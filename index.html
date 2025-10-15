@@ -4,15 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hydro-Immunity: Neutralizacija 48% Rizika | Anohubs</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap');
-        
-        /* KLJUČNO ZA RESPOZNIVNOST I TEKSTURU */
+        /* NOVO: Dodavanje suptilne teksture na svijetli body */
         body { 
             font-family: 'Inter', sans-serif; 
             overflow-x: hidden; 
+            /* KLJUČNO ZA MOBILNU RESPOZNIVNOST */
             /* SUBLIMNA TEKSTURA KAO DIGITALNA MREŽA */
             background-color: #F8FAFC; 
             background-image: radial-gradient(#d4e3f8 0.5px, transparent 0.5px);
@@ -57,15 +60,41 @@
             border-bottom: 2px solid #000;
             box-shadow: 0 0 15px rgba(52, 211, 163, 0.3); 
         }
+        
+        /* NOVO: Stilovi za "fade-in" animaciju prilikom skrolanja */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px); /* Počinje 30px niže */
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in-up.is-visible {
+            opacity: 1;
+            transform: translateY(0); /* Vraća se na originalnu poziciju */
+        }
+
+        /* NOVO: Stilovi za "zoom-in" animaciju */
+        .zoom-in {
+            opacity: 0;
+            transform: scale(0.95); /* Počinje malo smanjeno */
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .zoom-in.is-visible {
+            opacity: 1;
+            transform: scale(1); /* Vraća se na originalnu veličinu */
+        }
+
+        /* NOVO: Klase za odgođenu (staggered) animaciju */
+        .delay-150 { transition-delay: 150ms; }
+        .delay-300 { transition-delay: 300ms; }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
 
     <header class="bg-gray-900 text-white shadow-xl sticky top-0 z-50 neon-border">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-            <div class="text-3xl font-black tracking-widest text-cyan-400">
+            <a href="#" class="text-3xl font-black tracking-widest text-cyan-400">
                 HYDRO-IMMUNITY
-            </div>
+            </a>
             <nav class="hidden md:flex items-center space-x-10 font-extrabold text-sm">
                 <a href="#rizik" class="hover:text-red-500 transition tracking-wider">RIZIK</a>
                 <a href="#protokol" class="hover:text-cyan-400 transition tracking-wider">PROTOKOL</a>
@@ -109,24 +138,24 @@
 
     <section id="rizik" class="py-24 bg-gray-900 text-white neon-border">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-5xl font-extrabold text-red-500 mb-20 text-center tracking-tight">KVANTIFICIRANJE SKRIVENOG RIZIKA (THE TICKING BOMB)</h2>
+            <h2 class="text-5xl font-extrabold text-red-500 mb-20 text-center tracking-tight fade-in-up">KVANTIFICIRANJE SKRIVENOG RIZIKA (THE TICKING BOMB)</h2>
             <div class="grid md:grid-cols-3 gap-12">
                 
-                <div class="rizik-card p-8 rounded-xl border-t-4 border-red-600 shadow-2xl">
+                <div class="rizik-card p-8 rounded-xl border-t-4 border-red-600 shadow-2xl zoom-in">
                     <i data-lucide="alert-triangle" class="w-10 h-10 text-red-600 mb-4" aria-label="Ikona upozorenja"></i>
                     <div class="text-6xl font-black text-red-500 mb-4 tracking-tight">48%</div>
                     <h3 class="text-2xl font-bold mb-3 text-red-400">Dinamička Nestabilnost</h3>
                     <p class="text-gray-300 text-lg">Naučna istraživanja potvrđuju: neznatno neporavnanje osovine uvodi <span class="font-bold text-red-400">48%</span> promjene u kritične frekvencije rotora. Ovo je vaš najopasniji, ali skriveni problem.</p>
                 </div>
 
-                <div class="rizik-card p-8 rounded-xl border-t-4 border-blue-600 shadow-2xl">
+                <div class="rizik-card p-8 rounded-xl border-t-4 border-blue-600 shadow-2xl zoom-in delay-150">
                     <i data-lucide="gauge" class="w-10 h-10 text-blue-600 mb-4" aria-label="Ikona mjerača"></i>
                     <div class="text-6xl font-black text-blue-500 mb-4 tracking-tight">VRT < 60%</div>
                     <h3 class="text-2xl font-bold mb-3 text-blue-400">Prag Vibracijskog Rizika</h3>
                     <p class="text-gray-300 text-lg">Nadzor mora osigurati da vibracije (<span class="font-bold text-blue-400">VRT</span>) ostanu ispod <span class="font-bold text-blue-400">60%</span> ISO dozvoljene gornje granice. Svaka fluktuacija iznad toga je alarm za potencijalno zatajenje ležajeva.</p>
                 </div>
 
-                <div class="rizik-card p-8 rounded-xl border-t-4 border-green-600 shadow-2xl">
+                <div class="rizik-card p-8 rounded-xl border-t-4 border-green-600 shadow-2xl zoom-in delay-300">
                     <i data-lucide="factory" class="w-10 h-10 text-green-600 mb-4" aria-label="Ikona tvornice"></i>
                     <div class="text-6xl font-black text-green-500 mb-4 tracking-tight">30+ GODINA</div>
                     <h3 class="text-2xl font-bold mb-3 text-green-400">Garancija Dugovječnosti</h3>
@@ -138,19 +167,19 @@
 
     <section id="protokol" class="py-24 bg-gray-100 text-gray-900">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-4xl font-extrabold text-gray-900 mb-20 text-center">PROTOKOL BESPRIJEKORNE MONTAŽE: Eliminiranje "Execution Gap-a"</h2>
+            <h2 class="text-4xl font-extrabold text-gray-900 mb-20 text-center fade-in-up">PROTOKOL BESPRIJEKORNE MONTAŽE: Eliminiranje "Execution Gap-a"</h2>
             <div class="grid md:grid-cols-3 gap-10">
-                <div class="p-8 rounded-xl bg-white protokol-card border-l-4 border-cyan-400 shadow-lg hover:shadow-xl">
+                <div class="p-8 rounded-xl bg-white protokol-card border-l-4 border-cyan-400 shadow-lg hover:shadow-xl fade-in-up">
                     <i data-lucide="shield-check" class="w-10 h-10 text-cyan-500 mb-3" aria-label="Ikona štita"></i>
                     <h3 class="text-2xl font-bold mb-3">1. Dizajn Imuniteta</h3>
                     <p class="mb-4 text-gray-600">Uvodimo tehnološki štit protiv grešaka. To je <span class="font-bold text-cyan-600">Dual Application Strategy</span> s biomimetičkim <span class="font-bold text-cyan-600">Whale Fin</span> dizajnom koji stabilizira tok.</p>
                 </div>
-                <div class="p-8 rounded-xl bg-white protokol-card border-l-4 border-cyan-400 shadow-lg hover:shadow-xl">
+                <div class="p-8 rounded-xl bg-white protokol-card border-l-4 border-cyan-400 shadow-lg hover:shadow-xl fade-in-up delay-150">
                     <i data-lucide="scan" class="w-10 h-10 text-cyan-500 mb-3" aria-label="Ikona skeniranja"></i>
                     <h3 class="text-2xl font-bold mb-3">2. Garancija Preciznosti (QC)</h3>
                     <p class="mb-4 text-gray-600">Provodimo rigorozni QC. To uključuje <span class="font-bold text-cyan-600">Lasersko Poravnanje (&lt; 0.1 mm)</span> i <span class="font-bold text-cyan-600">3D Skeniranje</span> geometrije rotora, osiguravajući da fizička izvedba odgovara validiranom <span class="font-bold text-cyan-600">CFD modelu</span>.</p>
                 </div>
-                <div class="p-8 rounded-xl bg-white protokol-card border-l-4 border-cyan-400 shadow-lg hover:shadow-xl">
+                <div class="p-8 rounded-xl bg-white protokol-card border-l-4 border-cyan-400 shadow-lg hover:shadow-xl fade-in-up delay-300">
                     <i data-lucide="activity" class="w-10 h-10 text-cyan-500 mb-3" aria-label="Ikona aktivnosti"></i>
                     <h3 class="text-2xl font-bold mb-3">3. Aktivni Monitoring</h3>
                     <p class="mb-4 text-gray-600">Koristimo <span class="font-bold text-cyan-600">Digitalni Nadzor</span> za snimanje "Otiska Prsta" vibracija (<span class="font-bold text-cyan-600">Baseline</span>) i postavljamo alarme za <span class="font-bold text-cyan-600">VRT</span> prag kako bismo spriječili kvar prije nego što se on dogodi.</p>
@@ -161,7 +190,7 @@
     
     <section id="app-info" class="py-24 bg-gray-50 text-gray-900">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h3 class="text-4xl font-extrabold mb-6 flex items-center justify-center space-x-3">
+            <h3 class="text-4xl font-extrabold mb-6 flex items-center justify-center space-x-3 fade-in-up">
                 <i data-lucide="scan" class="w-8 h-8 text-green-600" aria-label="Ikona skeniranja"></i>
                 <span>Dobrodošli u <span class="text-green-600">AnoHUB</span>: Digitalna Procjena Rizika</span>
             </h3>
@@ -184,7 +213,7 @@
     <section id="e-usluge" class="py-24 bg-cyan-700 text-white">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <i data-lucide="zap" class="w-12 h-12 text-yellow-300 mb-4 mx-auto" aria-label="Ikona munje"></i>
-            <h2 class="text-4xl font-extrabold mb-4">PROŠIRENJE: Inženjerske Elektro Usluge</h2>
+            <h2 class="text-4xl font-extrabold mb-4 fade-in-up">PROŠIRENJE: Inženjerske Elektro Usluge</h2>
             <p class="text-xl font-light mb-8">
                 Pristupite našem **"drugom svijetu"** naprednih **elektro usluga**. Detalji o projektiranju, održavanju i rješenjima za elektroenergetsku imovinu obuhvaćeni su u **EH.pdf** dokumentu.
             </p>
@@ -203,7 +232,7 @@
     
     <section id="kontakt" class="py-24 bg-gray-900">
         <div class="max-w-2xl mx-auto px-4 text-center">
-            <h2 class="text-5xl font-extrabold text-white mb-6">Neutralizirajte Vaš Skriveni Rizik</h2>
+            <h2 class="text-5xl font-extrabold text-white mb-6 fade-in-up">Neutralizirajte Vaš Skriveni Rizik</h2>
             <p class="text-xl text-gray-300 mb-10">
                 Ne čekajte. Započnite procjenu rizika i implementirajte <span class="font-bold text-cyan-400">Hydrodynamic Immunity</span> protokol danas. Svi upiti, uključujući one iz aplikacije, bit će proslijeđeni na **ino@anohubs.com**.
             </p>
@@ -240,7 +269,7 @@
                 yearEl.textContent = new Date().getFullYear();
             }
 
-            // Rukovanje mobilnim menijem (DODANO)
+            // Rukovanje mobilnim menijem (Potrebno za funkcionalnost)
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
             if (mobileMenuButton && mobileMenu) {
@@ -249,7 +278,7 @@
                 });
             }
 
-            // Rukovanje slanjem forme (MODIFICIRANO)
+            // Rukovanje slanjem forme (Potrebno za funkcionalnost)
             const contactForm = document.getElementById('contactForm');
             const messageElement = document.getElementById('formMessage');
 
@@ -260,7 +289,6 @@
                     const form = event.target;
                     const data = new FormData(form);
                     
-                    // Prikazuje 'Slanje...' i postavlja loading stil
                     messageElement.textContent = 'Slanje...';
                     messageElement.className = 'mt-6 text-sm text-gray-400';
 
@@ -276,7 +304,6 @@
                             messageElement.className = 'mt-6 text-sm text-green-500';
                             form.reset();
                         } else {
-                            // Pokušava dohvatiti Formspree grešku, ako postoji
                             const errorData = await response.json();
                             const errorMessage = errorData?.errors?.map(err => err.message).join(', ') || 'Došlo je do nepoznate greške pri slanju.';
                             throw new Error(errorMessage);
@@ -287,6 +314,28 @@
                     }
                 });
             }
+
+            // Logika za animacije prilikom skrolanja (Intersection Observer)
+            const observerOptions = {
+                root: null, // promatraj u odnosu na viewport
+                rootMargin: '0px',
+                threshold: 0.1 // pokreni kad je 10% elementa vidljivo
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            // Pronađi sve elemente koje treba animirati i počni ih promatrati
+            const elementsToAnimate = document.querySelectorAll('.fade-in-up, .zoom-in');
+            elementsToAnimate.forEach(el => {
+                observer.observe(el);
+            });
         });
     </script>
 </body>
