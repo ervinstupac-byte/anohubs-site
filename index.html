@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hydro-Immunity: Neutralizacija 48% Rizika | Anohubs - Inženjerska Sigurnost i CFD</title>
     <meta name="description" content="Garantirana operativna izvrsnost i neutralizacija 48% skrivenog rizika. Hydro-Immunity protokol za besprijekornu montažu i dugovječnost hidropostrojenja. Započnite procjenu rizika.">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
@@ -12,32 +13,35 @@
     <script src="https://cdn.tailwindcss.com"></script>
     
     <style>
-        /* POBOLJŠANJE: Preimenovanje klasa radi bolje semantike (pogotovo kad koristimo Tailwind) */
-        
         /* Globalni Body Stilovi */
         body { 
             font-family: 'Inter', sans-serif; 
             overflow-x: hidden; 
             background-color: #F8FAFC; 
-            /* Suptilna tekstura ostaje */
             background-image: radial-gradient(#d4e3f8 0.5px, transparent 0.5px);
             background-size: 15px 15px;
-            /* POBOLJŠANJE: scroll-behavior: smooth za ugodnije navigiranje na klik sidra */
-            scroll-behavior: smooth;
+            scroll-behavior: smooth; /* Poboljšana glatka navigacija */
         }
 
         /* Hero Sekcija Stilovi */
         .hero-gradient {
-            /* POBOLJŠANJE: Smanjena neprozirnost (opacity) da se pozadina bolje vidi */
+            /* Smanjeno zatamnjenje za bolju vidljivost pozadine */
             background: linear-gradient(180deg, rgba(16, 24, 32, 0.75) 0%, rgba(16, 24, 32, 0.65) 100%), 
                         url('https://raw.githubusercontent.com/ervinstupac-byte/anohubs-site/main/hero-pozadina-anohubs.jpg') center/cover no-repeat;
             background-size: cover; 
             background-position: center; 
-            min-height: 90vh; /* POBOLJŠANJE: Povećana visina hero sekcije */
+            min-height: 90vh; /* Povećana visina */
         }
         .text-shadow-custom {
-            /* POBOLJŠANJE: Lagano smanjen sjena da bude suptilnija */
-            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8); 
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 1); /* Ostavljena jača sjena za bolji kontrast na slici */
+        }
+        /* NOVO: Stil za gumb na Hero sekciji (Taktilni sjaj) */
+        .hero-cta-button {
+            box-shadow: 0 0 15px rgba(251, 191, 36, 0.7), 0 10px 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        .hero-cta-button:hover {
+            box-shadow: 0 0 25px rgba(251, 191, 36, 1), 0 15px 35px rgba(0, 0, 0, 0.4);
         }
 
         /* Kartice (Protocols) */
@@ -47,29 +51,30 @@
         }
         .protocol-card-hover:hover {
             transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15); /* Jača sjena na hover */
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15); 
         }
 
-        /* Kartice Rizika (Dark Mode) */
+        /* Kartice Rizika (Dark Mode - Hi-Tech Neonski) */
         .risk-card {
             background-color: #0F172A; 
             color: #E2E8F0; 
-            transition: border-color 0.3s, box-shadow 0.3s; /* Dodana tranzicija i za sjenu */
+            transition: border-color 0.3s, box-shadow 0.3s;
+            /* Inicijalni, suptilni neonski sjaj */
             box-shadow: 0 0 10px rgba(56, 189, 248, 0.1); 
         }
         .risk-card:hover {
             border-color: #38BDF8; 
-            box-shadow: 0 0 20px rgba(56, 189, 248, 0.6); /* Jači neonski sjaj na hover */
+            /* Jači neonski sjaj na hover */
+            box-shadow: 0 0 25px rgba(56, 189, 248, 0.8); 
         }
 
         /* Neonski Border (Header) */
         .neon-border {
             border-bottom: 2px solid #000;
-            /* POBOLJŠANJE: Suptilniji sjaj za bolji kontrast na crnoj pozadini */
             box-shadow: 0 0 10px rgba(52, 211, 163, 0.2); 
         }
         
-        /* Animacije (Ostaju odlične!) */
+        /* Animacije (Ostaju odlične) */
         .fade-in-up {
             opacity: 0;
             transform: translateY(30px);
@@ -92,6 +97,7 @@
 
         .delay-150 { transition-delay: 150ms; }
         .delay-300 { transition-delay: 300ms; }
+        .delay-450 { transition-delay: 450ms; }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
@@ -109,7 +115,8 @@
                 <a href="#kontakt" class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 px-5 py-2 rounded-lg transition shadow-md font-bold tracking-wider">KONTAKT</a>
             </nav>
             <div class="md:hidden">
-                <button id="mobile-menu-button" aria-label="Otvori meni" type="button" class="p-2"> <svg data-lucide="menu" class="w-8 h-8"></svg> 
+                <button id="mobile-menu-button" aria-label="Otvori meni" type="button" class="p-2">
+                    <svg data-lucide="menu" class="w-8 h-8"></svg> 
                 </button>
             </div>
         </div>
@@ -132,10 +139,10 @@
             <h2 class="text-3xl md:text-4xl font-light italic text-cyan-300 mb-8 text-shadow-custom fade-in-up delay-150">
                 Neutralizacija <span class="font-extrabold text-red-500">48%</span> rizika: Problem je u montaži.
             </h2>
-            <p class="text-xl text-gray-200 mb-12 max-w-3xl mx-auto font-medium fade-in-up delay-300">
+            <p class="text-xl text-gray-200 mb-12 max-w-3xl mx-auto font-semibold tracking-wide fade-in-up delay-300">
                 Premošćivanje **"Execution Gap-a"** i garancija operativne dugovječnosti pretvaranjem organizacijskih slabosti u **inženjersku sigurnost**.
             </p>
-            <a href="#kontakt" class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 px-16 py-5 text-xl font-extrabold rounded-lg shadow-2xl transition transform hover:scale-105 tracking-widest inline-block fade-in-up delay-450" aria-label="Započnite procjenu rizika - Skok na kontakt formu">
+            <a href="#kontakt" class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 px-16 py-5 text-xl font-extrabold rounded-lg transition transform hover:scale-105 tracking-widest inline-block fade-in-up delay-450 hero-cta-button" aria-label="Započnite procjenu rizika - Skok na kontakt formu">
                 Započnite Procjenu Rizika
             </a>
         </div>
@@ -143,7 +150,7 @@
 
     <section id="rizik" class="py-24 bg-gray-900 text-white neon-border">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-5xl font-extrabold text-red-500 mb-20 text-center tracking-tight fade-in-up">KVANTIFICIRANJE SKRIVENOG RIZIKA (THE TICKING BOMB)</h2>
+            <h2 class="text-5xl font-extrabold text-red-500 mb-20 text-center tracking-tight fade-in-up" style="text-shadow: 0 0 8px rgba(239,68,68,0.5);">KVANTIFICIRANJE SKRIVENOG RIZIKA (THE TICKING BOMB)</h2>
             <div class="grid md:grid-cols-3 gap-12">
                 <div class="risk-card p-8 rounded-xl border-t-4 border-red-600 shadow-2xl zoom-in" role="article">
                     <svg data-lucide="alert-triangle" class="w-10 h-10 text-red-600 mb-4" aria-hidden="true"></svg>
@@ -173,20 +180,20 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-4xl font-extrabold text-gray-900 mb-20 text-center fade-in-up">PROTOKOL BESPRIJEKORNE MONTAŽE: Eliminiranje "Execution Gap-a"</h2>
             <div class="grid md:grid-cols-3 gap-10">
-                <div class="p-8 rounded-xl bg-white protocol-card-hover border-l-4 border-cyan-400 shadow-lg fade-in-up" role="article">
-                    <svg data-lucide="shield-check" class="w-10 h-10 text-cyan-500 mb-3" aria-hidden="true"></svg>
+                <div class="p-8 rounded-xl bg-white protocol-card-hover border-l-8 border-cyan-500 shadow-lg fade-in-up" role="article">
+                    <svg data-lucide="shield-check" class="w-12 h-12 text-cyan-500 mb-3" aria-hidden="true"></svg>
                     <h3 class="text-2xl font-bold mb-3">1. Dizajn Imuniteta</h3>
-                    <p class="mb-4 text-gray-600">Uvodimo tehnološki štit protiv grešaka. To je <span class="font-bold text-cyan-600">Dual Application Strategy</span> s biomimetičkim <span class="font-bold text-cyan-600">Whale Fin</span> dizajnom koji stabilizira tok.</p>
+                    <p class="mb-4 text-gray-700">Uvodimo tehnološki štit protiv grešaka. To je <span class="font-bold text-cyan-600">Dual Application Strategy</span> s biomimetičkim <span class="font-bold text-cyan-600">Whale Fin</span> dizajnom koji stabilizira tok.</p>
                 </div>
-                <div class="p-8 rounded-xl bg-white protocol-card-hover border-l-4 border-cyan-400 shadow-lg fade-in-up delay-150" role="article">
-                    <svg data-lucide="scan" class="w-10 h-10 text-cyan-500 mb-3" aria-hidden="true"></svg>
+                <div class="p-8 rounded-xl bg-white protocol-card-hover border-l-8 border-cyan-500 shadow-lg fade-in-up delay-150" role="article">
+                    <svg data-lucide="scan" class="w-12 h-12 text-cyan-500 mb-3" aria-hidden="true"></svg>
                     <h3 class="text-2xl font-bold mb-3">2. Garancija Preciznosti (QC)</h3>
-                    <p class="mb-4 text-gray-600">Provodimo rigorozni QC. To uključuje <span class="font-bold text-cyan-600">Lasersko Poravnanje (&lt; 0.1 mm)</span> i <span class="font-bold text-cyan-600">3D Skeniranje</span> geometrije rotora, osiguravajući da fizička izvedba odgovara validiranom <span class="font-bold text-cyan-600">CFD modelu</span>.</p>
+                    <p class="mb-4 text-gray-700">Provodimo rigorozni QC. To uključuje <span class="font-bold text-cyan-600">Lasersko Poravnanje (&lt; 0.1 mm)</span> i <span class="font-bold text-cyan-600">3D Skeniranje</span> geometrije rotora, osiguravajući da fizička izvedba odgovara validiranom <span class="font-bold text-cyan-600">CFD modelu</span>.</p>
                 </div>
-                <div class="p-8 rounded-xl bg-white protocol-card-hover border-l-4 border-cyan-400 shadow-lg fade-in-up delay-300" role="article">
-                    <svg data-lucide="activity" class="w-10 h-10 text-cyan-500 mb-3" aria-hidden="true"></svg>
+                <div class="p-8 rounded-xl bg-white protocol-card-hover border-l-8 border-cyan-500 shadow-lg fade-in-up delay-300" role="article">
+                    <svg data-lucide="activity" class="w-12 h-12 text-cyan-500 mb-3" aria-hidden="true"></svg>
                     <h3 class="text-2xl font-bold mb-3">3. Aktivni Monitoring</h3>
-                    <p class="mb-4 text-gray-600">Koristimo <span class="font-bold text-cyan-600">Digitalni Nadzor</span> za snimanje "Otiska Prsta" vibracija (<span class="font-bold text-cyan-600">Baseline</span>) i postavljamo alarme za <span class="font-bold text-cyan-600">VRT</span> prag kako bismo spriječili kvar prije nego što se on dogodi.</p>
+                    <p class="mb-4 text-gray-700">Koristimo <span class="font-bold text-cyan-600">Digitalni Nadzor</span> za snimanje "Otiska Prsta" vibracija (<span class="font-bold text-cyan-600">Baseline</span>) i postavljamo alarme za <span class="font-bold text-cyan-600">VRT</span> prag kako bismo spriječili kvar prije nego što se on dogodi.</p>
                 </div>
             </div>
         </div>
@@ -195,18 +202,17 @@
     <section id="app-info" class="py-24 bg-gray-50 text-gray-900">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 class="text-4xl font-extrabold mb-6 flex items-center justify-center space-x-3 fade-in-up">
-                <svg data-lucide="scan" class="w-8 h-8 text-green-600" aria-hidden="true"></svg>
-                <span>Dobrodošli u <span class="text-green-600">AnoHUB</span>: Digitalna Procjena Rizika</span>
+                <svg data-lucide="scan" class="w-8 h-8 text-green-700" aria-hidden="true"></svg>
+                <span>Dobrodošli u <span class="text-green-700">AnoHUB</span>: Digitalna Procjena Rizika</span>
             </h2>
             <p class="text-xl text-gray-700 mb-10 max-w-3xl mx-auto fade-in-up delay-150">
                 AnoHUB konvertira vaše terenske simptome u **kvantificirani izvještaj o riziku**. Pokrenite aplikaciju preko cijelog zaslona (full-screen) za najbolje iskustvo i kreiranje <span class="font-bold text-green-700">Digitalnog Mosta</span> između problema i rješenja.
             </p>
-
             <a 
                 href="anohub.html" 
                 target="_blank" 
                 rel="noopener"
-                class="bg-green-600 hover:bg-green-700 text-white px-16 py-5 text-xl font-extrabold rounded-lg shadow-2xl transition transform hover:scale-105 inline-flex items-center space-x-3 tracking-widest fade-in-up delay-300"
+                class="bg-green-600 hover:bg-green-700 text-white px-20 py-6 text-2xl font-extrabold rounded-lg shadow-2xl transition transform hover:scale-105 inline-flex items-center space-x-3 tracking-widest fade-in-up delay-300"
                 aria-label="Pokreni AnoHUB aplikaciju"
             >
                 <svg data-lucide="rocket" class="w-6 h-6" aria-hidden="true"></svg>
@@ -243,17 +249,18 @@
                 Ne čekajte. Započnite procjenu rizika i implementirajte <span class="font-bold text-cyan-400">Hydrodynamic Immunity</span> protokol danas. Svi upiti, uključujući one iz aplikacije, bit će proslijeđeni na **ino@anohubs.com**.
             </p>
             
-            <form id="contactForm" action="https://formspree.io/f/xqaywlaq" method="POST" class="bg-white p-8 rounded-xl shadow-2xl" role="form">
-                <input type="text" id="name" name="name" placeholder="Vaše Ime i Prezime" class="w-full p-4 mb-5 border border-gray-300 rounded-lg focus:ring-cyan-500 focus:border-cyan-500 text-lg" required autocomplete="name" aria-label="Ime i Prezime">
-                <input type="email" id="email" name="email" placeholder="Korporativni Email (Za službeni odgovor)" class="w-full p-4 mb-5 border border-gray-300 rounded-lg focus:ring-cyan-500 focus:border-cyan-500 text-lg" required autocomplete="email" aria-label="Korporativni Email">
-                <textarea id="message" name="message" rows="5" placeholder="Kratak opis vaše imovine (asset) i prirode problema (Ili pitanje o AnoHUB-u App)" class="w-full p-4 mb-8 border border-gray-300 rounded-lg focus:ring-cyan-500 focus:border-cyan-500 text-lg" required aria-label="Opis imovine/problema"></textarea>
+            <form id="contactForm" action="https://formspree.io/f/xqaywlaq" method="POST" class="bg-gray-100 p-8 rounded-xl shadow-2xl" role="form">
+                <input type="text" id="name" name="name" placeholder="Vaše Ime i Prezime" class="w-full p-4 mb-5 border-2 border-gray-300 rounded-lg focus:ring-cyan-600 focus:border-cyan-600 text-lg" required autocomplete="name" aria-label="Ime i Prezime">
+                <input type="email" id="email" name="email" placeholder="Korporativni Email (Za službeni odgovor)" class="w-full p-4 mb-5 border-2 border-gray-300 rounded-lg focus:ring-cyan-600 focus:border-cyan-600 text-lg" required autocomplete="email" aria-label="Korporativni Email">
+                <textarea id="message" name="message" rows="5" placeholder="Kratak opis vaše imovine (asset) i prirode problema (Ili pitanje o AnoHUB-u App)" class="w-full p-4 mb-8 border-2 border-gray-300 rounded-lg focus:ring-cyan-600 focus:border-cyan-600 text-lg" required aria-label="Opis imovine/problema"></textarea>
                 
                 <input type="hidden" name="_subject" value="Upit s Anohubs.com Landing Page"> 
                 
-                <button type="submit" class="w-full bg-cyan-600 text-white py-4 rounded-lg text-xl font-bold hover:bg-cyan-700 transition transform hover:scale-[1.01] shadow-lg tracking-wider" aria-live="polite">
+                <button type="submit" class="w-full bg-cyan-600 text-white py-4 rounded-lg text-xl font-bold hover:bg-cyan-700 transition transform hover:scale-[1.01] shadow-xl shadow-cyan-500/50 tracking-wider" aria-live="polite">
                     Zatražite Stratešku Procjenu
                 </button>
-                <p id="formMessage" class="mt-6 text-sm" role="status" aria-live="polite"></p> </form>
+                <p id="formMessage" class="mt-6 text-sm" role="status" aria-live="polite"></p>
+            </form>
         </div>
     </section>
 
@@ -263,9 +270,10 @@
         <p class="text-sm">&copy; <span id="year"></span> Strateško Ublažavanje Rizika. | Anohubs.com</p>
     </footer>
 
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // POBOLJŠANJE: Koristite SVG-ove unutar tagova, ne samo <i>. Lucide mora biti inicijaliziran samo jednom.
+            // Inicijalizacija Lucide ikona
             lucide.createIcons();
 
             // Postavljanje tekuće godine u footer
@@ -274,7 +282,7 @@
                 yearEl.textContent = new Date().getFullYear();
             }
 
-            // Rukovanje mobilnim menijem (Dodan aria-expanded)
+            // Rukovanje mobilnim menijem
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
             
@@ -285,7 +293,7 @@
                 });
             }
 
-            // Rukovanje slanjem forme (Bez promjena - odlično implementirano!)
+            // Rukovanje slanjem forme
             const contactForm = document.getElementById('contactForm');
             const messageElement = document.getElementById('formMessage');
 
@@ -312,17 +320,16 @@
 
                         if (response.ok) {
                             messageElement.textContent = 'Zahtjev je poslan! Hvala na upitu. Kontaktirat ćemo vas uskoro.';
-                            messageElement.className = 'mt-6 text-sm text-green-500';
+                            messageElement.className = 'mt-6 text-sm text-green-600 font-bold';
                             form.reset();
                         } else {
-                            // Detaljnije rukovanje greškama s Formspree-a
                             const errorData = await response.json();
                             const errorMessage = errorData?.errors?.map(err => err.message).join(', ') || 'Došlo je do nepoznate greške pri slanju.';
                             throw new Error(errorMessage);
                         }
                     } catch (error) {
                         messageElement.textContent = `Greška: ${error.message}. Molimo pokušajte ponovo ili nas kontaktirajte direktno na ino@anohubs.com.`;
-                        messageElement.className = 'mt-6 text-sm text-red-500';
+                        messageElement.className = 'mt-6 text-sm text-red-600 font-bold';
                     } finally {
                         // Vrati dugme u normalno stanje
                         submitButton.disabled = false;
@@ -353,6 +360,5 @@
             });
         });
     </script>
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 </body>
 </html>
