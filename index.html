@@ -13,88 +13,98 @@
     <script src="https://cdn.tailwindcss.com"></script>
     
     <style>
-        /* Globalni Body Stilovi */
+        /* 1. KORISTI CSS VARIJABLE ZA KONZISTENTNOST BOJA */
+        :root {
+            --color-dark: #0F172A;
+            --color-light: #F8FAFC;
+            --color-primary-cyan: #06B6D4;
+            --color-danger-red: #DC2626;
+            --color-warning-yellow: #FACC15;
+            /* POBOLJŠANJE: Responsivna veličina fonta za H1 */
+            --font-size-h1: clamp(3rem, 7vw + 1rem, 5.5rem); 
+        }
+
+        /* 2. GLOBALNI STILOVI (CSS Grid Tekstura, scroll-behavior) */
         body { 
             font-family: 'Inter', sans-serif; 
             overflow-x: hidden; 
-            background-color: #F8FAFC; 
+            background-color: var(--color-light); 
             background-image: radial-gradient(#d4e3f8 0.5px, transparent 0.5px);
             background-size: 15px 15px;
-            scroll-behavior: smooth; /* Poboljšana glatka navigacija */
+            scroll-behavior: smooth; 
         }
 
-        /* Hero Sekcija Stilovi */
+        /* 3. HERO SEKCIJA */
         .hero-gradient {
-            /* Smanjeno zatamnjenje za bolju vidljivost pozadine */
-            background: linear-gradient(180deg, rgba(16, 24, 32, 0.75) 0%, rgba(16, 24, 32, 0.65) 100%), 
+            background: linear-gradient(180deg, rgba(16, 24, 32, 0.7) 0%, rgba(16, 24, 32, 0.6) 100%), 
                         url('https://raw.githubusercontent.com/ervinstupac-byte/anohubs-site/main/hero-pozadina-anohubs.jpg') center/cover no-repeat;
-            background-size: cover; 
-            background-position: center; 
-            min-height: 90vh; /* Povećana visina */
+            min-height: 90vh; 
         }
-        .text-shadow-custom {
-            text-shadow: 2px 2px 6px rgba(0, 0, 0, 1); /* Ostavljena jača sjena za bolji kontrast na slici */
+        .hero-title {
+            font-size: var(--font-size-h1); /* Koristi varijablu za responsivnost */
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 1);
         }
-        /* NOVO: Stil za gumb na Hero sekciji (Taktilni sjaj) */
+        /* POBOLJŠANJE: Jači taktilni sjaj za CTA dugme */
         .hero-cta-button {
-            box-shadow: 0 0 15px rgba(251, 191, 36, 0.7), 0 10px 20px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s ease;
+            box-shadow: 0 0 18px rgba(251, 191, 36, 0.9), 0 10px 25px rgba(0, 0, 0, 0.4);
+            transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1); /* Sofisticiranija tranzicija */
         }
         .hero-cta-button:hover {
-            box-shadow: 0 0 25px rgba(251, 191, 36, 1), 0 15px 35px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 0 30px rgba(251, 191, 36, 1), 0 15px 40px rgba(0, 0, 0, 0.5);
+            transform: scale(1.06) !important; /* Jači scale na hover */
         }
 
-        /* Kartice (Protocols) */
-        .protocol-card-hover {
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .protocol-card-hover:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15); 
-        }
-
-        /* Kartice Rizika (Dark Mode - Hi-Tech Neonski) */
+        /* 4. RIZIK KARTICE (Dark Mode / Neonski) */
         .risk-card {
-            background-color: #0F172A; 
+            background-color: var(--color-dark); 
             color: #E2E8F0; 
             transition: border-color 0.3s, box-shadow 0.3s;
-            /* Inicijalni, suptilni neonski sjaj */
             box-shadow: 0 0 10px rgba(56, 189, 248, 0.1); 
+            border-bottom: 2px solid transparent; /* Vizuelni dodatak */
         }
         .risk-card:hover {
             border-color: #38BDF8; 
-            /* Jači neonski sjaj na hover */
-            box-shadow: 0 0 25px rgba(56, 189, 248, 0.8); 
+            box-shadow: 0 0 35px rgba(56, 189, 248, 0.9); /* Izuzetno jak neonski sjaj */
+            transform: translateY(-8px); /* Jači efekat izdizanja */
         }
 
-        /* Neonski Border (Header) */
-        .neon-border {
-            border-bottom: 2px solid #000;
-            box-shadow: 0 0 10px rgba(52, 211, 163, 0.2); 
+        /* 5. PROTOKOL KARTICE (Inženjerska preciznost) */
+        .protocol-card-hover {
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            /* POBOLJŠANJE: Naglašena sjena uz cyan granicu */
+            box-shadow: 2px 2px 0px 0px rgba(6, 182, 212, 0.1), 0 10px 20px rgba(0, 0, 0, 0.1);
         }
-        
-        /* Animacije (Ostaju odlične) */
-        .fade-in-up {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-        .fade-in-up.is-visible {
-            opacity: 1;
-            transform: translateY(0);
+        .protocol-card-hover:hover {
+            transform: translateY(-6px);
+            box-shadow: 4px 4px 0px 0px rgba(6, 182, 212, 0.2), 0 25px 50px rgba(0, 0, 0, 0.25);
         }
 
-        .zoom-in {
-            opacity: 0;
-            transform: scale(0.95);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        /* 6. MIKRO INTERAKCIJE (Header Linkovi) */
+        .nav-link {
+            position: relative;
+            padding-bottom: 2px;
+            display: inline-block;
         }
-        .zoom-in.is-visible {
-            opacity: 1;
-            transform: scale(1);
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0%;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--color-primary-cyan);
+            transition: width 0.3s ease-out;
+        }
+        .nav-link:hover::after {
+            width: 100%;
         }
 
+        /* Ostatak (Animacije ostaju iste) */
+        .fade-in-up { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+        .fade-in-up.is-visible { opacity: 1; transform: translateY(0); }
+        .zoom-in { opacity: 0; transform: scale(0.95); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+        .zoom-in.is-visible { opacity: 1; transform: scale(1); }
         .delay-150 { transition-delay: 150ms; }
         .delay-300 { transition-delay: 300ms; }
         .delay-450 { transition-delay: 450ms; }
@@ -108,10 +118,10 @@
                 HYDRO-IMMUNITY
             </a>
             <nav class="hidden md:flex items-center space-x-10 font-extrabold text-sm" role="navigation" aria-label="Glavna navigacija">
-                <a href="#rizik" class="hover:text-red-500 transition tracking-wider">RIZIK</a>
-                <a href="#protokol" class="hover:text-cyan-400 transition tracking-wider">PROTOKOL</a>
-                <a href="anohub.html" target="_blank" rel="noopener" class="hover:text-green-500 transition tracking-wider font-extrabold text-lg">AnoHUB</a>
-                <a href="#e-usluge" class="hover:text-yellow-400 transition tracking-wider">E-USLUGE</a> 
+                <a href="#rizik" class="nav-link hover:text-red-500 transition tracking-wider">RIZIK</a>
+                <a href="#protokol" class="nav-link hover:text-cyan-400 transition tracking-wider">PROTOKOL</a>
+                <a href="anohub.html" target="_blank" rel="noopener" class="nav-link hover:text-green-500 transition tracking-wider font-extrabold text-lg">AnoHUB</a>
+                <a href="#e-usluge" class="nav-link hover:text-yellow-400 transition tracking-wider">E-USLUGE</a> 
                 <a href="#kontakt" class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 px-5 py-2 rounded-lg transition shadow-md font-bold tracking-wider">KONTAKT</a>
             </nav>
             <div class="md:hidden">
@@ -133,7 +143,7 @@
 
     <section id="hero" class="hero-gradient flex items-center justify-center text-center">
         <div class="max-w-4xl px-4 py-36 md:py-48">
-            <h1 class="text-6xl md:text-8xl font-black text-white mb-6 leading-tight text-shadow-custom fade-in-up">
+            <h1 class="hero-title font-black text-white mb-6 leading-tight text-shadow-custom fade-in-up">
                 GARANTIRANA OPERATIVNA IZVRSNOST
             </h1>
             <h2 class="text-3xl md:text-4xl font-light italic text-cyan-300 mb-8 text-shadow-custom fade-in-up delay-150">
@@ -142,7 +152,7 @@
             <p class="text-xl text-gray-200 mb-12 max-w-3xl mx-auto font-semibold tracking-wide fade-in-up delay-300">
                 Premošćivanje **"Execution Gap-a"** i garancija operativne dugovječnosti pretvaranjem organizacijskih slabosti u **inženjersku sigurnost**.
             </p>
-            <a href="#kontakt" class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 px-16 py-5 text-xl font-extrabold rounded-lg transition transform hover:scale-105 tracking-widest inline-block fade-in-up delay-450 hero-cta-button" aria-label="Započnite procjenu rizika - Skok na kontakt formu">
+            <a href="#kontakt" class="bg-yellow-500 text-gray-900 px-16 py-5 text-xl font-extrabold rounded-lg transition tracking-widest inline-block fade-in-up delay-450 hero-cta-button" aria-label="Započnite procjenu rizika - Skok na kontakt formu">
                 Započnite Procjenu Rizika
             </a>
         </div>
@@ -150,7 +160,7 @@
 
     <section id="rizik" class="py-24 bg-gray-900 text-white neon-border">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-5xl font-extrabold text-red-500 mb-20 text-center tracking-tight fade-in-up" style="text-shadow: 0 0 8px rgba(239,68,68,0.5);">KVANTIFICIRANJE SKRIVENOG RIZIKA (THE TICKING BOMB)</h2>
+            <h2 class="text-5xl font-extrabold text-red-500 mb-20 text-center tracking-tight fade-in-up" style="text-shadow: 0 0 10px rgba(239,68,68,0.7);">KVANTIFICIRANJE SKRIVENOG RIZIKA (THE TICKING BOMB)</h2>
             <div class="grid md:grid-cols-3 gap-12">
                 <div class="risk-card p-8 rounded-xl border-t-4 border-red-600 shadow-2xl zoom-in" role="article">
                     <svg data-lucide="alert-triangle" class="w-10 h-10 text-red-600 mb-4" aria-hidden="true"></svg>
@@ -273,10 +283,10 @@
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Inicijalizacija Lucide ikona
+            // Inicijalizacija ikona
             lucide.createIcons();
 
-            // Postavljanje tekuće godine u footer
+            // Postavljanje tekuće godine
             const yearEl = document.getElementById('year');
             if (yearEl) {
                 yearEl.textContent = new Date().getFullYear();
@@ -293,7 +303,7 @@
                 });
             }
 
-            // Rukovanje slanjem forme
+            // Rukovanje slanjem forme (Bez promjena - savršeno implementirano)
             const contactForm = document.getElementById('contactForm');
             const messageElement = document.getElementById('formMessage');
 
@@ -305,7 +315,6 @@
                     const data = new FormData(form);
                     const submitButton = form.querySelector('button[type="submit"]');
 
-                    // Onemogući dugme i prikaži status slanja
                     submitButton.disabled = true;
                     submitButton.textContent = 'Šaljem... Molimo pričekajte.';
                     messageElement.textContent = 'Slanje...';
@@ -331,14 +340,13 @@
                         messageElement.textContent = `Greška: ${error.message}. Molimo pokušajte ponovo ili nas kontaktirajte direktno na ino@anohubs.com.`;
                         messageElement.className = 'mt-6 text-sm text-red-600 font-bold';
                     } finally {
-                        // Vrati dugme u normalno stanje
                         submitButton.disabled = false;
                         submitButton.textContent = 'Zatražite Stratešku Procjenu';
                     }
                 });
             }
 
-            // Logika za animacije prilikom skrolanja (Intersection Observer)
+            // Logika za animacije prilikom skrolanja
             const observerOptions = {
                 root: null, 
                 rootMargin: '0px',
