@@ -228,22 +228,21 @@
                 </p>
                 <div class="code-block text-sm">
                     <pre><code><span class="code-keyword">import</span> os
-<span class="code-keyword">import</span> <span class="code-keyword">time</span>
-<span class="code-keyword">import</span> <span class="code-keyword">random</span>
+<span class="code-keyword">import</span> time
+<span class="code-keyword">import</span> random
 
 <span class="code-comment"># --- Parametri iz QC Protokola ---</span>
 TOLERANCE_MM = <span class="code-number">0.5</span>
 PERFECT_MODEL_FILE = <span class="code-string">'whale_fin_rotor.step'</span>
-
 <span class="code-keyword">def</span> <span class="code-keyword">run_qc_comparison</span>():
     <span class="code-comment"># Simulira usporedbu dva 3D CAD modela</span>
-    <span class="code-keyword">report_lines</span> = [<span class="code-string">'--- IZVJEŠTAJ O ODSTUPANJU GEOMETRIJE ---'</span>]
+    report_lines = [<span class="code-string">'--- IZVJEŠTAJ O ODSTUPANJU GEOMETRIJE ---'</span>]
 
     <span class="code-comment"># 2. Simulacija analize (Simulacija 3D Skeniranja)</span>
-    <span class="code-keyword">time</span>.sleep(<span class="code-number">3</span>)
+    time.sleep(<span class="code-number">3</span>)
 
     <span class="code-comment"># 3. Simulacija rezultata (Realno odstupanje je 0.22 mm)</span>
-    simulated_max_deviation_m = <span class="code-number">random</span>.uniform(<span class="code-number">0.0002</span>, <span class="code-number">0.00025</span>)
+    simulated_max_deviation_m = random.uniform(<span class="code-number">0.0002</span>, <span class="code-number">0.00025</span>)
     report_lines.append(f<span class="code-string">"Maksimalno odstupanje: {simulated_max_deviation_m * 1000:.4f} mm"</span>)
     report_lines.append(f<span class="code-string">"Dopuštena tolerancija: {TOLERANCE_MM:.4f} mm"</span>)
 
@@ -253,8 +252,7 @@ PERFECT_MODEL_FILE = <span class="code-string">'whale_fin_rotor.step'</span>
     <span class="code-keyword">else</span>:
         result = <span class="code-string">"PADA (FAIL)"</span>
     
-    <span class="code-keyword">print</span>(f<span class="code-string">"Analiza završena. Rezultat: {result}"</span>)
-</code></pre>
+    <span class="code-keyword">print</span>(f<span class="code-string">"Analiza završena. Rezultat: {result}"</span>)</code></pre>
                 </div>
                 <p class="text-sm text-gray-500 mt-4 text-center">
                     Ovaj kod je dio našeg automatiziranog inženjerskog cjevovoda (**main\_workflow.py**) koji se izvršava prije i poslije montaže.
