@@ -1,0 +1,131 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom Styles (Transferred from HTML's <style> block) */
+@layer base {
+    :root {
+        --color-primary-cyan: #06B6D4;
+        --color-background-primary: #0A0A0A; 
+        --color-background-secondary: #0F172A; 
+        --color-warning-yellow: #FACC15;
+        --color-danger-red: #DC2626;
+        --font-size-h1: clamp(3rem, 7vw + 1rem, 5.5rem); 
+    }
+
+    body { 
+        font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        overflow-x: hidden; 
+        background-color: var(--color-background-primary); 
+        color: #E2E8F0; 
+        background-attachment: fixed; 
+        scroll-behavior: smooth; 
+    }
+}
+
+@layer components {
+    /* HERO SECTION */
+    .hero-gradient {
+        background: linear-gradient(180deg, rgba(10, 10, 10, 0.95) 0%, rgba(10, 10, 10, 0.85) 100%);
+        min-height: 95vh; 
+        clip-path: polygon(0 0, 100% 0, 100% 90%, 50% 100%, 0 90%);
+        padding-bottom: 140px; 
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Accordion */
+    .accordion-content { 
+        max-height: 0; 
+        overflow: hidden; 
+        transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), padding 0.5s ease-in-out; 
+        padding-top: 0; 
+        padding-bottom: 0; 
+    }
+    .accordion-content.is-open { 
+        padding-top: 1.5rem; 
+        padding-bottom: 1.5rem; 
+    }
+    .accordion-header { 
+        cursor: pointer; 
+        transition: color 0.3s; 
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .accordion-header svg {
+        transition: transform 0.3s ease-in-out;
+    }
+
+    /* Sekcije i Kartice */
+    .section-dark { background-color: #1A1A1A; }
+    .section-cyan { background-color: var(--color-background-secondary); }
+    .section-stripe {
+        background: linear-gradient(90deg, var(--color-background-primary) 0%, var(--color-primary-cyan) 50%, var(--color-background-primary) 100%);
+        height: 8px;
+        box-shadow: 0 0 15px rgba(6, 182, 212, 0.8);
+    }
+    .section-divider {
+        height: 60px;
+        background-color: var(--color-background-primary);
+        clip-path: polygon(0 0, 100% 100%, 0 100%);
+    }
+    .section-divider.inverted {
+        clip-path: polygon(0 100%, 100% 0, 100% 100%);
+        background-color: var(--color-background-primary);
+    }
+
+
+    /* Brojači/Metrike */
+    .counter-box {
+        background-color: var(--color-dark);
+        border: 1px solid rgba(6, 182, 212, 0.4);
+        box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
+        transition: all 0.4s;
+    }
+
+    /* Sticky Mobile CTA */
+    @media (max-width: 768px) {
+        .mobile-sticky-cta {
+            display: block;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.4);
+            padding: 10px 0;
+            background-color: rgba(10, 10, 10, 0.95);
+            border-top: 2px solid var(--color-warning-yellow);
+        }
+    }
+
+    /* Visual Authenticity: UPUTE */
+    .visual-placeholder {
+        min-height: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        flex-direction: column;
+        background-color: #111827;
+        border: 2px dashed #06B6D4;
+        color: #94A3B8;
+        padding: 20px;
+        border-radius: 12px;
+        font-family: monospace;
+        font-size: 0.9rem;
+    }
+
+    /* ANIMACIJE */
+    .fade-in-up, .zoom-in { transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+    .fade-in-up { opacity: 0; transform: translateY(50px); } 
+    .fade-in-up.is-visible { opacity: 1; transform: translateY(0); }
+    .zoom-in { opacity: 0; transform: scale(0.9); } 
+    .zoom-in.is-visible { opacity: 1; transform: scale(1); }
+    .delay-200 { transition-delay: 200ms; }
+    .delay-400 { transition-delay: 400ms; }
+    .delay-600 { transition-delay: 600ms; }
+}
