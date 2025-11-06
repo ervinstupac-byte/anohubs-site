@@ -10,101 +10,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
     
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <style>
-        /* ========================================= */
-        /* I. CSS VARIABLES (Theme and Branding)     */
-        /* ========================================= */
-        :root {
-            --color-primary-cyan: #06B6D4;
-            --color-background-primary: #0A0A0A; 
-            --color-background-secondary: #0F172A; 
-            --color-warning-yellow: #FACC15;
-            --color-danger-red: #DC2626;
-            --font-size-h1: clamp(3rem, 7vw + 1rem, 5.5rem); 
-        }
-
-        /* ========================================= */
-        /* II. GLOBAL STYLES                         */
-        /* ========================================= */
-        body { 
-            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            overflow-x: hidden; 
-            background-color: var(--color-background-primary); 
-            color: #E2E8F0; 
-            background-attachment: fixed; 
-            scroll-behavior: smooth; 
-        }
-
-        /* HERO SECTION */
-        .hero-gradient {
-            background: linear-gradient(180deg, rgba(10, 10, 10, 0.95) 0%, rgba(10, 10, 10, 0.85) 100%);
-            min-height: 95vh; 
-            clip-path: polygon(0 0, 100% 0, 100% 90%, 50% 100%, 0 90%);
-            padding-bottom: 140px; 
-            position: relative;
-            overflow: hidden;
-        }
-        
-        /* SECTION COLORS */
-        .section-dark { background-color: #1A1A1A; }
-        .section-cyan { background-color: var(--color-background-secondary); }
-
-        /* ACCORDION STYLES */
-        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), padding 0.5s ease-in-out; padding-top: 0; padding-bottom: 0; }
-        .accordion-content.is-open { padding-top: 1.5rem; padding-bottom: 1.5rem; }
-        .accordion-header { cursor: pointer; transition: color 0.3s; display: flex; justify-content: space-between; align-items: center; }
-        .accordion-header svg { transition: transform 0.3s ease-in-out; }
-
-        /* VISUAL PLACEHOLDER (For Expert Authority) */
-        .visual-placeholder {
-            min-height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            flex-direction: column;
-            background-color: #111827;
-            border: 2px dashed #06B6D4;
-            color: #94A3B8;
-            padding: 20px;
-            border-radius: 12px;
-            font-family: monospace;
-            font-size: 0.9rem;
-        }
-
-        /* SCROLL ANIMATIONS */
-        .fade-in-up, .zoom-in { transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
-        .fade-in-up { opacity: 0; transform: translateY(50px); } 
-        .fade-in-up.is-visible { opacity: 1; transform: translateY(0); }
-        .zoom-in { opacity: 0; transform: scale(0.9); } 
-        .zoom-in.is-visible { opacity: 1; transform: scale(1); }
-        .delay-200 { transition-delay: 200ms; }
-        .delay-400 { transition-delay: 400ms; }
-        .delay-600 { transition-delay: 600ms; }
-        .delay-800 { transition-delay: 800ms; }
-
-        /* STICKY MOBILE CTA */
-        @media (max-width: 768px) {
-            .mobile-sticky-cta {
-                display: block;
-                position: fixed;
-                bottom: 0;
-                left: 0;
-                width: 100%;
-                z-index: 1000;
-                box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.4);
-                padding: 10px 0;
-                background-color: rgba(10, 10, 10, 0.95);
-                border-top: 2px solid var(--color-danger-red);
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css"> 
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body>
 
     <header class="bg-gray-900 text-white shadow-2xl sticky top-0 z-50 border-b border-cyan-800/50" role="banner">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
@@ -114,7 +22,7 @@
                 <a href="#rizik" class="nav-link relative text-red-400 hover:text-red-500 transition tracking-wider p-2 uppercase">RISK</a>
                 <a href="#metrike" class="nav-link relative text-yellow-400 hover:text-cyan-400 transition tracking-wider p-2 uppercase">METRICS</a>
                 <a href="#core-protocol" class="nav-link relative text-gray-200 hover:text-cyan-400 transition tracking-wider p-2 uppercase">PROTOCOL</a>
-                <a href="/anohub-app-dashboard" target="_blank" rel="noopener noreferrer" class="nav-link relative text-green-400 hover:text-green-500 transition tracking-widest font-extrabold text-lg p-2 uppercase">ANO HUB</a>
+                <a href="anohub.html" target="_blank" rel="noopener noreferrer" class="nav-link relative text-green-400 hover:text-green-500 transition tracking-widest font-extrabold text-lg p-2 uppercase">ANO HUB</a>
                 <a href="#manifest" class="nav-link relative text-green-400 hover:text-green-500 transition tracking-wider p-2 uppercase">TEAM</a>
                 <a href="#kontakt" class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 px-6 py-2.5 rounded-full transition transform hover:scale-105 shadow-xl font-bold tracking-wider uppercase text-base">CONTACT</a>
             </nav>
@@ -127,167 +35,168 @@
         </div>
         
         <div id="mobile-menu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2 text-center bg-gray-900" aria-label="Mobile navigation menu">
-             <a href="#rizik" class="block hover:text-red-500 transition tracking-wider py-2">RISK</a>
-             <a href="#metrike" class="block hover:text-yellow-400 transition tracking-wider py-2">METRICS</a>
-             <a href="#core-protocol" class="block hover:text-cyan-400 transition tracking-wider py-2">PROTOCOL</a>
-             <a href="/anohub-app-dashboard" target="_blank" rel="noopener noreferrer" class="block hover:text-green-500 transition tracking-wider font-extrabold text-lg py-2">ANO HUB</a>
-             <a href="#manifest" class="block hover:text-green-500 transition tracking-wider py-2">TEAM</a>
-             <a href="#kontakt" class="block bg-yellow-500 hover:bg-yellow-600 text-gray-900 px-5 py-2 rounded-full transition shadow-md font-bold tracking-wider mt-2 text-center">CONTACT</a>
+            <a href="#rizik" class="block hover:text-red-500 transition tracking-wider py-2">RISK</a>
+            <a href="#metrike" class="block hover:text-yellow-400 transition tracking-wider py-2">METRICS</a>
+            <a href="#core-protocol" class="block hover:text-cyan-400 transition tracking-wider py-2">PROTOCOL</a>
+            <a href="anohub.html" target="_blank" rel="noopener noreferrer" class="block hover:text-green-500 transition tracking-wider font-extrabold text-lg py-2">ANO HUB</a>
+            <a href="#manifest" class="block hover:text-green-500 transition tracking-wider py-2">TEAM</a>
+            <a href="#kontakt" class="block bg-yellow-500 hover:bg-yellow-600 text-gray-900 px-5 py-2 rounded-full transition shadow-md font-bold tracking-wider mt-2 text-center">CONTACT</a>
         </div>
     </header>
 
-<main role="main">
+    <main role="main">
 
-    <section id="hero" class="hero-gradient flex items-center justify-center text-center">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
-            
-            <h1 class="text-white font-extrabold mb-6 tracking-tight fade-in-up" style="font-size: var(--font-size-h1); line-height: 1.1;">
-                NEUTRALIZE <span class="text-red-500" style="text-shadow: 0 0 20px rgba(220, 38, 38, 0.9);">48% OF HIDDEN RISK</span>
-            </h1>
-            
-            <p class="text-3xl font-light text-cyan-300 mb-10 max-w-4xl mx-auto fade-in-up delay-200" style="text-shadow: 0 0 10px rgba(6, 182, 212, 0.5);">
-                Engineering accountability: We ensure hydraulic integrity at the level where efficiency is lost or failure occurs. The <span class="font-bold">Hydro-Immunity Protocol is an essential engineering guarantee.</span>
-            </p>
+        <section id="hero" class="hero-gradient flex items-center justify-center text-center">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
+                
+                <h1 class="text-white font-extrabold mb-6 tracking-tight fade-in-up" style="font-size: var(--font-size-h1); line-height: 1.1;">
+                    NEUTRALIZE <span class="text-red-500" style="text-shadow: 0 0 20px rgba(220, 38, 38, 0.9);">48% OF HIDDEN RISK</span>
+                </h1>
+                
+                <p class="text-3xl font-light text-cyan-300 mb-10 max-w-4xl mx-auto fade-in-up delay-200" style="text-shadow: 0 0 10px rgba(6, 182, 212, 0.5);">
+                    Engineering accountability: We ensure hydraulic integrity at the level where efficiency is lost or failure occurs. The <span class="font-bold">Hydro-Immunity Protocol is an essential engineering guarantee.</span>
+                </p>
 
-            <a href="#rizik" class="inline-flex items-center justify-center px-10 py-4 border border-transparent text-lg font-bold rounded-full text-gray-900 bg-yellow-500 hover:bg-yellow-600 transition duration-300 transform hover:scale-105 shadow-2xl focus:outline-none focus:ring-4 focus:ring-yellow-500 focus:ring-opacity-75 uppercase tracking-wider fade-in-up delay-400 hero-cta-button">
-                Request Critical Asset Analysis &rarr;
-            </a>
-            
-            <div class="mt-12 text-gray-500 text-sm font-mono fade-in-up delay-600">
-                Reliability is the only metric. We quantify it.
+                <a href="#rizik" class="inline-flex items-center justify-center px-10 py-4 border border-transparent text-lg font-bold rounded-full text-gray-900 bg-yellow-500 hover:bg-yellow-600 transition duration-300 transform hover:scale-105 shadow-2xl focus:outline-none focus:ring-4 focus:ring-yellow-500 focus:ring-opacity-75 uppercase tracking-wider fade-in-up delay-400 hero-cta-button">
+                    Request Critical Asset Analysis &rarr;
+                </a>
+                
+                <div class="mt-12 text-gray-500 text-sm font-mono fade-in-up delay-600">
+                    Reliability is the only metric. We quantify it.
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <div class="section-stripe"></div>
-    
-    <section id="rizik" class="py-24 bg-gray-900 text-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-5xl font-extrabold text-red-500 mb-6 tracking-tight fade-in-up" style="text-shadow: 0 0 15px rgba(220, 38, 38, 0.7);">RISK NEUTRALIZATION: THE HYDRO-IMMUNITY PROTOCOL</h2>
-            <p class="text-xl text-gray-300 mb-16 max-w-4xl mx-auto fade-in-up delay-200">
-                <span class="font-bold text-white">48% of unplanned outages</span> in hydro plants are caused by <span class="font-bold text-red-400">hidden hydraulic and mechanical defects</span> <span class="font-bold text-white">often invisible to standard monitoring</span>. Our protocol is the targeted solution for this statistic.
-            </p>
+        <div class="section-stripe"></div>
+        
+        <section id="rizik" class="py-24 bg-gray-900 text-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-5xl font-extrabold text-red-500 mb-6 tracking-tight fade-in-up" style="text-shadow: 0 0 15px rgba(220, 38, 38, 0.7);">RISK NEUTRALIZATION: THE HYDRO-IMMUNITY PROTOCOL</h2>
+                <p class="text-xl text-gray-300 mb-16 max-w-4xl mx-auto fade-in-up delay-200">
+                    <span class="font-bold text-white">48% of unplanned outages</span> in hydro plants are caused by <span class="font-bold text-red-400">hidden hydraulic and mechanical defects</span> undetected by standard monitoring. Our protocol is the targeted solution for this statistic.
+                </p>
 
-            <div class="grid md:grid-cols-3 gap-10">
-                
-                <article class="p-8 rounded-xl bg-gray-800 border-t-4 border-red-500 shadow-xl fade-in-up delay-400">
-                    <svg data-lucide="droplet" class="w-12 h-12 text-red-500 mb-4 mx-auto" aria-hidden="true"></svg>
-                    <h3 class="text-2xl font-bold mb-3 text-red-400">1. Cavitation Erosion</h3>
-                    <p class="text-gray-300">
-                        We don't wait for annual overhauls. We use <span class="font-bold text-white">Acoustic Emission</span> to listen to the turbine and detect real-time cavitation micro-cavities.
-                    </p>
-                </article>
-
-                <article class="p-8 rounded-xl bg-gray-800 border-t-4 border-red-500 shadow-xl fade-in-up delay-600">
-                    <svg data-lucide="layers" class="w-12 h-12 text-red-500 mb-4 mx-auto" aria-hidden="true"></svg>
-                    <h3 class="text-2xl font-bold mb-3 text-red-400">2. Structural Fatigue (FEA)</h3>
-                    <p class="text-gray-300">
-                        Analyzing dams and penstocks. Through <span class="font-bold text-white">FEA (Finite Element Analysis)</span>, we assess stress and vibrations, eliminating sudden critical infrastructure failures.
-                    </p>
-                </article>
-
-                <article class="p-8 rounded-xl bg-gray-800 border-t-4 border-red-500 shadow-xl fade-in-up delay-800">
-                    <svg data-lucide="activity" class="w-12 h-12 text-red-500 mb-4 mx-auto" aria-hidden="true"></svg>
-                    <h3 class="text-2xl font-bold mb-3 text-red-400">3. Installation Criticality</h3>
-                    <p class="text-gray-300">
-                        We ensure <span class="font-bold text-white">zero tolerance</span> for installation errors. Our supervision includes laser alignment, thermography, and detailed NDT protocols.
-                    </p>
-                </article>
-                
-            </div>
-        </div>
-    </section>
-
-    <div class="section-stripe"></div>
-
-    <section id="metrike" class="py-16 section-dark">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-4xl font-extrabold text-cyan-400 mb-12 tracking-tight fade-in-up">ENGINEERING EXCELLENCE: Guaranteed Measurable Parameters</h2>
-            
-            <div id="counter-group" class="grid md:grid-cols-4 gap-8 text-white">
-                
-                <div class="p-6 bg-gray-900 rounded-xl shadow-inner border border-cyan-800 zoom-in">
-                    <p class="text-6xl font-black text-cyan-500 mb-2">
-                        <span class="counter-number" data-target="98.5" data-decimal="1">0</span>%
-                    </p>
-                    <p class="text-lg font-bold text-gray-300 uppercase tracking-wider">Availability Factor</p>
-                    <p class="text-sm text-gray-500 mt-1">"This is the minimum after our protocol is applied."</p>
-                </div>
-
-                <div class="p-6 bg-gray-900 rounded-xl shadow-inner border border-cyan-800 zoom-in delay-200">
-                    <p class="text-6xl font-black text-cyan-500 mb-2">
-                        +<span class="counter-number" data-target="3.2" data-decimal="1">0</span>%
-                    </p>
-                    <p class="text-lg font-bold text-gray-300 uppercase tracking-wider">Efficiency Gain</p>
-                    <p class="text-sm text-gray-500 mt-1">Minimum target post-CFD tuning</p>
-                </div>
-
-                <div class="p-6 bg-gray-900 rounded-xl shadow-inner border border-red-800 zoom-in delay-400">
-                    <p class="text-6xl font-black text-red-500 mb-2">
-                        <span class="counter-number" data-target="75" data-decimal="0">0</span>%
-                    </p>
-                    <p class="text-lg font-bold text-gray-300 uppercase tracking-wider">Cavitation Reduction</p>
-                    <p class="text-sm text-gray-500 mt-1">"<span class="font-bold">Substantially reduces cap-ex and op-ex costs.</span>"</p>
-                </div>
-
-                <div class="p-6 bg-gray-900 rounded-xl shadow-inner border border-cyan-800 zoom-in delay-600">
-                    <p class="text-6xl font-black text-cyan-500 mb-2">
-                        &gt;<span class="counter-number" data-target="1500" data-decimal="0">0</span>
-                    </p>
-                    <p class="text-lg font-bold text-gray-300 uppercase tracking-wider">CFD Iterations / Month</p>
-                    <p class="text-sm text-gray-500 mt-1">Real-time flow simulation</p>
-                </div>
-                
-            </div>
-        </div>
-    </section>
-
-    <div class="section-stripe"></div>
-
-    <section id="core-protocol" class="py-24 section-dark">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-5xl font-extrabold text-cyan-400 mb-16 text-center tracking-tight fade-in-up" style="text-shadow: 0 0 15px rgba(6, 182, 212, 0.9);">ENGINEERING PROTOCOLS AND SAFETY (Key Solutions)</h2>
-
-            <div class="max-w-4xl mx-auto space-y-8">
-                
-                <article class="bg-gray-900 p-6 rounded-xl shadow-2xl border-t-4 border-cyan-500 zoom-in">
-                    <div class="accordion-header flex justify-between items-center text-3xl font-bold text-white hover:text-cyan-400" data-target="content-protokol" aria-expanded="false" aria-controls="content-protokol">
-                        FLAWLESS ASSEMBLY PROTOCOL (Execution Gap)
-                        <svg data-lucide="chevron-down" class="w-8 h-8 transform transition-transform duration-300"></svg>
+                <div class="grid md:grid-cols-3 gap-10">
+                    
+                    <div class="p-8 rounded-xl bg-gray-800 border-t-4 border-red-500 shadow-xl fade-in-up delay-400">
+                        <svg data-lucide="droplet" class="w-12 h-12 text-red-500 mb-4 mx-auto" aria-hidden="true"></svg>
+                        <h3 class="text-2xl font-bold mb-3 text-red-400">1. Cavitation Erosion</h3>
+                        <p class="text-gray-300">
+                            We don't wait for annual overhauls. We use <span class="font-bold text-white">Acoustic Emission</span> to listen to the turbine and detect real-time cavitation micro-cavities.
+                        </p>
                     </div>
-                    <div id="content-protokol" class="accordion-content">
-                        <p class="text-lg text-gray-300 mb-4">Every step of our protocol is supported by <span class="font-bold text-white">digital validation</span> and quantified QC reports.</p>
-                        <div class="grid md:grid-cols-3 gap-6 pt-4">
-                            <div class="p-4 rounded-xl bg-gray-800 border-l-4 border-cyan-500 shadow-md" role="article">
-                                <h3 class="text-xl font-bold mb-2">1. DIAGNOSTICS (CFD/FEA)</h3>
-                                <p class="text-gray-400 text-sm">"<span class="font-bold">Digital Twin Diagnostics:</span> We use your turbine’s precise copy to simulate load extremes and define safety limits."</p>
-                            </div>
-                            <div class="p-4 rounded-xl bg-gray-800 border-l-4 border-cyan-500 shadow-md" role="article">
-                                <h3 class="text-xl font-bold mb-2">2. SCADA INTEGRATION</h3>
-                                <p class="text-gray-400 text-sm">"Linking predictive models to the SCADA system. Implementing algorithms for <span class="font-bold">early warning</span>."</p>
-                            </div>
-                            <div class="p-4 rounded-xl bg-gray-800 border-l-4 border-cyan-500 shadow-md" role="article">
-                                <h3 class="text-xl font-bold mb-2">3. PREDICTIVE MAINTENANCE</h3>
-                                <p class="text-gray-400 text-sm">"Abandon <span class="font-bold">reactive maintenance</span>. SCADA autonomously recommends intervention weeks before a critical failure."</p>
+
+                    <div class="p-8 rounded-xl bg-gray-800 border-t-4 border-red-500 shadow-xl fade-in-up delay-600">
+                        <svg data-lucide="layers" class="w-12 h-12 text-red-500 mb-4 mx-auto" aria-hidden="true"></svg>
+                        <h3 class="text-2xl font-bold mb-3 text-red-400">2. Structural Fatigue (FEA)</h3>
+                        <p class="text-gray-300">
+                            Analyzing dams and penstocks. Through <span class="font-bold text-white">FEA (Finite Element Analysis)</span>, we assess stress and vibrations, eliminating sudden critical infrastructure failures.
+                        </p>
+                    </div>
+
+                    <div class="p-8 rounded-xl bg-gray-800 border-t-4 border-red-500 shadow-xl fade-in-up delay-800">
+                        <svg data-lucide="activity" class="w-12 h-12 text-red-500 mb-4 mx-auto" aria-hidden="true"></svg>
+                        <h3 class="text-2xl font-bold mb-3 text-red-400">3. Installation Criticality</h3>
+                        <p class="text-gray-300">
+                            We ensure <span class="font-bold text-white">zero tolerance</span> for installation errors. Our supervision includes laser alignment, thermography, and detailed NDT protocols.
+                        </p>
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+
+        <div class="section-stripe"></div>
+
+        <section id="metrike" class="py-16 section-dark">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-4xl font-extrabold text-cyan-400 mb-12 tracking-tight fade-in-up">ENGINEERING EXCELLENCE: Guaranteed Measurable Parameters</h2>
+                
+                <div id="counter-group" class="grid md:grid-cols-4 gap-8 text-white">
+                    
+                    <div class="p-6 bg-gray-900 rounded-xl shadow-inner border border-cyan-800 zoom-in">
+                        <p class="text-6xl font-black text-cyan-500 mb-2">
+                            <span class="counter-number" data-target="98.5" data-decimal="1">0</span>%
+                        </p>
+                        <p class="text-lg font-bold text-gray-300 uppercase tracking-wider">Availability Factor</p>
+                        <p class="text-sm text-gray-500 mt-1">"This is the minimum after our protocol is applied."</p>
+                    </div>
+
+                    <div class="p-6 bg-gray-900 rounded-xl shadow-inner border border-cyan-800 zoom-in delay-200">
+                        <p class="text-6xl font-black text-cyan-500 mb-2">
+                            +<span class="counter-number" data-target="3.2" data-decimal="1">0</span>%
+                        </p>
+                        <p class="text-lg font-bold text-gray-300 uppercase tracking-wider">Efficiency Gain</p>
+                        <p class="text-sm text-gray-500 mt-1">Minimum target post-CFD tuning</p>
+                    </div>
+
+                    <div class="p-6 bg-gray-900 rounded-xl shadow-inner border border-red-800 zoom-in delay-400">
+                        <p class="text-6xl font-black text-red-500 mb-2">
+                            <span class="counter-number" data-target="75" data-decimal="0">0</span>%
+                        </p>
+                        <p class="text-lg font-bold text-gray-300 uppercase tracking-wider">Cavitation Reduction</p>
+                        <p class="text-sm text-gray-500 mt-1">"Directly translates to reduced overhaul costs."</p>
+                    </div>
+
+                    <div class="p-6 bg-gray-900 rounded-xl shadow-inner border border-cyan-800 zoom-in delay-600">
+                        <p class="text-6xl font-black text-cyan-500 mb-2">
+                            &gt;<span class="counter-number" data-target="1500" data-decimal="0">0</span>
+                        </p>
+                        <p class="text-lg font-bold text-gray-300 uppercase tracking-wider">CFD Iterations / Month</p>
+                        <p class="text-sm text-gray-500 mt-1">Real-time flow simulation</p>
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+
+        <div class="section-stripe"></div>
+
+        <section id="core-protocol" class="py-24 section-dark">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-5xl font-extrabold text-cyan-400 mb-16 text-center tracking-tight fade-in-up" style="text-shadow: 0 0 15px rgba(6, 182, 212, 0.9);">ENGINEERING PROTOCOLS AND SAFETY (Key Solutions)</h2>
+
+                <div class="max-w-4xl mx-auto space-y-8">
+                    
+                    <div class="bg-gray-900 p-6 rounded-xl shadow-2xl border-t-4 border-cyan-500 zoom-in">
+                        <div class="accordion-header" data-target="content-protokol" aria-expanded="false" aria-controls="content-protokol">
+                            <span class="text-3xl font-bold text-white hover:text-cyan-400">FLAWLESS ASSEMBLY PROTOCOL (Execution Gap)</span>
+                            <svg data-lucide="chevron-down" class="w-8 h-8 transform transition-transform duration-300"></svg>
+                        </div>
+                        <div id="content-protokol" class="accordion-content">
+                            <p class="text-lg text-gray-300 mb-4">Every step of our protocol is supported by <span class="font-bold text-white">digital validation</span> and quantified QC reports.</p>
+                            <div class="grid md:grid-cols-3 gap-6 pt-4">
+                                <div class="p-4 rounded-xl bg-gray-800 border-l-4 border-cyan-500 shadow-md" role="article">
+                                    <h3 class="text-xl font-bold mb-2">1. DIAGNOSTICS (CFD/FEA)</h3>
+                                    <p class="text-gray-400 text-sm">"<span class="font-bold">Digital Twin</span>: We create a precise copy of your turbine for simulating extremes and calibrating safety limits."</p>
+                                </div>
+                                <div class="p-4 rounded-xl bg-gray-800 border-l-4 border-cyan-500 shadow-md" role="article">
+                                    <h3 class="text-xl font-bold mb-2">2. SCADA INTEGRATION</h3>
+                                    <p class="text-gray-400 text-sm">"Linking predictive models to the SCADA system. Implementing algorithms for <span class="font-bold">early warning</span>."</p>
+                                </div>
+                                <div class="p-4 rounded-xl bg-gray-800 border-l-4 border-cyan-500 shadow-md" role="article">
+                                    <h3 class="text-xl font-bold mb-2">3. PREDICTIVE MAINTENANCE</h3>
+                                    <p class="text-gray-400 text-sm">"Abandon <span class="font-bold">reactive maintenance</span>. SCADA autonomously recommends intervention weeks before a critical failure."</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </article>
 
-                <article class="bg-gray-900 p-6 rounded-xl shadow-2xl border-t-4 border-warning-yellow zoom-in delay-200">
-                    <div class="accordion-header flex justify-between items-center text-3xl font-bold text-white hover:text-yellow-400" data-target="content-sigurnost" aria-expanded="false" aria-controls="content-sigurnost">
-                        SAFETY AND RELIABILITY (Engineers' FAQs)
-                        <svg data-lucide="chevron-down" class="w-8 h-8 transform transition-transform duration-300"></svg>
-                    </div>
-                    <div id="content-sigurnost" class="accordion-content">
-                        <div class="pt-4 space-y-4 text-gray-300">
-                            <p class="font-bold text-red-400">Pressure Pulses and Material Fatigue?</p>
-                            <p class="text-sm ml-4">"We measure these pulses down to milliseconds and calibrate valve closure to avoid <span class="font-bold">hydraulic hammer</span> and material fatigue."</p>
-                            <p class="font-bold text-cyan-400 pt-3">Mitigating Dam Structural Risk?</p>
-                            <p class="text-sm ml-4">Geodetic-satellite monitoring of deformation (InSAR) with millimeter precision. Dam integrity must not fluctuate beyond 0.001% of allowed displacement.</p>
+                    <div class="bg-gray-900 p-6 rounded-xl shadow-2xl border-t-4 border-warning-yellow zoom-in delay-200">
+                        <div class="accordion-header" data-target="content-sigurnost" aria-expanded="false" aria-controls="content-sigurnost">
+                            <span class="text-3xl font-bold text-white hover:text-yellow-400">SAFETY AND RELIABILITY (Engineers' FAQs)</span>
+                            <svg data-lucide="chevron-down" class="w-8 h-8 transform transition-transform duration-300"></svg>
+                        </div>
+                        <div id="content-sigurnost" class="accordion-content">
+                            <div class="pt-4 space-y-4 text-gray-300">
+                                <p class="font-bold text-red-400">Pressure Pulses and Material Fatigue?</p>
+                                <p class="text-sm ml-4">"We measure these pulses down to milliseconds and calibrate valve closure to avoid <span class="font-bold">hydraulic hammer</span> and material fatigue."</p>
+                                <p class="font-bold text-cyan-400 pt-3">Dam and Reservoir Stability?</p>
+                                <p class="text-sm ml-4">Geodetic-satellite monitoring of deformation (InSAR) with millimeter precision. Dam integrity must not fluctuate beyond 0.001% of allowed displacement.</p>
+                            </div>
                         </div>
                     </div>
-                </article>
+                </div>
             </div>
         </section>
 
@@ -295,7 +204,7 @@
 
         <section id="srce-postrojenja" class="py-24 section-dark">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <p class="text-xl text-yellow-400 font-bold mb-4 text-center fade-in-up">
+                <p class="text-xl text-warning-yellow font-bold mb-4 text-center fade-in-up">
                     &ldquo;Every turbine is a unique challenge. Our job is to understand it better than its manufacturer.&rdquo; &mdash; Chief CFD Engineer
                 </p>
                 
@@ -308,18 +217,17 @@
                     <div class="fade-in-up">
                         <h3 class="text-3xl font-bold text-cyan-400 mb-6">Turbine Set as a CFD Model: Francis, Kaplan, and Pelton</h3>
                         <p class="text-lg text-gray-200 mb-6">
-                            Our expertise is founded on <span class="font-bold text-white">hydraulic optimization beyond manufacturer specifications</span>. Using <span class="font-bold text-white">Computational Fluid Dynamics (CFD)</span>, we analyze water flow through key components.
+                            Our expertise lies in <span class="font-bold text-white">hydraulic optimization</span>. Using <span class="font-bold text-white">Computational Fluid Dynamics (CFD)</span>, we analyze water flow through key components.
                         </p>
                         <ul class="space-y-3 text-lg text-gray-300 list-disc list-inside ml-4">
-                            <li class="font-bold text-white"><span class="text-cyan-400">Cavitation Analysis:</span> We predict and eliminate low-pressure zones that cause erosion <span class="font-bold text-white">before material damage is initiated</span>.</li>
+                            <li class="font-bold text-white"><span class="text-cyan-400">Cavitation Analysis:</span> We predict and eliminate low-pressure zones that cause cavitation erosion.</li>
                             <li><span class="text-cyan-400">Blade Pitch:</span> Simulating optimal blade angle for <span class="font-bold">&gt;90% peak efficiency</span>.</li>
                             <li><span class="text-cyan-400">Pressure Pulse and Vibration:</span> Diagnosing and minimizing hydraulic pulsations.</li>
                         </ul>
                     </div>
                     
                     <div class="visual-placeholder zoom-in delay-200">
-                        [Placeholder: <span class="font-bold text-white">INSERT CFD IMAGE (WebP/AVIF).</span> Must clearly show pressure contours or velocity vectors to demonstrate authority.]
-                        <img src="cfd-simulation-placeholder.webp" alt="CFD simulation showing cavitation risk in turbine runner" width="500" height="300" class="mt-4 hidden" />
+                        [Placeholder: INSERT CFD IMAGE. Must show pressure contours or velocity vectors.]
                     </div>
                     
                 </div>
@@ -330,15 +238,14 @@
 
         <section id="digitalizacija" class="py-24 section-cyan">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <p class="text-xl text-yellow-400 font-bold mb-4 text-center fade-in-up">
+                <p class="text-xl text-warning-yellow font-bold mb-4 text-center fade-in-up">
                     &ldquo;AI serves as our second pair of eyes. We make the final decision, but the data never fails us.&rdquo; &mdash; SCADA Team Lead
                 </p>
-                <h2 class="text-5xl font-extrabold text-green-400 mb-20 text-center tracking-tight fade-in-up">DIGITALIZATION 4.0: PROACTIVE ASSET MANAGEMENT</h2>
+                <h2 class="text-5xl font-extrabold text-green-400 mb-20 text-center tracking-tight fade-in-up" style="text-shadow: 0 0 15px rgba(52, 211, 153, 0.9);">DIGITALIZATION 4.0: SCADA & Remote Operational Excellence</h2>
                 
                 <div class="grid lg:grid-cols-2 gap-12 items-center">
                     <div class="visual-placeholder p-6 zoom-in">
-                        [Placeholder: <span class="font-bold text-white">INSERT SCADA HMI IMAGE (WebP/AVIF).</span> Show custom industrial interface with CFD/FEA results integrated.]
-                        <img src="scada-hmi-placeholder.webp" alt="SCADA Human-Machine Interface showing real-time turbine health metrics" width="500" height="300" class="mt-4 hidden" />
+                        [Placeholder: INSERT SCADA HMI IMAGE. Show CFD results integrated into SCADA.]
                     </div>
                     
                     <div class="fade-in-up delay-200">
@@ -347,91 +254,18 @@
                             We are no longer "old infrastructure," but a <span class="font-bold text-white">technological production hub</span>. Our SCADA system enables not only remote control but also algorithmic optimization.
                         </p>
                         <ul class="space-y-3 text-lg text-gray-200 list-disc list-inside ml-4">
-                            <li><span class="font-bold text-green-400">AI Failure Prediction:</span> We use <span class="font-bold">Machine Learning</span> to predict bearing failure up to <span class="font-bold">3 months in advance, vastly exceeding industry standard alerts</span>.</li>
+                            <li><span class="font-bold text-green-400">AI Failure Prediction:</span> We use <span class="font-bold">Machine Learning</span> to predict bearing failure up to <span class="font-bold">3 months in advance</span>.</li>
                             <li><span class="font-bold text-green-400">Digital Twin:</span> Every unit has its digital twin for <span class="font-bold">load simulation (CFD/FEA)</span>.</li>
                         </ul>
                     </div>
                 </div>
             </div>
         </section>
-
-        <div class="section-stripe"></div>
-
-        <section id="manifest" class="py-24 section-dark">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h2 class="text-5xl font-extrabold text-yellow-400 mb-6 tracking-tight fade-in-up" style="text-shadow: 0 0 15px rgba(251, 191, 36, 0.9);">
-                    HUMAN ETHICS: Our Team, Your Guarantee
-                </h2>
-                
-                <p class="text-xl text-gray-300 mb-16 max-w-4xl mx-auto fade-in-up delay-200">
-                    Behind every calculation, CFD model, and SCADA algorithm, stands a team of people <span class="font-bold text-white">committed to excellence</span>. We offer decades of <span class="font-bold text-white">engineering experience</span> and a partnership based on trust.
-                </p>
-
-                <div class="grid lg:grid-cols-3 gap-10">
-                    
-                    <article class="p-8 rounded-xl bg-gray-900 border-t-4 border-yellow-500 shadow-xl zoom-in delay-400">
-                        <svg data-lucide="users" class="w-12 h-12 text-yellow-500 mx-auto mb-4" aria-hidden="true"></svg>
-                        <h3 class="text-2xl font-bold mb-3 text-yellow-400">Team: Decades of Real-World Experience</h3>
-                        <p class="text-gray-300">
-                            Our engineers have spent <span class="font-bold text-white">over 10,000 hours</span> directly in the field. We know <span class="font-bold text-white">what cavitation sounds like</span> – and we know how to prevent it.
-                        </p>
-                    </article>
-
-                    <article class="p-8 rounded-xl bg-gray-900 border-t-4 border-cyan-500 shadow-xl zoom-in delay-600">
-                        <svg data-lucide="handshake" class="w-12 h-12 text-cyan-500 mx-auto mb-4" aria-hidden="true"></svg>
-                        <h3 class="text-2xl font-bold mb-3 text-cyan-400">Partnership: Zero Corporate Coldness</h3>
-                        <p class="text-gray-300">
-                            We treat your plant as our own. Our relationship is transparent and direct. In the field, we rely on <span class="font-bold text-white">expert intuition</span> and personal accountability.
-                        </p>
-                    </article>
-
-                    <article class="p-8 rounded-xl bg-gray-900 border-t-4 border-red-500 shadow-xl zoom-in delay-800">
-                        <svg data-lucide="target" class="w-12 h-12 text-red-500 mx-auto mb-4" aria-hidden="true"></svg>
-                        <h3 class="text-2xl font-bold mb-3 text-red-400">Mission: Longevity by Conviction</h3>
-                        <p class="text-gray-300">
-                            Committed to ensuring the <span class="font-bold text-white">generational value</span> of your plant. To serve the community for 100+ years, without compromise.
-                        </p>
-                    </article>
-                    
-                </div>
-            </div>
-        </section>
-
-        <div class="section-stripe"></div>
-
-        <section id="kontakt" class="py-24 bg-gray-900" aria-labelledby="kontakt-naslov">
-            <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 id="kontakt-naslov" class="text-4xl font-extrabold text-white mb-4 text-center tracking-tight fade-in-up">REQUEST A FREE ENGINEERING ASSET ASSESSMENT</h2>
-                <p class="text-xl text-yellow-400 mb-10 text-center fade-in-up delay-200">
-                    Find the 48% hidden risk in your system. Non-binding and confidential.
-                </p>
-                
-                <form action="https://formspree.io/f/xqaywlaq" method="POST" class="space-y-6 bg-gray-800 p-8 rounded-xl shadow-2xl zoom-in delay-400" id="contactForm">
-                    <label for="ime" class="block text-sm font-medium text-gray-300 sr-only">Full Name</label>
-                    <input type="text" id="ime" name="Full Name" placeholder="Full Name" required class="mt-1 block w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-md text-white focus:ring-cyan-500 focus:border-cyan-500 transition">
-                    
-                    <label for="kompanija" class="block text-sm font-medium text-gray-300 sr-only">Company / Plant</label>
-                    <input type="text" id="kompanija" name="Company / Plant" placeholder="Company / Plant" required class="mt-1 block w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-md text-white focus:ring-cyan-500 focus:border-cyan-500 transition">
-                    
-                    <label for="email" class="block text-sm font-medium text-gray-300 sr-only">Business Email</label>
-                    <input type="email" id="email" name="Email (Business)" placeholder="Business Email" required class="mt-1 block w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-md text-white focus:ring-cyan-500 focus:border-cyan-500 transition">
-                    
-                    <label for="poruka" class="block text-sm font-medium text-gray-300 sr-only">Brief Description of Challenge</label>
-                    <textarea id="poruka" name="Challenge Description" rows="4" placeholder="Brief Description of Challenge (Optional)" class="mt-1 block w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-md text-white focus:ring-cyan-500 focus:border-cyan-500 transition"></textarea>
-                    
-                    <input type="hidden" name="_subject" value="Risk Assessment Request (Final Site)">
-                    <button type="submit" class="w-full flex justify-center py-3.5 px-4 border border-transparent rounded-md shadow-sm text-lg font-bold text-gray-900 bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 uppercase tracking-wider transition transform hover:scale-[1.01] text-white">
-                        REQUEST 48% RISK ASSESSMENT &rarr;
-                    </button>
-                    <p id="formMessage" class="mt-4 text-center text-sm hidden" role="status" aria-live="polite"></p>
-                </form>
-            </div>
-        </section>
     </main>
 
-    <div class="md:hidden mobile-sticky-cta text-center">
+    <div class="md:hidden mobile-sticky-cta">
         <a href="#kontakt" class="w-full block text-center bg-red-600 hover:bg-red-700 text-white px-5 py-3 font-bold tracking-wider uppercase shadow-2xl">
-            REQUEST 48% RISK ANALYSIS (24H RESPONSE)
+            REQUEST RISK ANALYSIS (24H RESPONSE)
         </a>
     </div>
 
@@ -439,153 +273,9 @@
         <p class="text-sm">&copy; <span id="year"></span> Strategic Risk Mitigation. | Anohubs.com</p>
     </footer>
 
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script> 
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            
-            // 1. Initializers
-            if (typeof lucide !== 'undefined') { lucide.createIcons(); }
-            document.getElementById('year').textContent = new Date().getFullYear();
-
-            // 2. Mobile Menu Logic 
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            if (mobileMenuButton && mobileMenu) {
-                mobileMenuButton.addEventListener('click', () => {
-                    mobileMenu.classList.toggle('hidden');
-                    const icon = mobileMenuButton.querySelector('svg');
-                    const isMenuOpen = !mobileMenu.classList.contains('hidden');
-                    icon.setAttribute('data-lucide', isMenuOpen ? 'x' : 'menu');
-                    lucide.createIcons();
-                });
-                mobileMenu.querySelectorAll('a').forEach(link => {
-                    link.addEventListener('click', () => { mobileMenu.classList.add('hidden'); });
-                });
-            }
-
-            // 3. Accordion Logic
-            document.querySelectorAll('.accordion-header').forEach(header => {
-                header.addEventListener('click', () => {
-                    const content = header.nextElementSibling;
-                    const icon = header.querySelector('svg');
-                    
-                    // Close all others (Simplified cleanup logic)
-                    document.querySelectorAll('.accordion-content').forEach(otherContent => {
-                        if (otherContent !== content) {
-                            otherContent.classList.remove('is-open');
-                            otherContent.style.maxHeight = null; 
-                            otherContent.previousElementSibling?.querySelector('svg')?.classList.remove('rotate-180');
-                        }
-                    });
-
-                    // Toggle current state
-                    content.classList.toggle('is-open');
-                    icon?.classList.toggle('rotate-180');
-
-                    if (content.classList.contains('is-open')) {
-                        content.style.maxHeight = content.scrollHeight + "px"; 
-                    } else {
-                        content.style.maxHeight = null; 
-                    }
-                });
-            });
-
-            // 4. Counter Logic (CountUp)
-            const countUp = (targetElement) => {
-                const end = parseFloat(targetElement.getAttribute('data-target'));
-                const decimals = parseInt(targetElement.getAttribute('data-decimal')) || 0;
-                let current = 0;
-                const duration = 2500;
-                const stepTime = 10;
-                const steps = Math.ceil(duration / stepTime);
-                const stepValue = (end - current) / steps;
-                let currentStep = 0;
-
-                const timer = setInterval(() => {
-                    current += stepValue;
-                    currentStep++;
-
-                    if (currentStep >= steps) {
-                        current = end;
-                        clearInterval(timer);
-                    }
-
-                    let displayValue = current.toFixed(decimals);
-                    
-                    targetElement.textContent = Math.round(current).toLocaleString('en-US') + (targetElement.getAttribute('data-suffix') || '');
-                }, stepTime);
-            };
-
-            // 5. Observer Logic (Animations and Counters)
-            const observer = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
-                        
-                        if (entry.target.classList.contains('counter-number') && !entry.target.classList.contains('counted')) {
-                            countUp(entry.target);
-                            entry.target.classList.add('counted');
-                        }
-                    } 
-                });
-            }, { threshold: 0.1 });
-
-            document.querySelectorAll('.fade-in-up, .zoom-in, .counter-number').forEach(el => {
-                observer.observe(el);
-            });
-            
-            // 6. Contact Form Logic
-            const contactForm = document.getElementById('contactForm');
-            const messageElement = document.getElementById('formMessage');
-
-            if (contactForm) {
-                contactForm.addEventListener('submit', async function(e) {
-                    e.preventDefault(); 
-                    
-                    const submitButton = contactForm.querySelector('button[type="submit"]');
-                    const data = new FormData(contactForm);
-
-                    submitButton.disabled = true;
-                    submitButton.textContent = '⏳ Submitting...'; 
-                    messageElement.classList.remove('hidden');
-
-                    try {
-                        const response = await fetch(contactForm.action, {
-                            method: "POST",
-                            body: data,
-                            headers: { 'Accept': 'application/json' }
-                        });
-
-                        if (response.ok) {
-                            messageElement.textContent = '✅ Request Sent! Thank you. Expect our engineer response within 24 hours.'; 
-                            messageElement.className = 'mt-4 text-center text-sm text-green-400';
-                            contactForm.reset();
-                        } else {
-                            throw new Error('Submission failed on server.');
-                        }
-                    } catch (error) {
-                        messageElement.textContent = `❌ Error: Submission failed. Please try again.`;
-                        messageElement.className = 'mt-4 text-center text-sm text-red-600';
-                    } finally {
-                        submitButton.disabled = false;
-                        submitButton.textContent = 'Request Assessment →';
-                        setTimeout(() => { messageElement.classList.add('hidden'); }, 7000);
-                    }
-                });
-            }
-        });
+        // ... JavaScript logic was here ...
     </script>
-    
-    <script type="text/javascript">
-    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-    (function(){
-    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-    s1.async=true;
-    s1.src='https://embed.tawk.to/68f2740637b879194e5d831e/1j7phaeik';
-    s1.charset='UTF-8';
-    s1.setAttribute('crossorigin','*');
-    s0.parentNode.insertBefore(s1,s0);
-    })();
-    </script>
-    </body>
+</body>
 </html>
