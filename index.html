@@ -29,8 +29,7 @@
             overflow-x: hidden; 
             background-color: #0A0A0A; 
             color: #E2E8F0; 
-            /* Suptilna Grid/Hexagon Tekstura */
-            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48ZGVmcz48cGF0dCBpZD0ieGV4LWhlYyI+TDAsMCBMNzUsMCBMNzUsODYuNiBMNjEuMjUsODYuNiBMNTIsNSBMNDIuNzUsODYuNiBMNDI.3NSw1Ni.2IEw1MCw2Ny41IEwxNy41LDcyLjQgTDAsODUuNiBMNDIsODYuNiBMNDI.3NSw4Ni42IEw0Mi43NSwwIEwzMi43NSwwIEw0Mi43NSwwIEw1MCw4LjcgTDQy.3NSw4Ni42IEw2MS4yNSwwIEwxMCwzMCBMNzUsNTkuMiBMNzUsMCBMNTAsMCBMNDI.3NSwwIEw0Mi.3NSww IEw1MCw1Mi41IEwxNy41LDY3LjkgTDAsNzUuNiBaIE01MCwzMCBMNzUuNSw0My4z IEw1MCw1Ni42IEw0Mi.3NSw1Ni.2IEwxNy41LDQzLjcgTDAsNTYuNiBMNDIsODUuNiBMNzUsNzIuNCBMNzUsNTkuMiBMNzUsMCBMNTAsMCBMNDI.3NSwwIEw0Mi43NSww IEw1MCw1Mi41IEwxNy41LDY3LjkgTDAsNzUuNi BaIiBmaWxsPSJub25lIiBzdHJva2U9IiMxNDFFMjEiIHN0cm9rZS1vcGFjaXR5PSIwLjEiIHN0cm9rZS13aWR0aD0iMC41Ii8+PC9kZWZzPjx1c2UgeGxpbms6aHJlZj0iI3hlZC1oZWMiIHg9IjAiIHk9IjAiLz48L3N2Zz>');
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48ZGVmcz48cGF0dCBpZD0ieGV4LWhlYyI+TDAsMCBMNzUsMCBMNzUsODYuNiBMNjEuMjUsODYuNiBMNTIsNSBMNDIuNzUsODYuNiBMNDI.3NSw1Ni.2IEw1MCw2Ny41IEwxNy41LDcyLjQgTDAsODUuNiBMNDIsODYuNiBMNDI.3NSw4Ni.2IEw0Mi43NSwwIEwzMi43NSwwIEw0Mi43NSwwIEw1MCw4LjcgTDQy.3NSw4Ni.2IEw2MS4yNSwwIEwxMCwzMCBMNzUsNTkuMiBMNzUsMCBMNTAsMCBMNDI.3NSwwIEw0Mi.3NSww IEw1MCw1Mi41IEwxNy41LDY3LjkgTDAsNzUuNi BaIE01MCwzMCBMNzUuNSw0My4z IEw1MCw1Ni42IEw0Mi.3NSw1Ni.2IEwxNy41LDQzLjcgTDAsNTYuNiBMNDIsODUuNiBMNzUsNzIuNCBMNzUsNTkuMiBMNzUsMCBMNTAsMCBMNDI.3NSwwIEw0Mi43NSww IEw1MCw1Mi41IEwxNy41LDY3LjkgTDAsNzUuNi BaIiBmaWxsPSJub25lIiBzdHJva2U9IiMxNDFFMjEiIHN0cm9rZS1vcGFjaXR5PSIwLjEiIHN0cm9rZS13aWR0aD0iMC41Ii8+PC9kZWZzPjx1c2UgeGxpbms6aHJlZj0iI3hlZC1oZWMiIHg9IjAiIHk9IjAiLz48L3N2Zz>');
             background-size: 100px 100px; 
             background-attachment: fixed; 
             scroll-behavior: smooth; 
@@ -63,7 +62,7 @@
             cursor: pointer;
             transition: color 0.3s;
         }
-
+        
         /* Brojači/Metrike */
         .counter-box {
             background-color: var(--color-dark);
@@ -73,7 +72,7 @@
         }
         .counter-box:hover {
             transform: translateY(-5px);
-            box-shadow: 0 0 30px rgba(6, 182, 212, 0.8), 0 0 50px rgba(6, 182, 212, 0.5); /* Pojačan sjaj */
+            box-shadow: 0 0 30px rgba(6, 182, 212, 0.8), 0 0 50px rgba(6, 182, 212, 0.5); 
         }
 
         /* Bar grafikon */
@@ -103,11 +102,17 @@
             opacity: 1;
         }
         
-        /* Boje sekcija */
+        /* Sekcije i Kartice */
         .section-dark { background-color: #1A1A1A; }
         .section-cyan { background-color: #0F172A; }
         
-        /* Animacije */
+        /* Finalno poliranje - Oštriji gumbi */
+        .hero-cta-button, #kontakt button, .nav-link:last-child {
+            transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        /* ANIMACIJE */
         .fade-in-up, .zoom-in { transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
         .fade-in-up { opacity: 0; transform: translateY(50px); } 
         .fade-in-up.is-visible { opacity: 1; transform: translateY(0); }
@@ -132,7 +137,13 @@
                 <a href="anohub.html" target="_blank" rel="noopener noreferrer" class="nav-link relative text-green-400 hover:text-green-500 transition tracking-widest font-extrabold text-lg p-2 uppercase">**AnoHUB**</a>
                 <a href="#kontakt" class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 px-6 py-2.5 rounded-full transition transform hover:scale-105 shadow-xl font-bold tracking-wider uppercase text-base">KONTAKT</a>
             </nav>
+            
+            <div class="md:hidden">
+                <button id="mobile-menu-button" aria-label="Otvori meni" type="button" class="p-2 text-white">
+                    <svg data-lucide="menu" class="w-8 h-8"></svg> 
+                </button>
             </div>
+        </div>
         
         <div id="mobile-menu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2 text-center" aria-label="Mobilni navigacijski meni">
             <a href="#metrike" class="block hover:text-yellow-400 transition tracking-wider py-2" onclick="document.getElementById('mobile-menu').classList.add('hidden')">METRIKE</a>
@@ -298,8 +309,39 @@
 
     <div class="section-stripe"></div>
 
+    <section id="manifest" class="py-24 section-cyan">
+        <div class="max-w-5xl mx-auto px-4 text-center">
+            <h2 class="text-4xl md:text-5xl font-black text-yellow-400 mb-8 fade-in-up" style="text-shadow: 0 0 10px rgba(251, 191, 36, 0.7);">TEMELJNA MISIJA: NAŠ INŽENJERSKI MANIFEST</h2>
+            <p class="text-2xl font-light italic text-gray-100 fade-in-up delay-200">
+                "Mi nismo samo proizvođači električne energije. Mi smo **čuvari vodnih resursa**, **jamci energetske stabilnosti** i **partneri u održivom razvoju**. Naša snaga leži u **inženjerskoj preciznosti**, **ekološkoj odgovornosti** i **posvećenosti zajednici**. Voda je naša snaga, pouzdanost je naša misija."
+            </p>
+        </div>
+    </section>
+    
+    <div class="section-stripe"></div>
+
     <section id="kontakt" class="py-24 bg-gray-900" aria-labelledby="kontakt-naslov">
-        </section>
+        <div class="max-w-2xl mx-auto px-4 text-center">
+            <h2 id="kontakt-naslov" class="text-5xl font-extrabold text-white mb-6 fade-in-up">Započnite Strateško Ublažavanje Rizika Odmah</h2>
+            <p class="text-xl text-gray-300 mb-10 fade-in-up delay-200">
+                Ne čekajte. Započnite validaciju rizika i implementirajte <span class="font-bold text-cyan-400">Hydrodynamic Immunity</span> protokol danas. Sve tehničke upite usmjerite na **ino@anohubs.com**.
+            </p>
+            
+            <form id="contactForm" action="https://formspree.io/f/xqaywlaq" method="POST" class="bg-white p-8 rounded-xl shadow-2xl space-y-5" role="form">
+                <input type="text" id="name" name="name" placeholder="Vaše Ime i Prezime" class="w-full p-4 border-2 border-gray-300 rounded-lg focus:ring-cyan-600 focus:border-cyan-600 text-lg transition duration-300" required autocomplete="name" aria-label="Ime i Prezime">
+                <input type="email" id="email" name="email" placeholder="Korporativni Email (Za službeni odgovor)" class="w-full p-4 border-2 border-gray-300 rounded-lg focus:ring-cyan-600 focus:border-cyan-600 text-lg transition duration-300" required autocomplete="email" aria-label="Korporativni Email">
+                <input type="tel" id="phone" name="phone" placeholder="Broj Telefona (Neobavezno)" class="w-full p-4 border-2 border-gray-300 rounded-lg focus:ring-cyan-600 focus:border-cyan-600 text-lg transition duration-300" autocomplete="tel" aria-label="Broj Telefona">
+                <textarea id="message" name="message" rows="5" placeholder="Kratak opis vaše imovine (asset) i prirode problema (Ili pitanje o AnoHUB-u App)" class="w-full p-4 border-2 border-gray-300 rounded-lg focus:ring-cyan-600 focus:border-cyan-600 text-lg transition duration-300" required aria-label="Opis imovine/problema"></textarea>
+                
+                <input type="hidden" name="_subject" value="Upit s Anohubs.com Landing Page"> 
+                
+                <button type="submit" class="w-full bg-cyan-600 text-white py-4 rounded-lg text-xl font-bold hover:bg-cyan-700 transition transform hover:scale-[1.01] shadow-xl shadow-cyan-500/50 tracking-wider uppercase disabled:opacity-50 disabled:cursor-not-allowed" aria-live="polite">
+                    POKRENI INŽENJERSKI ZAHTJEV
+                </button>
+                <p id="formMessage" class="mt-6 text-sm text-gray-600 font-medium" role="status" aria-live="polite"></p>
+            </form>
+        </div>
+    </section>
 
 </main>
 
@@ -336,7 +378,6 @@
                     const isExpanded = header.getAttribute('aria-expanded') === 'true';
                     const icon = header.querySelector('svg');
 
-                    // Zatvori sve otvorene akordeone
                     document.querySelectorAll('.accordion-content.is-open').forEach(openContent => {
                         if (openContent.id !== targetId) {
                             openContent.classList.remove('is-open');
@@ -345,7 +386,6 @@
                         }
                     });
 
-                    // Otvori/Zatvori trenutni
                     if (isExpanded) {
                         content.classList.remove('is-open');
                         header.setAttribute('aria-expanded', 'false');
@@ -359,7 +399,48 @@
             });
 
             // 4. Logika Kontakt Forme
-            // ... (Isti kod za kontakt formu, radi uštede prostora nije ponovljen, ali se podrazumijeva da je tu.) ...
+            const contactForm = document.getElementById('contactForm');
+            const messageElement = document.getElementById('formMessage');
+
+            if (contactForm && messageElement) {
+                contactForm.addEventListener('submit', async function(event) {
+                    event.preventDefault();
+                    
+                    const form = event.target;
+                    const data = new FormData(form);
+                    const submitButton = form.querySelector('button[type="submit"]');
+
+                    submitButton.disabled = true;
+                    submitButton.textContent = '⏳ Šaljem... Molimo pričekajte.'; 
+                    messageElement.textContent = 'Slanje u toku...';
+                    messageElement.className = 'mt-6 text-sm text-gray-400 font-medium'; 
+
+                    try {
+                        const response = await fetch(form.action, {
+                            method: form.method,
+                            body: data,
+                            headers: { 'Accept': 'application/json' }
+                        });
+
+                        if (response.ok) {
+                            messageElement.textContent = '✅ Zahtjev je poslan! Hvala na upitu. Kontaktirat ćemo vas uskoro.'; 
+                            messageElement.className = 'mt-6 text-sm text-green-600 font-bold';
+                            form.reset();
+                        } else {
+                            const errorData = await response.json();
+                            const errorMessage = errorData?.errors?.map(err => err.message).join(', ') || 'Došlo je do nepoznate greške pri slanju.';
+                            throw new Error(errorMessage);
+                        }
+                    } catch (error) {
+                        messageElement.textContent = `❌ Greška: ${error.message}. Molimo pokušajte ponovo ili nas kontaktirajte direktno na ino@anohubs.com.`;
+                        messageElement.className = 'mt-6 text-sm text-red-600 font-bold';
+                    } finally {
+                        submitButton.disabled = false;
+                        submitButton.textContent = 'POKRENI INŽENJERSKI ZAHTJEV';
+                    }
+                });
+            }
+
 
             /* 5. LOGIKA BROJAČA, EFIKASNOSTI I BAR GRAFIKONA (Potpuno implementirana) */
             const countUp = (targetElement, start = 0, duration = 2000) => {
@@ -403,6 +484,7 @@
                 counterObserver.observe(counter);
             });
 
+            // Logika za animaciju kruga (Efikasnost)
             const efficiencyElement = document.getElementById('circle-efficiency');
             const efficiencyDisplay = document.getElementById('efficiency-display');
             
@@ -431,6 +513,7 @@
                 efficiencyObserver.observe(efficiencyElement);
             }
 
+            // Logika za animaciju Bar Grafikona (CO2)
             const chartObserver = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
