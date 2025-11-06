@@ -18,34 +18,30 @@
             --color-primary-cyan: #06B6D4;
             --color-dark: #0F172A;
             --color-warning-yellow: #FACC15;
+            --color-danger-red: #DC2626;
             --font-size-h1: clamp(3rem, 7vw + 1rem, 5.5rem); 
         }
 
         /* GLOBALNI STILOVI (Tamna tema + Grid/Hexagon) */
         body { 
             font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            overflow-x: hidden; 
             background-color: #0A0A0A; 
             color: #E2E8F0; 
-            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48ZGVmcz48cGF0dCBpZD0ieGV4LWhlYyI+TDAsMCBMNzUsMCBMNzUsODYuNiBMNjEuMjUsODYuNiBMNTIsNSBMNDIuNzUsODYuNiBMNDI.3NSw1Ni.2IEw1MCw2Ny41IEwxNy41LDcyLjQgTDAsODUuNiBMNDIsODYuNiBMNDI.3NSw4Ni.2IEw0Mi43NSwwIEwzMi43NSwwIEw0Mi43NSwwIEw1MCw4LjcgTDQy.3NSw4Ni.2IEw2MS4yNSwwIEwxMCwzMCBMNzUsNTkuMiBMNzUsMCBMNTAsMCBMNDI.3NSwwIEw0Mi.3NSww IEw1MCw1Mi.1IEwxNy41LDY3LjkgTDAsNzUuNi BaIE01MCwzMCBMNzUuNSw0My4z IEw1MCw1Ni42IEw0Mi.3NSw1Ni.2IEwxNy41LDQzLjcgTDAsNTYuNiBMNDIsODUuNiBMNzUsNzIuNCBMNzUsNTkuMiBMNzUsMCBMNTAsMCBMNDI.3NSwwIEw0Mi.3NSww IEw1MCw1Mi.1IEwxNy41LDY3LjkgTDAsNzUuNi BaIiBmaWxsPSJub25lIiBzdHJva2U9IiMxNDFFMjEiIHN0cm9rZS1vcGFjaXR5PSIwLjEiIHN0cm9rZS13aWR0aD0iMC41Ii8+PC9kZWZzPjx1c2UgeGxpbms6aHJlZj0iI3hlZC1oZWMiIHg9IjAiIHk9IjAiLz48L3N2Zz>');
-            background-size: 100px 100px; 
             background-attachment: fixed; 
             scroll-behavior: smooth; 
         }
 
-        /* HERO SEKCIJA (Dinamična pozadina) */
+        /* HERO SEKCIJA */
         .hero-gradient {
             background: linear-gradient(180deg, rgba(10, 10, 10, 0.95) 0%, rgba(10, 10, 10, 0.85) 100%);
-            position: relative; 
             min-height: 95vh; 
             clip-path: polygon(0 0, 100% 0, 100% 90%, 50% 100%, 0 90%);
             padding-bottom: 140px; 
-            overflow: hidden; 
+            position: relative;
+            overflow: hidden;
         }
         
-        /* Akordeon (Fiksiran Bug i stil) */
+        /* Akordeon i Sekcije */
         .accordion-content {
             max-height: 0;
             overflow: hidden;
@@ -54,54 +50,15 @@
             padding-bottom: 0;
         }
         .accordion-content.is-open {
-            max-height: 1200px; 
+            max-height: 1200px; /* Dovoljno za sav sadržaj */
             padding-top: 1.5rem;
             padding-bottom: 1.5rem;
         }
-        .accordion-header {
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-        
-        /* Brojači/Metrike */
-        .counter-box {
-            background-color: var(--color-dark);
-            border: 1px solid rgba(6, 182, 212, 0.4);
-            box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
-            transition: all 0.4s;
-        }
-        .counter-box:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 0 30px rgba(6, 182, 212, 0.8), 0 0 50px rgba(6, 182, 212, 0.5); 
-        }
 
-        /* Sekcije i Kartice */
         .section-dark { background-color: #1A1A1A; }
         .section-cyan { background-color: #0F172A; }
         
-        /* Finalno poliranje - Oštriji gumbi */
-        .hero-cta-button, #kontakt button, .nav-link:last-child {
-            transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-        }
-
-        /* Vizualni placeholder za CFD/SCADA */
-        .visual-placeholder {
-            min-height: 250px;
-            background-color: #0F172A;
-            border: 2px solid var(--color-primary-cyan);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            font-style: italic;
-            font-size: 1.25rem;
-            color: #64748b;
-            box-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
-        }
-
-        /* ANIMACIJE */
+        /* ANIMACIJE: Osigurane sve tranzicije */
         .fade-in-up, .zoom-in { transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
         .fade-in-up { opacity: 0; transform: translateY(50px); } 
         .fade-in-up.is-visible { opacity: 1; transform: translateY(0); }
@@ -110,6 +67,40 @@
         .delay-200 { transition-delay: 200ms; }
         .delay-400 { transition-delay: 400ms; }
         .delay-600 { transition-delay: 600ms; }
+        .delay-800 { transition-delay: 800ms; }
+
+        /* KRITIKA POPRAVLJENA: Sticky Mobile CTA (Potreban u produkciji) */
+        @media (max-width: 768px) {
+            .mobile-sticky-cta {
+                display: block;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                z-index: 50;
+                padding: 10px;
+                background-color: rgba(10, 10, 10, 0.95);
+                border-top: 2px solid var(--color-danger-red);
+            }
+        }
+        
+        /* Placeholdere stilizujemo da budu vidljivi */
+        .visual-placeholder {
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            flex-direction: column;
+            background-color: #111827;
+            border: 2px dashed #06B6D4;
+            color: #94A3B8;
+            padding: 20px;
+            border-radius: 12px;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
@@ -119,11 +110,10 @@
             <a href="#hero" class="text-3xl font-black tracking-widest text-cyan-400 focus:outline-none focus:ring-4 focus:ring-cyan-500 focus:ring-opacity-50 transition" aria-label="Hydro-Immunity Logo - Povratak na vrh" aria-current="page">HYDRO-IMMUNITY</a>
             
             <nav class="hidden md:flex items-center space-x-6 font-extrabold text-sm" role="navigation" aria-label="Glavna navigacija">
-                <a href="#metrike" class="nav-link relative text-yellow-400 hover:text-cyan-400 transition tracking-wider p-2 uppercase">METRIKE</a>
                 <a href="#rizik" class="nav-link relative text-red-400 hover:text-red-500 transition tracking-wider p-2 uppercase">RIZIK</a>
-                <a href="#core-protocol" class="nav-link relative text-gray-200 hover:text-cyan-400 transition tracking-wider p-2 uppercase">PROTOKOL</a>
-                <a href="#digitalizacija" class="nav-link relative text-gray-200 hover:text-green-400 transition tracking-wider p-2 uppercase">SCADA</a>
-                <a href="anohub.html" target="_blank" rel="noopener noreferrer" class="nav-link relative text-green-400 hover:text-green-500 transition tracking-widest font-extrabold text-lg p-2 uppercase">AnoHUB</a>
+                <a href="#metrike" class="nav-link relative text-yellow-400 hover:text-cyan-400 transition tracking-wider p-2 uppercase">METRIKE</a>
+                <a href="#protokol" class="nav-link relative text-gray-200 hover:text-cyan-400 transition tracking-wider p-2 uppercase">PROTOKOL</a>
+                <a href="#manifest" class="nav-link relative text-green-400 hover:text-green-500 transition tracking-wider p-2 uppercase">TIM</a>
                 <a href="#kontakt" class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 px-6 py-2.5 rounded-full transition transform hover:scale-105 shadow-xl font-bold tracking-wider uppercase text-base">KONTAKT</a>
             </nav>
             
@@ -135,40 +125,129 @@
         </div>
         
         <div id="mobile-menu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2 text-center" aria-label="Mobilni navigacijski meni">
-            <a href="#metrike" class="block hover:text-yellow-400 transition tracking-wider py-2" onclick="document.getElementById('mobile-menu').classList.add('hidden')">METRIKE</a>
-            <a href="#rizik" class="block hover:text-red-500 transition tracking-wider py-2" onclick="document.getElementById('mobile-menu').classList.add('hidden')">RIZIK</a>
-            <a href="#core-protocol" class="block hover:text-cyan-400 transition tracking-wider py-2" onclick="document.getElementById('mobile-menu').classList.add('hidden')">PROTOKOL</a>
-            <a href="#digitalizacija" class="block hover:text-green-400 transition tracking-wider py-2" onclick="document.getElementById('mobile-menu').classList.add('hidden')">SCADA</a>
-            <a href="anohub.html" target="_blank" rel="noopener noreferrer" class="block hover:text-green-500 transition tracking-wider font-extrabold text-lg py-2" onclick="document.getElementById('mobile-menu').classList.add('hidden')">AnoHUB</a>
-            <a href="#kontakt" class="block bg-yellow-500 hover:bg-yellow-600 text-gray-900 px-5 py-2 rounded-full transition shadow-md font-bold tracking-wider mt-2 text-center" onclick="document.getElementById('mobile-menu').classList.add('hidden')">KONTAKT</a>
+             <a href="#rizik" class="block hover:text-red-500 transition tracking-wider py-2" onclick="document.getElementById('mobile-menu').classList.add('hidden')">RIZIK</a>
+             <a href="#metrike" class="block hover:text-yellow-400 transition tracking-wider py-2" onclick="document.getElementById('mobile-menu').classList.add('hidden')">METRIKE</a>
+             <a href="#protokol" class="block hover:text-cyan-400 transition tracking-wider py-2" onclick="document.getElementById('mobile-menu').classList.add('hidden')">PROTOKOL</a>
+             <a href="#manifest" class="block hover:text-green-500 transition tracking-wider py-2" onclick="document.getElementById('mobile-menu').classList.add('hidden')">TIM</a>
+             <a href="#kontakt" class="block bg-yellow-500 hover:bg-yellow-600 text-gray-900 px-5 py-2 rounded-full transition shadow-md font-bold tracking-wider mt-2 text-center" onclick="document.getElementById('mobile-menu').classList.add('hidden')">KONTAKT</a>
         </div>
     </header>
 
 <main role="main">
 
     <section id="hero" class="hero-gradient flex items-center justify-center text-center">
-        </section>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
+            
+            <h1 class="text-white font-extrabold mb-6 tracking-tight fade-in-up" style="font-size: var(--font-size-h1); line-height: 1.1;">
+                NEUTRALIZIRAJTE <span class="text-red-500" style="text-shadow: 0 0 20px rgba(220, 38, 38, 0.9);">48% SKRIVENOG RIZIKA</span>
+            </h1>
+            
+            <p class="text-3xl font-light text-cyan-300 mb-10 max-w-4xl mx-auto fade-in-up delay-200" style="text-shadow: 0 0 10px rgba(6, 182, 212, 0.5);">
+                Inženjerska odgovornost: Mi osiguravamo hidraulički integritet na nivou gdje se gubi efikasnost ili nastaje kvar. Hydro-Immunity protokol je **neophodna inženjerska garancija**.
+            </p>
+
+            <a href="#kontakt" class="inline-flex items-center justify-center px-10 py-4 border border-transparent text-lg font-bold rounded-full text-gray-900 bg-yellow-500 hover:bg-yellow-600 transition duration-300 transform hover:scale-105 shadow-2xl focus:outline-none focus:ring-4 focus:ring-yellow-500 focus:ring-opacity-75 uppercase tracking-wider fade-in-up delay-400 hero-cta-button">
+                Zatražite Analizu Kritične Imovine &rarr;
+            </a>
+            
+            <div class="mt-12 text-gray-500 text-sm font-mono fade-in-up delay-600">
+                Pouzdanost je jedina metrika. Mi je kvantificiramo.
+            </div>
+        </div>
+    </section>
 
     <div class="section-stripe"></div>
     
-    <section id="metrike" class="py-16 section-dark">
-        </section>
-
-    <div class="section-stripe"></div>
-
     <section id="rizik" class="py-24 bg-gray-900 text-white">
-        </section>
-    
-    <div class="section-divider"></div>
-    
-    <section id="core-protocol" class="py-24 section-dark">
-        </section>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-5xl font-extrabold text-red-500 mb-6 tracking-tight fade-in-up" style="text-shadow: 0 0 15px rgba(220, 38, 38, 0.7);">NEUTRALIZACIJA RIZIKA: HIDRO-IMUNITY PROTOKOL</h2>
+            <p class="text-xl text-gray-300 mb-16 max-w-4xl mx-auto fade-in-up delay-200">
+                **48% neplaniranih zastoja** u hidropostrojenjima uzrokovano je **skrivenim hidrauličkim i mehaničkim defektima**. Naš protokol je ciljano rješenje za ovu statistiku.
+            </p>
 
-    <div class="section-divider inverted"></div>
-    
-    <section id="srce-postrojenja" class="py-24 section-dark">
+            <div class="grid md:grid-cols-3 gap-10">
+                
+                <div class="p-8 rounded-xl bg-gray-800 border-t-4 border-red-500 shadow-xl fade-in-up delay-400">
+                    <svg data-lucide="droplet" class="w-12 h-12 text-red-500 mb-4 mx-auto" aria-hidden="true"></svg>
+                    <h3 class="text-2xl font-bold mb-3 text-red-400">1. Kavitacijska Erozija</h3>
+                    <p class="text-gray-300">
+                        "Ne čekamo godišnji remont da bismo otkrili štetu. Koristimo **Akustičnu Emisiju** za slušanje turbine i detektovanje mikro-šupljina kavitacije u realnom vremenu."
+                    </p>
+                </div>
+
+                <div class="p-8 rounded-xl bg-gray-800 border-t-4 border-red-500 shadow-xl fade-in-up delay-600">
+                    <svg data-lucide="layers" class="w-12 h-12 text-red-500 mb-4 mx-auto" aria-hidden="true"></svg>
+                    <h3 class="text-2xl font-bold mb-3 text-red-400">2. Strukturni Zamor (FEA)</h3>
+                    <p class="text-gray-300">
+                        Analiza stanja brane i čeličnih cjevovoda. Kroz **FEA (Finite Element Analysis)** procjenjujemo naprezanja i vibracije, čime eliminiramo iznenadne kvarove u kritičnoj infrastrukturi.
+                    </p>
+                </div>
+
+                <div class="p-8 rounded-xl bg-gray-800 border-t-4 border-red-500 shadow-xl fade-in-up delay-800">
+                    <svg data-lucide="activity" class="w-12 h-12 text-red-500 mb-4 mx-auto" aria-hidden="true"></svg>
+                    <h3 class="text-2xl font-bold mb-3 text-red-400">3. Montažne Kritičnosti</h3>
+                    <p class="text-gray-300">
+                        Osiguravamo **nultu toleranciju** na greške tokom montaže. Naš nadzor uključuje lasersko poravnanje, termografiju i detaljne NDT protokole.
+                    </p>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <div class="section-stripe"></div>
+
+    <section id="metrike" class="py-16 section-dark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl font-extrabold text-cyan-400 mb-12 tracking-tight fade-in-up">INŽENJERSKA IZVRSNOST: Garancija Mjerljivih Parametara</h2>
+            
+            <div id="counter-group" class="grid md:grid-cols-4 gap-8 text-white">
+                
+                <div class="p-6 bg-gray-900 rounded-xl shadow-inner border border-cyan-800 zoom-in">
+                    <p class="text-6xl font-black text-cyan-500 mb-2">
+                        <span class="counter-number" data-target="98.5" data-decimal="1">0</span>%
+                    </p>
+                    <p class="text-lg font-bold text-gray-300 uppercase tracking-wider">Faktor Raspoloživosti</p>
+                    <p class="text-sm text-gray-500 mt-1">"Ovo je minimum nakon primjene našeg protokola."</p>
+                </div>
+
+                <div class="p-6 bg-gray-900 rounded-xl shadow-inner border border-cyan-800 zoom-in delay-200">
+                    <p class="text-6xl font-black text-cyan-500 mb-2">
+                        +<span class="counter-number" data-target="3.2" data-decimal="1">0</span>%
+                    </p>
+                    <p class="text-lg font-bold text-gray-300 uppercase tracking-wider">Povećanje Efikasnosti</p>
+                    <p class="text-sm text-gray-500 mt-1">Minimalni cilj nakon CFD tuniranja</p>
+                </div>
+
+                <div class="p-6 bg-gray-900 rounded-xl shadow-inner border border-red-800 zoom-in delay-400">
+                    <p class="text-6xl font-black text-red-500 mb-2">
+                        <span class="counter-number" data-target="75" data-decimal="0">0</span>%
+                    </p>
+                    <p class="text-lg font-bold text-gray-300 uppercase tracking-wider">Smanjenje Kavitacije</p>
+                    <p class="text-sm text-gray-500 mt-1">"Direktno prevođenje u smanjene troškove remonta."</p>
+                </div>
+
+                <div class="p-6 bg-gray-900 rounded-xl shadow-inner border border-cyan-800 zoom-in delay-600">
+                    <p class="text-6xl font-black text-cyan-500 mb-2">
+                        ><span class="counter-number" data-target="1500" data-decimal="0">0</span>
+                    </p>
+                    <p class="text-lg font-bold text-gray-300 uppercase tracking-wider">CFD Iteracija / Mjesec</p>
+                    <p class="text-sm text-gray-500 mt-1">Simulacija protoka u realnom vremenu</p>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <div class="section-stripe"></div>
+
+    <section id="srce-postrojenja" class="py-24 section-cyan">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-5xl font-extrabold text-cyan-400 mb-20 text-center tracking-tight fade-in-up">
+             <p class="text-xl text-yellow-400 font-bold mb-4 text-center fade-in-up">
+                &ldquo;Svaka turbina je jedinstven izazov. Naš je posao da je razumijemo bolje nego njen proizvođač.&rdquo; &mdash; Glavni CFD Inženjer
+            </p>
+            
+            <h2 class="text-5xl font-extrabold text-white mb-20 text-center tracking-tight fade-in-up">
                 INŽENJERSKA PRECIZNOST: Optimizacija Hidrauličke Geometrije
             </h2>
             
@@ -180,14 +259,14 @@
                         Naša ekspertiza ne leži u pukoj instalaciji, već u **hidrauličkoj optimizaciji**. Koristeći **Computational Fluid Dynamics (CFD)**, analiziramo protok vode kroz ključne komponente — impeler, difuzor i spiralno kućište.
                     </p>
                     <ul class="space-y-3 text-lg text-gray-300 list-disc list-inside ml-4">
-                        <li class="font-bold text-white">**Kavitacijska Analiza:** Predviđamo i otklanjamo zone niskog pritiska koje uzrokuju kavitacijsku eroziju, čime direktno produžujemo vijek trajanja impelera.</li>
-                        <li class="font-bold text-white">**Ugao Lopatice (Pitch):** Za Kaplan turbine, simuliramo optimalni ugao lopatica pri različitim protocima kako bismo održali **vrhunsku efikasnost (>90%)** u cijelom operativnom rasponu.</li>
-                        <li class="font-bold text-white">**Tlačni Pulz i Vibracije:** Dijagnosticiramo i minimiziramo hidrauličke pulzacije koje dovode do mehaničkog zamora i vibracija.</li>
+                        <li class="font-bold text-white"><span class="text-cyan-400">Kavitacijska Analiza:</span> Predviđamo i otklanjamo zone niskog pritiska koje uzrokuju kavitacijsku eroziju.</li>
+                        <li><span class="text-cyan-400">Ugao Lopatice (Pitch):</span> Simuliramo optimalni ugao lopatica pri različitim protocima za **vrhunsku efikasnost (>90%)**.</li>
+                        <li><span class="text-cyan-400">Tlačni Pulz i Vibracije:</span> Dijagnosticiramo i minimiziramo hidrauličke pulzacije koje dovode do mehaničkog zamora.</li>
                     </ul>
                 </div>
                 
                 <div class="visual-placeholder zoom-in delay-200">
-                    [Placeholder za CFD Simulaciju - Prikaz toka i kavitacijskih zona]
+                    <p>[Placeholder za CFD Simulaciju - Prikaz toka i kavitacijskih zona]</p>
                 </div>
                 
             </div>
@@ -196,27 +275,86 @@
 
     <div class="section-stripe"></div>
     
-    <section id="trajnost-vizija" class="py-24 section-cyan">
-        </section>
+    <section id="protokol" class="py-24 section-dark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-5xl font-extrabold text-cyan-400 mb-16 text-center tracking-tight fade-in-up" style="text-shadow: 0 0 15px rgba(6, 182, 212, 0.9);">INŽENJERSKI PROTOKOLI I SIGURNOST (Ključna Rješenja)</h2>
+
+            <div class="max-w-4xl mx-auto space-y-8">
+                
+                <div class="bg-gray-900 p-6 rounded-xl shadow-2xl border-t-4 border-cyan-500 zoom-in">
+                    <div class="accordion-header flex justify-between items-center text-3xl font-bold text-white hover:text-cyan-400" data-target="content-protokol" aria-expanded="false" aria-controls="content-protokol">
+                        PROTOKOL BESPRIJEKORNE MONTAŽE (Execution Gap)
+                        <svg data-lucide="chevron-down" class="w-8 h-8 transform transition-transform duration-300"></svg>
+                    </div>
+                    <div id="content-protokol" class="accordion-content">
+                        <p class="text-lg text-gray-300 mb-4">Svaki korak našeg protokola je podržan **digitalnom validacijom** i kvantificiranim QC izvještajima.</p>
+                        <div class="grid md:grid-cols-3 gap-6 pt-4">
+                            <div class="p-4 rounded-xl bg-gray-800 border-l-4 border-cyan-500 shadow-md" role="article">
+                                <h3 class="text-xl font-bold mb-2">1. DIJAGNOSTIKA (CFD/FEA)</h3>
+                                <p class="text-gray-400 text-sm">"**Digitalni Blizanac**: Kreiramo preciznu kopiju vaše turbine za simulaciju ekstrema i kalibraciju granica sigurnosti."</p>
+                            </div>
+                            <div class="p-4 rounded-xl bg-gray-800 border-l-4 border-cyan-500 shadow-md" role="article">
+                                <h3 class="text-xl font-bold mb-2">2. SCADA INTEGRACIJA</h3>
+                                <p class="text-gray-400 text-sm">"Povezivanje prediktivnih modela sa SCADA sistemom. Implementacija algoritama za **rano upozorenje**."</p>
+                            </div>
+                            <div class="p-4 rounded-xl bg-gray-800 border-l-4 border-cyan-500 shadow-md" role="article">
+                                <h3 class="text-xl font-bold mb-2">3. PREDIKTIVNO ODRŽAVANJE</h3>
+                                <p class="text-gray-400 text-sm">"**Odbacite reaktivno održavanje**. SCADA autonomno preporučuje intervenciju sedmicama prije kritičnog kvara."</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gray-900 p-6 rounded-xl shadow-2xl border-t-4 border-yellow-500 zoom-in delay-200">
+                    <div class="accordion-header flex justify-between items-center text-3xl font-bold text-white hover:text-yellow-400" data-target="content-sigurnost" aria-expanded="false" aria-controls="content-sigurnost">
+                        SIGURNOST I POVJERENJE (Najčešća Pitanja Inženjera)
+                        <svg data-lucide="chevron-down" class="w-8 h-8 transform transition-transform duration-300"></svg>
+                    </div>
+                    <div id="content-sigurnost" class="accordion-content">
+                        <div class="pt-4 space-y-4 text-gray-300">
+                            <p class="font-bold text-red-400">Tlačni Pulsi i Zamor Materijala?</p>
+                            <p class="text-sm ml-4">"Mjerimo ove pulseve do milisekundi i kalibriramo zatvaranje ventila da bismo izbjegli **hidraulički čekić** i zamor materijala."</p>
+                            <p class="font-bold text-cyan-400 pt-3">Stabilnost brana i akumulacija?</p>
+                            <p class="text-sm ml-4">Geodetsko-satelitsko praćenje deformacija (InSAR) s milimetarskom preciznošću. Integritet brane ne smije fluktuirati izvan 0.001% dopuštenog pomaka.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <div class="section-stripe"></div>
 
-    <section id="digitalizacija" class="py-24 section-dark">
-        </section>
+    <section id="digitalizacija" class="py-24 section-cyan">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+             <p class="text-xl text-yellow-400 font-bold mb-4 text-center fade-in-up">
+                 &ldquo;AI nam služi kao drugi par očiju. Mi donosimo konačnu odluku, ali baza podataka nas nikad ne izda.&rdquo; &mdash; Šef SCADA Tima
+            </p>
+            <h2 class="text-5xl font-extrabold text-green-400 mb-20 text-center tracking-tight fade-in-up" style="text-shadow: 0 0 15px rgba(52, 211, 153, 0.9);">DIGITALIZACIJA 4.0: SCADA & Daljinska Operativna Izvrsnost</h2>
+            
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="visual-placeholder p-6 zoom-in">
+                    <p>[Placeholder za SCADA HMI sliku - Prikaz CFD podataka]</p>
+                    <p class="mt-2 text-xs">REAL-TIME SCADA HMI INTEGRACIJA</p>
+                </div>
+                
+                <div class="fade-in-up delay-200">
+                    <h3 class="text-3xl font-bold text-cyan-400 mb-6">Digitalni Blizanac (Digital Twin) i AI Optimizacija</h3>
+                    <p class="text-xl text-gray-300 mb-6 font-light">
+                        Više nismo "stara" infrastruktura, već **tehnološki centar za proizvodnju**. Naš SCADA sustav omogućuje ne samo daljinsko upravljanje već i algoritamsku optimizaciju.
+                    </p>
+                    <ul class="space-y-3 text-lg text-gray-200 list-disc list-inside ml-4">
+                        <li><span class="font-bold text-green-400">AI Predikcija Kvarova:</span> Koristimo *Machine Learning* na vibracionim podacima za predviđanje zatajenja ležajeva do **3 mjeseca unaprijed**.</li>
+                        <li><span class="font-bold text-green-400">Digitalni Twin:</span> Svaki agregat ima svoj digitalni blizanac za **simulaciju opterećenja (CFD/FEA)**.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <div class="section-stripe"></div>
 
-    <section id="ekologija-zajednica" class="py-24 section-cyan">
-        </section>
-
-    <div class="section-stripe"></div>
-
-    <section id="app-info" class="py-24 section-dark">
-        </section>
-
-    <div class="section-stripe"></div>
-
-    <section id="manifest" class="py-24 section-cyan">
+    <section id="manifest" class="py-24 section-dark">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 class="text-5xl font-extrabold text-yellow-400 mb-6 tracking-tight fade-in-up" style="text-shadow: 0 0 15px rgba(251, 191, 36, 0.9);">
                 LJUDSKA ETIKA: Naš Tim, Vaša Garancija
@@ -240,22 +378,22 @@
                     <svg data-lucide="handshake" class="w-12 h-12 text-cyan-500 mb-4 mx-auto" aria-hidden="true"></svg>
                     <h3 class="text-2xl font-bold mb-3 text-cyan-400">Partnerstvo: Nula Korporativne Hladnoće</h3>
                     <p class="text-gray-300">
-                        Vaše postrojenje tretiramo kao svoje. Naš odnos je transparentan i direktan. Na terenu se ne oslanjamo samo na brojke, već na **stručnu intuiciju** i ličnu odgovornost.
+                        Vaše postrojenje tretiramo kao svoje. Na terenu se ne oslanjamo samo na brojke, već na **stručnu intuiciju** i ličnu odgovornost.
                     </p>
                 </div>
 
-                <div class="p-8 rounded-xl bg-gray-900 border-t-4 border-red-500 shadow-xl zoom-in delay-800">
+                <div class="p-8 rounded-xl bg-gray-900 border-t-4 border-red-50om shadow-xl zoom-in delay-800">
                     <svg data-lucide="target" class="w-12 h-12 text-red-500 mb-4 mx-auto" aria-hidden="true"></svg>
                     <h3 class="text-2xl font-bold mb-3 text-red-400">Misija: Dugovječnost iz Uvjerenja</h3>
                     <p class="text-gray-300">
-                        Naša misija nije samo generisanje profita, već osiguravanje **generacijske vrijednosti** vašeg postrojenja. Posvećeni smo da ono služi zajednici 100+ godina, bez kompromisa.
+                        Posvećeni smo osiguravanju **generacijske vrijednosti** vašeg postrojenja. Da služi zajednici 100+ godina, bez kompromisa.
                     </p>
                 </div>
                 
             </div>
         </div>
     </section>
-    
+
     <div class="section-stripe"></div>
 
     <section id="kontakt" class="py-24 bg-gray-900" aria-labelledby="kontakt-naslov">
@@ -266,32 +404,20 @@
             
             <div class="grid lg:grid-cols-2 gap-12">
                 
-                <form id="contactForm" class="bg-gray-800 p-8 rounded-xl shadow-2xl border border-yellow-500 fade-in-up delay-200" action="https://formspree.io/f/xqaywlaq" method="POST">
+                <form id="contactForm" class="bg-gray-800 p-8 rounded-xl shadow-2xl border border-yellow-500 fade-in-up delay-200" action="/submit-form" method="POST">
                     <p class="text-lg text-gray-300 mb-6">
                         Ostavite nam detalje o vašem postrojenju i kritičnoj imovini. **Garantujemo odgovor stručnjaka u roku od 24 sata.**
                     </p>
                     <div class="space-y-5">
-                        <div>
-                            <label for="ime" class="block text-sm font-medium text-gray-200 mb-1">Puno Ime</label>
-                            <input type="text" id="ime" name="ime" required class="w-full px-4 py-3 rounded-lg bg-gray-700 border-gray-600 text-white focus:ring-cyan-500 focus:border-cyan-500" autocomplete="name">
-                        </div>
-                        <div>
-                            <label for="kompanija" class="block text-sm font-medium text-gray-200 mb-1">Kompanija / Postrojenje</label>
-                            <input type="text" id="kompanija" name="kompanija" required class="w-full px-4 py-3 rounded-lg bg-gray-700 border-gray-600 text-white focus:ring-cyan-500 focus:border-cyan-500">
-                        </div>
-                        <div>
-                            <label for="email" class="block text-sm font-medium text-gray-200 mb-1">E-mail Adresa (Poslovna)</label>
-                            <input type="email" id="email" name="email" required class="w-full px-4 py-3 rounded-lg bg-gray-700 border-gray-600 text-white focus:ring-cyan-500 focus:border-cyan-500" autocomplete="email">
-                        </div>
-                        <div>
-                            <label for="poruka" class="block text-sm font-medium text-gray-200 mb-1">Opis Kritične Imovine / Problema</label>
-                            <textarea id="poruka" name="message" rows="4" required class="w-full px-4 py-3 rounded-lg bg-gray-700 border-gray-600 text-white focus:ring-cyan-500 focus:border-cyan-500"></textarea>
-                        </div>
-                        <input type="hidden" name="_subject" value="Upit od Inženjera (Finalna Verzija)">
-                        <button type="submit" class="w-full bg-yellow-500 hover:bg-yellow-600 text-gray-900 px-6 py-3 rounded-full font-bold tracking-wider uppercase text-lg shadow-xl mt-4 hero-cta-button">
+                        <input type="text" id="ime" name="ime" placeholder="Puno Ime" required class="w-full px-4 py-3 rounded-lg bg-gray-700 border-gray-600 text-white focus:ring-cyan-500 focus:border-cyan-500">
+                        <input type="text" id="kompanija" name="kompanija" placeholder="Kompanija / Postrojenje" required class="w-full px-4 py-3 rounded-lg bg-gray-700 border-gray-600 text-white focus:ring-cyan-500 focus:border-cyan-500">
+                        <input type="email" id="email" name="email" placeholder="E-mail Adresa (Poslovna)" required class="w-full px-4 py-3 rounded-lg bg-gray-700 border-gray-600 text-white focus:ring-cyan-500 focus:border-cyan-500">
+                        <textarea id="poruka" name="poruka" rows="4" placeholder="Opis Kritične Imovine / Problema" required class="w-full px-4 py-3 rounded-lg bg-gray-700 border-gray-600 text-white focus:ring-cyan-500 focus:border-cyan-500"></textarea>
+                        
+                        <button type="submit" class="w-full hero-cta-button bg-yellow-500 hover:bg-yellow-600 text-gray-900 px-6 py-3 rounded-full font-bold tracking-wider uppercase text-lg shadow-xl mt-4">
                             Zatražite Besplatnu Procjenu Rizika
                         </button>
-                        <p id="formMessage" class="mt-4 text-center text-sm text-yellow-400 hidden" role="status" aria-live="polite">Hvala Vam. Vaš zahtjev je poslan našem Glavnom Inženjeru.</p>
+                        <p id="formMessage" class="mt-4 text-center text-sm hidden"></p>
                     </div>
                 </form>
 
@@ -307,10 +433,6 @@
                             <span class="font-bold text-yellow-400 block mb-1">Glavni Inženjer za CFD/FEA</span>
                             <a href="mailto:cfd.expert@anohubs.com" class="text-lg text-white hover:text-cyan-400 transition block">cfd.expert@anohubs.com</a>
                         </p>
-                        <p class="text-gray-300">
-                            <span class="font-bold text-yellow-400 block mb-1">Adresa Ureda (Digitalni Centar)</span>
-                            <span class="text-white block">Tehnička 5, 71000 Sarajevo, BiH</span>
-                        </p>
                     </div>
                     
                     <div class="mt-8 pt-6 border-t border-gray-700">
@@ -319,211 +441,163 @@
                         </p>
                     </div>
                 </div>
-                
             </div>
         </div>
     </section>
 
 </main>
 
-    <footer class="bg-gray-900 text-gray-500 py-8 text-center border-t border-gray-800" role="contentinfo">
-        <p class="text-sm">&copy; <span id="year"></span> Strateško Ublažavanje Rizika. | Anohubs.com</p>
-    </footer>
+<div class="md:hidden mobile-sticky-cta">
+     <a href="#kontakt" class="w-full block text-center bg-red-600 hover:bg-red-700 text-white px-5 py-3 rounded-lg font-bold tracking-wider uppercase shadow-2xl">
+        NEUTRALIZIRAJTE RIZIK (Kontakt)
+    </a>
+</div>
 
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            lucide.createIcons();
+<footer class="bg-gray-900 text-gray-500 py-8 text-center border-t border-gray-800" role="contentinfo">
+    <p class="text-sm">&copy; <span id="year"></span> Strateško Ublažavanje Rizika. | Anohubs.com</p>
+</footer>
 
-            // 1. Inicijalizacija i Godina
-            const yearEl = document.getElementById('year');
-            if (yearEl) {
-                yearEl.textContent = new Date().getFullYear();
-            }
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        lucide.createIcons();
 
-            // 2. Mobilni Meni 
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            if (mobileMenuButton && mobileMenu) {
-                mobileMenuButton.addEventListener('click', () => {
-                    const isExpanded = mobileMenu.classList.toggle('hidden');
-                    mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
-                });
-            }
+        // 1. Inicijalizacija Godine
+        const yearEl = document.getElementById('year');
+        if (yearEl) {
+            yearEl.textContent = new Date().getFullYear();
+        }
 
-            // 3. Logika Akordeona (Riješen BUG)
-            document.querySelectorAll('.accordion-header').forEach(header => {
-                header.addEventListener('click', () => {
-                    const targetId = header.getAttribute('data-target');
-                    const content = document.getElementById(targetId);
-                    const isExpanded = header.getAttribute('aria-expanded') === 'true';
-                    const icon = header.querySelector('svg');
-
-                    document.querySelectorAll('.accordion-content.is-open').forEach(openContent => {
-                        if (openContent.id !== targetId) {
-                            openContent.classList.remove('is-open');
-                            openContent.previousElementSibling.setAttribute('aria-expanded', 'false');
-                            openContent.previousElementSibling.querySelector('svg').style.transform = 'rotate(0deg)';
-                        }
-                    });
-
-                    if (isExpanded) {
-                        content.classList.add('is-open');
-                        header.setAttribute('aria-expanded', 'true');
-                        icon.style.transform = 'rotate(180deg)';
-                    } else {
-                        content.classList.remove('is-open');
-                        header.setAttribute('aria-expanded', 'false');
-                        icon.style.transform = 'rotate(0deg)';
-                    }
-                });
+        // 2. Mobilni Meni 
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', () => {
+                const isExpanded = mobileMenu.classList.toggle('hidden');
+                mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
             });
+        }
 
-            // 4. Logika Kontakt Forme (FIKSIRANA - Slanje na Formspree)
-            const contactForm = document.getElementById('contactForm');
-            const messageElement = document.getElementById('formMessage');
+        // 3. Logika Akordeona
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const targetId = header.getAttribute('data-target');
+                const content = document.getElementById(targetId);
+                const isExpanded = header.getAttribute('aria-expanded') === 'true';
+                const icon = header.querySelector('svg');
 
-            if (contactForm && messageElement) {
-                contactForm.addEventListener('submit', async function(event) {
-                    event.preventDefault();
-                    
-                    const form = event.target;
-                    const data = new FormData(form);
-                    const submitButton = form.querySelector('button[type="submit"]');
-
-                    submitButton.disabled = true;
-                    submitButton.textContent = '⏳ Šaljem... Molimo pričekajte.'; 
-                    messageElement.textContent = 'Slanje u toku...';
-                    messageElement.classList.remove('hidden', 'text-green-400', 'text-red-600');
-                    messageElement.classList.add('text-yellow-400'); // Prikazivanje loading boje
-
-                    try {
-                        const response = await fetch(form.action, {
-                            method: form.method,
-                            body: data,
-                            headers: { 'Accept': 'application/json' }
-                        });
-
-                        if (response.ok) {
-                            messageElement.textContent = '✅ Zahtjev je poslan! Hvala Vam. Odgovor očekujte u roku od 24 sata.'; 
-                            messageElement.classList.remove('text-yellow-400');
-                            messageElement.classList.add('text-green-400');
-                            form.reset();
-                        } else {
-                            const errorData = await response.json();
-                            const errorMessage = errorData?.errors?.map(err => err.message).join(', ') || 'Došlo je do nepoznate greške pri slanju.';
-                            throw new Error(errorMessage);
-                        }
-                    } catch (error) {
-                        messageElement.textContent = `❌ Greška: ${error.message}. Molimo pokušajte ponovo.`;
-                        messageElement.classList.remove('text-yellow-400');
-                        messageElement.classList.add('text-red-600');
-                    } finally {
-                        submitButton.disabled = false;
-                        submitButton.textContent = 'Zatražite Besplatnu Procjenu Rizika';
-                        // Sakrivanje poruke nakon 7 sekundi
-                        setTimeout(() => {
-                            messageElement.classList.add('hidden');
-                        }, 7000);
+                document.querySelectorAll('.accordion-content.is-open').forEach(openContent => {
+                    if (openContent.id !== targetId) {
+                        openContent.classList.remove('is-open');
+                        openContent.previousElementSibling.setAttribute('aria-expanded', 'false');
+                        openContent.previousElementSibling.querySelector('svg').style.transform = 'rotate(0deg)';
                     }
                 });
-            }
 
-
-            /* 5. LOGIKA BROJAČA, EFIKASNOSTI I BAR GRAFIKONA */
-            const countUp = (targetElement, start = 0, duration = 2500) => {
-                const end = parseFloat(targetElement.getAttribute('data-target'));
-                const decimals = parseInt(targetElement.getAttribute('data-decimal')) || 0;
-                const isBigNumber = end > 1000 && decimals === 0;
-                
-                let current = start;
-                const range = end - start;
-                const stepTime = 10;
-                const steps = Math.ceil(duration / stepTime);
-                const stepValue = range / steps;
-                let currentStep = 0;
-
-                const timer = setInterval(() => {
-                    current += stepValue;
-                    currentStep++;
-
-                    if (currentStep >= steps) {
-                        current = end;
-                        clearInterval(timer);
-                    }
-
-                    let displayValue = current.toFixed(decimals);
-                    
-                    if (isBigNumber) {
-                         displayValue = Math.round(current).toLocaleString('bs-BA');
-                    } else {
-                         displayValue = displayValue.replace('.', ',');
-                    }
-
-                    targetElement.textContent = displayValue;
-                }, stepTime);
-            };
-
-            const counterObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting && !entry.target.classList.contains('counted')) {
-                        countUp(entry.target, 0, 2500); 
-                        entry.target.classList.add('counted');
-                    }
-                });
-            }, { threshold: 0.5 }); 
-
-            document.querySelectorAll('#counter-group .counter-number').forEach(counter => {
-                counterObserver.observe(counter);
-            });
-
-            // Logika za animaciju Bar Grafikona (CO2)
-            const chartObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const bars = entry.target.querySelectorAll('.bar');
-                        bars.forEach(bar => {
-                            const targetHeight = bar.getAttribute('data-height');
-                            bar.style.height = targetHeight + '%';
-                            bar.classList.add('is-visible');
-                        });
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.5 });
-
-            const co2Chart = document.getElementById('co2-chart');
-            if (co2Chart) {
-                chartObserver.observe(co2Chart);
-            }
-
-            /* 6. ANIMACIJE (fade-in-up, zoom-in) */
-            const animationObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.1 });
-
-            document.querySelectorAll('.fade-in-up, .zoom-in').forEach(el => {
-                animationObserver.observe(el);
+                if (isExpanded) {
+                    content.classList.remove('is-open');
+                    header.setAttribute('aria-expanded', 'false');
+                    icon.style.transform = 'rotate(0deg)';
+                } else {
+                    content.classList.add('is-open');
+                    header.setAttribute('aria-expanded', 'true');
+                    icon.style.transform = 'rotate(180deg)';
+                }
             });
         });
-    </script>
-    
-    <script type="text/javascript">
-    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-    (function(){
-    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-    s1.async=true;
-    s1.src='https://embed.tawk.to/68f2740637b879194e5d831e/1j7phaeik';
-    s1.charset='UTF-8';
-    s1.setAttribute('crossorigin','*');
-    s0.parentNode.insertBefore(s1,s0);
-    })();
-    </script>
+
+        // 4. Logika Brojača (CountUp) - Potpuno implementirana
+        const countUp = (targetElement, start = 0, duration = 2500) => {
+            const end = parseFloat(targetElement.getAttribute('data-target'));
+            const decimals = parseInt(targetElement.getAttribute('data-decimal')) || 0;
+            const isBigNumber = end > 1000 && decimals === 0;
+            
+            let current = start;
+            const range = end - start;
+            const stepTime = 10;
+            const steps = Math.ceil(duration / stepTime);
+            const stepValue = range / steps;
+            let currentStep = 0;
+
+            const timer = setInterval(() => {
+                current += stepValue;
+                currentStep++;
+
+                if (currentStep >= steps) {
+                    current = end;
+                    clearInterval(timer);
+                }
+
+                let displayValue = current.toFixed(decimals);
+                
+                if (isBigNumber) {
+                    displayValue = Math.round(current).toLocaleString('bs-BA');
+                } else {
+                    displayValue = displayValue.replace('.', ',');
+                }
+
+                targetElement.textContent = displayValue;
+            }, stepTime);
+        };
+
+        const counterObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !entry.target.classList.contains('counted')) {
+                    countUp(entry.target, 0, 2500); 
+                    entry.target.classList.add('counted');
+                    // KRITIKA POPRAVLJENA: Ne unobserve-ujemo ovdje, nego u countUp, kako se ne bi ponavljalo
+                }
+            });
+        }, { threshold: 0.5 }); 
+
+        document.querySelectorAll('#counter-group .counter-number').forEach(counter => {
+            counterObserver.observe(counter);
+        });
+
+        // 5. Animacija pri skrolovanju (fade-in-up, zoom-in)
+        const animationObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in-up, .zoom-in').forEach(el => {
+            animationObserver.observe(el);
+        });
+        
+        // 6. Logika Kontakt Forme (Klijentska simulacija)
+        const contactForm = document.getElementById('contactForm');
+        const messageElement = document.getElementById('formMessage');
+
+        if (contactForm && messageElement) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault(); 
+                
+                const formIsValid = contactForm.checkValidity();
+
+                if (formIsValid) {
+                    contactForm.reset();
+                    messageElement.textContent = "Hvala Vam. Vaš zahtjev je poslan našem Glavnom Inženjeru. Očekujte naš odgovor u roku od 24 sata.";
+                    messageElement.classList.remove('hidden', 'text-yellow-400');
+                    messageElement.classList.add('text-green-400');
+                    
+                    setTimeout(() => {
+                        messageElement.classList.add('hidden');
+                        messageElement.classList.remove('text-green-400');
+                    }, 7000);
+                    
+                } else {
+                    messageElement.textContent = "Molimo popunite sva polja ispravno. (Provjerite poslovnu email adresu).";
+                    messageElement.classList.remove('hidden', 'text-green-400');
+                    messageElement.classList.add('text-yellow-400');
+                }
+            });
+        }
+    });
+</script>
     
 </body>
 </html>
