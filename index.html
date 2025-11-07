@@ -10,128 +10,121 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
     
-    <!-- Using CDN for guaranteed styling and bypassing local build issues -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'gray-900': '#111827', 
+                        'gray-800': '#1f2937',
+                        'gray-700': '#374151',
+                        'cyan-400': '#22d3ee', // Primary
+                        'cyan-500': '#06b6d4',
+                        'red-500': '#ef4444', // Risk
+                        'red-400': '#f87171',
+                        'green-400': '#4ade80', // Digitalization
+                        'yellow-500': '#f59e0b', // CTA
+                        'yellow-400': '#facc15', // Warning
+                    },
+                    fontSize: {
+                        'h1-hero': 'clamp(2.5rem, 5vw + 1rem, 4.5rem)',
+                    },
+                }
+            }
+        }
+    </script>
     
     <style>
-        /* CSS VARIABLES */
-        :root {
-            --color-primary-cyan: #06B6D4;
-            --color-background-primary: #0A0A0A; 
-            --color-background-secondary: #0F172A; 
-            --color-warning-yellow: #FACC15;
-            --color-danger-red: #DC2626;
-            --font-size-h1: clamp(3rem, 7vw + 1rem, 5.5rem); 
-        }
-
-        /* GLOBAL STYLES (Dark Theme) */
-        body { 
-            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            overflow-x: hidden; 
-            background-color: var(--color-background-primary); 
-            color: #E2E8F0; 
-            background-attachment: fixed; 
-            scroll-behavior: smooth; 
-        }
-
-        /* HERO SECTION */
+        /* Global Styles */
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; }
+        
+        /* Hero Section */
         .hero-gradient {
-            background: linear-gradient(180deg, rgba(10, 10, 10, 0.95) 0%, rgba(10, 10, 10, 0.85) 100%);
-            min-height: 95vh; 
-            clip-path: polygon(0 0, 100% 0, 100% 90%, 50% 100%, 0 90%);
-            padding-bottom: 140px; 
+            background: linear-gradient(180deg, #111827 0%, #1f2937 100%);
+            padding-top: 10rem;
+            padding-bottom: 10rem;
             position: relative;
-            overflow: hidden;
+            /* Postavite ovdje sliku pozadine ako je želite - preporučuje se Base64 ili putanja */
+            /* background-image: url('putanja/do/slike.jpg'); */
+            /* background-size: cover; */
         }
 
-        /* Accordion */
-        .accordion-content { 
-            max-height: 0; 
-            overflow: hidden; 
-            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), padding 0.5s ease-in-out; 
-            padding-top: 0; 
-            padding-bottom: 0; 
+        /* Sekcije Strip/Divider */
+        .section-stripe {
+            height: 10px;
+            background: repeating-linear-gradient(
+                45deg,
+                #1e293b,
+                #1e293b 10px,
+                #0f172a 10px,
+                #0f172a 20px
+            );
+            border-top: 1px solid #1e293b;
+            border-bottom: 1px solid #1e293b;
         }
-        .accordion-content.is-open { 
-            padding-top: 1.5rem; 
-            padding-bottom: 1.5rem; 
-        }
-        .accordion-header { 
-            cursor: pointer; 
-            transition: color 0.3s; 
+
+        /* Akordion Stilovi (Sakrij i animiraj) */
+        .accordion-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            cursor: pointer;
+            padding: 1rem 0;
+            transition: color 0.3s ease;
         }
-        .accordion-header svg {
-            transition: transform 0.3s ease-in-out;
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out, padding 0.3s ease;
+            padding-top: 0;
+            padding-bottom: 0;
         }
-
-        /* Sekcije i Kartice */
-        .section-dark { background-color: #1A1A1A; }
-        .section-cyan { background-color: var(--color-background-secondary); }
-        .section-stripe {
-            background: linear-gradient(90deg, var(--color-background-primary) 0%, var(--color-primary-cyan) 50%, var(--color-background-primary) 100%);
-            height: 8px;
-            box-shadow: 0 0 15px rgba(6, 182, 212, 0.8);
-        }
-        .section-divider {
-            height: 60px;
-            background-color: var(--color-background-primary);
-            clip-path: polygon(0 0, 100% 100%, 0 100%);
-        }
-        .section-divider.inverted {
-            clip-path: polygon(0 100%, 100% 0, 100% 100%);
-            background-color: var(--color-background-primary);
+        .accordion-content.is-open {
+            padding-top: 1rem; 
+            padding-bottom: 1rem;
         }
 
-        /* Sticky Mobile CTA */
-        @media (max-width: 768px) {
-            .mobile-sticky-cta {
-                display: block;
-                position: fixed;
-                bottom: 0;
-                left: 0;
-                width: 100%;
-                z-index: 1000;
-                box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.4);
-                padding: 10px 0;
-                background-color: rgba(10, 10, 10, 0.95);
-                border-top: 2px solid var(--color-warning-yellow);
-            }
+        /* Animacije (Inicijalno nevidljivo) */
+        .fade-in-up, .zoom-in { 
+            opacity: 0; 
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out, visibility 0s 0.8s; 
         }
-
-        /* Visual Authenticity: UPUTE */
-        .visual-placeholder {
-            min-height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            flex-direction: column;
-            background-color: #111827;
-            border: 2px dashed #06B6D4;
-            color: #94A3B8;
-            padding: 20px;
-            border-radius: 12px;
-            font-family: monospace;
-            font-size: 0.9rem;
+        .fade-in-up { 
+            transform: translateY(30px); 
         }
+        .zoom-in { 
+            transform: scale(0.95); 
+        }
+        
+        /* Animacije (Vidljivo stanje) */
+        .fade-in-up.is-visible, .zoom-in.is-visible { 
+            opacity: 1; 
+            transform: translateY(0) scale(1); 
+            visibility: visible;
+            transition-delay: var(--delay, 0ms); /* Koristi JS delay varijablu */
+        }
+        
+        /* CSS varijable za odgođeno pojavljivanje */
+        .delay-200 { --delay: 200ms; }
+        .delay-400 { --delay: 400ms; }
+        .delay-600 { --delay: 600ms; }
+        .delay-800 { --delay: 800ms; }
 
-        /* ANIMATIONS */
-        .fade-in-up, .zoom-in { transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
-        .fade-in-up { opacity: 0; transform: translateY(50px); } 
-        .fade-in-up.is-visible { opacity: 1; transform: translateY(0); }
-        .zoom-in { opacity: 0; transform: scale(0.9); } 
-        .zoom-in.is-visible { opacity: 1; transform: scale(1); }
-        .delay-200 { transition-delay: 200ms; }
-        .delay-400 { transition-delay: 400ms; }
-        .delay-600 { transition-delay: 600ms; }
+        /* Mobilni fiksni CTA */
+        .mobile-sticky-cta {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 40;
+            padding: 0.5rem 0;
+        }
     </style>
+
 </head>
-<body>
+<body class="bg-gray-900 text-gray-200 text-lg antialiased overflow-x-hidden">
 
     <header class="bg-gray-900 text-white shadow-2xl sticky top-0 z-50 border-b border-cyan-800/50" role="banner">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
@@ -165,7 +158,6 @@
 
     <main role="main">
 
-        <!-- SECTION 1: HERO (RISK STATEMENT) -->
         <section id="hero" class="hero-gradient flex items-center justify-center text-center">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
                 
@@ -174,7 +166,7 @@
                 </h1>
                 
                 <p class="text-3xl font-light text-cyan-300 mb-10 max-w-4xl mx-auto fade-in-up delay-200" style="text-shadow: 0 0 10px rgba(6, 182, 212, 0.5);">
-                    Engineering accountability: We ensure hydraulic integrity at the level where efficiency is lost or failure occurs. The <span class="font-bold">Hydro-Immunity Protocol is an essential engineering guarantee.</span>
+                    Problem isn't the turbine, but the culture: Stopping the Execution Gap. The <span class="font-bold">Hydro-Immunity Protocol is an essential engineering guarantee.</span>
                 </p>
 
                 <a href="#rizik" class="inline-flex items-center justify-center px-10 py-4 border border-transparent text-lg font-bold rounded-full text-gray-900 bg-yellow-500 hover:bg-yellow-600 transition duration-300 transform hover:scale-105 shadow-2xl focus:outline-none focus:ring-4 focus:ring-yellow-500 focus:ring-opacity-75 uppercase tracking-wider fade-in-up delay-400 hero-cta-button">
@@ -189,7 +181,6 @@
 
         <div class="section-stripe"></div>
         
-        <!-- SECTION 2: RISK (48% OUTAGES) -->
         <section id="rizik" class="py-24 bg-gray-900 text-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 <h2 class="text-5xl font-extrabold text-red-500 mb-6 tracking-tight fade-in-up" style="text-shadow: 0 0 15px rgba(220, 38, 38, 0.7);">RISK NEUTRALIZATION: THE HYDRO-IMMUNITY PROTOCOL</h2>
@@ -200,7 +191,7 @@
                 <div class="grid md:grid-cols-3 gap-10">
                     
                     <div class="p-8 rounded-xl bg-gray-800 border-t-4 border-red-500 shadow-xl fade-in-up delay-400">
-                        <svg data-lucide="droplet" class="w-12 h-12 text-red-500 mb-4 mx-auto" aria-hidden="true"></svg>
+                        <svg data-lucide="banknote" class="w-12 h-12 text-yellow-500 mx-auto" aria-hidden="true"></svg>
                         <h3 class="text-2xl font-bold mb-3 text-red-400">1. Cavitation Erosion</h3>
                         <p class="text-gray-300">
                             We don't wait for annual overhauls. We use <span class="font-bold text-white">Acoustic Emission</span> to listen to the turbine and detect real-time cavitation micro-cavities.
@@ -208,7 +199,7 @@
                     </div>
 
                     <div class="p-8 rounded-xl bg-gray-800 border-t-4 border-red-500 shadow-xl fade-in-up delay-600">
-                        <svg data-lucide="layers" class="w-12 h-12 text-red-500 mb-4 mx-auto" aria-hidden="true"></svg>
+                        <svg data-lucide="shield-check" class="w-12 h-12 text-green-500 mx-auto" aria-hidden="true"></svg>
                         <h3 class="text-2xl font-bold mb-3 text-red-400">2. Structural Fatigue (FEA)</h3>
                         <p class="text-gray-300">
                             Analyzing dams and penstocks. Through <span class="font-bold text-white">FEA (Finite Element Analysis)</span>, we assess stress and vibrations, eliminating sudden critical infrastructure failures.
@@ -216,7 +207,7 @@
                     </div>
 
                     <div class="p-8 rounded-xl bg-gray-800 border-t-4 border-red-500 shadow-xl fade-in-up delay-800">
-                        <svg data-lucide="activity" class="w-12 h-12 text-red-500 mb-4 mx-auto" aria-hidden="true"></svg>
+                        <svg data-lucide="hard-hat" class="w-12 h-12 text-cyan-500 mx-auto" aria-hidden="true"></svg>
                         <h3 class="text-2xl font-bold mb-3 text-red-400">3. Installation Criticality</h3>
                         <p class="text-gray-300">
                             We ensure <span class="font-bold text-white">zero tolerance</span> for installation errors. Our supervision includes laser alignment, thermography, and detailed NDT protocols.
@@ -229,8 +220,7 @@
 
         <div class="section-stripe"></div>
 
-        <!-- SECTION 3: METRICS (DYNAMIC COUNTERS) -->
-        <section id="metrike" class="py-16 section-dark">
+        <section id="metrike" class="py-16 bg-gray-900">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 <h2 class="text-4xl font-extrabold text-cyan-400 mb-12 tracking-tight fade-in-up">ENGINEERING EXCELLENCE: Guaranteed Measurable Parameters</h2>
                 
@@ -274,8 +264,7 @@
 
         <div class="section-stripe"></div>
 
-        <!-- SECTION 4: CORE PROTOCOL (ACCORDION - FLAWLESS ASSEMBLY / SAFETY) -->
-        <section id="core-protocol" class="py-24 section-dark">
+        <section id="core-protocol" class="py-24 bg-gray-900">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 class="text-5xl font-extrabold text-cyan-400 mb-16 text-center tracking-tight fade-in-up" style="text-shadow: 0 0 15px rgba(6, 182, 212, 0.9);">ENGINEERING PROTOCOLS AND SAFETY (Key Solutions)</h2>
 
@@ -305,7 +294,7 @@
                         </div>
                     </div>
 
-                    <div class="bg-gray-900 p-6 rounded-xl shadow-2xl border-t-4 border-warning-yellow zoom-in delay-200">
+                    <div class="bg-gray-900 p-6 rounded-xl shadow-2xl border-t-4 border-yellow-400 zoom-in delay-200">
                         <div class="accordion-header" data-target="content-sigurnost" aria-expanded="false" aria-controls="content-sigurnost">
                             <span class="text-3xl font-bold text-white hover:text-yellow-400">SAFETY AND RELIABILITY (Engineers' FAQs)</span>
                             <svg data-lucide="chevron-down" class="w-8 h-8 transform transition-transform duration-300"></svg>
@@ -323,12 +312,11 @@
             </div>
         </section>
 
-        <div class="section-divider inverted"></div>
+        <div class="section-stripe"></div>
 
-        <!-- SECTION 5: ASSET HEART (CFD/GEOMETRY) -->
-        <section id="srce-postrojenja" class="py-24 section-dark">
+        <section id="srce-postrojenja" class="py-24 bg-gray-900">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <p class="text-xl text-warning-yellow font-bold mb-4 text-center fade-in-up">
+                <p class="text-xl text-yellow-400 font-bold mb-4 text-center fade-in-up">
                     &ldquo;Every turbine is a unique challenge. Our job is to understand it better than its manufacturer.&rdquo; &mdash; Chief CFD Engineer
                 </p>
                 
@@ -351,7 +339,9 @@
                     </div>
                     
                     <div class="visual-placeholder zoom-in delay-200">
-                        [Placeholder: INSERT CFD IMAGE. Must show pressure contours or velocity vectors.]
+                        <div class="bg-gray-800 p-8 rounded-xl border border-cyan-800 flex items-center justify-center h-full min-h-[300px] text-gray-500 font-mono">
+                            [Placeholder: INSERT CFD IMAGE HERE]
+                        </div>
                     </div>
                     
                 </div>
@@ -360,17 +350,18 @@
 
         <div class="section-stripe"></div>
 
-        <!-- SECTION 6: DIGITALIZATION (SCADA) -->
-        <section id="digitalizacija" class="py-24 section-cyan">
+        <section id="digitalizacija" class="py-24 bg-gray-900">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <p class="text-xl text-warning-yellow font-bold mb-4 text-center fade-in-up">
+                <p class="text-xl text-yellow-400 font-bold mb-4 text-center fade-in-up">
                     &ldquo;AI serves as our second pair of eyes. We make the final decision, but the data never fails us.&rdquo; &mdash; SCADA Team Lead
                 </p>
                 <h2 class="text-5xl font-extrabold text-green-400 mb-20 text-center tracking-tight fade-in-up" style="text-shadow: 0 0 15px rgba(52, 211, 153, 0.9);">DIGITALIZATION 4.0: SCADA & Remote Operational Excellence</h2>
                 
                 <div class="grid lg:grid-cols-2 gap-12 items-center">
                     <div class="visual-placeholder p-6 zoom-in">
-                        [Placeholder: INSERT SCADA HMI IMAGE. Show CFD results integrated into SCADA.]
+                        <div class="bg-gray-800 p-8 rounded-xl border border-green-800 flex items-center justify-center h-full min-h-[300px] text-gray-500 font-mono">
+                            [Placeholder: INSERT SCADA HMI IMAGE HERE]
+                        </div>
                     </div>
                     
                     <div class="fade-in-up delay-200">
@@ -389,8 +380,7 @@
 
         <div class="section-stripe"></div>
 
-        <!-- SECTION 7: MANIFEST (HUMAN FACTOR) -->
-        <section id="manifest" class="py-24 section-dark">
+        <section id="manifest" class="py-24 bg-gray-900">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 <h2 class="text-5xl font-extrabold text-yellow-400 mb-6 tracking-tight fade-in-up" style="text-shadow: 0 0 15px rgba(251, 191, 36, 0.9);">
                     HUMAN ETHICS: Our Team, Your Guarantee
@@ -402,8 +392,8 @@
 
                 <div class="grid lg:grid-cols-3 gap-10">
                     
-                    <div class="p-8 rounded-xl bg-gray-900 border-t-4 border-warning-yellow zoom-in delay-400">
-                        <svg data-lucide="users" class="w-12 h-12 text-yellow-500 mx-auto mb-4" aria-hidden="true"></svg>
+                    <div class="p-8 rounded-xl bg-gray-900 border-t-4 border-yellow-400 zoom-in delay-400">
+                        <svg data-lucide="users" class="w-12 h-12 text-yellow-500 mx-auto" aria-hidden="true"></svg>
                         <h3 class="text-2xl font-bold mb-3 text-yellow-400">Team: Decades of Real-World Experience</h3>
                         <p class="text-gray-300">
                             Our engineers have spent <span class="font-bold text-white">over 10,000 hours</span> directly in the field. We know <span class="font-bold text-white">what cavitation sounds like</span> – and we know how to prevent it.
@@ -411,15 +401,15 @@
                     </div>
 
                     <div class="p-8 rounded-xl bg-gray-900 border-t-4 border-cyan-500 shadow-xl zoom-in delay-600">
-                        <svg data-lucide="handshake" class="w-12 h-12 text-cyan-500 mx-auto mb-4" aria-hidden="true"></svg>
+                        <svg data-lucide="handshake" class="w-12 h-12 text-cyan-500 mx-auto" aria-hidden="true"></svg>
                         <h3 class="text-2xl font-bold mb-3 text-cyan-400">Partnership: Zero Corporate Coldness</h3>
                         <p class="text-gray-300">
                             We treat your plant as our own. Our relationship is transparent and direct. In the field, we rely on <span class="font-bold text-white">expert intuition</span> and personal accountability.
                         </p>
                     </div>
 
-                    <div class="p-8 rounded-xl bg-gray-900 border-t-4 border-danger-red shadow-xl zoom-in delay-800">
-                        <svg data-lucide="target" class="w-12 h-12 text-red-500 mx-auto mb-4" aria-hidden="true"></svg>
+                    <div class="p-8 rounded-xl bg-gray-900 border-t-4 border-red-500 shadow-xl zoom-in delay-800">
+                        <svg data-lucide="target" class="w-12 h-12 text-red-500 mx-auto" aria-hidden="true"></svg>
                         <h3 class="text-2xl font-bold mb-3 text-red-400">Mission: Longevity by Conviction</h3>
                         <p class="text-gray-300">
                             Committed to ensuring the <span class="font-bold text-white">generational value</span> of your plant. To serve the community for 100+ years, without compromise.
@@ -432,11 +422,10 @@
 
         <div class="section-stripe"></div>
 
-        <!-- SECTION 8: CONTACT FORM (CLOSING THE LOOP) -->
         <section id="kontakt" class="py-24 bg-gray-900" aria-labelledby="kontakt-naslov">
             <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 id="kontakt-naslov" class="text-4xl font-extrabold text-white mb-4 text-center tracking-tight fade-in-up">REQUEST A FREE ENGINEERING ASSET ASSESSMENT</h2>
-                <p class="text-xl text-warning-yellow mb-10 text-center fade-in-up delay-200">
+                <p class="text-xl text-yellow-400 mb-10 text-center fade-in-up delay-200">
                     Find the 48% hidden risk in your system. Non-binding and confidential.
                 </p>
                 
@@ -466,7 +455,6 @@
         <p class="text-sm">&copy; <span id="year"></span> Strategic Risk Mitigation. | Anohubs.com</p>
     </footer>
 
-    <!-- JS and Tawk.to scripts go here -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
     <script>
         // --- START JavaScript Logic (Self-Contained for Reliability) ---
@@ -482,9 +470,13 @@
         });
         
         function initLucideIcons() {
-            if (typeof lucide !== 'undefined') {
-                lucide.createIcons();
-            }
+            // Lucide.createIcons() se poziva nakon što se skripta Lucide učita (defer)
+            // Stavljamo mali delay da se osiguramo da je lucide objekat definisan
+            setTimeout(() => {
+                if (typeof lucide !== 'undefined') {
+                    lucide.createIcons();
+                }
+            }, 100);
         }
 
         function initFooterYear() {
@@ -505,7 +497,7 @@
                 const icon = mobileMenuButton.querySelector('svg');
                 
                 if (icon && typeof lucide !== 'undefined') {
-                    icon.setAttribute('data-lucide', mobileMenu.classList.contains('hidden') ? 'x' : 'menu');
+                    icon.setAttribute('data-lucide', mobileMenu.classList.contains('hidden') ? 'menu' : 'x');
                     lucide.createIcons();
                 }
             });
@@ -546,7 +538,7 @@
                     icon?.classList.toggle('rotate-180');
 
                     if (content.classList.contains('is-open')) {
-                        // Use scrollHeight for dynamic content sizing during transition
+                        // Koristi scrollHeight za dinamičku visinu
                         content.style.maxHeight = content.scrollHeight + "px";
                     } else {
                         content.style.maxHeight = null;
@@ -580,10 +572,10 @@
                     let displayValue = current.toFixed(decimals);
                     
                     if (isBigNumber) {
-                        // Use EN formatting for large numbers (e.g., 1,500)
+                        // Koristi EN formatiranje (npr. 1,500)
                         displayValue = Math.round(current).toLocaleString('en-US');
                     } else {
-                        // Use comma for decimals (Standard EN usage, matching BS convention)
+                        // Koristi zarez za decimalni separator
                         displayValue = displayValue.replace('.', ',');
                     }
 
@@ -603,21 +595,6 @@
 
             document.querySelectorAll('#counter-group .counter-number').forEach(counter => {
                 observer.observe(counter);
-            });
-        }
-
-        function initScrollAnimations() {
-            const observer = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.1 });
-
-            document.querySelectorAll('.fade-in-up, .zoom-in').forEach(el => {
-                observer.observe(el);
             });
         }
 
