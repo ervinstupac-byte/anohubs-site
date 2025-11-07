@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Inicijalizacija svih funkcionalnosti
+    // Initialization of all dynamic functionalities
     initLucideIcons();
     initFooterYear();
     initMobileMenu();
@@ -10,12 +10,14 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function initLucideIcons() {
+    // Ensures Lucide icons load correctly
     if (typeof lucide !== 'undefined') {
         lucide.createIcons();
     }
 }
 
 function initFooterYear() {
+    // Sets the current year in the footer
     const yearEl = document.getElementById('year');
     if (yearEl) {
         yearEl.textContent = new Date().getFullYear();
@@ -23,24 +25,28 @@ function initFooterYear() {
 }
 
 function initMobileMenu() {
-    const menuButton = document.getElementById('mobile-menu-button');
+    // Handles toggling the mobile navigation menu
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
     const mobileMenu = document.getElementById('mobile-menu');
-    const menuIcon = menuButton?.querySelector('svg');
+    
+    if (!mobileMenuButton || !mobileMenu) return;
 
-    if (!menuButton || !mobileMenu) return;
-
-    menuButton.addEventListener('click', () => {
+    mobileMenuButton.addEventListener('click', () => {
         const isHidden = mobileMenu.classList.toggle('hidden');
-        if (menuIcon && typeof lucide !== 'undefined') {
-            menuIcon.setAttribute('data-lucide', mobileMenu.classList.contains('hidden') ? 'menu' : 'x');
+        const icon = mobileMenuButton.querySelector('svg');
+        
+        // Toggles menu icon (menu <-> X)
+        if (icon && typeof lucide !== 'undefined') {
+            icon.setAttribute('data-lucide', mobileMenu.classList.contains('hidden') ? 'x' : 'menu');
             lucide.createIcons();
         }
     });
 
-    // Zatvaranje menija klikom na link
+    // Closing menu by clicking a link
     mobileMenu.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', () => {
             mobileMenu.classList.add('hidden');
+            const menuIcon = mobileMenuButton.querySelector('svg');
             if (menuIcon && typeof lucide !== 'undefined') {
                 menuIcon.setAttribute('data-lucide', 'menu');
                 lucide.createIcons();
@@ -50,12 +56,13 @@ function initMobileMenu() {
 }
 
 function initAccordions() {
+    // Handles the interactive Accordion functionality (Protocol/Safety sections)
     document.querySelectorAll('.accordion-header').forEach(header => {
         header.addEventListener('click', () => {
             const content = header.nextElementSibling;
             const icon = header.querySelector('svg');
 
-            // Zatvori ostale otvorene harmonike
+            // Close other open accordions
             document.querySelectorAll('.accordion-content.is-open').forEach(otherContent => {
                 if (otherContent !== content) {
                     otherContent.classList.remove('is-open');
@@ -67,12 +74,12 @@ function initAccordions() {
                 }
             });
 
-            // Otvori/zatvori trenutnu
+            // Toggle current accordion state
             content.classList.toggle('is-open');
             icon?.classList.toggle('rotate-180');
 
             if (content.classList.contains('is-open')) {
-                // Postavljanje visine na osnovu sadržaja za tranziciju
+                // Use scrollHeight for dynamic content sizing during transition
                 content.style.maxHeight = content.scrollHeight + "px";
             } else {
                 content.style.maxHeight = null;
@@ -82,6 +89,7 @@ function initAccordions() {
 }
 
 function initCounters() {
+    // Logic for animating the metrics (e.g., 98.5% Availability Factor)
     const countUp = (targetElement) => {
         const end = parseFloat(targetElement.getAttribute('data-target'));
         const decimals = parseInt(targetElement.getAttribute('data-decimal')) || 0;
@@ -106,10 +114,10 @@ function initCounters() {
             let displayValue = current.toFixed(decimals);
             
             if (isBigNumber) {
-                // Lokalizacija za Bosanski (1.500)
-                displayValue = Math.round(current).toLocaleString('bs-BA');
+                // Use EN formatting for large numbers (e.g., 1,500)
+                displayValue = Math.round(current).toLocaleString('en-US');
             } else {
-                // Zamjena decimalne tačke zarezom
+                // Use comma for decimals 
                 displayValue = displayValue.replace('.', ',');
             }
 
@@ -117,6 +125,7 @@ function initCounters() {
         }, stepTime);
     };
 
+    // Observer to detect when counters enter the viewport
     const observer = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting && !entry.target.classList.contains('counted')) {
@@ -127,13 +136,14 @@ function initCounters() {
         });
     }, { threshold: 0.5 });
 
-    // CILJANJE BROJAČA UNUTAR SEKCIJE METRIKE
+    // Apply observer to all counter elements
     document.querySelectorAll('#counter-group .counter-number').forEach(counter => {
         observer.observe(counter);
     });
 }
 
 function initScrollAnimations() {
+    // Logic for fade-in and zoom-in effects on scroll
     const observer = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -148,57 +158,55 @@ function initScrollAnimations() {
     });
 }
 
-async function handleFormSubmit(event) {
-    event.preventDefault();
-    
-    const form = event.target;
-    const data = new FormData(form);
-    const submitButton = form.querySelector('button[type="submit"]');
+function initContactForm() {
+    // Handles form submission (simulated in client-side to simplify deployment)
+    const contactForm = document.getElementById('contactForm');
     const messageElement = document.getElementById('formMessage');
 
-    if (!submitButton || !messageElement) return;
+    if (contactForm && messageElement) {
+        contactForm.addEventListener('submit', async function(event) {
+            event.preventDefault();
+            
+            const form = event.target;
+            const data = new FormData(form);
+            const submitButton = form.querySelector('button[type="submit"]');
 
-    submitButton.disabled = true;
-    submitButton.textContent = '⏳ Submitting... Please wait.'; 
-    messageElement.textContent = 'Sending request...';
-    messageElement.classList.remove('hidden', 'text-green-400', 'text-red-600');
-    messageElement.classList.add('text-yellow-400');
+            submitButton.disabled = true;
+            submitButton.textContent = '⏳ Submitting... Please wait.'; 
+            messageElement.textContent = 'Sending request...';
+            messageElement.classList.remove('hidden', 'text-green-400', 'text-red-600');
+            messageElement.classList.add('text-yellow-400');
 
-    try {
-        // Koristi Formspree endpoint (prethodno dogovoren)
-        const response = await fetch("https://formspree.io/f/xqaywlaq", { 
-            method: "POST",
-            body: data,
-            headers: { 'Accept': 'application/json' }
+            try {
+                // Using Formspree endpoint (This requires the action URL in HTML to be correct)
+                const response = await fetch("https://formspree.io/f/xqaywlaq", { 
+                    method: "POST",
+                    body: data,
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                if (response.ok) {
+                    messageElement.textContent = '✅ Request Sent! Thank you. Expect our engineer response within 24 hours.'; 
+                    messageElement.classList.remove('text-yellow-400');
+                    messageElement.classList.add('text-green-400');
+                    form.reset();
+                } else {
+                    const errorData = await response.json();
+                    const errorMessage = errorData?.errors?.map(err => err.message).join(', ') || 'An unknown error occurred during submission.';
+                    throw new Error(errorMessage);
+                }
+            } catch (error) {
+                const errorMessage = error instanceof Error ? error.message : 'An error occurred.';
+                messageElement.textContent = `❌ Error: ${errorMessage}. Please try again.`;
+                messageElement.classList.remove('text-yellow-400');
+                messageElement.classList.add('text-red-600');
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = 'Request Assessment →';
+                setTimeout(() => {
+                    messageElement.classList.add('hidden');
+                }, 7000);
+            }
         });
-
-        if (response.ok) {
-            messageElement.textContent = '✅ Request Sent! Thank you. Expect our engineer response within 24 hours.'; 
-            messageElement.classList.remove('text-yellow-400');
-            messageElement.classList.add('text-green-400');
-            form.reset();
-        } else {
-            const errorData = await response.json();
-            const errorMessage = errorData?.errors?.map(err => err.message).join(', ') || 'An unknown error occurred during submission.';
-            throw new Error(errorMessage);
-        }
-    } catch (error) {
-        const errorMessage = error instanceof Error ? error.message : 'An error occurred.';
-        messageElement.textContent = `❌ Error: ${errorMessage}. Please try again.`;
-        messageElement.classList.remove('text-yellow-400');
-        messageElement.classList.add('text-red-600');
-    } finally {
-        submitButton.disabled = false;
-        submitButton.textContent = 'Request Assessment →';
-        setTimeout(() => {
-            messageElement.classList.add('hidden');
-        }, 7000);
-    }
-}
-
-function initContactForm() {
-    const contactForm = document.getElementById('contactForm');
-    if (contactForm) {
-        contactForm.addEventListener('submit', handleFormSubmit);
     }
 }
