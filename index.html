@@ -15,7 +15,7 @@
         const faviconLinks = [
             { rel: "shortcut icon", href: rootPath + "favicon.ico", type: "image/x-icon" },
             { rel: "icon", type: "image/png", sizes: "32x32", href: rootPath + "favicon-32x32.png" },
-            { rel: "icon", type="image/png", sizes: "16x16", href: rootPath + "favicon-16x16.png" },
+            { rel: "icon", type:"image/png", sizes: "16x16", href: rootPath + "favicon-16x16.png" },
             { rel: "apple-touch-icon", sizes: "180x180", href: rootPath + "apple-touch-icon.png" }
         ];
 
@@ -28,12 +28,13 @@
             document.head.appendChild(el);
         });
         
-        // Favicon Aplikacije (za tab)
+        // Favicon Aplikacije (za tab) - NE SME da ima cache buster, jer dolazi sa GitHub Pages domena
         const anohubFavicon = document.createElement("link");
         anohubFavicon.rel = "icon";
         anohubFavicon.type = "image/png";
         anohubFavicon.sizes = "32x32";
-        anohubFavicon.href = "https://ervinstupac-byte.github.io/anohubsapp/favicon-32x32.png";
+        // Izmena: Koristimo apsolutnu putanju za favicon unutar AnoHUB aplikacije
+        anohubFavicon.href = "https://anohubs.com/anohubsapp/favicon-32x32.png"; 
         document.head.appendChild(anohubFavicon);
 
     </script>
@@ -68,16 +69,22 @@
     <style>
         html { scroll-behavior: smooth; }
         body { font-family: 'Inter', sans-serif; }
+        
+        /* NOVO: Postavljamo orljani_Una.jpg kao globalnu fiksnu pozadinu */
+        body {
+            background-image: url('orljani_Una.jpg'); 
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center center;
+            background-repeat: no-repeat; /* Dodato za konzistentnost */
+        }
+
+        /* Hero sekcija sada ima transparentniji gradient da bi se videla pozadinska slika */
         .hero-gradient {
-            /* IZMENA: Jači, fokusirani gradient na Cyan/Plavo */
-            background: linear-gradient(180deg, var(--tw-colors-hydro-charcoal) 0%, #0c4d5d 100%); 
-            
-            /* IZMENA: RADIKALNO SMANJENJE VERTICAL PADDING-a */
+            background: linear-gradient(180deg, rgba(17, 24, 39, 0.95) 0%, rgba(30, 41, 59, 0.9) 100%); 
             padding-top: 3rem; 
             padding-bottom: 3rem;
-            
             position: relative;
-            /* UKLANJANJE min-height da se prilagodi samo visini sadržaja */
             min-height: auto; 
             display: flex;
             align-items: center;
@@ -175,7 +182,7 @@
             <nav class="hidden md:flex items-center space-x-6 font-extrabold text-sm" role="navigation" aria-label="Main navigation">
                 <a href="#about" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">About</a>
                 <a href="#services" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Services</a>
-                <a href="https://ervinstupac-byte.github.io/anohubsapp/" target="_blank" rel="noopener noreferrer" class="nav-link relative text-hydro-secondary hover:text-green-500 transition tracking-widest font-extrabold text-lg p-2 uppercase">ANO HUB</a>
+                <a href="https://anohubs.com/anohubsapp/" target="_blank" rel="noopener noreferrer" class="nav-link relative text-hydro-secondary hover:text-green-500 transition tracking-widest font-extrabold text-lg p-2 uppercase">ANO HUB</a>
                 <a href="#technology" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Technology</a>
                 <a href="#contact" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Contact</a>
                 <a href="#contact" class="bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-6 py-2.5 rounded-full transition transform hover:scale-105 shadow-xl font-bold tracking-wider uppercase text-base">Request Audit</a>
@@ -190,7 +197,7 @@
             <div id="mobile-menu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2 text-center bg-hydro-charcoal" aria-label="Mobile navigation menu">
                 <a href="#about" class="block hover:text-hydro-primary transition tracking-wider py-2">About</a>
                 <a href="#services" class="block hover:text-hydro-primary transition tracking-wider py-2">Services</a>
-                <a href="https://ervinstupac-byte.github.io/anohubsapp/" target="_blank" rel="noopener noreferrer" class="block hover:text-hydro-secondary transition tracking-wider py-2">ANO HUB</a>
+                <a href="https://anohubs.com/anohubsapp/" target="_blank" rel="noopener noreferrer" class="block hover:text-hydro-secondary transition tracking-wider py-2">ANO HUB</a>
                 <a href="#technology" class="block hover:text-hydro-primary transition tracking-wider py-2">Technology</a>
                 <a href="#contact" class="block hover:text-hydro-primary transition tracking-wider py-2">Contact</a>
                 <a href="#contact" class="block bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-5 py-2 rounded-full transition shadow-md font-bold tracking-wider mt-2 text-center">Request Audit</a>
@@ -414,7 +421,7 @@
                     
                     <div class="grid lg:grid-cols-5 gap-8 items-center bg-hydro-charcoal p-6 rounded-xl shadow-xl zoom-in delay-400">
                         <div class="lg:col-span-2 aspect-square rounded-lg bg-hydro-slate flex items-center justify-center text-hydro-gray">
-                            <img src="/francis-diagram.jpg" alt="Francis Turbine Diagram" class="w-full h-full object-cover">
+                            <img src="proljece_arm.jpg" alt="Francis Turbine Diagram in spring environment" class="w-full h-full object-cover">
                         </div>
                         <div class="lg:col-span-3">
                             <h3 class="text-3xl font-bold text-hydro-primary mb-3">Francis Turbine</h3>
@@ -429,7 +436,7 @@
 
                     <div class="grid lg:grid-cols-5 gap-8 items-center bg-hydro-charcoal p-6 rounded-xl shadow-xl zoom-in delay-600">
                         <div class="lg:col-span-2 aspect-square rounded-lg bg-hydro-slate flex items-center justify-center text-hydro-gray">
-                            <img src="/kaplan-diagram.jpg" alt="Kaplan Turbine Diagram" class="w-full h-full object-cover">
+                            <img src="zima_arm.jpg" alt="Kaplan Turbine Diagram in challenging winter environment" class="w-full h-full object-cover">
                         </div>
                         <div class="lg:col-span-3">
                             <h3 class="text-3xl font-bold text-hydro-primary mb-3">Kaplan Turbine</h3>
@@ -716,8 +723,31 @@
     </script>
     
     <script type="text/javascript">
-    // Tawk.to Live Chat (ostavljen nepromenjen)
+    // Tawk.to Inicijalizacija i Konfiguracija
     var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+
+    // --- NOVO: KONFIGURACIJA POZIVA I PRIKUPLJANJA PODATAKA ---
+
+    // 1. Postavljanje Obaveznih Polja pre nego što se započne chat
+    Tawk_API.setPrechatForm(
+        {
+            name : 'required', // Ime je obavezno
+            email : 'required', // Email je obavezno
+            tel : 'optional',  // Telefon je opcionalan
+            message : 'required'
+        }
+    );
+
+    // 2. Postavljanje automatskog pozdrava nakon učitavanja widgeta
+    Tawk_API.onLoad = function(){
+        Tawk_API.setWelcomeMessage("Hydro-Prijatelj je spreman. Kako možemo odmah da optimizujemo Vaše postrojenje?");
+        // Opciono: Dodavanje tagova za internu klasifikaciju upita
+        Tawk_API.addTags(['AnoHUB-Site-Visit', 'Risk_Inquiry'], function(error){});
+    };
+
+    // -----------------------------------------------------------
+
+    // Standardni Tawk.to kod za učitavanje widgeta (Ovaj deo se zadržava)
     (function(){
     var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
     s1.async=true;
