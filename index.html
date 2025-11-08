@@ -6,10 +6,29 @@
     <title>Anohubs: The Global Standard for Hydro Integrity | Audits & Optimization</title>
     <meta name="description" content="Establishing the global standard for hydro integrity where technological precision and ethical responsibility drive both sustainable profit and ecological health. Empowering hydropower operators with comprehensive, transparent, and verifiable audits.">
     
-    <link rel="icon" type="image/png" sizes="32x32" href="/anohubsapp/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/anohubsapp/favicon-16x16.png">
-    <link rel="shortcut icon" href="/anohubsapp/favicon.ico"> 
+    <script>
+        const cacheBuster = "?v=" + new Date().getTime();
+        const iconPath = "/"; // Putanja do root-a glavnog domena (anohubs-site)
+        const appPath = "/anohubsapp/"; // Putanja do React aplikacije (AnoHUB)
 
+        // Ubacivanje linkova za Favicon (koristi samo root putanju)
+        const faviconLinks = [
+            { rel: "shortcut icon", href: iconPath + "favicon.ico", type: "image/x-icon" },
+            { rel: "icon", type: "image/png", sizes: "32x32", href: iconPath + "favicon-32x32.png" },
+            { rel: "icon", type: "image/png", sizes: "16x16", href: iconPath + "favicon-16x16.png" },
+            { rel: "apple-touch-icon", sizes: "180x180", href: iconPath + "apple-touch-icon.png" }
+        ];
+
+        faviconLinks.forEach(link => {
+            const el = document.createElement("link");
+            el.rel = link.rel;
+            el.href = link.href + cacheBuster; // Forsira preuzimanje nove ikone
+            if (link.type) el.type = link.type;
+            if (link.sizes) el.sizes = link.sizes;
+            document.head.appendChild(el);
+        });
+    </script>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
@@ -61,7 +80,6 @@
             border-top: 1px solid var(--tw-colors-hydro-slate);
             border-bottom: 1px solid var(--tw-colors-hydro-slate);
         }
-        /* Uklonjena Accordion CSS pravila radi čistoće */
         .accordion-header {
             display: flex;
             justify-content: space-between;
@@ -81,7 +99,6 @@
             padding-top: 1rem; 
             padding-bottom: 1rem;
         }
-        /* SCROLL ANIMACIJE - Smanjena kompleksnost */
         .fade-in-up, .zoom-in { 
             opacity: 0; 
             transition: opacity 0.8s ease-out, transform 0.8s ease-out; 
@@ -110,25 +127,23 @@
             z-index: 40;
             padding: 0.5rem 0;
         }
-        /* SVG Logo Stilovi - Za inline SVG */
         .anohubs-logo {
-            width: 150px; /* Prilagodite veličinu po potrebi */
-            height: auto;
-            color: var(--tw-colors-hydro-primary); /* Boja za SVG ikonu */
-        }
-        /* SVG logo za hero sekciju */
-        .anohubs-hero-logo {
-            width: 250px; /* Veći logo za Hero sekciju */
+            width: 150px; 
             height: auto;
             color: var(--tw-colors-hydro-primary); 
-            margin-bottom: 2rem; /* Razmak ispod loga */
+        }
+        .anohubs-hero-logo {
+            width: 250px; 
+            height: auto;
+            color: var(--tw-colors-hydro-primary); 
+            margin-bottom: 2rem; 
         }
         @media (min-width: 768px) {
             .anohubs-logo {
-                width: 180px; /* Veći logo na desktopu */
+                width: 180px; 
             }
             .anohubs-hero-logo {
-                width: 350px; /* Još veći logo na desktopu */
+                width: 350px; 
             }
         }
     </style>
@@ -139,7 +154,7 @@
     <header class="bg-hydro-charcoal text-white shadow-2xl sticky top-0 z-50 border-b border-hydro-primary/50" role="banner">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
             <a href="#hero" class="focus:outline-none focus:ring-4 focus:ring-hydro-primary focus:ring-opacity-50 transition" aria-label="Anohubs Logo - Back to top" aria-current="page">
-                <img src="/anohubsapp/logo.svg" alt="Anohubs Logo" class="anohubs-logo">
+                <img src="/logo.svg" alt="Anohubs Logo" class="anohubs-logo">
             </a>
             
             <nav class="hidden md:flex items-center space-x-6 font-extrabold text-sm" role="navigation" aria-label="Main navigation">
@@ -171,7 +186,7 @@
     <main role="main">
         <section id="hero" class="hero-gradient flex items-center justify-center text-center">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
-                <img src="/anohubsapp/logo.svg" alt="Anohubs Logo" class="anohubs-hero-logo mx-auto fade-in-up">
+                <img src="/logo.svg" alt="Anohubs Logo" class="anohubs-hero-logo mx-auto fade-in-up">
                 
                 <h1 class="text-white font-extrabold mb-6 tracking-tight fade-in-up delay-200" style="font-size: var(--font-size-h1); line-height: 1.1;">
                     The Global Standard for <span class="text-hydro-primary" style="text-shadow: 0 0 20px rgba(34, 211, 238, 0.9);">Hydro Integrity</span>
@@ -289,8 +304,7 @@
         </section>
 
         <div class="section-stripe"></div>
-
-
+        
         <section id="services" class="py-24 bg-hydro-slate text-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 <h2 class="text-base font-bold tracking-widest text-hydro-primary uppercase fade-in-up">Our Core Services</h2>
@@ -467,7 +481,7 @@
     <footer class="bg-hydro-slate text-hydro-gray py-8 text-center border-t border-hydro-light-slate" role="contentinfo">
         <div class="container mx-auto px-6">
              <a href="#hero" class="mb-4 block" aria-label="Anohubs Logo - Back to top">
-                <img src="/anohubsapp/logo.svg" alt="Anohubs Logo" class="anohubs-logo mx-auto">
+                <img src="/logo.svg" alt="Anohubs Logo" class="anohubs-logo mx-auto">
              </a>
              <p class="text-slate-400 mb-6">Establishing the global standard for hydro integrity.</p>
              
