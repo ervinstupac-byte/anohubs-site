@@ -7,7 +7,35 @@
     <meta name="description" content="Establishing the global standard for hydro integrity where technological precision and ethical responsibility drive both sustainable profit and ecological health. Empowering hydropower operators with comprehensive, transparent, and verifiable audits.">
     
     <script>
-        // ... (Favicon Script Logic ostaje isti) ...
+        // Inicijalizacija cache bustera i putanje
+        const cacheBuster = "?v=" + new Date().getTime();
+        const rootPath = "/"; // Putanja do root-a glavnog domena (anohubs.com)
+
+        // Ubacivanje Favicon linkova sa Cache Buster-om
+        const faviconLinks = [
+            { rel: "shortcut icon", href: rootPath + "favicon.ico", type: "image/x-icon" },
+            { rel: "icon", type: "image/png", sizes: "32x32", href: rootPath + "favicon-32x32.png" },
+            { rel: "icon", type:"image/png", sizes: "16x16", href: rootPath + "favicon-16x16.png" },
+            { rel: "apple-touch-icon", sizes: "180x180", href: rootPath + "apple-touch-icon.png" }
+        ];
+
+        faviconLinks.forEach(link => {
+            const el = document.createElement("link");
+            el.rel = link.rel;
+            el.href = link.href + cacheBuster; // Forsira preuzimanje nove ikone
+            if (link.type) el.type = link.type;
+            if (link.sizes) el.sizes = link.sizes;
+            document.head.appendChild(el);
+        });
+        
+        // Favicon Aplikacije (za tab) - APSOLUTNA PUTANJA (GitHub Pages)
+        const anohubFavicon = document.createElement("link");
+        anohubFavicon.rel = "icon";
+        anohubFavicon.type = "image/png";
+        anohubFavicon.sizes = "32x32";
+        anohubFavicon.href = "https://ervinstupac-byte.github.io/anohubsapp/favicon-32x32.png";
+        document.head.appendChild(anohubFavicon);
+
     </script>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -41,32 +69,21 @@
         html { scroll-behavior: smooth; }
         body { font-family: 'Inter', sans-serif; }
         
-        /* RADIKALNA PROMENA: VIŠESTRUKA DINAMIČKA POZADINA */
+        /* POZADINA: orljani_Una.jpg je globalna fiksna pozadina */
         body {
-            /* 1. Orljani (Leto) / 2. Proleće / 3. Zima */
-            /* Koristimo background-attachment: local da se pozadina skroluje sa sadržajem */
-            background-image: 
-                url('zima_arm.jpg'), 
-                url('proljece_arm.jpg'), 
-                url('orljani_Una.jpg'); 
-            
+            background-image: url('orljani_Una.jpg'), url('proljece_arm.jpg'), url('zima_arm.jpg'); 
             background-repeat: no-repeat;
-            background-attachment: local; /* Ključno za scroll efekat */
-
-            /* Svaka slika zauzima 33.33% visine, i pozicionirana je na 0, 33%, 66% */
+            background-attachment: local;
             background-size: 100% 33.33%, 100% 33.33%, 100% 33.33%;
             background-position: 
-                center 100%,  /* Zima (na dnu) */
-                center 50%,   /* Proleće (u sredini) */
-                center 0;     /* Orljani (na vrhu) */
-            
-            /* Da bi skrolovanje trajalo duže (za 3 slike) */
+                center 0,
+                center 50%,
+                center 100%;
             min-height: 250vh; 
         }
-
-        /* Hero sekcija i dalje ima blagi gradient da bi se videla pozadina, ali je čitljivost prioritet */
+        
         .hero-gradient {
-            background: linear-gradient(180deg, rgba(17, 24, 39, 0.95) 0%, rgba(30, 41, 59, 0.9) 100%); 
+            background: linear-gradient(180deg, rgba(17, 24, 39, 0.7) 0%, rgba(30, 41, 59, 0.6) 100%); 
             padding-top: 3rem; 
             padding-bottom: 3rem;
             position: relative;
@@ -75,15 +92,23 @@
             align-items: center;
         }
         
-        /* ... (Ostali stilovi i funkcije su zadržani) ... */
+        .bg-hydro-slate {
+            background-color: rgba(30, 41, 59, 0.85) !important; 
+        }
+        .bg-hydro-charcoal {
+            background-color: rgba(17, 24, 39, 0.85) !important; 
+        }
+        .bg-hydro-light-slate {
+             background-color: rgba(51, 65, 85, 0.75) !important;
+        }
         .section-stripe {
             height: 10px;
             background: repeating-linear-gradient(
                 45deg,
-                var(--tw-colors-hydro-slate),
-                var(--tw-colors-hydro-slate) 10px,
-                var(--tw-colors-hydro-charcoal) 10px,
-                var(--tw-colors-hydro-charcoal) 20px
+                rgba(30, 41, 59, 0.8),
+                rgba(30, 41, 59, 0.8) 10px,
+                rgba(17, 24, 39, 0.8) 10px,
+                rgba(17, 24, 39, 0.8) 20px
             );
             border-top: 1px solid var(--tw-colors-hydro-slate);
             border-bottom: 1px solid var(--tw-colors-hydro-slate);
@@ -158,7 +183,7 @@
     </style>
 
 </head>
-<body class="bg-hydro-charcoal text-slate-300 text-lg antialiased overflow-x-hidden">
+<body class="text-white">
 
     <header class="bg-hydro-charcoal text-white shadow-2xl sticky top-0 z-50 border-b border-hydro-primary/50" role="banner">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex justify-between items-center">
@@ -170,7 +195,7 @@
                 <a href="#about" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">About</a>
                 <a href="#services" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Services</a>
                 
-                <a href="https://anohubs.com/anohubsapp/" target="_blank" rel="noopener noreferrer" class="nav-link relative text-hydro-secondary hover:text-green-500 transition tracking-widest font-extrabold text-lg p-2 uppercase">ANO HUB</a>
+                <a href="https://ervinstupac-byte.github.io/anohubsapp/" target="_blank" rel="noopener noreferrer" class="nav-link relative text-hydro-secondary hover:text-green-500 transition tracking-widest font-extrabold text-lg p-2 uppercase">ANO HUB</a>
                 <a href="#technology" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Technology</a>
                 <a href="#contact" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Contact</a>
                 <a href="#contact" class="bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-6 py-2.5 rounded-full transition transform hover:scale-105 shadow-xl font-bold tracking-wider uppercase text-base">Request Audit</a>
@@ -186,7 +211,7 @@
                 <a href="#about" class="block hover:text-hydro-primary transition tracking-wider py-2">About</a>
                 <a href="#services" class="block hover:text-hydro-primary transition tracking-wider py-2">Services</a>
                 
-                <a href="https://anohubs.com/anohubsapp/" target="_blank" rel="noopener noreferrer" class="block hover:text-hydro-secondary transition tracking-wider py-2">ANO HUB</a>
+                <a href="https://ervinstupac-byte.github.io/anohubsapp/" target="_blank" rel="noopener noreferrer" class="block hover:text-hydro-secondary transition tracking-wider py-2">ANO HUB</a>
                 <a href="#technology" class="block hover:text-hydro-primary transition tracking-wider py-2">Technology</a>
                 <a href="#contact" class="block hover:text-hydro-primary transition tracking-wider py-2">Contact</a>
                 <a href="#contact" class="block bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-5 py-2 rounded-full transition shadow-md font-bold tracking-wider mt-2 text-center">Request Audit</a>
