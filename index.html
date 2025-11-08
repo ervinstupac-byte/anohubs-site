@@ -7,29 +7,32 @@
     <meta name="description" content="Establishing the global standard for hydro integrity where technological precision and ethical responsibility drive both sustainable profit and ecological health. Empowering hydropower operators with comprehensive, transparent, and verifiable audits.">
     
     <script>
-        // Inicijalizacija cache bustera i putanje
+        // Generiše jedinstveni token za borbu protiv agresivnog keširanja
         const cacheBuster = "?v=" + new Date().getTime();
-        const iconPath = "/"; // Root putanja glavnog domena (anohubs.com)
-
-        // Ubacivanje Favicon linkova sa Cache Buster-om
+        const rootPath = "/"; // Putanja do root-a glavnog domena (anohubs.com)
+        
+        // --- 1. POSTAVKE ZA FAVICON NA GLAVNOM DOMENU (anohubs.com) ---
+        // Svi ovi fajlovi moraju biti u ROOT-u anohubs-site foldera
         const faviconLinks = [
-            // Svi ovi fajlovi su u root-u anohubs-site foldera, putanje su ispravljene
-            { rel: "shortcut icon", href: iconPath + "favicon.ico", type: "image/x-icon" },
-            { rel: "icon", type: "image/png", sizes: "32x32", href: iconPath + "favicon-32x32.png" },
-            { rel: "icon", type: "image/png", sizes: "16x16", href: iconPath + "favicon-16x16.png" },
-            { rel: "apple-touch-icon", sizes: "180x180", href: iconPath + "apple-touch-icon.png" }
+            { rel: "shortcut icon", href: rootPath + "favicon.ico", type: "image/x-icon" },
+            { rel: "icon", type: "image/png", sizes: "32x32", href: rootPath + "favicon-32x32.png" },
+            { rel: "icon", type: "image/png", sizes: "16x16", href: rootPath + "favicon-16x16.png" },
+            { rel: "apple-touch-icon", sizes: "180x180", href: rootPath + "apple-touch-icon.png" }
         ];
 
         faviconLinks.forEach(link => {
             const el = document.createElement("link");
             el.rel = link.rel;
-            el.href = link.href + cacheBuster; // Forsira preuzimanje nove ikone
+            // Dodavanje Cache Bustera za nultu toleranciju keširanja
+            el.href = link.href + cacheBuster; 
             if (link.type) el.type = link.type;
             if (link.sizes) el.sizes = link.sizes;
             document.head.appendChild(el);
         });
     </script>
     
+    <link rel="icon" type="image/png" sizes="32x32" href="https://ervinstupac-byte.github.io/anohubsapp/favicon-32x32.png">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
