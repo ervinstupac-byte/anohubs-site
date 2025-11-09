@@ -18,7 +18,7 @@
             font-family: 'Inter', sans-serif; 
             line-height: 1.6;
             
-            /* POZADINA: Vraćeno na zima_arm.jpg za Glavnu stranicu */
+            /* POZADINA: zima_arm.jpg za Glavnu stranicu (Zima) */
             background-image: url('zima_arm.jpg');
             background-size: cover;
             background-attachment: fixed;
@@ -42,7 +42,7 @@
         /* MODAL I SADRŽAJ ČLANKA */
         #article-modal { backdrop-filter: blur(5px); }
         .modal-content-area { 
-            /* PROLEĆE POZADINA ZA ČLANAK */
+            /* NOVO: POZADINA: proljece_arm.jpg kao pozadina Modala */
             background-image: url('proljece_arm.jpg');
             background-size: cover;
             background-position: center;
@@ -54,12 +54,15 @@
             width: 90%;
             max-width: 900px;
         }
+        
+        /* FIKSIRANJE SADRŽAJA ČLANKA */
         .article-container { 
             padding: 40px 20px; 
             margin: 0 auto;
             max-width: 100%;
-            /* DODAJEMO PROZIRNI SLOJ UNUTAR ČLANKA DA BI TEKST BIO ČITLJIV PREKO SLIKE */
-            background-color: rgba(255, 255, 255, 0.9); 
+            /* NOVO: SUBLIMNA BELA POZADINA DA TEKST BUDE ČITLJIV PREKO PROLEĆNE SLIKE */
+            background-color: rgba(255, 255, 255, 0.9);
+            min-height: 80vh; /* Osigurava da se modal ispravno inicijalizuje */
         }
         
         /* STILOVI ZA ČLANAK (IZ VAŠEG ORIGINALNOG PROMPTA) */
@@ -220,7 +223,7 @@
                 `
             },
             {
-                id: 'module4', // The Cost of Compromise (Novi članak) - Prethodni (sada Modul 4)
+                id: 'module4', // The True Cost of Compromise (Novi članak) - Prethodni (sada Modul 4)
                 icon: '🛡️',
                 title: 'The True Cost of Compromise',
                 subtitle: 'Why Integrity and Culture Matter',
@@ -230,7 +233,7 @@
                         <h1>🛡️ The True Cost of Compromise: Why Integrity and Culture Matter in Engineering</h1>
                         
                         <p class="article-intro">
-                            As a seasoned leader in global engineering, I've had the privilege of managing highly complex hydropower projects around the world. My experience has taught me that the true measure of a project’s success is not just its completion, but its long-term resilience and sustainability.
+                            As a seasoned leader in global engineering, I've had the privilege of managing highly complex hydropower projects in demanding international environments for over 15 years. My experience has taught me that the true measure of a project’s success is not just its completion, but its long-term resilience and sustainability.
                         </p>
 
                         <h2>1. Technical Expertise in Service of Strategic Leadership</h2>
@@ -334,7 +337,7 @@
 
                         <p>
                             **STRATEGIC VALUE:** Our design transforms the **unpredictable hydraulic environment into a predictable and manageable one**, ensuring maximum mitigation of the **48% dynamic risk factor**.</p>
-
+                        
                         <div class="cta-footer">
                             <strong>Spremni da eliminišete 48% dinamičkog rizika u vašoj floti?</strong>
                             <p>Garantujte Operativnu Izvrsnost sa Hydrodynamic Harmony™ rešenjima.</p>
@@ -391,6 +394,7 @@
             data.forEach(item => {
                 // 1. Kreiranje Kartice (Slider Item)
                 const card = document.createElement('div');
+                // FIKSIRANJE SLIDERA: Koristimo Tailwind klase za fiksiranje širine kartice i omogućavanje skrolovanja
                 card.className = 'insight-card flex-shrink-0 w-80 h-96 p-6 rounded-xl bg-slate-800 border border-cyan-500/50 cursor-pointer relative';
                 card.setAttribute('onclick', `openModal('${item.id}')`);
                 
