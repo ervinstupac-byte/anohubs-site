@@ -18,8 +18,8 @@
             font-family: 'Inter', sans-serif; 
             line-height: 1.6;
             
-            /* POZADINA: zima.arm kao fiksna pozadina za Insights */
-            background-image: url('zima_arm.jpg');
+            /* POZADINA: NOVO: proljece_arm.jpg kao fiksna pozadina za Insights */
+            background-image: url('proljece_arm.jpg');
             background-size: cover;
             background-attachment: fixed;
             background-position: center bottom;
@@ -87,7 +87,8 @@
         <h1 class="text-4xl font-extrabold text-white mb-4 text-center section-title">AnoHUB Expert Insights</h1>
         <p class="text-xl text-slate-400 mb-10 text-center">Your knowledge base for hydro sector challenges, discipline, and future expertise.</p>
 
-        <div id="content-slider-wrapper" class="relative"> <div id="insights-list" class="flex space-x-6 overflow-x-scroll p-4 pb-12 scrollbar-hide">
+        <div id="content-slider-wrapper" class="relative">
+            <div id="insights-list" class="flex space-x-6 overflow-x-scroll p-4 pb-12 scrollbar-hide">
                 </div>
 
             <button id="scroll-left" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-slate-700/70 p-3 rounded-full shadow-lg hover:bg-cyan-500 transition duration-300 z-20 hidden md:block">
@@ -125,10 +126,41 @@
 
 
     <script>
-        // PODACI O ČLANCIMA (Svi statusi su sada na Engleskom)
+        // PODACI O ČLANCIMA (Ugrađeni, rešava problem putanje)
         const insightData = [
             {
-                id: 'module4', 
+                id: 'module5', // NOVI ČLANAK: The True Cost of Low Bid (Modul 5)
+                icon: '💰',
+                title: 'The True Cost of Low Bid',
+                subtitle: 'The Dilemma of Capital Expenditure vs. LCC',
+                status: 'Published',
+                content: `
+                    <h1>💰 The True Cost of Low Bid: The Dilemma of Capital Expenditure vs. LCC</h1>
+                    
+                    <p class="article-intro">
+                        In the hydropower sector, a silent catastrophe is unfolding. The most procurement contracts rest on a fatal premise: the relentless pursuit of the lowest upfront price (CapEx). This "Low Bid Greed" is the greatest enemy of your project's longevity.
+                    </p>
+
+                    <h2>1. Measuring the Illusion: Long-term Cost vs. Purchase Price</h2>
+                    <p>Every expert knows that the Capital Expenditure (CapEx) of a turbine is minimal compared to the total cost over a 100-year lifecycle (OpEx). Despite this, investors routinely pressure manufacturers to cut corners. The manufacturer saves where it is hidden: choosing inferior materials for hydraulic or lubrication systems. A €5,000 saving leads to an unplanned outage costing €100,000 in lost revenue. The best rehabilitation projects show that the LCC for additional capacity can be as low as 0.01 USD/kWh.</p>
+                    
+                    <h2>2. The Science of Consequential Failure: The 48-Percent Risk</h2>
+                    <p>The consequences of low-bid procurement are not speculative; they are physically proven. Because installation teams face unsustainable deadlines, the critical alignment phase is rushed. Scientific Proof: Studies confirm that slight shaft misalignment triggers a quantifiable **48% dynamic instability** of the turbine's critical frequencies. The Low-Bid Project—regardless of the total investment—is financially flawed and dynamically unstable from birth, guaranteeing premature, catastrophic failure.</p>
+
+                    <h2>3. The "Everyone Knows Everything" Syndrome (The Holistic Failure)</h2>
+                    <p>Why does this cycle persist? Because the professional ecosystem suffers from a non-holistic approach: Contractual focus on delay clauses while ignoring material certificates; Construction management focuses on the visible component, but is forced to tolerate defects due to organizational chaos. The problem isn't lack of expertise, but the inability of experts to look beyond their narrow contractual mandate.</p>
+
+                    <h2>4. The Strategic Mandate: The Integrated Audit Solution</h2>
+                    <p>We must stop treating hydropower as a simple CapEx transaction. It is a 100-year commitment. Your reliable partner must **Enforce Precision** (Flawless Installation Protocol—QC < 0.1 mm) to eliminate the 48-Percent-Risk, **Audit Contracts** for material compatibility, and **Secure Integrity** (Investment in ethical leadership is the basis for guaranteed precision).</p>
+                    
+                    <div class="cta-footer">
+                        <strong>The investment in early, comprehensive integrity is not a cost factor. It's the only guarantee that your pursuit of the lowest bid won't become your costliest catastrophic failure.</strong>
+                        <a href="/index.html#contact" class="cta-button">REQUEST LCC CONSULTATION</a>
+                    </div>
+                `
+            },
+            {
+                id: 'module4', // The Cost of Compromise (Novi članak) - Prethodni (sada Modul 4)
                 icon: '🛡️',
                 title: 'The True Cost of Compromise',
                 subtitle: 'Why Integrity and Culture Matter',
@@ -137,7 +169,7 @@
                     <h1>🛡️ The True Cost of Compromise: Why Integrity and Culture Matter in Engineering</h1>
                     
                     <p class="article-intro">
-                        As a seasoned leader in global engineering, I've had the privilege of managing highly complex hydropower projects in demanding international environments for over 15 years. My experience has taught me that the true measure of a project’s success is not just its completion, but its long-term resilience and sustainability.
+                        As a seasoned leader in global engineering, I've had the privilege of managing highly complex hydropower projects around the world. My experience has taught me that the true measure of a project’s success is not just its completion, but its long-term resilience and sustainability.
                     </p>
 
                     <h2>1. Technical Expertise in Service of Strategic Leadership</h2>
@@ -289,6 +321,7 @@
             data.forEach(item => {
                 // 1. Kreiranje Kartice (Slider Item)
                 const card = document.createElement('div');
+                // FIKSIRANJE SLIDERA: Koristimo Tailwind klase za fiksiranje širine kartice i omogućavanje skrolovanja
                 card.className = 'insight-card flex-shrink-0 w-80 h-96 p-6 rounded-xl bg-slate-800 border border-cyan-500/50 cursor-pointer relative';
                 card.setAttribute('onclick', `openModal('${item.id}')`);
                 
