@@ -11,9 +11,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
-        /* ========================================================= */
-        /* GLOBALNI STILOVI (Dark Theme i Pozadina) */
-        /* ========================================================= */
+        /* CSS STILOVI ZA ČITLJIVOST I VIZUELNI AKCENAT (Dark Theme) */
         body { 
             background-color: #111827; 
             color: #E5E7EB; 
@@ -27,14 +25,10 @@
             background-position: center bottom;
         }
         .header-bg { background-color: rgba(30, 41, 59, 0.95); }
-
-        /* SKRIVANJE SKROL BARA ZA SLIDER */
         .scrollbar-hide::-webkit-scrollbar { display: none; }
         .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* ========================================================= */
-        /* KARTICE (INSIGHTS) */
-        /* ========================================================= */
+        /* Stilovi za KARTICE (BUBBLY LOOK) */
         .insight-card {
             transition: all 0.3s ease;
             background-color: rgba(30, 41, 59, 0.95); 
@@ -45,11 +39,10 @@
             box-shadow: 0 10px 15px -3px rgba(34, 211, 238, 0.3), 0 4px 6px -2px rgba(34, 211, 238, 0.1);
         }
 
-        /* ========================================================= */
-        /* MODAL I SADRŽAJ ČLANKA - KRITIČNA KOREKCIJA */
-        /* ========================================================= */
+        /* MODAL I SADRŽAJ ČLANKA */
         #article-modal { backdrop-filter: blur(5px); }
         .modal-content-area { 
+            /* PROLEĆE POZADINA ZA ČLANAK (Vizuelni omotač) */
             background-image: url('proljece_arm.jpg');
             background-size: cover;
             background-position: center;
@@ -65,78 +58,39 @@
         
         /* FIKSIRANJE WRAPPERA ZA SCROLL */
         #article-content-wrapper {
-              max-height: calc(90vh - 100px); /* Oduzima prostor za naslov i dugme */
-              overflow-y: auto; 
-              padding-bottom: 20px;
+             /* KRITIČNO: Postavlja vidljivu visinu za skrolovanje */
+             max-height: calc(90vh - 80px); /* Oduzima prostor za dugme */
+             overflow-y: auto; 
+             padding-bottom: 20px;
         }
         
-        /* KONTEJNER TEKSTA */
+        /* FIKSIRANJE SADRŽAJA ČLANKA - KONTEJNER TEKSTA */
         .article-container { 
             padding: 40px 20px; 
             margin: 0 auto;
             max-width: 100%;
-            /* KRITIČNO: Postavljeno na 70% providnosti */
-            background-color: rgba(255, 255, 255, 0.70); 
+            background-color: rgba(255, 255, 255, 0.9); /* KRITIČNO: Beli providni sloj */
+            color: #000000; /* KRITIČNO: Fiksna crna boja za sav tekst */
             line-height: 1.6;
             min-height: 80vh; 
         }
-
-        /* KRITIČNO: FORSIRANJE BOJE TEKSTA I ČITLJIVOST (FIKSIRANO) */
-        /* Osiguravamo da su svi glavni elementi teksta crni na bijeloj pozadini */
-        .article-container p, 
-        .article-container ul li, 
-        .article-container td,
-        .article-container blockquote,
-        .article-container strong,     /* DODANO: Osigurava crni boldirani tekst */
-        .article-container a,         /* DODANO: Osigurava crne linkove (CTA se stilizira posebno) */
-        .article-container .cta-footer strong,
-        .article-container .cta-footer p {
-            color: #000000 !important; /* Apsolutno crna boja za tijelo teksta */
-        }
         
-        /* STILOVI ZA NASLOVE */
-        .article-container h1, .article-container h2, .article-container h3 {
-            color: #6C5CE7 !important; /* Violet/Pearlescent Violet - Ljepša kontrastna boja */
-        }
-        
-        /* DETALJNI STILOVI ZA ČLANAK */
-        .article-container h1 { border-bottom: 3px solid #22d3ee; padding-bottom: 15px; margin-bottom: 20px; }
-        .article-container h2 { border-left: 5px solid #f59e0b; padding-left: 15px; }
-        .article-container blockquote { border-left: 4px solid #f59e0b; background-color: #f9f9f9; padding: 15px 20px; margin: 20px 0; font-style: italic; }
-        
-        /* STILOVI ZA TABELU */
-        .styled-table { width: 100%; border-collapse: collapse; margin: 25px 0; font-size: 0.9em; min-width: 400px; box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); }
+        /* STILOVI ZA ČLANAK (IZ VAŠEG ORIGINALNOG PROMPTA) */
+        .article-container h1 { font-size: 2.2em; color: #111827; border-bottom: 3px solid #22d3ee; padding-bottom: 15px; margin-bottom: 20px; }
+        .article-container h2 { font-size: 1.8em; color: #1E293B; margin-top: 35px; margin-bottom: 15px; border-left: 5px solid #f59e0b; padding-left: 15px; }
+        .article-container h3 { font-size: 1.4em; color: #0099cc; margin-top: 25px; margin-bottom: 10px; }
+        .article-intro { font-size: 1.15em; font-weight: 400; color: #1a1a1a; padding: 15px 0; margin-bottom: 25px; border-bottom: 1px solid #eee; }
+        .article-container blockquote { border-left: 4px solid #f59e0b; background-color: #f9f9f9; padding: 15px 20px; margin: 20px 0; font-style: italic; color: #555; }
+        .article-container ul { list-style-type: '🐳 '; padding-left: 20px; margin-bottom: 20px; }
+        .styled-table { width: 100%; border-collapse: collapse; margin: 25px 0; font-size: 0.9em; box-shadow: 0 0 20px rgba(0, 0, 0, 0.15); }
         .styled-table thead tr { background-color: #111827; color: #ffffff; text-align: left; }
         .styled-table th, .styled-table td { padding: 12px 15px; border: 1px solid #dddddd; }
-        .styled-table tbody tr { border-bottom: 1px solid #dddddd; }
         .styled-table tbody tr:nth-of-type(even) { background-color: #f3f3f3; }
-        .styled-table tbody tr:last-of-type { border-bottom: 2px solid #009879; }
-
-        /* STILOVI ZA CALL-TO-ACTION FOOTER */
-        .cta-footer { 
-            background-color: #e6f2ff; 
-            border-top: 3px solid #0099cc; 
-            padding: 20px; 
-            text-align: center; 
-            margin-top: 30px; 
-            border-radius: 0 0 8px 8px; /* Zaobljeni uglovi samo na dnu, ako je modal-content-area okrugla */
-        }
-        .cta-button { 
-            background-color: #f59e0b; 
-            color: #333; 
-            display: inline-block; 
-            padding: 10px 20px; 
-            border-radius: 8px; 
-            font-weight: 700;
-            text-decoration: none;
-            margin-top: 15px; 
-            transition: background-color 0.3s;
-        }
+        .cta-footer { text-align: center; margin-top: 50px; padding: 30px; background-color: #e6f2ff; border-top: 3px solid #0099cc; border-radius: 5px; }
+        .cta-button { display: inline-block; background-color: #f59e0b; color: #333; padding: 12px 25px; text-decoration: none; font-weight: bold; border-radius: 5px; margin-top: 15px; transition: background-color 0.3s; }
         .cta-button:hover { background-color: #e6b800; color: #000; }
-        
-        /* Responsivnost za tabelu */
         @media (max-width: 600px) {
-            .styled-table { display: block; overflow-x: auto; }
+             .styled-table { display: block; overflow-x: auto; }
         }
     </style>
 </head>
@@ -144,7 +98,7 @@
 
     <header class="bg-hydro-charcoal header-bg sticky top-0 z-10 shadow-lg">
         <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-            <a href="/index.html" class="text-xl font-bold text-cyan-400 hover:text-cyan-300 transition-colors">← Back to Homepage</a>
+            <a href="/index.html" class="text-xl font-bold text-cyan-400 hover:text-cyan-300">← Back to Homepage</a>
         </div>
     </header>
     
@@ -171,8 +125,8 @@
             <div id="article-content-wrapper">
                 </div>
             
-            <div class="flex-shrink-0 text-center p-4 bg-gray-900 border-t border-red-600">
-                <button onclick="closeModal()" class="px-6 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg transition-colors">Close Article</button>
+            <div class="text-center mt-6">
+                <button onclick="closeModal()" class="px-6 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg">Close Article</button>
             </div>
         </div>
     </div>
@@ -191,7 +145,7 @@
 
 
     <script>
-        // PODACI O ČLANCIMA (Ugrađeni)
+        // PODACI O ČLANCIMA (Ugrađeni, rešava problem putanje)
         const insightData = [
             // NOVO: MODUL 13 - The Unseen Threat: Sediment and Silt
             {
@@ -219,7 +173,7 @@
                         <p>Knowing your specific turbine's weaknesses is the first step toward building a better defense strategy.</p>
 
                         <h2>Protecting Your Investment: The Simple Solution</h2>
-                        <p>The most effective strategy against sediment is prevention. The best line of defense is a <strong>settling basin or sand trap</strong>.</p>
+                        <p>The most effective strategy against sediment is prevention. The best line of defense is a **settling basin or sand trap**.</p>
                         <p>A settling basin is a simple concrete channel or reservoir constructed upstream of the main intake. It's designed to slow the water’s velocity, allowing heavier particles of sand and gravel to settle to the bottom before the water enters the turbine's intake channel. This is a remarkably effective and low-cost solution that can be implemented on projects of any scale.</p>
                         
                         <p>The key to a successful sand trap is a regular flushing and maintenance schedule. By periodically opening the flushing gates at the bottom of the basin, you can efficiently remove the built-up sediment. This simple routine protects your turbine, extends its lifespan, and ensures consistent energy production.</p>
@@ -475,7 +429,7 @@
                         <p>Why does this cycle persist? Because the professional ecosystem suffers from a non-holistic approach: Contractual focus on delay clauses while ignoring material certificates; Construction management focuses on the visible component, but is forced to tolerate defects due to organizational chaos. The problem isn't lack of expertise, but the inability of experts to look beyond their narrow contractual mandate.</p>
 
                         <h2>4. The Strategic Mandate: The Integrated Audit Solution</h2>
-                        <p>We must stop treating hydropower as a simple CapEx transaction. It is a 100-year commitment. Your reliable partner must **Enforce Precision** (Flawless Installation Protocol—QC &lt; 0.1 mm) to eliminate the 48-Percent-Risk, **Audit Contracts** for material compatibility, and **Secure Integrity** (Investment in ethical leadership is the basis for guaranteed precision).</p>
+                        <p>We must stop treating hydropower as a simple CapEx transaction. It is a 100-year commitment. Your reliable partner must **Enforce Precision** (Flawless Installation Protocol—QC < 0.1 mm) to eliminate the 48-Percent-Risk, **Audit Contracts** for material compatibility, and **Secure Integrity** (Investment in ethical leadership is the basis for guaranteed precision).</p>
                         
                         <div class="cta-footer">
                             <strong>The investment in early, comprehensive integrity is not a cost factor. It's the only guarantee that your pursuit of the lowest bid won't become your costliest catastrophic failure.</strong>
@@ -657,23 +611,15 @@
                 // 1. Kreiranje Kartice (Slider Item)
                 const card = document.createElement('div');
                 card.className = 'insight-card flex-shrink-0 w-80 h-96 p-6 rounded-xl bg-slate-800 border border-cyan-500/50 cursor-pointer relative';
+                card.setAttribute('onclick', `openModal('${item.id}')`);
                 
+                // Status Text Logic (Sve na Engleskom)
                 const isPublished = item.status === 'Published';
-                const statusText = isPublished ? 'CLICK TO READ' : item.status.toUpperCase();
+                const statusText = isPublished ? 'CLICK TO READ' : item.status;
                 const statusColor = isPublished ? 'text-cyan-400' : 'text-slate-400';
                 
-                // Onclick event se dodaje samo ako je članak objavljen
-                if (isPublished) {
-                    card.setAttribute('onclick', `openModal('${item.id}')`);
-                } else {
-                    // Ako nije objavljen, samo dodajemo klasu koja vizualno isključuje
-                    card.classList.add('opacity-70', 'cursor-default');
-                }
-                
                 // Generisanje pregleda sadržaja za karticu (bez HTML tagova)
-                // Uklanjamo HTML tagove, zamjenjujemo zareze razmacima i skraćujemo tekst
-                const cleanContent = item.content.replace(/<[^>]*>?/gm, ' ').replace(/\s+/g, ' ');
-                const previewText = cleanContent.substring(0, 100);
+                const previewText = item.content.replace(/<[^>]*>?/gm, '').substring(0, 100);
 
                 card.innerHTML = `
                     <div class="text-3xl mb-4 text-cyan-400">${item.icon}</div>
@@ -681,7 +627,7 @@
                     <p class="text-sm text-slate-400 mt-2 italic">${item.subtitle}</p>
                     <p class="mt-4 text-slate-300">${previewText}...</p>
                     <div class="absolute bottom-6 text-sm font-semibold ${statusColor}">
-                        ${statusText} ${isPublished ? '&rarr;' : ''}
+                        ${statusText} &rarr;
                     </div>
                 `;
                 list.appendChild(card);
@@ -695,17 +641,14 @@
             });
         }
 
-        // FUNKCIJE ZA MODAL (AŽURIRANE za skrolovanje)
+        // FUNKCIJE ZA MODAL (OSTALO JE ISTO)
         function openModal(moduleId) {
             const modal = document.getElementById('article-modal');
-            const contentWrapper = document.getElementById('article-content-wrapper');
             
-            // Sakrij sve članke
             document.querySelectorAll('#article-content-wrapper .article-container').forEach(content => {
                 content.classList.add('hidden');
             });
             
-            // Prikaži traženi članak
             const targetContent = document.getElementById(moduleId + '-content');
             if (targetContent) {
                 targetContent.classList.remove('hidden');
@@ -714,9 +657,9 @@
             modal.classList.remove('hidden');
             document.body.classList.add('overflow-hidden'); // Sprečava skrolovanje pozadine
             
-            // Postavlja skrol na vrh wrappera pri otvaranju modala
-            if (contentWrapper) {
-                contentWrapper.scrollTop = 0; 
+            const contentArea = document.getElementById('modal-content-area');
+            if (contentArea) {
+                contentArea.scrollTo(0, 0);
             }
         }
 
