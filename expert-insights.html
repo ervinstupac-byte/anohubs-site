@@ -68,19 +68,19 @@
             padding: 40px 20px; 
             margin: 0 auto;
             max-width: 100%;
-            background-color: rgba(255, 255, 255, 0.90); /* 90% providnosti */
+            background-color: rgba(255, 255, 255, 0.9); /* PROZIRNA BELA POZADINA */
             line-height: 1.6;
             min-height: 80vh; 
-            
-            /* KRITIČNO: Z-INDEX MORA BITI VISOK */
-            z-index: 20; 
-            position: relative;
         }
 
         /* KRITIČNO: GURANJE TEKSTA U CRNO I POVEĆANJE TEŽINE FONTA */
-        /* OVDE FORSIRAMO BOJU TEKSTA NA ELEMENTE UNUTAR ARTIKLA */
-        .article-container * {
-            color: #000000 !important; /* Apsolutno crna boja za sve unutar kontejnera */
+        .article-container p, 
+        .article-container ul li, 
+        .article-container td,
+        .article-container th,
+        .article-container blockquote {
+            color: #000000 !important; /* Apsolutno crna boja za telo teksta i tabele */
+            font-weight: 500; /* Povećana težina za bolju čitljivost */
         }
         
         /* STILOVI ZA ČLANAK (UNUTAR KONTEJNERA) */
@@ -88,9 +88,17 @@
         .article-container h2 { color: #1E293B !important; margin-top: 35px; margin-bottom: 15px; border-left: 5px solid #f59e0b; padding-left: 15px; }
         .article-intro { color: #1a1a1a !important; padding: 15px 0; margin-bottom: 25px; border-bottom: 1px solid #eee; }
         .article-container blockquote { border-left: 4px solid #f59e0b; background-color: #f9f9f9; padding: 15px 20px; margin: 20px 0; font-style: italic; color: #555 !important; }
-        .styled-table thead tr { background-color: #111827 !important; color: #ffffff !important; text-align: left; }
+        .article-container ul { list-style-type: '🐳 '; padding-left: 20px; margin-bottom: 20px; }
+        .styled-table { width: 100%; border-collapse: collapse; margin: 25px 0; font-size: 0.9em; box-shadow: 0 0 20px rgba(0, 0, 0, 0.15); }
+        .styled-table thead tr { background-color: #111827; color: #ffffff; text-align: left; }
         .styled-table th, .styled-table td { padding: 12px 15px; border: 1px solid #dddddd; }
         .styled-table tbody tr:nth-of-type(even) { background-color: #f3f3f3; }
+        .cta-footer { text-align: center; margin-top: 50px; padding: 30px; background-color: #e6f2ff; border-top: 3px solid #0099cc; border-radius: 5px; }
+        .cta-button { display: inline-block; background-color: #f59e0b; color: #333; padding: 12px 25px; text-decoration: none; font-weight: bold; border-radius: 5px; margin-top: 15px; transition: background-color 0.3s; }
+        .cta-button:hover { background-color: #e6b800; color: #000; }
+        @media (max-width: 600px) {
+             .styled-table { display: block; overflow-x: auto; }
+        }
     </style>
 </head>
 <body>
@@ -184,7 +192,6 @@
                     </div>
                 `
             },
-            // NOVO: MODUL 12 - From Reactive to Predictive
             {
                 id: 'module12',
                 icon: '💻',
@@ -220,7 +227,6 @@
                     </div>
                 `
             },
-            // NOVO: MODUL 11 - The "Check Engine Light" of Your Turbine
             {
                 id: 'module11',
                 icon: '🌡️',
@@ -369,7 +375,7 @@
                             <li>10-20% of a hydropower plant's total operating costs are related to maintenance.</li>
                             <li>The service life of critical components can be shortened by 50-70% if adequate alignment and inspections are not performed.</li>
                         </ul>
-
+                        
                         <h2>2. Holistic Problem Breakdown: From Root Cause to Consequence</h2>
                         <h3>Initial Problems (Root Causes)</h3>
                         <ul>
