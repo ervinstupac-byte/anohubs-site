@@ -46,8 +46,7 @@
             background-image: url('proljece_arm.jpg');
             background-size: cover;
             background-position: center;
-            /* KRITIČNO: TEST BOJA - ŽUTA koja mora da probije sve konflikte */
-            background-color: #FFFF00 !important; 
+            background-color: #ffffff;
             max-height: 90vh;
             border-radius: 8px;
             width: 90%;
@@ -72,7 +71,6 @@
             background-color: rgba(255, 255, 255, 0.9); /* PROZIRNA BELA POZADINA */
             line-height: 1.6;
             min-height: 80vh; 
-            color: #000000; /* Fiksna crna boja za sav tekst */
         }
 
         /* KRITIČNO: GURANJE TEKSTA U CRNO I POVEĆANJE TEŽINE FONTA */
@@ -81,16 +79,17 @@
         .article-container td,
         .article-container th,
         .article-container blockquote {
-            color: #000000 !important; 
-            font-weight: 500;
+            color: #000000 !important; /* Apsolutno crna boja za telo teksta i tabele */
+            font-weight: 500; /* Povećana težina za bolju čitljivost */
         }
         
         /* STILOVI ZA NASLOVE */
         .article-container h1 { color: #111827 !important; border-bottom: 3px solid #22d3ee; padding-bottom: 15px; margin-bottom: 20px; }
         .article-container h2 { color: #1E293B !important; margin-top: 35px; margin-bottom: 15px; border-left: 5px solid #f59e0b; padding-left: 15px; }
         .article-intro { color: #1a1a1a !important; padding: 15px 0; margin-bottom: 25px; border-bottom: 1px solid #eee; }
+        .article-container blockquote { border-left: 4px solid #f59e0b; background-color: #f9f9f9; padding: 15px 20px; margin: 20px 0; font-style: italic; color: #555 !important; }
         .styled-table thead tr { background-color: #111827; color: #ffffff; text-align: left; }
-        .cta-footer { background-color: #e6f2ff; border-top: 3px solid #0099cc; }
+        .cta-footer { text-align: center; margin-top: 50px; padding: 30px; background-color: #e6f2ff; border-top: 3px solid #0099cc; border-radius: 5px; }
     </style>
 </head>
 <body>
@@ -585,6 +584,7 @@
                     </div>
                 `
             },
+            // MODUL 2: PLACEHOLDER
             {
                 id: 'module2',
                 icon: '🎯',
@@ -677,7 +677,7 @@
                 
                 // Generisanje pregleda sadržaja za karticu (bez HTML tagova)
                 const targetContentDiv = document.createElement('div');
-                targetContentDiv.innerHTML = item.content; // Renderujemo sadržaj u privremeni div
+                targetContentDiv.innerHTML = item.content;
                 const previewText = targetContentDiv.textContent.substring(0, 100).trim();
 
                 card.innerHTML = `
