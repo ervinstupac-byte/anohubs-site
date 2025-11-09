@@ -47,7 +47,6 @@
             background-size: cover;
             background-position: center;
             background-color: #ffffff;
-            color: #333; /* Boja teksta se ne nasleđuje, ali treba da je tamna */
             max-height: 90vh;
             border-radius: 8px;
             width: 90%;
@@ -69,33 +68,32 @@
             padding: 40px 20px; 
             margin: 0 auto;
             max-width: 100%;
-            background-color: rgba(255, 255, 255, 0.9); /* PROZIRNA BELA POZADINA */
-            color: #111827; /* Glavna boja za naslove */
+            /* KRITIČNO: Postavljeno na 70% providnosti */
+            background-color: rgba(255, 255, 255, 0.70); 
             line-height: 1.6;
             min-height: 80vh; 
         }
 
-        /* KRITIČNO: FORSIRANJE BOJE TEKSTA UNUTAR MODALA */
+        /* KRITIČNO: FORSIRANJE BOJE TEKSTA I NASLOVA */
         .article-container p, 
         .article-container ul li, 
         .article-container td,
         .article-container blockquote {
-            color: #000000 !important; /* Apsolutno crna boja */
+            color: #000000 !important; /* Apsolutno crna boja za telo teksta */
+        }
+        .article-container h1, .article-container h2, .article-container h3 {
+             color: #6C5CE7 !important; /* Violet/Pearlescent Violet - Ljepša kontrastna boja */
         }
         
         /* STILOVI ZA ČLANAK (IZ VAŠEG ORIGINALNOG PROMPTA) */
-        .article-container h1 { font-size: 2.2em; color: #111827; border-bottom: 3px solid #22d3ee; padding-bottom: 15px; margin-bottom: 20px; }
-        .article-container h2 { font-size: 1.8em; color: #1E293B; margin-top: 35px; margin-bottom: 15px; border-left: 5px solid #f59e0b; padding-left: 15px; }
-        .article-container h3 { font-size: 1.4em; color: #0099cc; margin-top: 25px; margin-bottom: 10px; }
-        .article-intro { font-size: 1.15em; font-weight: 400; color: #1a1a1a; padding: 15px 0; margin-bottom: 25px; border-bottom: 1px solid #eee; }
-        .article-container blockquote { border-left: 4px solid #f59e0b; background-color: #f9f9f9; padding: 15px 20px; margin: 20px 0; font-style: italic; color: #555; }
-        .article-container ul { list-style-type: '🐳 '; padding-left: 20px; margin-bottom: 20px; }
-        .styled-table { width: 100%; border-collapse: collapse; margin: 25px 0; font-size: 0.9em; box-shadow: 0 0 20px rgba(0, 0, 0, 0.15); }
+        .article-container h1 { border-bottom: 3px solid #22d3ee; padding-bottom: 15px; margin-bottom: 20px; }
+        .article-container h2 { border-left: 5px solid #f59e0b; padding-left: 15px; }
+        .article-container blockquote { border-left: 4px solid #f59e0b; background-color: #f9f9f9; padding: 15px 20px; margin: 20px 0; font-style: italic; }
         .styled-table thead tr { background-color: #111827; color: #ffffff; text-align: left; }
         .styled-table th, .styled-table td { padding: 12px 15px; border: 1px solid #dddddd; }
         .styled-table tbody tr:nth-of-type(even) { background-color: #f3f3f3; }
-        .cta-footer { text-align: center; margin-top: 50px; padding: 30px; background-color: #e6f2ff; border-top: 3px solid #0099cc; border-radius: 5px; }
-        .cta-button { display: inline-block; background-color: #f59e0b; color: #333; padding: 12px 25px; text-decoration: none; font-weight: bold; border-radius: 5px; margin-top: 15px; transition: background-color 0.3s; }
+        .cta-footer { background-color: #e6f2ff; border-top: 3px solid #0099cc; }
+        .cta-button { background-color: #f59e0b; color: #333; }
         .cta-button:hover { background-color: #e6b800; color: #000; }
         @media (max-width: 600px) {
              .styled-table { display: block; overflow-x: auto; }
