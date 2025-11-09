@@ -42,9 +42,12 @@
         /* MODAL I SADRŽAJ ČLANKA */
         #article-modal { backdrop-filter: blur(5px); }
         .modal-content-area { 
-            /* KRITIČNO: ČISTA BELA POZADINA (TEST) */
-            background-color: #FFFFFF;
-            color: #333;
+            /* PROLEĆE POZADINA ZA ČLANAK (Vizuelni omotač) */
+            background-image: url('proljece_arm.jpg');
+            background-size: cover;
+            background-position: center;
+            background-color: #ffffff;
+            color: #333; /* Boja teksta se ne nasleđuje, ali treba da je tamna */
             max-height: 90vh;
             border-radius: 8px;
             width: 90%;
@@ -66,15 +69,21 @@
             padding: 40px 20px; 
             margin: 0 auto;
             max-width: 100%;
-            /* KRITIČNO: UKLONJENA POZADINA I FIKSIRANA BOJA TEKSTA */
-            background-color: transparent; 
-            color: #000000; /* Fiksna crna boja za sav tekst */
+            background-color: rgba(255, 255, 255, 0.9); /* PROZIRNA BELA POZADINA */
+            color: #111827; /* Glavna boja za naslove */
             line-height: 1.6;
             min-height: 80vh; 
         }
+
+        /* KRITIČNO: FORSIRANJE BOJE TEKSTA UNUTAR MODALA */
+        .article-container p, 
+        .article-container ul li, 
+        .article-container td,
+        .article-container blockquote {
+            color: #000000 !important; /* Apsolutno crna boja */
+        }
         
-        /* STILOVI ZA ČLANAK (UNUTAR KONTEJNERA) */
-        /* OVI STILOVI MORAJU RADITI NA CRNOJ BOJI TEKSTA (#000000) */
+        /* STILOVI ZA ČLANAK (IZ VAŠEG ORIGINALNOG PROMPTA) */
         .article-container h1 { font-size: 2.2em; color: #111827; border-bottom: 3px solid #22d3ee; padding-bottom: 15px; margin-bottom: 20px; }
         .article-container h2 { font-size: 1.8em; color: #1E293B; margin-top: 35px; margin-bottom: 15px; border-left: 5px solid #f59e0b; padding-left: 15px; }
         .article-container h3 { font-size: 1.4em; color: #0099cc; margin-top: 25px; margin-bottom: 10px; }
