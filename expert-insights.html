@@ -17,6 +17,12 @@
             color: #E5E7EB; 
             font-family: 'Inter', sans-serif; 
             line-height: 1.6;
+            
+            /* NOVO: POZADINA ZIMA.ARM */
+            background-image: url('zima_arm.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center bottom; /* Fokus na dnu (zima) */
         }
         .header-bg { background-color: rgba(30, 41, 59, 0.95); }
         .scrollbar-hide::-webkit-scrollbar { display: none; }
@@ -25,6 +31,7 @@
         /* Stilovi za KARTICE (BUBBLY LOOK) */
         .insight-card {
             transition: all 0.3s ease;
+            background-color: rgba(30, 41, 59, 0.95); /* Tamna pozadina sa providnošću */
             box-shadow: 0 4px 6px -1px rgba(34, 211, 238, 0.1);
         }
         .insight-card:hover {
@@ -99,12 +106,12 @@
     </div>
 
     <script>
-        // PODACI O ČLANCIMA (EKSTERNALIZOVANO)
+        // PODACI O ČLANCIMA (Ugrađeni, rešava problem putanje)
         const insightData = [
             {
                 id: 'module4', // The Cost of Compromise
                 icon: '🛡️',
-                title: 'The True Cost of Compromise',
+                title: 'The Cost of Compromise',
                 subtitle: 'Zašto su integritet i kultura ključni',
                 status: 'Objavljeno',
                 content: `
@@ -233,8 +240,7 @@
                     </table>
 
                     <p>
-                        **STRATEŠKA VREDNOST:** Naš dizajn pretvara **nepredvidivu hidrauličnu okolinu u predvidivu i upravljivu**, osiguravajući maksimalno ublažavanje **48% dinamičkog faktora rizika**.
-                    </p>
+                        **STRATEŠKA VREDNOST:** Naš dizajn pretvara **nepredvidivu hidrauličnu okolinu u predvidivu i upravljivu**, osiguravajući maksimalno ublažavanje **48% dinamičkog faktora rizika**.</p>
 
                     <h2>🚀 4. Zaključak: Inžinjering Tolerancije i Budućnost</h2>
 
@@ -252,6 +258,38 @@
                         <strong>Spremni da eliminišete 48% dinamičkog rizika u vašoj floti?</strong>
                         <p>Garantujte Operativnu Izvrsnost sa Hydrodynamic Harmony™ rešenjima.</p>
                         <a href="/index.html#contact" class="cta-button">KONTAKTIRAJTE NAS ZA DETALJNU STUDIJU</a>
+                    </div>
+                `
+            },
+            {
+                id: 'module4', // The Cost of Compromise (Novi članak)
+                icon: '🛡️',
+                title: 'The Cost of Compromise',
+                subtitle: 'Zašto su integritet i kultura ključni',
+                status: 'Objavljeno',
+                content: `
+                    <h1>🛡️ The True Cost of Compromise</h1>
+                    
+                    <p class="article-intro">
+                        For over 15 years, I've had the privilege of leading complex hydropower projects around the world. My experience, from hands-on installation to site management, has shown me that the true measure of a project's success is not just its completion, but its long-term resilience and sustainability. A truly successful project is built on a foundation of integrity, safety, and a strong organizational culture.
+                    </p>
+
+                    <h2>1. Technical Expertise in Service of Strategic Leadership</h2>
+                    <p>My career has taught me how to bridge the gap between hands-on expertise and strategic leadership. I've learned that while technical skills are the foundation, true transformation happens when they are combined with advanced skills in problem-solving, risk management, and communication. A leader must not only give orders but must also deeply understand every aspect of the work on the ground to make informed and safe decisions.</p>
+
+                    <h2>2. Solving Systemic, Not Just Technical, Challenges</h2>
+                    <p>I’ve discovered that many on-site issues are not technical problems but are the result of systemic failures within the organizational culture. A lack of communication, insufficient staff training, or excessive pressure on deadlines can lead to errors that compromise quality and safety. My focus is on identifying and resolving these systemic challenges to create a more resilient and healthier work environment.</p>
+                    
+                    <h2>3. Investing in People as the Key Driver of Success</h2>
+                    <p>I firmly believe that successful projects are a direct result of investing in people. This includes ethical leadership, ensuring adequate resources and equipment, and fostering a culture that values and supports its employees. When every team member feels valued and safe, they are empowered to contribute to their full potential.</p>
+
+                    <h2>4. A Vision for the Future: A Holistic and Proactive Approach</h2>
+                    <p>My vision for the future of the engineering industry is based on a holistic and proactive approach. Instead of reactively fighting fires, we need to build systems that are inherently resilient to challenges. I believe that the greatest successes are achieved when ethics, safety, and operational excellence are not viewed as separate goals, but as inseparable parts of one, integrated process.</p>
+                    
+                    <div class="cta-footer">
+                        <strong>Ready to build robust, resilient systems?</strong>
+                        <p>Let's discuss how integrity and culture drive profitability.</p>
+                        <a href="/index.html#contact" class="cta-button">Connect With Me</a>
                     </div>
                 `
             },
@@ -274,7 +312,13 @@
         ];
 
         document.addEventListener('DOMContentLoaded', () => {
-            renderInsights(insightData);
+            // Proveravamo da li je insightData definisana pre nego što je pozovemo
+            if (typeof insightData !== 'undefined') {
+                 renderInsights(insightData);
+            } else {
+                 const list = document.getElementById('insights-list');
+                 list.innerHTML = '<p class="text-red-500 font-bold">Greška: Podaci za Insights nisu pronađeni. Proverite implementaciju.</p>';
+            }
         });
 
         function renderInsights(data) {
@@ -291,11 +335,14 @@
                 
                 const statusColor = item.status === 'Objavljeno' ? 'text-hydro-secondary' : 'text-slate-400';
                 
+                // Generisanje pregleda sadržaja za karticu (bez HTML tagova)
+                const previewText = item.content.replace(/<[^>]*>?/gm, '').substring(0, 100);
+
                 card.innerHTML = `
                     <div class="text-3xl mb-4 text-cyan-400">${item.icon}</div>
                     <h2 class="text-2xl font-bold text-white">${item.title}</h2>
                     <p class="text-sm text-slate-400 mt-2 italic">${item.subtitle}</p>
-                    <p class="mt-4 text-slate-300">${item.content.substring(0, 100).replace(/<[^>]*>?/gm, '')}...</p>
+                    <p class="mt-4 text-slate-300">${previewText}...</p>
                     <div class="absolute bottom-6 text-sm font-semibold ${statusColor}">
                         ${item.status === 'Objavljeno' ? 'KLIKNITE ZA ČITANJE' : item.status} &rarr;
                     </div>
