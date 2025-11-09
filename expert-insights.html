@@ -18,8 +18,8 @@
             font-family: 'Inter', sans-serif; 
             line-height: 1.6;
             
-            /* POZADINA: NOVO: proljece_arm.jpg kao fiksna pozadina za Insights */
-            background-image: url('proljece_arm.jpg');
+            /* POZADINA: Vraćeno na zima_arm.jpg za Glavnu stranicu */
+            background-image: url('zima_arm.jpg');
             background-size: cover;
             background-attachment: fixed;
             background-position: center bottom;
@@ -42,6 +42,10 @@
         /* MODAL I SADRŽAJ ČLANKA */
         #article-modal { backdrop-filter: blur(5px); }
         .modal-content-area { 
+            /* PROLEĆE POZADINA ZA ČLANAK */
+            background-image: url('proljece_arm.jpg');
+            background-size: cover;
+            background-position: center;
             background-color: #ffffff;
             color: #333;
             max-height: 90vh;
@@ -54,6 +58,8 @@
             padding: 40px 20px; 
             margin: 0 auto;
             max-width: 100%;
+            /* DODAJEMO PROZIRNI SLOJ UNUTAR ČLANKA DA BI TEKST BIO ČITLJIV PREKO SLIKE */
+            background-color: rgba(255, 255, 255, 0.9); 
         }
         
         /* STILOVI ZA ČLANAK (IZ VAŠEG ORIGINALNOG PROMPTA) */
@@ -128,34 +134,88 @@
     <script>
         // PODACI O ČLANCIMA (Ugrađeni, rešava problem putanje)
         const insightData = [
+            // NOVO: MODUL 6 - Hidden Costs & Ticking Bombs
             {
-                id: 'module5', // NOVI ČLANAK: The True Cost of Low Bid (Modul 5)
+                id: 'module6',
+                icon: '💣',
+                title: 'Hidden Costs & Ticking Bombs',
+                subtitle: 'Systematic Review of Mechanical Maintenance',
+                status: 'Published',
+                content: `
+                    <div class="article-container">
+                        <h1>💣 Hidden Costs & Ticking Bombs: The Hard Truth About Your Hydropower Plant</h1>
+
+                        <p class="article-intro">
+                            Although every hydropower plant has its unique characteristics, the global problem in mechanical maintenance is not a matter of isolated failures, but rather a systemic lack of a proactive maintenance culture. The traditional model often relies on reactive maintenance—that is, repairs are made only when a failure occurs. This approach is, unfortunately, the direct cause of most critical problems and long-term costs.
+                        </p>
+
+                        <h2>1. Relevant Statistics and General Data</h2>
+                        <ul>
+                            <li>70-80% of mechanical equipment failures can be attributed to inadequate maintenance or errors during assembly and installation.</li>
+                            <li>10-20% of a hydropower plant's total operating costs are related to maintenance.</li>
+                            <li>The service life of critical components can be shortened by 50-70% if adequate alignment and inspections are not performed.</li>
+                        </ul>
+                        
+                        <h2>2. Holistic Problem Breakdown: From Root Cause to Consequence</h2>
+                        <h3>Initial Problems (Root Causes)</h3>
+                        <ul>
+                            <li>**Assembly and Installation Errors:** The most common and dangerous cause of long-term problems. Errors like poor shaft alignment or improper bolt tightening become a **"ticking time bomb"**.</li>
+                            <li>**Electrical Factors and Faulty Automation:** Problems with voltage, frequency, or protection systems lead to excessive mechanical stress and electro-erosion on bearings.</li>
+                            <li>**Lack of Training and Inexperienced Personnel:** The direct cause of assembly errors and maintenance oversights.</li>
+                        </ul>
+
+                        <h3>Consequences of Initial Problems</h3>
+                        <ul>
+                            <li>**Misalignment:** Causes uneven load distribution and excessive vibrations, drastically reducing the lifespan of bearings and seals.</li>
+                            <li>**Vibrations:** Misalignment or damaged blades create vibrations that are a **"silent killer"** for the equipment.</li>
+                            <li>**Contamination:** Water, dirt, or foreign particles enter systems due to faulty seals.</li>
+                        </ul>
+
+                        <h2>3. The Human and Strategic Factor: The True Root Cause</h2>
+                        <p>While technical failures are the most visible problem, they are often a symptom of deeper organizational and human issues. This is where the true cost of compromise is found:</p>
+                        
+                        <ul>
+                            <li>**Reactive vs. Proactive Culture:** A culture that prioritizes short-term cost savings over long-term reliability inevitably leads to a reactive maintenance strategy.</li>
+                            <li>**Loss of Knowledge and Expertise:** Retirement and burnout of experienced personnel create a critical knowledge gap, directly threatening the plant's long-term operational health.</li>
+                        </ul>
+
+                        <div class="cta-footer">
+                            <strong>Conclusion: Your investment in early, comprehensive expert integrity is the only guarantee against costly failures.</strong>
+                            <a href="/index.html#contact" class="cta-button">Connect With Our Expertise</a>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                id: 'module5', // The True Cost of Low Bid (Modul 5)
                 icon: '💰',
                 title: 'The True Cost of Low Bid',
                 subtitle: 'The Dilemma of Capital Expenditure vs. LCC',
                 status: 'Published',
                 content: `
-                    <h1>💰 The True Cost of Low Bid: The Dilemma of Capital Expenditure vs. LCC</h1>
-                    
-                    <p class="article-intro">
-                        In the hydropower sector, a silent catastrophe is unfolding. The most procurement contracts rest on a fatal premise: the relentless pursuit of the lowest upfront price (CapEx). This "Low Bid Greed" is the greatest enemy of your project's longevity.
-                    </p>
+                    <div class="article-container">
+                        <h1>💰 The True Cost of Low Bid: The Dilemma of Capital Expenditure vs. LCC</h1>
+                        
+                        <p class="article-intro">
+                            In the hydropower sector, a silent catastrophe is unfolding. The most procurement contracts rest on a fatal premise: the relentless pursuit of the lowest upfront price (CapEx). This "Low Bid Greed" is the greatest enemy of your project's longevity.
+                        </p>
 
-                    <h2>1. Measuring the Illusion: Long-term Cost vs. Purchase Price</h2>
-                    <p>Every expert knows that the Capital Expenditure (CapEx) of a turbine is minimal compared to the total cost over a 100-year lifecycle (OpEx). Despite this, investors routinely pressure manufacturers to cut corners. The manufacturer saves where it is hidden: choosing inferior materials for hydraulic or lubrication systems. A €5,000 saving leads to an unplanned outage costing €100,000 in lost revenue. The best rehabilitation projects show that the LCC for additional capacity can be as low as 0.01 USD/kWh.</p>
-                    
-                    <h2>2. The Science of Consequential Failure: The 48-Percent Risk</h2>
-                    <p>The consequences of low-bid procurement are not speculative; they are physically proven. Because installation teams face unsustainable deadlines, the critical alignment phase is rushed. Scientific Proof: Studies confirm that slight shaft misalignment triggers a quantifiable **48% dynamic instability** of the turbine's critical frequencies. The Low-Bid Project—regardless of the total investment—is financially flawed and dynamically unstable from birth, guaranteeing premature, catastrophic failure.</p>
+                        <h2>1. Measuring the Illusion: Long-term Cost vs. Purchase Price</h2>
+                        <p>Every expert knows that the Capital Expenditure (CapEx) of a turbine is minimal compared to the total cost over a 100-year lifecycle (OpEx). Despite this, investors routinely pressure manufacturers to cut corners. The manufacturer saves where it is hidden: choosing inferior materials for hydraulic or lubrication systems. A €5,000 saving leads to an unplanned outage costing €100,000 in lost revenue. The best rehabilitation projects show that the LCC for additional capacity can be as low as 0.01 USD/kWh.</p>
+                        
+                        <h2>2. The Science of Consequential Failure: The 48-Percent Risk</h2>
+                        <p>The consequences of low-bid procurement are not speculative; they are physically proven. Because installation teams face unsustainable deadlines, the critical alignment phase is rushed. Scientific Proof: Studies confirm that slight shaft misalignment triggers a quantifiable **48% dynamic instability** of the turbine's critical frequencies. The Low-Bid Project—regardless of the total investment—is financially flawed and dynamically unstable from birth, guaranteeing premature, catastrophic failure.</p>
 
-                    <h2>3. The "Everyone Knows Everything" Syndrome (The Holistic Failure)</h2>
-                    <p>Why does this cycle persist? Because the professional ecosystem suffers from a non-holistic approach: Contractual focus on delay clauses while ignoring material certificates; Construction management focuses on the visible component, but is forced to tolerate defects due to organizational chaos. The problem isn't lack of expertise, but the inability of experts to look beyond their narrow contractual mandate.</p>
+                        <h2>3. The "Everyone Knows Everything" Syndrome (The Holistic Failure)</h2>
+                        <p>Why does this cycle persist? Because the professional ecosystem suffers from a non-holistic approach: Contractual focus on delay clauses while ignoring material certificates; Construction management focuses on the visible component, but is forced to tolerate defects due to organizational chaos. The problem isn't lack of expertise, but the inability of experts to look beyond their narrow contractual mandate.</p>
 
-                    <h2>4. The Strategic Mandate: The Integrated Audit Solution</h2>
-                    <p>We must stop treating hydropower as a simple CapEx transaction. It is a 100-year commitment. Your reliable partner must **Enforce Precision** (Flawless Installation Protocol—QC < 0.1 mm) to eliminate the 48-Percent-Risk, **Audit Contracts** for material compatibility, and **Secure Integrity** (Investment in ethical leadership is the basis for guaranteed precision).</p>
-                    
-                    <div class="cta-footer">
-                        <strong>The investment in early, comprehensive integrity is not a cost factor. It's the only guarantee that your pursuit of the lowest bid won't become your costliest catastrophic failure.</strong>
-                        <a href="/index.html#contact" class="cta-button">REQUEST LCC CONSULTATION</a>
+                        <h2>4. The Strategic Mandate: The Integrated Audit Solution</h2>
+                        <p>We must stop treating hydropower as a simple CapEx transaction. It is a 100-year commitment. Your reliable partner must **Enforce Precision** (Flawless Installation Protocol—QC < 0.1 mm) to eliminate the 48-Percent-Risk, **Audit Contracts** for material compatibility, and **Secure Integrity** (Investment in ethical leadership is the basis for guaranteed precision).</p>
+                        
+                        <div class="cta-footer">
+                            <strong>The investment in early, comprehensive integrity is not a cost factor. It's the only guarantee that your pursuit of the lowest bid won't become your costliest catastrophic failure.</strong>
+                            <a href="/index.html#contact" class="cta-button">REQUEST LCC CONSULTATION</a>
+                        </div>
                     </div>
                 `
             },
@@ -166,28 +226,30 @@
                 subtitle: 'Why Integrity and Culture Matter',
                 status: 'Published',
                 content: `
-                    <h1>🛡️ The True Cost of Compromise: Why Integrity and Culture Matter in Engineering</h1>
-                    
-                    <p class="article-intro">
-                        As a seasoned leader in global engineering, I've had the privilege of managing highly complex hydropower projects around the world. My experience has taught me that the true measure of a project’s success is not just its completion, but its long-term resilience and sustainability.
-                    </p>
+                    <div class="article-container">
+                        <h1>🛡️ The True Cost of Compromise: Why Integrity and Culture Matter in Engineering</h1>
+                        
+                        <p class="article-intro">
+                            As a seasoned leader in global engineering, I've had the privilege of managing highly complex hydropower projects around the world. My experience has taught me that the true measure of a project’s success is not just its completion, but its long-term resilience and sustainability.
+                        </p>
 
-                    <h2>1. Technical Expertise in Service of Strategic Leadership</h2>
-                    <p>My career has taught me how to bridge the gap between hands-on expertise and strategic leadership. I've learned that while technical skills are the foundation, true transformation happens when they are combined with advanced skills in problem-solving, risk management, and communication. A leader must not only give orders but must also deeply understand every aspect of the work on the ground to make informed and safe decisions.</p>
+                        <h2>1. Technical Expertise in Service of Strategic Leadership</h2>
+                        <p>My career has taught me how to bridge the gap between hands-on expertise and strategic leadership. I've learned that while technical skills are the foundation, true transformation happens when they are combined with advanced skills in problem-solving, risk management, and communication. A leader must not only give orders but must also deeply understand every aspect of the work on the ground to make informed and safe decisions.</p>
 
-                    <h2>2. Solving Systemic, Not Just Technical, Challenges</h2>
-                    <p>I’ve discovered that many on-site issues are not technical problems but are the result of systemic failures within the organizational culture. A lack of communication, insufficient staff training, or excessive pressure on deadlines can can lead to errors that compromise quality and safety. My focus is on identifying and resolving these systemic challenges to create a more resilient and healthier work environment.</p>
-                    
-                    <h2>3. Investing in People as the Key Driver of Success</h2>
-                    <p>I firmly believe that successful projects are a direct result of investing in people. This includes ethical leadership, ensuring adequate resources and equipment, and fostering a culture that values and supports its employees. When every team member feels valued and safe, they are empowered to contribute to their full potential.</p>
+                        <h2>2. Solving Systemic, Not Just Technical, Challenges</h2>
+                        <p>I’ve discovered that many on-site issues are not technical problems but are the result of systemic failures within the organizational culture. A lack of communication, insufficient staff training, or excessive pressure on deadlines can can lead to errors that compromise quality and safety. My focus is on identifying and resolving these systemic challenges to create a more resilient and healthier work environment.</p>
+                        
+                        <h2>3. Investing in People as the Key Driver of Success</h2>
+                        <p>I firmly believe that successful projects are a direct result of investing in people. This includes ethical leadership, ensuring adequate resources and equipment, and fostering a culture that values and supports its employees. When every team member feels valued and safe, they are empowered to contribute to their full potential.</p>
 
-                    <h2>4. A Vision for the Future: A Holistic and Proactive Approach</h2>
-                    <p>My vision for the future of the engineering industry is based on a holistic and proactive approach. Instead of reactively fighting fires, we need to build systems that are inherently resilient to challenges. I believe that the greatest successes are achieved when ethics, safety, and operational excellence are not viewed as separate goals, but as inseparable parts of one, integrated process.</p>
-                    
-                    <div class="cta-footer">
-                        <strong>Ready to build robust, resilient systems?</strong>
-                        <p>Let's discuss how integrity and culture drive profitability.</p>
-                        <a href="/index.html#contact" class="cta-button">Connect With Me</a>
+                        <h2>4. A Vision for the Future: A Holistic and Proactive Approach</h2>
+                        <p>My vision for the future of the engineering industry is based on a holistic and proactive approach. Instead of reactively fighting fires, we need to build systems that are inherently resilient to challenges. I believe that the greatest successes are achieved when ethics, safety, and operational excellence are not viewed as separate goals, but as inseparable parts of one, integrated process.</p>
+                        
+                        <div class="cta-footer">
+                            <strong>Ready to build robust, resilient systems?</strong>
+                            <p>Let's discuss how integrity and culture drive profitability.</p>
+                            <a href="/index.html#contact" class="cta-button">Connect With Me</a>
+                        </div>
                     </div>
                 `
             },
@@ -198,79 +260,87 @@
                 subtitle: 'Metrics and Risk',
                 status: 'Published',
                 content: `
-                    <h1>🌊 Engineering Immunity: How Technology Neutralizes 48% Dynamic Risk in Hydropower</h1>
+                    <div class="article-container">
+                        <h1>🌊 Engineering Immunity: How Technology Neutralizes 48% Dynamic Risk in Hydropower</h1>
 
-                    <p class="article-intro">
-                        This analysis demonstrates that the most significant threat to hydropower asset integrity is not component failure, but **Organizational Execution Gap**. Studies confirm that installation imperfections introduce a measurable 48% dynamic risk factor that accelerates asset degradation. We introduce the **Dual Application Strategy** – a bio-inspired solution guaranteeing maximum operational resilience.
-                    </p>
+                        <p class="article-intro">
+                            This analysis demonstrates that the most significant threat to hydropower asset integrity is not component failure, but **Organizational Execution Gap**. Studies confirm that installation imperfections introduce a measurable 48% dynamic risk factor that accelerates asset degradation. We introduce the **Dual Application Strategy** – a bio-inspired solution guaranteeing maximum operational resilience.
+                        </p>
 
-                    <h2>🚨 1. Organizational Compromise: The Ticking Bomb Thesis</h2>
+                        <h2>🚨 1. Organizational Compromise: The Ticking Bomb Thesis</h2>
 
-                    <p>
-                        The global hydropower industry faces a crisis. The exodus of seasoned technical experts and intense cost pressure create an **"Execution Gap"** – the critical disconnect between perfect design and flawed field implementation.
-                    </p>
+                        <p>
+                            The global hydropower industry faces a crisis. The exodus of seasoned technical experts and intense cost pressure create an **"Execution Gap"** – the critical disconnect between perfect design and flawed field implementation.
+                        </p>
 
-                    <blockquote>
-                        **THE TICKING BOMB THESIS:** Even the most precisely designed turbine is vulnerable to failure caused by simple **Installation Errors**—misalignments often invisible during standard commissioning. Landmark studies confirm: minutes of misalignment can introduce a staggering **48% risk of dynamic instability** over the asset’s lifetime.
-                    </blockquote>
+                        <blockquote>
+                            **THE TICKING BOMB THESIS:** Even the most precisely designed turbine is vulnerable to failure caused by simple **Installation Errors**—misalignments often invisible during standard commissioning. Landmark studies confirm: minutes of misalignment can introduce a staggering **48% risk of dynamic instability** over the asset’s lifetime.
+                        </blockquote>
 
-                    <h2>🐳 2. The Solution: Hydrodynamic Harmony™ — Dual Application Strategy</h2>
+                        <h2>🐳 2. The Solution: Hydrodynamic Harmony™ — Dual Application Strategy</h2>
 
-                    <p>
-                        Our innovative hypothesis finds its solution in nature's most efficient fluid dynamicist: the **Humpback Whale**. The **"Whale Fin" Rotor (Tubercle Concept)** integrates carefully shaped ridges to create **Hydrodynamic Immunity** – a design that tolerates human imperfection.
-                    </p>
+                        <p>
+                            Our innovative hypothesis finds its solution in nature's most efficient fluid dynamicist: the **Humpback Whale**. The **"Whale Fin" Rotor (Tubercle Concept)** integrates carefully shaped ridges to create **Hydrodynamic Immunity** – a design that tolerates human imperfection.
+                        </p>
 
-                    <table class="styled-table">
-                        <thead>
-                            <tr>
-                                <th>Component</th>
-                                <th>Role of Tubercle Design</th>
-                                <th>Benefit</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>**Rotor (Runner)**</td>
-                                <td>**Whale Fin Mandate:** Maintains controlled flow by eliminating chaos at partial load.</td>
-                                <td>Increased Stability and Resistance to Cavitation/Erosion.</td>
-                            </tr>
-                            <tr>
-                                <td>**Distributor (Guide Vanes)**</td>
-                                <td>**Reduced Inlet Turbulence:** Stabilizes the water column *before* it reaches the runner (Flow Pre-conditioning).</td>
-                                <td>Cleaner Flow and dramatically reduced **Input Chaos**.</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Component</th>
+                                    <th>Role of Tubercle Design</th>
+                                    <th>Benefit</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>**Rotor (Runner)**</td>
+                                    <td>**Whale Fin Mandate:** Maintains controlled flow by eliminating chaos at partial load.</td>
+                                    <td>Increased Stability and Resistance to Cavitation/Erosion.</td>
+                                </tr>
+                                <tr>
+                                    <td>**Distributor (Guide Vanes)**</td>
+                                    <td>**Reduced Inlet Turbulence:** Stabilizes the water column *before* it reaches the runner (Flow Pre-conditioning).</td>
+                                    <td>Cleaner Flow and dramatically reduced **Input Chaos**.</td>
+                                </tr>
+                            </tbody>
+                        </table>
 
-                    <h2>📈 3. Quantified Proof: CFD Validation and ROI</h2>
-                    <p>
-                        Independent CFD (Computational Fluid Dynamics) investigation confirmed the advantage, focusing on the critical **Partial Load ($0.6 \times Q_{rated}$)**. Our technology compensates for organizational risk, offering a clear Return on Investment (ROI).
-                    </p>
+                        <h2>📈 3. Quantified Proof: CFD Validation and ROI</h2>
+                        <p>
+                            Independent CFD (Computational Fluid Dynamics) investigation confirmed the advantage, focusing on the critical **Partial Load ($0.6 \times Q_{rated}$)**. Our technology compensates for organizational risk, offering a clear Return on Investment (ROI).
+                        </p>
 
-                    <table class="styled-table">
-                        <thead>
-                            <tr>
-                                <th>Metric</th>
-                                <th>Standard Kaplan Runner</th>
-                                <th>Whale Fin Runner (Dual Application)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>**Dynamic Risk**</td>
-                                <td>48% (Aggravated Instability)</td>
-                                <td>**Neutralized** (Virtual Elimination)</td>
-                            </tr>
-                            <tr>
-                                <td>**Vibrations**</td>
-                                <td>High (Accelerated Bearing Wear).</td>
-                                <td>**Drastically Reduced** (Extended Lifespan).</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Metric</th>
+                                    <th>Standard Kaplan Runner</th>
+                                    <th>Whale Fin Runner (Dual Application)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>**Dynamic Risk**</td>
+                                    <td>48% (Aggravated Instability)</td>
+                                    <td>**Neutralized** (Virtual Elimination)</td>
+                                </tr>
+                                <tr>
+                                    <td>**Vibrations**</td>
+                                    <td>High (Accelerated Bearing Wear).</td>
+                                    <td>**Drastically Reduced** (Extended Lifespan).</td>
+                                </tr>
+                            </tbody>
+                        </table>
 
-                    <p>
-                        **STRATEGIC VALUE:** Our design transforms the **unpredictable hydraulic environment into a predictable and manageable one**, ensuring maximum mitigation of the **48% dynamic risk factor**.</p>
+                        <p>
+                            **STRATEGIC VALUE:** Our design transforms the **unpredictable hydraulic environment into a predictable and manageable one**, ensuring maximum mitigation of the **48% dynamic risk factor**.</p>
+
+                        <div class="cta-footer">
+                            <strong>Spremni da eliminišete 48% dinamičkog rizika u vašoj floti?</strong>
+                            <p>Garantujte Operativnu Izvrsnost sa Hydrodynamic Harmony™ rešenjima.</p>
+                            <a href="/index.html#contact" class="cta-button">KONTAKTIRAJTE NAS ZA DETALJNU STUDIJU</a>
+                        </div>
+                    </div>
                 `
             },
             {
@@ -279,7 +349,7 @@
                 title: '0.05 mm/m Standard',
                 subtitle: 'Discipline Verification',
                 status: 'In preparation',
-                content: '<h2>Module 2: 0.05 mm/m Protocol (In Preparation)</h2><p>A detailed protocol for implementing the 0.05 mm/m standard on-site and how precision affects all machine components.</p>'
+                content: '<div class="article-container"><h2>Module 2: 0.05 mm/m Protocol (In Preparation)</h2><p>A detailed protocol for implementing the 0.05 mm/m standard on-site and how precision affects all machine components.</p></div>'
             },
             {
                 id: 'module3',
@@ -287,7 +357,7 @@
                 title: 'Winter Challenges & M-E Synergy',
                 subtitle: 'Extreme Conditions',
                 status: 'In preparation',
-                content: '<h2>Module 3: Winter Challenges and M-E Synergy (In Preparation)</h2><p>A detailed analysis of the M-E Synergy Gap and why digital monitoring is essential for protecting equipment in extreme winter conditions.</p>'
+                content: '<div class="article-container"><h2>Module 3: Winter Challenges and M-E Synergy (In Preparation)</h2><p>A detailed analysis of the M-E Synergy Gap and why digital monitoring is essential for protecting equipment in extreme winter conditions.</p></div>'
             }
         ];
 
@@ -321,7 +391,6 @@
             data.forEach(item => {
                 // 1. Kreiranje Kartice (Slider Item)
                 const card = document.createElement('div');
-                // FIKSIRANJE SLIDERA: Koristimo Tailwind klase za fiksiranje širine kartice i omogućavanje skrolovanja
                 card.className = 'insight-card flex-shrink-0 w-80 h-96 p-6 rounded-xl bg-slate-800 border border-cyan-500/50 cursor-pointer relative';
                 card.setAttribute('onclick', `openModal('${item.id}')`);
                 
