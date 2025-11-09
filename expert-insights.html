@@ -60,15 +60,18 @@
             padding: 40px 20px; 
             margin: 0 auto;
             max-width: 100%;
-            background-color: rgba(255, 255, 255, 0.9);
+            /* KRITIČNO: Postavljanje providne pozadine i boje teksta */
+            background-color: rgba(255, 255, 255, 0.98); 
+            color: #111827 !important; /* Fiksiranje boje teksta na CRNU/Tamnu */
             min-height: 80vh; 
+            z-index: 10; 
         }
         
         /* STILOVI ZA ČLANAK (IZ VAŠEG ORIGINALNOG PROMPTA) */
-        .article-container h1 { font-size: 2.2em; color: #111827; border-bottom: 3px solid #22d3ee; padding-bottom: 15px; margin-bottom: 20px; }
-        .article-container h2 { font-size: 1.8em; color: #1E293B; margin-top: 35px; margin-bottom: 15px; border-left: 5px solid #f59e0b; padding-left: 15px; }
-        .article-container h3 { font-size: 1.4em; color: #0099cc; margin-top: 25px; margin-bottom: 10px; }
-        .article-intro { font-size: 1.15em; font-weight: 400; color: #1a1a1a; padding: 15px 0; margin-bottom: 25px; border-bottom: 1px solid #eee; }
+        .article-container h1 { color: #111827; border-bottom: 3px solid #22d3ee; padding-bottom: 15px; margin-bottom: 20px; }
+        .article-container h2 { color: #1E293B; margin-top: 35px; margin-bottom: 15px; border-left: 5px solid #f59e0b; padding-left: 15px; }
+        .article-container h3 { color: #0099cc; margin-top: 25px; margin-bottom: 10px; }
+        .article-intro { color: #1a1a1a; padding: 15px 0; margin-bottom: 25px; border-bottom: 1px solid #eee; }
         .article-container blockquote { border-left: 4px solid #f59e0b; background-color: #f9f9f9; padding: 15px 20px; margin: 20px 0; font-style: italic; color: #555; }
         .article-container ul { list-style-type: '🐳 '; padding-left: 20px; margin-bottom: 20px; }
         .styled-table { width: 100%; border-collapse: collapse; margin: 25px 0; font-size: 0.9em; box-shadow: 0 0 20px rgba(0, 0, 0, 0.15); }
@@ -145,22 +148,25 @@
                 status: 'Published',
                 content: `
                     <div class="article-container">
-                        <h1>⏳ The Unseen Threat: How Sediment and Silt Are Eroding Hydropower Profits</h1>
+                        <h1>⏳ The Unseen Threat: Sediment and Silt Are Eroding Hydropower Profits</h1>
 
                         <h2>Defining the Damage: Abrasion vs. Cavitation</h2>
-                        <p>To fight the problem, you first need to understand the enemy. While both lead to turbine damage, abrasion and cavitation are entirely different phenomena. **Abrasion** is mechanical wear caused by solid particles in the water. Sand and silt act like sandpaper, constantly grinding down the metal surfaces. **Cavitation** is damage caused by the implosion of vapor bubbles in low-pressure zones.</p>
+                        <p>To fight the problem, you first need to understand the enemy. While both lead to turbine damage, abrasion and cavitation are entirely different phenomena.</p>
+                        <p><strong>Abrasion</strong> is mechanical wear caused by solid particles in the water. Sand and silt act like sandpaper, constantly grinding down the metal surfaces. The telltale sign of abrasion is a smooth, "sandblasted" appearance on the metal, which can thin out the blades over time. The primary culprits are soil erosion from upstream sources and high sediment loads, especially after heavy rains.</p>
+                        <p><strong>Cavitation</strong>, on the other hand, is damage caused by the implosion of vapor bubbles. This type of damage looks like a rough, pitted surface—like a sponge—and is typically localized. While a vortex can contribute to cavitation, it does not cause abrasion.</p>
+                        <p>The takeaway: If your turbine blades look worn down and smooth, you're dealing with abrasion.</p>
 
-                        <h3>The Right Tool for the Job: Turbine Susceptibility</h3>
-                        <p>Each turbine type has a different vulnerability to these forces:</p>
+                        <h2>The Right Tool for the Job: Turbine Susceptibility</h2>
+                        <p>Each turbine type has a different vulnerability to these forces.</p>
                         <ul>
-                            <li>**Francis and Kaplan:** Susceptible to both abrasion and cavitation due to submerged, high-pressure operation.</li>
-                            <li>**Pelton:** Highly vulnerable to abrasion as high-velocity particles impact the buckets, but generally not affected by cavitation.</li>
+                            <li>**Francis and Kaplan turbines:** Susceptible to both abrasion and cavitation due to their submerged, high-pressure operation.</li>
+                            <li>**Pelton turbines:** Highly vulnerable to abrasion as high-velocity particles impact the buckets.</li>
                         </ul>
                         <p>Knowing your specific turbine's weaknesses is the first step toward building a better defense strategy.</p>
 
                         <h2>Protecting Your Investment: The Simple Solution</h2>
                         <p>The most effective strategy against sediment is prevention. The best line of defense is a **settling basin or sand trap**.</p>
-                        <p>A settling basin is a simple concrete channel constructed upstream of the main intake, designed to slow the water’s velocity, allowing heavier particles of sand and gravel to settle to the bottom. This is a remarkably effective and low-cost solution that can be implemented on projects of any scale.</p>
+                        <p>A settling basin is a simple concrete channel or reservoir constructed upstream of the main intake. It's designed to slow the water’s velocity, allowing heavier particles of sand and gravel to settle to the bottom before the water enters the turbine's intake channel. This is a remarkably effective and low-cost solution that can be implemented on projects of any scale.</p>
                         
                         <p>The key to a successful sand trap is a regular flushing and maintenance schedule. By periodically opening the flushing gates at the bottom of the basin, you can efficiently remove the built-up sediment. This simple routine protects your turbine, extends its lifespan, and ensures consistent energy production.</p>
                         
@@ -171,7 +177,114 @@
                     </div>
                 `
             },
-            // NOVO: MODUL 9 - Beyond the Kilowatt-Hour (Symbiosis)
+            // NOVO: MODUL 12 - From Reactive to Predictive
+            {
+                id: 'module12',
+                icon: '💻',
+                title: 'From Reactive to Predictive',
+                subtitle: 'The Digital Twin’s Role in Hydropower Maintenance',
+                status: 'Published',
+                content: `
+                    <div class="article-container">
+                        <h1>💻 From Reactive to Predictive: The Digital Twin’s Role in Hydropower Maintenance</h1>
+
+                        <h2>What is a Digital Twin?</h2>
+                        <p>A digital twin is a virtual replica of a physical object, system, or process. It's created using data collected from sensors, allowing it to behave and react in the same way as its physical counterpart. For turbines, this means:</p>
+                        <ul>
+                            <li>A virtual model that perfectly simulates the turbine's behavior.</li>
+                            <li>Real-time sensors (for vibration, temperature, pressure, flow) that feed the twin with data.</li>
+                            <li>Analytical software that compares data from the virtual and real worlds to spot anomalies.</li>
+                        </ul>
+
+                        <h2>How a Digital Twin Helps in Practice</h2>
+                        <p>This technology transforms maintenance from a reactive to a predictive process. Instead of waiting for a breakdown, you predict the problem.</p>
+                        <ul>
+                            <li>**Early Detection of Abrasion and Cavitation:** When sediment starts damaging rotor blades, vibrations and pressure changes are minimal and barely noticeable to a human. A digital twin, however, can detect these minute changes instantly.</li>
+                            <li>**Performance Optimization:** The twin lets you simulate different scenarios without risking damage to the actual turbine.</li>
+                            <li>**Predictive Maintenance:** Based on data analysis, the system predicts when wear and tear will occur and determines the best time for maintenance. This eliminates expensive, unplanned emergency repairs.</li>
+                            <li>**Training and Education:** Technicians can practice on the virtual model, significantly reducing the risk of errors in the field.</li>
+                        </ul>
+
+                        <div class="cta-footer">
+                            <strong>Abrasion, cavitation, loss of efficiency—let's find better solutions together.</strong>
+                            <p>Connect with me to explore how we can implement this digital transformation.</p>
+                            <a href="/index.html#contact" class="cta-button">Connect With Me</a>
+                        </div>
+                    </div>
+                `
+            },
+            // NOVO: MODUL 11 - The "Check Engine Light" of Your Turbine
+            {
+                id: 'module11',
+                icon: '🌡️',
+                title: 'The "Check Engine Light" of Your Turbine',
+                subtitle: '5 Symptoms You Should Never Ignore',
+                status: 'Published',
+                content: `
+                    <div class="article-container">
+                        <h1>🌡️ The "Check Engine Light" of Your Turbine: 5 Symptoms You Should Never Ignore</h1>
+                        
+                        <p class="article-intro">
+                            Unexpected failures don't happen overnight. They are the result of cumulative stress from issues like abrasion, cavitation, and bearing wear. By the time a problem becomes critical, the damage is already done. Your best defense is a proactive approach, which means learning to read the subtle cues your turbine is giving you.
+                        </p>
+
+                        <h2>Your Diagnostic Toolkit: 5 Key Indicators</h2>
+                        
+                        <h3>1. Unusual Noise</h3>
+                        <ul>
+                            <li>**Thumping:** Often indicates issues with cavitation or damaged blades.</li>
+                            <li>**Squealing/Grinding:** Can signal a bearing problem from a lack of lubrication.</li>
+                            <li>**Rattling:** A common sign of loose parts or foreign objects inside the machine.</li>
+                        </ul>
+
+                        <h3>2. Changes in Vibration</h3>
+                        <p>Your hands are your best sensor. By placing a hand on the turbine's casing, you can feel for changes in vibration. Vibrations intensify over time and can signal a variety of problems, from an unbalanced rotor due to abrasion to damaged bearings. Ignoring these vibrations is like driving a car with a shaking wheel—a breakdown is inevitable.</p>
+                        
+                        <h3>3. A Temperature That Doesn't Match the Operating Mode</h3>
+                        <p>All turbines generate heat, but a sudden spike in temperature is a major red flag. Regularly check the temperature of bearings and oil. High temperatures can indicate insufficient lubrication, excessive friction, or a machine that's being overloaded. This simple visual check or using a thermometer can prevent you from overheating vital components.</p>
+                        
+                        <h3>4. The Appearance of Water and Leaks</h3>
+                        <ul>
+                            <li>**Foamy water:** This can be a sign that air is entering the system, which can lead to cavitation.</li>
+                            <li>**Oily streaks:** If you notice oily residue, there is likely a problem with the oil seals.</li>
+                            <li>**Dripping water:** Leaks at joints and seals are a common issue. If ignored, they lead to a loss of pressure and efficiency.</li>
+                        </ul>
+                        
+                        <h3>5. Changes in Power Output</h3>
+                        <p>Monitor your plant’s energy production. If you notice an unexplained drop in output, it’s a clear sign that something is wrong. Increased wear from abrasion, a blocked intake, or an unbalanced rotor can all lead to reduced efficiency.</p>
+
+                        <div class="cta-footer">
+                            <strong>Field experience has taught me that simple, low-cost inspections are far more effective than expensive, last-minute repairs.</strong>
+                            <p>Have you noticed any unusual signals from your machines? Share your experiences and help the community learn from each other.</p>
+                            <a href="/index.html#contact" class="cta-button">Connect With Our Expertise</a>
+                        </div>
+                    </div>
+                `
+            },
+            // NOVO: MODUL 10 - Holistic River View
+            {
+                id: 'module10',
+                icon: '🌍',
+                title: 'A Holistic View: River Protection and Turbines',
+                subtitle: 'Practical solutions for river health and assets',
+                status: 'Published',
+                content: `
+                    <div class="article-container">
+                        <h1>🌍 A Holistic View: River Protection and Turbines</h1>
+
+                        <h2>The Price of Negligence: The River's Condition as an Indicator</h2>
+                        <p>When the focus is solely on profit and not on the long-term health of the river, nature sends clear signals: The "hungry" river: A dam stops the transport of sediments (sand and gravel), leading to downstream riverbed erosion, loss of natural spawning grounds, and habitats for fish. Oily streaks: Oil leaks from machine parts leave traces on the water surface. Ineffective fish passages: Many fish ladders are too steep or the current within them is too strong, rendering them virtually unusable for most fish. These issues are not only ecological; they are a sign of an inefficient and outdated approach.</p>
+
+                        <h2>Practical Solutions: Paths to Symbiosis with Nature</h2>
+                        <p>The good news is that solutions exist. The key is a holistic approach that views the river as a single system. **Sediment Management** (e.g., controlled flushing) and **Natural Fish Passes** secure the long-term health of the river and, crucially for owners, prevent regulatory issues and ensure permanent operating licenses.</p>
+
+                        <div class="cta-footer">
+                            <strong>It is time for change. Have you struggled with unaddressed problems at your plant?</strong>
+                            <a href="/index.html#contact" class="cta-button">Share Your Experience</a>
+                        </div>
+                    </div>
+                `
+            },
             {
                 id: 'module9',
                 icon: '🌱',
@@ -411,6 +524,23 @@
                 `
             },
             {
+                id: 'module2',
+                icon: '🎯',
+                title: '0.05 mm/m Standard',
+                subtitle: 'Discipline Verification',
+                status: 'In preparation',
+                content: '<div class="article-container"><h2>Module 2: 0.05 mm/m Protocol (In Preparation)</h2><p>A detailed protocol for implementing the 0.05 mm/m standard on-site and how precision affects all machine components.</p></div>'
+            },
+            {
+                id: 'module3',
+                icon: '❄️',
+                title: 'Winter Challenges & M-E Synergy',
+                subtitle: 'Extreme Conditions',
+                status: 'In preparation',
+                content: '<div class="article-container"><h2>Module 3: Winter Challenges and M-E Synergy (In Preparation)</h2><p>A detailed analysis of the M-E Synergy Gap and why digital monitoring is essential for protecting equipment in extreme winter conditions.</p></div>'
+            },
+            // NOVO: MODUL 11 - The "Check Engine Light" of Your Turbine
+            {
                 id: 'module11',
                 icon: '🌡️',
                 title: 'The "Check Engine Light" of Your Turbine',
@@ -480,7 +610,7 @@
                         <ul>
                             <li>**Early Detection of Abrasion and Cavitation:** When sediment starts damaging rotor blades, vibrations and pressure changes are minimal and barely noticeable to a human. A digital twin, however, can detect these minute changes instantly.</li>
                             <li>**Performance Optimization:** The twin lets you simulate different scenarios without risking damage to the actual turbine.</li>
-                            <li>**Predictive Maintenance:** Based on data analysis, the system predicts when wear and tear will occur and determines the best time for maintenance.</li>
+                            <li>**Predictive Maintenance:** Based on data analysis, the system predicts when wear and tear will occur and determines the best time for maintenance. This eliminates expensive, unplanned emergency repairs.</li>
                             <li>**Training and Education:** Technicians can practice on the virtual model, significantly reducing the risk of errors in the field.</li>
                         </ul>
 
@@ -493,55 +623,24 @@
                 `
             },
             {
-                id: 'module2',
-                icon: '🎯',
-                title: '0.05 mm/m Standard',
-                subtitle: 'Discipline Verification',
-                status: 'In preparation',
-                content: '<div class="article-container"><h2>Module 2: 0.05 mm/m Protocol (In Preparation)</h2><p>A detailed protocol for implementing the 0.05 mm/m standard on-site and how precision affects all machine components.</p></div>'
-            },
-            {
-                id: 'module3',
-                icon: '❄️',
-                title: 'Winter Challenges & M-E Synergy',
-                subtitle: 'Extreme Conditions',
-                status: 'In preparation',
-                content: '<div class="article-container"><h2>Module 3: Winter Challenges and M-E Synergy (In Preparation)</h2><p>A detailed analysis of the M-E Synergy Gap and why digital monitoring is essential for protecting equipment in extreme winter conditions.</p></div>'
-            },
-            // Dodajem Modul 13 ovde
-            {
-                id: 'module13',
-                icon: '⏳',
-                title: 'The Unseen Threat: Sediment and Silt',
-                subtitle: 'Eroding Profits, Endangering Assets',
+                id: 'module10',
+                icon: '🌍',
+                title: 'A Holistic View: River Protection and Turbines',
+                subtitle: 'Practical solutions for river health and assets',
                 status: 'Published',
                 content: `
                     <div class="article-container">
-                        <h1>⏳ The Unseen Threat: How Sediment and Silt Are Eroding Hydropower Profits</h1>
+                        <h1>🌍 A Holistic View: River Protection and Turbines</h1>
 
-                        <h2>Defining the Damage: Abrasion vs. Cavitation</h2>
-                        <p>To fight the problem, you first need to understand the enemy. While both lead to turbine damage, abrasion and cavitation are entirely different phenomena.</p>
-                        <p><strong>Abrasion</strong> is mechanical wear caused by solid particles in the water. Sand and silt act like sandpaper, constantly grinding down the metal surfaces of the turbine’s runners and components. The primary culprits are soil erosion from upstream sources and high sediment loads, especially after heavy rains.</p>
-                        <p><strong>Cavitation</strong>, on the other hand, is damage caused by the implosion of vapor bubbles. This type of damage looks like a rough, pitted surface—like a sponge—and is typically localized.</p>
-                        <p>The takeaway: If your turbine blades look worn down and smooth, you're dealing with abrasion.</p>
+                        <h2>The Price of Negligence: The River's Condition as an Indicator</h2>
+                        <p>When the focus is solely on profit and not on the long-term health of the river, nature sends clear signals: The "hungry" river: A dam stops the transport of sediments (sand and gravel), leading to downstream riverbed erosion, loss of natural spawning grounds, and habitats for fish. Oily streaks: Oil leaks from machine parts leave traces on the water surface. Ineffective fish passages: Many fish ladders are too steep or the current within them is too strong, rendering them virtually unusable for most fish. These issues are not only ecological; they are a sign of an inefficient and outdated approach.</p>
 
-                        <h2>The Right Tool for the Job: Turbine Susceptibility</h2>
-                        <p>Each turbine type has a different vulnerability to these forces.</p>
-                        <ul>
-                            <li>**Francis and Kaplan turbines:** Susceptible to both abrasion and cavitation due to their submerged, high-pressure operation.</li>
-                            <li>**Pelton turbines:** Highly vulnerable to abrasion as high-velocity particles impact the buckets.</li>
-                        </ul>
-                        <p>Knowing your specific turbine's weaknesses is the first step toward building a better defense strategy.</p>
+                        <h2>Practical Solutions: Paths to Symbiosis with Nature</h2>
+                        <p>The good news is that solutions exist. The key is a holistic approach that views the river as a single system. **Sediment Management** (e.g., controlled flushing) and **Natural Fish Passes** secure the long-term health of the river and, crucially for owners, prevent regulatory issues and ensure permanent operating licenses.</p>
 
-                        <h2>Protecting Your Investment: The Simple Solution</h2>
-                        <p>The most effective strategy against sediment is prevention. The best line of defense is a **settling basin or sand trap**.</p>
-                        <p>A settling basin is a simple concrete channel or reservoir constructed upstream of the main intake. It's designed to slow the water’s velocity, allowing heavier particles of sand and gravel to settle to the bottom before the water enters the turbine's intake channel. This is a remarkably effective and low-cost solution that can be implemented on projects of any scale.</p>
-                        
-                        <p>The key to a successful sand trap is a regular flushing and maintenance schedule. This simple routine protects your turbine, extends its lifespan, and ensures consistent energy production.</p>
-                        
                         <div class="cta-footer">
-                            <strong>Is sediment building up in your intake? A small investment in a sand trap could save you from a major turbine overhaul.</strong>
-                            <a href="/index.html#contact" class="cta-button">Share Your Experiences</a>
+                            <strong>It is time for change. Have you struggled with unaddressed problems at your plant?</strong>
+                            <a href="/index.html#contact" class="cta-button">Share Your Experience</a>
                         </div>
                     </div>
                 `
@@ -576,6 +675,38 @@
                         <div class="cta-footer">
                             <strong>What would be the biggest challenge in establishing a "Symbiosis Standard"?</strong>
                             <a href="/index.html#contact" class="cta-button">Join the Debate</a>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                id: 'module7', // NOVO: Vaša hidrocentrala kao tvrđava
+                icon: '🏰',
+                title: 'Your Hydropower Plant as a Fortress',
+                subtitle: 'Take Control of Maintenance and Profit',
+                status: 'Published',
+                content: `
+                    <div class="article-container">
+                        <h1>🏰 Your Hydropower Plant as a Fortress: How to Take Control of Maintenance and Profit</h1>
+                        
+                        <h2>1. Overcoming Myths and Taking Control</h2>
+                        <p>The main challenge in our industry is not always machine failure, but the lack of knowledge that empowers owners to protect themselves. Maintenance too often relies on a reactive approach. This opens the door for service providers seeking profit, not the optimal solution.</p>
+
+                        <h2>2. Keys to Independence: Practical Knowledge and Modern Solutions</h2>
+                        <p>Your hydropower plant can become a fortress resistant to systemic shocks. This is achieved by combining practical experience and modern innovation:</p>
+                        
+                        <ul>
+                            <li>**Precision as the Foundation:** The basis of machine longevity is assembly precision. I maintain that a core knowledge of the **0.05 mm per meter** tolerance is essential, as this precision prevents costly future vibrations and wear.</li>
+                            <li>**Optimal, Not Maximal:** Not every failure means complete replacement. My experience shows that many problems can be solved with minimal repairs, significantly reducing costs.</li>
+                            <li>**Holistic Inspection:** True knowledge lies in a detailed insight into the machine's condition. Focus on key components like shaft seals, central lubrication systems, and the hydraulic system to prevent leaks and bearing overheating.</li>
+                            <li>**Digital Protocol:** Owners must introduce a digital system to serve as a central logbook for all service work, providing complete control over the plant's history, ensuring transparency and accountability.</li>
+                            <li>**Modernization as Investment:** Solutions like automatic trash rack cleaners and hybrid systems offer independence from an unstable grid and increase profit.</li>
+                        </ul>
+
+                        <div class="cta-footer">
+                            <strong>Your first battle is knowledge.</strong>
+                            <p>I want to share my experience so owners can make informed decisions. Contact me for insight and advice without any obligation.</p>
+                            <a href="/index.html#contact" class="cta-button">Get My Free Insight</a>
                         </div>
                     </div>
                 `
