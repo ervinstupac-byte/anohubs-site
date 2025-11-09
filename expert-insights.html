@@ -5,68 +5,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AnoHUB Expert Insights | Inovativni Uvidi u Hidrosektor</title>
     
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
-    
-    <script>
-        // Konfiguracija boja (Kopirana iz index.html)
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'hydro-primary': '#22d3ee', // Cyan
-                        'hydro-secondary': '#4ade80', // Green
-                        'hydro-risk': '#ef4444', 
-                        'hydro-cta': '#f59e0b', 
-                        'hydro-charcoal': '#111827', 
-                        'hydro-slate': '#1E293B', 
-                        'hydro-light-slate': '#334155', 
-                        'hydro-gray': '#475569',
-                    },
-                }
-            }
-        }
-    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
-        /* Osnovni stilovi za stranicu i BUBBLY KARTICE */
+        /* CSS STILOVI ZA ČITLJIVOST I VIZUELNI AKCENAT */
         body { 
             background-color: #111827; 
             color: #E5E7EB; 
             font-family: 'Inter', sans-serif; 
+            line-height: 1.6;
         }
         .header-bg { background-color: rgba(30, 41, 59, 0.95); }
         .scrollbar-hide::-webkit-scrollbar { display: none; }
         .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* Stilovi za ČLANAK (IZ VAŠEG ORIGINALNOG PROMPTA - ČITLJIV NA BELOJ POZADINI) */
-        .article-container { 
-            /* Koristi bela pozadinu za čitanje teksta */
-            background-color: #ffffff; 
-            color: #333;
-            padding: 40px; 
-            border-radius: 8px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-            line-height: 1.7;
+        /* Stilovi za KARTICE (BUBBLY LOOK) */
+        .insight-card {
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(34, 211, 238, 0.1);
         }
-        .article-container h1 { font-size: 2.2em; color: #004d99; border-bottom: 3px solid #004d99; padding-bottom: 15px; margin-bottom: 20px; }
-        .article-container h2 { font-size: 1.8em; color: #0066cc; margin-top: 35px; margin-bottom: 15px; border-left: 5px solid #ffcc00; padding-left: 15px; }
-        .article-container ul { list-style-type: '🐳 '; padding-left: 20px; margin-bottom: 20px; }
-        .styled-table { width: 100%; border-collapse: collapse; margin: 25px 0; font-size: 0.9em; box-shadow: 0 0 20px rgba(0, 0, 0, 0.15); }
-        .styled-table thead tr { background-color: #004d99; color: #ffffff; text-align: left; }
-        .styled-table th, .styled-table td { padding: 12px 15px; border: 1px solid #dddddd; }
-        .styled-table tbody tr:nth-of-type(even) { background-color: #f3f3f3; }
-        .cta-button { background-color: #ffcc00; }
+        .insight-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(34, 211, 238, 0.3), 0 4px 6px -2px rgba(34, 211, 238, 0.1);
+        }
 
-        /* MODAL STILOVI */
+        /* MODAL I SADRŽAJ ČLANKA */
         #article-modal { backdrop-filter: blur(5px); }
         .modal-content-area { 
             max-height: 90vh;
             overflow-y: auto;
             width: 90%;
             max-width: 900px;
+            background-color: #ffffff;
+            color: #333;
+            border-radius: 8px;
+        }
+        .article-container { 
+            padding: 40px 20px; 
+            margin: 0 auto;
+            max-width: 100%;
+        }
+        
+        /* STILOVI ZA ČLANAK (IZ VAŠEG ORIGINALNOG PROMPTA) */
+        .article-container h1 { font-size: 2.2em; color: #004d99; border-bottom: 3px solid #004d99; padding-bottom: 15px; margin-bottom: 20px; }
+        .article-container h2 { font-size: 1.8em; color: #0066cc; margin-top: 35px; margin-bottom: 15px; border-left: 5px solid #ffcc00; padding-left: 15px; }
+        .article-container h3 { font-size: 1.4em; color: #0099cc; margin-top: 25px; margin-bottom: 10px; }
+        .article-intro { font-size: 1.15em; font-weight: 400; color: #1a1a1a; padding: 15px 0; margin-bottom: 25px; border-bottom: 1px solid #eee; }
+        .article-container blockquote { border-left: 4px solid #ffcc00; background-color: #f9f9f9; padding: 15px 20px; margin: 20px 0; font-style: italic; color: #555; }
+        .article-container ul { list-style-type: '🐳 '; padding-left: 20px; margin-bottom: 20px; }
+        .styled-table { width: 100%; border-collapse: collapse; margin: 25px 0; font-size: 0.9em; box-shadow: 0 0 20px rgba(0, 0, 0, 0.15); }
+        .styled-table thead tr { background-color: #004d99; color: #ffffff; text-align: left; }
+        .styled-table th, .styled-table td { padding: 12px 15px; border: 1px solid #dddddd; }
+        .styled-table tbody tr:nth-of-type(even) { background-color: #f3f3f3; }
+        .cta-footer { text-align: center; margin-top: 50px; padding: 30px; background-color: #e6f2ff; border-top: 3px solid #0099cc; border-radius: 5px; }
+        .cta-button { display: inline-block; background-color: #ffcc00; color: #333; padding: 12px 25px; text-decoration: none; font-weight: bold; border-radius: 5px; margin-top: 15px; transition: background-color 0.3s; }
+        .cta-button:hover { background-color: #e6b800; color: #000; }
+        @media (max-width: 600px) {
+             .styled-table { display: block; overflow-x: auto; }
         }
     </style>
 </head>
@@ -74,12 +72,12 @@
 
     <header class="bg-hydro-charcoal header-bg sticky top-0 z-10 shadow-lg">
         <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-            <a href="/index.html#hero" class="text-xl font-bold text-cyan-400 hover:text-cyan-300">← Vrati se na Glavnu Stranicu</a>
+            <a href="/index.html#hero" class="text-xl font-bold text-cyan-400 hover:text-cyan-300">← Povratak na Glavnu Stranicu</a>
         </div>
     </header>
     
     <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-        <h1 class="text-4xl font-extrabold text-white mb-4 text-center">AnoHUB Expert Insights</h1>
+        <h1 class="text-4xl font-extrabold text-white mb-4 text-center section-title">AnoHUB Expert Insights</h1>
         <p class="text-xl text-slate-400 mb-10 text-center">Vaša riznica razmišljanja o hidro-sektoru, disciplini i budućnosti ekspertize.</p>
 
         <div id="content-slider" class="relative">
@@ -121,15 +119,26 @@
             
             <div id="module1-content" class="article-container hidden">
                 <h1>🌊 Inženjerski Imunitet: Kako Tehnologija Neutrališe 48% Dinamičkog Rizika u Hidroelektranama</h1>
-                <p class="article-intro">Ovaj članak predstavlja sveobuhvatnu analizu koja demonstrira da najznačajnija pretnja integritetu hidroenergetske imovine nije kvar komponente, već **Organizacijski Izvršni Jaz (Execution Gap)**. Naučne studije potvrđuju da instalacione nesavršenosti uvode merljivih 48% dinamičkog rizika nestabilnosti koji ubrzava degradaciju imovine. Predstavljamo **Dual Application Strategiju** – bio-inspirisano rešenje koje garantuje maksimalnu operativnu otpornost.</p>
+
+                <p class="article-intro">
+                    Ovaj članak predstavlja sveobuhvatnu analizu koja demonstrira da najznačajnija pretnja integritetu hidroenergetske imovine nije kvar komponente, već **Organizacijski Izvršni Jaz (Execution Gap)**. Naučne studije potvrđuju da instalacione nesavršenosti uvode merljivih 48% dinamičkog rizika nestabilnosti koji ubrzava degradaciju imovine. Predstavljamo **Dual Application Strategiju** – bio-inspirisano rešenje koje garantuje maksimalnu operativnu otpornost.
+                </p>
 
                 <h2>🚨 1. Organizacijska Kompromitacija: Ticking Bomb Teza</h2>
-                <p>Globalna hidroenergetska industrija suočava se sa krizom. Odlazak iskusnih tehničkih stručnjaka i intenzivan pritisak na troškove stvaraju **"Execution Gap"** – kritičan jaz između savršenog dizajna na papiru i manjkave implementacije na terenu.</p>
+
+                <p>
+                    Globalna hidroenergetska industrija suočava se sa krizom. Odlazak iskusnih tehničkih stručnjaka i intenzivan pritisak na troškove stvaraju **"Execution Gap"** – kritičan jaz između savršenog dizajna na papiru i manjkave implementacije na terenu.
+                </p>
+
                 <blockquote>
                     **TICKING BOMB TEZA:** Čak i najpreciznije projektovana turbina je ranjiva na kvar uzrokovan jednostavnim **Instalacionim Greškama**—neusklađenostima često nevidljivim tokom standardnog puštanja u rad. Landmark studije potvrđuju: minute neusklađenosti mogu uvesti zapanjujućih **48% rizika od dinamičke nestabilnosti** tokom životnog veka imovine.
                 </blockquote>
+
                 <h3>Ahilova Peta: Operacija Delimičnog Opterećenja</h3>
-                <p>Standardni Kaplan rotori su hiper-osetljivi na ove nedostatke, posebno tokom **Partial Load (Off-Design) operacije** (npr. pri $0.6 \times Q_{rated}$), gde sečiva pate od **Teškog Odvajanja Toka (Flow Separation)**, što rezultira:</p>
+
+                <p>
+                    Standardni Kaplan rotori su hiper-osetljivi na ove nedostatke, posebno tokom **Partial Load (Off-Design) operacije** (npr. pri $0.6 \times Q_{rated}$), gde sečiva pate od **Teškog Odvajanja Toka (Flow Separation)**, što rezultira:
+                </p>
                 <ul>
                     <li>Pulsirajućim pritiscima i vrtložnim otpuštanjem.</li>
                     <li>Ubrzanim oštećenjima usled **Kavitacije i Erozije**.</li>
@@ -137,39 +146,79 @@
                 </ul>
 
                 <h2>🐳 2. Rešenje: Hydrodynamic Harmony™ — Dual Application Strategija</h2>
-                <p>Naša inovativna hipoteza traži rešenje u najefikasnijem dinamičaru fluida u prirodi: **grbavom kitu**. **Koncept "Whale Fin" Rotora (Tubercle Concept)** integriše pažljivo oblikovane kvrge (tubercles) da bi stvorio **hidrodinamički imunitet** – dizajn koji toleriše ljudsku nesavršenost.</p>
+
+                <p>
+                    Naša inovativna hipoteza traži rešenje u najefikasnijem dinamičaru fluida u prirodi: **grbavom kitu**. **Koncept "Whale Fin" Rotora (Tubercle Concept)** integriše pažljivo oblikovane kvrge (tubercles) da bi stvorio **hidrodinamički imunitet** – dizajn koji toleriše ljudsku nesavršenost.
+                </p>
+
                 <h3>Holistički Pristup: Dual Application Strategija</h3>
+
                 <p>Strategija nije samo popravka komponente; to je **Sistem-Široka Harmonizacija**:</p>
-                <div class="styled-table-wrapper">
-                    <table class="styled-table">
-                        <thead>
-                            <tr><th>Komponenta</th><th>Uloga Tubercle Dizajna</th><th>Benefit</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr><td>**Rotor (Runner)**</td><td>**Whale Fin Mandat:** Održava kontrolisan protok eliminisanjem haosa pri delimičnom opterećenju.</td><td>Povećana Stabilnost i Otpornost na Kavitaciju/Eroziju.</td></tr>
-                            <tr><td>**Distributer (Guide Vanes)**</td><td>**Smanjenje Ulazne Turbulencije:** Stabilizuje vodeni stub *pre* nego što dođe do rotora (Pre-kondicioniranje toka).</td><td>"Čistiji" Protok i dramatično smanjenje **Input Chaos (Ulaznog Haosa)**.</td></tr>
-                        </tbody>
-                    </table>
-                </div>
+
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Komponenta</th>
+                            <th>Uloga Tubercle Dizajna</th>
+                            <th>Benefit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>**Rotor (Runner)**</td>
+                            <td>**Whale Fin Mandat:** Održava kontrolisan protok eliminisanjem haosa pri delimičnom opterećenju.</td>
+                            <td>Povećana Stabilnost i Otpornost na Kavitaciju/Eroziju.</td>
+                        </tr>
+                        <tr>
+                            <td>**Distributer (Guide Vanes)**</td>
+                            <td>**Smanjenje Ulazne Turbulencije:** Stabilizuje vodeni stub *pre* nego što dođe do rotora (Pre-kondicioniranje toka).</td>
+                            <td>"Čistiji" Protok i dramatično smanjenje **Input Chaos (Ulaznog Haosa)**.</td>
+                        </tr>
+                    </tbody>
+                </table>
 
                 <h2>📈 3. Kvantifikovani Dokaz: CFD Validacija i ROI</h2>
-                <p>Nezavisna CFD (Computational Fluid Dynamics) istraga potvrdila je prednost, fokusirana na kritično **Parcijalno Opterećenje ($0.6 \times Q_{rated}$)**. Naša tehnologija kompenzuje organizacijski rizik, nudeći jasan povrat investicije (ROI).</p>
-                <div class="styled-table-wrapper">
-                    <table class="styled-table">
-                        <thead>
-                            <tr><th>Metrika</th><th>Standardni Kaplan Rotor</th><th>Whale Fin Rotor (Dual Application)</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr><td>**Dinamički Rizik**</td><td>48% (Zagređujuća Nestabilnost)</td><td>**Neutralizovan** (Virtuelna Eliminacija)</td></tr>
-                            <tr><td>**Ponašanje Toka**</td><td>Teško i eratično Odvajanje Toka.</td><td>**Privezan i Kontrolisan Tok** (stabilizovan vrtlozima).</td></tr>
-                            <tr><td>**Vibracije**</td><td>Visoke (Ubrzano habanje ležajeva).</td><td>**Drastično Smanjene** (Produženje Životnog Veka).</td></tr>
-                        </tbody>
-                    </table>
-                </div>
 
-                <p>**STRATEŠKA VREDNOST:** Naš dizajn pretvara **nepredvidivu hidrauličnu okolinu u predvidivu i upravljivu**, osiguravajući maksimalno ublažavanje **48% dinamičkog faktora rizika**.</p>
+                <p>
+                    Nezavisna CFD (Computational Fluid Dynamics) istraga potvrdila je prednost, fokusirana na kritično **Parcijalno Opterećenje ($0.6 \times Q_{rated}$)**. Naša tehnologija kompenzuje organizacijski rizik, nudeći jasan povrat investicije (ROI).
+                </p>
+
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Metrika</th>
+                            <th>Standardni Kaplan Rotor</th>
+                            <th>Whale Fin Rotor (Dual Application)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>**Dinamički Rizik**</td>
+                            <td>48% (Zagređujuća Nestabilnost)</td>
+                            <td>**Neutralizovan** (Virtuelna Eliminacija)</td>
+                        </tr>
+                        <tr>
+                            <td>**Ponašanje Toka**</td>
+                            <td>Teško i eratično Odvajanje Toka.</td>
+                            <td>**Privezan i Kontrolisan Tok** (stabilizovan vrtlozima).</td>
+                        </tr>
+                        <tr>
+                            <td>**Vibracije**</td>
+                            <td>Visoke (Ubrzano habanje ležajeva).</td>
+                            <td>**Drastično Smanjene** (Produženje Životnog Veka).</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p>
+                    **STRATEŠKA VREDNOST:** Naš dizajn pretvara **nepredvidivu hidrauličnu okolinu u predvidivu i upravljivu**, osiguravajući maksimalno ublažavanje **48% dinamičkog faktora rizika**.</p>
+
                 <h2>🚀 4. Zaključak: Inžinjering Tolerancije i Budućnost</h2>
-                <p>Tehnološka inovacija je jedina pouzdana zaštita od inherentnih slabosti industrije. Usvajanjem Dual Application Strategije, vlasnici imovine efektivno neutrališu nepredvidivi rizik. Budućnost hidroenergetske otpornosti leži u pametnijem, opraštajućem inženjeringu.</p>
+
+                <p>
+                    Tehnološka inovacija je jedina pouzdana zaštita od inherentnih slabosti industrije. Usvajanjem Dual Application Strategije, vlasnici imovine efektivno neutrališu nepredvidivi rizik. Budućnost hidroenergetske otpornosti leži u pametnijem, opraštajućem inženjeringu.
+                </p>
+
                 <h3>Buduće Primene: Hibridna Hidrodinamika</h3>
                 <ul>
                     <li>**Makro-Skala:** Hibridna Tubercle + Denticle Kaskada za samostalno-čisteće i izuzetno efikasne hidrokinetičke turbine.</li>
@@ -179,14 +228,20 @@
                 <div class="cta-footer">
                     <strong>Spremni da eliminišete 48% dinamičkog rizika u vašoj floti?</strong>
                     <p>Garantujte Operativnu Izvrsnost sa Hydrodynamic Harmony™ rešenjima.</p>
-                    <a href="#contact" onclick="closeModal()" class="cta-button">KONTAKTIRAJTE NAS ZA DETALJNU STUDIJU</a>
+                    <a href="/index.html#contact" class="cta-button">KONTAKTIRAJTE NAS ZA DETALJNU STUDIJU</a>
                 </div>
             </div>
             
             <div id="module2-content" class="article-container hidden">
-                <h2>Modul 2: U pripremi</h2>
-                <p>Detaljan protokol za primenu 0.05 mm/m standarda na licu mesta.</p>
+                <h2>Modul 2: 0.05 mm/m Protokol (U pripremi)</h2>
+                <p>Detaljan protokol za primenu 0.05 mm/m standarda na licu mesta i kako preciznost utiče na sve komponente mašine.</p>
             </div>
+            
+            <div id="module3-content" class="article-container hidden">
+                <h2>Modul 3: Zimski Izazovi i M-E Sinergija (U pripremi)</h2>
+                <p>Detaljna analiza M-E Synergy Gap-a i zašto je digitalni nadzor neophodan za zaštitu opreme u ekstremnim zimskim uslovima.</p>
+            </div>
+
             
             <div class="text-center mt-6">
                 <button onclick="closeModal()" class="px-6 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg">Zatvori</button>
