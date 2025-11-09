@@ -68,9 +68,10 @@
             padding: 40px 20px; 
             margin: 0 auto;
             max-width: 100%;
-            background-color: rgba(255, 255, 255, 0.6); /* KRITIČNO: 60% PROZIRNOSTI */
+            background-color: rgba(255, 255, 255, 0.7); /* KRITIČNO: 70% providnosti! */
             line-height: 1.6;
             min-height: 80vh; 
+            color: #000000; /* Fiksna crna boja za sav tekst */
         }
 
         /* KRITIČNO: GURANJE TEKSTA U CRNO I POVEĆANJE TEŽINE FONTA */
@@ -674,8 +675,11 @@
                 const statusText = isPublished ? 'CLICK TO READ' : item.status;
                 const statusColor = isPublished ? 'text-cyan-400' : 'text-slate-400';
                 
-                // Generisanje pregleda sadržaja za karticu (bez HTML tagova)
-                const previewText = item.content.replace(/<[^>]*>?/gm, '').substring(0, 100);
+                // Generisanje pregleda sadržaja za karticu (iz kratkog opisa, jer su dugački stringovi sada sakriveni)
+                const targetContentDiv = document.createElement('div');
+                targetContentDiv.innerHTML = item.content;
+                const previewText = targetContentDiv.querySelector('.article-container') ? targetContentDiv.querySelector('.article-container').textContent.substring(0, 100) : item.title;
+
 
                 card.innerHTML = `
                     <div class="text-3xl mb-4 text-cyan-400">${item.icon}</div>
