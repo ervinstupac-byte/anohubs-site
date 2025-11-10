@@ -12,7 +12,7 @@ async function handleContactFormSubmit(event) {
     const form = event.target;
     const data = new FormData(form);
     
-    // Ključni elementi forme za povratnu informaciju
+    // Ključni elementi forme za povratnu informaciju (koriste ID-ove iz index.html)
     const submitButton = form.querySelector('button[type="submit"]');
     const messageElement = document.getElementById('formMessage');
 
@@ -20,14 +20,13 @@ async function handleContactFormSubmit(event) {
     submitButton.disabled = true;
     submitButton.textContent = '⏳ Submitting... Please wait.'; 
     messageElement.textContent = 'Sending request...';
-    // Uklanjanje klasa za skrivanje i boju greške/uspeha
-    // Pretpostavljamo da su klase definirane u globalnom CSS-u/Tailwind configu
+    // Uklanjanje klasa za skrivanje i boju greške/uspeha (pretpostavljamo Tailwind boje)
     messageElement.classList.remove('hidden', 'text-hydro-secondary', 'text-hydro-risk');
     // Postavljanje privremene boje (CTA boja)
     messageElement.classList.add('text-hydro-cta');
 
     try {
-        // Asinhrono slanje podataka
+        // Asinhrono slanje podataka na Formspree
         const response = await fetch(form.action, { 
             method: "POST",
             body: data,
