@@ -21,7 +21,7 @@
         faviconLinks.forEach(link => {
             const el = document.createElement("link");
             el.rel = link.rel;
-            el.href = link.href + cacheBuster; 
+            el.href = el.href + cacheBuster; 
             if (link.type) el.type = link.type;
             if (link.sizes) el.sizes = link.sizes;
             document.head.appendChild(el);
@@ -131,9 +131,11 @@
             padding-top: 1rem; 
             padding-bottom: 1rem;
         }
+        /* GPU OPTIMIZACIJA ZA ANIMACIJE */
         .fade-in-up, .zoom-in { 
             opacity: 0; 
             transition: opacity 0.8s ease-out, transform 0.8s ease-out; 
+            will-change: opacity, transform; 
         }
         .fade-in-up { 
             transform: translateY(30px); 
@@ -179,14 +181,25 @@
                 width: 200px; 
             }
         }
-        /* Stilovi za klikabilne turbine */
+        /* Stilovi za klikabilne turbine i servise */
         .turbine-card {
             display: block;
             text-align: left;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            will-change: transform, box-shadow; /* GPU PRIPREMA */
+            transform: translateZ(0); 
         }
         .turbine-card:hover {
             transform: scale(1.02);
+            box-shadow: 0 10px 15px rgba(34, 211, 238, 0.4);
+        }
+        /* Style za Services kartice (da se skaliraju kao turbine) */
+        .block > div { 
+            will-change: transform, box-shadow;
+            transform: translateZ(0); 
+        }
+        .block > div:hover {
+            transform: scale(1.03);
             box-shadow: 0 10px 15px rgba(34, 211, 238, 0.4);
         }
     </style>
