@@ -29,7 +29,7 @@ function initMobileMenu() {
         
         // Toggles menu icon (menu <-> X)
         if (icon && typeof lucide !== 'undefined') {
-            icon.setAttribute('data-lucide', mobileMenu.classList.contains('hidden') ? 'menu' : 'x'); // Fiksirano: 'menu' kada je skriveno, 'x' kada je vidljivo
+            icon.setAttribute('data-lucide', mobileMenu.classList.contains('hidden') ? 'menu' : 'x');
             lucide.createIcons();
         }
     });
@@ -151,14 +151,12 @@ function initScrollAnimations() {
 }
 
 // Glavna funkcija za pokretanje UI inicijalizacije
-function initGlobalUI() {
+// Ona se poziva preko DOMContentLoaded u index.html
+document.addEventListener('DOMContentLoaded', () => {
     initLucideIcons();
     initFooterYear();
     initMobileMenu();
     initAccordions();
     initCounters(); 
     initScrollAnimations();
-    // initContactForm se poziva iz contact_logic.js
-}
-
-document.addEventListener('DOMContentLoaded', initGlobalUI);
+});
