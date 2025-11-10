@@ -76,7 +76,8 @@
         
         /* Stilizacija za kontrast teksta na About stranici */
         .vision-content-card {
-             background-color: rgba(30, 41, 59, 0.95); /* Tamna, polu-transparentna pozadina za čitljivost teksta */
+             /* KRITIČNO: NOVO: 60% NEPROZIRNOSTI */
+             background-color: rgba(30, 41, 59, 0.6); 
              padding: 2rem;
              border-radius: 0.5rem;
              box-shadow: 0 10px 15px -3px rgba(34, 211, 238, 0.3);
@@ -84,6 +85,20 @@
         }
         .text-glow {
             text-shadow: 0 0 10px rgba(34, 211, 238, 0.5);
+        }
+        /* Stilovi za listu unutar About Us */
+        .expertise-list-grid {
+            column-count: 2;
+            column-gap: 2rem;
+        }
+        .expertise-list-grid li {
+            margin-bottom: 0.5rem;
+            break-inside: avoid; /* Sprečava prekidanje stavki liste na različitim kolonama */
+        }
+        @media (max-width: 768px) {
+            .expertise-list-grid {
+                column-count: 1;
+            }
         }
     </style>
 
@@ -162,34 +177,29 @@
                     </div>
                     
                     <div class="space-y-8 pt-4">
-                        <h3 class="text-3xl font-bold text-hydro-primary mb-6 border-b pb-2 border-hydro-primary/50">Our Expertise: From Hands-On Assembly to Digital Audit</h3>
+                        <h3 class="text-3xl font-bold text-hydro-primary mb-6 border-b pb-2 border-hydro-primary/50">Our Comprehensive Service Spectrum</h3>
                         
                         <p class="text-slate-300">
-                            Our unique value proposition lies in merging decades of deep, hands-on, mechanical engineering field experience with cutting-edge digital diagnostics. This ensures that every solution we propose is both theoretically sound and practically achievable.
+                            Our unique value proposition lies in merging decades of deep, hands-on mechanical engineering field experience with cutting-edge digital diagnostics. We provide specialized services across the entire asset lifecycle:
                         </p>
                         
-                        <div class="grid md:grid-cols-2 gap-6">
+                        <ul class="expertise-list-grid text-slate-400 space-y-3 pl-4">
+                            <li><strong>Regular & Emergency Maintenance:</strong> Full-scope services including regular maintenance, unscheduled repairs, and comprehensive machine overhauls.</li>
+                            <li><strong>Repairs & Refurbishment:</strong> Expertise in component repair, major refurbishment, and material upgrades (e.g., advanced coatings).</li>
                             
-                            <div class="bg-hydro-light-slate/50 p-4 rounded-lg">
-                                <h4 class="text-xl font-bold text-hydro-secondary mb-2">Machine Assembly & Installation (Hands-On Mandate)</h4>
-                                <p class="text-slate-400 text-sm">We provide expert supervision and detailed quality control for complex mechanical installations (turbines, generators, shaft alignment), ensuring adherence to precision standards from the ground up.</p>
-                            </div>
+                            <li><strong>Efficiency Enhancement:</strong> Strategic projects focused on increasing energy output and performance optimization (reducing hydraulic losses and downtime).</li>
+                            <li><strong>Modernization of all Systems:</strong> Upgrading and modernizing mechanical, hydraulic, and electrical components (e.g., turbine, generator, control systems, transformers, relays).</li>
+                            <li><strong>Sensor Integration:</strong> Implementation of advanced sensory technology and monitoring tools for real-time asset condition assessment.</li>
+
+                            <li><strong>Acoustic & Vibration Monitoring:</strong> Deep analysis of turbine and ancillary equipment operation to predict failures and ensure stability.</li>
+                            <li><strong>Digital Twin Creation:</strong> 3D scanning of existing components (like runners) for the production of new parts and the creation of digital twins for simulation.</li>
+                            <li><strong>Forensic Audits for Disputes:</strong> Providing irrefutable evidence in case of technical disputes or ambiguities regarding the root cause of failure.</li>
+                            <li><strong>Advanced Materials Sourcing:</strong> Consultation on and procurement of advanced, high-performance materials for critical components.</li>
                             
-                            <div class="bg-hydro-light-slate/50 p-4 rounded-lg">
-                                <h4 class="text-xl font-bold text-hydro-secondary mb-2">Digital & Forensic Audits (Problem Detection)</h4>
-                                <p class="text-slate-400 text-sm">Comprehensive assessment of operating machines, focusing on early problem detection, root cause analysis (RCFA), cavitation mitigation, and identifying hidden structural weaknesses through advanced diagnostics.</p>
-                            </div>
-                            
-                            <div class="bg-hydro-light-slate/50 p-4 rounded-lg">
-                                <h4 class="text-xl font-bold text-hydro-secondary mb-2">Management & Supervision (Risk Mitigation)</h4>
-                                <p class="text-slate-400 text-sm">Strategic site management, project integrity consulting, and leadership training focused on establishing a proactive, safety-first culture to eliminate organizational risk factors.</p>
-                            </div>
-                            
-                            <div class="bg-hydro-light-slate/50 p-4 rounded-lg">
-                                <h4 class="text-xl font-bold text-hydro-secondary mb-2">Digital Protocol & Teams on Standby</h4>
-                                <p class="text-slate-400 text-sm">Implementation of Digital Protocol logbooks for transparent asset history, alongside providing access to highly experienced, multi-disciplinary teams available on standby for critical interventions.</p>
-                            </div>
-                        </div>
+                            <li><strong>Operator & Staff Training:</strong> Comprehensive training programs for operators and all hydropower plant personnel involved in turbine and auxiliary equipment maintenance.</li>
+                            <li><strong>Site Management & Supervision:</strong> Expert supervision of installations, site management, and project integrity consulting to eliminate execution gaps.</li>
+                            <li><strong>Teams on Standby:</strong> Access to expert, multi-disciplinary intervention teams available on standby for critical needs.</li>
+                        </ul>
                     </div>
                 </div>
 
