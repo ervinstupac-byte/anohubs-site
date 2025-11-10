@@ -10,6 +10,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- KRITIČNO: Biblioteka za 3D modele (model-viewer) -->
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/1.13.0/model-viewer.min.js"></script>
 
     <style>
         /* KRITIČNI STILOVI */
@@ -34,6 +37,8 @@
              border-radius: 0.5rem;
              box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
              border-top: 5px solid #22d3ee;
+             will-change: transform, box-shadow; /* GPU PRIPREMA */
+             transform: translateZ(0); /* GPU AKCELERACIJA */
         }
         .list-icon {
             color: #4ade80; /* Hydro Secondary */
@@ -49,15 +54,13 @@
         .bg-hydro-cta { background-color: #f59e0b; }
         .text-hydro-charcoal { color: #111827; }
 
-        .media-placeholder {
-            min-height: 250px;
-            background-color: rgba(0, 0, 0, 0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 2px dashed #22d3ee50;
-            color: #22d3ee;
-            font-style: italic;
+        /* Stil za 3D Model Viewer */
+        model-viewer {
+            width: 100%;
+            height: 400px;
+            background-color: #111827;
+            border-radius: 0.5rem;
+            box-shadow: 0 0 15px rgba(34, 211, 238, 0.5);
         }
 
     </style>
@@ -88,25 +91,26 @@
                 <div class="space-y-10 text-lg">
                     
                     <div class="p-6 rounded-lg bg-slate-800/70">
-                        <h2 class="text-2xl font-bold text-white mb-3">A History of Adaptability and Flow</h2>
-                        <p class="text-slate-400">
-                            The Kaplan turbine, developed by Viktor Kaplan in the early 20th century, revolutionized low-head hydropower. Its defining feature is its **adjustable runner blades**, allowing it to maintain high efficiency across a much broader range of flow rates than fixed-blade designs. This adaptability makes it critical for river projects and plants with seasonal variations.
+                        <h2 class="text-2xl font-bold text-white mb-3">3D Model: Horizontal Kaplan with Spiral Casing</h2>
+                        <p class="text-slate-400 mb-4">
+                            Ovaj prikaz demonstrira složenost **Horizontalne Kaplan turbine sa spiralnim kućištem**. Istražite interakciju između kućišta, vode i pokretnih delova—kritičnu za analizu RSI i dinamičke stabilnosti.
                         </p>
-                        <p class="text-slate-400 mt-3">
-                            However, this adaptability introduces complexity. The hydraulic servo systems and the dynamic interaction between the moving blades and guide vanes are primary points of mechanical wear and potential failure. Our integrity checks focus precisely on these intricate moving parts.
-                        </p>
-                    </div>
+                        
+                        <!-- 3D MODEL VIEWER -->
+                        <model-viewer 
+                            src="H_Kaplan_Spiral.glb" 
+                            alt="3D model of a Horizontal Kaplan Turbine with Spiral Casing"
+                            camera-controls 
+                            auto-rotate 
+                            ar 
+                            shadow-intensity="1"
+                            exposure="1.5"
+                            camera-orbit="180deg 85deg 1.5m" /* Podešavanje za bolji prikaz turbine sa strane */
+                            >
+                            <div slot="progress-bar"></div>
+                        </model-viewer>
+                        <!-- KRAJ 3D MODELA -->
 
-                    <div class="bg-slate-800/70 p-6 rounded-lg">
-                        <h2 class="text-3xl font-bold text-hydro-secondary mb-4">Visualizing Dynamics: Schematics and Simulation</h2>
-                        <div class="grid md:grid-cols-2 gap-4">
-                            <div class="media-placeholder rounded-lg">
-                                Placeholder: Kaplan Turbine Diagram / 3D Model
-                            </div>
-                            <div class="media-placeholder rounded-lg">
-                                Placeholder: Video of Blade Pitch Control / Flow Simulation
-                            </div>
-                        </div>
                     </div>
 
 
