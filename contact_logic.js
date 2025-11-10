@@ -21,6 +21,7 @@ async function handleContactFormSubmit(event) {
     submitButton.textContent = '⏳ Submitting... Please wait.'; 
     messageElement.textContent = 'Sending request...';
     // Uklanjanje klasa za skrivanje i boju greške/uspeha
+    // Pretpostavljamo da su klase definirane u globalnom CSS-u/Tailwind configu
     messageElement.classList.remove('hidden', 'text-hydro-secondary', 'text-hydro-risk');
     // Postavljanje privremene boje (CTA boja)
     messageElement.classList.add('text-hydro-cta');
@@ -74,5 +75,5 @@ function initContactForm() {
     }
 }
 
-// NAPOMENA: Ovu funkciju treba pozvati iz Vašeg index.html (unutar DOMContentLoaded).
-// Npr.: document.addEventListener('DOMContentLoaded', initContactForm);
+// KRITIČNA INICIJALIZACIJA: Poziva funkciju tek kada je cijeli HTML dokument učitan
+document.addEventListener('DOMContentLoaded', initContactForm);
