@@ -14,16 +14,9 @@
     --color-header-bg: #1E293B; /* Slate-800 */
 }
 
-/* GLOBALNI STILOVI (Pozadinska slika ARHIVE - ZIMA) */
+/* GLOBALNI STILOVI (Pozadina ARHIVE je riješena INLINE STILOM u HTML-u) */
 body { 
-    /* Koristimo ispravnu relativnu putanju, iako je forsirana inline stilom */
-    background-image: url('zima_arm.jpg') !important; 
-    background-color: #0F172A !important; 
-    background-attachment: fixed !important;
-    background-size: cover !important;
-    background-position: center bottom !important;
-    
-    /* Ostali stilovi za tijelo */
+    /* Ostali stilovi za body (nasljeđuju se iz inline stila) */
     color: var(--color-text-base) !important; 
     font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
     line-height: 1.6;
@@ -39,7 +32,7 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Tamni sloj preko slike */
+    background-color: rgba(0, 0, 0, 0.5); 
     z-index: -1; 
 }
 
@@ -54,41 +47,24 @@ body::before {
 
 
 /*======================================================
-  STILOVI ZA KARTICE ČLANAKA (INSIGHTS LIST)
-======================================================*/
-
-/* Bazni stil kartice */
-.insight-card {
-    transition: all 0.3s ease;
-    background-color: rgba(30, 41, 59, 0.95); 
-    box-shadow: 0 4px 6px -1px rgba(34, 211, 238, 0.1);
-}
-
-/* Hover efekat (Podizanje i Cyan sjenka) */
-.insight-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 15px -3px rgba(34, 211, 238, 0.5), 0 4px 6px -2px rgba(34, 211, 238, 0.3);
-    border-color: #22d3ee;
-}
-
-
-/*======================================================
   MODAL I SADRŽAJ ČLANKA (ČITLJIVOST)
 ======================================================*/
 
-#article-modal { 
-    backdrop-filter: blur(5px); 
-    transition: opacity 0.3s ease;
-}
-
 /* Kontejner za Modal (Centriranje) */
 .modal-content-area { 
+    /* KRITIČNO: POZADINA ČLANKA (PROLJEĆE) POSTAVLJENA OVDJE */
+    background-image: url('proljece_arm.jpg'); 
+    background-size: cover;
+    background-position: center;
+    background-attachment: scroll; 
+    
     color: var(--color-dark);
     border-radius: 8px;
     display: flex; 
     flex-direction: column; 
     max-height: 90vh; 
     overflow-y: auto; 
+    position: relative; 
 }
 
 /* Wrapper za Scroll unutar Modala */
@@ -99,13 +75,7 @@ body::before {
 
 /* KONTEJNER TEKSTA ČLANKA (article-container) */
 .article-container { 
-    /* KRITIČNO: POZADINA ČLANKA (PROLJEĆE) - Relativna putanja */
-    background-image: url('proljece_arm.jpg'); 
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: scroll; 
-    
+    /* Ovdje se postavlja padding i veličina, ali ne pozadina */
     position: relative;
     z-index: 1;
 
@@ -113,19 +83,8 @@ body::before {
     margin: 0 auto;
     max-width: 100%;
     line-height: 1.6;
-}
-
-/* PSEUDOELEMENT ZA OVERLAY UNUTAR ČLANKA - Ključno za čitljivost teksta */
-.article-container::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    /* Bijeli overlay preko slike za jasan crni tekst */
-    background-color: rgba(255, 255, 255, 0.85); 
-    z-index: -1; 
+    
+    /* DODATNA SIGURNOST: Pobrinite se da se boja pozadine Modula postavi preko Tailwind klase bg-white/90 u HTML-u (kao u člancima ispod) */
 }
 
 
@@ -135,7 +94,7 @@ body::before {
 .article-container td,
 .article-container th,
 .article-container blockquote {
-    color: #000000 !important; /* Osiguravamo crni tekst */
+    color: #000000 !important; 
     font-weight: 400; 
     font-size: 1.1rem;
     margin-bottom: 1.25rem;
