@@ -1,510 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"> 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Expert Insights Hub | AnoHUB Hydro Integrity Analytics</title>
-    <meta name="description" content="In-depth technical articles on Francis, Kaplan, and Pelton turbine integrity, predictive maintenance, CFD analysis, and the Symbiosis Standard for hydropower assets.">
+    <meta name="description" content="Your knowledge base for hydro sector challenges, discipline, and future expertise.">
     
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <style>
-        /* CSS STILOVI ZA ČITLJIVOST I VIZUELNI AKCENAT (Dark Theme) */
-        body { 
-            background-color: #111827; 
-            color: #E5E7EB; 
-            font-family: 'Inter', sans-serif; 
-            line-height: 1.6;
-            
-            /* POZADINA: zima_arm.jpg za Glavnu stranicu (Zima) */
-            background-image: url('zima_arm.jpg');
-            background-size: cover;
-            background-attachment: fixed;
-            background-position: center bottom;
-        }
-        .header-bg { background-color: rgba(30, 41, 59, 0.95); }
-        .scrollbar-hide::-webkit-scrollbar { display: none; }
-        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
-
-        /* Stilovi za KARTICE (BUBBLY LOOK) */
-        .insight-card {
-            transition: all 0.3s ease;
-            background-color: rgba(30, 41, 59, 0.95); 
-            box-shadow: 0 4px 6px -1px rgba(34, 211, 238, 0.1);
-        }
-        .insight-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(34, 211, 238, 0.3), 0 4px 6px -2px rgba(34, 211, 238, 0.1);
-        }
-
-        /* MODAL I SADRŽAJ ČLANKA */
-        #article-modal { backdrop-filter: blur(5px); }
-        .modal-content-area { 
-            /* PROLEĆE POZADINA ZA ČLANAK (Vizuelni omotač) */
-            background-image: url('proljece_arm.jpg');
-            background-size: cover;
-            background-position: center;
-            background-color: #ffffff;
-            max-height: 90vh;
-            border-radius: 8px;
-            width: 90%;
-            max-width: 900px;
-            overflow-y: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        /* FIKSIRANJE WRAPPERA ZA SCROLL */
-        #article-content-wrapper {
-             max-height: calc(90vh - 80px); /* Oduzima prostor za dugme */
-             overflow-y: auto; 
-             padding-bottom: 20px;
-        }
-        
-        /* FIKSIRANJE SADRŽAJA ČLANKA - KONTEJNER TEKSTA */
-        .article-container { 
-            padding: 40px 20px; 
-            margin: 0 auto;
-            max-width: 100%;
-            background-color: rgba(255, 255, 255, 0.9); /* PROZIRNA BELA POZADINA */
-            line-height: 1.6;
-            min-height: 80vh; 
-        }
-
-        /* KRITIČNO: GURANJE TEKSTA U CRNO I POVEĆANJE TEŽINE FONTA */
-        .article-container p, 
-        .article-container ul li, 
-        .article-container td,
-        .article-container th,
-        .article-container blockquote {
-            color: #000000 !important; /* Apsolutno crna boja za telo teksta i tabele */
-            font-weight: 500; /* Povećana težina za bolju čitljivost */
-        }
-        
-        /* STILOVI ZA NASLOVE */
-        .article-container h1 { color: #111827 !important; border-bottom: 3px solid #22d3ee; padding-bottom: 15px; margin-bottom: 20px; }
-        .article-container h2 { color: #1E293B !important; margin-top: 35px; margin-bottom: 15px; border-left: 5px solid #f59e0b; padding-left: 15px; }
-        .article-intro { color: #1a1a1a !important; padding: 15px 0; margin-bottom: 25px; border-bottom: 1px solid #eee; }
-        .styled-table thead tr { background-color: #111827; color: #ffffff; text-align: left; }
-        .cta-footer { background-color: #e6f2ff; border-top: 3px solid #0099cc; border-radius: 5px; }
-    </style>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <link rel="stylesheet" href="insight_style.css"> 
 </head>
-<body>
+<body class="text-white">
 
-    <header class="bg-hydro-charcoal header-bg sticky top-0 z-10 shadow-lg">
+    <header class="header-bg sticky top-0 z-10 shadow-lg">
         <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-            <a href="/index.html" class="text-xl font-bold text-cyan-400 hover:text-cyan-300">← Back to Homepage</a>
+            <a href="index.html" class="text-xl font-bold text-cyan-400 hover:text-cyan-300">← Back to Home</a>
+            <div class="text-xl font-bold text-white">HYDRO-IMMUNITY INSIGHTS</div>
         </div>
     </header>
     
-    <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-        <h1 class="text-4xl font-extrabold text-white mb-4 text-center section-title">AnoHUB Expert Insights</h1>
-        <p class="text-xl text-slate-400 mb-10 text-center">Your knowledge base for hydro sector challenges, discipline, and future expertise.</p>
+    <main>
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <h1 class="text-4xl font-extrabold text-white mb-4 text-center section-title">AnoHUB Expert Insights</h1>
+            <p class="text-xl text-slate-400 mb-10 text-center">Your knowledge base for hydro sector challenges, discipline, and future expertise.</p>
 
-        <div id="content-slider-wrapper" class="relative">
-            <div id="insights-list" class="flex space-x-6 overflow-x-scroll p-4 pb-12 scrollbar-hide">
-                </div>
+            <div id="content-slider-wrapper" class="relative">
+                <div id="insights-list" class="flex space-x-6 overflow-x-scroll p-4 pb-12 scrollbar-hide">
+                    </div>
 
-            <button id="scroll-left" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-slate-700/70 p-3 rounded-full shadow-lg hover:bg-cyan-500 transition duration-300 z-20 hidden md:block">
-                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
-            </button>
-            <button id="scroll-right" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-slate-700/70 p-3 rounded-full shadow-lg hover:bg-cyan-500 transition duration-300 z-20 hidden md:block">
-                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-            </button>
+                <button id="scroll-left" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-slate-700/70 p-3 rounded-full shadow-lg hover:bg-cyan-500 transition duration-300 z-20 hidden md:block" aria-label="Previous Article">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                </button>
+                <button id="scroll-right" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-slate-700/70 p-3 rounded-full shadow-lg hover:bg-cyan-500 transition duration-300 z-20 hidden md:block" aria-label="Next Article">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </button>
+            </div>
         </div>
-    </div>
+    </main>
     
     <div id="article-modal" class="hidden fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4" onclick="closeModal()">
-        <div class="modal-content-area" id="modal-content-area" onclick="event.stopPropagation()">
+        <div 
+            class="modal-content-area flex flex-col w-full max-w-4xl max-h-[90vh] rounded-lg shadow-2xl overflow-y-auto bg-white" 
+            id="modal-content-area" 
+            onclick="event.stopPropagation()">
             
-            <div id="article-content-wrapper">
+            <div id="article-content-wrapper" class="text-black">
                 </div>
             
-            <div class="text-center mt-6">
-                <button onclick="closeModal()" class="px-6 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg">Close Article</button>
+            <div class="text-center py-4 px-4 bg-slate-900 border-t border-slate-700 flex-shrink-0">
+                <button onclick="closeModal()" class="px-6 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg shadow-lg">Close Article</button>
             </div>
         </div>
     </div>
 
-    <footer class="bg-slate-900 border-t border-cyan-500/50 mt-12">
-        <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 text-center text-slate-400">
-            <div class="flex justify-center space-x-6 mb-4">
-                <a href="/index.html" class="hover:text-cyan-400 transition-colors">Homepage</a>
-                <a href="/index.html#expertise" class="hover:text-cyan-400 transition-colors">Expertise</a>
-                <a href="/index.html#contact" class="hover:text-cyan-400 transition-colors">Contact</a>
+    <footer>
+        <div class="bg-slate-900 border-t border-cyan-500/50 mt-12">
+            <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 text-center text-slate-400">
+                <div class="flex justify-center space-x-6 mb-4">
+                    <a href="index.html" class="hover:text-cyan-400 transition-colors">Homepage</a>
+                    <a href="index.html#protokol" class="hover:text-cyan-400 transition-colors">Protocol</a>
+                    <a href="index.html#kontakt" class="hover:text-cyan-400 transition-colors">Contact</a>
+                </div>
+                <p class="text-lg font-semibold text-white mb-2">AnoHUB | Expert Insights</p>
+                <p class="text-sm">&copy; 2025 AnoHUB. All Rights Reserved. | Powered by Precision.</p>
             </div>
-            <p class="text-lg font-semibold text-white mb-2">AnoHUB | Expert Insights</p>
-            <p class="text-sm">&copy; 2025 AnoHUB. All rights reserved. | Powered by Precision.</p>
         </div>
     </footer>
 
-
-    <script>
-        // PODACI O ČLANCIMA (Ugrađeni, rešava problem putanje)
-        const insightData = [
-            // MODUL 15: The SCADA-to-CEO Gap (NOVO)
-            {
-                id: 'module15',
-                icon: '📈',
-                title: 'The SCADA-to-CEO Gap',
-                subtitle: 'Bridging Data and Strategic Budgeting',
-                status: 'Published',
-                content: `
-                    <div class="article-container">
-                        <h1>📈 The SCADA-to-CEO Gap: Bridging Data and Strategic Budgeting</h1>
-                        <p class="article-intro">Traditional monitoring generates massive amounts of data (vibration, temperature, flow) but fails to answer the strategic question: "How does this affect my CAPEX budget and the asset's lifespan?" This is the SCADA-to-CEO Gap.</p>
-                        
-                        <h2>The Hydro Health Index (HHI) Solution</h2>
-                        <p>We use AI and advanced analytics to create the **Hydro Health Index (HHI)**. HHI is a single composite score (0-100%) that aggregates operational metrics into a measurable assessment of risk and Remaining Useful Life (RUL).</p>
-                        
-                        <p><strong>Impact:</strong></p>
-                        <ul>
-                            <li>**Proactive Budgeting:** Replace reactive failure costs with predicted, optimized investments.</li>
-                            <li>**ROI-focused Maintenance:** Justify component repair costs by directly quantifying the increase in HHI and delayed costs.</li>
-                            <li>**Risk Reduction:** Leaders gain immediate insight into the true risk of the entire portfolio, avoiding catastrophic failures.</li>
-                        </ul>
-
-                        <div class="cta-footer">
-                            <strong>AnoHUB translates engineering complexity into the language of finance, making your digital transformation a profit center.</strong>
-                            <a href="/index.html#contact" class="cta-button">Request Executive Briefing on HHI</a>
-                        </div>
-                    </div>
-                `
-            },
-            // MODUL 14 - 3D Flow Analysis: Ultra-High Head Risk
-            {
-                id: 'module14',
-                icon: '🔬',
-                title: '3D Flow Analysis: Ultra-High Head Risk',
-                subtitle: 'The Necessity of Full System Simulation (CFD)',
-                status: 'Published',
-                content: `
-                    <div class="article-container">
-                        <h1>🔬 3D Flow Analysis: Ultra-High Head Risk and System Coupling</h1>
-
-                        <h2>Key Findings: The System is Interconnected</h2>
-                        <p>This analysis, based on 3D simulations of an ultra-high-head pumped storage unit, demonstrates that severe pressure pulsations significantly threaten operational safety.</p>
-                        <p><strong>Bidirectional Coupling:</strong> The study reveals a strong bidirectional coupling between the flow in the long outlet pipe and the internal flow within the pump-turbine unit.</p>
-                        <p><strong>Strategic Takeaway:</strong> Ignoring 3D flow within these long pipelines may result in significant errors in predicting internal flow characteristics and dynamic instability, directly relating to the <strong>48% dynamic risk factor</strong> we seek to mitigate.</p>
-                        
-                        <div class="cta-footer">
-                            <strong>Is your predictive maintenance based on 1D flow models? Upgrade to the AnoHUB Digital Protocol.</strong>
-                            <a href="/index.html#contact" class="cta-button">Request Advanced Audit</a>
-                        </div>
-                    </div>
-                `
-            },
-            // MODUL 13 - The Unseen Threat: Sediment and Silt
-            {
-                id: 'module13',
-                icon: '⏳',
-                title: 'The Unseen Threat: Sediment and Silt',
-                subtitle: 'Eroding Profits, Endangering Assets',
-                status: 'Published',
-                content: `
-                    <div class="article-container">
-                        <h1>⏳ The Unseen Threat: Sediment and Silt Are Eroding Hydropower Profits</h1>
-
-                        <h2>Defining the Damage: Abrasion vs. Cavitation</h2>
-                        <p>To fight the problem, you first need to understand the enemy. While both lead to turbine damage, abrasion and cavitation are entirely different phenomena.</p>
-                        <p><strong>Abrasion</strong> is mechanical wear caused by solid particles in the water. Sand and silt act like sandpaper, constantly grinding down the metal surfaces. The telltale sign of abrasion is a smooth, "sandblasted" appearance on the metal, which can thin out the blades over time. The primary culprits are soil erosion from upstream sources and high sediment loads, especially after heavy rains.</p>
-                        
-                        <h2>The Right Tool for the Job: Turbine Susceptibility</h2>
-                        <p>Each turbine type has a different vulnerability. Francis and Kaplan turbines are susceptible to both, while Pelton turbines are highly vulnerable to abrasion alone. Knowing your specific turbine's weaknesses is the first step toward building a better defense strategy.</p>
-
-                        <h2>Protecting Your Investment: The Simple Solution</h2>
-                        <p>The most effective strategy against sediment is prevention. The best line of defense is a **settling basin or sand trap**. The key to a successful sand trap is a regular flushing and maintenance schedule to remove built-up sediment, protecting your turbine and extending its lifespan.</p>
-                        
-                        <div class="cta-footer">
-                            <strong>Is sediment building up in your intake? A small investment in a sand trap could save you from a major turbine overhaul.</strong>
-                            <a href="/index.html#contact" class="cta-button">Share Your Experiences</a>
-                        </div>
-                    </div>
-                `
-            },
-            // MODUL 12 - From Reactive to Predictive
-            {
-                id: 'module12',
-                icon: '💻',
-                title: 'From Reactive to Predictive',
-                subtitle: 'The Digital Twin’s Role in Hydropower Maintenance',
-                status: 'Published',
-                content: `
-                    <div class="article-container">
-                        <h1>💻 From Reactive to Predictive: The Digital Twin’s Role in Hydropower Maintenance</h1>
-
-                        <h2>What is a Digital Twin?</h2>
-                        <p>A digital twin is a virtual replica of a physical object, system, or process. It's created using data collected from sensors, allowing it to behave and react in the same way as its physical counterpart. For turbines, this means: A virtual model that simulates the turbine's behavior. Real-time sensors (for vibration, temperature, pressure, flow) that feed the twin with data.</p>
-
-                        <h2>How a Digital Twin Helps in Practice</h2>
-                        <p>This technology transforms maintenance from a reactive to a predictive process. Instead of waiting for a breakdown, you predict the problem. This includes **Early Detection of Abrasion and Cavitation**, **Performance Optimization** through simulation, and **Predictive Maintenance** eliminating expensive, unplanned emergency repairs.</p>
-                        
-                        <div class="cta-footer">
-                            <strong>Abrasion, cavitation, loss of efficiency—let's find better solutions together.</strong>
-                            <a href="/index.html#contact" class="cta-button">Connect With Me</a>
-                        </div>
-                    </div>
-                `
-            },
-            // MODUL 11 - The "Check Engine Light" of Your Turbine
-            {
-                id: 'module11',
-                icon: '🌡️',
-                title: 'The "Check Engine Light" of Your Turbine',
-                subtitle: '5 Symptoms You Should Never Ignore',
-                status: 'Published',
-                content: `
-                    <div class="article-container">
-                        <h1>🌡️ The "Check Engine Light" of Your Turbine: 5 Symptoms You Should Never Ignore</h1>
-                        
-                        <p class="article-intro">
-                            Unexpected failures don't happen overnight. They are the result of cumulative stress from issues like abrasion, cavitation, and bearing wear. By the time a problem becomes critical, the damage je already done. Your best defense is a proactive approach, which means learning to read the subtle cues your turbine is giving you.
-                        </p>
-
-                        <h2>Your Diagnostic Toolkit: 5 Key Indicators</h2>
-                        
-                        <h3>1. Unusual Noise</h3>
-                        <p>Thumping often indicates issues with cavitation. Squealing/Grinding signals bearing problems. Rattling is a common sign of loose parts.</p>
-
-                        <h3>2. Changes in Vibration</h3>
-                        <p>Your hands are your best sensor. Vibrations intensify over time and can signal a variety of problems, from an unbalanced rotor to damaged bearings.</p>
-                        
-                        <h3>3. Abnormal Temperature</h3>
-                        <p>A sudden spike in bearing or oil temperature is a major red flag, often indicating insufficient lubrication or overloading. Simple visual checks can prevent you from overheating vital components.</p>
-                        
-                        <div class="cta-footer">
-                            <strong>Field experience has taught me that simple, low-cost inspections are far more effective than expensive, last-minute repairs.</strong>
-                            <a href="/index.html#contact" class="cta-button">Connect With Our Expertise</a>
-                        </div>
-                    </div>
-                `
-            },
-            // MODUL 10 - Holistic River View
-            {
-                id: 'module10',
-                icon: '🌍',
-                title: 'A Holistic View: River Protection and Turbines',
-                subtitle: 'Practical solutions for river health and assets',
-                status: 'Published',
-                content: `
-                    <div class="article-container">
-                        <h1>🌍 A Holistic View: River Protection and Turbines</h1>
-
-                        <h2>The Price of Negligence: The River's Condition as an Indicator</h2>
-                        <p>When the focus is solely on profit and not on the long-term health of the river, nature sends clear signals: The "hungry" river (erosion due to sediment loss), Oily streaks, and Ineffective fish passages. These issues are not only ecological; they are a sign of an inefficient and outdated approach.</p>
-
-                        <h2>Practical Solutions: Paths to Symbiosis with Nature</h2>
-                        <p>The key is a holistic approach that views the river as a single system. **Sediment Management** (e.g., controlled flushing) and **Natural Fish Passes** secure the long-term health of the river and, crucially for owners, prevent regulatory issues and ensure permanent operating licenses.</p>
-
-                        <div class="cta-footer">
-                            <strong>It is time for change. Have you struggled with unaddressed problems at your plant?</strong>
-                            <a href="/index.html#contact" class="cta-button">Share Your Experience</a>
-                        </div>
-                    </div>
-                `
-            },
-            // MODUL 9 - Beyond the Kilowatt-Hour
-            {
-                id: 'module9',
-                icon: '🌱',
-                title: 'Beyond the Kilowatt-Hour',
-                subtitle: 'The Symbiosis Standard',
-                status: 'Published',
-                content: `
-                    <div class="article-container">
-                        <h1>🌱 Beyond the Kilowatt-Hour: A Call for a New Standard in Hydropower</h1>
-
-                        <h2>The Problem with Our Current Model</h2>
-                        <p>
-                            We have become experts at measuring the obvious—the kilowatt-hour. But what about the hidden value? What about the **river mint**? The reality is that our current approach is incomplete. We treat hydropower as a pure financial equation, ignoring the ecological and natural capital we rely on.
-                        </p>
-
-                        <h2>A Vision for the Future: The Symbiosis Standard</h2>
-                        <p>
-                            I believe we need a "counter-value" system where the preservation of nature—the health of the river, its biodiversity, and its natural beauty—is given real economic weight. I call this the **Symbiosis Standard**. In this model, a project's value wouldn't be judged solely by its energy generation, but by its ability to exist in harmony with the environment.
-                        </p>
-                        
-                        <div class="cta-footer">
-                            <strong>What would be the biggest challenge in establishing a "Symbiosis Standard"?</strong>
-                            <a href="/index.html#contact" class="cta-button">Join the Debate</a>
-                        </div>
-                    </div>
-                `
-            },
-            // MODUL 7 - Your Hydropower Plant as a Fortress
-            {
-                id: 'module7', 
-                icon: '🏰',
-                title: 'Your Hydropower Plant as a Fortress',
-                subtitle: 'Take Control of Maintenance and Profit',
-                status: 'Published',
-                content: `
-                    <div class="article-container">
-                        <h1>🏰 Your Hydropower Plant as a Fortress: How to Take Control of Maintenance and Profit</h1>
-                        
-                        <h2>1. Overcoming Myths and Taking Control</h2>
-                        <p>The main challenge in our industry is not always machine failure, but the lack of knowledge that empowers owners to protect themselves. Maintenance too often relies on a reactive approach. This opens the door for service providers seeking profit, not the optimal solution.</p>
-
-                        <h2>2. Keys to Independence: Practical Knowledge and Modern Solutions</h2>
-                        <p>Your hydropower plant can become a fortress resistant to systemic shocks. This is achieved by combining practical experience and modern innovation:</p>
-                        
-                        <ul>
-                            <li>**Precision as the Foundation:** The basis of machine longevity is assembly precision. I maintain that a core knowledge of the **0.05 mm per meter** tolerance is essential.</li>
-                            <li>**Holistic Inspection:** Focus on key components like shaft seals, central lubrication systems, and the hydraulic system to prevent leaks and bearing overheating.</li>
-                            <li>**Digital Protocol:** Owners must introduce a digital system to serve as a central logbook for all service work, providing complete control over the plant's history.</li>
-                        </ul>
-
-                        <div class="cta-footer">
-                            <strong>Your first battle is knowledge.</strong>
-                            <p>I want to share my experience so owners can make informed decisions. Contact me for insight and advice without any obligation.</p>
-                            <a href="/index.html#contact" class="cta-button">Get My Free Insight</a>
-                        </div>
-                    </div>
-                `
-            },
-            // MODUL 6 - Hidden Costs & Ticking Bombs
-            {
-                id: 'module6',
-                icon: '💣',
-                title: 'Hidden Costs & Ticking Bombs',
-                subtitle: 'Systematic Review of Mechanical Maintenance',
-                status: 'Published',
-                content: `
-                    <div class="article-container">
-                        <h1>💣 Hidden Costs & Ticking Bombs: The Hard Truth About Your Hydropower Plant</h1>
-
-                        <h2>1. Relevant Statistics and General Data</h2>
-                        <ul>
-                            <li>70-80% of mechanical equipment failures can be attributed to inadequate maintenance or errors during assembly and installation.</li>
-                            <li>10-20% of a hydropower plant's total operating costs are related to maintenance.</li>
-                        </ul>
-
-                        <h2>2. Holistic Problem Breakdown: From Root Cause to Consequence</h2>
-                        <h3>Initial Problems (Root Causes)</h3>
-                        <p><strong>Assembly and Installation Errors</strong> (poor shaft alignment) and **Electrical Factors** are the most dangerous root causes. Consequences: **Misalignment**, **Vibrations** (the "silent killer"), and **Contamination**.</p>
-
-                        <h2>3. The Human and Strategic Factor: The True Root Cause</h2>
-                        <p>The true cost of compromise is found here: **Reactive vs. Proactive Culture**, **Loss of Knowledge and Expertise**, and **Personnel Burnout**.</p>
-
-                        <div class="cta-footer">
-                            <strong>Conclusion: Your investment in early, comprehensive expert integrity is the only guarantee against costly failures.</strong>
-                            <a href="/index.html#contact" class="cta-button">Connect With Our Expertise</a>
-                        </div>
-                    </div>
-                `
-            },
-            // MODUL 5 - The True Cost of Low Bid
-            {
-                id: 'module5', 
-                icon: '💰',
-                title: 'The True Cost of Low Bid',
-                subtitle: 'The Dilemma of Capital Expenditure vs. LCC',
-                status: 'Published',
-                content: `
-                    <div class="article-container">
-                        <h1>💰 The True Cost of Low Bid: The Dilemma of Capital Expenditure vs. LCC</h1>
-                        
-                        <p class="article-intro">
-                            In the hydropower sector, a silent catastrophe is unfolding. The pursuit of the lowest upfront price (CapEx) is the greatest enemy of your project's longevity.
-                        </p>
-
-                        <h2>1. Measuring the Illusion: Long-term Cost vs. Purchase Price</h2>
-                        <p>Every expert knows that the Capital Expenditure (CapEx) of a turbine is minimal compared to the total cost over a 100-year lifecycle (OpEx). Scientific Proof: Studies confirm that slight shaft misalignment triggers a quantifiable **48% dynamic instability** of the turbine's critical frequencies. The Low-Bid Project—is financially flawed and dynamically unstable from birth.</p>
-
-                        <h2>4. The Strategic Mandate: The Integrated Audit Solution</h2>
-                        <p>We must stop treating hydropower as a simple CapEx transaction. Your reliable partner must **Enforce Precision** (Flawless Installation Protocol—QC < 0.1 mm) to eliminate the 48-Percent-Risk, **Audit Contracts** for material compatibility, and **Secure Integrity**.</p>
-                        
-                        <div class="cta-footer">
-                            <strong>The investment in early, comprehensive integrity is not a cost factor. It's the only guarantee that your pursuit of the lowest bid won't become your costliest catastrophic failure.</strong>
-                            <a href="/index.html#contact" class="cta-button">REQUEST LCC CONSULTATION</a>
-                        </div>
-                    </div>
-                `
-            },
-            // MODUL 4: The True Cost of Compromise
-            {
-                id: 'module4', 
-                icon: '🛡️',
-                title: 'The True Cost of Compromise',
-                subtitle: 'Why Integrity and Culture Matter',
-                status: 'Published',
-                content: `
-                    <div class="article-container">
-                        <h1>🛡️ The True Cost of Compromise: Why Integrity and Culture Matter in Engineering</h1>
-                        
-                        <p class="article-intro">
-                            As a seasoned leader in global engineering, I've had the privilege of managing highly complex hydropower projects for over 15 years. My experience has taught me that the true measure of a project’s success is its long-term resilience and sustainability.
-                        </p>
-
-                        <h2>1. Technical Expertise in Service of Strategic Leadership</h2>
-                        <p>My career has taught me how to bridge the gap between hands-on expertise and strategic leadership. I've learned that while technical skills are the foundation, true transformation happens when they are combined with advanced skills in problem-solving, risk management, and communication.</p>
-
-                        <h2>2. Solving Systemic, Not Just Technical, Challenges</h2>
-                        <p>I’ve discovered that many on-site issues are not technical problems but are the result of systemic failures within the organizational culture. A lack of communication, insufficient staff training, or excessive pressure on deadlines can can lead to errors that compromise quality and safety. My focus is on identifying and resolving these systemic challenges to create a more resilient and healthier work environment.</p>
-
-                        <div class="cta-footer">
-                            <strong>Ready to build robust, resilient systems?</strong>
-                            <p>Let's discuss how integrity and culture drive profitability.</p>
-                            <a href="/index.html#contact" class="cta-button">Connect With Me</a>
-                        </div>
-                    </div>
-                `
-            },
-            // MODUL 1: Engineering Immunity (Puni tekst)
-            {
-                id: 'module1', 
-                icon: '🐳',
-                title: 'Engineering Immunity',
-                subtitle: 'Metrics and Risk',
-                status: 'Published',
-                content: `
-                    <div class="article-container">
-                        <h1>🌊 Engineering Immunity: How Technology Neutralizes 48% Dynamic Risk in Hydropower</h1>
-
-                        <p class="article-intro">
-                            This analysis demonstrates that the most significant threat to hydropower asset integrity is not component failure, but **Organizational Execution Gap**. Studies confirm that installation imperfections introduce a measurable 48% dynamic risk factor that accelerates asset degradation. We introduce the **Dual Application Strategy** – a bio-inspired solution guaranteeing maximum operational resilience.
-                        </p>
-
-                        <h2>🚨 1. Organizational Compromise: The Ticking Bomb Thesis</h2>
-                        <p>The crisis is defined by the critical disconnect between perfect design and flawed field implementation (Execution Gap). Even the most precisely designed turbine is vulnerable to failure caused by simple **Installation Errors**—misalignments often invisible during standard commissioning.</p>
-
-                        <h2>🐳 2. The Solution: Hydrodynamic Harmony™ — Dual Application Strategy</h2>
-                        <p>Our innovative hypothesis finds its solution in nature's most efficient fluid dynamicist: the **Humpback Whale**. The **"Whale Fin" Rotor (Tubercle Concept)** integrates carefully shaped ridges to create **Hydrodynamic Immunity** – a design that tolerates human imperfection.</p>
-                        
-                        <p>Metrics Summary (Simplified): Dynamic Risk is **Neutralized**, and Vibrations are **Drastically Reduced**.</p>
-                        
-                        <div class="cta-footer">
-                            <strong>Ready to eliminate 48% dynamic risk in your fleet?</strong>
-                            <a href="/index.html#contact" class="cta-button">CONTACT US FOR A DETAILED STUDY</a>
-                        </div>
-                    </div>
-                `
-            },
-            // MODUL 2: PLACEHOLDER
-            {
-                id: 'module2',
-                icon: '🎯',
-                title: '0.05 mm/m Standard',
-                subtitle: 'Discipline Verification',
-                status: 'In preparation',
-                content: '<div class="article-container"><h1>🎯 Module 2: 0.05 mm/m Protocol (In Preparation)</h1><p class="article-intro">This module will provide the detailed protocol for implementing the 0.05 mm/m standard on-site and explain how this ultra-precision directly impacts all machine components by reducing the 48% dynamic risk.</p></div>'
-            },
-            // MODUL 3: PLACEHOLDER
-            {
-                id: 'module3',
-                icon: '❄️',
-                title: 'Winter Challenges & M-E Synergy',
-                subtitle: 'Extreme Conditions',
-                status: 'In preparation',
-                content: '<div class="article-container"><h1>❄️ Winter Challenges and M-E Synergy (In Preparation)</h1><p class="article-intro">This module will detail the Machine-Electrical (M-E) Synergy Gap: how electrical instabilities and cold temperatures stress mechanical assets. Focus will be on solutions for protecting equipment in extreme winter conditions.</p></div>'
-            }
-        ];
-
-        // Exporting the data array so it can be imported by expert-insights.html
-        export { insightData };
-    </script>
+    <script src="insights_logic.js"></script>
 </body>
 </html>
