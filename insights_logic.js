@@ -53,15 +53,15 @@ function renderInsights(data) {
         const statusText = isPublished ? 'CLICK TO READ' : item.status;
         const statusColor = isPublished ? 'text-cyan-400' : 'text-slate-400';
         
-        // Iako nam ne treba, zadržavamo const previewText zbog potencijalne buduće upotrebe
-        const previewText = item.subtitle; 
+        // Koristimo samo subtitle za pregled
+        const previewText = item.subtitle;
 
-        // KRITIČNA KOREKCIJA: Uklanjamo duplirani preview tekst i povećavamo razmak (mb-10)
+        // KRITIČNA KOREKCIJA: Uklanjamo dupli preview tekst i osiguravamo mb-10
         card.innerHTML = `
             <div class="text-3xl mb-4 text-cyan-400">${item.icon}</div>
             <h2 class="text-xl font-bold text-white mb-2">${item.title}</h2>
             
-            <p class="text-sm text-slate-400 italic mb-10">${item.subtitle}</p>
+            <p class="text-sm text-slate-400 italic mb-10">${previewText}</p>
             
             <div class="absolute bottom-6 text-sm font-semibold ${statusColor}">
                 ${statusText} →
