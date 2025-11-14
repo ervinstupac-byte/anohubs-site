@@ -16,22 +16,21 @@
 
 /* GLOBALNI STILOVI (Pozadinska slika ARHIVE - ZIMA) */
 body { 
-    /* KRITIČNO: POZADINA ARHIVE (ZIMA) - Forsiramo! */
-    background-image: url('zima_arm.jpg') !important; 
+    /* KRITIČNO: POZADINA ARHIVE (ZIMA) - Koristi apsolutnu putanju / */
+    background-image: url('/zima_arm.jpg') !important; 
     background-color: #0F172A !important; /* Tamna boja */
     background-attachment: fixed;
     background-size: cover;
     background-position: center bottom;
     
-    /* KRITIČNO: Forsiramo boju teksta na svijetlu za arhivu */
-    color: var(--color-text-base) !important; 
+    color: var(--color-text-base) !important; /* Forsiramo svijetlu boju teksta */
     font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
     line-height: 1.6;
     position: relative; 
     min-height: 100vh;
 }
 
-/* PSEUDOELEMENT ZA ZATAMNJENJE (OVERLAY) radi čitljivosti teksta na glavnoj stranici */
+/* PSEUDOELEMENT ZA ZATAMNJENJE (OVERLAY) */
 body::before {
     content: '';
     position: fixed;
@@ -54,6 +53,25 @@ body::before {
 
 
 /*======================================================
+  STILOVI ZA KARTICE ČLANAKA (INSIGHTS LIST)
+======================================================*/
+
+/* Bazni stil kartice */
+.insight-card {
+    transition: all 0.3s ease;
+    background-color: rgba(30, 41, 59, 0.95); 
+    box-shadow: 0 4px 6px -1px rgba(34, 211, 238, 0.1);
+}
+
+/* Hover efekat (Podizanje i Cyan sjenka) */
+.insight-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(34, 211, 238, 0.5), 0 4px 6px -2px rgba(34, 211, 238, 0.3);
+    border-color: #22d3ee;
+}
+
+
+/*======================================================
   MODAL I SADRŽAJ ČLANKA (ČITLJIVOST)
 ======================================================*/
 
@@ -64,7 +82,6 @@ body::before {
 
 /* Kontejner za Modal (Centriranje) */
 .modal-content-area { 
-    /* Pozadina je rješena u HTML-u sa bg-white */
     color: var(--color-dark);
     border-radius: 8px;
     display: flex; 
@@ -81,14 +98,13 @@ body::before {
 
 /* KONTEJNER TEKSTA ČLANKA (article-container) */
 .article-container { 
-    /* KRITIČNO: POZADINA ČLANKA (PROLJEĆE) */
-    background-image: url('proljece_arm.jpg'); 
+    /* KRITIČNO: POZADINA ČLANKA (PROLJEĆE) - Koristi apsolutnu putanju / */
+    background-image: url('/proljece_arm.jpg'); 
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: scroll; 
     
-    /* Dodajemo OVERLAY preko slike u članku za bolju čitljivost */
     position: relative;
     z-index: 1;
 
@@ -98,7 +114,7 @@ body::before {
     line-height: 1.6;
 }
 
-/* PSEUDOELEMENT ZA OVERLAY UNUTAR ČLANKA - Ključno za čitljivost teksta */
+/* PSEUDOELEMENT ZA OVERLAY UNUTAR ČLANKA */
 .article-container::before {
     content: '';
     position: absolute;
@@ -106,8 +122,7 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    /* Bijeli overlay preko slike, radi bolje vidljivosti crnog teksta */
-    background-color: rgba(255, 255, 255, 0.85); 
+    background-color: rgba(255, 255, 255, 0.85); /* Bijeli overlay */
     z-index: -1; 
 }
 
