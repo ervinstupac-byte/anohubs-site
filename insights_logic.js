@@ -25,7 +25,7 @@ const insightData = [
                 
                 <div class="cta-footer">
                     <strong>Ready to eliminate 48% dynamic risk in your fleet?</strong>
-                    <a href="/index.html#contact" class="cta-button">CONTACT US FOR A DETAILED STUDY</a>
+                    <a href="/index.html#contact" class="cta-button">REQUEST A DETAILED STUDY</a>
                 </div>
             </div>
         `
@@ -99,7 +99,7 @@ const insightData = [
                 <div class="cta-footer">
                     <strong>Ready to build robust, resilient systems?</strong>
                     <p>Let's discuss how integrity and culture drive profitability.</p>
-                    <a href="/index.html#contact" class="cta-button">Connect With Me</a>
+                    <a href="/index.html#contact" class="cta-button">CONNECT WITH ME</a>
                 </div>
             </div>
         `
@@ -125,7 +125,7 @@ const insightData = [
                 
                 <div class="cta-footer">
                     <strong>Build a culture of trust.</strong>
-                    <a href="/index.html#contact" class="cta-button">Join the Hydro-Prijateljstvo Community</a>
+                    <a href="/index.html#contact" class="cta-button">JOIN THE HYDRO-PRIJATELJSTVO COMMUNITY</a>
                 </div>
             </div>
         `
@@ -156,7 +156,7 @@ const insightData = [
 
                 <div class="cta-footer">
                     <strong>Conclusion: Your investment in early, comprehensive expert integrity is the only guarantee against costly failures.</strong>
-                    <a href="/index.html#contact" class="cta-button">Connect With Our Expertise</a>
+                    <a href="/index.html#contact" class="cta-button">CONNECT WITH OUR EXPERTISE</a>
                 </div>
             </div>
         `
@@ -188,7 +188,7 @@ const insightData = [
                 <div class="cta-footer">
                     <strong>Your first battle is knowledge.</strong>
                     <p>I want to share my experience so owners can make informed decisions. Contact me for insight and advice without any obligation.</p>
-                    <a href="/index.html#contact" class="cta-button">Get My Free Insight</a>
+                    <a href="/index.html#contact" class="cta-button">GET MY FREE INSIGHT</a>
                 </div>
             </div>
         `
@@ -217,7 +217,7 @@ const insightData = [
                 
                 <div class="cta-footer">
                     <strong>What would be the biggest challenge in establishing a "Symbiosis Standard"?</strong>
-                    <a href="/index.html#contact" class="cta-button">Join the Debate</a>
+                    <a href="/index.html#contact" class="cta-button">JOIN THE DEBATE</a>
                 </div>
             </div>
         `
@@ -242,7 +242,7 @@ const insightData = [
 
                 <div class="cta-footer">
                     <strong>It is time for change. Have you struggled with unaddressed problems at your plant?</strong>
-                    <a href="/index.html#contact" class="cta-button">Share Your Experience</a>
+                    <a href="/index.html#contact" class="cta-button">SHARE YOUR EXPERIENCE</a>
                 </div>
             </div>
         `
@@ -276,7 +276,7 @@ const insightData = [
                 
                 <div class="cta-footer">
                     <strong>Field experience has taught me that simple, low-cost inspections are far more effective than expensive, last-minute repairs.</strong>
-                    <a href="/index.html#contact" class="cta-button">Connect With Our Expertise</a>
+                    <a href="/index.html#contact" class="cta-button">CONNECT WITH OUR EXPERTISE</a>
                 </div>
             </div>
         `
@@ -301,7 +301,7 @@ const insightData = [
                 
                 <div class="cta-footer">
                     <strong>Abrasion, cavitation, loss of efficiency—let's find better solutions together.</strong>
-                    <a href="/index.html#contact" class="cta-button">Connect With Me</a>
+                    <a href="/index.html#contact" class="cta-button">CONNECT WITH ME</a>
                 </div>
             </div>
         `
@@ -324,7 +324,7 @@ const insightData = [
                 
                 <div class="cta-footer">
                     <strong>Ensure your mechanical investment is protected from electrical flaws.</strong>
-                    <a href="/index.html#e-usluge" class="cta-button">Download HOAI Electrical Service Guide</a>
+                    <a href="/index.html#e-usluge" class="cta-button">DOWNLOAD HOAI ELECTRICAL SERVICE GUIDE</a>
                 </div>
             </div>
         `
@@ -350,7 +350,7 @@ const insightData = [
                 
                 <div class="cta-footer">
                     <strong>A small investment in a sand trap could save you from a major turbine overhaul.</strong>
-                    <a href="/index.html#contact" class="cta-button">Share Your Experiences</a>
+                    <a href="/index.html#contact" class="cta-button">SHARE YOUR EXPERIENCES</a>
                 </div>
             </div>
         `
@@ -374,7 +374,7 @@ const insightData = [
                 
                 <div class="cta-footer">
                     <strong>Is your predictive maintenance based on 1D flow models? Upgrade to the AnoHUB Digital Protocol.</strong>
-                    <a href="/index.html#contact" class="cta-button">Request Advanced Audit</a>
+                    <a href="/index.html#contact" class="cta-button">REQUEST ADVANCED AUDIT</a>
                 </div>
             </div>
         `
@@ -404,7 +404,7 @@ const insightData = [
 
                 <div class="cta-footer">
                     <strong>AnoHUB translates engineering complexity into the language of finance, making your digital transformation a profit center.</strong>
-                    <a href="/index.html#contact" class="cta-button">Request Executive Briefing on HHI</a>
+                    <a href="/index.html#contact" class="cta-button">REQUEST EXECUTIVE BRIEFING ON HHI</a>
                 </div>
             </div>
         `
@@ -417,17 +417,14 @@ function renderInsights(data) {
     const contentWrapper = document.getElementById('article-content-wrapper');
     if (!list || !contentWrapper) return;
 
-    // Prvo, sortirajte podatke da se najnoviji (ili po želji) pojave prvi.
-    // Ovdje koristimo izvorni redoslijed.
-
     data.forEach(item => {
         // 1. Kreiranje Kartice (Slider Item)
         const card = document.createElement('div');
-        // Napomena: Uklonio sam "h-96" za fleksibilniju visinu, ali ostavio "w-80" za širinu
         card.className = 'insight-card flex-shrink-0 w-80 p-6 rounded-xl bg-slate-800 border border-cyan-500/50 cursor-pointer relative';
         card.setAttribute('onclick', `openModal('${item.id}')`);
         
         const isPublished = item.status === 'Published';
+        // TEKST KARTICE JE SADA NA ENGLESKOM
         const statusText = isPublished ? 'CLICK TO READ' : item.status;
         const statusColor = isPublished ? 'text-cyan-400' : 'text-slate-400';
         
@@ -443,7 +440,7 @@ function renderInsights(data) {
             <p class="text-sm text-slate-400 italic">${item.subtitle}</p>
             <p class="mt-4 text-sm text-slate-300">${previewText}...</p>
             <div class="absolute bottom-6 text-sm font-semibold ${statusColor}">
-                ${statusText} &rarr;
+                ${statusText} →
             </div>
         `;
         list.appendChild(card);
@@ -471,7 +468,8 @@ function openModal(moduleId) {
     // Prikaži samo ciljani sadržaj
     const targetContent = document.getElementById(moduleId + '-content');
     if (targetContent) {
-        targetContent.classList.remove('hidden');
+        // OVO UKLANJA KLASU 'hidden' KOJA SAKRIVA SADRŽAJ
+        targetContent.classList.remove('hidden'); 
     }
 
     if (modal) {
@@ -498,6 +496,7 @@ function closeModal() {
 document.addEventListener('DOMContentLoaded', () => {
     // Moramo inicijalizirati Lucide ikone i renderirati podatke
     if (typeof lucide !== 'undefined') {
+        // Provjera da li su Lucide ikone učitane
         lucide.createIcons();
     }
     renderInsights(insightData); // Pokreće generisanje kartica
