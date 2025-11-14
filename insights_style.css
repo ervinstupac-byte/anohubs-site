@@ -16,9 +16,8 @@
 
 /* GLOBALNI STILOVI (Pozadinska slika i Tamna pozadina) */
 body { 
-    /* PROMJENA: POSTAVLJANJE POZADINSKE SLIKE */
     background-image: url('zima_arm.jpg'); 
-    background-color: #0F172A; /* Fallback boja ako slika ne uspije */
+    background-color: #0F172A; 
     background-attachment: fixed;
     background-size: cover;
     background-position: center bottom;
@@ -26,7 +25,7 @@ body {
     color: var(--color-text-base); 
     font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
     line-height: 1.6;
-    position: relative; /* Potrebno za ::before pseudoelement */
+    position: relative; 
     min-height: 100vh;
 }
 
@@ -38,7 +37,6 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    /* Polu-transparentni tamni sloj (poboljšava čitljivost svetlog teksta na slici) */
     background-color: rgba(0, 0, 0, 0.5); 
     z-index: -1; 
 }
@@ -60,7 +58,7 @@ body::before {
 /* Bazni stil kartice */
 .insight-card {
     transition: all 0.3s ease;
-    background-color: rgba(30, 41, 59, 0.95); /* Dark Slate pozadina */
+    background-color: rgba(30, 41, 59, 0.95); 
     box-shadow: 0 4px 6px -1px rgba(34, 211, 238, 0.1);
 }
 
@@ -83,10 +81,9 @@ body::before {
 
 /* Kontejner za Modal (Centriranje) */
 .modal-content-area { 
-    /* Koriste se i Tailwind klase u HTML-u */
-    background-color: #ffffff; 
-    color: var(--color-dark);
-    border-radius: 8px;
+    /* NAPOMENA: Ovdje smo uklonili background-color jer se BG-WHITE sada nalazi direktno u HTML-u. */
+    color: var(--color-dark); /* Postavlja boju teksta na Dark (Slate-900) kao fallback */
+    border-radius: 8px;
     display: flex; 
     flex-direction: column; 
     max-height: 90vh; 
@@ -104,7 +101,7 @@ body::before {
     padding: 40px 20px; 
     margin: 0 auto;
     max-width: 100%;
-    /* ISPRAVKA KONTRASTA 1: Blago siva pozadina */
+    /* Ostavljamo blagu pozadinu za kontrast */
     background-color: #F8F8F8; 
     line-height: 1.6;
 }
@@ -115,12 +112,22 @@ body::before {
 .article-container td,
 .article-container th,
 .article-container blockquote {
-    /* ISPRAVKA KONTRASTA 2: Vrlo tamna boja teksta */
-    color: #111111 !important; 
+    /* Agresivno postavljanje crne boje teksta */
+    color: #000000 !important; 
     font-weight: 400; 
     font-size: 1.1rem;
     margin-bottom: 1.25rem;
 }
+
+/* SIGURNOST: Ako Modal postavi boju, osiguravamo da je crna */
+.modal-content-area p,
+.modal-content-area ul,
+.modal-content-area li,
+.modal-content-area h1,
+.modal-content-area h2 {
+    color: #000000 !important;
+}
+
 
 /* STILOVI ZA NASLOVE */
 .article-container h1 { 
