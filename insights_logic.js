@@ -1,6 +1,8 @@
 // Ovaj fajl sadrži sadržaj SVIH modula (insightData) i logiku za prikaz kartica i modala.
 
 const insightData = [
+    // NAPOMENA: Sadržaj modula ostaje IDENTIČAN kao u vašem posljednjem fajlu.
+    
     // MODUL 1: Engineering Immunity (Neutralizing 48% Risk)
     {
         id: 'module1', 
@@ -118,7 +120,7 @@ const insightData = [
                 <p class="article-intro">My personal experience proves that a **Culture that tolerates injustice** (ethical compromise) is the same culture that tolerates a **technical compromise** (Execution Gap). You can't have one without the other.</p>
 
                 <h2>1. The Human Sensor Advantage</h2>
-                <p>AI serves as a powerful tool, but it doesn't replace the human engineer. Field experts know what cavitation sounds like, how metal smells when it is under fatigue, and how oil looks when it is contaminated. This is the **Human Sensor**—the first and most important layer of diagnostics.</p>
+                <p>AI serves as a powerful tool, but it doesn't replace the human engineer. Field experts know what cavitation sounds like, how metal smells when it is under fatigue, and how oil looks when it je contaminated. This is the **Human Sensor**—the first and most important layer of diagnostics.</p>
                 
                 <h2>2. The Ethical Imperative</h2>
                 <p>To eliminate the 48% dynamic risk, you need engineers who are **empowered** to report faults immediately. A culture that prioritizes safety, ethics, and worker rights is the only foundation for demanding **100% precision**.</p>
@@ -393,7 +395,7 @@ const insightData = [
                 <p class="article-intro">Traditional monitoring generates massive amounts of data (vibration, temperature, flow) but fails to answer the strategic question: "How does this affect my CAPEX budget and the asset's lifespan?" This is the SCADA-to-CEO Gap.</p>
                 
                 <h2>The Hydro Health Index (HHI) Solution</h2>
-                <p>We use AI and advanced analytics to create the **Hydro Health Index (HHI)**. HHI is a single composite score (0-100%) that aggregates operational metrics into a measurable assessment of risk and Remaining Useful Life (RUL).</p>
+                <p>We use AI and advanced analytics to create the **Hydro Health Index (HHI)**. HHI je a single composite score (0-100%) that aggregates operational metrics into a measurable assessment of risk and Remaining Useful Life (RUL).</p>
                 
                 <p><strong>Impact:</strong></p>
                 <ul>
@@ -424,7 +426,7 @@ function renderInsights(data) {
         card.setAttribute('onclick', `openModal('${item.id}')`);
         
         const isPublished = item.status === 'Published';
-        // TEKST KARTICE JE SADA NA ENGLESKOM
+        // TEKST KARTICE JE NA ENGLESKOM
         const statusText = isPublished ? 'CLICK TO READ' : item.status;
         const statusColor = isPublished ? 'text-cyan-400' : 'text-slate-400';
         
@@ -446,9 +448,10 @@ function renderInsights(data) {
         list.appendChild(card);
         
         // 2. Kreiranje Skrivenog Sadržaja za Modal
+        // Ovdje koristimo klasični Tailwind "hidden"
         const articleDiv = document.createElement('div');
         articleDiv.id = item.id + '-content';
-        articleDiv.className = 'article-container hidden';
+        articleDiv.className = 'article-container hidden'; 
         articleDiv.innerHTML = item.content;
         contentWrapper.appendChild(articleDiv);
     });
@@ -462,13 +465,14 @@ function openModal(moduleId) {
 
     // Sakrij sav sadržaj
     document.querySelectorAll('#article-content-wrapper .article-container').forEach(content => {
-        content.classList.add('hidden');
+        // Koristimo Tailwind klasu
+        content.classList.add('hidden'); 
     });
     
     // Prikaži samo ciljani sadržaj
     const targetContent = document.getElementById(moduleId + '-content');
     if (targetContent) {
-        // OVO UKLANJA KLASU 'hidden' KOJA SAKRIVA SADRŽAJ
+        // OVO UKLANJA KLASU 'hidden' KOJA TREBA DA PRIKAŽE SADRŽAJ
         targetContent.classList.remove('hidden'); 
     }
 
@@ -496,7 +500,6 @@ function closeModal() {
 document.addEventListener('DOMContentLoaded', () => {
     // Moramo inicijalizirati Lucide ikone i renderirati podatke
     if (typeof lucide !== 'undefined') {
-        // Provjera da li su Lucide ikone učitane
         lucide.createIcons();
     }
     renderInsights(insightData); // Pokreće generisanje kartica
