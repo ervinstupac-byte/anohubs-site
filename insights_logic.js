@@ -1,7 +1,7 @@
 // Ovaj fajl čita metapodatke iz articles.json i asinhrono učitava sadržaj članka.
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Inicijalizacija ikona (iz globalnog HTML-a)
+    // Inicijalizacija ikona
     if (typeof lucide !== 'undefined') {
         lucide.createIcons();
     }
@@ -12,21 +12,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
 let articleCache = []; // Kešira metapodatke članaka
 
-// 1. DOHVAĆANJE METAPODATAKA IZ JSON-a
+// 1. DOHVAĆANJE METAPODATAKA IZ JSON-a (Sa Cache Busterom)
 async function loadArticles() {
     try {
-        const response = await fetch('articles.json');
-        articleCache = await response.json();
+        // KRITIČNA KOREKCIJA: Dodajemo timestamp da spriječimo keširanje i osiguramo da se fajl UČITA
+        const response = await fetch('articles.json?v=' + new Date().getTime()); 
+        
+        if (!response.ok) {
+            // Ako je HTTP status 404, 500, itd.
+            throw new Error(`HTTP error! Status: ${response.status} (File not found or server issue).`);
+        }
+        
+        // Pokušaj parsiranja JSON-a
+        articleCache = await response.json(); 
 
-        // Sortirajte članke po datumu (najnoviji prvi, ako želite)
+        // Sortiranje članaka (ako želite da najnoviji budu prvi)
         articleCache.sort((a, b) => new Date(b.date) - new Date(a.date));
 
         renderInsights(articleCache); 
     } catch (error) {
-        console.error('Greška pri učitavanju članaka (articles.json):', error);
+        // Prikaz greške u konzoli i na ekranu
+        console.error('Error loading articles (articles.json):', error);
+        
         const list = document.getElementById('insights-list');
         if (list) {
-            list.innerHTML = '<p class="text-red-400 p-4">Error loading articles. Please check articles.json file path.</p>';
+            list.innerHTML = '<p class="text-red-400 p-4">Error loading articles. Please check **articles.json** file path, syntax, and make sure it is named **articles.json**.</p>';
         }
     }
 }
@@ -35,18 +45,18 @@ async function loadArticles() {
 function renderInsights(data) {
     const list = document.getElementById('insights-list');
     if (!list) return;
-    list.innerHTML = ''; // Briše sve što je tamo bilo
+    list.innerHTML = ''; 
 
     data.forEach(item => {
         const card = document.createElement('div');
         card.className = 'insight-card flex-shrink-0 w-80 p-6 rounded-xl bg-slate-800 border border-cyan-500/50 cursor-pointer relative';
-        card.setAttribute('onclick', `openArticleModal('${item.content_file}')`); // Poziva funkciju sa putanjom do HTML-a
+        card.setAttribute('onclick', `openArticleModal('${item.content_file}')`); // Putanja do HTML fajla
         
         const isPublished = item.status === 'Published';
         const statusText = isPublished ? 'CLICK TO READ' : item.status;
         const statusColor = isPublished ? 'text-cyan-400' : 'text-slate-400';
         
-        // Generisanje pregleda (Ne možemo učitati sadržaj, pa koristimo subtitle kao pregled)
+        // Koristimo subtitle kao pregled
         const previewText = item.subtitle;
 
         card.innerHTML = `
@@ -71,11 +81,17 @@ async function openArticleModal(contentFile) {
 
     if (!contentWrapper) return;
     
-    contentWrapper.innerHTML = '<div class="article-container text-center py-10"><h1 class="text-cyan-600">Loading Article...</h1></div>'; // Placeholder
+    // Placeholder za učitavanje
+    contentWrapper.innerHTML = '<div class="article-container text-center py-10 text-black"><h1 class="text-cyan-600">Loading Article...</h1></div>'; 
 
     try {
-        // Asinhrono dohvati čisti HTML sadržaj članka
+        // Dohvati čisti HTML sadržaj članka
         const response = await fetch(contentFile);
+        
+        if (!response.ok) {
+            throw new Error(`Article file not found: ${contentFile}`);
+        }
+        
         const articleHtml = await response.text();
 
         // Ubacuje učitani HTML sadržaj u Modal
@@ -83,7 +99,7 @@ async function openArticleModal(contentFile) {
         
     } catch (error) {
         console.error('Error loading article content:', contentFile, error);
-        contentWrapper.innerHTML = '<div class="article-container text-center py-10"><h1 class="text-red-600">Error: Could not load article content. Check file path.</h1></div>';
+        contentWrapper.innerHTML = '<div class="article-container text-center py-10 text-black"><h1 class="text-red-600">Error: Could not load article content. Check file path.</h1></div>';
     }
 
     // Prikaz Modala
@@ -107,7 +123,7 @@ window.closeModal = () => {
     }
 };
 
-// 4. LOGIKA SKROLANJA (Ne mijenja se)
+// 4. LOGIKA SKROLANJA 
 function initScrollLogic() {
     const insightsList = document.getElementById('insights-list');
     const scrollLeftBtn = document.getElementById('scroll-left');
