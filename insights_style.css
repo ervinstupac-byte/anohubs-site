@@ -66,27 +66,23 @@ body {
 
 /* Kontejner za Modal (Centriranje) */
 .modal-content-area { 
-    background-color: #ffffff; /* Bijela pozadina za čitanje */
+    /* Tailwind klase u HTML-u preuzimaju većinu ovih stilova, ali ostavljamo ih kao fallback */
+    background-color: #ffffff; 
     color: var(--color-dark);
-    max-height: 90vh;
     border-radius: 8px;
-    width: 90%;
-    max-width: 900px;
-    /* ISPRAVKA 1: Uklonite overflow-y: hidden; i prenesite ga niže */
-    /* ISPRAVKA 2: Ako koristite flex u JS-u, ovo ostaje, ali je bolje rješenje u HTML-u */
-    display: flex; 
-    flex-direction: column; 
-    overflow-y: auto; /* Dodajemo scroll ovdje */
+    
+    /* ISPRAVKA 1: Definira flex ponašanje, visinu i scroll za modal */
+    display: flex; 
+    flex-direction: column; 
+    max-height: 90vh; /* Da modal ne zauzme cijeli ekran */
+    overflow-y: auto; /* Ključno: Omogućava skrolanje cijelog Modala */
 }
 
-/* Wrapper za Scroll unutar Modala - SADA JE MANJE BITAN */
+/* Wrapper za Scroll unutar Modala */
 #article-content-wrapper {
-    /* Uklonite max-height i overflow-y ako ste ih dodali na .modal-content-area */
-    /* Ako #modal-content-area ima scroll, ovaj wrapper ne treba fiksnu visinu */
-    /* max-height: calc(90vh - 80px); */ 
-    /* overflow-y: auto; */ 
-    flex-grow: 1; /* Omogućava da zauzme sav dostupan prostor u flex kontejneru */
-    padding-bottom: 0; /* Uklanjamo padding-bottom jer ga ima članak */
+    /* OVO JE SADA FLEX ITEM KOJI SE PROŠIRUJE */
+    flex-grow: 1; 
+    padding-bottom: 0; 
 }
 
 /* KONTEJNER TEKSTA ČLANKA (Kritično za profesionalni izgled) */
@@ -94,10 +90,9 @@ body {
     padding: 40px 20px; 
     margin: 0 auto;
     max-width: 100%;
-    background-color: rgba(255, 255, 255, 1); /* Puna bela pozadina za tekst */
+    background-color: rgba(255, 255, 255, 1); 
     line-height: 1.6;
-    /* ISPRAVKA 3: UKLONITE min-height, inače se kratki članci čudno ponašaju */
-    /* min-height: 80vh; */ 
+    /* ISPRAVKA 2: UKLONJENO JE min-height: 80vh; */
 }
 
 /* KRITIČNO: STILOVI ZA TEKST UNUTAR ČLANKA */
@@ -106,7 +101,7 @@ body {
 .article-container td,
 .article-container th,
 .article-container blockquote {
-    color: #000000 !important; /* Tekst mora biti crn */
+    color: #000000 !important; 
     font-weight: 400; 
     font-size: 1.1rem;
     margin-bottom: 1.25rem;
