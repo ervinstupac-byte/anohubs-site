@@ -7,28 +7,28 @@
 
 /* CSS VARIJABLE */
 :root {
-    --color-dark: #0F172A; /* Slate-900 */
-    --color-light: #F8FAFC; /* Gray-50 */
-    --color-primary-cyan: #06B6D4; /* Cyan-600 */
-    --color-text-base: #E2E8F0; /* Slate-200 */
-    --color-header-bg: #1E293B; /* Slate-800 */
-    --color-article-bg: #FFFFFF;
+    --color-dark: #0F172A; /* Slate-900 */
+    --color-light: #F8FAFC; /* Gray-50 */
+    --color-primary-cyan: #06B6D4; /* Cyan-600 */
+    --color-text-base: #E2E8F0; /* Slate-200 */
+    --color-header-bg: #1E293B; /* Slate-800 */
+    --color-article-bg: #FFFFFF;
 }
 
 /* GLOBALNI STILOVI (Tamna pozadina) */
 body { 
-    background-color: var(--color-dark); 
-    color: var(--color-text-base); 
-    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
-    line-height: 1.6;
-    background-attachment: fixed;
-    background-size: cover;
-    background-position: center bottom;
+    background-color: var(--color-dark); 
+    color: var(--color-text-base); 
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+    line-height: 1.6;
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center bottom;
 }
 
 /* POZADINA GLAVE (Dark Overlay) */
 .header-bg { 
-    background-color: rgba(30, 41, 59, 0.95); 
+    background-color: rgba(30, 41, 59, 0.95); 
 }
 
 /* Skrivanje Scrollbara za klizač kartica */
@@ -37,61 +37,67 @@ body {
 
 
 /*======================================================
-  STILOVI ZA KARTICE ČLANAKA (INSIGHTS LIST)
+  STILOVI ZA KARTICE ČLANAKA (INSIGHTS LIST)
 ======================================================*/
 
 /* Bazni stil kartice */
 .insight-card {
-    transition: all 0.3s ease;
-    background-color: rgba(30, 41, 59, 0.95); /* Dark Slate pozadina */
-    box-shadow: 0 4px 6px -1px rgba(34, 211, 238, 0.1);
+    transition: all 0.3s ease;
+    background-color: rgba(30, 41, 59, 0.95); /* Dark Slate pozadina */
+    box-shadow: 0 4px 6px -1px rgba(34, 211, 238, 0.1);
 }
 
 /* Hover efekat (Podizanje i Cyan sjenka) */
 .insight-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 15px -3px rgba(34, 211, 238, 0.5), 0 4px 6px -2px rgba(34, 211, 238, 0.3);
-    border-color: #22d3ee;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(34, 211, 238, 0.5), 0 4px 6px -2px rgba(34, 211, 238, 0.3);
+    border-color: #22d3ee;
 }
 
 
 /*======================================================
-  MODAL I SADRŽAJ ČLANKA (ČITLJIVOST)
+  MODAL I SADRŽAJ ČLANKA (ČITLJIVOST)
 ======================================================*/
 
 #article-modal { 
-    backdrop-filter: blur(5px); 
-    transition: opacity 0.3s ease;
+    backdrop-filter: blur(5px); 
+    transition: opacity 0.3s ease;
 }
 
 /* Kontejner za Modal (Centriranje) */
 .modal-content-area { 
-    background-color: #ffffff; /* Bijela pozadina za čitanje */
-    color: var(--color-dark);
-    max-height: 90vh;
-    border-radius: 8px;
-    width: 90%;
-    max-width: 900px;
-    overflow-y: hidden;
-    display: flex;
-    flex-direction: column;
+    background-color: #ffffff; /* Bijela pozadina za čitanje */
+    color: var(--color-dark);
+    max-height: 90vh;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 900px;
+    /* ISPRAVKA 1: Uklonite overflow-y: hidden; i prenesite ga niže */
+    /* ISPRAVKA 2: Ako koristite flex u JS-u, ovo ostaje, ali je bolje rješenje u HTML-u */
+    display: flex; 
+    flex-direction: column; 
+    overflow-y: auto; /* Dodajemo scroll ovdje */
 }
 
-/* Wrapper za Scroll unutar Modala */
+/* Wrapper za Scroll unutar Modala - SADA JE MANJE BITAN */
 #article-content-wrapper {
-    max-height: calc(90vh - 80px); /* Oduzima prostor za dugme */
-    overflow-y: auto; 
-    padding-bottom: 20px;
+    /* Uklonite max-height i overflow-y ako ste ih dodali na .modal-content-area */
+    /* Ako #modal-content-area ima scroll, ovaj wrapper ne treba fiksnu visinu */
+    /* max-height: calc(90vh - 80px); */ 
+    /* overflow-y: auto; */ 
+    flex-grow: 1; /* Omogućava da zauzme sav dostupan prostor u flex kontejneru */
+    padding-bottom: 0; /* Uklanjamo padding-bottom jer ga ima članak */
 }
 
 /* KONTEJNER TEKSTA ČLANKA (Kritično za profesionalni izgled) */
 .article-container { 
-    padding: 40px 20px; 
-    margin: 0 auto;
-    max-width: 100%;
-    background-color: rgba(255, 255, 255, 1); /* Puna bela pozadina za tekst */
-    line-height: 1.6;
-    min-height: 80vh; 
+    padding: 40px 20px; 
+    margin: 0 auto;
+    max-width: 100%;
+    background-color: rgba(255, 255, 255, 1); /* Puna bela pozadina za tekst */
+    line-height: 1.6;
+    /* ISPRAVKA 3: UKLONITE min-height, inače se kratki članci čudno ponašaju */
+    /* min-height: 80vh; */ 
 }
 
 /* KRITIČNO: STILOVI ZA TEKST UNUTAR ČLANKA */
@@ -100,40 +106,40 @@ body {
 .article-container td,
 .article-container th,
 .article-container blockquote {
-    color: #000000 !important; /* Tekst mora biti crn */
-    font-weight: 400; 
-    font-size: 1.1rem;
-    margin-bottom: 1.25rem;
+    color: #000000 !important; /* Tekst mora biti crn */
+    font-weight: 400; 
+    font-size: 1.1rem;
+    margin-bottom: 1.25rem;
 }
 
 /* STILOVI ZA NASLOVE */
 .article-container h1 { 
-    color: #111827 !important; 
-    border-bottom: 3px solid #22d3ee; 
-    padding-bottom: 15px; 
-    margin-bottom: 25px; 
-    font-size: 2.25rem; 
-    font-weight: 800;
+    color: #111827 !important; 
+    border-bottom: 3px solid #22d3ee; 
+    padding-bottom: 15px; 
+    margin-bottom: 25px; 
+    font-size: 2.25rem; 
+    font-weight: 800;
 }
 .article-container h2 { 
-    color: #1E293B !important; 
-    margin-top: 35px; 
-    margin-bottom: 15px; 
-    border-left: 5px solid #f59e0b; 
-    padding-left: 15px; 
-    font-size: 1.75rem; 
-    font-weight: 700;
+    color: #1E293B !important; 
+    margin-top: 35px; 
+    margin-bottom: 15px; 
+    border-left: 5px solid #f59e0b; 
+    padding-left: 15px; 
+    font-size: 1.75rem; 
+    font-weight: 700;
 }
 .article-intro { 
-    color: #1a1a1a !important; 
-    padding: 15px 0; 
-    margin-bottom: 25px; 
-    border-bottom: 1px solid #eee; 
-    font-style: italic;
+    color: #1a1a1a !important; 
+    padding: 15px 0; 
+    margin-bottom: 25px; 
+    border-bottom: 1px solid #eee; 
+    font-style: italic;
 }
 .cta-footer { 
-    background-color: #e6f2ff; 
-    border-top: 3px solid #0099cc; 
-    border-radius: 5px; 
-    padding: 15px;
+    background-color: #e6f2ff; 
+    border-top: 3px solid #0099cc; 
+    border-radius: 5px; 
+    padding: 15px;
 }
