@@ -14,9 +14,20 @@
     --color-header-bg: #1E293B; /* Slate-800 */
 }
 
-/* GLOBALNI STILOVI (Pozadina ARHIVE je riješena INLINE STILOM u HTML-u) */
-body { 
-    /* Ostali stilovi za body (nasljeđuju se iz inline stila) */
+/* GLOBALNI STILOVI (Pozadinska slika ARHIVE - ZIMA) */
+html, body {
+    /* KOREKCIJA 2: Sprečava horizontalno lomljenje stranice */
+    overflow-x: hidden; 
+
+    /* Osiguravamo da je body stil prisutan (ako inline zakaže) */
+    background-image: url('zima_arm.jpg') !important; 
+    background-color: #0F172A !important; 
+    background-attachment: fixed !important;
+    background-size: cover !important;
+    background-position: center bottom !important;
+    background-repeat: no-repeat !important; /* Sigurnosna kopija za body */
+    
+    /* ... (ostali stilovi za tijelo) ... */
     color: var(--color-text-base) !important; 
     font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
     line-height: 1.6;
@@ -24,7 +35,7 @@ body {
     min-height: 100vh;
 }
 
-/* PSEUDOELEMENT ZA ZATAMNJENJE (OVERLAY) - Ostaje isti */
+/* PSEUDOELEMENT ZA ZATAMNJENJE (OVERLAY) */
 body::before {
     content: '';
     position: fixed;
@@ -50,20 +61,26 @@ body::before {
   MODAL I SADRŽAJ ČLANKA (ČITLJIVOST)
 ======================================================*/
 
+#article-modal { 
+    backdrop-filter: blur(5px); 
+    transition: opacity 0.3s ease;
+}
+
 /* Kontejner za Modal (Centriranje) */
 .modal-content-area { 
-    /* KRITIČNO: POZADINA ČLANKA (PROLJEĆE) POSTAVLJENA OVDJE */
-    background-image: url('proljece_arm.jpg'); 
-    background-size: cover;
-    background-position: center;
-    background-attachment: scroll; 
-    
     color: var(--color-dark);
     border-radius: 8px;
     display: flex; 
     flex-direction: column; 
     max-height: 90vh; 
     overflow-y: auto; 
+    
+    /* KRITIČNO: POZADINA MODALA (PROLJEĆE) */
+    background-image: url('proljece_arm.jpg'); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat !important; /* SPREČAVA PONAVLJANJE U MODALU */
+    background-attachment: scroll; 
     position: relative; 
 }
 
@@ -75,7 +92,6 @@ body::before {
 
 /* KONTEJNER TEKSTA ČLANKA (article-container) */
 .article-container { 
-    /* Ovdje se postavlja padding i veličina, ali ne pozadina */
     position: relative;
     z-index: 1;
 
@@ -83,8 +99,18 @@ body::before {
     margin: 0 auto;
     max-width: 100%;
     line-height: 1.6;
-    
-    /* DODATNA SIGURNOST: Pobrinite se da se boja pozadine Modula postavi preko Tailwind klase bg-white/90 u HTML-u (kao u člancima ispod) */
+}
+
+/* PSEUDOELEMENT ZA OVERLAY UNUTAR ČLANKA */
+.article-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.85); 
+    z-index: -1; 
 }
 
 
