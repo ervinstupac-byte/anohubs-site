@@ -1,496 +1,1091 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anohubs: The Global Standard for Hydro Integrity | Audits & Optimization</title>
-    <meta name="description" content="Establishing the global standard for hydro integrity where technological precision and ethical responsibility drive both sustainable profit and ecological health. Empowering hydropower operators with comprehensive, transparent, and verifiable audits.">
-    
-    <script>
-        // === FAVICON & CACHE BUSTER LOGIC ===
-        const cacheBuster = "?v=" + new Date().getTime();
-        const rootPath = "/"; 
 
-        const faviconLinks = [
-            { rel: "shortcut icon", href: rootPath + "favicon.ico", type: "image/x-icon" },
-            { rel: "icon", type: "image/png", sizes: "32x32", href: rootPath + "favicon-32x32.png" },
-            { rel: "icon", type:"image/png", sizes: "16x16", href: rootPath + "favicon-16x16.png" },
-            { rel: "apple-touch-icon", sizes: "180x180", href: rootPath + "apple-touch-icon.png" }
-        ];
+    <meta charset="UTF-8">
 
-        faviconLinks.forEach(link => {
-            const el = document.createElement("link");
-            el.rel = link.rel;
-            el.href = link.href + cacheBuster; 
-            if (link.type) el.type = link.type;
-            if (link.sizes) el.sizes = link.sizes;
-            document.head.appendChild(el);
-        });
-        
-        // Favicon Aplikacije (za tab) - APSOLUTNA PUTANJA (GitHub Pages)
-        const anohubFavicon = document.createElement("link");
-        anohubFavicon.rel = "icon";
-        anohubFavicon.type = "image/png";
-        anohubFavicon.sizes = "32x32";
-        anohubFavicon.href = "https://ervinstupac-byte.github.io/anohubsapp/favicon-32x32.png";
-        document.head.appendChild(anohubFavicon);
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    </script>
-    
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'hydro-primary': '#22d3ee', 
-                        'hydro-secondary': '#4ade80', 
-                        'hydro-risk': '#ef4444', 
-                        'hydro-cta': '#f59e0b', 
-                        'hydro-charcoal': '#111827', 
-                        'hydro-slate': '#1E293B', 
-                        'hydro-light-slate': '#334155', 
-                        'hydro-gray': '#475569',
-                    },
-                    fontSize: {
-                        'h1-hero': 'clamp(2.5rem, 5vw + 1rem, 4.5rem)',
-                    },
-                },
-                // KRITIČNO: Tailwind ne vidi custom klase bez 'extend'
-                screens: {
-                    'sm': '640px',
-                    'md': '768px',
-                    'lg': '1024px',
-                    'xl': '1280px',
-                    '2xl': '1536px',
-                },
-            }
-        };
-    </script>
-    
-    <style>
-        html { scroll-behavior: smooth; }
-        body { font-family: 'Inter', sans-serif; }
-        
-        /* POZADINA: orljani_Una.jpg je globalna fiksna pozadina (sezonski efekat) */
-        body {
-            background-image: url('orljani_Una.jpg'), url('proljece_arm.jpg'), url('zima_arm.jpg'); 
-            background-repeat: no-repeat;
-            background-attachment: local;
-            background-size: 100% 33.33%, 100% 33.33%, 100% 33.33%;
-            background-position: 
-                center 0,
-                center 50%,
-                center 100%;
-            min-height: 250vh; 
-        }
-        
-        .hero-gradient {
-            background: linear-gradient(180deg, rgba(17, 24, 39, 0.7) 0%, rgba(30, 41, 59, 0.6) 100%); 
-            padding-top: 3rem; 
-            padding-bottom: 3rem;
-            position: relative;
-            min-height: auto; 
-            display: flex;
-            align-items: center;
-        }
-        
-        .bg-hydro-slate {
-            background-color: rgba(30, 41, 59, 0.85) !important; 
-        }
-        .bg-hydro-charcoal {
-            background-color: rgba(17, 24, 39, 0.85) !important; 
-        }
-        .bg-hydro-light-slate {
-             background-color: rgba(51, 65, 85, 0.75) !important;
-        }
-        .section-stripe {
-            height: 10px;
-            background: repeating-linear-gradient(
-                45deg,
-                rgba(30, 41, 59, 0.8),
-                rgba(30, 41, 59, 0.8) 10px,
-                rgba(17, 24, 39, 0.8) 10px,
-                rgba(17, 24, 39, 0.8) 20px
-            );
-            border-top: 1px solid var(--tw-colors-hydro-slate);
-            border-bottom: 1px solid var(--tw-colors-hydro-slate);
-        }
-        .fade-in-up, .zoom-in { 
-            opacity: 0; 
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out; 
-            will-change: opacity, transform; 
-        }
-        .fade-in-up { 
-            transform: translateY(30px); 
-        }
-        .zoom-in { 
-            transform: scale(0.95); 
-        }
-        .fade-in-up.is-visible, .zoom-in.is-visible { 
-            opacity: 1; 
-            transform: translateY(0) scale(1); 
-            transition-delay: var(--delay, 0ms);
-        }
-        .delay-200 { --delay: 200ms; }
-        .delay-400 { --delay: 400ms; }
-        .delay-600 { --delay: 600ms; }
-        .delay-800 { --delay: 800ms; }
-        .delay-1000 { --delay: 1000ms; }
-        .mobile-sticky-cta {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            z-index: 40;
-            padding: 0.5rem 0;
-        }
-        /* LOGO STILOVI - MAKSIMALNO KOMPAKTNO */
-        .anohubs-logo {
-            width: 110px; 
-            height: auto;
-            color: var(--tw-colors-hydro-primary); 
-        }
-        .anohubs-hero-logo {
-            width: 160px; 
-            height: auto;
-            color: var(--tw-colors-hydro-primary); 
-            margin-bottom: 1.5rem; 
-        }
-        @media (min-width: 768px) {
-            .anohubs-logo {
-                width: 140px; 
-            }
-            .anohubs-hero-logo {
-                width: 200px; 
-            }
-        }
-        /* Stilovi za klikabilne turbine i servise */
-        .turbine-card {
-            display: block;
-            text-align: left;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            will-change: transform, box-shadow; 
-            transform: translateZ(0); 
-        }
-        .turbine-card:hover {
-            transform: scale(1.02);
-            box-shadow: 0 10px 15px rgba(34, 211, 238, 0.4);
-        }
-        /* Style za Services kartice (da se skaliraju kao turbine) */
-        .block > div { 
-            will-change: transform, box-shadow;
-            transform: translateZ(0);
-        }
-        .block > div:hover {
-            transform: scale(1.03);
-            box-shadow: 0 10px 15px rgba(34, 211, 238, 0.4);
-        }
-        /* Stil za Video Kontejner */
-        #video-container {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 0;
-            overflow: hidden;
-        }
-        #hero-video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-    </style>
+    <title>Anohubs: The Global Standard for Hydro Integrity | Audits & Optimization</title>
+
+    <meta name="description" content="Establishing the global standard for hydro integrity where technological precision and ethical responsibility drive both sustainable profit and ecological health. Empowering hydropower operators with comprehensive, transparent, and verifiable audits.">
+
+   
+
+    <script>
+
+        // === FAVICON & CACHE BUSTER LOGIC ===
+
+        const cacheBuster = "?v=" + new Date().getTime();
+
+        const rootPath = "/";
+
+
+
+        const faviconLinks = [
+
+            { rel: "shortcut icon", href: rootPath + "favicon.ico", type: "image/x-icon" },
+
+            { rel: "icon", type: "image/png", sizes: "32x32", href: rootPath + "favicon-32x32.png" },
+
+            { rel: "icon", type:"image/png", sizes: "16x16", href: rootPath + "favicon-16x16.png" },
+
+            { rel: "apple-touch-icon", sizes: "180x180", href: rootPath + "apple-touch-icon.png" }
+
+        ];
+
+
+
+        faviconLinks.forEach(link => {
+
+            const el = document.createElement("link");
+
+            el.rel = link.rel;
+
+            el.href = link.href + cacheBuster;
+
+            if (link.type) el.type = link.type;
+
+            if (link.sizes) el.sizes = link.sizes;
+
+            document.head.appendChild(el);
+
+        });
+
+       
+
+        // Favicon Aplikacije (za tab) - APSOLUTNA PUTANJA (GitHub Pages)
+
+        const anohubFavicon = document.createElement("link");
+
+        anohubFavicon.rel = "icon";
+
+        anohubFavicon.type = "image/png";
+
+        anohubFavicon.sizes = "32x32";
+
+        anohubFavicon.href = "https://ervinstupac-byte.github.io/anohubsapp/favicon-32x32.png";
+
+        document.head.appendChild(anohubFavicon);
+
+
+
+    </script>
+
+   
+
+    <!-- OSTALI HEAD ELEMENTI -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
+
+   
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+
+        tailwind.config = {
+
+            theme: {
+
+                extend: {
+
+                    colors: {
+
+                        'hydro-primary': '#22d3ee',
+
+                        'hydro-secondary': '#4ade80',
+
+                        'hydro-risk': '#ef4444',
+
+                        'hydro-cta': '#f59e0b',
+
+                        'hydro-charcoal': '#111827',
+
+                        'hydro-slate': '#1E293B',
+
+                        'hydro-light-slate': '#334155',
+
+                        'hydro-gray': '#475569',
+
+                    },
+
+                    fontSize: {
+
+                        'h1-hero': 'clamp(2.5rem, 5vw + 1rem, 4.5rem)',
+
+                    },
+
+                }
+
+            }
+
+        }
+
+    </script>
+
+   
+
+    <style>
+
+        html { scroll-behavior: smooth; }
+
+        body { font-family: 'Inter', sans-serif; }
+
+       
+
+        /* POZADINA: orljani_Una.jpg je globalna fiksna pozadina (sezonski efekat) */
+
+        body {
+
+            background-image: url('orljani_Una.jpg'), url('proljece_arm.jpg'), url('zima_arm.jpg');
+
+            background-repeat: no-repeat;
+
+            background-attachment: local;
+
+            background-size: 100% 33.33%, 100% 33.33%, 100% 33.33%;
+
+            background-position:
+
+                center 0,
+
+                center 50%,
+
+                center 100%;
+
+            min-height: 250vh;
+
+        }
+
+       
+
+        .hero-gradient {
+
+            background: linear-gradient(180deg, rgba(17, 24, 39, 0.7) 0%, rgba(30, 41, 59, 0.6) 100%);
+
+            padding-top: 3rem;
+
+            padding-bottom: 3rem;
+
+            position: relative;
+
+            min-height: auto;
+
+            display: flex;
+
+            align-items: center;
+
+        }
+
+       
+
+        .bg-hydro-slate {
+
+            background-color: rgba(30, 41, 59, 0.85) !important;
+
+        }
+
+        .bg-hydro-charcoal {
+
+            background-color: rgba(17, 24, 39, 0.85) !important;
+
+        }
+
+        .bg-hydro-light-slate {
+
+             background-color: rgba(51, 65, 85, 0.75) !important;
+
+        }
+
+        .section-stripe {
+
+            height: 10px;
+
+            background: repeating-linear-gradient(
+
+                45deg,
+
+                rgba(30, 41, 59, 0.8),
+
+                rgba(30, 41, 59, 0.8) 10px,
+
+                rgba(17, 24, 39, 0.8) 10px,
+
+                rgba(17, 24, 39, 0.8) 20px
+
+            );
+
+            border-top: 1px solid var(--tw-colors-hydro-slate);
+
+            border-bottom: 1px solid var(--tw-colors-hydro-slate);
+
+        }
+
+        .fade-in-up, .zoom-in {
+
+            opacity: 0;
+
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+
+            will-change: opacity, transform;
+
+        }
+
+        .fade-in-up {
+
+            transform: translateY(30px);
+
+        }
+
+        .zoom-in {
+
+            transform: scale(0.95);
+
+        }
+
+        .fade-in-up.is-visible, .zoom-in.is-visible {
+
+            opacity: 1;
+
+            transform: translateY(0) scale(1);
+
+            transition-delay: var(--delay, 0ms);
+
+        }
+
+        .delay-200 { --delay: 200ms; }
+
+        .delay-400 { --delay: 400ms; }
+
+        .delay-600 { --delay: 600ms; }
+
+        .delay-800 { --delay: 800ms; }
+
+        .delay-1000 { --delay: 1000ms; }
+
+        .mobile-sticky-cta {
+
+            position: fixed;
+
+            bottom: 0;
+
+            left: 0;
+
+            right: 0;
+
+            z-index: 40;
+
+            padding: 0.5rem 0;
+
+        }
+
+        /* LOGO STILOVI - MAKSIMALNO KOMPAKTNO */
+
+        .anohubs-logo {
+
+            width: 110px;
+
+            height: auto;
+
+            color: var(--tw-colors-hydro-primary);
+
+        }
+
+        .anohubs-hero-logo {
+
+            width: 160px;
+
+            height: auto;
+
+            color: var(--tw-colors-hydro-primary);
+
+            margin-bottom: 1.5rem;
+
+        }
+
+        @media (min-width: 768px) {
+
+            .anohubs-logo {
+
+                width: 140px;
+
+            }
+
+            .anohubs-hero-logo {
+
+                width: 200px;
+
+            }
+
+        }
+
+         /* Stilovi za klikabilne turbine i servise */
+
+        .turbine-card {
+
+            display: block;
+
+            text-align: left;
+
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+            will-change: transform, box-shadow;
+
+            transform: translateZ(0);
+
+        }
+
+        .turbine-card:hover {
+
+            transform: scale(1.02);
+
+            box-shadow: 0 10px 15px rgba(34, 211, 238, 0.4);
+
+        }
+
+        /* Style za Services kartice (da se skaliraju kao turbine) */
+
+        .block > div {
+
+            will-change: transform, box-shadow;
+
+            transform: translateZ(0);
+
+        }
+
+        .block > div:hover {
+
+            transform: scale(1.03);
+
+            box-shadow: 0 10px 15px rgba(34, 211, 238, 0.4);
+
+        }
+
+        /* Stil za Video Kontejner */
+
+        #video-container {
+
+            width: 100%;
+
+            height: 100%;
+
+            position: absolute;
+
+            top: 0;
+
+            left: 0;
+
+            z-index: 0;
+
+            overflow: hidden;
+
+        }
+
+        #hero-video {
+
+            width: 100%;
+
+            height: 100%;
+
+            object-fit: cover;
+
+        }
+
+    </style>
+
+
 
 </head>
+
 <body class="text-white">
 
-    <header class="bg-hydro-charcoal text-white shadow-2xl sticky top-0 z-50 border-b border-hydro-primary/50" role="banner">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex justify-between items-center">
-            <a href="#hero" class="focus:outline-none focus:ring-4 focus:ring-hydro-primary focus:ring-opacity-50 transition" aria-label="Anohubs Logo - Back to top" aria-current="page">
-                <img src="/logo.svg" alt="Anohubs Logo" class="anohubs-logo">
-            </a>
-            
-            <nav class="hidden md:flex items-center space-x-6 font-extrabold text-sm" role="navigation" aria-label="Main navigation">
-                <a href="/about-us-vision.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">About</a>
-                <a href="#services" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Services</a>
-                
-                <a href="/expert-insights.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Insights</a>
-                
-                <a href="https://ervinstupac-byte.github.io/anohubsapp/" target="_blank" rel="noopener noreferrer" class="nav-link relative text-hydro-secondary hover:text-green-500 transition tracking-widest font-extrabold text-lg p-2 uppercase">ANO HUB</a>
-                <a href="#technology" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Technology</a>
-                <a href="#contact" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Contact</a>
-                <a href="#contact" class="bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-6 py-2.5 rounded-full transition transform hover:scale-105 shadow-xl font-bold tracking-wider uppercase text-base">Request Audit</a>
-            </nav>
-            
-            <div class="md:hidden">
-                <button id="mobile-menu-button" aria-label="Open menu" type="button" class="p-2 text-white">
-                    <svg data-lucide="menu" class="w-8 h-8"></svg> 
-                </button>
-            </div>
-            
-            <div id="mobile-menu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2 text-center bg-hydro-charcoal" aria-label="Mobile navigation menu">
-                <a href="/about-us-vision.html" class="block hover:text-hydro-primary transition tracking-wider py-2">About</a>
-                <a href="/expert-insights.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Insights</a>
-                
-                <a href="https://ervinstupac-byte.github.io/anohubsapp/" target="_blank" rel="noopener noreferrer" class="block hover:text-hydro-secondary transition tracking-wider py-2">ANO HUB</a>
-                <a href="#technology" class="block hover:text-hydro-primary transition tracking-wider py-2">Technology</a>
-                <a href="#contact" class="block hover:text-hydro-primary transition tracking-wider py-2">Contact</a>
-                <a href="#contact" class="block bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-5 py-2 rounded-full transition shadow-md font-bold tracking-wider mt-2 text-center">Request Audit</a>
-            </div>
-        </div>
-    </header>
 
-    <main role="main">
-        <section id="hero" class="hero-gradient flex items-center justify-center text-center relative">
-            
-                        <div id="video-container" class="absolute inset-0 z-0">
-                <video id="hero-video" autoplay loop muted playsinline preload="auto">
-                    <source src="Videoone.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-            </div>
-            
-                        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
-                <img src="/logo.svg" alt="Anohubs Logo" class="anohubs-hero-logo mx-auto fade-in-up">
-                
-                <h1 class="text-white font-extrabold mb-6 tracking-tight fade-in-up delay-200" style="font-size: var(--font-size-h1); line-height: 1.1; text-shadow: 0 0 10px rgba(0,0,0,0.9);">
-                    The Global Standard for <span class="text-hydro-primary" style="text-shadow: 0 0 20px rgba(34, 211, 238, 0.9);">Hydro Integrity</span>
-                </h1>
-                
-                <p class="text-3xl font-light text-cyan-300 mb-10 max-w-4xl mx-auto fade-in-up delay-400" style="text-shadow: 0 0 10px rgba(6, 182, 212, 0.5);">
-                    Where technological precision and ethical responsibility drive both sustainable profit and ecological health.
-                </p>
 
-                <div class="flex flex-col sm:flex-row justify-center items-center gap-4 fade-in-up delay-600">
-                    <a href="#contact" class="inline-flex items-center justify-center px-10 py-4 border border-transparent text-lg font-bold rounded-full text-hydro-charcoal bg-hydro-cta hover:bg-yellow-600 transition duration-300 transform hover:scale-105 shadow-2xl focus:outline-none focus:ring-4 focus:ring-hydro-cta focus:ring-opacity-75 uppercase tracking-wider hero-cta-button">
-                        Schedule an Audit &rarr;
-                    </a>
-                    <a href="/about-us-vision.html" class="text-white font-semibold py-4 px-8 rounded-full hover:bg-hydro-slate/50 transition-colors duration-300">
-                        Learn More
-                    </a>
-                </div>
-            </div>
-        </section>
+    <header class="bg-hydro-charcoal text-white shadow-2xl sticky top-0 z-50 border-b border-hydro-primary/50" role="banner">
 
-        <div class="section-stripe"></div>
-        
-                <section id="about-section" class="py-24 bg-hydro-slate text-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
-                    
-                    <div class="fade-in-up">
-                        <h2 class="text-base font-bold tracking-widest text-hydro-primary uppercase">Pioneering Hydro Integrity</h2>
-                        <h3 class="text-3xl md:text-4xl font-extrabold !leading-tight text-white mt-2">
-                            We provide the clarity and confidence needed to power the future responsibly.
-                        </h3>
-                        <p class="mt-4 text-slate-400 text-lg">
-                            Anohubs was founded on the principle that the future of renewable energy depends not just on generation capacity, but on <strong>unwavering operational integrity</strong>. We bridge the gap between raw data and actionable intelligence, empowering hydropower operators with comprehensive, transparent, and verifiable audits.
-                        </p>
-                        
-                        <div class="mt-10 space-y-6">
-                            
-                            <div class="flex items-start gap-4">
-                                <div class="flex-shrink-0 bg-hydro-light-slate p-3 rounded-full text-hydro-primary"><svg data-lucide="target" class="w-6 h-6"></svg></div>
-                                <div>
-                                    <h4 class="text-xl font-bold text-white">Technological Precision</h4>
-                                    <p class="mt-1 text-slate-400 text-base">Utilizing state-of-the-art sensors and AI-driven analytics to deliver unparalleled accuracy in our assessments.</p>
-                                </div>
-                            </div>
-                            
-                            <div class="flex items-start gap-4">
-                                <div class="flex-shrink-0 bg-hydro-light-slate p-3 rounded-full text-hydro-primary"><svg data-lucide="shield-check" class="w-6 h-6"></svg></div>
-                                <div>
-                                    <h4 class="text-xl font-bold text-white">Ethical Responsibility</h4>
-                                    <p class="mt-1 text-slate-400 text-base">Upholding the highest standards of transparency and accountability to ensure ecological health and community trust.</p>
-                                </div>
-                            </div>
-                            
-                            <div class="flex items-start gap-4">
-                                <div class="flex-shrink-0 bg-hydro-light-slate p-3 rounded-full text-hydro-primary"><svg data-lucide="trending-up" class="w-6 h-6"></svg></div>
-                                <div>
-                                    <h4 class="text-xl font-bold text-white">Sustainable Profit</h4>
-                                    <p class="mt-1 text-slate-400 text-base">Our audits identify inefficiencies and mitigate risks, directly translating to improved performance and profitability.</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="mt-12">
-                            <a href="/expert-insights.html" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-lg font-bold rounded-full text-hydro-charcoal bg-hydro-secondary hover:bg-green-500 transition duration-300 transform hover:scale-105 shadow-xl uppercase tracking-wider">
-                                View Expert Insights &rarr;
-                            </a>
-                        </div>
-                    </div>
-                    
-                    <div class="zoom-in delay-300">
-                                                <div class="aspect-square rounded-2xl overflow-hidden shadow-2xl bg-hydro-charcoal flex items-center justify-center text-hydro-gray">
-                            <p class="text-white/50 p-4">Content placeholder for secondary image/video.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex justify-between items-center">
 
-        <div class="section-stripe"></div>
-        
-                <section id="services" class="py-24 bg-hydro-slate text-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h2 class="text-base font-bold tracking-widest text-hydro-primary uppercase fade-in-up">Our Core Services</h2>
-                <p class="mt-4 text-4xl md:text-5xl font-extrabold text-white fade-in-up delay-200">
-                    A New Paradigm in Hydropower Management
-                </p>
-                
-                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mt-16">
-                    
-                                        <a href="/services-integrity.html" class="block">
-                        <div class="p-8 rounded-2xl bg-hydro-charcoal border border-hydro-light-slate hover:border-hydro-primary shadow-lg h-full zoom-in delay-400 text-left transition transform hover:scale-[1.03]">
-                            <div class="bg-hydro-light-slate inline-block p-4 rounded-xl text-hydro-primary mb-6"><svg data-lucide="layers" class="w-8 h-8"></svg></div>
-                            <h3 class="text-2xl font-bold text-white mb-4">Systemic Integrity Audits</h3>
-                            <p class="text-slate-400 text-base">A holistic examination of your entire hydropower system, ensuring every component meets global excellence standards. Includes FEA and NDT protocols.</p>
-                        </div>
-                    </a>
+            <a href="#hero" class="focus:outline-none focus:ring-4 focus:ring-hydro-primary focus:ring-opacity-50 transition" aria-label="Anohubs Logo - Back to top" aria-current="page">
 
-                                        <a href="/services-predictive.html" class="block">
-                        <div class="p-8 rounded-2xl bg-hydro-charcoal border border-hydro-light-slate hover:border-hydro-primary shadow-lg h-full zoom-in delay-600 text-left transition transform hover:scale-[1.03]">
-                            <div class="bg-hydro-light-slate inline-block p-4 rounded-xl text-hydro-primary mb-6"><svg data-lucide="bot" class="w-8 h-8"></svg></div>
-                            <h3 class="text-2xl font-bold text-white mb-4">AI-Powered Predictive Maintenance</h3>
-                            <p class="text-slate-400 text-base">Leverage our proprietary AI models to forecast potential equipment failures, reduce downtime, and optimize maintenance schedules for cost savings.</p>
-                        </div>
-                    </a>
+                <img src="/logo.svg" alt="Anohubs Logo" class="anohubs-logo">
 
-                                        <a href="/services-compliance.html" class="block">
-                        <div class="p-8 rounded-2xl bg-hydro-charcoal border border-hydro-light-slate hover:border-hydro-primary shadow-lg h-full zoom-in delay-800 text-left transition transform hover:scale-[1.03]">
-                            <div class="bg-hydro-light-slate inline-block p-4 rounded-xl text-hydro-primary mb-6"><svg data-lucide="clipboard-check" class="w-8 h-8"></svg></div>
-                            <h3 class="text-2xl font-bold text-white mb-4">Regulatory & Compliance Reporting</h3>
-                            <p class="text-slate-400 text-base">Automate and streamline complex compliance reporting. Our platform generates audit-ready documentation verifying adherence to regulations.</p>
-                        </div>
-                    </a>
+            </a>
 
-                                        <a href="/services-optimization.html" class="block">
-                        <div class="p-8 rounded-2xl bg-hydro-charcoal border border-hydro-light-slate hover:border-hydro-primary shadow-lg h-full zoom-in delay-1000 text-left transition transform hover:scale-[1.03]">
-                            <div class="bg-hydro-light-slate inline-block p-4 rounded-xl text-hydro-primary mb-6"><svg data-lucide="bar-chart-2" class="w-8 h-8"></svg></div>
-                            <h3 class="text-2xl font-bold text-white mb-4">Performance Optimization Analysis</h3>
-                            <p class="text-slate-400 text-base">We identify inefficiencies and mitigate risks (including the **48% hidden risk**), translating to improved energy output and profitability.</p>
-                        </div>
-                    </a>
+           
 
-                </div>
-            </div>
-        </section>
+            <nav class="hidden md:flex items-center space-x-6 font-extrabold text-sm" role="navigation" aria-label="Main navigation">
 
-        <div class="section-stripe"></div>
-        
-                <section id="technology" class="py-24 bg-hydro-slate text-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-base font-bold tracking-widest text-hydro-primary uppercase text-center fade-in-up">Advanced Analytics</h2>
-                <p class="mt-4 text-4xl md:text-5xl font-extrabold text-white text-center mb-16 fade-in-up delay-200">
-                    Turbine-Specific Integrity Analysis
-                </p>
+                <a href="/about-us-vision.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">About</a>
 
-                <div class="max-w-5xl mx-auto space-y-12">
-                    
-                                        <a href="/turbine-francis.html" class="turbine-card grid lg:grid-cols-5 gap-8 items-center bg-hydro-charcoal p-6 rounded-xl shadow-xl zoom-in delay-400 border border-hydro-primary/20">
-                        <div class="lg:col-span-2 aspect-square rounded-lg bg-hydro-slate flex items-center justify-center text-hydro-gray">
-                            <img src="/francis-diagram.jpg" alt="Francis Turbine Diagram" class="w-full h-full object-cover">
-                        </div>
-                        <div class="lg:col-span-3">
-                            <h3 class="text-3xl font-bold text-hydro-primary mb-3">Francis Turbine</h3>
-                            <p class="text-slate-400">
-                                Ideal for medium head and flow rates, the Francis turbine is the most common. Our audits ensure <strong>optimal blade geometry</strong> and flow dynamics, maximizing efficiency and lifespan.
-                            </p>
-                            <p class="text-cyan-400 mt-2 font-semibold">Focus: CFD Optimization & Acoustic Emission (Cavitation) &rarr;</p>
-                        </div>
-                    </a>
+                <a href="#services" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Services</a>
 
-                                        <a href="/turbine-kaplan.html" class="turbine-card grid lg:grid-cols-5 gap-8 items-center bg-hydro-charcoal p-6 rounded-xl shadow-xl zoom-in delay-600 border border-hydro-primary/20">
-                        <div class="lg:col-span-2 aspect-square rounded-lg bg-hydro-slate flex items-center justify-center text-hydro-gray">
-                            <img src="/kaplan-diagram.jpg" alt="Kaplan Turbine Diagram" class="w-full h-full object-cover">
-                        </div>
-                        <div class="lg:col-span-3">
-                            <h3 class="text-3xl font-bold text-hydro-primary mb-3">Kaplan Turbine</h3>
-                            <p class="text-slate-400">
-                                A propeller-type turbine for low head and high flow rates. Our analysis focuses on <strong>adjustable blade performance</strong> and <strong>cavitation prevention</strong>, crucial for maintaining peak output.
-                            </p>
-                            <p class="text-cyan-400 mt-2 font-semibold">Focus: Adjustable Blade Performance & Real-time Load Simulation &rarr;</p>
-                        </div>
-                    </a>
-                    
-                                        <a href="/turbine-pelton.html" class="turbine-card grid lg:grid-cols-5 gap-8 items-center bg-hydro-charcoal p-6 rounded-xl shadow-xl zoom-in delay-800 border border-hydro-primary/20">
-                        <div class="lg:col-span-2 aspect-square rounded-lg bg-hydro-slate flex items-center justify-center text-hydro-gray">
-                            <img src="/pelton-diagram.jpg" alt="Pelton Turbine Diagram" class="w-full h-full object-cover">
-                        </div>
-                        <div class="lg:col-span-3">
-                            <h3 class="text-3xl font-bold text-hydro-primary mb-3">Pelton Turbine</h3>
-                            <p class="text-slate-400">
-                                Designed for very high head and low flow applications. We provide integrity checks on the <strong>nozzle and bucket systems</strong>, ensuring impulse energy conversion is precise and wear is minimized.
-                            </p>
-                            <p class="text-cyan-400 mt-2 font-semibold">Focus: Nozzle System Precision & Impulse Energy Conversion &rarr;</p>
-                        </div>
-                    </a>
-                    
-                </div>
-            </div>
-        </section>
+               
 
-        <div class="section-stripe"></div>
+                <a href="/expert-insights.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Insights</a>
 
-        <section id="contact" class="py-24 bg-hydro-charcoal" aria-labelledby="kontakt-naslov">
-            <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-base font-bold tracking-widest text-hydro-primary uppercase text-center fade-in-up">Get in Touch</h2>
-                <p id="kontakt-naslov" class="mt-4 text-4xl font-extrabold text-white mb-4 text-center tracking-tight fade-in-up delay-200">Connect With Our Experts</p>
-                <p class="text-xl text-hydro-cta mb-10 text-center fade-in-up delay-400">
-                    Ready to elevate your operations? Fill out the form below to schedule a consultation with our hydro integrity specialists.
-                </p>
-                
-                <form id="contactForm" class="space-y-6 bg-hydro-slate p-8 rounded-xl shadow-2xl zoom-in delay-600" action="https://formspree.io/f/xqaywlaq" method="POST">
-                    <input type="text" id="ime" name="Full Name" placeholder="Full Name" required class="mt-1 block w-full px-4 py-3 bg-hydro-light-slate border border-hydro-gray rounded-md text-white focus:ring-hydro-primary focus:border-hydro-primary transition">
-                    <input type="email" id="email" name="Email (Business)" placeholder="Email Address" required class="mt-1 block w-full px-4 py-3 bg-hydro-light-slate border border-hydro-gray rounded-md text-white focus:ring-hydro-primary focus:border-hydro-primary transition">
-                    <input type="text" id="kompanija" name="Company / Plant" placeholder="Company" required class="mt-1 block w-full px-4 py-3 bg-hydro-light-slate border border-hydro-gray rounded-md text-white focus:ring-hydro-primary focus:border-hydro-primary transition">
-                    <textarea id="poruka" name="Message" rows="4" placeholder="Message" class="mt-1 block w-full px-4 py-3 bg-hydro-light-slate border border-hydro-gray rounded-md text-white focus:ring-hydro-primary focus:border-hydro-primary transition"></textarea>
-                    
-                    <input type="hidden" name="_subject" value="Consultation Request (Final Site)">
-                    <button type="submit" class="w-full flex justify-center py-3.5 px-4 border border-transparent rounded-md shadow-sm text-lg font-bold text-hydro-charcoal bg-hydro-cta hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-hydro-cta uppercase tracking-wider transition transform hover:scale-[1.01]">
-                        Send Inquiry
-                    </button>
-                    <p id="formMessage" class="mt-4 text-center text-sm hidden" role="status" aria-live="polite"></p>
-                </form>
-            </div>
-        </section>
-    </main>
+               
 
-    <div class="md:hidden mobile-sticky-cta text-center">
-        <a href="#contact" class="w-full block text-center bg-hydro-primary hover:bg-cyan-500 text-hydro-charcoal px-5 py-3 font-bold tracking-wider uppercase shadow-2xl">
-            SCHEDULE AUDIT
-        </a>
-    </div>
+                <a href="https://ervinstupac-byte.github.io/anohubsapp/" target="_blank" rel="noopener noreferrer" class="nav-link relative text-hydro-secondary hover:text-green-500 transition tracking-widest font-extrabold text-lg p-2 uppercase">ANO HUB</a>
 
-    <footer class="bg-hydro-slate text-hydro-gray py-8 text-center border-t border-hydro-light-slate" role="contentinfo">
-        <div class="container mx-auto px-6">
-             
-             <a href="#hero" class="mb-4 block" aria-label="Anohubs Logo - Back to top">
-                <img src="/logo.svg" alt="Anohubs Logo" class="anohubs-logo mx-auto">
-             </a>
-             <p class="text-slate-400 mb-6">Establishing the global standard for hydro integrity.</p>
-             
-             <nav class="flex justify-center space-x-6 text-sm mb-6">
-                <a href="/about-us-vision.html" class="text-slate-400 hover:text-hydro-primary">About</a>
-                <a href="#services" class="text-slate-400 hover:text-hydro-primary">Services</a>
-                <a href="/expert-insights.html" class="text-slate-400 hover:text-hydro-primary">Insights</a>
-                <a href="#technology" class="text-slate-400 hover:text-hydro-primary">Technology</a>
-                <a href="#contact" class="text-slate-400 hover:text-hydro-primary">Contact</a>
-             </nav>
-             
-             <p class="text-sm">&copy; <span id="year"></span> Anohubs Inc. All rights reserved.</p>
-        </div>
-    </footer>
+                <a href="#technology" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Technology</a>
 
-        <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
-    <script src="contact_logic.js"></script> 
-    <script src="global_ui_logic.js"></script> 
+                <a href="#contact" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Contact</a>
+
+                <a href="#contact" class="bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-6 py-2.5 rounded-full transition transform hover:scale-105 shadow-xl font-bold tracking-wider uppercase text-base">Request Audit</a>
+
+            </nav>
+
+           
+
+            <div class="md:hidden">
+
+                <button id="mobile-menu-button" aria-label="Open menu" type="button" class="p-2 text-white">
+
+                    <svg data-lucide="menu" class="w-8 h-8"></svg>
+
+                </button>
+
+            </div>
+
+           
+
+            <div id="mobile-menu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2 text-center bg-hydro-charcoal" aria-label="Mobile navigation menu">
+
+                <a href="/about-us-vision.html" class="block hover:text-hydro-primary transition tracking-wider py-2">About</a>
+
+                <a href="/expert-insights.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Insights</a>
+
+               
+
+                <a href="https://ervinstupac-byte.github.io/anohubsapp/" target="_blank" rel="noopener noreferrer" class="block hover:text-hydro-secondary transition tracking-wider py-2">ANO HUB</a>
+
+                <a href="#technology" class="block hover:text-hydro-primary transition tracking-wider py-2">Technology</a>
+
+                <a href="#contact" class="block hover:text-hydro-primary transition tracking-wider py-2">Contact</a>
+
+                <a href="#contact" class="block bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-5 py-2 rounded-full transition shadow-md font-bold tracking-wider mt-2 text-center">Request Audit</a>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+
+    <main role="main">
+
+        <section id="hero" class="hero-gradient flex items-center justify-center text-center relative">
+
+           
+
+            <!-- KRITIČNO: VIDEO KONTEJNER UMESTO SLIKE -->
+
+            <div id="video-container" class="absolute inset-0 z-0">
+
+                <video id="hero-video" autoplay loop muted playsinline preload="auto">
+
+                    <source src="Videoone.mp4" type="video/mp4">
+
+                    Your browser does not support the video tag.
+
+                </video>
+
+            </div>
+
+           
+
+            <!-- SADRŽAJ HERO SEKCIJE (Preko videa) -->
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
+
+                <img src="/logo.svg" alt="Anohubs Logo" class="anohubs-hero-logo mx-auto fade-in-up">
+
+               
+
+                <h1 class="text-white font-extrabold mb-6 tracking-tight fade-in-up delay-200" style="font-size: var(--font-size-h1); line-height: 1.1; text-shadow: 0 0 10px rgba(0,0,0,0.9);">
+
+                    The Global Standard for <span class="text-hydro-primary" style="text-shadow: 0 0 20px rgba(34, 211, 238, 0.9);">Hydro Integrity</span>
+
+                </h1>
+
+               
+
+                <p class="text-3xl font-light text-cyan-300 mb-10 max-w-4xl mx-auto fade-in-up delay-400" style="text-shadow: 0 0 10px rgba(6, 182, 212, 0.5);">
+
+                    Where technological precision and ethical responsibility drive both sustainable profit and ecological health.
+
+                </p>
+
+
+
+                <div class="flex flex-col sm:flex-row justify-center items-center gap-4 fade-in-up delay-600">
+
+                    <a href="#contact" class="inline-flex items-center justify-center px-10 py-4 border border-transparent text-lg font-bold rounded-full text-hydro-charcoal bg-hydro-cta hover:bg-yellow-600 transition duration-300 transform hover:scale-105 shadow-2xl focus:outline-none focus:ring-4 focus:ring-hydro-cta focus:ring-opacity-75 uppercase tracking-wider hero-cta-button">
+
+                        Schedule an Audit &rarr;
+
+                    </a>
+
+                    <a href="/about-us-vision.html" class="text-white font-semibold py-4 px-8 rounded-full hover:bg-hydro-slate/50 transition-colors duration-300">
+
+                        Learn More
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <div class="section-stripe"></div>
+
+       
+
+        <!-- ABOUT SEKCIJA -->
+
+        <section id="about-section" class="py-24 bg-hydro-slate text-white">
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+                <div class="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
+
+                   
+
+                    <div class="fade-in-up">
+
+                        <h2 class="text-base font-bold tracking-widest text-hydro-primary uppercase">Pioneering Hydro Integrity</h2>
+
+                        <h3 class="text-3xl md:text-4xl font-extrabold !leading-tight text-white mt-2">
+
+                            We provide the clarity and confidence needed to power the future responsibly.
+
+                        </h3>
+
+                        <p class="mt-4 text-slate-400 text-lg">
+
+                            Anohubs was founded on the principle that the future of renewable energy depends not just on generation capacity, but on <strong>unwavering operational integrity</strong>. We bridge the gap between raw data and actionable intelligence, empowering hydropower operators with comprehensive, transparent, and verifiable audits.
+
+                        </p>
+
+                       
+
+                        <div class="mt-10 space-y-6">
+
+                           
+
+                            <div class="flex items-start gap-4">
+
+                                <div class="flex-shrink-0 bg-hydro-light-slate p-3 rounded-full text-hydro-primary"><svg data-lucide="target" class="w-6 h-6"></svg></div>
+
+                                <div>
+
+                                    <h4 class="text-xl font-bold text-white">Technological Precision</h4>
+
+                                    <p class="mt-1 text-slate-400 text-base">Utilizing state-of-the-art sensors and AI-driven analytics to deliver unparalleled accuracy in our assessments.</p>
+
+                                </div>
+
+                            </div>
+
+                           
+
+                            <div class="flex items-start gap-4">
+
+                                <div class="flex-shrink-0 bg-hydro-light-slate p-3 rounded-full text-hydro-primary"><svg data-lucide="shield-check" class="w-6 h-6"></svg></div>
+
+                                <div>
+
+                                    <h4 class="text-xl font-bold text-white">Ethical Responsibility</h4>
+
+                                    <p class="mt-1 text-slate-400 text-base">Upholding the highest standards of transparency and accountability to ensure ecological health and community trust.</p>
+
+                                </div>
+
+                            </div>
+
+                           
+
+                            <div class="flex items-start gap-4">
+
+                                <div class="flex-shrink-0 bg-hydro-light-slate p-3 rounded-full text-hydro-primary"><svg data-lucide="trending-up" class="w-6 h-6"></svg></div>
+
+                                <div>
+
+                                    <h4 class="text-xl font-bold text-white">Sustainable Profit</h4>
+
+                                    <p class="mt-1 text-slate-400 text-base">Our audits identify inefficiencies and mitigate risks, directly translating to improved performance and profitability.</p>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                       
+
+                        <div class="mt-12">
+
+                            <a href="/expert-insights.html" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-lg font-bold rounded-full text-hydro-charcoal bg-hydro-secondary hover:bg-green-500 transition duration-300 transform hover:scale-105 shadow-xl uppercase tracking-wider">
+
+                                View Expert Insights &rarr;
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                   
+
+                    <div class="zoom-in delay-300">
+
+                        <!-- VIDEO PLACEHOLDER UMESTO SLIKE -->
+
+                        <div class="aspect-square rounded-2xl overflow-hidden shadow-2xl bg-hydro-charcoal flex items-center justify-center text-hydro-gray text-xl">
+
+                            <p class="text-white/50 p-4">Content placeholder for secondary image/video.</p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <div class="section-stripe"></div>
+
+       
+
+        <section id="metrics" class="py-16 bg-hydro-charcoal">
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+
+                <h2 class="text-4xl font-extrabold text-hydro-primary mb-12 tracking-tight fade-in-up">UNWAVERING OPERATIONAL INTEGRITY: Guaranteed Measurable Parameters</h2>
+
+               
+
+                <div id="counter-group" class="grid md:grid-cols-4 gap-8 text-white">
+
+                   
+
+                    <div class="p-6 bg-hydro-slate rounded-xl shadow-inner border border-hydro-primary zoom-in">
+
+                        <p class="text-6xl font-black text-hydro-primary mb-2">
+
+                            <span class="counter-number" data-target="98.5" data-decimal="1">0</span>%
+
+                        </p>
+
+                        <p class="text-lg font-bold text-slate-300 uppercase tracking-wider">Availability Factor</p>
+
+                        <p class="text-sm text-hydro-gray mt-1">Minimum target after our protocol is applied.</p>
+
+                    </div>
+
+
+
+                    <div class="p-6 bg-hydro-slate rounded-xl shadow-inner border border-hydro-primary zoom-in delay-200">
+
+                        <p class="text-6xl font-black text-hydro-primary mb-2">
+
+                            +<span class="counter-number" data-target="3.2" data-decimal="1">0</span>%
+
+                        </p>
+
+                        <p class="text-lg font-bold text-slate-300 uppercase tracking-wider">Efficiency Gain</p>
+
+                        <p class="text-sm text-hydro-gray mt-1">Minimum target post-CFD tuning</p>
+
+                    </div>
+
+
+
+                    <div class="p-6 bg-hydro-slate rounded-xl shadow-inner border border-hydro-risk zoom-in delay-400">
+
+                        <p class="text-6xl font-black text-hydro-risk mb-2">
+
+                            <span class="counter-number" data-target="75" data-decimal="0">0</span>%
+
+                        </p>
+
+                        <p class="text-lg font-bold text-slate-300 uppercase tracking-wider">Cavitation Reduction</p>
+
+                        <p class="text-sm text-hydro-gray mt-1">Directly translates to reduced overhaul costs.</p>
+
+                    </div>
+
+
+
+                    <div class="p-6 bg-hydro-slate rounded-xl shadow-inner border border-hydro-primary zoom-in delay-600">
+
+                        <p class="text-6xl font-black text-hydro-primary mb-2">
+
+                            &gt;<span class="counter-number" data-target="15000" data-decimal="0">0</span>
+
+                        </p>
+
+                        <p class="text-lg font-bold text-slate-300 uppercase tracking-wider">Hands-on Shaft Hours</p>
+
+                        <p class="text-sm text-hydro-gray mt-1">Direct experience enforcing the 0.05 mm/m standard.</p>
+
+                    </div>
+
+                </div>
+
+               
+
+            </div>
+
+        </section>
+
+
+
+        <div class="section-stripe"></div>
+
+       
+
+        <!-- SERVICES SEKCIJA -->
+
+        <section id="services" class="py-24 bg-hydro-slate text-white">
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+
+                <h2 class="text-base font-bold tracking-widest text-hydro-primary uppercase fade-in-up">Our Core Services</h2>
+
+                <p class="mt-4 text-4xl md:text-5xl font-extrabold text-white fade-in-up delay-200">
+
+                    A New Paradigm in Hydropower Management
+
+                </p>
+
+               
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mt-16">
+
+                   
+
+                    <!-- Systemic Integrity Audits: LINK AKTIVAN -->
+
+                    <a href="/services-integrity.html" class="block">
+
+                        <div class="p-8 rounded-2xl bg-hydro-charcoal border border-hydro-light-slate hover:border-hydro-primary shadow-lg h-full zoom-in delay-400 text-left transition transform hover:scale-[1.03]">
+
+                            <div class="bg-hydro-light-slate inline-block p-4 rounded-xl text-hydro-primary mb-6"><svg data-lucide="layers" class="w-8 h-8"></svg></div>
+
+                            <h3 class="text-2xl font-bold text-white mb-4">Systemic Integrity Audits</h3>
+
+                            <p class="text-slate-400 text-base">A holistic examination of your entire hydropower system, ensuring every component meets global excellence standards. Includes FEA and NDT protocols.</p>
+
+                        </div>
+
+                    </a>
+
+
+
+                    <!-- AI-Powered Predictive Maintenance: LINK AKTIVAN -->
+
+                    <a href="/services-predictive.html" class="block">
+
+                        <div class="p-8 rounded-2xl bg-hydro-charcoal border border-hydro-light-slate hover:border-hydro-primary shadow-lg h-full zoom-in delay-600 text-left transition transform hover:scale-[1.03]">
+
+                            <div class="bg-hydro-light-slate inline-block p-4 rounded-xl text-hydro-primary mb-6"><svg data-lucide="bot" class="w-8 h-8"></svg></div>
+
+                            <h3 class="text-2xl font-bold text-white mb-4">AI-Powered Predictive Maintenance</h3>
+
+                            <p class="text-slate-400 text-base">Leverage our proprietary AI models to forecast potential equipment failures, reduce downtime, and optimize maintenance schedules for cost savings.</p>
+
+                        </div>
+
+                    </a>
+
+
+
+                    <!-- Regulatory & Compliance Reporting: LINK AKTIVAN -->
+
+                    <a href="/services-compliance.html" class="block">
+
+                        <div class="p-8 rounded-2xl bg-hydro-charcoal border border-hydro-light-slate hover:border-hydro-primary shadow-lg h-full zoom-in delay-800 text-left transition transform hover:scale-[1.03]">
+
+                            <div class="bg-hydro-light-slate inline-block p-4 rounded-xl text-hydro-primary mb-6"><svg data-lucide="clipboard-check" class="w-8 h-8"></svg></div>
+
+                            <h3 class="text-2xl font-bold text-white mb-4">Regulatory & Compliance Reporting</h3>
+
+                            <p class="text-slate-400 text-base">Automate and streamline complex compliance reporting. Our platform generates audit-ready documentation verifying adherence to regulations.</p>
+
+                        </div>
+
+                    </a>
+
+
+
+                    <!-- Performance Optimization Analysis: LINK AKTIVAN -->
+
+                    <a href="/services-optimization.html" class="block">
+
+                        <div class="p-8 rounded-2xl bg-hydro-charcoal border border-hydro-light-slate hover:border-hydro-primary shadow-lg h-full zoom-in delay-1000 text-left transition transform hover:scale-[1.03]">
+
+                            <div class="bg-hydro-light-slate inline-block p-4 rounded-xl text-hydro-primary mb-6"><svg data-lucide="bar-chart-2" class="w-8 h-8"></svg></div>
+
+                            <h3 class="text-2xl font-bold text-white mb-4">Performance Optimization Analysis</h3>
+
+                            <p class="text-slate-400 text-base">We identify inefficiencies and mitigate risks (including the **48% hidden risk**), translating to improved energy output and profitability.</p>
+
+                        </div>
+
+                    </a>
+
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <div class="section-stripe"></div>
+
+       
+
+        <!-- ADVANCED ANALYTICS: CLICKABLE TURBINE CARDS -->
+
+        <section id="technology" class="py-24 bg-hydro-slate text-white">
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+                <h2 class="text-base font-bold tracking-widest text-hydro-primary uppercase text-center fade-in-up">Advanced Analytics</h2>
+
+                <p class="mt-4 text-4xl md:text-5xl font-extrabold text-white text-center mb-16 fade-in-up delay-200">
+
+                    Turbine-Specific Integrity Analysis
+
+                </p>
+
+
+
+                <div class="max-w-5xl mx-auto space-y-12">
+
+                   
+
+                    <!-- FRANCIS TURBINE CARD (CLICKABLE) -->
+
+                    <a href="/turbine-francis.html" class="turbine-card grid lg:grid-cols-5 gap-8 items-center bg-hydro-charcoal p-6 rounded-xl shadow-xl zoom-in delay-400 border border-hydro-primary/20">
+
+                        <div class="lg:col-span-2 aspect-square rounded-lg bg-hydro-slate flex items-center justify-center text-hydro-gray">
+
+                            <img src="/francis-diagram.jpg" alt="Francis Turbine Diagram" class="w-full h-full object-cover">
+
+                        </div>
+
+                        <div class="lg:col-span-3">
+
+                            <h3 class="text-3xl font-bold text-hydro-primary mb-3">Francis Turbine</h3>
+
+                            <p class="text-slate-400">
+
+                                Ideal for medium head and flow rates, the Francis turbine is the most common. Our audits ensure <strong>optimal blade geometry</strong> and flow dynamics, maximizing efficiency and lifespan.
+
+                            </p>
+
+                            <p class="text-cyan-400 mt-2 font-semibold">Focus: CFD Optimization & Acoustic Emission (Cavitation) &rarr;</p>
+
+                        </div>
+
+                    </a>
+
+
+
+                    <!-- KAPLAN TURBINE CARD (CLICKABLE) -->
+
+                    <a href="/turbine-kaplan.html" class="turbine-card grid lg:grid-cols-5 gap-8 items-center bg-hydro-charcoal p-6 rounded-xl shadow-xl zoom-in delay-600 border border-hydro-primary/20">
+
+                        <div class="lg:col-span-2 aspect-square rounded-lg bg-hydro-slate flex items-center justify-center text-hydro-gray">
+
+                            <img src="/kaplan-diagram.jpg" alt="Kaplan Turbine Diagram" class="w-full h-full object-cover">
+
+                        </div>
+
+                        <div class="lg:col-span-3">
+
+                            <h3 class="text-3xl font-bold text-hydro-primary mb-3">Kaplan Turbine</h3>
+
+                            <p class="text-slate-400">
+
+                                A propeller-type turbine for low head and high flow rates. Our analysis focuses on <strong>adjustable blade performance</strong> and <strong>cavitation prevention</strong>, crucial for maintaining peak output.
+
+                            </p>
+
+                            <p class="text-cyan-400 mt-2 font-semibold">Focus: Adjustable Blade Performance & Real-time Load Simulation &rarr;</p>
+
+                        </div>
+
+                    </a>
+
+                   
+
+                    <!-- PELTON TURBINE CARD (CLICKABLE) -->
+
+                    <a href="/turbine-pelton.html" class="turbine-card grid lg:grid-cols-5 gap-8 items-center bg-hydro-charcoal p-6 rounded-xl shadow-xl zoom-in delay-800 border border-hydro-primary/20">
+
+                        <div class="lg:col-span-2 aspect-square rounded-lg bg-hydro-slate flex items-center justify-center text-hydro-gray">
+
+                            <img src="/pelton-diagram.jpg" alt="Pelton Turbine Diagram" class="w-full h-full object-cover">
+
+                        </div>
+
+                        <div class="lg:col-span-3">
+
+                            <h3 class="text-3xl font-bold text-hydro-primary mb-3">Pelton Turbine</h3>
+
+                            <p class="text-slate-400">
+
+                                Designed for very high head and low flow applications. We provide integrity checks on the <strong>nozzle and bucket systems</strong>, ensuring impulse energy conversion is precise and wear is minimized.
+
+                            </p>
+
+                            <p class="text-cyan-400 mt-2 font-semibold">Focus: Nozzle System Precision & Impulse Energy Conversion &rarr;</p>
+
+                        </div>
+
+                    </a>
+
+                   
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <div class="section-stripe"></div>
+
+
+
+        <section id="contact" class="py-24 bg-hydro-charcoal" aria-labelledby="kontakt-naslov">
+
+            <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+
+                <h2 class="text-base font-bold tracking-widest text-hydro-primary uppercase text-center fade-in-up">Get in Touch</h2>
+
+                <p id="kontakt-naslov" class="mt-4 text-4xl font-extrabold text-white mb-4 text-center tracking-tight fade-in-up delay-200">Connect With Our Experts</p>
+
+                <p class="text-xl text-hydro-cta mb-10 text-center fade-in-up delay-400">
+
+                    Ready to elevate your operations? Fill out the form below to schedule a consultation with our hydro integrity specialists.
+
+                </p>
+
+               
+
+                <form id="contactForm" class="space-y-6 bg-hydro-slate p-8 rounded-xl shadow-2xl zoom-in delay-600" action="https://formspree.io/f/xqaywlaq" method="POST">
+
+                    <input type="text" id="ime" name="Full Name" placeholder="Full Name" required class="mt-1 block w-full px-4 py-3 bg-hydro-light-slate border border-hydro-gray rounded-md text-white focus:ring-hydro-primary focus:border-hydro-primary transition">
+
+                    <input type="email" id="email" name="Email (Business)" placeholder="Email Address" required class="mt-1 block w-full px-4 py-3 bg-hydro-light-slate border border-hydro-gray rounded-md text-white focus:ring-hydro-primary focus:border-hydro-primary transition">
+
+                    <input type="text" id="kompanija" name="Company / Plant" placeholder="Company" required class="mt-1 block w-full px-4 py-3 bg-hydro-light-slate border border-hydro-gray rounded-md text-white focus:ring-hydro-primary focus:border-hydro-primary transition">
+
+                    <textarea id="poruka" name="Message" rows="4" placeholder="Message" class="mt-1 block w-full px-4 py-3 bg-hydro-light-slate border border-hydro-gray rounded-md text-white focus:ring-hydro-primary focus:border-hydro-primary transition"></textarea>
+
+                   
+
+                    <input type="hidden" name="_subject" value="Consultation Request (Final Site)">
+
+                    <button type="submit" class="w-full flex justify-center py-3.5 px-4 border border-transparent rounded-md shadow-sm text-lg font-bold text-hydro-charcoal bg-hydro-cta hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-hydro-cta uppercase tracking-wider transition transform hover:scale-[1.01]">
+
+                        Send Inquiry
+
+                    </button>
+
+                    <p id="formMessage" class="mt-4 text-center text-sm hidden" role="status" aria-live="polite"></p>
+
+                </form>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <div class="md:hidden mobile-sticky-cta text-center">
+
+        <a href="#contact" class="w-full block text-center bg-hydro-primary hover:bg-cyan-500 text-hydro-charcoal px-5 py-3 font-bold tracking-wider uppercase shadow-2xl">
+
+            SCHEDULE AUDIT
+
+        </a>
+
+    </div>
+
+
+
+    <footer class="bg-hydro-slate text-hydro-gray py-8 text-center border-t border-hydro-light-slate" role="contentinfo">
+
+        <div class="container mx-auto px-6">
+
+             
+
+             <a href="#hero" class="mb-4 block" aria-label="Anohubs Logo - Back to top">
+
+                <img src="/logo.svg" alt="Anohubs Logo" class="anohubs-logo mx-auto">
+
+             </a>
+
+             <p class="text-slate-400 mb-6">Establishing the global standard for hydro integrity.</p>
+
+             
+
+             <nav class="flex justify-center space-x-6 text-sm mb-6">
+
+                <a href="/about-us-vision.html" class="text-slate-400 hover:text-hydro-primary">About</a>
+
+                <a href="#services" class="text-slate-400 hover:text-hydro-primary">Services</a>
+
+                <a href="#technology" class="text-slate-400 hover:text-hydro-primary">Technology</a>
+
+                <a href="#contact" class="text-slate-400 hover:text-hydro-primary">Contact</a>
+
+             </nav>
+
+             
+
+             <p class="text-sm">&copy; <span id="year"></span> Anohubs Inc. All rights reserved.</p>
+
+        </div>
+
+    </footer>
+
+
+
+    <!-- KRITIČNO: GLOBALNA JS LOGIKA I INICJALIZACIJA -->
+
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
+
+    <script src="contact_logic.js"></script>
+
+    <script src="global_ui_logic.js"></script>
+
 </body>
-</html>"
+
+</html>
