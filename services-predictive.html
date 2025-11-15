@@ -6,36 +6,6 @@
     <title>AI-Powered Predictive Maintenance | Anohubs</title>
     <meta name="description" content="Leverage our proprietary AI models to forecast potential equipment failures, reduce downtime, and optimize maintenance schedules for cost savings.">
     
-    <script>
-        // === FAVICON & CACHE BUSTER LOGIC (Isti kao na index.html) ===
-        const cacheBuster = "?v=" + new Date().getTime();
-        const rootPath = "/";
-
-        const faviconLinks = [
-            { rel: "shortcut icon", href: rootPath + "favicon.ico", type: "image/x-icon" },
-            { rel: "icon", type: "image/png", sizes: "32x32", href: rootPath + "favicon-32x32.png" },
-            { rel: "icon", type:"image/png", sizes: "16x16", href: rootPath + "favicon-16x16.png" },
-            { rel: "apple-touch-icon", sizes: "180x180", href: rootPath + "apple-touch-icon.png" }
-        ];
-
-        faviconLinks.forEach(link => {
-            const el = document.createElement("link");
-            el.rel = link.rel;
-            el.href = link.href + cacheBuster; 
-            if (link.type) el.type = link.type;
-            if (link.sizes) el.sizes = link.sizes;
-            document.head.appendChild(el);
-        });
-        
-        const anohubFavicon = document.createElement("link");
-        anohubFavicon.rel = "icon";
-        anohubFavicon.type = "image/png";
-        anohubFavicon.sizes = "32x32";
-        anohubFavicon.href = "https://ervinstupac-byte.github.io/anohubsapp/favicon-32x32.png";
-        document.head.appendChild(anohubFavicon);
-
-    </script>
-    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
@@ -43,7 +13,7 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     
     <script>
-        // Tailwind Konfiguracija (Iz index.html)
+        // === Tailwind Konfiguracija (Iz index.html) ===
         tailwind.config = {
             theme: {
                 extend: {
@@ -72,17 +42,19 @@
             font-family: 'Inter', sans-serif; 
             background-color: #111827; 
             color: #E5E7EB;
-            
-            /* POZADINA: PROLJECE ARM */
-            background-image: url('proljece_arm.jpg'); /* Provjerite putanju */
+            background-image: url('proljece_arm.jpg'); 
             background-size: cover;
             background-attachment: fixed;
             background-position: center; 
             min-height: 100vh;
         }
-        .header-bg { background-color: rgba(17, 24, 39, 0.95); }
         
-        /* OVERLAY NAD SADRŽAJEM */
+        /* HEADER & FOOTER */
+        .header-bg { background-color: rgba(17, 24, 39, 0.95); }
+        .anohubs-logo-compact { width: 110px; height: auto; color: #22d3ee; }
+        @media (min-width: 768px) { .anohubs-logo-compact { width: 140px; } }
+
+        /* OVERLAY NAD SADRŽAJEM (Za čitljivost) */
         .content-overlay {
             background-color: rgba(30, 41, 59, 0.75); 
             padding: 3rem 2rem;
@@ -92,15 +64,9 @@
             will-change: transform, box-shadow; 
             transform: translateZ(0); 
         }
-        .text-glow {
-            text-shadow: 0 0 15px rgba(34, 211, 238, 0.7); 
-        }
-        
-        /* STILOVI LOGOTIPA (Isto kao index.html) */
-        .anohubs-logo-compact { width: 110px; height: auto; color: #22d3ee; }
-        @media (min-width: 768px) { .anohubs-logo-compact { width: 140px; } }
-        
-        /* STILOVI ZA ANIMACIJE (Isti kao index.html) */
+        .text-glow { text-shadow: 0 0 15px rgba(34, 211, 238, 0.7); }
+
+        /* STILOVI ZA ANIMACIJE (Kopirano iz index.html) */
         .fade-in-up, .zoom-in { opacity: 0; transition: opacity 0.8s ease-out, transform 0.8s ease-out; will-change: opacity, transform; }
         .fade-in-up { transform: translateY(30px); }
         .zoom-in { transform: scale(0.95); }
@@ -111,7 +77,6 @@
         .delay-800 { --delay: 800ms; }
         .delay-1000 { --delay: 1000ms; }
         .delay-1200 { --delay: 1200ms; }
-        .mobile-sticky-cta { position: fixed; bottom: 0; left: 0; right: 0; z-index: 40; padding: 0.5rem 0; }
         
     </style>
 </head>
@@ -131,7 +96,7 @@
             </nav>
         </div>
     </header>
-
+    
     <main role="main">
         <section class="py-16 text-white flex items-center justify-center min-h-[90vh]">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 content-overlay zoom-in"> 
@@ -234,11 +199,10 @@
              <a href="/index.html#contact" class="text-slate-400 hover:text-hydro-primary">Contact</a>
            </nav>
            
-           <p class="text-sm">&copy; <span id="year"></span> Anohubs Inc. All rights reserved.</p>
+           <p class="text-sm">&copy; 2025 <span id="year"></span> Anohubs Inc. All rights reserved.</p>
         </div>
     </footer>
 
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
     <script>
         // Inicijalizacija ikona nakon učitavanja
         document.addEventListener('DOMContentLoaded', () => {
@@ -286,7 +250,6 @@
                 });
             });
         }
-        
     </script>
 </body>
 </html>
