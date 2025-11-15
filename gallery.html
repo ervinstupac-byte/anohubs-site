@@ -28,94 +28,135 @@
             }
         };
 
-        // KLIJENTSKA LOGIKA ZA GALERIJU
-        const galleryImages = [
-            // OVDJE DEFINIŠETE SVE VAŠE SLIKE I OPISE
-            { src: 'slike/20190618_213435.jpg', caption: 'Global Perspective: High-altitude view of the vast energy transition landscape.' },
-            { src: 'slike/IMG20170304090522.jpg', caption: 'Water Capital: Reflective waters and the need for ecological stewardship (Symbiosis Standard).' },
-            { src: 'slike/20190620_233856.jpg', caption: 'Facing the Extremes: Robust engineering required in challenging climates.' },
-            { src: 'slike/20221201_025542.jpg', caption: 'Global Logistics: The vastness of global commerce and the demand for stable energy.' },
-            { src: 'slike/20210511_071530.jpg', caption: 'Ethical Responsibility: Local energy production and community impact.' },
-            { src: 'slike/2606d612-866d-49a6-b259-a2e520d776c3.jpg', caption: 'Geological Stability: Analysis of mountainous regions for PSH and Ultra-High Head risk.' },
+        // ====================================================================
+        // KLIJENTSKA LOGIKA ZA GALERIJU - AŽURIRANA ZA 300 SLIKA
+        // ====================================================================
+        
+        // PAŽNJA: OVDJE MORATE UBACITI LISTU IMENA SVIH VAŠIH 300 SLIKA
+        // Sve slike se nalaze u folderu 'slike/gallery/'
+        const imageFilenames = [
+            // PRVIH 6 IMENA SLIKE IZ PRETHODNOG KORAKA (PRIMJER)
+            '20190618_213435.jpg',
+            'IMG20170304090522.jpg',
+            '20190620_233856.jpg',
+            '20221201_025542.jpg',
+            '20210511_071530.jpg',
+            '2606d612-866d-49a6-b259-a2e520d776c3.jpg',
+            
+            // OVDJE UBACITE PREOSTALIH ~294 FAJLA (NAZIV SA EKSTENZIJOM)
+            // 'ime_slike_7.jpg',
+            // ...
+            // 'ime_slike_300.jpg',
         ];
+
+        // Priprema galerije (Dodaje putanju i automatski generiše opis)
+        const galleryImages = imageFilenames.map(filename => ({
+            src: 'slike/gallery/' + filename, // Korištenje nove putanje
+            // Automatski generiše opis iz imena fajla (npr. 'image_01.jpg' -> 'Image 01')
+            caption: filename.replace(/_/g, ' ').replace(/\.[^/.]+$/, '').toUpperCase() 
+        }));
+        
         let currentIndex = 0;
 
+        // F-ja koja otvara modal i postavlja trenutnu sliku
         function openModal(index) {
             currentIndex = index;
             const modal = document.getElementById('lightbox-modal');
-            const container = document.getElementById('lightbox-container');
-            const total = galleryImages.length;
-
-            function updateImage() {
-                const img = galleryImages[currentIndex];
-                container.innerHTML = `
-                    <img src="${img.src}" alt="${img.caption}" class="max-h-[85vh] max-w-full object-contain rounded-lg shadow-2xl mx-auto zoom-in" style="animation-delay: 0ms;">
-                    <div class="text-white text-center mt-4 max-w-3xl mx-auto bg-black/50 p-3 rounded-lg">
-                        <p class="text-sm md:text-base">${img.caption}</p>
-                        <p class="text-xs text-slate-400 mt-1">Image ${currentIndex + 1} of ${total}</p>
-                    </div>
-                `;
-                // Prikaz/skrivanje navigacionih dugmadi
-                document.getElementById('prev-btn').classList.toggle('hidden', currentIndex === 0);
-                document.getElementById('next-btn').classList.toggle('hidden', currentIndex === total - 1);
+            
+            // Zaustavi potencijalni slideshow iz prethodnog otvaranja
+            const slideshowBtn = document.getElementById('slideshow-btn');
+            if (slideshowBtn && slideshowBtn.textContent.includes('Stop')) {
+                toggleSlideshow(slideshowBtn);
             }
-
-            // Funkcija za navigaciju (izložena globalno)
-            window.navigateGallery = (direction) => {
-                currentIndex += direction;
-                if (currentIndex >= 0 && currentIndex < total) {
-                    updateImage();
-                } else if (currentIndex === total) {
-                     currentIndex = total - 1;
-                } else if (currentIndex < 0) {
-                     currentIndex = 0;
-                }
-            };
-
-            // Funkcija za pokretanje/zaustavljanje slideshowa
-            let slideshowInterval;
-            window.toggleSlideshow = (button) => {
-                if (slideshowInterval) {
-                    clearInterval(slideshowInterval);
-                    slideshowInterval = null;
-                    button.textContent = '▶️ Start Slideshow';
-                    button.classList.remove('bg-red-600');
-                    button.classList.add('bg-hydro-secondary');
-                } else {
-                    button.textContent = '⏸️ Stop Slideshow';
-                    button.classList.remove('bg-hydro-secondary');
-                    button.classList.add('bg-red-600');
-                    slideshowInterval = setInterval(() => {
-                        if (currentIndex < total - 1) {
-                            navigateGallery(1);
-                        } else {
-                            // Zaustavi slideshow nakon posljednje slike
-                            toggleSlideshow(button);
-                        }
-                    }, 4000); // 4 sekunde
-                }
-            };
-
-            updateImage();
+            
+            updateImage(false); // Postavi sliku bez animacije pri prvom otvaranju
             modal.classList.remove('hidden');
             document.body.classList.add('overflow-hidden');
         }
+
+        // F-ja za navigaciju i ažuriranje slike
+        function updateImage(useTransition = true) {
+            const container = document.getElementById('lightbox-container');
+            const total = galleryImages.length;
+            const img = galleryImages[currentIndex];
+            
+            const animationClass = useTransition ? 'animate-fade-in' : ''; // Dodavanje animacije za promjenu
+            
+            container.innerHTML = `
+                <img src="${img.src}" alt="${img.caption}" class="max-h-[85vh] max-w-full object-contain rounded-lg shadow-2xl mx-auto ${animationClass}" style="animation-duration: 0.3s;">
+                <div class="text-white text-center mt-4 max-w-3xl mx-auto bg-black/50 p-3 rounded-lg">
+                    <p class="text-sm md:text-base">${img.caption}</p>
+                    <p class="text-xs text-slate-400 mt-1">Image ${currentIndex + 1} of ${total}</p>
+                </div>
+            `;
+            // Prikaz/skrivanje navigacionih dugmadi
+            document.getElementById('prev-btn').classList.toggle('hidden', currentIndex === 0);
+            document.getElementById('next-btn').classList.toggle('hidden', currentIndex === total - 1);
+        }
+
+        // F-ja za navigaciju
+        window.navigateGallery = (direction) => {
+            const total = galleryImages.length;
+            const newIndex = currentIndex + direction;
+
+            if (newIndex >= 0 && newIndex < total) {
+                currentIndex = newIndex;
+                updateImage(true); // Koristi animaciju za promjenu
+            }
+        };
+
+        // F-ja za pokretanje/zaustavljanje slideshowa
+        let slideshowInterval;
+        window.toggleSlideshow = (button) => {
+            const total = galleryImages.length;
+            if (slideshowInterval) {
+                clearInterval(slideshowInterval);
+                slideshowInterval = null;
+                button.innerHTML = '▶️ Start Slideshow';
+                button.classList.remove('bg-red-600');
+                button.classList.add('bg-hydro-secondary');
+            } else {
+                button.innerHTML = '⏸️ Stop Slideshow';
+                button.classList.remove('bg-hydro-secondary');
+                button.classList.add('bg-red-600');
+                slideshowInterval = setInterval(() => {
+                    if (currentIndex < total - 1) {
+                        navigateGallery(1);
+                    } else {
+                        // Stani na zadnjoj slici
+                        toggleSlideshow(button);
+                    }
+                }, 3500); // 3.5 sekundi (Brzina)
+            }
+        };
 
         function closeModal() {
             const modal = document.getElementById('lightbox-modal');
             modal.classList.add('hidden');
             document.body.classList.remove('overflow-hidden');
-            // Zaustavi slideshow ako radi
+            
             const slideshowBtn = document.getElementById('slideshow-btn');
             if (slideshowBtn && slideshowBtn.textContent.includes('Stop')) {
                  toggleSlideshow(slideshowBtn);
             }
         }
         
-        // Inicijalizacija animacija i ikona
+        // Inicijalizacija grid-a i animacija (za scroll)
         document.addEventListener("DOMContentLoaded", function() {
             if (typeof lucide !== 'undefined') {
                 lucide.createIcons();
+            }
+            
+            // Generisanje svih 300+ thumbnailova
+            const grid = document.querySelector('.gallery-grid');
+            if (grid) {
+                galleryImages.forEach((img, index) => {
+                    grid.innerHTML += `
+                        <div onclick="openModal(${index})" class="thumbnail-item">
+                            <img src="${img.src}" alt="${img.caption}" class="thumbnail-img w-full h-36 object-cover rounded-lg" loading="lazy">
+                        </div>
+                    `;
+                });
             }
         });
     </script>
@@ -127,34 +168,46 @@
         .bg-hydro-slate { background-color: #1E293B; }
 
         .thumbnail-img {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.5s ease;
             cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
             border: 2px solid transparent;
+            opacity: 0.9;
         }
         .thumbnail-img:hover {
-            transform: scale(1.03);
-            box-shadow: 0 8px 20px rgba(34, 211, 238, 0.4);
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(34, 211, 238, 0.6); /* Jači hover efekat */
             border-color: #22d3ee;
+            opacity: 1;
         }
         
         .lightbox-modal {
-            background-color: rgba(0, 0, 0, 0.95); /* Vrlo tamna pozadina */
+            backdrop-filter: blur(8px); /* Blur za profesionalniji efekat */
+        }
+        
+        /* Animacija za promjenu slike u modalu */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.3s ease-out;
         }
     </style>
 </head>
 <body class="text-white bg-hydro-charcoal">
 
     <header class="header-bg shadow-2xl sticky top-0 z-50 border-b border-hydro-primary/50" role="banner">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-1 flex justify-between items-center">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex justify-between items-center">
             <a href="/index.html#hero" class="focus:outline-none transition" aria-label="Anohubs Logo - Back to top">
-                 <img src="/logo.svg" alt="Anohubs Logo" class="anohubs-logo-compact">
+                 <div class="text-xl font-bold text-cyan-400">AnoHUB</div>
             </a>
             
             <nav class="flex items-center space-x-4 font-extrabold text-sm" role="navigation">
                 <a href="/expert-insights.html" class="text-slate-300 hover:text-cyan-400 transition">Insights</a>
+                <a href="/gallery.html" class="text-cyan-400 transition" aria-current="page">Gallery</a>
                 <a href="/protocol.html" class="text-slate-300 hover:text-cyan-400 transition">Protocol</a>
-                <a href="/index.html#contact" class="bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-4 py-2 rounded-full transition">Request Audit</a>
+                <a href="/index.html#contact" class="inline-flex bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-4 py-2 rounded-full transition">Request Audit</a>
             </nav>
         </div>
     </header>
@@ -163,30 +216,21 @@
         <section class="py-20 bg-hydro-slate text-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 
-                <h1 class="text-5xl md:text-6xl font-extrabold text-hydro-primary mb-4 tracking-tighter fade-in-up">
+                <h1 class="text-5xl md:text-6xl font-extrabold text-hydro-primary mb-4 tracking-tighter">
                     THE HYDRO-VISION GALLERY
                 </h1>
-                <p class="text-xl md:text-2xl font-light text-cyan-200 mb-12 max-w-4xl mx-auto fade-in-up delay-200">
-                    A curated collection of natural capital, global projects, and the vast landscapes protected by the AnoHUB Integrity Standard.
+                <p class="text-xl md:text-2xl font-light text-cyan-200 mb-12 max-w-4xl mx-auto">
+                    A panoramic view of the global water capital, captured in over ${galleryImages.length} images. This visual manifesto showcases the ecosystems we protect and the environments where the AnoHUB Symbiosis Standard is mandatory.
                 </p>
 
-                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6">
-                    <script>
-                        document.addEventListener('DOMContentLoaded', () => {
-                            const grid = document.querySelector('.gallery-grid');
-                            if (grid) {
-                                galleryImages.forEach((img, index) => {
-                                    grid.innerHTML += `
-                                        <div onclick="openModal(${index})" class="thumbnail-item">
-                                            <img src="${img.src}" alt="${img.caption}" class="thumbnail-img w-full h-36 object-cover rounded-lg">
-                                        </div>
-                                    `;
-                                });
-                            }
-                        });
-                    </script>
-                    <div class="gallery-grid contents"></div>
-                </div>
+                <div class="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 gap-4 gallery-grid">
+                    </div>
+                
+                <script>
+                    if (galleryImages.length === 0) {
+                        document.write('<p class="text-xl text-red-400 mt-20">No images found. Please check the `imageFilenames` list in the HTML script.</p>');
+                    }
+                </script>
 
             </div>
         </section>
@@ -198,10 +242,10 @@
             <div id="lightbox-container" class="relative">
                 </div>
             
-            <button id="prev-btn" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-3 rounded-r-lg hover:bg-black/80 transition" aria-label="Previous image" onclick="navigateGallery(-1)">
+            <button id="prev-btn" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-3 rounded-r-lg hover:bg-black/80 transition disabled:opacity-30 disabled:hover:bg-black/50" aria-label="Previous image" onclick="navigateGallery(-1)">
                 <svg data-lucide="chevron-left" class="w-6 h-6"></svg>
             </button>
-            <button id="next-btn" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-3 rounded-l-lg hover:bg-black/80 transition" aria-label="Next image" onclick="navigateGallery(1)">
+            <button id="next-btn" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-3 rounded-l-lg hover:bg-black/80 transition disabled:opacity-30 disabled:hover:bg-black/50" aria-label="Next image" onclick="navigateGallery(1)">
                 <svg data-lucide="chevron-right" class="w-6 h-6"></svg>
             </button>
             
@@ -220,20 +264,19 @@
     <footer class="bg-hydro-slate text-gray-400 py-8 text-center border-t border-hydro-light-slate" role="contentinfo">
         <div class="container mx-auto px-6">
              
-           <a href="/index.html#hero" class="mb-4 block" aria-label="Anohubs Logo - Back to top">
-             <img src="/logo.svg" alt="Anohubs Logo" class="anohubs-logo-compact">
-           </a>
+           <div class="text-xl font-bold text-cyan-400 mb-4">AnoHUB</div>
            <p class="text-slate-400 mb-6">Establishing the global standard for hydro integrity.</p>
            
            <nav class="flex justify-center space-x-6 text-sm mb-6">
              <a href="/about-us-vision.html" class="text-slate-400 hover:text-hydro-primary">About</a>
              <a href="/index.html#services" class="text-slate-400 hover:text-hydro-primary">Services</a>
              <a href="/expert-insights.html" class="text-slate-400 hover:text-hydro-primary">Insights</a>
+             <a href="/gallery.html" class="text-hydro-primary font-bold">Gallery</a>
              <a href="/protocol.html" class="text-slate-400 hover:text-hydro-primary">Protocol</a>
              <a href="/index.html#contact" class="text-slate-400 hover:text-hydro-primary">Contact</a>
            </nav>
            
-           <p class="text-sm">&copy; <span id="year"></span> Anohubs Inc. All rights reserved.</p>
+           <p class="text-sm">&copy; 2025 Anohubs Inc. All rights reserved.</p>
         </div>
     </footer>
 </body>
