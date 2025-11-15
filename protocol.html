@@ -13,7 +13,7 @@
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <script>
-        // === Tailwind Konfiguracija ===
+        // === Tailwind Konfiguracija (Iz index.html) ===
         tailwind.config = {
             theme: {
                 extend: {
@@ -63,14 +63,15 @@
             if (heroSection) {
                 window.addEventListener('scroll', () => {
                     const scrollPosition = window.pageYOffset;
-                    heroSection.style.backgroundPositionY = -scrollPosition * 0.3 + 'px'; // 30% brzine skrola
+                    // Prilagođavamo poziciju da simuliramo dubinu (parallax)
+                    heroSection.style.backgroundPositionY = -scrollPosition * 0.3 + 'px';
                 });
             }
         });
     </script>
     
     <style>
-        /* CSS STILOVI PROTOCOL.HTML - AŽURIRANO ZA DINAMIČNOST */
+        /* CSS STILOVI PROTOCOL.HTML */
         body { font-family: 'Inter', sans-serif; background-color: #111827; color: white; }
 
         /* HEADER & NAVIGATION */
@@ -78,23 +79,20 @@
         .anohubs-logo-compact { width: 90px; height: auto; color: #22d3ee; }
         @media (min-width: 768px) { .anohubs-logo-compact { width: 120px; } }
 
-        /* PROTOCOL HERO SEKCIJA - PERSONALIZOVANA POZADINA */
+        /* HERO SEKCIJA - PERSONALIZOVANA POZADINA S PARALLAXOM */
         #hero-protocol {
-            background-image: url('personal_vision.jpg'); 
+            background-image: url('personal_vision.jpg'); /* VAŠA LIČNA SLIKA */
             background-size: cover;
-            background-attachment: fixed;
-            background-position: left center; 
+            background-attachment: fixed; /* Ostavljamo fiksno za klasičan parallax efekat */
+            background-position: left center; /* Fokus na figuru */
             position: relative;
-            z-index: 0;
-            padding-top: 5rem; 
-            padding-bottom: 5rem;
             min-height: 85vh; 
             display: flex;
             align-items: center; 
             justify-content: flex-start;
         }
 
-        /* OVERLAY sa gradientom koji postaje transparentniji ka lijevoj strani (ka slici) */
+        /* OVERLAY - Gradient za čitljivost teksta na desnoj strani */
         #hero-protocol::before {
             content: "";
             position: absolute;
@@ -102,7 +100,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            /* Gradient: Tamna boja (charcoal/slate) na DESNOJ strani -> transparentno na LIJEVOJ strani (preko Vaše figure) */
+            /* Gradient: Transparentno (lijevo, preko figure) -> Tamno (desno, preko teksta) */
             background: linear-gradient(90deg, 
                 rgba(17, 24, 39, 0.1) 0%, 
                 rgba(17, 24, 39, 0.85) 40%, 
@@ -111,7 +109,7 @@
             z-index: -1;
         }
 
-        /* SEKCIJE SADRŽAJA */
+        /* KARDS U DETALJIMA */
         .protocol-card {
             background-color: #1E293B; 
             border-left: 5px solid #22d3ee; 
@@ -135,8 +133,17 @@
         .delay-800 { --delay: 800ms; }
         .delay-1000 { --delay: 1000ms; }
         .delay-1200 { --delay: 1200ms; }
-        .mobile-sticky-cta { position: fixed; bottom: 0; left: 0; right: 0; z-index: 40; padding: 0.5rem 0; }
         
+        /* LOGO I NAVIGATION */
+        .mobile-sticky-cta { position: fixed; bottom: 0; left: 0; right: 0; z-index: 40; padding: 0.5rem 0; }
+        .nav-link { position: relative; }
+        .nav-link::after {
+            content: ''; position: absolute; width: 100%; transform: scaleX(0); height: 3px; bottom: -5px; left: 0; background-color: #22d3ee; transform-origin: bottom right; transition: transform 0.3s ease-out;
+        }
+        .nav-link:hover::after, .nav-link[aria-current="page"]::after {
+            transform: scaleX(1); transform-origin: bottom left;
+        }
+
     </style>
 </head>
 <body class="text-white bg-hydro-charcoal">
@@ -144,7 +151,7 @@
     <header class="bg-hydro-charcoal text-white shadow-2xl sticky top-0 z-50 border-b border-hydro-primary/50" role="banner">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-1 flex justify-between items-center">
             
-            <a href="/index.html#hero" class="focus:outline-none transition" aria-label="Anohubs Logo - Back to top">
+            <a href="/index.html#hero" class="focus:outline-none transition" aria-label="Anohubs Logo - Back to top" aria-current="page">
                  <img src="/logo.svg" alt="Anohubs Logo" class="anohubs-logo-compact">
             </a>
             
@@ -178,7 +185,7 @@
         <section id="hero-protocol" class="relative text-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 text-white">
                 
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center text-left">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center text-left py-12">
                     
                     <div class="lg:col-span-7 fade-in-up delay-400 max-w-2xl">
                         <h1 class="text-5xl md:text-6xl font-black leading-tight mb-6 text-hydro-primary" style="text-shadow: 0 0 20px rgba(34, 211, 238, 0.9);">
@@ -203,7 +210,7 @@
         <section id="protocol-details" class="py-20 bg-hydro-charcoal text-white relative">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 
-                <div class="bg-hydro-slate p-8 rounded-2xl shadow-2xl border-l-4 border-hydro-cta mb-16 fade-in-up">
+                <div class="protocol-card mx-auto max-w-4xl zoom-in delay-200">
                     <h2 class="text-3xl font-bold text-hydro-cta mb-4 flex items-center gap-3">
                         <svg data-lucide="compass" class="w-8 h-8 text-hydro-cta"></svg> The Non-Negotiable Standard: Precision First
                     </h2>
@@ -218,11 +225,11 @@
                     </p>
                 </div>
 
-                <h2 class="text-4xl font-extrabold text-white mb-12 text-center fade-in-up delay-200">The Three Pillars of Holistic Asset Derisking</h2>
+                <h2 class="text-4xl font-extrabold text-white mb-12 text-center mt-16 fade-in-up delay-400">The Three Pillars of Holistic Asset Derisking</h2>
                 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
                     
-                    <div class="protocol-card text-center fade-in-up delay-400">
+                    <div class="protocol-card fade-in-up delay-600">
                         <div class="bg-hydro-primary/20 inline-block p-3 rounded-full text-hydro-primary mb-4">
                             <svg data-lucide="zap" class="w-7 h-7"></svg>
                         </div>
@@ -230,7 +237,7 @@
                         <p class="text-slate-300 leading-relaxed">We eliminate the "Synergy Gap" where electrical faults (poor grounding, VDE non-compliance) accelerate mechanical failure (electro-erosion, vibration). Our audit guarantees protection across both domains.</p>
                     </div>
 
-                    <div class="protocol-card text-center fade-in-up delay-600">
+                    <div class="protocol-card fade-in-up delay-800">
                          <div class="bg-hydro-primary/20 inline-block p-3 rounded-full text-hydro-primary mb-4">
                             <svg data-lucide="bar-chart-3" class="w-7 h-7"></svg>
                         </div>
@@ -238,7 +245,7 @@
                         <p class="text-slate-300 leading-relaxed">We mandate that decisions prioritize **Life Cycle Cost (LCC)** over lowest CapEx. This includes mandatory verification of material compatibility to preempt **Galvanic Corrosion**, which destroys bearings prematurely.</p>
                     </div>
 
-                    <div class="protocol-card text-center fade-in-up delay-800">
+                    <div class="protocol-card fade-in-up delay-1000">
                          <div class="bg-hydro-primary/20 inline-block p-3 rounded-full text-hydro-primary mb-4">
                             <svg data-lucide="target" class="w-7 h-7"></svg>
                         </div>
@@ -247,8 +254,8 @@
                     </div>
                 </div>
 
-                <h2 class="text-4xl font-extrabold text-white mb-6 mt-12 border-b pb-2 fade-in-up">Technological Defense Systems (Engineering Immunity)</h2>
-                <div class="protocol-card bg-hydro-slate p-8 rounded-2xl shadow-xl border-l-4 border-hydro-secondary fade-in-up delay-200">
+                <h2 class="text-4xl font-extrabold text-white mb-6 mt-12 border-b pb-2 fade-in-up delay-1200">Technological Defense Systems (Engineering Immunity)</h2>
+                <div class="protocol-card bg-hydro-slate p-8 rounded-2xl shadow-xl border-l-4 border-hydro-secondary fade-in-up delay-1400">
                     <ul class="list-disc ml-6 space-y-6 text-lg text-slate-300">
                         <li>
                             <strong class="text-hydro-primary text-xl flex items-center gap-2 mb-1"><svg data-lucide="hexagon" class="w-6 h-6"></svg> Bio-Inspired Design:</strong> 
@@ -288,7 +295,6 @@
              <a href="/about-us-vision.html" class="text-slate-400 hover:text-hydro-primary">About</a>
              <a href="/index.html#services" class="text-slate-400 hover:text-hydro-primary">Services</a>
              <a href="/expert-insights.html" class="text-slate-400 hover:text-hydro-primary">Insights</a>
-             <a href="/index.html#technology" class="text-slate-400 hover:text-hydro-primary">Technology</a>
              <a href="/protocol.html" class="text-slate-400 hover:text-hydro-primary">Protocol</a>
              <a href="/index.html#contact" class="text-slate-400 hover:text-hydro-primary">Contact</a>
            </nav>
@@ -319,15 +325,6 @@
             document.querySelectorAll('.fade-in-up, .zoom-in').forEach(element => {
                 observer.observe(element);
             });
-            
-            // Parallax efekt za hero sekciju
-            const heroSection = document.getElementById('hero-protocol');
-            if (heroSection) {
-                window.addEventListener('scroll', () => {
-                    const scrollPosition = window.pageYOffset;
-                    heroSection.style.backgroundPositionY = -scrollPosition * 0.3 + 'px';
-                });
-            }
         });
         
     </script>
