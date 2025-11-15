@@ -16,31 +16,31 @@
 
 /* GLOBALNI STILOVI (Pozadinska slika ARHIVE - ZIMA) */
 html, body {
-    overflow-x: hidden; /* Sprečava horizontalno lomljenje */
-    background-image: url('zima_arm.jpg') !important; 
-    background-color: #0F172A !important; 
+    overflow-x: hidden; /* Sprečava horizontalno lomljenje */
+    /* Napomena: Pozadina body-a se sada forsira INLINE stilom u expert-insights.html */
+    background-color: #0F172A !important; 
     background-attachment: fixed !important;
     background-size: cover !important;
     background-position: center bottom !important;
-    background-repeat: no-repeat !important; 
-    
+    background-repeat: no-repeat !important; 
+    
     color: var(--color-text-base) !important; 
     font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
     line-height: 1.6;
-    position: relative; 
-    min-height: 100vh;
+    position: relative; 
+    min-height: 100vh;
 }
 
 /* PSEUDOELEMENT ZA ZATAMNJENJE (OVERLAY) */
 body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Tamni sloj preko slike */
-    z-index: -1; 
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Tamni sloj preko slike */
+    z-index: -1; 
 }
 
 /* POZADINA GLAVE (Dark Overlay) */
@@ -62,7 +62,7 @@ body::before {
     transition: all 0.3s ease;
     background-color: rgba(30, 41, 59, 0.95); 
     box-shadow: 0 4px 6px -1px rgba(34, 211, 238, 0.1);
-    height: 450px; /* FIKSNA VISINA: Rješava preklapanje */
+    height: 450px; 
     position: relative;
 }
 
@@ -92,8 +92,8 @@ body::before {
     max-height: 90vh; 
     overflow-y: auto; 
     
-    /* Pozadina modala (Proljece) */
-    background-image: url('proljece_arm.jpg'); 
+    /* KRITIČNO: POZADINA MODALA - Postavlja article_1.png kao pozadinu */
+    background-image: url('slike/article_1.png'); 
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat !important; 
@@ -118,7 +118,7 @@ body::before {
     line-height: 1.6;
 }
 
-/* PSEUDOELEMENT ZA OVERLAY UNUTAR ČLANKA */
+/* PSEUDOELEMENT ZA OVERLAY UNUTAR ČLANKA - KLJUČNO ZA ČITLJIVOST */
 .article-container::before {
     content: '';
     position: absolute;
@@ -126,17 +126,18 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(255, 255, 255, 0.85); /* Bijeli overlay za kontrast */
+    /* Povećana neprozirnost (0.95) za maksimalan kontrast teksta */
+    background-color: rgba(255, 255, 255, 0.95); 
     z-index: -1; 
 }
 
-/* --- NOVO: STILOVI ZA SLIKE I VIDEOZAPISE --- */
 
+/* STILOVI ZA SLIKE I VIDEOZAPISE UNUTAR ČLANKA */
 .article-container img {
     max-width: 100%;
     height: auto;
     display: block; 
-    margin: 30px auto; /* Centriranje i razmak */
+    margin: 30px auto; 
     border-radius: 8px; 
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
     border: 1px solid #e2e8f0;
@@ -163,10 +164,9 @@ body::before {
     height: 100%;
     border: none;
 }
-/* --- KRAJ NOVIH STILOVA --- */
 
 
-/* KRITIČNO: STILOVI ZA TEKST UNUTAR ČLANKA (Kontrast i čitljivost) */
+/* KRITIČNO: STILOVI ZA TEKST UNUTAR ČLANKA (Kontrast) */
 .article-container p, 
 .article-container ul li, 
 .article-container td,
