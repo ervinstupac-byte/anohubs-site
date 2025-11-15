@@ -32,8 +32,7 @@
         // KLIJENTSKA LOGIKA ZA GALERIJU - KRITIČNO: OVDJE UBACITE LISTU FAJLOVA!
         // ====================================================================
         
-        // PAŽNJA: OVDJE MORATE UBACITI LISTU IMENA SVIH VAŠIH 300 SLIKA (sa ekstenzijom)
-        // One moraju biti u folderu 'slike/gallery/'
+        // PAŽNJA: OVDJE MORATE IMATI TAČNU LISTU IMENA SVIH VAŠIH 300 SLIKA
         const imageFilenames = [
             '20190618_213435.jpg',
             'IMG20170304090522.jpg',
@@ -41,19 +40,22 @@
             '20221201_025542.jpg',
             '20210511_071530.jpg',
             '2606d612-866d-49a6-b259-a2e520d776c3.jpg',
-            // ... Dodajte ostalih 294+ imena ovdje
+            // Koristite ostale slike koje ste dali
+            '20210805_174424.jpg', 
+            '20210805_174627.jpg', 
+            '20190613_191351.jpg', 
+            '20190620_233856.jpg', 
+            // Dodajte ostalih 290+ imena ovdje
         ];
 
         // Priprema galerije (Dodaje putanju i automatski generiše opis)
         const galleryImages = imageFilenames.map(filename => ({
             src: 'slike/gallery/' + filename, 
-            // Generiše opis iz imena fajla za profesionalan izgled
             caption: filename.replace(/_/g, ' ').replace(/\.[^/.]+$/, '').toUpperCase() 
         }));
         
         let currentIndex = 0;
 
-        // F-ja koja otvara modal i postavlja trenutnu sliku
         function openModal(index) {
             currentIndex = index;
             const modal = document.getElementById('lightbox-modal');
@@ -70,24 +72,26 @@
 
         // F-ja za navigaciju i ažuriranje slike
         function updateImage(useTransition = true) {
-            const container = document.getElementById('lightbox-container');
+            const container = document.getElementById('lightbox-image-wrapper'); // Ciljamo novi wrapper
             const total = galleryImages.length;
             const img = galleryImages[currentIndex];
             
             const animationClass = useTransition ? 'animate-fade-in' : '';
             
             container.innerHTML = `
-                <img src="${img.src}" alt="${img.caption}" class="max-h-[85vh] max-w-full object-contain rounded-lg shadow-2xl mx-auto ${animationClass}" style="animation-duration: 0.3s;">
-                <div class="text-white text-center mt-4 max-w-3xl mx-auto bg-black/50 p-3 rounded-lg">
-                    <p class="text-sm md:text-base">${img.caption}</p>
-                    <p class="text-xs text-slate-400 mt-1">Image ${currentIndex + 1} of ${total}</p>
-                </div>
+                <img src="${img.src}" alt="${img.caption}" class="w-full h-full object-contain ${animationClass}" style="animation-duration: 0.3s;">
             `;
-            document.getElementById('prev-btn').classList.toggle('hidden', currentIndex === 0);
-            document.getElementById('next-btn').classList.toggle('hidden', currentIndex === total - 1);
+            
+            // Ažuriranje opisa
+            document.getElementById('lightbox-caption').textContent = img.caption;
+            document.getElementById('lightbox-counter').textContent = `Image ${currentIndex + 1} of ${total}`;
+            
+            // Prikaz/skrivanje navigacionih dugmadi
+            document.getElementById('prev-btn').disabled = (currentIndex === 0);
+            document.getElementById('next-btn').disabled = (currentIndex === total - 1);
         }
 
-        // F-ja za navigaciju
+        // F-ja za navigaciju (izložena globalno)
         window.navigateGallery = (direction) => {
             const total = galleryImages.length;
             const newIndex = currentIndex + direction;
@@ -133,7 +137,7 @@
             }
         }
         
-        // Inicijalizacija grid-a i animacija (za scroll)
+        // Inicijalizacija grid-a
         document.addEventListener("DOMContentLoaded", function() {
             if (typeof lucide !== 'undefined') {
                 lucide.createIcons();
@@ -159,16 +163,9 @@
         .header-bg { background-color: rgba(17, 24, 39, 0.95); }
         .bg-hydro-slate { background-color: #1E293B; }
 
-        /* KOREKCIJA: LOGO - FIKSNA VISINA I PADDING (Za rješavanje preklapanja) */
-        .anohubs-logo-img { 
-            max-height: 40px; 
-            width: auto;
-            color: #22d3ee; 
-            display: block; 
-        }
-
+        .anohubs-logo-img { max-height: 35px; width: auto; color: #22d3ee; display: block; }
         .thumbnail-img {
-            transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.5s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
             border: 2px solid transparent;
@@ -188,6 +185,45 @@
             to { opacity: 1; transform: scale(1); }
         }
         .animate-fade-in { animation: fadeIn 0.3s ease-out; }
+
+        /* KRITIČNO: Fiksni prozor za prikaz velike slike */
+        #lightbox-window {
+            position: relative;
+            width: 90vw; /* 90% širine ekrana */
+            height: 85vh; /* 85% visine ekrana */
+            max-width: 1200px;
+            background-color: #111827;
+            border-radius: 12px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Kontejner za samu sliku (Održava omjer slike) */
+        #lightbox-image-wrapper {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            /* KRITIČNO: Ograničavamo sliku da stane unutar wrappera */
+        }
+        
+        /* Navigacioni tasteri iznad opisa */
+        .lightbox-controls {
+            position: absolute; 
+            top: 50%;
+            width: 100%;
+            transform: translateY(-50%);
+            z-index: 10;
+            padding: 0 10px;
+            pointer-events: none; /* Da klik na sliku radi, a ne na dugme */
+        }
+
+        .lightbox-controls button {
+            pointer-events: auto; /* Vraćamo klik na dugmad */
+        }
     </style>
 </head>
 <body class="text-white bg-hydro-charcoal">
@@ -202,7 +238,7 @@
                 <a href="/expert-insights.html" class="text-slate-300 hover:text-cyan-400 transition">Insights</a>
                 <a href="/gallery.html" class="text-cyan-400 transition" aria-current="page">Gallery</a>
                 <a href="/protocol.html" class="text-slate-300 hover:text-cyan-400 transition">Protocol</a>
-                <a href="/index.html#contact" class="inline-flex bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-4 py-2 rounded-full transition">Request Audit</a>
+                <a href="/index.html#contact" class="bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-4 py-2 rounded-full transition">Request Audit</a>
             </nav>
         </div>
     </header>
@@ -232,47 +268,40 @@
     </main>
     
     <div id="lightbox-modal" class="lightbox-modal hidden fixed inset-0 z-[100] flex items-center justify-center p-4" onclick="closeModal()">
-        <div class="relative max-w-full max-h-full" onclick="event.stopPropagation()">
+        
+        <div id="lightbox-window" onclick="event.stopPropagation()">
             
-            <div id="lightbox-container" class="relative">
+            <div id="lightbox-image-wrapper">
                 </div>
             
-            <button id="prev-btn" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-3 rounded-r-lg hover:bg-black/80 transition disabled:opacity-30 disabled:hover:bg-black/50" aria-label="Previous image" onclick="navigateGallery(-1)">
-                <svg data-lucide="chevron-left" class="w-6 h-6"></svg>
-            </button>
-            <button id="next-btn" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-3 rounded-l-lg hover:bg-black/80 transition disabled:opacity-30 disabled:hover:bg-black/50" aria-label="Next image" onclick="navigateGallery(1)">
-                <svg data-lucide="chevron-right" class="w-6 h-6"></svg>
-            </button>
-            
-            <div class="flex justify-center space-x-4 mt-6">
-                 <button onclick="toggleSlideshow(this)" id="slideshow-btn" class="bg-hydro-secondary hover:bg-green-500 text-hydro-charcoal px-4 py-2 rounded-full font-bold transition">
-                    ▶️ Start Slideshow
-                </button>
-                <button onclick="closeModal()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-full font-bold transition">
-                    Close Gallery
-                </button>
+            <div class="p-4 bg-hydro-slate flex justify-between items-center relative">
+                
+                <div class="flex space-x-2">
+                    <button id="prev-btn" class="bg-black/50 text-white p-2 rounded-full hover:bg-black/80 transition disabled:opacity-30 disabled:hover:bg-black/50" aria-label="Previous image" onclick="navigateGallery(-1)">
+                        <svg data-lucide="chevron-left" class="w-5 h-5"></svg>
+                    </button>
+                    <button id="next-btn" class="bg-black/50 text-white p-2 rounded-full hover:bg-black/80 transition disabled:opacity-30 disabled:hover:bg-black/50" aria-label="Next image" onclick="navigateGallery(1)">
+                        <svg data-lucide="chevron-right" class="w-5 h-5"></svg>
+                    </button>
+                </div>
+
+                <div class="text-center">
+                    <p id="lightbox-caption" class="text-sm font-semibold text-slate-300"></p>
+                    <p id="lightbox-counter" class="text-xs text-slate-500"></p>
+                </div>
+                
+                <div class="flex space-x-3">
+                     <button onclick="toggleSlideshow(this)" id="slideshow-btn" class="bg-hydro-secondary hover:bg-green-500 text-hydro-charcoal px-4 py-2 rounded-full font-bold transition text-sm">
+                        ▶️ Start Slideshow
+                    </button>
+                    <button onclick="closeModal()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-full font-bold transition text-sm">
+                        Close Gallery
+                    </button>
+                </div>
+
             </div>
 
         </div>
     </div>
-
-    <footer class="bg-hydro-slate text-gray-400 py-8 text-center border-t border-hydro-light-slate" role="contentinfo">
-        <div class="container mx-auto px-6">
-             
-           <div class="text-xl font-bold text-cyan-400 mb-4">AnoHUB</div>
-           <p class="text-slate-400 mb-6">Establishing the global standard for hydro integrity.</p>
-           
-           <nav class="flex justify-center space-x-6 text-sm mb-6">
-             <a href="/about-us-vision.html" class="text-slate-400 hover:text-hydro-primary">About</a>
-             <a href="/index.html#services" class="text-slate-400 hover:text-hydro-primary">Services</a>
-             <a href="/expert-insights.html" class="text-slate-400 hover:text-hydro-primary">Insights</a>
-             <a href="/gallery.html" class="text-hydro-primary font-bold">Gallery</a>
-             <a href="/protocol.html" class="text-slate-400 hover:text-hydro-primary">Protocol</a>
-             <a href="/index.html#contact" class="text-slate-400 hover:text-hydro-primary">Contact</a>
-           </nav>
-           
-           <p class="text-sm">&copy; 2025 Anohubs Inc. All rights reserved.</p>
-        </div>
-    </footer>
 </body>
 </html>
