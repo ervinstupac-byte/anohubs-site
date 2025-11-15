@@ -68,8 +68,7 @@
             background-color: #111827; 
             color: #E5E7EB;
             
-            /* POZADINA: about_us_bckgrnd.jpg */
-            background-image: url('about_us_bckgrnd.jpg'); 
+            /* POZADINA: about_us_bckgrnd.jpg (PUTANJA SA INLINE STILOM U HTML-u) */
             background-size: cover;
             background-attachment: fixed;
             background-position: center; 
@@ -81,34 +80,15 @@
         .anohubs-logo-compact { width: 90px; height: auto; color: #22d3ee; }
         @media (min-width: 768px) { .anohubs-logo-compact { width: 120px; } }
 
-        /* OVERLAY NAD SADRŽAJEM (Ključan za čitljivost) */
+        /* OVERLAY NAD SADRŽAJEM */
         .vision-content-card {
-            background-color: rgba(30, 41, 59, 0.85); /* 85% opacity */
+            background-color: rgba(30, 41, 59, 0.85); 
             padding: 3rem;
             border-radius: 0.75rem; 
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6); 
             border-top: 5px solid #f59e0b;
         }
         
-        /* Navigacioni linkovi sa animacijom */
-        .nav-link { position: relative; }
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            transform: scaleX(0);
-            height: 3px;
-            bottom: -5px;
-            left: 0;
-            background-color: #22d3ee;
-            transform-origin: bottom right;
-            transition: transform 0.3s ease-out;
-        }
-        .nav-link:hover::after, .nav-link[aria-current="page"]::after {
-            transform: scaleX(1);
-            transform-origin: bottom left;
-        }
-
         /* STILOVI ZA ANIMACIJE */
         .fade-in-up, .zoom-in { opacity: 0; transition: opacity 0.8s ease-out, transform 0.8s ease-out; will-change: opacity, transform; }
         .fade-in-up { transform: translateY(30px); }
@@ -120,6 +100,7 @@
         .delay-800 { --delay: 800ms; }
         .delay-1000 { --delay: 1000ms; }
         .delay-1200 { --delay: 1200ms; }
+        .mobile-sticky-cta { position: fixed; bottom: 0; left: 0; right: 0; z-index: 40; padding: 0.5rem 0; }
         
         /* LISTE SA IKONAMA I DVIJE KOLONE */
         .expertise-list-grid {
@@ -148,7 +129,16 @@
         
     </style>
 </head>
-<body class="text-white bg-hydro-charcoal">
+<body class="text-white bg-hydro-charcoal" 
+    style="
+        /* KRITIČNO: INLINE STIL ZA POZADINU - Zaobilazi CSS keširanje i format greške */
+        background-image: url('about_us_bckgrnd.jpg') !important; 
+        background-color: #111827 !important; 
+        background-size: cover !important;
+        background-attachment: fixed !important;
+        background-position: center !important;
+        min-height: 100vh;
+    ">
 
     <header class="bg-hydro-charcoal header-bg shadow-2xl sticky top-0 z-50 border-b border-hydro-primary/50" role="banner">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-1 flex justify-between items-center">
@@ -162,6 +152,7 @@
                 <a href="/index.html#services" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Services</a>
                 <a href="/expert-insights.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Insights</a>
                 <a href="https://ervinstupac-byte.github.io/anohubsapp/" target="_blank" rel="noopener noreferrer" class="nav-link relative text-hydro-secondary hover:text-green-500 transition tracking-widest font-extrabold text-lg p-2 uppercase">ANO HUB</a>
+                <a href="/protocol.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Protocol</a> 
                 <a href="/index.html#contact" class="bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-6 py-2.5 rounded-full transition transform hover:scale-105 shadow-xl font-bold tracking-wider uppercase text-base">Request Audit</a>
             </nav>
             
@@ -176,9 +167,7 @@
                 <a href="/index.html#services" class="block hover:text-hydro-primary transition tracking-wider py-2">Services</a>
                 <a href="/expert-insights.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Insights</a>
                 <a href="https://ervinstupac-byte.github.io/anohubsapp/" target="_blank" rel="noopener noreferrer" class="block hover:text-hydro-secondary transition tracking-wider py-2">ANO HUB</a>
-                <a href="/index.html#technology" class="block hover:text-hydro-primary transition tracking-wider py-2">Technology</a>
-                <a href="/index.html#contact" class="block hover:text-hydro-primary transition tracking-wider py-2">Contact</a>
-                <a href="/index.html#contact" class="block bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-5 py-2 rounded-full transition shadow-md font-bold tracking-wider mt-2 text-center">Request Audit</a>
+                <a href="/protocol.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Protocol</a> <a href="/index.html#contact" class="block bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-5 py-2 rounded-full transition shadow-md font-bold tracking-wider mt-2 text-center">Request Audit</a>
             </div>
         </div>
     </header>
@@ -270,10 +259,10 @@
              <a href="/index.html#services" class="text-slate-400 hover:text-hydro-primary">Services</a>
              <a href="/expert-insights.html" class="text-slate-400 hover:text-hydro-primary">Insights</a>
              <a href="/index.html#technology" class="text-slate-400 hover:text-hydro-primary">Technology</a>
-             <a href="/index.html#contact" class="text-slate-400 hover:text-hydro-primary">Contact</a>
+             <a href="/protocol.html" class="text-slate-400 hover:text-hydro-primary">Protocol</a> <a href="/index.html#contact" class="text-slate-400 hover:text-hydro-primary">Contact</a>
            </nav>
            
-           <p class="text-sm">&copy; <span id="year"></span> Anohubs Inc. All rights reserved.</p>
+           <p class="text-sm">&copy; 2025 <span id="year"></span> Anohubs Inc. All rights reserved.</p>
         </div>
     </footer>
 
@@ -285,16 +274,6 @@
             }
             const yearEl = document.getElementById('year');
             if (yearEl) yearEl.textContent = new Date().getFullYear();
-
-            // Logika za mobilni meni (opcionalno ako nije implementirana na indexu)
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-
-            if (mobileMenuButton && mobileMenu) {
-                mobileMenuButton.addEventListener('click', function() {
-                    mobileMenu.classList.toggle('hidden');
-                });
-            }
 
             const observerOptions = { root: null, rootMargin: "0px", threshold: 0.1 };
             const observer = new IntersectionObserver((entries, observer) => {
