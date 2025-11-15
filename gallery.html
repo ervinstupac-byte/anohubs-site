@@ -94,7 +94,7 @@
             'IMG_20200526_184043.jpg', 'IMG_20200606_163721.jpg', 'IMG_20200620_172530.jpg', 'IMG_20200620_181148.jpg', 
             'IMG_20200716_133530.jpg', 'IMG_20200720_175506.jpg', 'IMG_20200720_175510.jpg', 'IMG_20200814_101140.jpg', 
             'IMG_20200819_151743.jpg', 'IMG_20200830_110917.jpg', 'IMG_20200830_122414.jpg', 'IMG_20200830_123017.jpg', 
-            'IMG_20200830_153528.jpg', 'IMG_20201106_183442.jpg', 'IMG_20201110_090446.jpg', 'IMG_202001110_090451.jpg', 
+            'IMG_20200830_153528.jpg', 'IMG_20201106_183442.jpg', 'IMG_20201110_090446.jpg', 'IMG_20201110_090451.jpg', 
             'IMG_20201124_145540.jpg', 'IMG_20201207_103611.jpg', 'IMG_20210524_110135.jpg', 'IMG_20210617_154844.jpg', 
             'IMG_20210721_112608.jpg', 'IMG_20210722_102425.jpg', 'IMG_20211119_155917.jpg', 'IMG_20211122_133648.jpg', 
             'IMG_20220122_095139.jpg', 'IMG_20220122_142027.jpg', 'IMG_20220123-WA0004.jpg', 'IMG_20220527-WA0004 (1).jpg', 
@@ -123,7 +123,6 @@
             const modal = document.getElementById('lightbox-modal');
             const slideshowBtn = document.getElementById('slideshow-btn');
             
-            // Zaustavi slideshow ako je već aktivan
             if (slideshowBtn && slideshowBtn.textContent.includes('Stop')) {
                 toggleSlideshow(slideshowBtn);
             }
@@ -286,14 +285,17 @@
         
         /* Navigacione kontrole (Polu-krugovi) - fiksirane uz rub Modala */
         .lightbox-controls-wrapper {
+            /* Fiksiramo unutar Modala */
             position: absolute; 
-            top: 50%;
-            width: 100%;
-            transform: translateY(-50%);
-            z-index: 10; 
+            top: 0; /* Pokriva cijelu visinu Modala */
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none; /* Da klik na sliku radi */
         }
 
         .lightbox-controls-wrapper button {
+            pointer-events: auto; /* Vraćamo klik na dugmad */
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
@@ -317,6 +319,7 @@
 </head>
 <body class="text-white bg-hydro-charcoal">
 
+    <!-- HEADER -->
     <header class="header-bg shadow-2xl sticky top-0 z-50 border-b border-hydro-primary/50" role="banner">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex justify-between items-center">
             <a href="/index.html#hero" class="focus:outline-none transition" aria-label="Anohubs Logo - Back to top">
@@ -332,6 +335,7 @@
         </div>
     </header>
     
+    <!-- GLAVNI SADRŽAJ - GALERIJA -->
     <main role="main">
         <section class="py-20 bg-hydro-slate text-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -343,8 +347,10 @@
                     A panoramic view of the global water capital, captured in over ${galleryImages.length} images. This visual manifesto showcases the ecosystems we protect and the environments where the AnoHUB Symbiosis Standard is mandatory.
                 </p>
 
+                <!-- GRID SA SLIKAMA (7 kolona za optimalnu gustinu) -->
                 <div class="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 gap-4 gallery-grid">
-                    </div>
+                    <!-- Slike se dinamički ubacuju ovdje putem JavaScripta -->
+                </div>
                 
                 <script>
                     if (galleryImages.length === 0) {
@@ -356,20 +362,27 @@
         </section>
     </main>
     
+    <!-- LIGHTBOX MODAL (Preko cijelog ekrana) -->
     <div id="lightbox-modal" class="lightbox-modal hidden fixed inset-0 z-[100] flex items-center justify-center p-4" onclick="closeModal()">
         
+        <!-- GLAVNI PROZOR ZA SLIKU - Fiksne dimenzije -->
         <div id="lightbox-window" onclick="event.stopPropagation()">
             
+            <!-- 1. Kontejner za veliku sliku (Flex za centriranje) -->
             <div id="lightbox-image-wrapper">
-                </div>
+                <!-- Slika se ovdje dinamički ubacuje -->
+            </div>
             
+            <!-- 2. Footer i Kontrole -->
             <div class="p-4 bg-hydro-slate flex justify-between items-center relative">
                 
+                <!-- B. Opis i brojač -->
                 <div class="text-center">
                     <p id="lightbox-caption" class="text-sm font-semibold text-slate-300"></p>
                     <p id="lightbox-counter" class="text-xs text-slate-500"></p>
                 </div>
                 
+                <!-- C. Kontrolni centar (Slideshow i Zatvori) -->
                 <div class="flex space-x-3">
                      <button onclick="toggleSlideshow(this)" id="slideshow-btn" class="bg-hydro-secondary hover:bg-green-500 text-hydro-charcoal px-4 py-2 rounded-full font-bold transition text-sm">
                         ▶️ Start Slideshow
@@ -383,11 +396,13 @@
 
         </div>
 
+        <!-- KRITIČNO: NAVIGACIONE STRELICE (Fiksirane na rub Modala) -->
         <div class="lightbox-controls-wrapper">
-            <button id="prev-btn" aria-label="Previous image" onclick="navigateGallery(-1)">
+            <!-- Dodali smo event.stopPropagation() da zaustavimo zatvaranje Modala -->
+            <button id="prev-btn" aria-label="Previous image" onclick="navigateGallery(-1); event.stopPropagation();">
                 <svg data-lucide="chevron-left" class="w-6 h-6"></svg>
             </button>
-            <button id="next-btn" aria-label="Next image" onclick="navigateGallery(1)">
+            <button id="next-btn" aria-label="Next image" onclick="navigateGallery(1); event.stopPropagation();">
                 <svg data-lucide="chevron-right" class="w-6 h-6"></svg>
             </button>
         </div>
