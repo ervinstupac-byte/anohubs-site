@@ -84,7 +84,7 @@
             'IMG_20190626_140300.jpg', 'IMG_20190707_104324.jpg', 'IMG_20190727_161220.jpg', 'IMG_20190731_162025.jpg', 
             'IMG_20190731_164301.jpg', 'IMG_20190808_190454.jpg', 'IMG_20190820_181148.jpg', 'IMG_20190902_144732.jpg', 
             'IMG_20190908_174848.jpg', 'IMG_20190910_174831.jpg', 'IMG_20190918_163940.jpg', 'IMG_20190928_184857.jpg', 
-            'IMG_20190930_073721.jpg', 'IMG_20191005_140741.jpg', 'IMG_20191005_140750.jpg', 'IMG_20191008_180606.jpg', 
+            'IMG_20190930_073721.jpg', 'IMG_20191005_140741.jpg', 'IMG_201901005_140750.jpg', 'IMG_20191008_180606.jpg', 
             'IMG_20191012_124134.jpg', 'IMG_20191012_195541.jpg', 'IMG_20191018_094059.jpg', 'IMG_20191106_155401.jpg', 
             'IMG_20191119_161129.jpg', 'IMG_20191127_094218.jpg', 'IMG_20200122_160528_1_BURST002.jpg', 'IMG_20200122_160534.jpg', 
             'IMG_20200122_160738.jpg', 'IMG_20200122_160743.jpg', 'IMG_20200122_162955.jpg', 'IMG_20200122_165855.jpg', 
@@ -123,6 +123,7 @@
             const modal = document.getElementById('lightbox-modal');
             const slideshowBtn = document.getElementById('slideshow-btn');
             
+            // Zaustavi slideshow ako je već aktivan
             if (slideshowBtn && slideshowBtn.textContent.includes('Stop')) {
                 toggleSlideshow(slideshowBtn);
             }
@@ -283,11 +284,10 @@
             padding: 20px;
         }
         
-        /* Navigacione kontrole (Polu-krugovi) - fiksirane uz rub Modala */
+        /* Navigacione kontrole - Fiksirane uz rub Modala (CRITICAL FIX) */
         .lightbox-controls-wrapper {
-            /* Fiksiramo unutar Modala */
             position: absolute; 
-            top: 0; /* Pokriva cijelu visinu Modala */
+            top: 0;
             left: 0;
             right: 0;
             bottom: 0;
@@ -319,7 +319,6 @@
 </head>
 <body class="text-white bg-hydro-charcoal">
 
-    <!-- HEADER -->
     <header class="header-bg shadow-2xl sticky top-0 z-50 border-b border-hydro-primary/50" role="banner">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex justify-between items-center">
             <a href="/index.html#hero" class="focus:outline-none transition" aria-label="Anohubs Logo - Back to top">
@@ -335,7 +334,6 @@
         </div>
     </header>
     
-    <!-- GLAVNI SADRŽAJ - GALERIJA -->
     <main role="main">
         <section class="py-20 bg-hydro-slate text-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -347,10 +345,16 @@
                     A panoramic view of the global water capital, captured in over ${galleryImages.length} images. This visual manifesto showcases the ecosystems we protect and the environments where the AnoHUB Symbiosis Standard is mandatory.
                 </p>
 
-                <!-- GRID SA SLIKAMA (7 kolona za optimalnu gustinu) -->
-                <div class="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 gap-4 gallery-grid">
-                    <!-- Slike se dinamički ubacuju ovdje putem JavaScripta -->
+                <div class="mb-12 fade-in-up delay-400">
+                    <button onclick="openModal(0); toggleSlideshow(document.getElementById('slideshow-btn'))" 
+                            class="bg-hydro-secondary hover:bg-green-500 text-hydro-charcoal px-8 py-3 rounded-full font-bold transition text-lg shadow-xl flex items-center justify-center mx-auto space-x-2">
+                        <svg data-lucide="play" class="w-6 h-6"></svg>
+                        <span>START FULL SLIDESHOW (${galleryImages.length} IMAGES)</span>
+                    </button>
                 </div>
+
+                <div class="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 gap-4 gallery-grid">
+                    </div>
                 
                 <script>
                     if (galleryImages.length === 0) {
@@ -362,27 +366,20 @@
         </section>
     </main>
     
-    <!-- LIGHTBOX MODAL (Preko cijelog ekrana) -->
     <div id="lightbox-modal" class="lightbox-modal hidden fixed inset-0 z-[100] flex items-center justify-center p-4" onclick="closeModal()">
         
-        <!-- GLAVNI PROZOR ZA SLIKU - Fiksne dimenzije -->
         <div id="lightbox-window" onclick="event.stopPropagation()">
             
-            <!-- 1. Kontejner za veliku sliku (Flex za centriranje) -->
             <div id="lightbox-image-wrapper">
-                <!-- Slika se ovdje dinamički ubacuje -->
-            </div>
+                </div>
             
-            <!-- 2. Footer i Kontrole -->
             <div class="p-4 bg-hydro-slate flex justify-between items-center relative">
                 
-                <!-- B. Opis i brojač -->
                 <div class="text-center">
                     <p id="lightbox-caption" class="text-sm font-semibold text-slate-300"></p>
                     <p id="lightbox-counter" class="text-xs text-slate-500"></p>
                 </div>
                 
-                <!-- C. Kontrolni centar (Slideshow i Zatvori) -->
                 <div class="flex space-x-3">
                      <button onclick="toggleSlideshow(this)" id="slideshow-btn" class="bg-hydro-secondary hover:bg-green-500 text-hydro-charcoal px-4 py-2 rounded-full font-bold transition text-sm">
                         ▶️ Start Slideshow
@@ -396,13 +393,11 @@
 
         </div>
 
-        <!-- KRITIČNO: NAVIGACIONE STRELICE (Fiksirane na rub Modala) -->
         <div class="lightbox-controls-wrapper">
-            <!-- Dodali smo event.stopPropagation() da zaustavimo zatvaranje Modala -->
-            <button id="prev-btn" aria-label="Previous image" onclick="navigateGallery(-1); event.stopPropagation();">
+            <button id="prev-btn" aria-label="Previous image" onclick="navigateGallery(-1)">
                 <svg data-lucide="chevron-left" class="w-6 h-6"></svg>
             </button>
-            <button id="next-btn" aria-label="Next image" onclick="navigateGallery(1); event.stopPropagation();">
+            <button id="next-btn" aria-label="Next image" onclick="navigateGallery(1)">
                 <svg data-lucide="chevron-right" class="w-6 h-6"></svg>
             </button>
         </div>
