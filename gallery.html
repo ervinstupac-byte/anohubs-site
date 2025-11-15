@@ -29,7 +29,7 @@
         };
 
         // ====================================================================
-        // KLIJENTSKA LOGIKA ZA GALERIJU - UMETNUTA LISTA FAJLOVA
+        // KLIJENTSKA LOGIKA ZA GALERIJU - KRITIČNO: OVDJE UBACITE LISTU FAJLOVA!
         // ====================================================================
         
         const imageFilenames = [
@@ -123,7 +123,6 @@
             const modal = document.getElementById('lightbox-modal');
             const slideshowBtn = document.getElementById('slideshow-btn');
             
-            // Zaustavi slideshow ako je već aktivan
             if (slideshowBtn && slideshowBtn.textContent.includes('Stop')) {
                 toggleSlideshow(slideshowBtn);
             }
@@ -143,7 +142,7 @@
             
             // Slika je unutar fiksnog wrappera
             container.innerHTML = `
-                <img src="${img.src}" alt="${img.caption}" class="w-full h-full object-contain ${animationClass}" style="animation-duration: 0.3s;">
+                <img src="${img.src}" alt="${img.caption}" class="max-w-full max-h-full object-contain ${animationClass}" style="animation-duration: 0.3s;">
             `;
             
             // Ažuriranje opisa
@@ -264,9 +263,9 @@
         /* KRITIČNO: Fiksni prozor za prikaz velike slike */
         #lightbox-window {
             position: relative;
-            width: 90vw; 
-            height: 85vh; 
-            max-width: 1200px; 
+            width: 95vw; 
+            height: 90vh; 
+            max-width: 1300px; 
             background-color: #111827;
             border-radius: 12px;
             box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
@@ -275,7 +274,7 @@
             overflow: hidden;
         }
 
-        /* Kontejner za samu sliku (Flex da centriramo i zauzme prostor) */
+        /* Kontejner za samu sliku (Flex za centriranje) */
         #lightbox-image-wrapper {
             flex-grow: 1;
             display: flex;
@@ -284,14 +283,13 @@
             padding: 20px;
         }
         
-        /* Navigacione kontrole (Polu-krugovi) */
+        /* Navigacione kontrole - Fiksirane uz rub Modala (CRITICAL FIX) */
         .lightbox-controls-wrapper {
             position: absolute; 
             top: 50%;
             width: 100%;
             transform: translateY(-50%);
             z-index: 10; 
-            padding: 0 10px;
         }
 
         .lightbox-controls-wrapper button {
@@ -303,13 +301,16 @@
             color: white;
             padding: 12px;
             transition: background-color 0.2s, transform 0.2s;
+            /* KRITIČNO: Povećavamo dugmad i fiksiramo im poziciju unutar Modala */
+            height: 60px; 
+            width: 60px;
         }
         #prev-btn {
-            left: 10px; 
+            left: 0; /* Pričvrsti za lijevu ivicu prozora */
             border-radius: 0 50% 50% 0;
         }
         #next-btn {
-            right: 10px;
+            right: 0; /* Pričvrsti za desnu ivicu prozora */
             border-radius: 50% 0 0 50%;
         }
     </style>
@@ -364,15 +365,6 @@
             
             <div class="p-4 bg-hydro-slate flex justify-between items-center relative">
                 
-                <div class="flex space-x-2">
-                    <button id="prev-btn" class="bg-black/50 text-white p-2 rounded-full hover:bg-black/80 transition disabled:opacity-30 disabled:hover:bg-black/50" aria-label="Previous image" onclick="navigateGallery(-1)">
-                        <svg data-lucide="chevron-left" class="w-5 h-5"></svg>
-                    </button>
-                    <button id="next-btn" class="bg-black/50 text-white p-2 rounded-full hover:bg-black/80 transition disabled:opacity-30 disabled:hover:bg-black/50" aria-label="Next image" onclick="navigateGallery(1)">
-                        <svg data-lucide="chevron-right" class="w-5 h-5"></svg>
-                    </button>
-                </div>
-
                 <div class="text-center">
                     <p id="lightbox-caption" class="text-sm font-semibold text-slate-300"></p>
                     <p id="lightbox-counter" class="text-xs text-slate-500"></p>
@@ -390,6 +382,16 @@
             </div>
 
         </div>
+
+        <div class="lightbox-controls-wrapper">
+            <button id="prev-btn" aria-label="Previous image" onclick="navigateGallery(-1)">
+                <svg data-lucide="chevron-left" class="w-6 h-6"></svg>
+            </button>
+            <button id="next-btn" aria-label="Next image" onclick="navigateGallery(1)">
+                <svg data-lucide="chevron-right" class="w-6 h-6"></svg>
+            </button>
+        </div>
+        
     </div>
 </body>
 </html>
