@@ -13,7 +13,7 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     
     <script>
-        // === Tailwind Konfiguracija (Iz index.html) ===
+        // === Tailwind Konfiguracija ===
         tailwind.config = {
             theme: {
                 extend: {
@@ -49,11 +49,13 @@
             min-height: 100vh;
         }
         
-        /* HEADER & FOOTER */
+        /* HEADER & NAVIGATION */
         .header-bg { background-color: rgba(17, 24, 39, 0.95); }
-        .anohubs-logo-compact { width: 110px; height: auto; color: #22d3ee; }
-        @media (min-width: 768px) { .anohubs-logo-compact { width: 140px; } }
-
+        
+        /* Korigovani Logo Stilovi - MANJI I KOMPAKTNIJI */
+        .anohubs-logo-compact { width: 90px; height: auto; color: #22d3ee; }
+        @media (min-width: 768px) { .anohubs-logo-compact { width: 120px; } }
+        
         /* OVERLAY NAD SADRŽAJEM (Za čitljivost) */
         .content-overlay {
             background-color: rgba(30, 41, 59, 0.75); 
@@ -66,7 +68,7 @@
         }
         .text-glow { text-shadow: 0 0 15px rgba(34, 211, 238, 0.7); }
 
-        /* STILOVI ZA ANIMACIJE (Kopirano iz index.html) */
+        /* STILOVI ZA ANIMACIJE */
         .fade-in-up, .zoom-in { opacity: 0; transition: opacity 0.8s ease-out, transform 0.8s ease-out; will-change: opacity, transform; }
         .fade-in-up { transform: translateY(30px); }
         .zoom-in { transform: scale(0.95); }
@@ -77,6 +79,7 @@
         .delay-800 { --delay: 800ms; }
         .delay-1000 { --delay: 1000ms; }
         .delay-1200 { --delay: 1200ms; }
+        .mobile-sticky-cta { position: fixed; bottom: 0; left: 0; right: 0; z-index: 40; padding: 0.5rem 0; }
         
     </style>
 </head>
@@ -90,11 +93,13 @@
             </a>
             
             <nav class="flex items-center space-x-4 font-extrabold text-sm" role="navigation">
+                
                 <a href="/expert-insights.html" class="text-slate-300 hover:text-cyan-400 transition">Insights</a>
                 
                 <a href="/index.html#contact" class="bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-4 py-2 rounded-full transition">Request Audit</a>
             </nav>
-        </div>
+            
+            </div>
     </header>
     
     <main role="main">
@@ -199,7 +204,7 @@
              <a href="/index.html#contact" class="text-slate-400 hover:text-hydro-primary">Contact</a>
            </nav>
            
-           <p class="text-sm">&copy; 2025 <span id="year"></span> Anohubs Inc. All rights reserved.</p>
+           <p class="text-sm">&copy; <span id="year"></span> Anohubs Inc. All rights reserved.</p>
         </div>
     </footer>
 
