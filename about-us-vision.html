@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-
+    
     <script>
         // === Tailwind Konfiguracija (Iz index.html) ===
         tailwind.config = {
@@ -61,15 +61,15 @@
     </script>
     
     <style>
-        /* CSS STILOVI ZA ABOUT-US.HTML */
+        /* CSS STILOVI ZA ABOUT-US.HTML - AŽURIRANO ZA GLOBALNU VIZIJU */
         html { scroll-behavior: smooth; }
         body { 
             font-family: 'Inter', sans-serif; 
             background-color: #111827; 
             color: #E5E7EB;
             
-            /* POZADINA: BIHAC KANAL ili druga adekvatna slika */
-            background-image: url('bihackanal.jpg'); 
+            /* POZADINA: NOVI VIZUAL (SLIKA IZ AVIONA) */
+            background-image: url('about_us_bckgrnd.jpg'); 
             background-size: cover;
             background-attachment: fixed;
             background-position: center; 
@@ -80,26 +80,59 @@
         .header-bg { background-color: rgba(17, 24, 39, 0.95); }
         .anohubs-logo-compact { width: 90px; height: auto; color: #22d3ee; }
         @media (min-width: 768px) { .anohubs-logo-compact { width: 120px; } }
-
-        /* OVERLAY NAD SADRŽAJEM */
+        
+        /* OVERLAY NAD SADRŽAJEM - SADA JE SVJETLIJI I VIZUELNO JAK */
         .vision-content-card {
-            background-color: rgba(30, 41, 59, 0.85); /* Tamniji overlay za čitljivost teksta */
-            padding: 3rem 2rem;
+            /* MANJE PROZIRNOSTI (85% neprozirno) + SVIJETLO SIVA/PLAVA pozadina */
+            background-color: rgba(30, 41, 59, 0.85); 
+            padding: 3rem;
             border-radius: 0.75rem; 
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6); 
             border-top: 5px solid #f59e0b; /* Akcentna CTA boja */
+            will-change: transform, box-shadow; 
+            transform: translateZ(0); 
         }
         
-        /* Liste sa dvije kolone (kolumna za veće ekrane) */
+        /* ANIMACIJE I PREOSTALI STILOVI */
+        .fade-in-up, .zoom-in { opacity: 0; transition: opacity 0.8s ease-out, transform 0.8s ease-out; will-change: opacity, transform; }
+        .fade-in-up { transform: translateY(30px); }
+        .zoom-in { transform: scale(0.95); }
+        .fade-in-up.is-visible, .zoom-in.is-visible { opacity: 1; transform: translateY(0) scale(1); transition-delay: var(--delay, 0ms); }
+        .delay-200 { --delay: 200ms; }
+        .delay-400 { --delay: 400ms; }
+        .delay-600 { --delay: 600ms; }
+        .delay-800 { --delay: 800ms; }
+        .delay-1000 { --delay: 1000ms; }
+        .delay-1200 { --delay: 1200ms; }
+        
+        /* Navigacioni linkovi sa animacijom - AKCENTNA CRTA */
+        .nav-link { position: relative; }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            transform: scaleX(0);
+            height: 3px;
+            bottom: -5px;
+            left: 0;
+            background-color: #22d3ee;
+            transform-origin: bottom right;
+            transition: transform 0.3s ease-out;
+        }
+        .nav-link:hover::after, .nav-link[aria-current="page"]::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+        /* Stilovi za listu unutar About Us */
         .expertise-list-grid {
             column-count: 2;
             column-gap: 3rem;
-            list-style: none; /* Uklanjamo default stil, koristimo ikone */
+            list-style: none; 
             padding-left: 0;
         }
         .expertise-list-grid li {
             margin-bottom: 1.5rem;
-            break-inside: avoid; /* Sprečava prekidanje stavki liste na različitim kolonama */
+            break-inside: avoid; 
             display: flex;
             align-items: flex-start;
         }
@@ -113,25 +146,11 @@
                 column-count: 1;
             }
         }
-
-        /* STILOVI ZA ANIMACIJE */
-        .fade-in-up, .zoom-in { opacity: 0; transition: opacity 0.8s ease-out, transform 0.8s ease-out; will-change: opacity, transform; }
-        .fade-in-up { transform: translateY(30px); }
-        .zoom-in { transform: scale(0.95); }
-        .fade-in-up.is-visible, .zoom-in.is-visible { opacity: 1; transform: translateY(0) scale(1); transition-delay: var(--delay, 0ms); }
-        .delay-200 { --delay: 200ms; }
-        .delay-400 { --delay: 400ms; }
-        .delay-600 { --delay: 600ms; }
-        .delay-800 { --delay: 800ms; }
-        .delay-1000 { --delay: 1000ms; }
-        .delay-1200 { --delay: 1200ms; }
-        .mobile-sticky-cta { position: fixed; bottom: 0; left: 0; right: 0; z-index: 40; padding: 0.5rem 0; }
-        
     </style>
 </head>
-<body class="text-white bg-hydro-charcoal">
+<body class="text-white">
 
-    <header class="header-bg shadow-2xl sticky top-0 z-50 border-b border-hydro-primary/50" role="banner">
+    <header class="bg-hydro-charcoal header-bg shadow-2xl sticky top-0 z-50 border-b border-hydro-primary/50" role="banner">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-1 flex justify-between items-center">
             
             <a href="/index.html#hero" class="focus:outline-none transition" aria-label="Anohubs Logo - Back to top" aria-current="page">
@@ -146,71 +165,76 @@
                 <a href="/index.html#contact" class="bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-6 py-2.5 rounded-full transition transform hover:scale-105 shadow-xl font-bold tracking-wider uppercase text-base">Request Audit</a>
             </nav>
             
-            </div>
+        </div>
     </header>
-    
+
     <main role="main">
         <section class="py-24 text-white min-h-screen flex items-center justify-center">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="vision-content-card zoom-in delay-200">
                     
                     <h1 class="text-6xl font-black text-hydro-primary mb-4 tracking-tighter fade-in-up">
-                        WE ARE LEADING THE WAY
+                        OUR GLOBAL VISION: LEADING THE WAY
                     </h1>
                     <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-8 border-b pb-4 border-hydro-primary/50 fade-in-up delay-400">
-                        OUR VISION: Defining the Global Hydro Integrity Standard
+                        Defining the Global Hydro Integrity Standard
                     </h2>
                     
                     <p class="mt-4 text-slate-300 text-xl font-light mb-10 fade-in-up delay-600">
                         Anohubs is dedicated to establishing the global benchmark where **technological precision** and **ethical responsibility** drive both sustainable profit and ecological health. We are committed to leading the hydropower sector towards a new era of proactive excellence.
                     </p>
-                    
-                    <div class="grid md:grid-cols-2 gap-12 pt-8 border-t border-slate-700">
+
+                    <div class="space-y-12 text-lg">
                         
-                        <div class="fade-in-up delay-800">
-                            <h3 class="text-3xl font-bold text-hydro-secondary mb-4">Our Core Mission</h3>
-                            <p class="text-slate-400 leading-relaxed">
-                                We bridge the gap between raw engineering data and **actionable intelligence**. Our mission is to empower hydropower operators with comprehensive, transparent, and verifiable audits, ensuring every asset operates at peak integrity while honoring its environmental mandate. We move the industry from reactive repairs to proactive, data-driven excellence.
-                            </p>
-                            <a href="/index.html#contact" class="inline-flex mt-6 bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-6 py-2 rounded-full font-bold transition transform hover:scale-105 shadow-lg">
-                                Join Our Vision &rarr;
-                            </a>
+                        <div class="grid md:grid-cols-2 gap-12 pt-4 border-t border-slate-700">
+                            
+                            <div class="fade-in-up delay-800">
+                                <h3 class="text-3xl font-bold text-hydro-secondary mb-4">Our Core Mission</h3>
+                                <p class="text-slate-400 leading-relaxed">
+                                    We bridge the gap between raw engineering data and **actionable intelligence**. Our mission is to empower hydropower operators with comprehensive, transparent, and verifiable audits, ensuring every asset operates at peak integrity while honoring its environmental mandate. We move the industry from reactive repairs to proactive, data-driven excellence.
+                                </p>
+                            </div>
+                            
+                            <div class="fade-in-up delay-1000">
+                                <h3 class="text-3xl font-bold text-hydro-secondary mb-4">The Immunity Commitment</h3>
+                                <p class="text-slate-400 leading-relaxed">
+                                    Our commitment is founded on the principles of the **Engineering Immunity Protocol**: We never compromise on precision, ethical conduct, or transparency. This dedication transforms unpredictable operational risk into guaranteed long-term stability and profitability for our clients globally.
+                                </p>
+                                <a href="/protocol.html" class="inline-flex mt-4 text-hydro-primary hover:text-cyan-500 font-bold underline transition">
+                                    Review Our Full Protocol &rarr;
+                                </a>
+                            </div>
                         </div>
-                        
-                        <div class="fade-in-up delay-1000">
-                            <h3 class="text-3xl font-bold text-hydro-secondary mb-4">Our Unyielding Commitment</h3>
-                            <p class="text-slate-400 leading-relaxed">
-                                Our commitment is founded on the principles of the **Engineering Immunity Protocol**: We never compromise on precision, ethical conduct, or transparency. This dedication is what transforms unpredictable operational risk into guaranteed long-term stability and profitability for our clients globally.
-                            </p>
-                            <a href="/protocol.html" class="inline-flex mt-6 text-hydro-primary hover:text-cyan-500 font-bold underline transition">
-                                Review Our Full Protocol &rarr;
-                            </a>
+
+                        <div class="pt-16 fade-in-up delay-1200">
+                            <h3 class="text-4xl font-extrabold text-hydro-primary mb-8 border-b pb-3">Our Foundational Expertise</h3>
+                            
+                            <ul class="expertise-list-grid text-slate-400">
+                                <li><svg data-lucide="target" class="w-5 h-5 mt-1"></svg> <strong>0.05 mm/m Precision Mandate</strong></li>
+                                <li><svg data-lucide="microscope" class="w-5 h-5 mt-1"></svg> Digital Twin Validation (CFD/FEA)</li>
+                                <li><svg data-lucide="zap" class="w-5 h-5 mt-1"></svg> M-E Synergy Audits (Electro-Mechanical)</li>
+                                <li><svg data-lucide="bar-chart-2" class="w-5 h-5 mt-1"></svg> Life Cycle Cost (LCC) Analysis</li>
+                                <li><svg data-lucide="shield" class="w-5 h-5 mt-1"></svg> Galvanic Corrosion Mitigation</li>
+                                <li><svg data-lucide="users" class="w-5 h-5 mt-1"></svg> Human Sensor & Ethical Compliance</li>
+                                <li><svg data-lucide="factory" class="w-5 h-5 mt-1"></svg> Flawless Installation Protocols (QC)</li>
+                                <li><svg data-lucide="package" class="w-5 h-5 mt-1"></svg> Advanced Materials Sourcing</li>
+                                <li><svg data-lucide="repeat" class="w-5 h-5 mt-1"></svg> Turbine Full Overhaul & Refurbishment</li>
+                                <li><svg data-lucide="waves" class="w-5 h-5 mt-1"></svg> Hydraulic Flow Optimization</li>
+                                <li><svg data-lucide="calendar-check" class="w-5 h-5 mt-1"></svg> Predictive Maintenance Scheduling</li>
+                                <li><svg data-lucide="globe" class="w-5 h-5 mt-1"></svg> Ecological & Regulatory Compliance (Symbiosis Standard)</li>
+                            </ul>
                         </div>
+
                     </div>
 
-                    <div class="pt-16 fade-in-up delay-1200">
-                        <h3 class="text-4xl font-extrabold text-hydro-primary mb-8 border-b pb-3">Our Core Expertise</h3>
-                        
-                        <ul class="expertise-list-grid text-slate-400">
-                            <li><svg data-lucide="target" class="w-5 h-5 mt-1"></svg> <strong>0.05 mm/m Precision Mandate</strong></li>
-                            <li><svg data-lucide="microscope" class="w-5 h-5 mt-1"></svg> Digital Twin Validation (CFD/FEA)</li>
-                            <li><svg data-lucide="zap" class="w-5 h-5 mt-1"></svg> M-E Synergy Audits (Electro-Mechanical)</li>
-                            <li><svg data-lucide="bar-chart-2" class="w-5 h-5 mt-1"></svg> Life Cycle Cost (LCC) Analysis</li>
-                            <li><svg data-lucide="shield" class="w-5 h-5 mt-1"></svg> Galvanic Corrosion Mitigation</li>
-                            <li><svg data-lucide="users" class="w-5 h-5 mt-1"></svg> Human Sensor & Ethical Compliance</li>
-                            <li><svg data-lucide="factory" class="w-5 h-5 mt-1"></svg> Flawless Installation Protocols (QC)</li>
-                            <li><svg data-lucide="package" class="w-5 h-5 mt-1"></svg> Advanced Materials Sourcing</li>
-                            <li><svg data-lucide="repeat" class="w-5 h-5 mt-1"></svg> Turbine Full Overhaul & Refurbishment</li>
-                            <li><svg data-lucide="waves" class="w-5 h-5 mt-1"></svg> Hydraulic Flow Optimization</li>
-                            <li><svg data-lucide="calendar-check" class="w-5 h-5 mt-1"></svg> Predictive Maintenance Scheduling</li>
-                            <li><svg data-lucide="globe" class="w-5 h-5 mt-1"></svg> Ecological & Regulatory Compliance (Symbiosis Standard)</li>
-                        </ul>
+                    <div class="mt-16 pt-8 border-t border-slate-700 text-center fade-in-up delay-1400">
+                        <a href="/index.html#contact" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-lg font-bold rounded-full text-hydro-charcoal bg-hydro-primary hover:bg-cyan-500 transition duration-300 transform hover:scale-105 shadow-xl">
+                            Schedule a Consultation &rarr;
+                        </a>
                     </div>
-
                 </div>
-            </div>
-        </section>
-    </main>
+            </section>
+        </main>
     
     <footer class="bg-hydro-slate text-hydro-gray py-8 text-center border-t border-hydro-light-slate" role="contentinfo">
         <div class="container mx-auto px-6">
@@ -228,20 +252,36 @@
              <a href="/index.html#contact" class="text-slate-400 hover:text-hydro-primary">Contact</a>
            </nav>
            
-           <p class="text-sm">&copy; <span id="year"></span> Anohubs Inc. All rights reserved.</p>
+           <p class="text-sm">&copy; 2025 <span id="year"></span> Anohubs Inc. All rights reserved.</p>
         </div>
     </footer>
 
     <script>
         // Logika za mobilni meni, animacije, inicijalizaciju Lucide ikona
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        if (mobileMenuButton) {
-            mobileMenuButton.addEventListener('click', function() {
-                const mobileMenu = document.getElementById('mobile-menu');
-                mobileMenu.classList.toggle('hidden');
-                // Ovdje bi išla logika za mobilni meni, ali je na ovoj stranici nepotrebna
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+            const yearEl = document.getElementById('year');
+            if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+            // Logika animiranja elemenata
+            const observerOptions = { root: null, rootMargin: "0px", threshold: 0.1 };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.fade-in-up, .zoom-in').forEach(element => {
+                observer.observe(element);
             });
-        }
+        });
+        
     </script>
 </body>
 </html>
