@@ -10,12 +10,60 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
     
-    <!-- KRITIČNO: Biblioteka za 3D modele (model-viewer) -->
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/1.13.0/model-viewer.min.js"></script>
 
+    <script>
+        // === Tailwind Konfiguracija (Iz index.html) ===
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'hydro-primary': '#22d3ee', 
+                        'hydro-secondary': '#4ade80', 
+                        'hydro-risk': '#ef4444', 
+                        'hydro-cta': '#f59e0b', 
+                        'hydro-charcoal': '#111827', 
+                        'hydro-slate': '#1E293B', 
+                        'hydro-light-slate': '#334155', 
+                        'hydro-gray': '#475569',
+                    },
+                    fontSize: {
+                        'h1-hero': 'clamp(2.5rem, 5vw + 1rem, 4.5rem)',
+                    },
+                },
+            }
+        }
+        
+        // Logika za animacije i inicijalizaciju Lucide ikona
+        document.addEventListener("DOMContentLoaded", function() {
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+            
+            const observerOptions = { root: null, rootMargin: "0px", threshold: 0.1 };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.fade-in-up, .zoom-in').forEach(element => {
+                observer.observe(element);
+            });
+            
+            const yearEl = document.getElementById('year');
+            if (yearEl) yearEl.textContent = new Date().getFullYear();
+        });
+    </script>
+    
     <style>
-        /* KRITIČNI STILOVI */
+        /* CSS STILOVI ZA TURBINE PAGES */
         body { 
             font-family: 'Inter', sans-serif; 
             background-color: #111827; 
@@ -26,81 +74,105 @@
             background-size: cover;
             background-attachment: fixed;
             background-position: center; 
-            min-height: 120vh;
+            min-height: 100vh;
         }
+        
+        /* HEADER & NAVIGATION */
         .header-bg { background-color: rgba(17, 24, 39, 0.95); }
-        
-        /* KRITIČNO: 60% PROZIRNOSTI */
-        .content-overlay {
-             background-color: rgba(30, 41, 59, 0.6); 
-             padding: 3rem 2rem;
-             border-radius: 0.5rem;
-             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-             border-top: 5px solid #22d3ee;
-             will-change: transform, box-shadow;
-             transform: translateZ(0);
-        }
-        .list-icon {
-            color: #4ade80; /* Hydro Secondary */
-            font-size: 1.5rem;
-            margin-right: 0.5rem;
-        }
-        .text-glow {
-             text-shadow: 0 0 10px rgba(34, 211, 238, 0.5);
-        }
-        
-        .text-hydro-primary { color: #22d3ee; }
-        .text-hydro-secondary { color: #4ade80; }
-        .bg-hydro-cta { background-color: #f59e0b; }
-        .text-hydro-charcoal { color: #111827; }
+        .anohubs-logo-compact { width: 90px; height: auto; color: #22d3ee; }
+        @media (min-width: 768px) { .anohubs-logo-compact { width: 120px; } }
 
-        /* Stil za 3D Model Viewer */
+        /* OVERLAY NAD SADRŽAJEM */
+        .content-overlay {
+            background-color: rgba(30, 41, 59, 0.75); 
+            padding: 3rem 2rem;
+            border-radius: 0.75rem; 
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6); 
+            border-top: 5px solid #22d3ee;
+            will-change: transform, box-shadow; 
+            transform: translateZ(0); 
+        }
+        .text-glow { text-shadow: 0 0 15px rgba(34, 211, 238, 0.7); }
+
+        /* STILOVI ZA 3D MODEL VIEWER */
         model-viewer {
             width: 100%;
             height: 400px;
             background-color: #111827;
             border-radius: 0.5rem;
             box-shadow: 0 0 15px rgba(34, 211, 238, 0.5);
+            /* Centriranje u kontejneru */
+            margin: 20px auto; 
+            display: block; 
         }
 
+        /* STILOVI ZA ANIMACIJE */
+        .fade-in-up, .zoom-in { opacity: 0; transition: opacity 0.8s ease-out, transform 0.8s ease-out; will-change: opacity, transform; }
+        .fade-in-up { transform: translateY(30px); }
+        .zoom-in { transform: scale(0.95); }
+        .fade-in-up.is-visible, .zoom-in.is-visible { opacity: 1; transform: translateY(0) scale(1); transition-delay: var(--delay, 0ms); }
+        .delay-200 { --delay: 200ms; }
+        .delay-400 { --delay: 400ms; }
+        .delay-600 { --delay: 600ms; }
+        .delay-800 { --delay: 800ms; }
+        .delay-1000 { --delay: 1000ms; }
+        .delay-1200 { --delay: 1200ms; }
+        .mobile-sticky-cta { position: fixed; bottom: 0; left: 0; right: 0; z-index: 40; padding: 0.5rem 0; }
+        
     </style>
-
 </head>
-<body class="text-white">
+<body class="text-white bg-hydro-charcoal">
 
-    <header class="header-bg shadow-2xl sticky top-0 z-50 border-b border-cyan-500/50" role="banner">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex justify-between items-center">
-            <a href="/index.html#hero" class="text-xl font-bold text-cyan-400 hover:text-cyan-300">← Back to Homepage</a>
+    <header class="header-bg shadow-2xl sticky top-0 z-50 border-b border-hydro-primary/50" role="banner">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-1 flex justify-between items-center">
+            
+            <a href="/index.html#hero" class="focus:outline-none transition" aria-label="Anohubs Logo - Back to top" aria-current="page">
+                 <img src="/logo.svg" alt="Anohubs Logo" class="anohubs-logo-compact">
+            </a>
+            
             <nav class="flex items-center space-x-4 font-extrabold text-sm" role="navigation">
+                <a href="/expert-insights.html" class="text-slate-300 hover:text-cyan-400 transition">Insights</a>
+                
                 <a href="/index.html#contact" class="bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-4 py-2 rounded-full transition">Request Audit</a>
             </nav>
+            
         </div>
     </header>
-
+    
     <main role="main">
-        <section class="py-16 text-white flex items-center justify-center min-h-screen">
-            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 content-overlay">
+        <section class="py-16 text-white flex items-center justify-center min-h-[90vh]">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 content-overlay zoom-in"> 
                 
-                <h1 class="text-5xl font-extrabold text-hydro-primary mb-4 text-glow tracking-tight">
+                <h1 class="text-5xl md:text-6xl font-extrabold text-hydro-primary mb-4 text-glow tracking-tight fade-in-up">
                     KAPLAN TURBINE INTEGRITY ANALYSIS
                 </h1>
-                <p class="text-xl font-light text-slate-300 mb-8 border-b pb-4 border-slate-700">
+                <p class="text-xl md:text-2xl font-light text-slate-300 mb-8 border-b pb-4 border-slate-700 fade-in-up delay-200">
                     Precision diagnostics for low-head turbines: Ensuring optimal adjustable blade performance and mitigating cavitation risk.
                 </p>
-
+                
                 <div class="space-y-10 text-lg">
+                    <div class="p-6 rounded-xl bg-hydro-light-slate/80 shadow-lg fade-in-up delay-400"> 
+                        <h2 class="text-2xl font-bold text-white mb-3 flex items-center gap-2">
+                            <svg data-lucide="compass" class="w-6 h-6 text-hydro-cta"></svg> The Kaplan Challenge: Adjustable Blade Dynamics
+                        </h2>
+                        <p class="text-slate-300 leading-relaxed">
+                            The **Kaplan Turbine**, ideal for high flow rates and low-to-medium head applications, relies fundamentally on the precise control of its **adjustable runner blades**. Unlike fixed-blade turbines, the Kaplan's ability to maintain peak efficiency across wide variations in water flow makes its mechanical integrity acutely dependent on the smooth operation of its hydraulic hub and servo system.
+                        </p>
+                        <p class="text-slate-400 mt-3">
+                            Any wear or misalignment in the hub mechanism leads to **blade pitch errors**, causing significant hydraulic instability, increased vibrations (contributing to the 48% risk), and major efficiency loss, especially during load changes.
+                        </p>
+                    </div>
                     
-                    <div class="p-6 rounded-lg bg-slate-800/70">
-                        <h2 class="text-2xl font-bold text-white mb-3">3D Model: Horizontal Kaplan with Spiral Casing</h2>
+                    <div class="bg-hydro-light-slate/80 p-6 rounded-lg shadow-lg fade-in-up delay-600">
+                        <h2 class="text-3xl font-bold text-hydro-secondary mb-4 flex items-center gap-3">
+                            <svg data-lucide="layers-3d" class="w-7 h-7"></svg> 3D Model: Horizontal Kaplan with Spiral Casing
+                        </h2>
                         <p class="text-slate-400 mb-4">
-                            This visualization demonstrates the complexity of the <strong>Horizontal Kaplan Turbine</strong>. Explore the interaction between the casing, water, and moving parts—a critical factor in analyzing RSI and dynamic stability using our Digital Twin protocols.
-                            <br/>
-                            **Note:** If the 3D model does not appear, the browser could not locate the <strong>H_Kaplan_Spiral.glb</strong> file at the expected server path.
+                            Explore the complexity of the **Horizontal Kaplan Turbine**. Our analysis protocols use 3D models to precisely map flow and pressure, revealing vulnerabilities often hidden in 2D diagrams.
                         </p>
                         
-                        <!-- 3D MODEL VIEWER (Kritično: Proverite putanju H_Kaplan_Spiral.glb) -->
                         <model-viewer 
-                            src="H_Kaplan_Spiral.glb" /* Ciljaj root putanju */
+                            src="H_Kaplan_Spiral.glb" 
                             alt="3D model of a Horizontal Kaplan Turbine with Spiral Casing"
                             camera-controls 
                             auto-rotate 
@@ -108,50 +180,51 @@
                             loading="eager"
                             shadow-intensity="1"
                             exposure="1.5"
-                            camera-orbit="180deg 85deg 1.5m" 
-                            >
+                            camera-orbit="180deg 85deg 1.5m">
                             <div slot="progress-bar"></div>
                         </model-viewer>
-                        <!-- KRAJ 3D MODELA -->
+                        </div>
 
-                    </div>
-
-
-                    <div class="space-y-6">
-                        <h2 class="text-3xl font-bold text-hydro-secondary mb-4">Focus Protocol: Dynamic Stability and Wear</h2>
+                    <div class="space-y-6 fade-in-up delay-800">
+                        <h2 class="text-3xl font-bold text-hydro-secondary mb-4 flex items-center gap-3">
+                            <svg data-lucide="check-square" class="w-7 h-7"></svg> Focus Protocol: Dynamic Stability and Wear
+                        </h2>
                         
-                        <p class="text-slate-300">Our inspection focuses on the dynamic systems unique to Kaplan:</p>
+                        <p class="text-slate-300">We target the dynamic mechanisms unique to the Kaplan design:</p>
                         
-                        <ul class="space-y-4">
-                            <li class="flex items-start">
-                                <span class="list-icon">⚙️</span>
+                        <ul class="space-y-6">
+                            <li class="flex items-start p-4 bg-hydro-slate/70 rounded-lg shadow-md hover:bg-hydro-slate transition duration-300 fade-in-up delay-1000">
+                                <div class="bg-hydro-primary/20 p-2 rounded-full mr-4 flex-shrink-0">
+                                    <svg data-lucide="settings" class="w-6 h-6 text-hydro-primary"></svg>
+                                </div>
                                 <div>
-                                    <strong>Blade System Performance:</strong> Detailed analysis of the adjustable runner blade mechanism and hydraulic servo system to ensure precise pitch control and prevent mechanical play that causes vibration.
+                                    <strong class="text-white text-xl block mb-1">Adjustable Blade Mechanism Check:</strong> 
+                                    <p class="text-slate-300">Detailed diagnostic of the hydraulic servo system and control rods to ensure precise pitch control, eliminate mechanical play, and prevent flow instability.</p>
                                 </div>
                             </li>
-                            <li class="flex items-start">
-                                <span class="list-icon">📊</span>
+                            <li class="flex items-start p-4 bg-hydro-slate/70 rounded-lg shadow-md hover:bg-hydro-slate transition duration-300 fade-in-up delay-1100">
+                                <div class="bg-hydro-primary/20 p-2 rounded-full mr-4 flex-shrink-0">
+                                    <svg data-lucide="zap" class="w-6 h-6 text-hydro-primary"></svg>
+                                </div>
                                 <div>
-                                    <strong>Real-time Load Simulation:</strong> Testing the turbine's performance envelope to ensure stable and efficient operation across wide load ranges, particularly during off-design scenarios.
+                                    <strong class="text-white text-xl block mb-1">Vibration & Alignment Verification:</strong> 
+                                    <p class="text-slate-300">Re-verification of shaft alignment against the **0.05 mm/m** standard, crucial for eliminating the introduction of the 48% dynamic instability factor.</p>
                                 </div>
                             </li>
-                            <li class="flex items-start">
-                                <span class="list-icon">💧</span>
-                                <div>
-                                    <strong>Cavitation Prevention:</strong> Focused diagnostics on the Draft Tube and runner hub where flow separation is most severe, recommending structural or operational adjustments to mitigate pit cavitation risk.
+                            <li class="flex items-start p-4 bg-hydro-slate/70 rounded-lg shadow-md hover:bg-hydro-slate transition duration-300 fade-in-up delay-1200">
+                                <div class="bg-hydro-primary/20 p-2 rounded-full mr-4 flex-shrink-0">
+                                    <svg data-lucide="wind" class="w-6 h-6 text-hydro-primary"></svg>
                                 </div>
-                            </li>
-                            <li class="flex items-start">
-                                <span class="list-icon">📐</span>
                                 <div>
-                                    <strong>Misalignment Verification:</strong> Re-verification of shaft alignment against the **0.05 mm/m** standard, crucial for preventing the introduction of the 48% dynamic instability factor inherent in misalignment.
+                                    <strong class="text-white text-xl block mb-1">Cavitation Prevention:</strong> 
+                                    <p class="text-slate-300">Focused diagnostics on the runner hub and blade edges, utilizing acoustic monitoring to detect the precise onset of pit cavitation before significant damage occurs.</p>
                                 </div>
                             </li>
                         </ul>
                     </div>
                 </div>
 
-                <div class="mt-10 text-center">
+                <div class="mt-10 text-center fade-in-up delay-1400">
                     <a href="/index.html#contact" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-lg font-bold rounded-full text-hydro-charcoal bg-hydro-primary hover:bg-cyan-500 transition duration-300 transform hover:scale-105 shadow-xl">
                         Schedule Kaplan Turbine Audit &rarr;
                     </a>
@@ -161,10 +234,53 @@
         </section>
     </main>
     
-    <footer class="bg-slate-900/70 text-gray-400 py-8 text-center border-t border-slate-700" role="contentinfo">
+    <footer class="bg-hydro-slate text-hydro-gray py-8 text-center border-t border-hydro-light-slate" role="contentinfo">
         <div class="container mx-auto px-6">
-             <p class="text-sm">&copy; 2025 Anohubs Inc. All rights reserved. | Global Hydro Integrity.</p>
+             
+           <a href="/index.html#hero" class="mb-4 block" aria-label="Anohubs Logo - Back to top">
+             <img src="/logo.svg" alt="Anohubs Logo" class="anohubs-logo-compact">
+           </a>
+           <p class="text-slate-400 mb-6">Establishing the global standard for hydro integrity.</p>
+           
+           <nav class="flex justify-center space-x-6 text-sm mb-6">
+             <a href="/about-us-vision.html" class="text-slate-400 hover:text-hydro-primary">About</a>
+             <a href="/index.html#services" class="text-slate-400 hover:text-hydro-primary">Services</a>
+             <a href="/expert-insights.html" class="text-slate-400 hover:text-hydro-primary">Insights</a>
+             <a href="/index.html#technology" class="text-slate-400 hover:text-hydro-primary">Technology</a>
+             <a href="/index.html#contact" class="text-slate-400 hover:text-hydro-primary">Contact</a>
+           </nav>
+           
+           <p class="text-sm">&copy; <span id="year"></span> Anohubs Inc. All rights reserved.</p>
         </div>
     </footer>
+
+    <script>
+        // Inicijalizacija ikona nakon učitavanja
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+            // Ažuriranje godine
+            const yearEl = document.getElementById('year');
+            if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+            // Animiranje elemenata
+            const observerOptions = { root: null, rootMargin: "0px", threshold: 0.1 };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.fade-in-up, .zoom-in').forEach(element => {
+                observer.observe(element);
+            });
+        });
+        
+    </script>
 </body>
 </html>
