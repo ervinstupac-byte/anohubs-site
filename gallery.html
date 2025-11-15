@@ -29,7 +29,7 @@
         };
 
         // ====================================================================
-        // KLIJENTSKA LOGIKA ZA GALERIJU - KRITIČNO: OVDJE UBACITE LISTU FAJLOVA!
+        // KLIJENTSKA LOGIKA ZA GALERIJU - UMETNUTA LISTA FAJLOVA
         // ====================================================================
         
         const imageFilenames = [
@@ -94,7 +94,7 @@
             'IMG_20200526_184043.jpg', 'IMG_20200606_163721.jpg', 'IMG_20200620_172530.jpg', 'IMG_20200620_181148.jpg', 
             'IMG_20200716_133530.jpg', 'IMG_20200720_175506.jpg', 'IMG_20200720_175510.jpg', 'IMG_20200814_101140.jpg', 
             'IMG_20200819_151743.jpg', 'IMG_20200830_110917.jpg', 'IMG_20200830_122414.jpg', 'IMG_20200830_123017.jpg', 
-            'IMG_20200830_153528.jpg', 'IMG_20201106_183442.jpg', 'IMG_20201110_090446.jpg', 'IMG_20201110_090451.jpg', 
+            'IMG_20200830_153528.jpg', 'IMG_20201106_183442.jpg', 'IMG_20201110_090446.jpg', 'IMG_202001110_090451.jpg', 
             'IMG_20201124_145540.jpg', 'IMG_20201207_103611.jpg', 'IMG_20210524_110135.jpg', 'IMG_20210617_154844.jpg', 
             'IMG_20210721_112608.jpg', 'IMG_20210722_102425.jpg', 'IMG_20211119_155917.jpg', 'IMG_20211122_133648.jpg', 
             'IMG_20220122_095139.jpg', 'IMG_20220122_142027.jpg', 'IMG_20220123-WA0004.jpg', 'IMG_20220527-WA0004 (1).jpg', 
@@ -123,6 +123,7 @@
             const modal = document.getElementById('lightbox-modal');
             const slideshowBtn = document.getElementById('slideshow-btn');
             
+            // Zaustavi slideshow ako je već aktivan
             if (slideshowBtn && slideshowBtn.textContent.includes('Stop')) {
                 toggleSlideshow(slideshowBtn);
             }
@@ -283,7 +284,7 @@
             padding: 20px;
         }
         
-        /* Navigacione kontrole - Fiksirane uz rub Modala (CRITICAL FIX) */
+        /* Navigacione kontrole (Polu-krugovi) - fiksirane uz rub Modala */
         .lightbox-controls-wrapper {
             position: absolute; 
             top: 50%;
@@ -301,16 +302,15 @@
             color: white;
             padding: 12px;
             transition: background-color 0.2s, transform 0.2s;
-            /* KRITIČNO: Povećavamo dugmad i fiksiramo im poziciju unutar Modala */
             height: 60px; 
             width: 60px;
         }
         #prev-btn {
-            left: 0; /* Pričvrsti za lijevu ivicu prozora */
+            left: 0; 
             border-radius: 0 50% 50% 0;
         }
         #next-btn {
-            right: 0; /* Pričvrsti za desnu ivicu prozora */
+            right: 0;
             border-radius: 50% 0 0 50%;
         }
     </style>
