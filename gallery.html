@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Hydro-Vision Gallery | Global Eco-Integrity</title>
+    <meta name="description" content="A curated collection of global landscapes, rivers, and hydropower environments showcasing the natural capital protected by the AnoHUB Integrity Standard.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        // Tailwind Config (za konzistentnost boja)
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'hydro-primary': '#22d3ee', 
+                        'hydro-secondary': '#4ade80', 
+                        'hydro-charcoal': '#111827', 
+                        'hydro-slate': '#1E293B',
+                        'hydro-cta': '#f59e0b', 
+                    },
+                },
+            }
+        };
+
+        // KLIJENTSKA LOGIKA ZA GALERIJU
+        const galleryImages = [
+            // OVDJE DEFINIŠETE SVE VAŠE SLIKE I OPISE
+            { src: 'slike/20190618_213435.jpg', caption: 'Global Perspective: High-altitude view of the vast energy transition landscape.' },
+            { src: 'slike/IMG20170304090522.jpg', caption: 'Water Capital: Reflective waters and the need for ecological stewardship (Symbiosis Standard).' },
+            { src: 'slike/20190620_233856.jpg', caption: 'Facing the Extremes: Robust engineering required in challenging climates.' },
+            { src: 'slike/20221201_025542.jpg', caption: 'Global Logistics: The vastness of global commerce and the demand for stable energy.' },
+            { src: 'slike/20210511_071530.jpg', caption: 'Ethical Responsibility: Local energy production and community impact.' },
+            { src: 'slike/2606d612-866d-49a6-b259-a2e520d776c3.jpg', caption: 'Geological Stability: Analysis of mountainous regions for PSH and Ultra-High Head risk.' },
+        ];
+        let currentIndex = 0;
+
+        function openModal(index) {
+            currentIndex = index;
+            const modal = document.getElementById('lightbox-modal');
+            const container = document.getElementById('lightbox-container');
+            const total = galleryImages.length;
+
+            function updateImage() {
+                const img = galleryImages[currentIndex];
+                container.innerHTML = `
+                    <img src="${img.src}" alt="${img.caption}" class="max-h-[85vh] max-w-full object-contain rounded-lg shadow-2xl mx-auto zoom-in" style="animation-delay: 0ms;">
+                    <div class="text-white text-center mt-4 max-w-3xl mx-auto bg-black/50 p-3 rounded-lg">
+                        <p class="text-sm md:text-base">${img.caption}</p>
+                        <p class="text-xs text-slate-400 mt-1">Image ${currentIndex + 1} of ${total}</p>
+                    </div>
+                `;
+                // Prikaz/skrivanje navigacionih dugmadi
+                document.getElementById('prev-btn').classList.toggle('hidden', currentIndex === 0);
+                document.getElementById('next-btn').classList.toggle('hidden', currentIndex === total - 1);
+            }
+
+            // Funkcija za navigaciju (izložena globalno)
+            window.navigateGallery = (direction) => {
+                currentIndex += direction;
+                if (currentIndex >= 0 && currentIndex < total) {
+                    updateImage();
+                } else if (currentIndex === total) {
+                     currentIndex = total - 1;
+                } else if (currentIndex < 0) {
+                     currentIndex = 0;
+                }
+            };
+
+            // Funkcija za pokretanje/zaustavljanje slideshowa
+            let slideshowInterval;
+            window.toggleSlideshow = (button) => {
+                if (slideshowInterval) {
+                    clearInterval(slideshowInterval);
+                    slideshowInterval = null;
+                    button.textContent = '▶️ Start Slideshow';
+                    button.classList.remove('bg-red-600');
+                    button.classList.add('bg-hydro-secondary');
+                } else {
+                    button.textContent = '⏸️ Stop Slideshow';
+                    button.classList.remove('bg-hydro-secondary');
+                    button.classList.add('bg-red-600');
+                    slideshowInterval = setInterval(() => {
+                        if (currentIndex < total - 1) {
+                            navigateGallery(1);
+                        } else {
+                            // Zaustavi slideshow nakon posljednje slike
+                            toggleSlideshow(button);
+                        }
+                    }, 4000); // 4 sekunde
+                }
+            };
+
+            updateImage();
+            modal.classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('lightbox-modal');
+            modal.classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+            // Zaustavi slideshow ako radi
+            const slideshowBtn = document.getElementById('slideshow-btn');
+            if (slideshowBtn && slideshowBtn.textContent.includes('Stop')) {
+                 toggleSlideshow(slideshowBtn);
+            }
+        }
+        
+        // Inicijalizacija animacija i ikona
+        document.addEventListener("DOMContentLoaded", function() {
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        });
+    </script>
+    
+    <style>
+        /* CSS STILOVI GALERIJE */
+        body { background-color: #111827; }
+        .header-bg { background-color: rgba(17, 24, 39, 0.95); }
+        .bg-hydro-slate { background-color: #1E293B; }
+
+        .thumbnail-img {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            border: 2px solid transparent;
+        }
+        .thumbnail-img:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 20px rgba(34, 211, 238, 0.4);
+            border-color: #22d3ee;
+        }
+        
+        .lightbox-modal {
+            background-color: rgba(0, 0, 0, 0.95); /* Vrlo tamna pozadina */
+        }
+    </style>
+</head>
+<body class="text-white bg-hydro-charcoal">
+
+    <header class="header-bg shadow-2xl sticky top-0 z-50 border-b border-hydro-primary/50" role="banner">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-1 flex justify-between items-center">
+            <a href="/index.html#hero" class="focus:outline-none transition" aria-label="Anohubs Logo - Back to top">
+                 <img src="/logo.svg" alt="Anohubs Logo" class="anohubs-logo-compact">
+            </a>
+            
+            <nav class="flex items-center space-x-4 font-extrabold text-sm" role="navigation">
+                <a href="/expert-insights.html" class="text-slate-300 hover:text-cyan-400 transition">Insights</a>
+                <a href="/protocol.html" class="text-slate-300 hover:text-cyan-400 transition">Protocol</a>
+                <a href="/index.html#contact" class="bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-4 py-2 rounded-full transition">Request Audit</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main role="main">
+        <section class="py-20 bg-hydro-slate text-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                
+                <h1 class="text-5xl md:text-6xl font-extrabold text-hydro-primary mb-4 tracking-tighter fade-in-up">
+                    THE HYDRO-VISION GALLERY
+                </h1>
+                <p class="text-xl md:text-2xl font-light text-cyan-200 mb-12 max-w-4xl mx-auto fade-in-up delay-200">
+                    A curated collection of natural capital, global projects, and the vast landscapes protected by the AnoHUB Integrity Standard.
+                </p>
+
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6">
+                    <script>
+                        document.addEventListener('DOMContentLoaded', () => {
+                            const grid = document.querySelector('.gallery-grid');
+                            if (grid) {
+                                galleryImages.forEach((img, index) => {
+                                    grid.innerHTML += `
+                                        <div onclick="openModal(${index})" class="thumbnail-item">
+                                            <img src="${img.src}" alt="${img.caption}" class="thumbnail-img w-full h-36 object-cover rounded-lg">
+                                        </div>
+                                    `;
+                                });
+                            }
+                        });
+                    </script>
+                    <div class="gallery-grid contents"></div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+    
+    <div id="lightbox-modal" class="lightbox-modal hidden fixed inset-0 z-[100] flex items-center justify-center p-4" onclick="closeModal()">
+        <div class="relative max-w-full max-h-full" onclick="event.stopPropagation()">
+            
+            <div id="lightbox-container" class="relative">
+                </div>
+            
+            <button id="prev-btn" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-3 rounded-r-lg hover:bg-black/80 transition" aria-label="Previous image" onclick="navigateGallery(-1)">
+                <svg data-lucide="chevron-left" class="w-6 h-6"></svg>
+            </button>
+            <button id="next-btn" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-3 rounded-l-lg hover:bg-black/80 transition" aria-label="Next image" onclick="navigateGallery(1)">
+                <svg data-lucide="chevron-right" class="w-6 h-6"></svg>
+            </button>
+            
+            <div class="flex justify-center space-x-4 mt-6">
+                 <button onclick="toggleSlideshow(this)" id="slideshow-btn" class="bg-hydro-secondary hover:bg-green-500 text-hydro-charcoal px-4 py-2 rounded-full font-bold transition">
+                    ▶️ Start Slideshow
+                </button>
+                <button onclick="closeModal()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-full font-bold transition">
+                    Close Gallery
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <footer class="bg-hydro-slate text-gray-400 py-8 text-center border-t border-hydro-light-slate" role="contentinfo">
+        <div class="container mx-auto px-6">
+             
+           <a href="/index.html#hero" class="mb-4 block" aria-label="Anohubs Logo - Back to top">
+             <img src="/logo.svg" alt="Anohubs Logo" class="anohubs-logo-compact">
+           </a>
+           <p class="text-slate-400 mb-6">Establishing the global standard for hydro integrity.</p>
+           
+           <nav class="flex justify-center space-x-6 text-sm mb-6">
+             <a href="/about-us-vision.html" class="text-slate-400 hover:text-hydro-primary">About</a>
+             <a href="/index.html#services" class="text-slate-400 hover:text-hydro-primary">Services</a>
+             <a href="/expert-insights.html" class="text-slate-400 hover:text-hydro-primary">Insights</a>
+             <a href="/protocol.html" class="text-slate-400 hover:text-hydro-primary">Protocol</a>
+             <a href="/index.html#contact" class="text-slate-400 hover:text-hydro-primary">Contact</a>
+           </nav>
+           
+           <p class="text-sm">&copy; <span id="year"></span> Anohubs Inc. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
