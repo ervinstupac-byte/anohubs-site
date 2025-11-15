@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Engineering Immunity Protocol | Anohubs: The Global Standard for Hydro Integrity</title>
-    <meta name="description" content="Anohubs' Engineering Immunity Protocol: Our non-negotiable standard ensuring absolute precision, ethical responsibility, and verifiable asset integrity in hydropower.">
+    <title>Engineering Immunity Protocol | Anohubs: Advanced Analytics</title>
+    <meta name="description" content="Anohubs' Engineering Immunity Protocol: Our non-negotiable standard ensuring absolute precision, ethical responsibility, and verifiable asset integrity in hydropower operations.">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,7 +13,7 @@
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <script>
-        // === Tailwind Konfiguracija (Iz index.html) ===
+        // === Tailwind Konfiguracija ===
         tailwind.config = {
             theme: {
                 extend: {
@@ -70,65 +70,51 @@
     </script>
     
     <style>
-        /* CSS STILOVI ZA PROTOCOL.HTML - AŽURIRANO ZA DINAMIČNOST */
-        html { scroll-behavior: smooth; }
-        body { 
-            font-family: 'Inter', sans-serif; 
-            background-color: #111827; 
-            color: #E5E7EB;
-        }
-        
+        /* CSS STILOVI PROTOCOL.HTML - AŽURIRANO ZA DINAMIČNOST */
+        body { font-family: 'Inter', sans-serif; background-color: #111827; color: white; }
+
         /* HEADER & NAVIGATION */
         .header-bg { background-color: rgba(17, 24, 39, 0.95); }
         .anohubs-logo-compact { width: 90px; height: auto; color: #22d3ee; }
         @media (min-width: 768px) { .anohubs-logo-compact { width: 120px; } }
 
-        /* HERO SEKCIJA - POZADINA S PARALLAXOM */
+        /* PROTOCOL HERO SEKCIJA - PERSONALIZOVANA POZADINA */
         #hero-protocol {
-            background-image: url('personal_vision.jpg');
+            background-image: url('personal_vision.jpg'); 
             background-size: cover;
-            background-attachment: fixed; /* Ključno za parallax, iako se dalje kontrolira JS-om */
-            background-position: center bottom; /* Fokus na osobu */
+            background-attachment: fixed;
+            background-position: left center; 
             position: relative;
-            min-height: 80vh; /* Više vertikalnog prostora */
+            z-index: 0;
+            padding-top: 5rem; 
+            padding-bottom: 5rem;
+            min-height: 85vh; 
             display: flex;
-            align-items: center;
-            justify-content: flex-start; /* Sadržaj lijevo */
-            padding: 4rem 0;
-            overflow: hidden; /* Skriva prelijevanje slike zbog parallax efekta */
+            align-items: center; 
+            justify-content: flex-start;
         }
 
-        /* OVERLAY ZA HERO SEKCIJU - JAKI GRADIENT */
+        /* OVERLAY sa gradientom koji postaje transparentniji ka lijevoj strani (ka slici) */
         #hero-protocol::before {
-            content: '';
+            content: "";
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            /* Gradient od transparentnog (lijevo) do tamno plavog (desno) */
-            background: linear-gradient(to right, rgba(17, 24, 39, 0.3) 0%, rgba(17, 24, 39, 0.8) 50%, rgba(17, 24, 39, 0.95) 100%);
-            z-index: 1;
-        }
-
-        #hero-protocol .hero-content {
-            position: relative;
-            z-index: 2; /* Iznad overlay-a */
-            max-width: 600px; /* Kontrolira širinu teksta */
-            margin-left: 10%; /* Odmak od lijeve ivice */
-            padding: 2rem;
+            /* Gradient: Tamna boja (charcoal/slate) na DESNOJ strani -> transparentno na LIJEVOJ strani (preko Vaše figure) */
+            background: linear-gradient(90deg, 
+                rgba(17, 24, 39, 0.1) 0%, 
+                rgba(17, 24, 39, 0.85) 40%, 
+                rgba(30, 41, 59, 1) 100% 
+            );
+            z-index: -1;
         }
 
         /* SEKCIJE SADRŽAJA */
-        .content-section {
-            background-color: #1a2333; /* Tamnija pozadina za bolje isticanje kartica */
-            padding: 5rem 0;
-            position: relative;
-            z-index: 5; /* Da se vidi iznad hero sekcije */
-        }
         .protocol-card {
-            background-color: #1E293B; /* Hydro Slate */
-            border-left: 5px solid #22d3ee; /* Hydro Primary */
+            background-color: #1E293B; 
+            border-left: 5px solid #22d3ee; 
             padding: 2.5rem;
             border-radius: 0.75rem;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
@@ -149,33 +135,13 @@
         .delay-800 { --delay: 800ms; }
         .delay-1000 { --delay: 1000ms; }
         .delay-1200 { --delay: 1200ms; }
-        .delay-1400 { --delay: 1400ms; }
-        .delay-1600 { --delay: 1600ms; }
-
-        /* Navigacioni linkovi sa animacijom */
-        .nav-link { position: relative; }
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            transform: scaleX(0);
-            height: 3px;
-            bottom: -5px;
-            left: 0;
-            background-color: #22d3ee;
-            transform-origin: bottom right;
-            transition: transform 0.3s ease-out;
-        }
-        .nav-link:hover::after, .nav-link[aria-current="page"]::after {
-            transform: scaleX(1);
-            transform-origin: bottom left;
-        }
-
+        .mobile-sticky-cta { position: fixed; bottom: 0; left: 0; right: 0; z-index: 40; padding: 0.5rem 0; }
+        
     </style>
 </head>
-<body class="bg-hydro-charcoal text-white">
+<body class="text-white bg-hydro-charcoal">
 
-    <header class="header-bg shadow-2xl sticky top-0 z-50 border-b border-hydro-primary/50" role="banner">
+    <header class="bg-hydro-charcoal text-white shadow-2xl sticky top-0 z-50 border-b border-hydro-primary/50" role="banner">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-1 flex justify-between items-center">
             
             <a href="/index.html#hero" class="focus:outline-none transition" aria-label="Anohubs Logo - Back to top">
@@ -210,106 +176,106 @@
 
     <main>
         <section id="hero-protocol" class="relative text-white">
-            <div class="hero-content text-left">
-                <h1 class="text-h1-hero font-black text-hydro-primary mb-4 leading-tight fade-in-up">
-                    The Engineering <br> Immunity Manifesto
-                </h1>
-                <p class="text-xl md:text-2xl font-light mb-8 max-w-lg text-slate-200 fade-in-up delay-200">
-                    We transform the unpredictable <strong class="text-hydro-risk font-bold">48% dynamic risk</strong> into 
-                    <strong class="text-hydro-secondary font-bold">Guaranteed Operational Performance</strong>. This is the 
-                    definitive strategic hedge against the Organizational Execution Gap.
-                </p>
-                <a href="/index.html#contact" class="inline-flex bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-8 py-3 rounded-full font-bold text-lg transition transform hover:scale-105 shadow-xl fade-in-up delay-400">
-                    Request Personal Consultation &rarr;
-                </a>
-            </div>
-        </section>
-
-        <section class="content-section py-20 bg-hydro-charcoal">
-            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="protocol-card mx-auto max-w-4xl text-center zoom-in delay-600">
-                    <div class="flex items-center justify-center mb-6">
-                        <svg data-lucide="shield-check" class="w-12 h-12 text-hydro-primary mr-4"></svg>
-                        <h2 class="text-4xl font-extrabold text-white">The Non-Negotiable Standard: Precision First</h2>
-                    </div>
-                    <p class="text-slate-300 text-lg mb-6 leading-relaxed">
-                        The longevity of any rotating machine is determined at the moment of installation. We enforce a 
-                        <strong class="text-hydro-secondary">Flawless Installation Protocol</strong> grounded in verifiable and absolute technical discipline.
-                    </p>
-                    <div class="bg-hydro-light-slate p-6 rounded-lg mb-6 shadow-inner">
-                        <p class="text-5xl font-extrabold text-hydro-primary">0.05 mm <span class="text-2xl font-normal text-slate-300">per meter of tolerance.</span></p>
-                        <p class="text-lg text-slate-400 mt-2">(<strong class="text-white">QC < 0.1 mm</strong> Total Displacement)</p>
-                    </div>
-                    <p class="text-slate-300 text-lg leading-relaxed">
-                        This level of ultra-precision is the foundational safeguard that virtually eliminates the 
-                        <strong class="text-hydro-risk">48% dynamic instability risk</strong> before the turbine ever starts operating.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <section class="content-section py-20 bg-hydro-charcoal">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-5xl font-black text-center text-white mb-16 fade-in-up delay-800">
-                    The Three Pillars of Holistic Asset Derisking
-                </h2>
-                <div class="grid md:grid-cols-3 gap-12">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 text-white">
+                
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center text-left">
                     
-                    <div class="protocol-card text-center fade-in-up delay-1000">
-                        <svg data-lucide="zap" class="w-16 h-16 text-hydro-primary mx-auto mb-6"></svg>
-                        <h3 class="text-3xl font-bold text-hydro-secondary mb-4">1. M-E Synergy Audit</h3>
-                        <p class="text-slate-300 leading-relaxed">
-                            We eliminate the <strong class="text-white">Synergy Gap</strong> where mechanical and electrical systems clash, preventing cascading failures. Our audit ensures perfect harmonic operation.
+                    <div class="lg:col-span-7 fade-in-up delay-400 max-w-2xl">
+                        <h1 class="text-5xl md:text-6xl font-black leading-tight mb-6 text-hydro-primary" style="text-shadow: 0 0 20px rgba(34, 211, 238, 0.9);">
+                            The Engineering Immunity Manifesto
+                        </h1>
+                        <p class="text-xl md:text-2xl font-light text-cyan-200 mb-8 border-b pb-4 border-slate-700" style="text-shadow: 0 0 10px rgba(6, 182, 212, 0.5);">
+                            We transform the unpredictable <span class="font-black text-red-500 underline">48% dynamic risk</span> into **Guaranteed Operational Performance**. This is the definitive strategic hedge against the Organizational Execution Gap.
                         </p>
-                    </div>
-                    
-                    <div class="protocol-card text-center fade-in-up delay-1200">
-                        <svg data-lucide="bar-chart-2" class="w-16 h-16 text-hydro-primary mx-auto mb-6"></svg>
-                        <h3 class="text-3xl font-bold text-hydro-secondary mb-4">2. LCC & Procurement Integrity</h3>
-                        <p class="text-slate-300 leading-relaxed">
-                            Beyond initial costs, we optimize <strong class="text-white">Life Cycle Costs</strong> and ensure absolute transparency and ethical standards in all procurement processes.
-                        </p>
-                    </div>
-                    
-                    <div class="protocol-card text-center fade-in-up delay-1400">
-                        <svg data-lucide="target" class="w-16 h-16 text-hydro-primary mx-auto mb-6"></svg>
-                        <h3 class="text-3xl font-bold text-hydro-secondary mb-4">3. Predictive Health (HHI)</h3>
-                        <p class="text-slate-300 leading-relaxed">
-                            We bridge the <strong class="text-white">SCADA-to-CEO Gap</strong> through Human-Hybrid Intelligence, translating complex data into actionable insights for strategic decision-making.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="content-section py-20 bg-hydro-slate">
-            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-5xl font-black text-center text-white mb-16 fade-in-up delay-1600">
-                    Engineering Immunity: From Theory to Absolute Guarantee
-                </h2>
-                <div class="grid md:grid-cols-2 gap-12 items-center">
-                    <div class="fade-in-up delay-1800">
-                        <img src="https://via.placeholder.com/600x400/1E293B/4ade80?text=Immunity+In+Action" alt="Engineering Immunity in Action" class="rounded-lg shadow-xl w-full h-auto">
-                    </div>
-                    <div class="fade-in-up delay-2000">
-                        <h3 class="text-3xl font-bold text-hydro-primary mb-4">Our Methodology: Zero Compromise</h3>
-                        <p class="text-slate-300 leading-relaxed mb-6">
-                            The Anohubs protocol is not a guideline; it's a <strong class="text-white">mandate for perfection</strong>. From material stress tests to installation alignment within micrometers, every step is rigorously documented and verified. We don't just reduce risk; we systematically eliminate it.
-                        </p>
-                        <ul class="list-disc list-inside text-slate-400 space-y-2">
-                            <li><strong class="text-hydro-secondary">Multi-tier Verification:</strong> Independent double-checks on all critical parameters.</li>
-                            <li><strong class="text-hydro-secondary">Continuous Improvement:</strong> Feedback loops from every project enhance future protocols.</li>
-                            <li><strong class="text-hydro-secondary">Ethical Sourcing:</strong> Only partners who meet our strict integrity standards.</li>
-                        </ul>
-                        <a href="/index.html#contact" class="inline-flex mt-8 bg-hydro-secondary hover:bg-green-500 text-hydro-charcoal px-8 py-3 rounded-full font-bold text-lg transition transform hover:scale-105 shadow-xl">
-                            Secure Your Asset's Immunity &rarr;
+                        
+                        <a href="/index.html#contact" class="inline-flex items-center justify-center px-10 py-4 border border-transparent text-lg font-bold rounded-full text-hydro-charcoal bg-hydro-cta hover:bg-yellow-600 transition duration-300 transform hover:scale-105 shadow-2xl fade-in-up delay-600">
+                            Request Personal Consultation &rarr;
                         </a>
                     </div>
+                    
+                    <div class="lg:col-span-5 hidden lg:block">
+                        </div>
+                    
                 </div>
+            </div>
+        </section>
+
+        <section id="protocol-details" class="py-20 bg-hydro-charcoal text-white relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="bg-hydro-slate p-8 rounded-2xl shadow-2xl border-l-4 border-hydro-cta mb-16 fade-in-up">
+                    <h2 class="text-3xl font-bold text-hydro-cta mb-4 flex items-center gap-3">
+                        <svg data-lucide="compass" class="w-8 h-8 text-hydro-cta"></svg> The Non-Negotiable Standard: Precision First
+                    </h2>
+                    <p class="text-lg text-slate-300 mb-4">
+                        The longevity of any rotating machine is determined at the moment of installation. We enforce a **Flawless Installation Protocol** grounded in verifiable and absolute technical discipline.
+                    </p>
+                    <blockquote class="text-2xl font-black text-hydro-primary mt-4 border-l-4 border-hydro-primary pl-4 py-2 bg-hydro-light-slate/50 rounded-md">
+                        <span class="text-5xl font-black text-yellow-400">0.05 mm</span> per meter of tolerance. (QC &lt; <span class="text-3xl font-bold">0.1 mm</span> Total Displacement)
+                    </blockquote>
+                    <p class="mt-4 text-lg text-slate-300">
+                        This level of ultra-precision is the foundational safeguard that virtually eliminates the **48% dynamic instability risk** before the turbine ever starts operating.
+                    </p>
+                </div>
+
+                <h2 class="text-4xl font-extrabold text-white mb-12 text-center fade-in-up delay-200">The Three Pillars of Holistic Asset Derisking</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+                    
+                    <div class="protocol-card text-center fade-in-up delay-400">
+                        <div class="bg-hydro-primary/20 inline-block p-3 rounded-full text-hydro-primary mb-4">
+                            <svg data-lucide="zap" class="w-7 h-7"></svg>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3 text-white">1. M-E Synergy Audit</h3>
+                        <p class="text-slate-300 leading-relaxed">We eliminate the "Synergy Gap" where electrical faults (poor grounding, VDE non-compliance) accelerate mechanical failure (electro-erosion, vibration). Our audit guarantees protection across both domains.</p>
+                    </div>
+
+                    <div class="protocol-card text-center fade-in-up delay-600">
+                         <div class="bg-hydro-primary/20 inline-block p-3 rounded-full text-hydro-primary mb-4">
+                            <svg data-lucide="bar-chart-3" class="w-7 h-7"></svg>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3 text-white">2. LCC & Procurement Integrity</h3>
+                        <p class="text-slate-300 leading-relaxed">We mandate that decisions prioritize **Life Cycle Cost (LCC)** over lowest CapEx. This includes mandatory verification of material compatibility to preempt **Galvanic Corrosion**, which destroys bearings prematurely.</p>
+                    </div>
+
+                    <div class="protocol-card text-center fade-in-up delay-800">
+                         <div class="bg-hydro-primary/20 inline-block p-3 rounded-full text-hydro-primary mb-4">
+                            <svg data-lucide="target" class="w-7 h-7"></svg>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3 text-white">3. Predictive Health (HHI)</h3>
+                        <p class="text-slate-300 leading-relaxed">We bridge the **SCADA-to-CEO Gap** by translating technical data into the **Hydro Health Index (HHI)**. HHI transforms reactive spending into predictive, ROI-focused investment for leadership.</p>
+                    </div>
+                </div>
+
+                <h2 class="text-4xl font-extrabold text-white mb-6 mt-12 border-b pb-2 fade-in-up">Technological Defense Systems (Engineering Immunity)</h2>
+                <div class="protocol-card bg-hydro-slate p-8 rounded-2xl shadow-xl border-l-4 border-hydro-secondary fade-in-up delay-200">
+                    <ul class="list-disc ml-6 space-y-6 text-lg text-slate-300">
+                        <li>
+                            <strong class="text-hydro-primary text-xl flex items-center gap-2 mb-1"><svg data-lucide="hexagon" class="w-6 h-6"></svg> Bio-Inspired Design:</strong> 
+                            We validate the **Dual Application Strategy** (Whale Fin Tubercle Concept) on both Runner and Distributor blades to achieve <span class="font-bold text-hydro-secondary">Hydrodynamic Harmony</span>, guaranteeing stability during critical Partial Load operation.
+                        </li>
+                        <li>
+                            <strong class="text-hydro-primary text-xl flex items-center gap-2 mb-1"><svg data-lucide="waves" class="w-6 h-6"></svg> 3D Flow Analysis (CFD):</strong> 
+                            We mandate full, coupled 3D simulation of the entire pipeline and pump-turbine unit to accurately predict pressure pulsations and flow dynamics—a necessity for <span class="font-bold text-hydro-secondary">Ultra-High Head</span> systems.
+                        </li>
+                        <li>
+                            <strong class="text-hydro-primary text-xl flex items-center gap-2 mb-1"><svg data-lucide="users" class="w-6 h-6"></svg> Human Sensor Empowerment:</strong> 
+                            We foster a culture where technicians are fully trained and ethically empowered to report flaws immediately, recognizing that a culture tolerating ethical failure also tolerates technical compromise.
+                        </li>
+                    </ul>
+                </div>
+
             </div>
         </section>
     </main>
+
     
+    <div class="md:hidden mobile-sticky-cta text-center">
+        <a href="/index.html#contact" class="w-full block text-center bg-hydro-primary hover:bg-cyan-500 text-hydro-charcoal px-5 py-3 font-bold tracking-wider uppercase shadow-2xl">
+            SCHEDULE AUDIT
+        </a>
+    </div>
+
     <footer class="bg-hydro-slate text-hydro-gray py-8 text-center border-t border-hydro-light-slate" role="contentinfo">
         <div class="container mx-auto px-6">
              
@@ -322,6 +288,7 @@
              <a href="/about-us-vision.html" class="text-slate-400 hover:text-hydro-primary">About</a>
              <a href="/index.html#services" class="text-slate-400 hover:text-hydro-primary">Services</a>
              <a href="/expert-insights.html" class="text-slate-400 hover:text-hydro-primary">Insights</a>
+             <a href="/index.html#technology" class="text-slate-400 hover:text-hydro-primary">Technology</a>
              <a href="/protocol.html" class="text-slate-400 hover:text-hydro-primary">Protocol</a>
              <a href="/index.html#contact" class="text-slate-400 hover:text-hydro-primary">Contact</a>
            </nav>
@@ -339,17 +306,6 @@
             const yearEl = document.getElementById('year');
             if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-            // Logika za mobilni meni (ako postoji)
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-
-            if (mobileMenuButton && mobileMenu) {
-                mobileMenuButton.addEventListener('click', function() {
-                    mobileMenu.classList.toggle('hidden');
-                });
-            }
-
-            // Implementacija Intersection Observera za animacije
             const observerOptions = { root: null, rootMargin: "0px", threshold: 0.1 };
             const observer = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
@@ -363,13 +319,13 @@
             document.querySelectorAll('.fade-in-up, .zoom-in').forEach(element => {
                 observer.observe(element);
             });
-
+            
             // Parallax efekt za hero sekciju
             const heroSection = document.getElementById('hero-protocol');
             if (heroSection) {
                 window.addEventListener('scroll', () => {
                     const scrollPosition = window.pageYOffset;
-                    heroSection.style.backgroundPositionY = -scrollPosition * 0.3 + 'px'; // 30% brzine skrola
+                    heroSection.style.backgroundPositionY = -scrollPosition * 0.3 + 'px';
                 });
             }
         });
