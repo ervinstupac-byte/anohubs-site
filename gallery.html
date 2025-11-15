@@ -29,10 +29,9 @@
         };
 
         // ====================================================================
-        // KLIJENTSKA LOGIKA ZA GALERIJU - KRITIČNO: PUN LIST FAJLOVA IZ VAŠIH FOLDERA
+        // KLIJENTSKA LOGIKA ZA GALERIJU - KOMPLETNA LISTA FAJLOVA (300+)
         // ====================================================================
         
-        // PAŽNJA: Ovo je automatski generirana lista svih slika koje su vidljive na Vašim snimcima ekrana.
         const imageFilenames = [
             '4 (1).PNG',
             '6.PNG',
@@ -174,7 +173,6 @@
             '20230721_113008.jpg',
             '20230721_113038.jpg',
             '20230721_113303.jpg',
-            '20230721_113303.jpg',
             '20230721_152842.jpg',
             '20230828_191056.jpg',
             '20230922_111734.jpg',
@@ -310,7 +308,8 @@
             'IMG20180220082613.jpg',
             'IMG20180220191613.jpg',
             'IMG20180223104205.jpg',
-            'IMG20180223144045.jpg'
+            'IMG20180223144045.jpg',
+            'about_us_bckgrnd.jpg' // Dodata za About Us
         ];
 
 
@@ -339,11 +338,10 @@
 
         // F-ja za navigaciju i ažuriranje slike
         function updateImage(useTransition = true) {
-            const container = document.getElementById('lightbox-image-wrapper'); // Ciljamo novi wrapper
+            const container = document.getElementById('lightbox-image-wrapper');
             const total = galleryImages.length;
             const img = galleryImages[currentIndex];
             
-            // Animacija za glatku promjenu (fade-in)
             const animationClass = useTransition ? 'animate-fade-in' : '';
             
             container.innerHTML = `
@@ -354,7 +352,7 @@
             document.getElementById('lightbox-caption').textContent = img.caption;
             document.getElementById('lightbox-counter').textContent = `Image ${currentIndex + 1} of ${total}`;
             
-            // Prikaz/skrivanje navigacionih dugmadi
+            // Onemogućavanje dugmadi
             document.getElementById('prev-btn').disabled = (currentIndex === 0);
             document.getElementById('next-btn').disabled = (currentIndex === total - 1);
         }
@@ -370,30 +368,38 @@
             }
         };
 
-        // F-ja za pokretanje/zaustavljanje slideshowa
+        // F-ja za pokretanje/zaustavljanje slideshowa (SA LOOPOM)
         let slideshowInterval;
         window.toggleSlideshow = (button) => {
             const total = galleryImages.length;
             if (slideshowInterval) {
-                // Zaustavljanje
+                // ZAUSTAVLJANJE
                 clearInterval(slideshowInterval);
                 slideshowInterval = null;
                 button.innerHTML = '▶️ Start Slideshow';
                 button.classList.remove('bg-red-600');
                 button.classList.add('bg-hydro-secondary');
             } else {
-                // Pokretanje
+                // POKRETANJE
+                // Ako je kraj, vrati se na početak (LOOP)
+                if (currentIndex === total - 1) {
+                    currentIndex = 0;
+                    updateImage(false);
+                }
+
                 button.innerHTML = '⏸️ Stop Slideshow';
                 button.classList.remove('bg-hydro-secondary');
                 button.classList.add('bg-red-600');
+                
                 slideshowInterval = setInterval(() => {
                     if (currentIndex < total - 1) {
                         navigateGallery(1);
                     } else {
-                        // Zaustavlja se na kraju liste
-                        toggleSlideshow(button);
+                        // Vraća se na početak za kontinuirani loop
+                        currentIndex = 0;
+                        updateImage(true); 
                     }
-                }, 3500); // Mijenja sliku svakih 3.5 sekundi
+                }, 3500); // 3.5 sekundi
             }
         };
 
@@ -460,9 +466,9 @@
         /* KRITIČNO: Fiksni prozor za prikaz velike slike */
         #lightbox-window {
             position: relative;
-            width: 90vw; /* 90% širine ekrana */
-            height: 85vh; /* 85% visine ekrana */
-            max-width: 1200px; /* Maksimalna širina */
+            width: 90vw; 
+            height: 85vh; 
+            max-width: 1200px; 
             background-color: #111827;
             border-radius: 12px;
             box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
@@ -471,7 +477,7 @@
             overflow: hidden;
         }
 
-        /* Kontejner za samu sliku (Održava omjer slike) */
+        /* Kontejner za samu sliku (Flex da centriramo i zauzme prostor) */
         #lightbox-image-wrapper {
             flex-grow: 1;
             display: flex;
@@ -480,7 +486,34 @@
             padding: 20px;
         }
         
-        /* Dugmad za navigaciju su sada u footeru */
+        /* Navigacione kontrole (Polu-krugovi) */
+        .lightbox-controls-wrapper {
+            position: absolute; 
+            top: 50%;
+            width: 100%;
+            transform: translateY(-50%);
+            z-index: 10; 
+            padding: 0 10px;
+        }
+
+        .lightbox-controls-wrapper button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            background-color: rgba(0, 0, 0, 0.6); 
+            color: white;
+            padding: 12px;
+            transition: background-color 0.2s, transform 0.2s;
+        }
+        #prev-btn {
+            left: 10px; 
+            border-radius: 0 50% 50% 0;
+        }
+        #next-btn {
+            right: 10px;
+            border-radius: 50% 0 0 50%;
+        }
     </style>
 </head>
 <body class="text-white bg-hydro-charcoal">
