@@ -7,8 +7,9 @@
     <meta name="description" content="Leverage our proprietary AI models to forecast potential equipment failures, reduce downtime, and optimize maintenance schedules for cost savings.">
     
     <script>
+        // === FAVICON & CACHE BUSTER LOGIC (Isti kao na index.html) ===
         const cacheBuster = "?v=" + new Date().getTime();
-        const rootPath = "/"; // Adjust if your root is different, e.g., '/anohubs-website/'
+        const rootPath = "/";
 
         const faviconLinks = [
             { rel: "shortcut icon", href: rootPath + "favicon.ico", type: "image/x-icon" },
@@ -26,7 +27,6 @@
             document.head.appendChild(el);
         });
         
-        // Favicon Aplikacije (za tab)
         const anohubFavicon = document.createElement("link");
         anohubFavicon.rel = "icon";
         anohubFavicon.type = "image/png";
@@ -40,7 +40,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script> <script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        // Tailwind Konfiguracija (Iz index.html)
         tailwind.config = {
             theme: {
                 extend: {
@@ -63,6 +66,7 @@
     </script>
     
     <style>
+        /* CSS STILOVI ZA SERVICE-PREDICTIVE.HTML */
         html { scroll-behavior: smooth; }
         body { 
             font-family: 'Inter', sans-serif; 
@@ -70,7 +74,7 @@
             color: #E5E7EB;
             
             /* POZADINA: PROLJECE ARM */
-            background-image: url('proljece_arm.jpg');
+            background-image: url('proljece_arm.jpg'); /* Provjerite putanju */
             background-size: cover;
             background-attachment: fixed;
             background-position: center; 
@@ -78,7 +82,7 @@
         }
         .header-bg { background-color: rgba(17, 24, 39, 0.95); }
         
-        /* KRITIČNO: 75% PROZIRNOSTI POZADINE SADRŽAJA */
+        /* OVERLAY NAD SADRŽAJEM */
         .content-overlay {
             background-color: rgba(30, 41, 59, 0.75); 
             padding: 3rem 2rem;
@@ -92,16 +96,11 @@
             text-shadow: 0 0 15px rgba(34, 211, 238, 0.7); 
         }
         
-        /* NOVI STILOVI ZA LOGO I IKONICE */
+        /* STILOVI LOGOTIPA (Isto kao index.html) */
         .anohubs-logo-compact { width: 110px; height: auto; color: #22d3ee; }
-        .list-icon { color: #4ade80; font-size: 1.5rem; margin-right: 0.5rem; }
+        @media (min-width: 768px) { .anohubs-logo-compact { width: 140px; } }
         
-        .text-hydro-primary { color: #22d3ee; }
-        .text-hydro-secondary { color: #4ade80; }
-        .bg-hydro-cta { background-color: #f59e0b; }
-        .text-hydro-charcoal { color: #111827; }
-
-        /* Stilovi za animacije */
+        /* STILOVI ZA ANIMACIJE (Isti kao index.html) */
         .fade-in-up, .zoom-in { opacity: 0; transition: opacity 0.8s ease-out, transform 0.8s ease-out; will-change: opacity, transform; }
         .fade-in-up { transform: translateY(30px); }
         .zoom-in { transform: scale(0.95); }
@@ -112,8 +111,6 @@
         .delay-800 { --delay: 800ms; }
         .delay-1000 { --delay: 1000ms; }
         .delay-1200 { --delay: 1200ms; }
-        
-        /* Za sticky CTA button na mobitelima */
         .mobile-sticky-cta { position: fixed; bottom: 0; left: 0; right: 0; z-index: 40; padding: 0.5rem 0; }
         
     </style>
@@ -237,7 +234,7 @@
              <a href="/index.html#contact" class="text-slate-400 hover:text-hydro-primary">Contact</a>
            </nav>
            
-           <p class="text-sm">&copy; 2025 Anohubs Inc. All rights reserved.</p>
+           <p class="text-sm">&copy; <span id="year"></span> Anohubs Inc. All rights reserved.</p>
         </div>
     </footer>
 
@@ -269,7 +266,7 @@
             });
         });
 
-        // Logika za mobilni meni (ako je potrebna na stranici)
+        // Logika za mobilni meni (kopirana iz index.html)
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         if (mobileMenuButton) {
             mobileMenuButton.addEventListener('click', function() {
@@ -282,7 +279,6 @@
                 mobileMenu.classList.toggle('w-full');
                 mobileMenu.classList.toggle('shadow-lg');
             });
-             // Hide mobile menu when a link is clicked
             document.querySelectorAll('#mobile-menu a').forEach(item => {
                 item.addEventListener('click', () => {
                     document.getElementById('mobile-menu').classList.add('hidden');
@@ -290,6 +286,7 @@
                 });
             });
         }
+        
     </script>
 </body>
 </html>
