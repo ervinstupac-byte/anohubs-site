@@ -109,19 +109,18 @@
             'dji_fly_20230630_105622_454_1688093955943_photo_optimized_result.webp', 'dji_fly_20230703_174842_482_1688377737493_photo_optimized_result.webp',
         ];
 
-        // Priprema galerije (Sada koristi prazan caption za brže učitavanje)
+        // Priprema galerije 
         const galleryImages = imageFilenames.map(filename => ({
             src: 'slike/gallery/' + filename, 
-            caption: '' // Prazan opis umjesto parsiranja naziva fajla
+            caption: '' // Prazan opis
         }));
         
         let currentIndex = 0;
         let slideshowInterval;
         const totalImages = galleryImages.length;
         let controlHideTimeout;
-        const LIGHTBOX_HIDE_DELAY = 5000; // 5 sekundi
+        const LIGHTBOX_HIDE_DELAY = 5000; 
 
-        // Globalne reference na elemente (postavljaju se u DOMContentLoaded)
         let modalElement;
         let slideshowBtn;
 
@@ -145,7 +144,6 @@
         }
 
         function hideControls() {
-            // Skrij kontrole samo ako Slideshow NIJE aktivan
             if (modalElement && !slideshowInterval) { 
                 modalElement.classList.add('controls-hidden');
             }
@@ -155,7 +153,6 @@
             clearTimeout(controlHideTimeout);
             showControls();
             
-            // Postavi novi timeout samo ako Slideshow NIJE aktivan
             if (slideshowBtn && !slideshowBtn.textContent.includes('Stop')) {
                  controlHideTimeout = setTimeout(hideControls, LIGHTBOX_HIDE_DELAY); 
             }
@@ -188,16 +185,12 @@
                 <img src="${img.src}" alt="AnoHUB Gallery Image" class="max-w-full max-h-full object-contain ${animationClass}" style="animation-duration: 0.3s;">
             `;
             
-            // Uklanjamo prikaz caption-a
-            // document.getElementById('lightbox-caption').textContent = img.caption;
-            
             document.getElementById('lightbox-counter').textContent = `Image ${currentIndex + 1} of ${totalImages}`;
             
             document.getElementById('prev-btn').disabled = (currentIndex === 0);
             document.getElementById('next-btn').disabled = (currentIndex === totalImages - 1);
         }
 
-        // F-ja za navigaciju (izložena globalno)
         window.navigateGallery = (direction) => {
             const newIndex = currentIndex + direction;
 
@@ -280,6 +273,13 @@
                 });
             }
 
+            // KRITIČNO: POPRAVAK PRIKAZA BROJA SLIKA
+            const totalCountElements = document.querySelectorAll('.total-images-placeholder');
+            totalCountElements.forEach(el => {
+                el.textContent = totalImages;
+            });
+
+
             // Listener za navigaciju tastaturom
             document.addEventListener('keydown', (e) => {
                 if (!modalElement.classList.contains('hidden')) {
@@ -314,6 +314,23 @@
         .bg-hydro-slate { background-color: #1E293B; }
 
         .anohubs-logo-img { max-height: 35px; width: auto; color: #22d3ee; display: block; }
+        
+        /* === ESTETSKA POBOLJŠANJA === */
+        .h1-glow {
+            /* Dodajemo sjenu tekstu za "životniji" izgled */
+            text-shadow: 0 0 5px rgba(34, 211, 238, 0.5), 0 0 10px rgba(34, 211, 238, 0.3);
+        }
+        .cta-shadow {
+            /* Jača sjena za dugme */
+            box-shadow: 0 10px 15px -3px rgba(74, 222, 128, 0.4), 0 4px 6px -2px rgba(74, 222, 128, 0.2);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .cta-shadow:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 25px -5px rgba(74, 222, 128, 0.6), 0 10px 10px -5px rgba(74, 222, 128, 0.4);
+        }
+        /* ============================ */
+
         .thumbnail-img {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
@@ -387,7 +404,7 @@
              pointer-events: none; 
         }
         .lightbox-modal.controls-hidden {
-            cursor: none; /* Sakrij kursor */
+            cursor: none; 
         }
 
 
@@ -445,18 +462,18 @@
         <section class="py-20 bg-hydro-slate text-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 
-                <h1 class="text-5xl md:text-6xl font-extrabold text-hydro-primary mb-4 tracking-tighter fade-in-up">
+                <h1 class="text-5xl md:text-6xl font-extrabold text-hydro-primary mb-4 tracking-tighter fade-in-up h1-glow">
                     THE HYDRO-VISION GALLERY
                 </h1>
                 <p class="text-xl md:text-2xl font-light text-cyan-200 mb-12 max-w-4xl mx-auto fade-in-up delay-200">
-                    A panoramic view of the global water capital, captured in over ${totalImages} images. This visual manifesto showcases the ecosystems we protect and the environments where the AnoHUB Symbiosis Standard is mandatory.
+                    A panoramic view of the global water capital, captured in over <span class="total-images-placeholder">...</span> images. This visual manifesto showcases the ecosystems we protect and the environments where the AnoHUB Symbiosis Standard is mandatory.
                 </p>
 
                 <div class="mb-12 fade-in-up delay-400">
                     <button onclick="openModal(0); toggleSlideshow(document.getElementById('slideshow-btn'))" 
-                            class="bg-hydro-secondary hover:bg-green-500 text-hydro-charcoal px-8 py-3 rounded-full font-bold transition text-lg shadow-xl flex items-center justify-center mx-auto space-x-2">
+                            class="bg-hydro-secondary hover:bg-green-500 text-hydro-charcoal px-8 py-3 rounded-full font-bold transition text-lg shadow-xl flex items-center justify-center mx-auto space-x-2 cta-shadow">
                         <svg data-lucide="play" class="w-6 h-6"></svg>
-                        <span>START FULL SLIDESHOW (${totalImages} IMAGES)</span>
+                        <span>START FULL SLIDESHOW (<span class="total-images-placeholder">...</span> IMAGES)</span>
                     </button>
                 </div>
 
