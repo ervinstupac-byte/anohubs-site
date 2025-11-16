@@ -64,11 +64,17 @@
             const modelViewer = document.querySelector('model-viewer');
             if (modelViewer) {
                 modelViewer.addEventListener('progress', (event) => {
-                    const bar = document.querySelector('.update-bar');
-                    if (bar) {
+                    const barContainer = document.querySelector('.update-bar');
+                    if (barContainer) {
                         const progress = event.detail.totalProgress;
-                        bar.style.width = `${progress * 100}%`;
+                        const bar = barContainer.querySelector('div');
+                        if(bar) bar.style.width = `${progress * 100}%`;
                     }
+                });
+                modelViewer.addEventListener('load', () => {
+                     // Sakrijte progress bar nakon učitavanja
+                     const barContainer = document.querySelector('.progress-bar');
+                     if (barContainer) barContainer.style.display = 'none';
                 });
             }
         });
@@ -115,9 +121,8 @@
             box-shadow: 0 0 15px rgba(34, 211, 238, 0.5);
             margin: 20px auto; 
             display: block; 
-            /* Dodatni stil za loading bar i interakciju */
-            --progress-bar-color: var(--tw-colors-hydro-primary);
-            --poster-color: var(--tw-colors-hydro-charcoal);
+            --progress-bar-color: #22d3ee; /* Koristimo hydro-primary */
+            --poster-color: #111827; /* Koristimo hydro-charcoal */
         }
         /* STIL ZA PROGRESS BAR */
         .progress-bar {
@@ -131,7 +136,7 @@
         .progress-bar .update-bar {
             height: 10px;
             width: 80%;
-            background-color: #334155; /* Light Slate */
+            background-color: #334155; /* Hydro Light Slate */
             border-radius: 5px;
             overflow: hidden;
             margin-top: 10px;
@@ -162,7 +167,7 @@
         /* DODATNO: STILOVI ZA LISTE */
         .tech-list li {
             padding: 0.75rem;
-            background-color: rgba(51, 65, 85, 0.5); /* Hydro Light Slate transparent */
+            background-color: rgba(51, 65, 85, 0.5); 
             border-radius: 0.5rem;
         }
 
@@ -177,7 +182,7 @@
                  <img src="/logo.svg" alt="Anohubs Logo" class="anohubs-logo-compact">
             </a>
             
-            <nav class="flex items-center space-x-4 font-extrabold text-sm" role="navigation">
+            <nav class="hidden md:flex items-center space-x-4 font-extrabold text-sm" role="navigation">
                 <a href="/expert-insights.html" class="text-slate-300 hover:text-cyan-400 transition">Insights</a>
                 <a href="/protocol.html" class="text-slate-300 hover:text-cyan-400 transition">Protocol</a>
                 <a href="/index.html#contact" class="bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-4 py-2 rounded-full transition">Request Audit</a>
@@ -327,24 +332,6 @@
             
             const yearEl = document.getElementById('year');
             if (yearEl) yearEl.textContent = new Date().getFullYear();
-            
-            // Logika za progress bar (za GLB fajl)
-            const modelViewer = document.querySelector('model-viewer');
-            if (modelViewer) {
-                modelViewer.addEventListener('progress', (event) => {
-                    const barContainer = document.querySelector('.update-bar');
-                    if (barContainer) {
-                        const progress = event.detail.totalProgress;
-                        const bar = barContainer.querySelector('div');
-                        if(bar) bar.style.width = `${progress * 100}%`;
-                    }
-                });
-                modelViewer.addEventListener('load', () => {
-                     // Sakrijte progress bar nakon učitavanja
-                     const barContainer = document.querySelector('.progress-bar');
-                     if (barContainer) barContainer.style.display = 'none';
-                });
-            }
         });
         
     </script>
