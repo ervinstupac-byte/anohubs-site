@@ -116,6 +116,25 @@
         }));
         
         let currentIndex = 0;
+        let slideshowInterval;
+        const totalImages = galleryImages.length;
+
+
+        // === FULL SCREEN LOGIKA ===
+        function toggleFullScreen() {
+            const element = document.getElementById('lightbox-window');
+            if (!document.fullscreenElement) {
+                // Ulazak u Fullscreen
+                element.requestFullscreen().catch(err => {
+                    alert(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+                });
+            } else {
+                // Izlazak iz Fullscreen
+                document.exitFullscreen();
+            }
+        }
+
+        // === KLIJENTSKA LOGIKA (GLAVNE FUNKCIJE) ===
 
         function openModal(index) {
             currentIndex = index;
@@ -132,12 +151,11 @@
             document.body.classList.add('overflow-hidden');
         }
 
-        // F-ja za navigaciju i ažuriranje slike
         function updateImage(useTransition = true) {
             const container = document.getElementById('lightbox-image-wrapper');
-            const total = galleryImages.length;
             const img = galleryImages[currentIndex];
             
+            // Animacija (CSS se brine za stvarno postavljanje fade-in klase)
             const animationClass = useTransition ? 'animate-fade-in' : '';
             
             // Slika je unutar fiksnog wrappera
@@ -147,28 +165,24 @@
             
             // Ažuriranje opisa
             document.getElementById('lightbox-caption').textContent = img.caption;
-            document.getElementById('lightbox-counter').textContent = `Image ${currentIndex + 1} of ${total}`;
+            document.getElementById('lightbox-counter').textContent = `Image ${currentIndex + 1} of ${totalImages}`;
             
             // Onemogućavanje dugmadi
             document.getElementById('prev-btn').disabled = (currentIndex === 0);
-            document.getElementById('next-btn').disabled = (currentIndex === total - 1);
+            document.getElementById('next-btn').disabled = (currentIndex === totalImages - 1);
         }
 
         // F-ja za navigaciju (izložena globalno)
         window.navigateGallery = (direction) => {
-            const total = galleryImages.length;
             const newIndex = currentIndex + direction;
 
-            if (newIndex >= 0 && newIndex < total) {
+            if (newIndex >= 0 && newIndex < totalImages) {
                 currentIndex = newIndex;
                 updateImage(true); 
             }
         };
 
-        // F-ja za pokretanje/zaustavljanje slideshowa (SA LOOPOM)
-        let slideshowInterval;
         window.toggleSlideshow = (button) => {
-            const total = galleryImages.length;
             if (slideshowInterval) {
                 // ZAUSTAVLJANJE
                 clearInterval(slideshowInterval);
@@ -178,8 +192,7 @@
                 button.classList.add('bg-hydro-secondary');
             } else {
                 // POKRETANJE
-                // Ako je kraj, vrati se na početak (LOOP)
-                if (currentIndex === total - 1) {
+                if (currentIndex === totalImages - 1) {
                     currentIndex = 0;
                     updateImage(false);
                 }
@@ -189,7 +202,7 @@
                 button.classList.add('bg-red-600');
                 
                 slideshowInterval = setInterval(() => {
-                    if (currentIndex < total - 1) {
+                    if (currentIndex < totalImages - 1) {
                         navigateGallery(1);
                     } else {
                         // Vraća se na početak za kontinuirani loop
@@ -209,25 +222,73 @@
             if (slideshowBtn && slideshowBtn.textContent.includes('Stop')) {
                  toggleSlideshow(slideshowBtn);
             }
+
+            // Izlaz iz Fullscreen-a ako je aktivan
+            if (document.fullscreenElement) {
+                document.exitFullscreen();
+            }
         }
         
-        // Inicijalizacija grid-a i ikona
+        // === INICIJALIZACIJA ===
+
         document.addEventListener("DOMContentLoaded", function() {
             if (typeof lucide !== 'undefined') {
                 lucide.createIcons();
             }
             
-            // Generisanje svih thumbnailova
             const grid = document.querySelector('.gallery-grid');
             if (grid) {
+                // 1. Generisanje praznih placeholder-a za lazy loading (Za brzi prikaz stranice)
                 galleryImages.forEach((img, index) => {
-                    grid.innerHTML += `
-                        <div onclick="openModal(${index})" class="thumbnail-item">
-                            <img src="${img.src}" alt="${img.caption}" class="thumbnail-img w-full h-36 object-cover rounded-lg" loading="lazy">
-                        </div>
-                    `;
+                    const placeholder = document.createElement('div');
+                    placeholder.className = 'thumbnail-item';
+                    placeholder.dataset.index = index;
+                    placeholder.innerHTML = `<div class="w-full h-36 bg-hydro-slate/50 rounded-lg animate-pulse"></div>`; // Placeholder
+                    grid.appendChild(placeholder);
+                });
+
+                // 2. Implementacija Intersection Observer-a za stvarni lazy loading
+                const observer = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const item = entry.target;
+                            const index = parseInt(item.dataset.index);
+                            const imgData = galleryImages[index];
+
+                            // Stvarni thumbnail:
+                            item.innerHTML = `
+                                <img src="${imgData.src}" alt="${imgData.caption}" 
+                                     class="thumbnail-img w-full h-36 object-cover rounded-lg" 
+                                     loading="lazy"
+                                     onclick="openModal(${index})">
+                            `;
+                            // Prekid posmatranja nakon učitavanja
+                            observer.unobserve(item);
+                        }
+                    });
+                }, {
+                    rootMargin: '0px',
+                    threshold: 0.05 // Učitaj kad je 5% elementa vidljivo
+                });
+
+                // Posmatraj sve generisane thumb placeholder-e
+                document.querySelectorAll('.thumbnail-item').forEach(item => {
+                    observer.observe(item);
                 });
             }
+
+            // Dodaj listener za navigaciju tastaturom kad je modal otvoren
+            document.addEventListener('keydown', (e) => {
+                if (!document.getElementById('lightbox-modal').classList.contains('hidden')) {
+                    if (e.key === 'ArrowLeft') {
+                        navigateGallery(-1);
+                    } else if (e.key === 'ArrowRight') {
+                        navigateGallery(1);
+                    } else if (e.key === 'Escape') {
+                        closeModal();
+                    }
+                }
+            });
         });
     </script>
     
@@ -236,6 +297,15 @@
         body { background-color: #111827; }
         .header-bg { background-color: rgba(17, 24, 39, 0.95); }
         .bg-hydro-slate { background-color: #1E293B; }
+        
+        /* Animacija za placeholder */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .animate-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
 
         .anohubs-logo-img { max-height: 35px; width: auto; color: #22d3ee; display: block; }
         .thumbnail-img {
@@ -273,6 +343,16 @@
             flex-direction: column;
             overflow: hidden;
         }
+        /* Fiks za Fullscreen */
+        #lightbox-window:fullscreen {
+            width: 100vw;
+            height: 100vh;
+            max-width: none;
+            border-radius: 0;
+            background-color: black;
+            padding: 0;
+        }
+
 
         /* Kontejner za samu sliku (Flex za centriranje) */
         #lightbox-image-wrapper {
@@ -341,14 +421,14 @@
                     THE HYDRO-VISION GALLERY
                 </h1>
                 <p class="text-xl md:text-2xl font-light text-cyan-200 mb-12 max-w-4xl mx-auto fade-in-up delay-200">
-                    A panoramic view of the global water capital, captured in over ${galleryImages.length} images. This visual manifesto showcases the ecosystems we protect and the environments where the AnoHUB Symbiosis Standard is mandatory.
+                    A panoramic view of the global water capital, captured in over ${totalImages} images. This visual manifesto showcases the ecosystems we protect and the environments where the AnoHUB Symbiosis Standard is mandatory.
                 </p>
 
                 <div class="mb-12 fade-in-up delay-400">
                     <button onclick="openModal(0); toggleSlideshow(document.getElementById('slideshow-btn'))" 
                             class="bg-hydro-secondary hover:bg-green-500 text-hydro-charcoal px-8 py-3 rounded-full font-bold transition text-lg shadow-xl flex items-center justify-center mx-auto space-x-2">
                         <svg data-lucide="play" class="w-6 h-6"></svg>
-                        <span>START FULL SLIDESHOW (${galleryImages.length} IMAGES)</span>
+                        <span>START FULL SLIDESHOW (${totalImages} IMAGES)</span>
                     </button>
                 </div>
 
@@ -356,7 +436,7 @@
                     </div>
                 
                 <script>
-                    if (galleryImages.length === 0) {
+                    if (totalImages === 0) {
                         document.write('<p class="text-xl text-red-400 mt-20">Nema pronađenih slika. Molimo provjerite listu `imageFilenames` u skripti.</p>');
                     }
                 </script>
@@ -374,18 +454,23 @@
             
             <div class="p-4 bg-hydro-slate flex justify-between items-center relative">
                 
-                <div class="text-center">
+                <div class="text-left">
                     <p id="lightbox-caption" class="text-sm font-semibold text-slate-300"></p>
                     <p id="lightbox-counter" class="text-xs text-slate-500"></p>
                 </div>
                 
-                <div class="flex space-x-3">
-                     <button onclick="toggleSlideshow(this)" id="slideshow-btn" class="bg-hydro-secondary hover:bg-green-500 text-hydro-charcoal px-4 py-2 rounded-full font-bold transition text-sm">
-                         ▶️ Start Slideshow
-                     </button>
-                     <button onclick="closeModal()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-full font-bold transition text-sm">
-                         Close Gallery
-                     </button>
+                <div class="flex space-x-3 items-center">
+                    <button onclick="toggleFullScreen()" class="bg-hydro-primary/20 hover:bg-hydro-primary/40 text-hydro-primary p-2 rounded-full transition text-sm flex items-center" aria-label="Toggle Fullscreen">
+                        <svg data-lucide="maximize" class="w-5 h-5"></svg>
+                    </button>
+
+                    <button onclick="toggleSlideshow(this)" id="slideshow-btn" class="bg-hydro-secondary hover:bg-green-500 text-hydro-charcoal px-4 py-2 rounded-full font-bold transition text-sm">
+                        ▶️ Start Slideshow
+                    </button>
+                    
+                    <button onclick="closeModal()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-full font-bold transition text-sm">
+                        Close Gallery
+                    </button>
                 </div>
 
             </div>
