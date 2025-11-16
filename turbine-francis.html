@@ -59,12 +59,23 @@
             
             const yearEl = document.getElementById('year');
             if (yearEl) yearEl.textContent = new Date().getFullYear();
+            
+            // Logika za progress bar (za GLB fajl)
+            const modelViewer = document.querySelector('model-viewer');
+            if (modelViewer) {
+                modelViewer.addEventListener('progress', (event) => {
+                    const bar = document.querySelector('.update-bar');
+                    if (bar) {
+                        const progress = event.detail.totalProgress;
+                        bar.style.width = `${progress * 100}%`;
+                    }
+                });
+            }
         });
     </script>
     
     <style>
-        /* CSS STILOVI ZA TURBINE PAGES - OBJEKTIVNI STILOVI */
-        html { scroll-behavior: smooth; }
+        /* CSS STILOVI ZA TURBINE PAGES */
         body { 
             font-family: 'Inter', sans-serif; 
             background-color: #111827; 
@@ -105,9 +116,35 @@
             margin: 20px auto; 
             display: block; 
             /* Dodatni stil za loading bar i interakciju */
-            --progress-bar-color: var(--tw-colors-hydro-primary);
-            --poster-color: var(--tw-colors-hydro-charcoal);
+            --progress-bar-color: #22d3ee; /* Koristimo hydro-primary */
+            --poster-color: #111827; /* Koristimo hydro-charcoal */
         }
+        /* STIL ZA PROGRESS BAR */
+        .progress-bar {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        .progress-bar .update-bar {
+            height: 10px;
+            width: 80%;
+            background-color: #334155;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        .progress-bar .update-bar::before {
+            content: '';
+            display: block;
+            height: 100%;
+            background-color: #22d3ee;
+            width: 0%;
+            transition: width 0.3s;
+        }
+
 
         /* STILOVI ZA ANIMACIJE */
         .fade-in-up, .zoom-in { opacity: 0; transition: opacity 0.8s ease-out, transform 0.8s ease-out; will-change: opacity, transform; }
@@ -125,7 +162,7 @@
         /* DODATNO: STILOVI ZA LISTE */
         .tech-list li {
             padding: 0.75rem;
-            background-color: rgba(51, 65, 85, 0.5); /* Hydro Light Slate transparent */
+            background-color: rgba(51, 65, 85, 0.5); 
             border-radius: 0.5rem;
         }
 
@@ -140,7 +177,7 @@
                  <img src="/logo.svg" alt="Anohubs Logo" class="anohubs-logo-compact">
             </a>
             
-            <nav class="hidden md:flex items-center space-x-4 font-extrabold text-sm" role="navigation">
+            <nav class="flex items-center space-x-4 font-extrabold text-sm" role="navigation">
                 <a href="/expert-insights.html" class="text-slate-300 hover:text-cyan-400 transition">Insights</a>
                 <a href="/protocol.html" class="text-slate-300 hover:text-cyan-400 transition">Protocol</a>
                 <a href="/index.html#contact" class="bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-4 py-2 rounded-full transition">Request Audit</a>
@@ -166,22 +203,29 @@
                     </h2>
                     
                     <model-viewer 
-                        src="francis_turbine.glb" 
+                        src="./francis_turbine.glb" /* Putanja do Vašeg GLB fajla (33.5MB) */
                         alt="3D Francis Turbine Runner"
                         camera-controls 
                         auto-rotate 
                         ar 
-                        loading="eager"
+                        loading="eager" 
                         shadow-intensity="1"
                         exposure="1.5"
                         camera-orbit="180deg 85deg 1.5m">
+                        
+                        <div slot="progress-bar" class="progress-bar">
+                            <span class="text-white text-base font-semibold">Loading 3D Model... Please wait.</span>
+                            <div class="update-bar" style="width: 80%;">
+                                </div>
+                        </div>
+
                     </model-viewer>
                 </div>
                 
                 <div class="space-y-10 text-lg mt-8 fade-in-up delay-600">
                     <div class="p-6 rounded-xl bg-hydro-light-slate/80 shadow-lg"> 
                         <h2 class="text-2xl font-bold text-white mb-3 flex items-center gap-2">
-                            <svg data-lucide="droplet" class="w-6 h-6 text-hydro-cta"></svg> The Francis Challenge: Pressure and Flow Dynamics
+                            <svg data-lucide="compass" class="w-6 h-6 text-hydro-cta"></svg> The Francis Challenge: Pressure and Flow Dynamics
                         </h2>
                         <p class="text-slate-300 leading-relaxed">
                             The Francis turbine operates under immense hydraulic pressure where efficiency hinges on maintaining perfect flow over the complex runner geometry. Our specialized audits ensure that this geometry is optimal and that pressure differentials do not lead to localized structural failure.
@@ -199,14 +243,16 @@
                         <p class="text-slate-300">We target the specific vulnerabilities of Francis runners and guide vanes:</p>
                         
                         <ul class="space-y-4 mt-4 tech-list">
-                            <li class="flex items-start">
-                                <svg data-lucide="maximize" class="w-6 h-6 text-hydro-primary mr-3"></svg>
+                            <li class="flex items-start p-4 bg-hydro-slate/70 rounded-lg shadow-md hover:bg-hydro-slate transition duration-300 delay-1000">
+                                <div class="bg-hydro-primary/20 p-2 rounded-full mr-4 flex-shrink-0">
+                                    <svg data-lucide="maximize" class="w-6 h-6 text-hydro-primary"></svg>
+                                </div>
                                 <div>
                                     <strong class="text-white text-xl block mb-1">CFD Optimization:</strong> 
                                     <p class="text-slate-300 text-base">Utilizing Computational Fluid Dynamics (CFD) to validate and adjust blade profiles and flow paths, ensuring maximum hydraulic efficiency and reducing hydraulic hammer risks.</p>
                                 </div>
                             </li>
-                            <li class="flex items-start">
+                            <li class="flex items-start p-4 bg-hydro-slate/70 rounded-lg shadow-md hover:bg-hydro-slate transition duration-300 delay-1100">
                                 <div class="bg-hydro-primary/20 p-2 rounded-full mr-4 flex-shrink-0">
                                     <svg data-lucide="ear" class="w-6 h-6 text-hydro-primary"></svg>
                                 </div>
@@ -215,7 +261,7 @@
                                     <p class="text-slate-300 text-base">Non-invasive acoustic monitoring to detect the precise onset and location of cavitation, allowing for preemptive intervention and repair before damage escalates.</p>
                                 </div>
                             </li>
-                            <li class="flex items-start">
+                            <li class="flex items-start p-4 bg-hydro-slate/70 rounded-lg shadow-md hover:bg-hydro-slate transition duration-300 delay-1200">
                                 <div class="bg-hydro-primary/20 p-2 rounded-full mr-4 flex-shrink-0">
                                     <svg data-lucide="minus-square" class="w-6 h-6 text-hydro-primary"></svg>
                                 </div>
@@ -224,7 +270,7 @@
                                     <p class="text-slate-300 text-base">Auditing turbine performance and control logic during off-design (partial load) operation, where flow separation and resulting vibrations pose the greatest long-term threat.</p>
                                 </div>
                             </li>
-                            <li class="flex items-start">
+                            <li class="flex items-start p-4 bg-hydro-slate/70 rounded-lg shadow-md hover:bg-hydro-slate transition duration-300 delay-1300">
                                 <div class="bg-hydro-primary/20 p-2 rounded-full mr-4 flex-shrink-0">
                                     <svg data-lucide="link" class="w-6 h-6 text-hydro-primary"></svg>
                                 </div>
@@ -247,7 +293,7 @@
         </section>
     </main>
     
-    <footer class="bg-slate-900/70 text-gray-400 py-8 text-center border-t border-slate-700" role="contentinfo">
+    <footer class="bg-hydro-slate text-hydro-gray py-8 text-center border-t border-hydro-light-slate" role="contentinfo">
         <div class="container mx-auto px-6">
              
            <a href="/index.html#hero" class="mb-4 block" aria-label="Anohubs Logo - Back to top">
