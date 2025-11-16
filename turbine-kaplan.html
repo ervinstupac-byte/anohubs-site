@@ -59,6 +59,18 @@
             
             const yearEl = document.getElementById('year');
             if (yearEl) yearEl.textContent = new Date().getFullYear();
+            
+            // Logika za progress bar (za GLB fajl)
+            const modelViewer = document.querySelector('model-viewer');
+            if (modelViewer) {
+                modelViewer.addEventListener('progress', (event) => {
+                    const bar = document.querySelector('.update-bar');
+                    if (bar) {
+                        const progress = event.detail.totalProgress;
+                        bar.style.width = `${progress * 100}%`;
+                    }
+                });
+            }
         });
     </script>
     
@@ -70,7 +82,7 @@
             color: #E5E7EB;
             
             /* POZADINA: ORLJANI UNA */
-            background-image: url('orljani_Una.jpg');
+            background-image: url('orljani_Una.jpg'); 
             background-size: cover;
             background-attachment: fixed;
             background-position: center; 
@@ -94,17 +106,45 @@
         }
         .text-glow { text-shadow: 0 0 15px rgba(34, 211, 238, 0.7); }
 
-        /* STILOVI ZA 3D MODEL VIEWER */
+        /* KRITIČNO: STIL ZA 3D MODEL VIEWER */
         model-viewer {
             width: 100%;
-            height: 400px;
+            height: 400px; /* Fiksna visina za model */
             background-color: #111827;
-            border-radius: 0.5rem;
+            border-radius: 0.75rem;
             box-shadow: 0 0 15px rgba(34, 211, 238, 0.5);
-            /* Centriranje u kontejneru */
             margin: 20px auto; 
             display: block; 
+            /* Dodatni stil za loading bar i interakciju */
+            --progress-bar-color: var(--tw-colors-hydro-primary);
+            --poster-color: var(--tw-colors-hydro-charcoal);
         }
+        /* STIL ZA PROGRESS BAR */
+        .progress-bar {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        .progress-bar .update-bar {
+            height: 10px;
+            width: 80%;
+            background-color: #334155; /* Light Slate */
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        .progress-bar .update-bar::before {
+            content: '';
+            display: block;
+            height: 100%;
+            background-color: #22d3ee;
+            width: 0%;
+            transition: width 0.3s;
+        }
+
 
         /* STILOVI ZA ANIMACIJE */
         .fade-in-up, .zoom-in { opacity: 0; transition: opacity 0.8s ease-out, transform 0.8s ease-out; will-change: opacity, transform; }
@@ -119,6 +159,13 @@
         .delay-1200 { --delay: 1200ms; }
         .mobile-sticky-cta { position: fixed; bottom: 0; left: 0; right: 0; z-index: 40; padding: 0.5rem 0; }
         
+        /* DODATNO: STILOVI ZA LISTE */
+        .tech-list li {
+            padding: 0.75rem;
+            background-color: rgba(51, 65, 85, 0.5); /* Hydro Light Slate transparent */
+            border-radius: 0.5rem;
+        }
+
     </style>
 </head>
 <body class="text-white bg-hydro-charcoal">
@@ -132,7 +179,7 @@
             
             <nav class="flex items-center space-x-4 font-extrabold text-sm" role="navigation">
                 <a href="/expert-insights.html" class="text-slate-300 hover:text-cyan-400 transition">Insights</a>
-                
+                <a href="/protocol.html" class="text-slate-300 hover:text-cyan-400 transition">Protocol</a>
                 <a href="/index.html#contact" class="bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-4 py-2 rounded-full transition">Request Audit</a>
             </nav>
             
@@ -150,40 +197,42 @@
                     Precision diagnostics for low-head turbines: Ensuring optimal adjustable blade performance and mitigating cavitation risk.
                 </p>
                 
-                <div class="space-y-10 text-lg">
-                    <div class="p-6 rounded-xl bg-hydro-light-slate/80 shadow-lg fade-in-up delay-400"> 
+                <div class="bg-hydro-light-slate/80 p-6 rounded-lg shadow-lg fade-in-up delay-400">
+                    <h2 class="text-3xl font-bold text-white mb-4 flex items-center gap-3">
+                        <svg data-lucide="layers-3d" class="w-7 h-7 text-hydro-secondary"></svg> Interactive 3D Model: Kaplan Hydraulic Hub
+                    </h2>
+                    
+                    <model-viewer 
+                        src="./H_Kaplan_Spiral.glb" /* Putanja do Vašeg GLB fajla */
+                        alt="3D Horizontal Kaplan Turbine with Spiral Casing"
+                        camera-controls 
+                        auto-rotate 
+                        ar 
+                        loading="eager" 
+                        shadow-intensity="1"
+                        exposure="1.5"
+                        camera-orbit="180deg 85deg 1.5m">
+                        
+                        <div slot="progress-bar" class="progress-bar text-sm text-white">
+                            Loading 3D Model (approx. 33MB)... Please wait.
+                            <div class="update-bar" style="width: 80%;">
+                                </div>
+                        </div>
+                    </model-viewer>
+                    </div>
+                
+                <div class="space-y-10 text-lg mt-8 fade-in-up delay-600">
+                    <div class="p-6 rounded-xl bg-hydro-light-slate/80 shadow-lg"> 
                         <h2 class="text-2xl font-bold text-white mb-3 flex items-center gap-2">
                             <svg data-lucide="compass" class="w-6 h-6 text-hydro-cta"></svg> The Kaplan Challenge: Adjustable Blade Dynamics
                         </h2>
                         <p class="text-slate-300 leading-relaxed">
-                            The **Kaplan Turbine**, ideal for high flow rates and low-to-medium head applications, relies fundamentally on the precise control of its **adjustable runner blades**. Unlike fixed-blade turbines, the Kaplan's ability to maintain peak efficiency across wide variations in water flow makes its mechanical integrity acutely dependent on the smooth operation of its hydraulic hub and servo system.
+                            The **Kaplan Turbine**, ideal for high flow rates and low-to-medium head applications, relies fundamentally on the precise control of its **adjustable runner blades**. Any wear or misalignment in the hydraulic hub mechanism leads to **blade pitch errors**, causing significant hydraulic instability, increased vibrations, and major efficiency loss.
                         </p>
                         <p class="text-slate-400 mt-3">
-                            Any wear or misalignment in the hub mechanism leads to **blade pitch errors**, causing significant hydraulic instability, increased vibrations (contributing to the 48% risk), and major efficiency loss, especially during load changes.
+                            Maintaining the integrity of the hydraulic hub and servo system is paramount, as the Kaplan's high efficiency across varied water flow depends entirely on its mechanical precision.
                         </p>
                     </div>
-                    
-                    <div class="bg-hydro-light-slate/80 p-6 rounded-lg shadow-lg fade-in-up delay-600">
-                        <h2 class="text-3xl font-bold text-hydro-secondary mb-4 flex items-center gap-3">
-                            <svg data-lucide="layers-3d" class="w-7 h-7"></svg> 3D Model: Horizontal Kaplan with Spiral Casing
-                        </h2>
-                        <p class="text-slate-400 mb-4">
-                            Explore the complexity of the **Horizontal Kaplan Turbine**. Our analysis protocols use 3D models to precisely map flow and pressure, revealing vulnerabilities often hidden in 2D diagrams.
-                        </p>
-                        
-                        <model-viewer 
-                            src="H_Kaplan_Spiral.glb" 
-                            alt="3D model of a Horizontal Kaplan Turbine with Spiral Casing"
-                            camera-controls 
-                            auto-rotate 
-                            ar 
-                            loading="eager"
-                            shadow-intensity="1"
-                            exposure="1.5"
-                            camera-orbit="180deg 85deg 1.5m">
-                            <div slot="progress-bar"></div>
-                        </model-viewer>
-                        </div>
 
                     <div class="space-y-6 fade-in-up delay-800">
                         <h2 class="text-3xl font-bold text-hydro-secondary mb-4 flex items-center gap-3">
@@ -193,39 +242,39 @@
                         <p class="text-slate-300">We target the dynamic mechanisms unique to the Kaplan design:</p>
                         
                         <ul class="space-y-6">
-                            <li class="flex items-start p-4 bg-hydro-slate/70 rounded-lg shadow-md hover:bg-hydro-slate transition duration-300 fade-in-up delay-1000">
+                            <li class="flex items-start p-4 bg-hydro-slate/70 rounded-lg shadow-md hover:bg-hydro-slate transition duration-300 delay-1000">
                                 <div class="bg-hydro-primary/20 p-2 rounded-full mr-4 flex-shrink-0">
                                     <svg data-lucide="settings" class="w-6 h-6 text-hydro-primary"></svg>
                                 </div>
                                 <div>
                                     <strong class="text-white text-xl block mb-1">Adjustable Blade Mechanism Check:</strong> 
-                                    <p class="text-slate-300">Detailed diagnostic of the hydraulic servo system and control rods to ensure precise pitch control, eliminate mechanical play, and prevent flow instability.</p>
+                                    <p class="text-slate-300 text-base">Detailed diagnostic of the hydraulic servo system and control rods to ensure precise pitch control, eliminate mechanical play, and prevent flow instability.</p>
                                 </div>
                             </li>
-                            <li class="flex items-start p-4 bg-hydro-slate/70 rounded-lg shadow-md hover:bg-hydro-slate transition duration-300 fade-in-up delay-1100">
+                            <li class="flex items-start p-4 bg-hydro-slate/70 rounded-lg shadow-md hover:bg-hydro-slate transition duration-300 delay-1100">
                                 <div class="bg-hydro-primary/20 p-2 rounded-full mr-4 flex-shrink-0">
                                     <svg data-lucide="zap" class="w-6 h-6 text-hydro-primary"></svg>
                                 </div>
                                 <div>
                                     <strong class="text-white text-xl block mb-1">Vibration & Alignment Verification:</strong> 
-                                    <p class="text-slate-300">Re-verification of shaft alignment against the **0.05 mm/m** standard, crucial for eliminating the introduction of the 48% dynamic instability factor.</p>
+                                    <p class="text-slate-300 text-base">Re-verification of shaft alignment against the **0.05 mm/m** standard, crucial for eliminating the introduction of the 48% dynamic instability factor.</p>
                                 </div>
                             </li>
-                            <li class="flex items-start p-4 bg-hydro-slate/70 rounded-lg shadow-md hover:bg-hydro-slate transition duration-300 fade-in-up delay-1200">
+                            <li class="flex items-start p-4 bg-hydro-slate/70 rounded-lg shadow-md hover:bg-hydro-slate transition duration-300 delay-1200">
                                 <div class="bg-hydro-primary/20 p-2 rounded-full mr-4 flex-shrink-0">
                                     <svg data-lucide="wind" class="w-6 h-6 text-hydro-primary"></svg>
                                 </div>
                                 <div>
                                     <strong class="text-white text-xl block mb-1">Cavitation Prevention:</strong> 
-                                    <p class="text-slate-300">Focused diagnostics on the runner hub and blade edges, utilizing acoustic monitoring to detect the precise onset of pit cavitation before significant damage occurs.</p>
+                                    <p class="text-slate-300 text-base">Focused diagnostics on the Draft Tube and runner hub, utilizing acoustic monitoring to detect the precise onset of pit cavitation before significant damage occurs.</p>
                                 </div>
                             </li>
                         </ul>
                     </div>
                 </div>
 
-                <div class="mt-10 text-center fade-in-up delay-1400">
-                    <a href="/index.html#contact" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-lg font-bold rounded-full text-hydro-charcoal bg-hydro-primary hover:bg-cyan-500 transition duration-300 transform hover:scale-105 shadow-xl">
+                <div class="mt-12 text-center fade-in-up delay-1400">
+                    <a href="/index.html#contact" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-lg font-bold rounded-full text-hydro-charcoal bg-hydro-primary hover:bg-cyan-500 transition duration-300 transform hover:scale-105 shadow-xl uppercase tracking-wider">
                         Schedule Kaplan Turbine Audit &rarr;
                     </a>
                 </div>
@@ -246,7 +295,7 @@
              <a href="/about-us-vision.html" class="text-slate-400 hover:text-hydro-primary">About</a>
              <a href="/index.html#services" class="text-slate-400 hover:text-hydro-primary">Services</a>
              <a href="/expert-insights.html" class="text-slate-400 hover:text-hydro-primary">Insights</a>
-             <a href="/index.html#technology" class="text-slate-400 hover:text-hydro-primary">Technology</a>
+             <a href="/protocol.html" class="text-slate-400 hover:text-hydro-primary">Protocol</a>
              <a href="/index.html#contact" class="text-slate-400 hover:text-hydro-primary">Contact</a>
            </nav>
            
@@ -255,16 +304,12 @@
     </footer>
 
     <script>
-        // Inicijalizacija ikona nakon učitavanja
+        // Logika za animacije, inicijalizaciju Lucide ikona, i footer godine
         document.addEventListener('DOMContentLoaded', () => {
             if (typeof lucide !== 'undefined') {
                 lucide.createIcons();
             }
-            // Ažuriranje godine
-            const yearEl = document.getElementById('year');
-            if (yearEl) yearEl.textContent = new Date().getFullYear();
-
-            // Animiranje elemenata
+            
             const observerOptions = { root: null, rootMargin: "0px", threshold: 0.1 };
 
             const observer = new IntersectionObserver((entries, observer) => {
@@ -279,6 +324,27 @@
             document.querySelectorAll('.fade-in-up, .zoom-in').forEach(element => {
                 observer.observe(element);
             });
+            
+            const yearEl = document.getElementById('year');
+            if (yearEl) yearEl.textContent = new Date().getFullYear();
+            
+            // Logika za progress bar (za GLB fajl)
+            const modelViewer = document.querySelector('model-viewer');
+            if (modelViewer) {
+                modelViewer.addEventListener('progress', (event) => {
+                    const barContainer = document.querySelector('.update-bar');
+                    if (barContainer) {
+                        const progress = event.detail.totalProgress;
+                        const bar = barContainer.querySelector('div');
+                        if(bar) bar.style.width = `${progress * 100}%`;
+                    }
+                });
+                modelViewer.addEventListener('load', () => {
+                     // Sakrijte progress bar nakon učitavanja
+                     const barContainer = document.querySelector('.progress-bar');
+                     if (barContainer) barContainer.style.display = 'none';
+                });
+            }
         });
         
     </script>
