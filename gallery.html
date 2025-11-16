@@ -118,56 +118,79 @@
         let currentIndex = 0;
         let slideshowInterval;
         const totalImages = galleryImages.length;
+        let controlHideTimeout;
+        const modalElement = document.getElementById('lightbox-modal');
 
 
         // === FULL SCREEN LOGIKA ===
-        function toggleFullScreen() {
+        window.toggleFullScreen = () => {
             const element = document.getElementById('lightbox-window');
             if (!document.fullscreenElement) {
-                // Ulazak u Fullscreen
                 element.requestFullscreen().catch(err => {
-                    alert(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+                    console.error(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
                 });
             } else {
-                // Izlazak iz Fullscreen
                 document.exitFullscreen();
             }
         }
 
+        // === LOGIKA ZA SKRIVANJE/PRIKAZIVANJE KONTROLA ===
+        function showControls() {
+            if (modalElement && modalElement.classList.contains('controls-hidden')) {
+                modalElement.classList.remove('controls-hidden');
+            }
+        }
+
+        function hideControls() {
+            if (modalElement && !slideshowInterval) { // Sakrij kontrole samo ako Slideshow NIJE aktivan
+                modalElement.classList.add('controls-hidden');
+            }
+        }
+
+        function resetControlTimeout() {
+            clearTimeout(controlHideTimeout);
+            showControls();
+            
+            // Postavi novi timeout samo ako Slideshow NIJE aktivan
+            const slideshowBtn = document.getElementById('slideshow-btn');
+            if (slideshowBtn && !slideshowBtn.textContent.includes('Stop')) {
+                 controlHideTimeout = setTimeout(hideControls, 5000); // Sakrij nakon 5 sekundi
+            }
+        }
+        // =================================================
+
         // === KLIJENTSKA LOGIKA (GLAVNE FUNKCIJE) ===
 
-        function openModal(index) {
+        window.openModal = (index) => {
             currentIndex = index;
-            const modal = document.getElementById('lightbox-modal');
             const slideshowBtn = document.getElementById('slideshow-btn');
             
             // Zaustavi slideshow ako je već aktivan
             if (slideshowBtn && slideshowBtn.textContent.includes('Stop')) {
-                toggleSlideshow(slideshowBtn);
+                window.toggleSlideshow(slideshowBtn);
             }
             
             updateImage(false); 
-            modal.classList.remove('hidden');
+            modalElement.classList.remove('hidden');
             document.body.classList.add('overflow-hidden');
+            
+            // Pokreni skrivanje kontrola (početno stanje)
+            resetControlTimeout(); 
         }
 
         function updateImage(useTransition = true) {
             const container = document.getElementById('lightbox-image-wrapper');
             const img = galleryImages[currentIndex];
             
-            // Animacija (CSS se brine za stvarno postavljanje fade-in klase)
             const animationClass = useTransition ? 'animate-fade-in' : '';
             
-            // Slika je unutar fiksnog wrappera
             container.innerHTML = `
                 <img src="${img.src}" alt="${img.caption}" class="max-w-full max-h-full object-contain ${animationClass}" style="animation-duration: 0.3s;">
             `;
             
-            // Ažuriranje opisa
             document.getElementById('lightbox-caption').textContent = img.caption;
             document.getElementById('lightbox-counter').textContent = `Image ${currentIndex + 1} of ${totalImages}`;
             
-            // Onemogućavanje dugmadi
             document.getElementById('prev-btn').disabled = (currentIndex === 0);
             document.getElementById('next-btn').disabled = (currentIndex === totalImages - 1);
         }
@@ -179,6 +202,7 @@
             if (newIndex >= 0 && newIndex < totalImages) {
                 currentIndex = newIndex;
                 updateImage(true); 
+                resetControlTimeout(); // Resetuj tajmer nakon navigacije
             }
         };
 
@@ -190,8 +214,12 @@
                 button.innerHTML = '▶️ Start Slideshow';
                 button.classList.remove('bg-red-600');
                 button.classList.add('bg-hydro-secondary');
+                resetControlTimeout(); // Ponovo pokreni timeout za skrivanje kontrola
             } else {
                 // POKRETANJE
+                clearTimeout(controlHideTimeout); // Zaustavi automatsko skrivanje tokom slideshowa
+                showControls(); // Osiguraj da su kontrole vidljive
+
                 if (currentIndex === totalImages - 1) {
                     currentIndex = 0;
                     updateImage(false);
@@ -205,7 +233,6 @@
                     if (currentIndex < totalImages - 1) {
                         navigateGallery(1);
                     } else {
-                        // Vraća se na početak za kontinuirani loop
                         currentIndex = 0;
                         updateImage(true); 
                     }
@@ -213,20 +240,20 @@
             }
         };
 
-        function closeModal() {
-            const modal = document.getElementById('lightbox-modal');
-            modal.classList.add('hidden');
+        window.closeModal = () => {
+            modalElement.classList.add('hidden');
             document.body.classList.remove('overflow-hidden');
             
             const slideshowBtn = document.getElementById('slideshow-btn');
             if (slideshowBtn && slideshowBtn.textContent.includes('Stop')) {
-                 toggleSlideshow(slideshowBtn);
+                 window.toggleSlideshow(slideshowBtn);
             }
 
             // Izlaz iz Fullscreen-a ako je aktivan
             if (document.fullscreenElement) {
                 document.exitFullscreen();
             }
+            clearTimeout(controlHideTimeout);
         }
         
         // === INICIJALIZACIJA ===
@@ -238,7 +265,7 @@
             
             const grid = document.querySelector('.gallery-grid');
             if (grid) {
-                // 1. Generisanje praznih placeholder-a za lazy loading (Za brzi prikaz stranice)
+                // 1. Generisanje praznih placeholder-a za lazy loading
                 galleryImages.forEach((img, index) => {
                     const placeholder = document.createElement('div');
                     placeholder.className = 'thumbnail-item';
@@ -262,24 +289,22 @@
                                      loading="lazy"
                                      onclick="openModal(${index})">
                             `;
-                            // Prekid posmatranja nakon učitavanja
                             observer.unobserve(item);
                         }
                     });
                 }, {
                     rootMargin: '0px',
-                    threshold: 0.05 // Učitaj kad je 5% elementa vidljivo
+                    threshold: 0.05 
                 });
 
-                // Posmatraj sve generisane thumb placeholder-e
                 document.querySelectorAll('.thumbnail-item').forEach(item => {
                     observer.observe(item);
                 });
             }
 
-            // Dodaj listener za navigaciju tastaturom kad je modal otvoren
+            // 3. Listener za navigaciju tastaturom
             document.addEventListener('keydown', (e) => {
-                if (!document.getElementById('lightbox-modal').classList.contains('hidden')) {
+                if (!modalElement.classList.contains('hidden')) {
                     if (e.key === 'ArrowLeft') {
                         navigateGallery(-1);
                     } else if (e.key === 'ArrowRight') {
@@ -289,6 +314,9 @@
                     }
                 }
             });
+
+            // 4. Listener za automatsko skrivanje kontrola unutar lightboksa
+            modalElement.addEventListener('mousemove', resetControlTimeout);
         });
     </script>
     
@@ -298,7 +326,6 @@
         .header-bg { background-color: rgba(17, 24, 39, 0.95); }
         .bg-hydro-slate { background-color: #1E293B; }
         
-        /* Animacija za placeholder */
         @keyframes pulse {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.5; }
@@ -342,6 +369,7 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            transition: all 0.5s ease; /* Za Fullscreen tranziciju */
         }
         /* Fiks za Fullscreen */
         #lightbox-window:fullscreen {
@@ -363,18 +391,37 @@
             padding: 20px;
         }
         
-        /* Navigacione kontrole - Fiksirane uz rub Modala (CRITICAL FIX) */
+        /* Kontrolne trake i navigacija (gornja traka, donja traka i strelice) */
+        .lightbox-controls-bar, .lightbox-controls-wrapper {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        /* Klasa za skrivanje kontrola */
+        .lightbox-modal.controls-hidden .lightbox-controls-bar {
+            opacity: 0;
+            transform: translateY(100%); /* Sakrij footer prema dole */
+        }
+        .lightbox-modal.controls-hidden .lightbox-controls-wrapper button {
+             opacity: 0;
+             pointer-events: none;
+        }
+        .lightbox-modal.controls-hidden .lightbox-controls-wrapper {
+            cursor: none; /* Sakrij i kursor ako su kontrole skrivene */
+        }
+
+        /* Navigacione kontrole */
         .lightbox-controls-wrapper {
             position: absolute; 
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            pointer-events: none; /* Da klik na sliku radi */
+            pointer-events: none; 
+            z-index: 99; /* Ispod footer-a */
         }
 
         .lightbox-controls-wrapper button {
-            pointer-events: auto; /* Vraćamo klik na dugmad */
+            pointer-events: auto;
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
@@ -382,7 +429,7 @@
             background-color: rgba(0, 0, 0, 0.6); 
             color: white;
             padding: 12px;
-            transition: background-color 0.2s, transform 0.2s;
+            transition: background-color 0.2s, transform 0.2s, opacity 0.3s;
             height: 60px; 
             width: 60px;
         }
@@ -452,7 +499,7 @@
             <div id="lightbox-image-wrapper">
                 </div>
             
-            <div class="p-4 bg-hydro-slate flex justify-between items-center relative">
+            <div class="lightbox-controls-bar p-4 bg-hydro-slate flex justify-between items-center relative">
                 
                 <div class="text-left">
                     <p id="lightbox-caption" class="text-sm font-semibold text-slate-300"></p>
@@ -460,7 +507,7 @@
                 </div>
                 
                 <div class="flex space-x-3 items-center">
-                    <button onclick="toggleFullScreen()" class="bg-hydro-primary/20 hover:bg-hydro-primary/40 text-hydro-primary p-2 rounded-full transition text-sm flex items-center" aria-label="Toggle Fullscreen">
+                    <button onclick="toggleFullScreen()" class="bg-hydro-primary/20 hover:bg-hydro-primary/40 text-hydro-primary p-2 rounded-full font-bold transition text-sm flex items-center" aria-label="Toggle Fullscreen">
                         <svg data-lucide="maximize" class="w-5 h-5"></svg>
                     </button>
 
