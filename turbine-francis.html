@@ -64,11 +64,17 @@
             const modelViewer = document.querySelector('model-viewer');
             if (modelViewer) {
                 modelViewer.addEventListener('progress', (event) => {
-                    const bar = document.querySelector('.update-bar');
-                    if (bar) {
+                    const barContainer = document.querySelector('.update-bar');
+                    if (barContainer) {
                         const progress = event.detail.totalProgress;
-                        bar.style.width = `${progress * 100}%`;
+                        const bar = barContainer.querySelector('div');
+                        if(bar) bar.style.width = `${progress * 100}%`;
                     }
+                });
+                modelViewer.addEventListener('load', () => {
+                     // Sakrijte progress bar nakon učitavanja
+                     const barContainer = document.querySelector('.progress-bar');
+                     if (barContainer) barContainer.style.display = 'none';
                 });
             }
         });
@@ -116,8 +122,8 @@
             margin: 20px auto; 
             display: block; 
             /* Dodatni stil za loading bar i interakciju */
-            --progress-bar-color: #22d3ee; /* Koristimo hydro-primary */
-            --poster-color: #111827; /* Koristimo hydro-charcoal */
+            --progress-bar-color: #22d3ee; 
+            --poster-color: #111827; 
         }
         /* STIL ZA PROGRESS BAR */
         .progress-bar {
@@ -131,7 +137,7 @@
         .progress-bar .update-bar {
             height: 10px;
             width: 80%;
-            background-color: #334155;
+            background-color: #334155; /* Hydro Light Slate */
             border-radius: 5px;
             overflow: hidden;
             margin-top: 10px;
@@ -177,7 +183,7 @@
                  <img src="/logo.svg" alt="Anohubs Logo" class="anohubs-logo-compact">
             </a>
             
-            <nav class="flex items-center space-x-4 font-extrabold text-sm" role="navigation">
+            <nav class="hidden md:flex items-center space-x-4 font-extrabold text-sm" role="navigation">
                 <a href="/expert-insights.html" class="text-slate-300 hover:text-cyan-400 transition">Insights</a>
                 <a href="/protocol.html" class="text-slate-300 hover:text-cyan-400 transition">Protocol</a>
                 <a href="/index.html#contact" class="bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-4 py-2 rounded-full transition">Request Audit</a>
@@ -203,7 +209,7 @@
                     </h2>
                     
                     <model-viewer 
-                        src="./francis_turbine.glb" /* Putanja do Vašeg GLB fajla (33.5MB) */
+                        src="/francis_turbine.glb" /* Apsolutna putanja od root foldera */
                         alt="3D Francis Turbine Runner"
                         camera-controls 
                         auto-rotate 
@@ -213,12 +219,11 @@
                         exposure="1.5"
                         camera-orbit="180deg 85deg 1.5m">
                         
-                        <div slot="progress-bar" class="progress-bar">
-                            <span class="text-white text-base font-semibold">Loading 3D Model... Please wait.</span>
+                        <div slot="progress-bar" class="progress-bar text-sm text-white">
+                            Loading 3D Model (approx. 33MB)... Please wait.
                             <div class="update-bar" style="width: 80%;">
                                 </div>
                         </div>
-
                     </model-viewer>
                 </div>
                 
@@ -242,7 +247,7 @@
                         
                         <p class="text-slate-300">We target the specific vulnerabilities of Francis runners and guide vanes:</p>
                         
-                        <ul class="space-y-4 mt-4 tech-list">
+                        <ul class="space-y-6">
                             <li class="flex items-start p-4 bg-hydro-slate/70 rounded-lg shadow-md hover:bg-hydro-slate transition duration-300 delay-1000">
                                 <div class="bg-hydro-primary/20 p-2 rounded-full mr-4 flex-shrink-0">
                                     <svg data-lucide="maximize" class="w-6 h-6 text-hydro-primary"></svg>
