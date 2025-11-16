@@ -12,6 +12,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/1.13.0/model-viewer.min.js"></script>
+
     <script>
         // === Tailwind Konfiguracija (Iz index.html) ===
         tailwind.config = {
@@ -61,14 +63,14 @@
     </script>
     
     <style>
-        /* CSS STILOVI ZA TURBINE PAGES */
+        /* CSS STILOVI ZA TURBINE PAGES - OBJEKTIVNI STILOVI */
         html { scroll-behavior: smooth; }
         body { 
             font-family: 'Inter', sans-serif; 
             background-color: #111827; 
             color: #E5E7EB;
             
-            /* POZADINA: KORISTIMO ORLJANI UNA (ILI SLIKU ZA INTEGRITY) */
+            /* POZADINA: ORLJANI UNA */
             background-image: url('orljani_Una.jpg'); 
             background-size: cover;
             background-attachment: fixed;
@@ -93,6 +95,20 @@
         }
         .text-glow { text-shadow: 0 0 15px rgba(34, 211, 238, 0.7); }
 
+        /* KRITIČNO: STIL ZA 3D MODEL VIEWER */
+        model-viewer {
+            width: 100%;
+            height: 400px; /* Fiksna visina za model */
+            background-color: #111827;
+            border-radius: 0.75rem;
+            box-shadow: 0 0 15px rgba(34, 211, 238, 0.5);
+            margin: 20px auto; 
+            display: block; 
+            /* Dodatni stil za loading bar i interakciju */
+            --progress-bar-color: var(--tw-colors-hydro-primary);
+            --poster-color: var(--tw-colors-hydro-charcoal);
+        }
+
         /* STILOVI ZA ANIMACIJE */
         .fade-in-up, .zoom-in { opacity: 0; transition: opacity 0.8s ease-out, transform 0.8s ease-out; will-change: opacity, transform; }
         .fade-in-up { transform: translateY(30px); }
@@ -106,6 +122,13 @@
         .delay-1200 { --delay: 1200ms; }
         .mobile-sticky-cta { position: fixed; bottom: 0; left: 0; right: 0; z-index: 40; padding: 0.5rem 0; }
         
+        /* DODATNO: STILOVI ZA LISTE */
+        .tech-list li {
+            padding: 0.75rem;
+            background-color: rgba(51, 65, 85, 0.5); /* Hydro Light Slate transparent */
+            border-radius: 0.5rem;
+        }
+
     </style>
 </head>
 <body class="text-white bg-hydro-charcoal">
@@ -117,9 +140,9 @@
                  <img src="/logo.svg" alt="Anohubs Logo" class="anohubs-logo-compact">
             </a>
             
-            <nav class="flex items-center space-x-4 font-extrabold text-sm" role="navigation">
+            <nav class="hidden md:flex items-center space-x-4 font-extrabold text-sm" role="navigation">
                 <a href="/expert-insights.html" class="text-slate-300 hover:text-cyan-400 transition">Insights</a>
-                
+                <a href="/protocol.html" class="text-slate-300 hover:text-cyan-400 transition">Protocol</a>
                 <a href="/index.html#contact" class="bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-4 py-2 rounded-full transition">Request Audit</a>
             </nav>
             
@@ -134,33 +157,38 @@
                     FRANCIS TURBINE INTEGRITY ANALYSIS
                 </h1>
                 <p class="text-xl md:text-2xl font-light text-slate-300 mb-8 border-b pb-4 border-slate-700 fade-in-up delay-200">
-                    Targeted analysis for medium-head turbines: Focusing on hydraulic stability, cavitation risk, and component longevity.
+                    Targeted analysis for medium-head turbines: Focusing on hydraulic stability, cavitation, and component longevity.
                 </p>
                 
-                <div class="space-y-10 text-lg">
-                    <div class="p-6 rounded-xl bg-hydro-light-slate/80 shadow-lg fade-in-up delay-400"> 
+                <div class="bg-hydro-light-slate/80 p-6 rounded-lg shadow-lg fade-in-up delay-400">
+                    <h2 class="text-3xl font-bold text-white mb-4 flex items-center gap-3">
+                        <svg data-lucide="layers-3d" class="w-7 h-7 text-hydro-secondary"></svg> Interactive 3D Model: Francis Runner Integrity
+                    </h2>
+                    
+                    <model-viewer 
+                        src="francis_turbine.glb" 
+                        alt="3D Francis Turbine Runner"
+                        camera-controls 
+                        auto-rotate 
+                        ar 
+                        loading="eager"
+                        shadow-intensity="1"
+                        exposure="1.5"
+                        camera-orbit="180deg 85deg 1.5m">
+                    </model-viewer>
+                </div>
+                
+                <div class="space-y-10 text-lg mt-8 fade-in-up delay-600">
+                    <div class="p-6 rounded-xl bg-hydro-light-slate/80 shadow-lg"> 
                         <h2 class="text-2xl font-bold text-white mb-3 flex items-center gap-2">
                             <svg data-lucide="droplet" class="w-6 h-6 text-hydro-cta"></svg> The Francis Challenge: Pressure and Flow Dynamics
                         </h2>
                         <p class="text-slate-300 leading-relaxed">
-                            The Francis turbine, ideal for medium-head applications, operates under immense hydraulic pressure where efficiency hinges on maintaining perfect flow over the complex runner geometry. Our specialized audits ensure that this geometry is optimal and that pressure differentials do not lead to localized structural failure.
+                            The Francis turbine operates under immense hydraulic pressure where efficiency hinges on maintaining perfect flow over the complex runner geometry. Our specialized audits ensure that this geometry is optimal and that pressure differentials do not lead to localized structural failure.
                         </p>
                         <p class="text-slate-400 mt-3">
-                            Its setup—where water enters the runner radially and exits axially—is what gives it its unique, powerful hydraulic signature. For us, maintaining the integrity of this design is paramount, as every fraction of efficiency contributes directly to sustainable power generation.
+                            Its unique setup—where water enters the runner radially and exits axially—is what gives it its unique, powerful hydraulic signature. For us, maintaining the integrity of this design is paramount, as every fraction of efficiency contributes directly to sustainable power generation.
                         </p>
-                    </div>
-
-                    <div class="bg-hydro-light-slate/80 p-6 rounded-lg shadow-lg fade-in-up delay-600">
-                        <h2 class="text-3xl font-bold text-hydro-secondary mb-4 flex items-center gap-3">
-                            <svg data-lucide="ruler" class="w-7 h-7"></svg> Visualizing Integrity: Schematics and 3D Models
-                        </h2>
-                        <div class="grid md:grid-cols-2 gap-4">
-                            <img src="francis-diagram.jpg" alt="Francis Turbine Diagram" class="w-full h-full object-cover rounded-lg shadow-md border border-hydro-primary/20">
-                            
-                            <div class="bg-hydro-slate p-4 rounded-lg flex items-center justify-center text-hydro-gray text-xl media-placeholder aspect-video">
-                                Placeholder: CFD Simulation / Key Component
-                            </div>
-                        </div>
                     </div>
 
                     <div class="space-y-6 fade-in-up delay-800">
@@ -168,43 +196,41 @@
                             <svg data-lucide="check-square" class="w-7 h-7"></svg> Focus Protocol: Maximizing Lifespan
                         </h2>
                         
-                        <p class="text-slate-300">We address the specific vulnerabilities of Francis runners and guide vanes:</p>
+                        <p class="text-slate-300">We target the specific vulnerabilities of Francis runners and guide vanes:</p>
                         
-                        <ul class="space-y-6">
-                            <li class="flex items-start p-4 bg-hydro-slate/70 rounded-lg shadow-md hover:bg-hydro-slate transition duration-300 fade-in-up delay-1000">
-                                <div class="bg-hydro-primary/20 p-2 rounded-full mr-4 flex-shrink-0">
-                                    <svg data-lucide="maximize" class="w-6 h-6 text-hydro-primary"></svg>
-                                </div>
+                        <ul class="space-y-4 mt-4 tech-list">
+                            <li class="flex items-start">
+                                <svg data-lucide="maximize" class="w-6 h-6 text-hydro-primary mr-3"></svg>
                                 <div>
                                     <strong class="text-white text-xl block mb-1">CFD Optimization:</strong> 
-                                    <p class="text-slate-300">Utilizing Computational Fluid Dynamics (CFD) to validate and adjust blade profiles and flow paths, ensuring maximum hydraulic efficiency and reducing hydraulic hammer risks.</p>
+                                    <p class="text-slate-300 text-base">Utilizing Computational Fluid Dynamics (CFD) to validate and adjust blade profiles and flow paths, ensuring maximum hydraulic efficiency and reducing hydraulic hammer risks.</p>
                                 </div>
                             </li>
-                            <li class="flex items-start p-4 bg-hydro-slate/70 rounded-lg shadow-md hover:bg-hydro-slate transition duration-300 fade-in-up delay-1100">
+                            <li class="flex items-start">
                                 <div class="bg-hydro-primary/20 p-2 rounded-full mr-4 flex-shrink-0">
                                     <svg data-lucide="ear" class="w-6 h-6 text-hydro-primary"></svg>
                                 </div>
                                 <div>
                                     <strong class="text-white text-xl block mb-1">Acoustic Emission Monitoring (AEM):</strong> 
-                                    <p class="text-slate-300">Non-invasive acoustic monitoring to detect the precise onset and location of cavitation, allowing for preemptive intervention and repair before damage escalates.</p>
+                                    <p class="text-slate-300 text-base">Non-invasive acoustic monitoring to detect the precise onset and location of cavitation, allowing for preemptive intervention and repair before damage escalates.</p>
                                 </div>
                             </li>
-                            <li class="flex items-start p-4 bg-hydro-slate/70 rounded-lg shadow-md hover:bg-hydro-slate transition duration-300 fade-in-up delay-1200">
+                            <li class="flex items-start">
                                 <div class="bg-hydro-primary/20 p-2 rounded-full mr-4 flex-shrink-0">
                                     <svg data-lucide="minus-square" class="w-6 h-6 text-hydro-primary"></svg>
                                 </div>
                                 <div>
                                     <strong class="text-white text-xl block mb-1">Partial Load Instability:</strong> 
-                                    <p class="text-slate-300">Auditing turbine performance during off-design (partial load) operation, where flow separation and resulting vibrations pose the greatest long-term threat.</p>
+                                    <p class="text-slate-300 text-base">Auditing turbine performance and control logic during off-design (partial load) operation, where flow separation and resulting vibrations pose the greatest long-term threat.</p>
                                 </div>
                             </li>
-                            <li class="flex items-start p-4 bg-hydro-slate/70 rounded-lg shadow-md hover:bg-hydro-slate transition duration-300 fade-in-up delay-1300">
+                            <li class="flex items-start">
                                 <div class="bg-hydro-primary/20 p-2 rounded-full mr-4 flex-shrink-0">
                                     <svg data-lucide="link" class="w-6 h-6 text-hydro-primary"></svg>
                                 </div>
                                 <div>
                                     <strong class="text-white text-xl block mb-1">Rotor-Stator Interaction (RSI) Mitigation:</strong> 
-                                    <p class="text-slate-300">Detailed analysis of the clearances and hydraulic forces between the runner and guide vanes to minimize dynamic excitation and noise generation.</p>
+                                    <p class="text-slate-300 text-base">Detailed analysis of the clearances and hydraulic forces between the runner and guide vanes to minimize dynamic excitation and noise generation.</p>
                                 </div>
                             </li>
                         </ul>
@@ -221,7 +247,7 @@
         </section>
     </main>
     
-    <footer class="bg-hydro-slate text-hydro-gray py-8 text-center border-t border-hydro-light-slate" role="contentinfo">
+    <footer class="bg-slate-900/70 text-gray-400 py-8 text-center border-t border-slate-700" role="contentinfo">
         <div class="container mx-auto px-6">
              
            <a href="/index.html#hero" class="mb-4 block" aria-label="Anohubs Logo - Back to top">
@@ -233,7 +259,7 @@
              <a href="/about-us-vision.html" class="text-slate-400 hover:text-hydro-primary">About</a>
              <a href="/index.html#services" class="text-slate-400 hover:text-hydro-primary">Services</a>
              <a href="/expert-insights.html" class="text-slate-400 hover:text-hydro-primary">Insights</a>
-             <a href="/index.html#technology" class="text-slate-400 hover:text-hydro-primary">Technology</a>
+             <a href="/protocol.html" class="text-slate-400 hover:text-hydro-primary">Protocol</a>
              <a href="/index.html#contact" class="text-slate-400 hover:text-hydro-primary">Contact</a>
            </nav>
            
@@ -242,15 +268,14 @@
     </footer>
 
     <script>
-        // Logika za animacije, inicijalizaciju, i footer godine
+        // Logika za animacije, inicijalizaciju Lucide ikona, i footer godine
         document.addEventListener('DOMContentLoaded', () => {
             if (typeof lucide !== 'undefined') {
                 lucide.createIcons();
             }
-            const yearEl = document.getElementById('year');
-            if (yearEl) yearEl.textContent = new Date().getFullYear();
-
+            
             const observerOptions = { root: null, rootMargin: "0px", threshold: 0.1 };
+
             const observer = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -263,6 +288,9 @@
             document.querySelectorAll('.fade-in-up, .zoom-in').forEach(element => {
                 observer.observe(element);
             });
+            
+            const yearEl = document.getElementById('year');
+            if (yearEl) yearEl.textContent = new Date().getFullYear();
         });
         
     </script>
