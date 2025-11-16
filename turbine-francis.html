@@ -121,7 +121,6 @@
             box-shadow: 0 0 15px rgba(34, 211, 238, 0.5);
             margin: 20px auto; 
             display: block; 
-            /* Dodatni stil za loading bar i interakciju */
             --progress-bar-color: #22d3ee; 
             --poster-color: #111827; 
         }
@@ -137,7 +136,7 @@
         .progress-bar .update-bar {
             height: 10px;
             width: 80%;
-            background-color: #334155; /* Hydro Light Slate */
+            background-color: #334155; 
             border-radius: 5px;
             overflow: hidden;
             margin-top: 10px;
@@ -216,11 +215,12 @@
                         ar 
                         loading="eager" 
                         shadow-intensity="1"
+                        draco /* KRITIČNO: Podrška za Draco kompresiju */
                         exposure="1.5"
                         camera-orbit="180deg 85deg 1.5m">
                         
                         <div slot="progress-bar" class="progress-bar text-sm text-white">
-                            Loading 3D Model (approx. 33MB)... Please wait.
+                            Loading 3D Model... Please wait.
                             <div class="update-bar" style="width: 80%;">
                                 </div>
                         </div>
@@ -342,6 +342,24 @@
             
             const yearEl = document.getElementById('year');
             if (yearEl) yearEl.textContent = new Date().getFullYear();
+            
+            // Logika za progress bar (za GLB fajl)
+            const modelViewer = document.querySelector('model-viewer');
+            if (modelViewer) {
+                modelViewer.addEventListener('progress', (event) => {
+                    const barContainer = document.querySelector('.update-bar');
+                    if (barContainer) {
+                        const progress = event.detail.totalProgress;
+                        const bar = barContainer.querySelector('div');
+                        if(bar) bar.style.width = `${progress * 100}%`;
+                    }
+                });
+                modelViewer.addEventListener('load', () => {
+                     // Sakrijte progress bar nakon učitavanja
+                     const barContainer = document.querySelector('.progress-bar');
+                     if (barContainer) barContainer.style.display = 'none';
+                });
+            }
         });
         
     </script>
