@@ -1,0 +1,185 @@
+/* ==============================================
+   ANOHUBS GLOBAL CUSTOM STYLES (anohubs.css)
+   Zamjenjuje Tailwind CDN, Config i Inline <style>
+   ============================================== */
+
+/* Osnovne Tailwind direktive (potrebne ako koristite Tailwind bez build alata) */
+/* Ako Tailwind nije lokalno instaliran, ovaj fajl MORA biti generisan sa svim klasama
+   koje su u HTML-u. Budući da simuliramo ručno čišćenje:
+   Ove klase moraju biti zamijenjene sa punim Tailwind bibliotekama, ili se moraju koristiti 
+   samo klase koje su definisane u @layer. 
+   
+   ZA OVAJ SLUČAJ: Zbog specifičnog Tailwind CDN pristupa, preći ćemo na potpunu 
+   samostalnu implementaciju ključnih Tailwind boja i custom stilova, dok se ne odlučite 
+   za pravi build proces. */
+
+/* PRILAGOĐENE KLJUČNE TAILWIND BOJE (Definisane kao CSS varijable za custom blokove) */
+:root {
+    --color-hydro-primary: #22d3ee;    /* cijan */
+    --color-hydro-secondary: #4ade80;  /* zelena */
+    --color-hydro-risk: #ef4444;       /* crvena */
+    --color-hydro-cta: #f59e0b;        /* žuta/narandžasta */
+    --color-hydro-charcoal: #111827;   /* tamno siva (pozadina) */
+    --color-hydro-slate: #1E293B;      /* srednja siva */
+    --color-hydro-light-slate: #334155;/* svijetla siva */
+    --color-hydro-gray: #475569;       /* siva */
+
+    /* Custom font scale (clamp za responzivnost) */
+    --font-size-h1-hero: clamp(2.5rem, 5vw + 1rem, 4.5rem);
+
+    /* Postavljanje CSS varijabli za korištenje u custom stilovima kao u originalnom kodu */
+    --tw-colors-hydro-slate: var(--color-hydro-slate);
+    --tw-colors-hydro-primary: var(--color-hydro-primary);
+}
+
+/* -- GLOBALNI STILOVI (iz originalnog <style> bloka) -- */
+
+html { 
+    scroll-behavior: smooth; 
+}
+body { 
+    font-family: 'Inter', sans-serif;
+}
+
+/* POZADINA: orljani_Una.jpg je globalna fiksna pozadina (sezonski efekat) */
+body {
+    background-image: url('orljani_Una.jpg'), url('proljece_arm.jpg'), url('zima_arm.jpg');
+    background-repeat: no-repeat;
+    background-attachment: local;
+    background-size: 100% 33.33%, 100% 33.33%, 100% 33.33%;
+    background-position:
+        center 0,
+        center 50%,
+        center 100%;
+    min-height: 250vh;
+}
+
+/* Hero sekcija - Gradijent preko videa */
+.hero-gradient {
+    background: linear-gradient(180deg, rgba(17, 24, 39, 0.7) 0%, rgba(30, 41, 59, 0.6) 100%);
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    position: relative;
+    min-height: auto;
+    display: flex;
+    align-items: center;
+}
+
+/* Prilagođene klase s polu-transparentnim pozadinama (vaša prilagođena definicija) */
+.bg-hydro-slate {
+    background-color: rgba(30, 41, 59, 0.85) !important;
+}
+.bg-hydro-charcoal {
+    background-color: rgba(17, 24, 39, 0.85) !important;
+}
+.bg-hydro-light-slate {
+    background-color: rgba(51, 65, 85, 0.75) !important;
+}
+
+/* Ponavljajuća linija (Strip) između sekcija */
+.section-stripe {
+    height: 10px;
+    background: repeating-linear-gradient(
+        45deg,
+        rgba(30, 41, 59, 0.8),
+        rgba(30, 41, 59, 0.8) 10px,
+        rgba(17, 24, 39, 0.8) 10px,
+        rgba(17, 24, 39, 0.8) 20px
+    );
+    border-top: 1px solid var(--tw-colors-hydro-slate);
+    border-bottom: 1px solid var(--tw-colors-hydro-slate);
+}
+
+/* Animacije: Početno stanje (JS će dodati is-visible) */
+.fade-in-up, .zoom-in {
+    opacity: 0;
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    will-change: opacity, transform;
+}
+.fade-in-up {
+    transform: translateY(30px);
+}
+.zoom-in {
+    transform: scale(0.95);
+}
+
+/* Animacije: Krajnje stanje (dodaje JS) */
+.fade-in-up.is-visible, .zoom-in.is-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    transition-delay: var(--delay, 0ms);
+}
+.delay-200 { --delay: 200ms; }
+.delay-400 { --delay: 400ms; }
+.delay-600 { --delay: 600ms; }
+.delay-800 { --delay: 800ms; }
+.delay-1000 { --delay: 1000ms; }
+
+/* Sticky CTA na mobilnom */
+.mobile-sticky-cta {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 40;
+    padding: 0.5rem 0;
+}
+
+/* LOGO STILOVI */
+.anohubs-logo {
+    width: 110px;
+    height: auto;
+    color: var(--color-hydro-primary); 
+}
+.anohubs-hero-logo {
+    width: 160px;
+    height: auto;
+    color: var(--color-hydro-primary); 
+    margin-bottom: 1.5rem;
+}
+@media (min-width: 768px) {
+    .anohubs-logo {
+        width: 140px;
+    }
+    .anohubs-hero-logo {
+        width: 200px;
+    }
+}
+
+/* Stilovi za klikabilne kartice (Turbine/Servisi) */
+.turbine-card {
+    display: block;
+    text-align: left;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    will-change: transform, box-shadow;
+    transform: translateZ(0); 
+}
+.turbine-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 10px 15px rgba(34, 211, 238, 0.4); 
+}
+/* Style za Services kartice (da se skaliraju kao turbine) */
+.block > div {
+    will-change: transform, box-shadow;
+    transform: translateZ(0);
+}
+.block > div:hover {
+    transform: scale(1.03);
+    box-shadow: 0 10px 15px rgba(34, 211, 238, 0.4);
+}
+
+/* Stil za Video Kontejner u Hero sekciji */
+#video-container {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    overflow: hidden;
+}
+#hero-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
