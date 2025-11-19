@@ -17,7 +17,7 @@
     <!-- 3. TAILWIND CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- 4. TAILWIND CONFIG -->
+    <!-- 4. TAILWIND KONFIGURACIJA -->
     <script>
         tailwind.config = {
             theme: {
@@ -55,7 +55,7 @@
         /* --- LIGHTBOX STILOVI --- */
         .lightbox-modal { 
             backdrop-filter: blur(10px); 
-            background-color: rgba(0,0,0,0.9);
+            background-color: rgba(0,0,0,0.95);
         }
         
         #lightbox-window {
@@ -101,7 +101,7 @@
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background-color: rgba(30, 41, 59, 0.9); /* hydro-slate sa prozirnošću */
+            background-color: rgba(30, 41, 59, 0.9);
             border: 1px solid #334155;
             padding: 10px 20px;
             border-radius: 50px;
@@ -133,6 +133,7 @@
             cursor: pointer;
             transition: all 0.3s;
             z-index: 50;
+            border: none; /* Ukloni default border */
         }
         .nav-arrow:hover { background-color: var(--color-hydro-primary); color: #111827; }
         #prev-btn { left: 20px; }
@@ -141,6 +142,23 @@
         /* Animirano pojavljivanje slike */
         @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
         .animate-fade-in { animation: fadeIn 0.4s ease-out; }
+        
+        /* Thumbnail stilovi iz prethodne logike su potrebni u HTML-u ili CSS-u */
+        .thumbnail-item {
+            overflow: hidden;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            position: relative;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
+            border: 1px solid #334155;
+        }
+        .thumbnail-item:hover { transform: scale(1.05); border-color: #22d3ee; z-index: 10; }
+        .thumbnail-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
     </style>
 </head>
 <body class="text-white bg-hydro-charcoal">
@@ -149,7 +167,7 @@
     <header class="header-bg shadow-2xl sticky top-0 z-50 border-b border-hydro-primary/50" role="banner">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex justify-between items-center">
             <a href="index.html#hero" class="focus:outline-none transition" aria-label="Anohubs Logo - Back to top">
-                <img src="logo.svg" alt="Anohubs Logo" class="anohubs-logo-img">
+                <img src="logo.svg" alt="Anohubs Logo" class="anohubs-logo-img" style="height: 40px; width: auto;">
             </a>
             
             <nav class="hidden md:flex items-center space-x-4 font-extrabold text-sm" role="navigation">
@@ -157,14 +175,15 @@
                 <a href="services.html" class="text-slate-300 hover:text-hydro-primary transition">Services</a>
                 <a href="insights/expert-insights.html" class="text-slate-300 hover:text-hydro-primary transition">Insights</a>
                 <a href="case-studies.html" class="text-slate-300 hover:text-hydro-primary transition">Case Studies</a>
+                <a href="app-iframe.html" target="_blank" rel="noopener noreferrer" class="text-slate-300 hover:text-hydro-secondary">ANO HUB</a>
                 <a href="gallery.html" class="text-hydro-primary transition" aria-current="page">Gallery</a>
                 <a href="protocol.html" class="text-slate-300 hover:text-hydro-primary transition">Protocol</a>
                 <a href="contact.html" class="bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-4 py-2 rounded-full transition">Request Audit</a>
             </nav>
             
-            <!-- Mobile Menu Button (Jednostavno) -->
+            <!-- Mobile Menu Button -->
             <div class="md:hidden">
-                <a href="index.html" class="text-hydro-primary">Menu</a>
+                <a href="index.html" class="text-hydro-primary"><svg data-lucide="menu" class="w-8 h-8"></svg></a>
             </div>
         </div>
     </header>
@@ -194,6 +213,7 @@
                 </div>
                 
                 <script>
+                    // Prikaz poruke ako nema slika (fallback)
                     if (typeof totalImages !== 'undefined' && totalImages === 0) {
                         document.write('<p class="text-xl text-red-400 mt-20">Nema slika. Provjerite js/gallery-logic.js</p>');
                     }
@@ -226,7 +246,7 @@
             <div class="lightbox-controls-bar">
                 
                 <!-- Brojač -->
-                <div class="text-slate-300 font-mono text-sm mr-4" id="lightbox-counter">1 / 100</div>
+                <div class="text-slate-300 font-mono text-sm mr-4" id="lightbox-counter">1 / ...</div>
 
                 <!-- Fullscreen Toggle -->
                 <button onclick="toggleFullScreen()" class="hover:text-hydro-primary transition" title="Toggle Fullscreen">
