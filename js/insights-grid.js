@@ -3,7 +3,7 @@
 // Objedinjeni fajl za prikaz članaka na expert-insights.html
 // ==============================================
 
-// 1. PODACI (DATA)
+// 1. PODACI (DATA) - Svih 15 članaka
 const insightsData = [
     {
         "id": "module1",
@@ -135,14 +135,14 @@ function createInsightCard(insight) {
     // Kreira HTML karticu
     return `
         <a href="${insight.content_file}" class="block transform hover:scale-[1.02] transition duration-300 h-full">
-            <div class="bg-white border border-slate-200 hover:border-hydro-primary rounded-xl shadow-lg h-full p-6 flex flex-col">
+            <div class="bg-white border border-slate-200 hover:border-hydro-primary rounded-xl shadow-lg h-full p-6 flex flex-col zoom-in">
                 <div class="flex items-center space-x-4 mb-4">
                     <span class="text-4xl" role="img" aria-label="Icon">${insight.icon}</span>
                     <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">${formattedDate}</span>
                 </div>
                 <h2 class="text-xl font-extrabold text-gray-900 mb-2">${insight.title}</h2>
                 <p class="text-slate-600 text-sm flex-grow">${insight.subtitle}</p>
-                <span class="mt-4 inline-flex items-center text-cyan-500 font-semibold text-sm">
+                <span class="mt-4 inline-flex items-center text-hydro-primary font-semibold text-sm">
                     Read Article →
                 </span>
             </div>
@@ -152,20 +152,32 @@ function createInsightCard(insight) {
 
 function renderGrid() {
     const container = document.getElementById('insights-archive-grid');
+    
     if (!container) {
         console.error("Greška: Element #insights-archive-grid nije pronađen!");
         return;
     }
 
+    console.log("Renderujem Insights Grid...");
     let htmlContent = '';
-    insightsData.forEach(insight => {
-        htmlContent += createInsightCard(insight);
+    
+    insightsData.forEach((insight, index) => {
+        let cardHtml = createInsightCard(insight);
+        // Dodajemo animaciju sa zakašnjenjem
+        const delayClass = `delay-${Math.min((index % 4) * 200, 800)}`; 
+        cardHtml = cardHtml.replace('zoom-in', `zoom-in ${delayClass}`);
+        htmlContent += cardHtml;
     });
 
     container.innerHTML = htmlContent;
+    
+    // Pokrećemo animacije ako je biblioteka dostupna
+    if (typeof initScrollAnimations === 'function') {
+        initScrollAnimations();
+    }
 }
 
-// Pokreni renderovanje čim se fajl učita (jer je na dnu body-a)
+// Pokreni renderovanje čim se fajl učita
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', renderGrid);
 } else {
