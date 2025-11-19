@@ -3,80 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Vision and Mission | Anohubs: The Global Standard for Hydro Integrity</title>
-    <meta name="description" content="Anohubs' definitive vision: Establishing the global standard for hydro integrity where technological precision and ethical responsibility drive both sustainable profit and ecological health.">
+    <title>Our Vision & Expertise | Anohubs: Advanced Analytics</title>
+    <meta name="description" content="Discover Anohubs' mission to redefine hydro integrity standards using advanced NDT, AI-driven analytics, and 3D scanning technology.">
     
+    <!-- 1. STANDARDNA JS INICIJALIZACIJA -->
     <script src="js/head-init.js"></script>
 
+    <!-- 2. FONTOVI -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- 3. KRITIČNO: TAILWIND CSS CDN (VRAĆENO) -->
+    <script src="https://cdn.tailwindcss.com"></script>
 
+    <!-- 4. TAILWIND KONFIGURACIJA -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'hydro-primary': '#22d3ee',
+                        'hydro-secondary': '#4ade80',
+                        'hydro-risk': '#ef4444',
+                        'hydro-cta': '#f59e0b',
+                        'hydro-charcoal': '#111827',
+                        'hydro-slate': '#1E293B',
+                        'hydro-light-slate': '#334155',
+                        'hydro-gray': '#475569',
+                    },
+                    fontSize: {
+                        'h1-hero': 'clamp(2.5rem, 5vw + 1rem, 4.5rem)',
+                    },
+                }
+            }
+        }
+    </script>
+
+    <!-- 5. GLOBALNI STILOVI -->
     <link href="css/anohubs.css" rel="stylesheet">
     
     <style>
-        /* Logo je manji na About stranicama */
-        .anohubs-logo-compact { width: 90px; height: auto; color: var(--color-hydro-primary); }
-        @media (min-width: 768px) { .anohubs-logo-compact { width: 120px; } }
-        
-        /* OVERLAY NAD SADRŽAJEM */
-        .vision-content-card {
-            background-color: rgba(30, 41, 59, 0.85); /* hydro-slate */
-            padding: 3rem;
-            border-radius: 0.75rem;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
-            border-top: 5px solid var(--color-hydro-cta); /* hydro-cta */
+        /* CSS STILOVI SPECIFIČNI ZA OVU STRANICU */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #111827; /* hydro-charcoal */
+            color: #E5E7EB;
+            min-height: 100vh;
+        }
+
+        /* Hero sekcija */
+        .hero-about {
+            /* Pretpostavljamo da imate sliku, ako ne, biće tamna pozadina */
+            background-image: linear-gradient(rgba(17, 24, 39, 0.9), rgba(17, 24, 39, 0.95)), url('about_us_bckgrnd.jpg'); 
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            padding-top: 8rem;
+            padding-bottom: 6rem;
+            border-bottom: 5px solid #22d3ee; /* hydro-primary */
+        }
+        .text-hero-glow { text-shadow: 0 0 18px rgba(34, 211, 238, 0.8); }
+
+        /* Stilovi za kartice misije */
+        .mission-card {
+            background-color: #1E293B; /* hydro-slate */
+            border-left: 4px solid #4ade80; /* hydro-secondary */
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+
+        .mission-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
         }
         
-        /* LISTE SA IKONAMA I DVIJE KOLONE */
-        .expertise-list-grid {
-            column-count: 2;
-            column-gap: 3rem;
-            list-style: none;
-            padding-left: 0;
-            margin-top: 1.5rem;
-        }
-        .expertise-list-grid li {
-            margin-bottom: 1.5rem;
-            break-inside: avoid;
-            display: flex;
-            align-items: flex-start;
-        }
-        .expertise-list-grid li svg {
-            margin-right: 0.75rem;
-            flex-shrink: 0;
-            color: var(--tw-colors-hydro-secondary);
-        }
-        @media (max-width: 768px) {
-            .expertise-list-grid { column-count: 1; }
+        /* Sekcija Vizije */
+        .vision-section {
+            background-color: #334155; /* hydro-light-slate */
+            border-top: 1px solid #475569; /* hydro-gray */
         }
     </style>
 </head>
-<body class="text-white bg-hydro-charcoal" style="
-        /* KRITIČNO: Inline style za pozadinu (očekuje se u root-u) */
-        background-image: url('about_us_bckgrnd.jpg') !important;
-        background-size: cover !important;
-        background-attachment: fixed !important;
-        background-position: center !important;
-        min-height: 100vh;
-">
+<body class="text-white bg-hydro-charcoal">
 
+    <!-- HEADER -->
     <header class="bg-hydro-charcoal text-white shadow-2xl sticky top-0 z-50 border-b border-hydro-primary/50" role="banner">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex justify-between items-center">
-            <a href="index.html#hero" class="focus:outline-none focus:ring-4 focus:ring-hydro-primary focus:ring-opacity-50 transition" aria-label="Anohubs Logo - Back to top" aria-current="page">
-                <img src="/logo.svg" alt="Anohubs Logo" class="anohubs-logo">
+            <a href="index.html#hero" class="focus:outline-none transition" aria-label="Anohubs Logo - Back to top" aria-current="page">
+                <img src="logo.svg" alt="Anohubs Logo" class="anohubs-logo">
             </a>
             
             <nav class="hidden md:flex items-center space-x-6 font-extrabold text-sm" role="navigation" aria-label="Main navigation">
-                <a href="about-us-vision.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">About</a>
+                <!-- Aktivni link -->
+                <a href="about-us-vision.html" class="nav-link relative text-hydro-primary transition tracking-wider p-2 uppercase" aria-current="page">About</a>
                 <a href="index.html#services" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Services</a>
-                
                 <a href="insights/expert-insights.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Insights</a>
-                
-                <a href="https://ervinstupac-byte.github.io/anohubsapp/" target="_blank" rel="noopener noreferrer" class="nav-link relative text-hydro-secondary hover:text-green-500 transition tracking-widest font-extrabold text-lg p-2 uppercase">ANO HUB</a>
-                <a href="index.html#technology" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Technology</a>
-                <a href="index.html#contact" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Contact</a>
-                <a href="index.html#contact" class="bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-6 py-2.5 rounded-full transition transform hover:scale-105 shadow-xl font-bold tracking-wider uppercase text-base">Request Audit</a>
+                <a href="case-studies.html" class="nav-link relative text-slate-300 hover:text-hydro-secondary transition tracking-wider p-2 uppercase">Case Studies</a>
+                <a href="app-iframe.html" target="_blank" rel="noopener noreferrer" class="nav-link relative text-hydro-secondary hover:text-green-500 transition tracking-widest font-extrabold text-lg p-2 uppercase">ANO HUB</a>
+                <a href="gallery.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Gallery</a>
+                <a href="protocol.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Protocol</a>
+                <a href="contact.html" class="bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-6 py-2.5 rounded-full transition transform hover:scale-105 shadow-xl font-bold tracking-wider uppercase text-base">Contact</a>
             </nav>
             
             <div class="md:hidden">
@@ -85,125 +111,152 @@
                 </button>
             </div>
             
+            <!-- MOBILE MENU -->
             <div id="mobile-menu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2 text-center bg-hydro-charcoal" aria-label="Mobile navigation menu">
                 <a href="about-us-vision.html" class="block hover:text-hydro-primary transition tracking-wider py-2">About</a>
+                <a href="index.html#services" class="block hover:text-hydro-primary transition tracking-wider py-2">Services</a>
                 <a href="insights/expert-insights.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Insights</a>
-                
-                <a href="https://ervinstupac-byte.github.io/anohubsapp/" target="_blank" rel="noopener noreferrer" class="block hover:text-hydro-secondary transition tracking-wider py-2">ANO HUB</a>
-                <a href="index.html#technology" class="block hover:text-hydro-primary transition tracking-wider py-2">Technology</a>
-                <a href="index.html#contact" class="block hover:text-hydro-primary transition tracking-wider py-2">Contact</a>
-                <a href="index.html#contact" class="block bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-5 py-2 rounded-full transition shadow-md font-bold tracking-wider mt-2 text-center">Request Audit</a>
+                <a href="case-studies.html" class="block hover:text-hydro-secondary transition tracking-wider py-2">Case Studies</a>
+                <a href="app-iframe.html" target="_blank" rel="noopener noreferrer" class="block hover:text-hydro-secondary transition tracking-wider py-2">ANO HUB</a>
+                <a href="gallery.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Gallery</a>
+                <a href="protocol.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Protocol</a>
+                <a href="contact.html" class="block bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-5 py-2 rounded-full transition shadow-md font-bold tracking-wider mt-2 text-center">Contact</a>
             </div>
         </div>
     </header>
-    
+
     <main role="main">
-        <section class="py-24 text-white min-h-screen flex items-center justify-center">
-            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="vision-content-card zoom-in delay-200">
-                    
-                    <h1 class="text-6xl font-black text-hydro-primary mb-4 tracking-tighter fade-in-up">
-                        OUR GLOBAL VISION: LEADING THE WAY
-                    </h1>
-                    <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-8 border-b pb-4 border-hydro-primary/50 fade-in-up delay-400">
-                        Defining the Global Hydro Integrity Standard
-                    </h2>
-                    
-                    <p class="mt-4 text-slate-300 text-xl font-light mb-10 fade-in-up delay-600">
-                        Anohubs is dedicated to establishing the global benchmark where **technological precision** and **ethical responsibility** drive both sustainable profit and ecological health. We are committed to leading the hydropower sector towards a new era of proactive excellence.
-                    </p>
+        <!-- HERO: OUR VISION -->
+        <section class="hero-about text-white pt-24 pb-16">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <p class="text-hydro-primary text-lg font-bold uppercase tracking-widest mb-3 fade-in-up">
+                    ESTABLISHING THE GOLD STANDARD
+                </p>
+                <h1 class="text-h1-hero font-extrabold text-white mb-6 text-hero-glow tracking-tight fade-in-up delay-200">
+                    OUR VISION FOR HYDRO INTEGRITY
+                </h1>
+                <p class="text-xl md:text-2xl font-light text-slate-300 max-w-4xl mx-auto fade-in-up delay-400">
+                    We are pioneers, translating complex inspection data into clear, actionable strategies that ensure the longevity, efficiency, and safety of your hydraulic assets.
+                </p>
+            </div>
+        </section>
 
-                    <div class="space-y-12 text-lg">
-                        
-                        <div class="grid md:grid-cols-2 gap-12 pt-4 border-t border-slate-700">
-                            
-                            <div class="fade-in-up delay-800">
-                                <h3 class="text-3xl font-bold text-hydro-secondary mb-4">Our Core Mission</h3>
-                                <p class="text-slate-400 leading-relaxed">
-                                    We bridge the gap between raw engineering data and **actionable intelligence**. Our mission is to empower hydropower operators with comprehensive, transparent, and verifiable audits, ensuring every asset operates at peak integrity while honoring its environmental mandate. We move the industry from reactive repairs to proactive, data-driven excellence.
-                                </p>
-                            </div>
-                            
-                            <div class="fade-in-up delay-1000">
-                                <h3 class="text-3xl font-bold text-hydro-secondary mb-4">The Immunity Commitment</h3>
-                                <p class="text-slate-400 leading-relaxed">
-                                    Our commitment is founded on the principles of the **Engineering Immunity Protocol**: We never compromise on precision, ethical conduct, or transparency. This dedication transforms unpredictable operational risk into guaranteed long-term stability and profitability for our clients globally.
-                                </p>
-                                <a href="/protocol.html" class="inline-flex mt-4 text-hydro-primary hover:text-cyan-500 font-bold underline transition">
-                                    Review Our Full Protocol &rarr;
-                                </a>
-                            </div>
-                        </div>
+        <!-- SEKCIJA 1: NAŠA MISIJA (TRI STUPA) -->
+        <section class="py-20 bg-hydro-charcoal">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12 fade-in-up delay-600">
+                    <h2 class="text-4xl font-extrabold text-hydro-secondary mb-4">Our Core Mission Pillars</h2>
+                    <p class="text-xl text-slate-400">The foundation of every analysis we perform is built on three uncompromisable values.</p>
+                </div>
 
-                        <div class="pt-16 fade-in-up delay-1200">
-                            <h3 class="text-4xl font-extrabold text-hydro-primary mb-8 border-b pb-3">Our Comprehensive Service Spectrum</h3>
-                            
-                            <ul class="expertise-list-grid text-slate-400">
-                                <li><svg data-lucide="target" class="w-5 h-5 mt-1"></svg> <strong class="text-white mr-2">Precision Mandate:</strong> 0.05 mm/m Tolerance Verification</li>
-                                <li><svg data-lucide="factory" class="w-5 h-5 mt-1"></svg> Site Management & Supervision of Installations</li>
-                                <li><svg data-lucide="repeat" class="w-5 h-5 mt-1"></svg> Turbine Full Overhaul & Refurbishment</li>
-                                <li><svg data-lucide="wrench" class="w-5 h-5 mt-1"></svg> Regular & Emergency Maintenance (Full-Scope)</li>
-                                <li><svg data-lucide="hard-hat" class="w-5 h-5 mt-1"></svg> Flawless Installation Protocols (QC Enforcement)</li>
-                                
-                                <li><svg data-lucide="cpu" class="w-5 h-5 mt-1"></svg> Digital Twin Validation (CFD/FEA)</li>
-                                <li><svg data-lucide="zap" class="w-5 h-5 mt-1"></svg> M-E Synergy Audits (Electro-Mechanical Faults)</li>
-                                <li><svg data-lucide="ear" class="w-5 h-5 mt-1"></svg> Acoustic & Vibration Monitoring Analysis</li>
-                                <li><svg data-lucide="microscope" class="w-5 h-5 mt-1"></svg> Forensic NDT (Non-Destructive Testing) & Material Checks</li>
-                                <li><svg data-lucide="search-check" class="w-5 h-5 mt-1"></svg> Root Cause Analysis (RCFA) for Disputes</li>
-                                
-                                <li><svg data-lucide="bar-chart-2" class="w-5 h-5 mt-1"></svg> Life Cycle Cost (LCC) & Procurement Integrity</li>
-                                <li><svg data-lucide="package" class="w-5 h-5 mt-1"></svg> Advanced Materials Sourcing & Coating Consultation</li>
-                                <li><svg data-lucide="calendar-check" class="w-5 h-5 mt-1"></svg> Predictive Maintenance Scheduling & Optimization</li>
-                                <li><svg data-lucide="globe" class="w-5 h-5 mt-1"></svg> Ecological & Regulatory Compliance (Symbiosis Standard)</li>
-                                <li><svg data-lucide="users" class="w-5 h-5 mt-1"></svg> Operator & Staff Training (Discipline Standards)</li>
-                            </ul>
-                        </div>
-
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Stup 1: Precision -->
+                    <div class="p-8 mission-card zoom-in delay-800 rounded-xl">
+                        <svg data-lucide="scan-eye" class="w-10 h-10 text-hydro-primary mb-4"></svg>
+                        <h3 class="text-2xl font-bold text-white mb-3">Microscopic Precision</h3>
+                        <p class="text-slate-300">
+                            We utilize 3D scanning and sub-surface NDT techniques to achieve measurement accuracy that exceeds industry standards, eliminating guesswork in damage assessment.
+                        </p>
                     </div>
 
-                    <div class="mt-16 pt-8 border-t border-slate-700 text-center fade-in-up delay-1400">
-                        <a href="index.html#contact" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-lg font-bold rounded-full text-hydro-charcoal bg-hydro-primary hover:bg-cyan-500 transition duration-300 transform hover:scale-105 shadow-xl">
-                            Schedule a Consultation &rarr;
-                        </a>
+                    <!-- Stup 2: Reliability -->
+                    <div class="p-8 mission-card zoom-in delay-1000 rounded-xl">
+                        <svg data-lucide="trending-up" class="w-10 h-10 text-hydro-secondary mb-4"></svg>
+                        <h3 class="text-2xl font-bold text-white mb-3">Predictive Reliability</h3>
+                        <p class="text-slate-300">
+                            Our data is processed through custom AI models, moving beyond simple diagnostics to predict future failure points, optimizing maintenance schedules and reducing downtime.
+                        </p>
+                    </div>
+
+                    <!-- Stup 3: Sustainability -->
+                    <div class="p-8 mission-card zoom-in delay-1200 rounded-xl">
+                        <svg data-lucide="leaf" class="w-10 h-10 text-hydro-cta mb-4"></svg>
+                        <h3 class="text-2xl font-bold text-white mb-3">Sustainable Longevity</h3>
+                        <p class="text-slate-300">
+                            By extending the functional lifespan of existing infrastructure, we significantly reduce capital expenditure and promote environmentally responsible hydro energy production.
+                        </p>
                     </div>
                 </div>
             </div>
         </section>
+
+        <!-- SEKCIJA 2: O NAMA / ISTORIJA -->
+        <section class="py-20 vision-section">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                
+                <div class="fade-in-up delay-400">
+                    <h2 class="text-4xl font-extrabold text-hydro-primary mb-6">A History of Innovation</h2>
+                    <p class="text-xl text-slate-300 mb-6">
+                        Anohubs was founded by a team of hydraulic engineers and data scientists frustrated by the limitations of conventional turbine inspection methods. We built a platform that closes the gap between complex physical data and simplified, critical business decisions.
+                    </p>
+                    <p class="text-lg text-slate-400">
+                        Our proprietary methodologies, utilizing sensors and analytics developed in-house, provide a complete digital twin of your assets. This allows for unparalleled monitoring of cavitation, erosion, and fatigue—the silent killers of hydro efficiency.
+                    </p>
+                    <a href="protocol.html" class="inline-flex items-center mt-6 text-hydro-secondary hover:text-green-500 font-bold transition">
+                        Explore Our Full Protocol Documentation <svg data-lucide="arrow-right" class="w-5 h-5 ml-2"></svg>
+                    </a>
+                </div>
+
+                <!-- Slika ili grafika za viziju -->
+                <div class="zoom-in delay-600">
+                    <img src="slike/ervin_stupac_portrait.jpg" alt="Anohubs founder vision" class="rounded-xl shadow-2xl border-4 border-hydro-slate w-full object-cover h-auto">
+                </div>
+
+            </div>
+        </section>
+
+        <!-- CTA SEKCIJA -->
+        <section class="py-20 bg-hydro-charcoal text-center fade-in-up delay-800">
+            <div class="max-w-3xl mx-auto px-4">
+                <h2 class="text-3xl font-extrabold text-white mb-4">Meet the Experts. Secure Your Future.</h2>
+                <p class="text-lg text-slate-300 mb-8">
+                    Our team is ready to demonstrate how data-driven hydro integrity analysis can transform your operation.
+                </p>
+                <a href="contact.html" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-xl font-bold rounded-full text-hydro-charcoal bg-hydro-cta hover:bg-yellow-600 transition duration-300 transform hover:scale-105 shadow-xl uppercase tracking-wider">
+                    Request a Consultation Today &rarr;
+                </a>
+            </div>
+        </section>
     </main>
-    
+
+    <!-- FOOTER -->
     <div class="md:hidden mobile-sticky-cta text-center">
-        <a href="index.html#contact" class="w-full block text-center bg-hydro-primary hover:bg-cyan-500 text-hydro-charcoal px-5 py-3 font-bold tracking-wider uppercase shadow-2xl">
+        <a href="contact.html" class="w-full block text-center bg-hydro-primary hover:bg-cyan-500 text-hydro-charcoal px-5 py-3 font-bold tracking-wider uppercase shadow-2xl">
             SCHEDULE AUDIT
         </a>
     </div>
 
     <footer class="bg-hydro-slate text-hydro-gray py-8 text-center border-t border-hydro-light-slate" role="contentinfo">
         <div class="container mx-auto px-6">
-                
            <a href="index.html#hero" class="mb-4 block" aria-label="Anohubs Logo - Back to top">
-               <img src="/logo.svg" alt="Anohubs Logo" class="anohubs-logo mx-auto">
+               <img src="logo.svg" alt="Anohubs Logo" class="anohubs-logo mx-auto">
            </a>
            <p class="text-slate-400 mb-6">Establishing the global standard for hydro integrity.</p>
            
-           <nav class="flex justify-center space-x-6 text-sm mb-6">
+           <nav class="flex justify-center space-x-6 text-sm mb-4">
                <a href="about-us-vision.html" class="text-slate-400 hover:text-hydro-primary">About</a>
                <a href="index.html#services" class="text-slate-400 hover:text-hydro-primary">Services</a>
-               
                <a href="insights/expert-insights.html" class="text-slate-400 hover:text-hydro-primary">Insights</a>
-               
-               <a href="index.html#technology" class="text-slate-400 hover:text-hydro-primary">Technology</a>
-               <a href="index.html#contact" class="text-slate-400 hover:text-hydro-primary">Contact</a>
+               <a href="case-studies.html" class="text-slate-400 hover:text-hydro-primary">Case Studies</a>
+               <a href="gallery.html" class="text-slate-400 hover:text-hydro-primary">Gallery</a>
+               <a href="protocol.html" class="text-slate-400 hover:text-hydro-primary">Protocol</a>
+               <a href="contact.html" class="text-slate-400 hover:text-hydro-primary">Contact</a>
            </nav>
+           
+           <!-- PRAVNI LINKOVI -->
+           <div class="flex justify-center space-x-4 text-xs mb-4">
+                <a href="privacy-policy.html" class="text-slate-500 hover:text-slate-300 underline">Privacy Policy</a>
+                <span class="text-slate-500">|</span>
+                <a href="terms-of-use.html" class="text-slate-500 hover:text-slate-300 underline">Terms of Use</a>
+           </div>
            
            <p class="text-sm">&copy; <span id="year"></span> Anohubs Inc. All rights reserved.</p>
         </div>
     </footer>
-
+    
+    <!-- SKRIPTE -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
-    
     <script src="js/ui_core.js"></script>
-    
     <script src="js/animation_logic.js"></script>
-    
 </body>
 </html>

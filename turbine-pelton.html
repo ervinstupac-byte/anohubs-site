@@ -6,20 +6,49 @@
     <title>Pelton Turbine Integrity | Anohubs: Advanced Analytics</title>
     <meta name="description" content="Integrity analysis for Pelton turbines focusing on nozzle system precision, bucket wear, and impulse energy conversion efficiency.">
     
+    <!-- 1. STANDARDNA JS INICIJALIZACIJA -->
     <script src="js/head-init.js"></script>
 
+    <!-- 2. FONTOVI -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
     
+    <!-- 3. KRITIČNO: TAILWIND CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- 4. TAILWIND KONFIGURACIJA -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'hydro-primary': '#22d3ee', 
+                        'hydro-secondary': '#4ade80', 
+                        'hydro-risk': '#ef4444', 
+                        'hydro-cta': '#f59e0b', 
+                        'hydro-charcoal': '#111827', 
+                        'hydro-slate': '#1E293B', 
+                        'hydro-light-slate': '#334155', 
+                        'hydro-gray': '#475569',
+                    },
+                    fontSize: {
+                        'h1-hero': 'clamp(2.5rem, 5vw + 1rem, 4.5rem)',
+                    },
+                },
+            }
+        }
+    </script>
+
+    <!-- 5. GLOBALNI STILOVI -->
     <link href="css/anohubs.css" rel="stylesheet">
 
+    <!-- KRITIČNO: CDN ZA 3D MODEL VIEWER -->
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/1.13.0/model-viewer.min.js"></script>
     
     <style>
         /* CSS STILOVI SPECIFIČNI ZA OVU STRANICU */
         body {
-            /* POZADINA: ORLJANI UNA */
             background-image: url('orljani_Una.jpg'); 
             background-size: cover;
             background-attachment: fixed;
@@ -29,7 +58,7 @@
         
         /* HEADER & NAVIGATION */
         .header-bg { background-color: rgba(17, 24, 39, 0.95); }
-        .anohubs-logo-compact { width: 90px; height: auto; color: var(--color-hydro-primary); }
+        .anohubs-logo-compact { width: 90px; height: auto; color: #22d3ee; }
         @media (min-width: 768px) { .anohubs-logo-compact { width: 120px; } }
 
         /* OVERLAY NAD SADRŽAJEM */
@@ -38,17 +67,17 @@
             padding: 3rem 2rem;
             border-radius: 0.75rem; 
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6); 
-            border-top: 5px solid var(--color-hydro-primary);
+            border-top: 5px solid #22d3ee;
             will-change: transform, box-shadow; 
             transform: translateZ(0); 
         }
         .text-glow { text-shadow: 0 0 15px rgba(34, 211, 238, 0.7); }
 
-        /* KRITIČNO: STIL ZA 3D MODEL VIEWER (Zadržano zbog turbine-3d-logic.js) */
+        /* KRITIČNO: STIL ZA 3D MODEL VIEWER */
         model-viewer {
             width: 100%;
             height: 400px;
-            background-color: var(--color-hydro-charcoal);
+            background-color: #111827;
             border-radius: 0.5rem;
             box-shadow: 0 0 15px rgba(34, 211, 238, 0.5);
             margin: 20px auto; 
@@ -60,28 +89,27 @@
             background-color: rgba(51, 65, 85, 0.5); 
             border-radius: 0.5rem;
         }
-
     </style>
 </head>
 <body class="text-white bg-hydro-charcoal">
 
+    <!-- HEADER -->
     <header class="header-bg shadow-2xl sticky top-0 z-50 border-b border-hydro-primary/50" role="banner">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-1 flex justify-between items-center">
             
             <a href="index.html#hero" class="focus:outline-none transition" aria-label="Anohubs Logo - Back to top" aria-current="page">
-                 <img src="/logo.svg" alt="Anohubs Logo" class="anohubs-logo-compact">
+                 <img src="logo.svg" alt="Anohubs Logo" class="anohubs-logo-compact">
             </a>
             
             <nav class="hidden md:flex items-center space-x-4 font-extrabold text-sm" role="navigation" aria-label="Main navigation">
                 <a href="about-us-vision.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">About</a>
                 <a href="index.html#services" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Services</a> 
-                
                 <a href="insights/expert-insights.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Insights</a>
+                <a href="case-studies.html" class="nav-link relative text-slate-300 hover:text-hydro-secondary transition tracking-wider p-2 uppercase">Case Studies</a>
                 <a href="app-iframe.html" target="_blank" rel="noopener noreferrer" class="nav-link relative text-hydro-secondary hover:text-green-500 transition tracking-widest font-extrabold text-lg p-2 uppercase">ANO HUB</a>
-                
                 <a href="gallery.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Gallery</a>
                 <a href="protocol.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Protocol</a>
-                <a href="index.html#contact" class="bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-6 py-2.5 rounded-full transition transform hover:scale-105 shadow-xl font-bold tracking-wider uppercase text-base">Request Audit</a>
+                <a href="contact.html" class="bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-6 py-2.5 rounded-full transition transform hover:scale-105 shadow-xl font-bold tracking-wider uppercase text-base">Contact</a>
             </nav>
             
             <div class="md:hidden">
@@ -94,10 +122,11 @@
                 <a href="about-us-vision.html" class="block hover:text-hydro-primary transition tracking-wider py-2">About</a>
                 <a href="index.html#services" class="block hover:text-hydro-primary transition tracking-wider py-2">Services</a>
                 <a href="insights/expert-insights.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Insights</a>
+                <a href="case-studies.html" class="block hover:text-hydro-secondary transition tracking-wider py-2">Case Studies</a>
                 <a href="app-iframe.html" target="_blank" rel="noopener noreferrer" class="block hover:text-hydro-secondary transition tracking-wider py-2">ANO HUB</a>
                 <a href="gallery.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Gallery</a>
                 <a href="protocol.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Protocol</a>
-                <a href="index.html#contact" class="block bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-5 py-2 rounded-full transition shadow-md font-bold tracking-wider mt-2 text-center">Request Audit</a>
+                <a href="contact.html" class="block bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-5 py-2 rounded-full transition shadow-md font-bold tracking-wider mt-2 text-center">Contact</a>
             </div>
 
         </div>
@@ -120,8 +149,9 @@
                     </h2>
                     
                     <div class="relative">
+                        <!-- 3D MODEL VIEWER -->
                         <model-viewer 
-                            src="pelton_wheel.glb" /* Promijenjeno na pretpostavljeni Pelton model */
+                            src="pelton_wheel.glb" 
                             alt="3D model of a Pelton Turbine Impeller and Nozzle"
                             camera-controls 
                             auto-rotate 
@@ -131,6 +161,7 @@
                             exposure="1.5"
                             camera-orbit="180deg 85deg 1.5m">
                             
+                            <!-- Custom Progress Bar (Ako Pelton model bude veći) -->
                             <div slot="progress-bar" class="progress-bar text-sm text-white">
                                 Loading 3D Model... Please wait.
                                 <div class="update-bar">
@@ -147,13 +178,13 @@
                             <svg data-lucide="droplet" class="w-6 h-6 text-hydro-cta"></svg> The Pelton Challenge: Impulse Precision
                         </h2>
                         <p class="text-slate-300 leading-relaxed">
-                            The **Pelton Turbine** operates on microscopic precision: maintaining the integrity of the nozzle system and managing the brutal forces of **high-velocity abrasion**. Maximum efficiency relies entirely on the precise geometry of the water jet and the impact angle on the runner buckets.
+                            The **Pelton Turbine** is a heritage of high-head efficiency, converting water's potential energy into kinetic energy via high-velocity jets. Its operation hinges on microscopic precision: maintaining the integrity of the nozzle system and managing the brutal forces of **high-velocity abrasion** caused by even the slightest sediment in the jet stream.
                         </p>
                         <p class="text-slate-400 mt-3">
-                            Any wear translates directly to catastrophic efficiency loss. Our protocols are designed to secure the integrity of the spear, nozzle, and bucket geometry.
+                            Unlike Francis or Kaplan, Pelton is an impulse machine; maximum efficiency relies entirely on the precise geometry of the water jet and the impact angle on the runner buckets. Any wear translates directly to catastrophic efficiency loss.
                         </p>
                     </div>
-
+                    
                     <div class="space-y-6 fade-in-up delay-800">
                         <h2 class="text-3xl font-bold text-hydro-secondary mb-4 flex items-center gap-3">
                             <svg data-lucide="check-square" class="w-7 h-7"></svg> Focus Protocol: Nozzle and Bucket Precision
@@ -203,7 +234,7 @@
                 </div>
 
                 <div class="mt-12 text-center fade-in-up delay-1400">
-                    <a href="index.html#contact" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-lg font-bold rounded-full text-hydro-charcoal bg-hydro-primary hover:bg-cyan-500 transition duration-300 transform hover:scale-105 shadow-xl uppercase tracking-wider">
+                    <a href="contact.html" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-lg font-bold rounded-full text-hydro-charcoal bg-hydro-primary hover:bg-cyan-500 transition duration-300 transform hover:scale-105 shadow-xl uppercase tracking-wider">
                         Schedule Pelton Turbine Audit &rarr;
                     </a>
                 </div>
@@ -212,43 +243,46 @@
         </section>
     </main>
     
+    <!-- FOOTER -->
     <div class="md:hidden mobile-sticky-cta text-center">
-        <a href="index.html#contact" class="w-full block text-center bg-hydro-primary hover:bg-cyan-500 text-hydro-charcoal px-5 py-3 font-bold tracking-wider uppercase shadow-2xl">
+        <a href="contact.html" class="w-full block text-center bg-hydro-primary hover:bg-cyan-500 text-hydro-charcoal px-5 py-3 font-bold tracking-wider uppercase shadow-2xl">
             SCHEDULE AUDIT
         </a>
     </div>
 
     <footer class="bg-hydro-slate text-hydro-gray py-8 text-center border-t border-hydro-light-slate" role="contentinfo">
         <div class="container mx-auto px-6">
-                
            <a href="index.html#hero" class="mb-4 block" aria-label="Anohubs Logo - Back to top">
-               <img src="/logo.svg" alt="Anohubs Logo" class="anohubs-logo mx-auto">
+               <img src="logo.svg" alt="Anohubs Logo" class="anohubs-logo-compact">
            </a>
            <p class="text-slate-400 mb-6">Establishing the global standard for hydro integrity.</p>
-           
-           <nav class="flex justify-center space-x-6 text-sm mb-6">
+           <nav class="flex justify-center space-x-6 text-sm mb-4">
                <a href="about-us-vision.html" class="text-slate-400 hover:text-hydro-primary">About</a>
                <a href="index.html#services" class="text-slate-400 hover:text-hydro-primary">Services</a>
-               
                <a href="insights/expert-insights.html" class="text-slate-400 hover:text-hydro-primary">Insights</a>
+               <a href="case-studies.html" class="text-slate-400 hover:text-hydro-primary">Case Studies</a>
+               <a href="app-iframe.html" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-hydro-secondary">ANO HUB</a>
                <a href="gallery.html" class="text-slate-400 hover:text-hydro-primary">Gallery</a>
-               
                <a href="protocol.html" class="text-slate-400 hover:text-hydro-primary">Protocol</a>
-               <a href="index.html#contact" class="text-slate-400 hover:text-hydro-primary">Contact</a>
+               <a href="contact.html" class="text-slate-400 hover:text-hydro-primary">Contact</a>
            </nav>
-           
+           <div class="flex justify-center space-x-4 text-xs mb-4">
+                <a href="privacy-policy.html" class="text-slate-500 hover:text-slate-300 underline">Privacy Policy</a>
+                <span class="text-slate-500">|</span>
+                <a href="terms-of-use.html" class="text-slate-500 hover:text-slate-300 underline">Terms of Use</a>
+           </div>
            <p class="text-sm">&copy; <span id="year"></span> Anohubs Inc. All rights reserved.</p>
         </div>
     </footer>
 
-
+    <!-- SKRIPTE -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
-    
     <script src="js/ui_core.js"></script>
-    
     <script src="js/animation_logic.js"></script>
-
     <script src="js/turbine-3d-logic.js"></script>
     
 </body>
 </html>
+```
+
+Tako smo uspješno riješili "razbijeni" izgled na sve tri stranice turbina, uz ispravnu navigaciju i 3D logiku.

@@ -6,19 +6,48 @@
     <title>Contact Our Hydro Integrity Experts | Anohubs</title>
     <meta name="description" content="Request a consultation or expert audit. Connect with Anohubs specialists for comprehensive hydro integrity and optimization solutions.">
     
+    <!-- 1. STANDARDNA JS INICIJALIZACIJA -->
     <script src="js/head-init.js"></script>
 
+    <!-- 2. FONTOVI -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
     
+    <!-- 3. KRITIČNO: TAILWIND CSS CDN (VRAĆENO) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- 4. TAILWIND KONFIGURACIJA -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'hydro-primary': '#22d3ee',
+                        'hydro-secondary': '#4ade80',
+                        'hydro-risk': '#ef4444',
+                        'hydro-cta': '#f59e0b',
+                        'hydro-charcoal': '#111827',
+                        'hydro-slate': '#1E293B',
+                        'hydro-light-slate': '#334155',
+                        'hydro-gray': '#475569',
+                    },
+                    fontSize: {
+                        'h1-hero': 'clamp(2.5rem, 5vw + 1rem, 4.5rem)',
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <!-- 5. GLOBALNI STILOVI -->
     <link href="css/anohubs.css" rel="stylesheet">
     
     <style>
         /* CSS STILOVI SPECIFIČNI ZA OVU STRANICU */
         body { 
             font-family: 'Inter', sans-serif; 
-            background-color: var(--color-hydro-charcoal); 
+            background-color: #111827; /* hydro-charcoal */
             color: #E5E7EB;
             /* POZADINA: ORLJANI UNA za konzistentnost */
             background-image: url('orljani_Una.jpg');
@@ -40,20 +69,23 @@
 </head>
 <body class="text-white bg-hydro-charcoal">
 
-    <header class="bg-hydro-charcoal shadow-2xl sticky top-0 z-50 border-b border-hydro-primary/50" role="banner">
+    <!-- HEADER (SA AŽURIRANIM LINKOVIMA) -->
+    <header class="bg-hydro-charcoal text-white shadow-2xl sticky top-0 z-50 border-b border-hydro-primary/50" role="banner">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex justify-between items-center">
             <a href="index.html#hero" class="focus:outline-none transition" aria-label="Anohubs Logo - Back to top" aria-current="page">
-                <img src="/logo.svg" alt="Anohubs Logo" class="anohubs-logo">
+                <img src="logo.svg" alt="Anohubs Logo" class="anohubs-logo">
             </a>
             
             <nav class="hidden md:flex items-center space-x-6 font-extrabold text-sm" role="navigation" aria-label="Main navigation">
                 <a href="about-us-vision.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">About</a>
                 <a href="index.html#services" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Services</a>
                 <a href="insights/expert-insights.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Insights</a>
+                <a href="case-studies.html" class="nav-link relative text-slate-300 hover:text-hydro-secondary transition tracking-wider p-2 uppercase">Case Studies</a>
                 <a href="app-iframe.html" target="_blank" rel="noopener noreferrer" class="nav-link relative text-hydro-secondary hover:text-green-500 transition tracking-widest font-extrabold text-lg p-2 uppercase">ANO HUB</a>
                 <a href="gallery.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Gallery</a>
                 <a href="protocol.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Protocol</a>
-                <a href="contact.html" class="bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-6 py-2.5 rounded-full transition transform hover:scale-105 shadow-xl font-bold tracking-wider uppercase text-base" aria-current="page">Request Audit</a>
+                <!-- Aktivni link -->
+                <a href="contact.html" class="bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-6 py-2.5 rounded-full transition transform hover:scale-105 shadow-xl font-bold tracking-wider uppercase text-base" aria-current="page">Contact</a>
             </nav>
             
             <div class="md:hidden">
@@ -62,14 +94,16 @@
                 </button>
             </div>
             
+            <!-- MOBILE MENU -->
             <div id="mobile-menu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2 text-center bg-hydro-charcoal" aria-label="Mobile navigation menu">
                 <a href="about-us-vision.html" class="block hover:text-hydro-primary transition tracking-wider py-2">About</a>
                 <a href="index.html#services" class="block hover:text-hydro-primary transition tracking-wider py-2">Services</a>
                 <a href="insights/expert-insights.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Insights</a>
+                <a href="case-studies.html" class="block hover:text-hydro-secondary transition tracking-wider py-2">Case Studies</a>
                 <a href="app-iframe.html" target="_blank" rel="noopener noreferrer" class="block hover:text-hydro-secondary transition tracking-wider py-2">ANO HUB</a>
                 <a href="gallery.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Gallery</a>
                 <a href="protocol.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Protocol</a>
-                <a href="contact.html" class="block bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-5 py-2 rounded-full transition shadow-md font-bold tracking-wider mt-2 text-center" aria-current="page">Request Audit</a>
+                <a href="contact.html" class="block bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-5 py-2 rounded-full transition shadow-md font-bold tracking-wider mt-2 text-center">Contact</a>
             </div>
         </div>
     </header>
@@ -80,6 +114,7 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
                 <div class="grid lg:grid-cols-2 gap-12 items-start">
                     
+                    <!-- Lijeve informacije / CTA -->
                     <div class="fade-in-up">
                         <h2 class="text-base font-bold tracking-widest text-hydro-primary uppercase">Global Standard</h2>
                         <h3 class="text-5xl md:text-6xl font-extrabold leading-tight text-white mt-2">
@@ -101,9 +136,11 @@
                         </div>
                     </div>
                     
+                    <!-- Desna forma -->
                     <div class="zoom-in delay-200">
-                        <div class="bg-hydro-slate p-8 rounded-xl shadow-2xl">
+                        <div class="bg-hydro-slate p-8 rounded-xl shadow-2xl border border-hydro-light-slate">
                             <p class="text-xl text-hydro-cta mb-6 font-semibold">Schedule Your Integrated Audit</p>
+                            <!-- FORMA S POTREBNIM ID-om ZA JS LOGIKU -->
                             <form id="contactForm" class="space-y-6" action="https://formspree.io/f/xqaywlaq" method="POST">
                                 <input type="text" id="ime" name="Full Name" placeholder="Full Name" required class="mt-1 block w-full px-4 py-3 bg-hydro-light-slate border border-hydro-gray rounded-md text-white focus:ring-hydro-primary focus:border-hydro-primary transition">
                                 <input type="email" id="email" name="Email (Business)" placeholder="Email Address" required class="mt-1 block w-full px-4 py-3 bg-hydro-light-slate border border-hydro-gray rounded-md text-white focus:ring-hydro-primary focus:border-hydro-primary transition">
@@ -124,8 +161,9 @@
         </section>
     </main>
     
+    <!-- FOOTER (SA PRAVNIM LINKOVIMA) -->
     <div class="md:hidden mobile-sticky-cta text-center">
-        <a href="index.html#contact" class="w-full block text-center bg-hydro-primary hover:bg-cyan-500 text-hydro-charcoal px-5 py-3 font-bold tracking-wider uppercase shadow-2xl">
+        <a href="contact.html" class="w-full block text-center bg-hydro-primary hover:bg-cyan-500 text-hydro-charcoal px-5 py-3 font-bold tracking-wider uppercase shadow-2xl">
             SCHEDULE AUDIT
         </a>
     </div>
@@ -133,28 +171,38 @@
     <footer class="bg-hydro-slate text-hydro-gray py-8 text-center border-t border-hydro-light-slate" role="contentinfo">
         <div class="container mx-auto px-6">
                 
-           <a href="index.html#hero" class="mb-4 block" aria-label="Anohubs Logo - Back to top">
-               <img src="/logo.svg" alt="Anohubs Logo" class="anohubs-logo mx-auto">
+           <a href="index.html#hero" class="mb-4 block" aria-label="Anohubs Logo - Back to Home">
+               <img src="logo.svg" alt="Anohubs Logo" class="anohubs-logo mx-auto">
            </a>
            <p class="text-slate-400 mb-6">Establishing the global standard for hydro integrity.</p>
            
-           <nav class="flex justify-center space-x-6 text-sm mb-6">
+           <nav class="flex justify-center space-x-6 text-sm mb-4">
                <a href="about-us-vision.html" class="text-slate-400 hover:text-hydro-primary">About</a>
                <a href="index.html#services" class="text-slate-400 hover:text-hydro-primary">Services</a>
-               
                <a href="insights/expert-insights.html" class="text-slate-400 hover:text-hydro-primary">Insights</a>
+               <a href="case-studies.html" class="text-slate-400 hover:text-hydro-primary">Case Studies</a>
                <a href="gallery.html" class="text-slate-400 hover:text-hydro-primary">Gallery</a>
                <a href="protocol.html" class="text-slate-400 hover:text-hydro-primary">Protocol</a>
-               <a href="contact.html" class="text-slate-400 hover:text-hydro-primary" aria-current="page">Contact</a>
+               <a href="contact.html" class="text-slate-400 hover:text-hydro-primary">Contact</a>
            </nav>
+           
+           <!-- PRAVNI LINKOVI -->
+           <div class="flex justify-center space-x-4 text-xs mb-4">
+                <a href="privacy-policy.html" class="text-slate-500 hover:text-slate-300 underline">Privacy Policy</a>
+                <span class="text-slate-500">|</span>
+                <a href="terms-of-use.html" class="text-slate-500 hover:text-slate-300 underline">Terms of Use</a>
+           </div>
            
            <p class="text-sm">&copy; <span id="year"></span> Anohubs Inc. All rights reserved.</p>
         </div>
     </footer>
 
-
+    <!-- KRITIČNO: MODULARNA JS STRUKTURA -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
     <script src="js/ui_core.js"></script>
     <script src="js/animation_logic.js"></script>
-    <script src="contact_logic.js"></script> </body>
+    <!-- Logika forme se mora učitati ovdje -->
+    <script src="contact_logic.js"></script> 
+    
+</body>
 </html>

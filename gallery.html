@@ -6,21 +6,51 @@
     <title>The Hydro-Vision Gallery | Global Eco-Integrity</title>
     <meta name="description" content="A curated collection of global landscapes, rivers, and hydropower environments showcasing the natural capital protected by the AnoHUB Integrity Standard.">
     
+    <!-- 1. STANDARDNA JS INICIJALIZACIJA -->
     <script src="js/head-init.js"></script>
 
+    <!-- 2. FONTOVI -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
     
+    <!-- 3. KRITIČNO: TAILWIND CSS CDN (VRAĆENO) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- 4. TAILWIND KONFIGURACIJA -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'hydro-primary': '#22d3ee',
+                        'hydro-secondary': '#4ade80',
+                        'hydro-risk': '#ef4444',
+                        'hydro-cta': '#f59e0b',
+                        'hydro-charcoal': '#111827',
+                        'hydro-slate': '#1E293B',
+                        'hydro-light-slate': '#334155',
+                        'hydro-gray': '#475569',
+                    },
+                    fontSize: {
+                        'h1-hero': 'clamp(2.5rem, 5vw + 1rem, 4.5rem)',
+                    },
+                }
+            }
+        }
+    </script>
+
+    <!-- 5. GLOBALNI STILOVI -->
     <link href="css/anohubs.css" rel="stylesheet">
 
+    <!-- CSS STILOVI ZA GALERIJU I LIGHTBOX -->
     <style>
         /* CSS STILOVI GALERIJE */
-        body { background-color: var(--color-hydro-charcoal); }
+        body { background-color: #111827; }
         .header-bg { background-color: rgba(17, 24, 39, 0.95); }
-        .bg-hydro-slate { background-color: var(--color-hydro-slate); }
+        .bg-hydro-slate { background-color: #1E293B; }
 
-        .anohubs-logo-img { max-height: 35px; width: auto; color: var(--color-hydro-primary); display: block; }
+        .anohubs-logo-img { max-height: 35px; width: auto; color: #22d3ee; display: block; }
         
         /* === ESTETSKA POBOLJŠANJA === */
         .h1-glow {
@@ -45,7 +75,7 @@
         .thumbnail-img:hover {
             transform: scale(1.05);
             box-shadow: 0 8px 25px rgba(34, 211, 238, 0.6);
-            border-color: var(--color-hydro-primary);
+            border-color: #22d3ee;
             opacity: 1;
         }
         
@@ -62,11 +92,11 @@
 
         /* Fiksni prozor za prikaz velike slike */
         #lightbox-window {
-            position: relative;
+            position: relative; 
             width: 95vw; 
             height: 90vh; 
             max-width: 1300px; 
-            background-color: var(--color-hydro-charcoal);
+            background-color: #111827;
             border-radius: 12px;
             box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
             display: flex;
@@ -143,19 +173,41 @@
 </head>
 <body class="text-white bg-hydro-charcoal">
 
+    <!-- HEADER -->
     <header class="header-bg shadow-2xl sticky top-0 z-50 border-b border-hydro-primary/50" role="banner">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex justify-between items-center">
             <a href="index.html#hero" class="focus:outline-none transition" aria-label="Anohubs Logo - Back to top">
-                <img src="/logo.svg" alt="Anohubs Logo" class="anohubs-logo-img">
+                <img src="logo.svg" alt="Anohubs Logo" class="anohubs-logo-img">
             </a>
             
-            <nav class="flex items-center space-x-4 font-extrabold text-sm" role="navigation">
-                <a href="about-us-vision.html" class="text-slate-300 hover:text-cyan-400 transition">About</a>
-                <a href="insights/expert-insights.html" class="text-slate-300 hover:text-cyan-400 transition">Insights</a>
-                <a href="gallery.html" class="text-cyan-400 transition" aria-current="page">Gallery</a>
-                <a href="protocol.html" class="text-slate-300 hover:text-cyan-400 transition">Protocol</a>
-                <a href="index.html#contact" class="bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-4 py-2 rounded-full transition">Request Audit</a>
+            <nav class="hidden md:flex items-center space-x-6 font-extrabold text-sm" role="navigation" aria-label="Main navigation">
+                <a href="about-us-vision.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">About</a>
+                <a href="index.html#services" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Services</a>
+                <a href="insights/expert-insights.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Insights</a>
+                <a href="case-studies.html" class="nav-link relative text-slate-300 hover:text-hydro-secondary transition tracking-wider p-2 uppercase">Case Studies</a>
+                <a href="app-iframe.html" target="_blank" rel="noopener noreferrer" class="nav-link relative text-hydro-secondary hover:text-green-500 transition tracking-widest font-extrabold text-lg p-2 uppercase">ANO HUB</a>
+                <a href="gallery.html" class="nav-link relative text-hydro-primary transition tracking-wider p-2 uppercase" aria-current="page">Gallery</a>
+                <a href="protocol.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Protocol</a>
+                <a href="contact.html" class="bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-6 py-2.5 rounded-full transition transform hover:scale-105 shadow-xl font-bold tracking-wider uppercase text-base">Contact</a>
             </nav>
+            
+            <div class="md:hidden">
+                <button id="mobile-menu-button" aria-label="Open menu" type="button" class="p-2 text-white">
+                    <svg data-lucide="menu" class="w-8 h-8"></svg>
+                </button>
+            </div>
+            
+            <!-- MOBILE MENU -->
+            <div id="mobile-menu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2 text-center bg-hydro-charcoal" aria-label="Mobile navigation menu">
+                <a href="about-us-vision.html" class="block hover:text-hydro-primary transition tracking-wider py-2">About</a>
+                <a href="index.html#services" class="block hover:text-hydro-primary transition tracking-wider py-2">Services</a>
+                <a href="insights/expert-insights.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Insights</a>
+                <a href="case-studies.html" class="block hover:text-hydro-secondary transition tracking-wider py-2">Case Studies</a>
+                <a href="app-iframe.html" target="_blank" rel="noopener noreferrer" class="block hover:text-hydro-secondary transition tracking-wider py-2">ANO HUB</a>
+                <a href="gallery.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Gallery</a>
+                <a href="protocol.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Protocol</a>
+                <a href="contact.html" class="block bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-5 py-2 rounded-full transition shadow-md font-bold tracking-wider mt-2 text-center">Contact</a>
+            </div>
         </div>
     </header>
     
@@ -171,11 +223,12 @@
                 </p>
 
                 <div class="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 gap-4 gallery-grid">
-                    </div>
+                    <!-- OVDJE SE SLIKE UČITAVAJU KROZ JS -->
+                </div>
                 
                 <script>
                     // Prikaz poruke ako nema slika
-                    if (totalImages === 0) {
+                    if (typeof totalImages !== 'undefined' && totalImages === 0) {
                         document.write('<p class="text-xl text-red-400 mt-20">Nema pronađenih slika. Molimo provjerite listu `imageFilenames` u skripti.</p>');
                     }
                 </script>
@@ -184,12 +237,14 @@
         </section>
     </main>
     
+    <!-- LIGHTBOX MODAL (KRITIČNA KOMPONENTA GALERIJE) -->
     <div id="lightbox-modal" class="lightbox-modal hidden fixed inset-0 z-[100] flex items-center justify-center p-4">
         
         <div id="lightbox-window" onclick="event.stopPropagation()">
             
             <div id="lightbox-image-wrapper">
-                </div>
+                <!-- OVDJE SE UČITAVA VELIKA SLIKA -->
+            </div>
             
             <div class="lightbox-controls-bar p-4 bg-hydro-slate flex justify-between items-center relative">
                 
@@ -226,42 +281,46 @@
         
     </div>
 
+    <!-- FOOTER -->
     <div class="md:hidden mobile-sticky-cta text-center">
-        <a href="index.html#contact" class="w-full block text-center bg-hydro-primary hover:bg-cyan-500 text-hydro-charcoal px-5 py-3 font-bold tracking-wider uppercase shadow-2xl">
+        <a href="contact.html" class="w-full block text-center bg-hydro-primary hover:bg-cyan-500 text-hydro-charcoal px-5 py-3 font-bold tracking-wider uppercase shadow-2xl">
             SCHEDULE AUDIT
         </a>
     </div>
 
     <footer class="bg-hydro-slate text-hydro-gray py-8 text-center border-t border-hydro-light-slate" role="contentinfo">
         <div class="container mx-auto px-6">
-                
            <a href="index.html#hero" class="mb-4 block" aria-label="Anohubs Logo - Back to top">
-               <img src="/logo.svg" alt="Anohubs Logo" class="anohubs-logo mx-auto">
+               <img src="logo.svg" alt="Anohubs Logo" class="anohubs-logo-img mx-auto">
            </a>
            <p class="text-slate-400 mb-6">Establishing the global standard for hydro integrity.</p>
-           
-           <nav class="flex justify-center space-x-6 text-sm mb-6">
+           <nav class="flex justify-center space-x-6 text-sm mb-4">
                <a href="about-us-vision.html" class="text-slate-400 hover:text-hydro-primary">About</a>
                <a href="index.html#services" class="text-slate-400 hover:text-hydro-primary">Services</a>
-               
                <a href="insights/expert-insights.html" class="text-slate-400 hover:text-hydro-primary">Insights</a>
-               
-               <a href="index.html#technology" class="text-slate-400 hover:text-hydro-primary">Technology</a>
-               <a href="index.html#contact" class="text-slate-400 hover:text-hydro-primary">Contact</a>
+               <a href="case-studies.html" class="text-slate-400 hover:text-hydro-primary">Case Studies</a>
+               <a href="gallery.html" class="text-slate-400 hover:text-hydro-primary">Gallery</a>
+               <a href="protocol.html" class="text-slate-400 hover:text-hydro-primary">Protocol</a>
+               <a href="contact.html" class="text-slate-400 hover:text-hydro-primary">Contact</a>
            </nav>
-           
+           <!-- PRAVNI LINKOVI -->
+           <div class="flex justify-center space-x-4 text-xs mb-4">
+                <a href="privacy-policy.html" class="text-slate-500 hover:text-slate-300 underline">Privacy Policy</a>
+                <span class="text-slate-500">|</span>
+                <a href="terms-of-use.html" class="text-slate-500 hover:text-slate-300 underline">Terms of Use</a>
+           </div>
            <p class="text-sm">&copy; <span id="year"></span> Anohubs Inc. All rights reserved.</p>
         </div>
     </footer>
 
-
+    <!-- KRITIČNO: MODULARNA JS STRUKTURA -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
-    
     <script src="js/ui_core.js"></script>
-    
     <script src="js/animation_logic.js"></script>
-    
+    <!-- Logika za galeriju -->
     <script src="js/gallery-logic.js"></script>
+    <!-- Zaštita slika -->
+    <script src="js/gallery-protection.js"></script>
 
 </body>
 </html>
