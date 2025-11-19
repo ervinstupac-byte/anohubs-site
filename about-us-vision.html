@@ -14,7 +14,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
     
-    <!-- 3. KRITIČNO: TAILWIND CSS CDN (VRAĆENO) -->
+    <!-- 3. KRITIČNO: TAILWIND CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- 4. TAILWIND KONFIGURACIJA -->
@@ -23,65 +23,74 @@
             theme: {
                 extend: {
                     colors: {
-                        'hydro-primary': '#22d3ee',
-                        'hydro-secondary': '#4ade80',
-                        'hydro-risk': '#ef4444',
-                        'hydro-cta': '#f59e0b',
-                        'hydro-charcoal': '#111827',
-                        'hydro-slate': '#1E293B',
-                        'hydro-light-slate': '#334155',
+                        'hydro-primary': '#22d3ee', 
+                        'hydro-secondary': '#4ade80', 
+                        'hydro-risk': '#ef4444', 
+                        'hydro-cta': '#f59e0b', 
+                        'hydro-charcoal': '#111827', 
+                        'hydro-slate': '#1E293B', 
+                        'hydro-light-slate': '#334155', 
                         'hydro-gray': '#475569',
                     },
                     fontSize: {
                         'h1-hero': 'clamp(2.5rem, 5vw + 1rem, 4.5rem)',
                     },
-                }
+                },
             }
         }
     </script>
-
+    
     <!-- 5. GLOBALNI STILOVI -->
     <link href="css/anohubs.css" rel="stylesheet">
     
     <style>
         /* CSS STILOVI SPECIFIČNI ZA OVU STRANICU */
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #111827; /* hydro-charcoal */
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #111827; 
             color: #E5E7EB;
-            min-height: 100vh;
         }
 
-        /* Hero sekcija */
+        /* HERO SEKCIJA */
         .hero-about {
-            /* Pretpostavljamo da imate sliku, ako ne, biće tamna pozadina */
+            /* Slika iz root foldera */
             background-image: linear-gradient(rgba(17, 24, 39, 0.9), rgba(17, 24, 39, 0.95)), url('about_us_bckgrnd.jpg'); 
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
             padding-top: 8rem;
             padding-bottom: 6rem;
-            border-bottom: 5px solid #22d3ee; /* hydro-primary */
+            border-bottom: 5px solid #22d3ee; 
         }
         .text-hero-glow { text-shadow: 0 0 18px rgba(34, 211, 238, 0.8); }
 
-        /* Stilovi za kartice misije */
+        /* KARTICE MISIJE */
         .mission-card {
-            background-color: #1E293B; /* hydro-slate */
-            border-left: 4px solid #4ade80; /* hydro-secondary */
+            background-color: #1E293B; 
+            border-left: 4px solid #4ade80; 
             transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
         }
-
         .mission-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
         }
         
-        /* Sekcija Vizije */
+        /* VIZIJA SEKCIJA */
         .vision-section {
-            background-color: #334155; /* hydro-light-slate */
-            border-top: 1px solid #475569; /* hydro-gray */
+            background-color: #334155; 
+            border-top: 1px solid #475569; 
         }
+
+        /* ANIMACIJE */
+        .fade-in-up, .zoom-in { opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+        .zoom-in { transform: scale(0.95); }
+        .fade-in-up.is-visible, .zoom-in.is-visible { opacity: 1; transform: translateY(0) scale(1); }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-400 { transition-delay: 400ms; }
+        .delay-600 { transition-delay: 600ms; }
+        .delay-800 { transition-delay: 800ms; }
+        .delay-1000 { transition-delay: 1000ms; }
+        .delay-1200 { transition-delay: 1200ms; }
     </style>
 </head>
 <body class="text-white bg-hydro-charcoal">
@@ -96,7 +105,7 @@
             <nav class="hidden md:flex items-center space-x-6 font-extrabold text-sm" role="navigation" aria-label="Main navigation">
                 <!-- Aktivni link -->
                 <a href="about-us-vision.html" class="nav-link relative text-hydro-primary transition tracking-wider p-2 uppercase" aria-current="page">About</a>
-                <a href="index.html#services" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Services</a>
+                <a href="services.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Services</a>
                 <a href="insights/expert-insights.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Insights</a>
                 <a href="case-studies.html" class="nav-link relative text-slate-300 hover:text-hydro-secondary transition tracking-wider p-2 uppercase">Case Studies</a>
                 <a href="app-iframe.html" target="_blank" rel="noopener noreferrer" class="nav-link relative text-hydro-secondary hover:text-green-500 transition tracking-widest font-extrabold text-lg p-2 uppercase">ANO HUB</a>
@@ -114,7 +123,7 @@
             <!-- MOBILE MENU -->
             <div id="mobile-menu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2 text-center bg-hydro-charcoal" aria-label="Mobile navigation menu">
                 <a href="about-us-vision.html" class="block hover:text-hydro-primary transition tracking-wider py-2">About</a>
-                <a href="index.html#services" class="block hover:text-hydro-primary transition tracking-wider py-2">Services</a>
+                <a href="services.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Services</a>
                 <a href="insights/expert-insights.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Insights</a>
                 <a href="case-studies.html" class="block hover:text-hydro-secondary transition tracking-wider py-2">Case Studies</a>
                 <a href="app-iframe.html" target="_blank" rel="noopener noreferrer" class="block hover:text-hydro-secondary transition tracking-wider py-2">ANO HUB</a>
@@ -199,7 +208,8 @@
 
                 <!-- Slika ili grafika za viziju -->
                 <div class="zoom-in delay-600">
-                    <img src="slike/ervin_stupac_portrait.jpg" alt="Anohubs founder vision" class="rounded-xl shadow-2xl border-4 border-hydro-slate w-full object-cover h-auto">
+                    <!-- Slika iz root foldera -->
+                    <img src="ervin_stupac_portrait.jpg" alt="Anohubs founder vision" class="rounded-xl shadow-2xl border-4 border-hydro-slate w-full object-cover h-auto">
                 </div>
 
             </div>
@@ -235,7 +245,7 @@
            
            <nav class="flex justify-center space-x-6 text-sm mb-4">
                <a href="about-us-vision.html" class="text-slate-400 hover:text-hydro-primary">About</a>
-               <a href="index.html#services" class="text-slate-400 hover:text-hydro-primary">Services</a>
+               <a href="services.html" class="text-slate-400 hover:text-hydro-primary">Services</a>
                <a href="insights/expert-insights.html" class="text-slate-400 hover:text-hydro-primary">Insights</a>
                <a href="case-studies.html" class="text-slate-400 hover:text-hydro-primary">Case Studies</a>
                <a href="gallery.html" class="text-slate-400 hover:text-hydro-primary">Gallery</a>

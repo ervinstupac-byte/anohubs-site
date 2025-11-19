@@ -6,7 +6,7 @@
     <title>The Hydro-Vision Gallery | Global Eco-Integrity</title>
     <meta name="description" content="A curated collection of global landscapes, rivers, and hydropower environments showcasing the natural capital protected by the AnoHUB Integrity Standard.">
     
-    <!-- 1. STANDARDNA JS INICIJALIZACIJA -->
+    <!-- 1. JS INICIJALIZACIJA -->
     <script src="js/head-init.js"></script>
 
     <!-- 2. FONTOVI -->
@@ -14,22 +14,22 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
     
-    <!-- 3. KRITIČNO: TAILWIND CSS CDN (VRAĆENO) -->
+    <!-- 3. TAILWIND CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- 4. TAILWIND KONFIGURACIJA -->
+    <!-- 4. TAILWIND CONFIG -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        'hydro-primary': '#22d3ee',
-                        'hydro-secondary': '#4ade80',
-                        'hydro-risk': '#ef4444',
-                        'hydro-cta': '#f59e0b',
-                        'hydro-charcoal': '#111827',
-                        'hydro-slate': '#1E293B',
-                        'hydro-light-slate': '#334155',
+                        'hydro-primary': '#22d3ee', 
+                        'hydro-secondary': '#4ade80', 
+                        'hydro-risk': '#ef4444', 
+                        'hydro-cta': '#f59e0b', 
+                        'hydro-charcoal': '#111827', 
+                        'hydro-slate': '#1E293B', 
+                        'hydro-light-slate': '#334155', 
                         'hydro-gray': '#475569',
                     },
                     fontSize: {
@@ -45,130 +45,102 @@
 
     <!-- CSS STILOVI ZA GALERIJU I LIGHTBOX -->
     <style>
-        /* CSS STILOVI GALERIJE */
         body { background-color: #111827; }
         .header-bg { background-color: rgba(17, 24, 39, 0.95); }
-        .bg-hydro-slate { background-color: #1E293B; }
-
-        .anohubs-logo-img { max-height: 35px; width: auto; color: #22d3ee; display: block; }
         
-        /* === ESTETSKA POBOLJŠANJA === */
         .h1-glow {
             text-shadow: 0 0 5px rgba(34, 211, 238, 0.5), 0 0 10px rgba(34, 211, 238, 0.3);
         }
-        .cta-shadow {
-            box-shadow: 0 10px 15px -3px rgba(74, 222, 128, 0.4), 0 4px 6px -2px rgba(74, 222, 128, 0.2);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .cta-shadow:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 25px -5px rgba(74, 222, 128, 0.6), 0 10px 10px -5px rgba(74, 222, 128, 0.4);
-        }
-        
-        .thumbnail-img {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-            border: 2px solid transparent;
-            opacity: 0.9;
-        }
-        .thumbnail-img:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 25px rgba(34, 211, 238, 0.6);
-            border-color: #22d3ee;
-            opacity: 1;
-        }
-        
-        .lightbox-modal { 
-            backdrop-filter: blur(8px); 
-            cursor: default;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.98); }
-            to { opacity: 1; transform: scale(1); }
-        }
-        .animate-fade-in { animation: fadeIn 0.3s ease-out; }
 
-        /* Fiksni prozor za prikaz velike slike */
+        /* --- LIGHTBOX STILOVI --- */
+        .lightbox-modal { 
+            backdrop-filter: blur(10px); 
+            background-color: rgba(0,0,0,0.9);
+        }
+        
         #lightbox-window {
             position: relative; 
-            width: 95vw; 
-            height: 90vh; 
-            max-width: 1300px; 
-            background-color: #111827;
-            border-radius: 12px;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+            width: auto; 
+            max-width: 95vw; 
+            height: auto; 
+            max-height: 90vh;
             display: flex;
             flex-direction: column;
-            overflow: hidden;
-            transition: all 0.5s ease;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
         }
+
+        /* Fullscreen override */
         #lightbox-window:fullscreen {
             width: 100vw;
             height: 100vh;
             max-width: none;
-            border-radius: 0;
+            max-height: none;
             background-color: black;
-            padding: 0;
-        }
-        #lightbox-image-wrapper {
-            flex-grow: 1;
-            display: flex;
-            align-items: center;
             justify-content: center;
-            padding: 20px;
+        }
+        #lightbox-window:fullscreen img {
+            max-height: 100vh;
+            max-width: 100vw;
+            object-fit: contain;
+        }
+
+        #lightbox-image-wrapper {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
         }
         
-        /* Kontrolne trake i navigacija */
-        .lightbox-controls-bar, .lightbox-controls-wrapper button {
-            transition: opacity 0.3s ease, transform 0.3s ease;
+        /* Kontrolna traka na dnu (overlay) */
+        .lightbox-controls-bar {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(30, 41, 59, 0.9); /* hydro-slate sa prozirnošću */
+            border: 1px solid #334155;
+            padding: 10px 20px;
+            border-radius: 50px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            z-index: 100;
+            transition: opacity 0.5s ease;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
         }
 
-        /* KLASA ZA SAKRIVANJE KONTROLA (Nakon 5 sekundi) */
-        .lightbox-modal.controls-hidden .lightbox-controls-bar {
+        /* Animacija skrivanja kontrola */
+        .controls-hidden .lightbox-controls-bar,
+        .controls-hidden .nav-arrow {
             opacity: 0;
-            transform: translateY(100%);
+            pointer-events: none;
         }
-        .lightbox-modal.controls-hidden .lightbox-controls-wrapper button {
-             opacity: 0;
-             pointer-events: none; 
-        }
-        .lightbox-modal.controls-hidden {
-            cursor: none; 
-        }
+        .controls-hidden { cursor: none; }
 
-        /* Navigacione kontrole */
-        .lightbox-controls-wrapper {
-            position: absolute; 
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            pointer-events: none; 
-            z-index: 99; 
-        }
-
-        .lightbox-controls-wrapper button {
-            pointer-events: auto; 
+        /* Strelice za navigaciju */
+        .nav-arrow {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            z-index: 100;
-            background-color: rgba(0, 0, 0, 0.6); 
+            background-color: rgba(0, 0, 0, 0.3);
             color: white;
-            padding: 12px;
-            height: 60px; 
-            width: 60px;
+            padding: 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 50;
         }
-        #prev-btn {
-            left: 0; 
-            border-radius: 0 50% 50% 0;
-        }
-        #next-btn {
-            right: 0;
-            border-radius: 50% 0 0 50%;
-        }
+        .nav-arrow:hover { background-color: var(--color-hydro-primary); color: #111827; }
+        #prev-btn { left: 20px; }
+        #next-btn { right: 20px; }
+
+        /* Animirano pojavljivanje slike */
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
+        .animate-fade-in { animation: fadeIn 0.4s ease-out; }
     </style>
 </head>
 <body class="text-white bg-hydro-charcoal">
@@ -180,56 +152,50 @@
                 <img src="logo.svg" alt="Anohubs Logo" class="anohubs-logo-img">
             </a>
             
-            <nav class="hidden md:flex items-center space-x-6 font-extrabold text-sm" role="navigation" aria-label="Main navigation">
-                <a href="about-us-vision.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">About</a>
-                <a href="index.html#services" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Services</a>
-                <a href="insights/expert-insights.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Insights</a>
-                <a href="case-studies.html" class="nav-link relative text-slate-300 hover:text-hydro-secondary transition tracking-wider p-2 uppercase">Case Studies</a>
-                <a href="app-iframe.html" target="_blank" rel="noopener noreferrer" class="nav-link relative text-hydro-secondary hover:text-green-500 transition tracking-widest font-extrabold text-lg p-2 uppercase">ANO HUB</a>
-                <a href="gallery.html" class="nav-link relative text-hydro-primary transition tracking-wider p-2 uppercase" aria-current="page">Gallery</a>
-                <a href="protocol.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Protocol</a>
-                <a href="contact.html" class="bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-6 py-2.5 rounded-full transition transform hover:scale-105 shadow-xl font-bold tracking-wider uppercase text-base">Contact</a>
+            <nav class="hidden md:flex items-center space-x-4 font-extrabold text-sm" role="navigation">
+                <a href="about-us-vision.html" class="text-slate-300 hover:text-hydro-primary transition">About</a>
+                <a href="services.html" class="text-slate-300 hover:text-hydro-primary transition">Services</a>
+                <a href="insights/expert-insights.html" class="text-slate-300 hover:text-hydro-primary transition">Insights</a>
+                <a href="case-studies.html" class="text-slate-300 hover:text-hydro-primary transition">Case Studies</a>
+                <a href="gallery.html" class="text-hydro-primary transition" aria-current="page">Gallery</a>
+                <a href="protocol.html" class="text-slate-300 hover:text-hydro-primary transition">Protocol</a>
+                <a href="contact.html" class="bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-4 py-2 rounded-full transition">Request Audit</a>
             </nav>
             
+            <!-- Mobile Menu Button (Jednostavno) -->
             <div class="md:hidden">
-                <button id="mobile-menu-button" aria-label="Open menu" type="button" class="p-2 text-white">
-                    <svg data-lucide="menu" class="w-8 h-8"></svg>
-                </button>
-            </div>
-            
-            <!-- MOBILE MENU -->
-            <div id="mobile-menu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2 text-center bg-hydro-charcoal" aria-label="Mobile navigation menu">
-                <a href="about-us-vision.html" class="block hover:text-hydro-primary transition tracking-wider py-2">About</a>
-                <a href="index.html#services" class="block hover:text-hydro-primary transition tracking-wider py-2">Services</a>
-                <a href="insights/expert-insights.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Insights</a>
-                <a href="case-studies.html" class="block hover:text-hydro-secondary transition tracking-wider py-2">Case Studies</a>
-                <a href="app-iframe.html" target="_blank" rel="noopener noreferrer" class="block hover:text-hydro-secondary transition tracking-wider py-2">ANO HUB</a>
-                <a href="gallery.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Gallery</a>
-                <a href="protocol.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Protocol</a>
-                <a href="contact.html" class="block bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-5 py-2 rounded-full transition shadow-md font-bold tracking-wider mt-2 text-center">Contact</a>
+                <a href="index.html" class="text-hydro-primary">Menu</a>
             </div>
         </div>
     </header>
     
     <main role="main">
-        <section class="py-20 bg-hydro-slate text-white">
+        <section class="py-20 bg-hydro-slate text-white min-h-screen">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 
                 <h1 class="text-5xl md:text-6xl font-extrabold text-hydro-primary mb-4 tracking-tighter fade-in-up h1-glow">
                     THE HYDRO-VISION GALLERY
                 </h1>
                 <p class="text-xl md:text-2xl font-light text-cyan-200 mb-12 max-w-4xl mx-auto fade-in-up delay-200">
-                    A panoramic view of the global water capital, captured in over <span class="total-images-placeholder">...</span> images. This visual manifesto showcases the ecosystems we protect and the environments where the AnoHUB Symbiosis Standard is mandatory.
+                    A panoramic view of the global water capital. <span class="font-bold text-white"><span class="total-images-placeholder">...</span> unique perspectives</span> captured from our projects.
                 </p>
 
-                <div class="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 gap-4 gallery-grid">
-                    <!-- OVDJE SE SLIKE UČITAVAJU KROZ JS -->
+                <!-- CTA za pokretanje slideshow-a odmah -->
+                <div class="mb-10 fade-in-up delay-400">
+                     <button onclick="openModal(0); toggleSlideshow(document.getElementById('slideshow-btn'))" 
+                             class="inline-flex items-center px-6 py-3 bg-hydro-secondary text-hydro-charcoal font-bold rounded-full hover:bg-green-400 transition shadow-lg">
+                        <svg data-lucide="play" class="w-5 h-5 mr-2"></svg> Start Full Experience
+                     </button>
+                </div>
+
+                <!-- GRID GALERIJE (Puni se preko JS) -->
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 gallery-grid pb-20">
+                    <!-- JS Insert -->
                 </div>
                 
                 <script>
-                    // Prikaz poruke ako nema slika
                     if (typeof totalImages !== 'undefined' && totalImages === 0) {
-                        document.write('<p class="text-xl text-red-400 mt-20">Nema pronađenih slika. Molimo provjerite listu `imageFilenames` u skripti.</p>');
+                        document.write('<p class="text-xl text-red-400 mt-20">Nema slika. Provjerite js/gallery-logic.js</p>');
                     }
                 </script>
 
@@ -237,88 +203,65 @@
         </section>
     </main>
     
-    <!-- LIGHTBOX MODAL (KRITIČNA KOMPONENTA GALERIJE) -->
-    <div id="lightbox-modal" class="lightbox-modal hidden fixed inset-0 z-[100] flex items-center justify-center p-4">
+    <!-- LIGHTBOX MODAL -->
+    <div id="lightbox-modal" class="lightbox-modal hidden fixed inset-0 z-[100] flex items-center justify-center">
         
+        <!-- Glavni prozor (omotač) -->
         <div id="lightbox-window" onclick="event.stopPropagation()">
             
+            <!-- Slika -->
             <div id="lightbox-image-wrapper">
-                <!-- OVDJE SE UČITAVA VELIKA SLIKA -->
+                <!-- JS ubacuje <img> ovdje -->
             </div>
             
-            <div class="lightbox-controls-bar p-4 bg-hydro-slate flex justify-between items-center relative">
-                
-                <div class="text-left">
-                    <p id="lightbox-counter" class="text-xs text-slate-500 font-semibold"></p>
-                </div>
-                
-                <div class="flex space-x-3 items-center">
-                    <button onclick="toggleFullScreen()" class="bg-hydro-primary/20 hover:bg-hydro-primary/40 text-hydro-primary p-2 rounded-full font-bold transition text-sm flex items-center" aria-label="Toggle Fullscreen">
-                        <svg data-lucide="maximize" class="w-5 h-5"></svg>
-                    </button>
+            <!-- Strelice (Apsolutno pozicionirane na ekranu) -->
+            <button id="prev-btn" class="nav-arrow" aria-label="Previous image" onclick="navigateGallery(-1)">
+                <svg data-lucide="chevron-left" class="w-8 h-8"></svg>
+            </button>
+            <button id="next-btn" class="nav-arrow" aria-label="Next image" onclick="navigateGallery(1)">
+                <svg data-lucide="chevron-right" class="w-8 h-8"></svg>
+            </button>
 
-                    <button onclick="toggleSlideshow(this)" id="slideshow-btn" class="bg-hydro-secondary hover:bg-green-500 text-hydro-charcoal px-4 py-2 rounded-full font-bold transition text-sm">
-                        ▶️ Start Slideshow
-                    </button>
-                    
-                    <button onclick="closeModal()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-full font-bold transition text-sm">
-                        Close Gallery
-                    </button>
-                </div>
+            <!-- Kontrolna traka (Dugmad) -->
+            <div class="lightbox-controls-bar">
+                
+                <!-- Brojač -->
+                <div class="text-slate-300 font-mono text-sm mr-4" id="lightbox-counter">1 / 100</div>
 
+                <!-- Fullscreen Toggle -->
+                <button onclick="toggleFullScreen()" class="hover:text-hydro-primary transition" title="Toggle Fullscreen">
+                    <svg data-lucide="maximize" class="w-6 h-6"></svg>
+                </button>
+
+                <!-- Slideshow Toggle -->
+                <button onclick="toggleSlideshow(this)" id="slideshow-btn" class="flex items-center gap-2 bg-hydro-secondary text-hydro-charcoal px-4 py-2 rounded-full font-bold text-xs hover:bg-green-400 transition min-w-[140px] justify-center">
+                    <span>▶️ Start Slideshow</span>
+                </button>
+                
+                <!-- Close Button -->
+                <button onclick="closeModal()" class="hover:text-red-500 transition ml-4" title="Close Gallery">
+                    <svg data-lucide="x" class="w-8 h-8"></svg>
+                </button>
             </div>
 
         </div>
-
-        <div class="lightbox-controls-wrapper">
-            <button id="prev-btn" aria-label="Previous image" onclick="navigateGallery(-1)">
-                <svg data-lucide="chevron-left" class="w-6 h-6"></svg>
-            </button>
-            <button id="next-btn" aria-label="Next image" onclick="navigateGallery(1)">
-                <svg data-lucide="chevron-right" class="w-6 h-6"></svg>
-            </button>
-        </div>
-        
     </div>
 
     <!-- FOOTER -->
-    <div class="md:hidden mobile-sticky-cta text-center">
-        <a href="contact.html" class="w-full block text-center bg-hydro-primary hover:bg-cyan-500 text-hydro-charcoal px-5 py-3 font-bold tracking-wider uppercase shadow-2xl">
-            SCHEDULE AUDIT
-        </a>
-    </div>
-
-    <footer class="bg-hydro-slate text-hydro-gray py-8 text-center border-t border-hydro-light-slate" role="contentinfo">
+    <footer class="bg-hydro-slate text-hydro-gray py-8 text-center border-t border-hydro-light-slate">
         <div class="container mx-auto px-6">
-           <a href="index.html#hero" class="mb-4 block" aria-label="Anohubs Logo - Back to top">
-               <img src="logo.svg" alt="Anohubs Logo" class="anohubs-logo-img mx-auto">
-           </a>
-           <p class="text-slate-400 mb-6">Establishing the global standard for hydro integrity.</p>
-           <nav class="flex justify-center space-x-6 text-sm mb-4">
-               <a href="about-us-vision.html" class="text-slate-400 hover:text-hydro-primary">About</a>
-               <a href="index.html#services" class="text-slate-400 hover:text-hydro-primary">Services</a>
-               <a href="insights/expert-insights.html" class="text-slate-400 hover:text-hydro-primary">Insights</a>
-               <a href="case-studies.html" class="text-slate-400 hover:text-hydro-primary">Case Studies</a>
-               <a href="gallery.html" class="text-slate-400 hover:text-hydro-primary">Gallery</a>
-               <a href="protocol.html" class="text-slate-400 hover:text-hydro-primary">Protocol</a>
-               <a href="contact.html" class="text-slate-400 hover:text-hydro-primary">Contact</a>
-           </nav>
-           <!-- PRAVNI LINKOVI -->
-           <div class="flex justify-center space-x-4 text-xs mb-4">
-                <a href="privacy-policy.html" class="text-slate-500 hover:text-slate-300 underline">Privacy Policy</a>
-                <span class="text-slate-500">|</span>
-                <a href="terms-of-use.html" class="text-slate-500 hover:text-slate-300 underline">Terms of Use</a>
-           </div>
-           <p class="text-sm">&copy; <span id="year"></span> Anohubs Inc. All rights reserved.</p>
+            <p class="text-sm">&copy; 2025 Anohubs Inc. | Protected Gallery Content.</p>
         </div>
     </footer>
 
-    <!-- KRITIČNO: MODULARNA JS STRUKTURA -->
+    <!-- SKRIPTE -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
     <script src="js/ui_core.js"></script>
     <script src="js/animation_logic.js"></script>
-    <!-- Logika za galeriju -->
+    
+    <!-- Logika Galerije -->
     <script src="js/gallery-logic.js"></script>
+    
     <!-- Zaštita slika -->
     <script src="js/gallery-protection.js"></script>
 

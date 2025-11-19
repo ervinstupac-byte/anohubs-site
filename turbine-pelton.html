@@ -6,18 +6,12 @@
     <title>Pelton Turbine Integrity | Anohubs: Advanced Analytics</title>
     <meta name="description" content="Integrity analysis for Pelton turbines focusing on nozzle system precision, bucket wear, and impulse energy conversion efficiency.">
     
-    <!-- 1. STANDARDNA JS INICIJALIZACIJA -->
     <script src="js/head-init.js"></script>
-
-    <!-- 2. FONTOVI -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
-    
-    <!-- 3. KRITIČNO: TAILWIND CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- 4. TAILWIND KONFIGURACIJA -->
     <script>
         tailwind.config = {
             theme: {
@@ -35,19 +29,15 @@
                     fontSize: {
                         'h1-hero': 'clamp(2.5rem, 5vw + 1rem, 4.5rem)',
                     },
-                },
+                }
             }
         }
     </script>
 
-    <!-- 5. GLOBALNI STILOVI -->
     <link href="css/anohubs.css" rel="stylesheet">
-
-    <!-- KRITIČNO: CDN ZA 3D MODEL VIEWER -->
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/1.13.0/model-viewer.min.js"></script>
     
     <style>
-        /* CSS STILOVI SPECIFIČNI ZA OVU STRANICU */
         body {
             background-image: url('orljani_Una.jpg'); 
             background-size: cover;
@@ -55,13 +45,10 @@
             background-position: center; 
             min-height: 100vh;
         }
-        
-        /* HEADER & NAVIGATION */
         .header-bg { background-color: rgba(17, 24, 39, 0.95); }
         .anohubs-logo-compact { width: 90px; height: auto; color: #22d3ee; }
         @media (min-width: 768px) { .anohubs-logo-compact { width: 120px; } }
-
-        /* OVERLAY NAD SADRŽAJEM */
+        
         .content-overlay {
             background-color: rgba(30, 41, 59, 0.75);
             padding: 3rem 2rem;
@@ -73,7 +60,6 @@
         }
         .text-glow { text-shadow: 0 0 15px rgba(34, 211, 238, 0.7); }
 
-        /* KRITIČNO: STIL ZA 3D MODEL VIEWER */
         model-viewer {
             width: 100%;
             height: 400px;
@@ -83,7 +69,6 @@
             margin: 20px auto; 
             display: block; 
         }
-        /* DODATNO: STILOVI ZA LISTE */
         .tech-list li {
             padding: 0.75rem;
             background-color: rgba(51, 65, 85, 0.5); 
@@ -93,17 +78,14 @@
 </head>
 <body class="text-white bg-hydro-charcoal">
 
-    <!-- HEADER -->
     <header class="header-bg shadow-2xl sticky top-0 z-50 border-b border-hydro-primary/50" role="banner">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-1 flex justify-between items-center">
-            
             <a href="index.html#hero" class="focus:outline-none transition" aria-label="Anohubs Logo - Back to top" aria-current="page">
                  <img src="logo.svg" alt="Anohubs Logo" class="anohubs-logo-compact">
             </a>
-            
             <nav class="hidden md:flex items-center space-x-4 font-extrabold text-sm" role="navigation" aria-label="Main navigation">
                 <a href="about-us-vision.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">About</a>
-                <a href="index.html#services" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Services</a> 
+                <a href="services.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Services</a> 
                 <a href="insights/expert-insights.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Insights</a>
                 <a href="case-studies.html" class="nav-link relative text-slate-300 hover:text-hydro-secondary transition tracking-wider p-2 uppercase">Case Studies</a>
                 <a href="app-iframe.html" target="_blank" rel="noopener noreferrer" class="nav-link relative text-hydro-secondary hover:text-green-500 transition tracking-widest font-extrabold text-lg p-2 uppercase">ANO HUB</a>
@@ -111,16 +93,12 @@
                 <a href="protocol.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Protocol</a>
                 <a href="contact.html" class="bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-6 py-2.5 rounded-full transition transform hover:scale-105 shadow-xl font-bold tracking-wider uppercase text-base">Contact</a>
             </nav>
-            
             <div class="md:hidden">
-                <button id="mobile-menu-button" aria-label="Open menu" type="button" class="p-2 text-white">
-                    <svg data-lucide="menu" class="w-8 h-8"></svg> 
-                </button>
+                <button id="mobile-menu-button" aria-label="Open menu" type="button" class="p-2 text-white"><svg data-lucide="menu" class="w-8 h-8"></svg></button>
             </div>
-            
             <div id="mobile-menu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2 text-center bg-hydro-charcoal" aria-label="Mobile navigation menu">
                 <a href="about-us-vision.html" class="block hover:text-hydro-primary transition tracking-wider py-2">About</a>
-                <a href="index.html#services" class="block hover:text-hydro-primary transition tracking-wider py-2">Services</a>
+                <a href="services.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Services</a>
                 <a href="insights/expert-insights.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Insights</a>
                 <a href="case-studies.html" class="block hover:text-hydro-secondary transition tracking-wider py-2">Case Studies</a>
                 <a href="app-iframe.html" target="_blank" rel="noopener noreferrer" class="block hover:text-hydro-secondary transition tracking-wider py-2">ANO HUB</a>
@@ -128,140 +106,56 @@
                 <a href="protocol.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Protocol</a>
                 <a href="contact.html" class="block bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-5 py-2 rounded-full transition shadow-md font-bold tracking-wider mt-2 text-center">Contact</a>
             </div>
-
         </div>
     </header>
     
     <main role="main">
         <section class="py-16 text-white flex items-center justify-center min-h-[90vh]">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 content-overlay zoom-in"> 
-                
-                <h1 class="text-5xl md:text-6xl font-extrabold text-hydro-primary mb-4 text-glow tracking-tight fade-in-up">
-                    PELTON TURBINE INTEGRITY ANALYSIS
-                </h1>
-                <p class="text-xl md:text-2xl font-light text-slate-300 mb-8 border-b pb-4 border-slate-700 fade-in-up delay-200">
-                    Focused inspection on the impulse system: Ensuring maximum nozzle precision and mitigating high-velocity abrasion.
-                </p>
+                <h1 class="text-5xl md:text-6xl font-extrabold text-hydro-primary mb-4 text-glow tracking-tight fade-in-up">PELTON TURBINE INTEGRITY ANALYSIS</h1>
+                <p class="text-xl md:text-2xl font-light text-slate-300 mb-8 border-b pb-4 border-slate-700 fade-in-up delay-200">Focused inspection on the impulse system: Ensuring maximum nozzle precision and mitigating high-velocity abrasion.</p>
                 
                 <div class="bg-hydro-light-slate/80 p-6 rounded-lg shadow-lg fade-in-up delay-400">
-                    <h2 class="text-3xl font-bold text-white mb-4 flex items-center gap-3">
-                        <svg data-lucide="layers-3d" class="w-7 h-7 text-hydro-secondary"></svg> Interactive 3D Model: Pelton Runner and Nozzle
-                    </h2>
-                    
+                    <h2 class="text-3xl font-bold text-white mb-4 flex items-center gap-3"><svg data-lucide="layers-3d" class="w-7 h-7 text-hydro-secondary"></svg> Interactive 3D Model: Pelton Runner and Nozzle</h2>
                     <div class="relative">
-                        <!-- 3D MODEL VIEWER -->
-                        <model-viewer 
-                            src="pelton_wheel.glb" 
-                            alt="3D model of a Pelton Turbine Impeller and Nozzle"
-                            camera-controls 
-                            auto-rotate 
-                            ar 
-                            loading="eager" 
-                            shadow-intensity="1"
-                            exposure="1.5"
-                            camera-orbit="180deg 85deg 1.5m">
-                            
-                            <!-- Custom Progress Bar (Ako Pelton model bude veći) -->
-                            <div slot="progress-bar" class="progress-bar text-sm text-white">
-                                Loading 3D Model... Please wait.
-                                <div class="update-bar">
-                                    <div></div>
-                                </div>
-                            </div>
+                        <model-viewer src="pelton_wheel.glb" alt="3D model of a Pelton Turbine Impeller and Nozzle" camera-controls auto-rotate ar loading="eager" shadow-intensity="1" exposure="1.5" camera-orbit="180deg 85deg 1.5m">
+                            <div slot="progress-bar" class="progress-bar text-sm text-white">Loading 3D Model... Please wait.<div class="update-bar"><div></div></div></div>
                         </model-viewer>
                     </div>
                 </div>
                 
                 <div class="space-y-10 text-lg mt-8 fade-in-up delay-600">
                     <div class="p-6 rounded-xl bg-hydro-light-slate/80 shadow-lg"> 
-                        <h2 class="text-2xl font-bold text-white mb-3 flex items-center gap-2">
-                            <svg data-lucide="droplet" class="w-6 h-6 text-hydro-cta"></svg> The Pelton Challenge: Impulse Precision
-                        </h2>
-                        <p class="text-slate-300 leading-relaxed">
-                            The **Pelton Turbine** is a heritage of high-head efficiency, converting water's potential energy into kinetic energy via high-velocity jets. Its operation hinges on microscopic precision: maintaining the integrity of the nozzle system and managing the brutal forces of **high-velocity abrasion** caused by even the slightest sediment in the jet stream.
-                        </p>
-                        <p class="text-slate-400 mt-3">
-                            Unlike Francis or Kaplan, Pelton is an impulse machine; maximum efficiency relies entirely on the precise geometry of the water jet and the impact angle on the runner buckets. Any wear translates directly to catastrophic efficiency loss.
-                        </p>
+                        <h2 class="text-2xl font-bold text-white mb-3 flex items-center gap-2"><svg data-lucide="droplet" class="w-6 h-6 text-hydro-cta"></svg> The Pelton Challenge: Impulse Precision</h2>
+                        <p class="text-slate-300 leading-relaxed">The Pelton Turbine operates on microscopic precision. Maximum efficiency relies entirely on the precise geometry of the water jet and the impact angle on the runner buckets.</p>
                     </div>
-                    
                     <div class="space-y-6 fade-in-up delay-800">
-                        <h2 class="text-3xl font-bold text-hydro-secondary mb-4 flex items-center gap-3">
-                            <svg data-lucide="check-square" class="w-7 h-7"></svg> Focus Protocol: Nozzle and Bucket Precision
-                        </h2>
-                        
-                        <p class="text-slate-300">We inspect the unique vulnerabilities of Pelton units, which are especially susceptible to abrasion:</p>
-                        
+                        <h2 class="text-3xl font-bold text-hydro-secondary mb-4 flex items-center gap-3"><svg data-lucide="check-square" class="w-7 h-7"></svg> Focus Protocol: Nozzle and Bucket Precision</h2>
                         <ul class="space-y-6 tech-list">
-                            <li class="flex items-start p-4 bg-hydro-slate/70 rounded-lg shadow-md hover:bg-hydro-slate transition duration-300 fade-in-up delay-1000">
-                                <div class="bg-hydro-primary/20 p-2 rounded-full mr-4 flex-shrink-0">
-                                    <svg data-lucide="scan" class="w-6 h-6 text-hydro-primary"></svg>
-                                </div>
-                                <div>
-                                    <strong class="text-white text-xl block mb-1">Nozzle System Precision:</strong> 
-                                    <p class="text-slate-300">Micro-level alignment checks of the jet needle and nozzle opening mechanism to ensure ideal water jet geometry and velocity.</p>
-                                </div>
-                            </li>
-                            <li class="flex items-start p-4 bg-hydro-slate/70 rounded-lg shadow-md hover:bg-hydro-slate transition duration-300 fade-in-up delay-1100">
-                                <div class="bg-hydro-primary/20 p-2 rounded-full mr-4 flex-shrink-0">
-                                    <svg data-lucide="hard-hat" class="w-6 h-6 text-hydro-primary"></svg>
-                                </div>
-                                <div>
-                                    <strong class="text-white text-xl block mb-1">Bucket Wear Analysis:</strong> 
-                                    <p class="text-slate-300">Non-destructive testing (NDT) and 3D scanning of runner buckets to precisely quantify abrasion damage and determine optimal repair schedules.</p>
-                                </div>
-                            </li>
-                            <li class="flex items-start p-4 bg-hydro-slate/70 rounded-lg shadow-md hover:bg-hydro-slate transition duration-300 fade-in-up delay-1200">
-                                <div class="bg-hydro-primary/20 p-2 rounded-full mr-4 flex-shrink-0">
-                                    <svg data-lucide="rotate-ccw" class="w-6 h-6 text-hydro-primary"></svg>
-                                </div>
-                                <div>
-                                    <strong class="text-white text-xl block mb-1">Impulse Force Symmetry:</strong> 
-                                    <p class="text-slate-300">Auditing the synchronization and timing of multiple jets to ensure balanced forces on the shaft, preventing dynamic instability and reducing bearing stress.</p>
-                                </div>
-                            </li>
-                            <li class="flex items-start p-4 bg-hydro-slate/70 rounded-lg shadow-md hover:bg-hydro-slate transition duration-300 fade-in-up delay-1300">
-                                <div class="bg-hydro-primary/20 p-2 rounded-full mr-4 flex-shrink-0">
-                                    <svg data-lucide="shield-off" class="w-6 h-6 text-hydro-primary"></svg>
-                                </div>
-                                <div>
-                                    <strong class="text-white text-xl block mb-1">Abrasion Mitigation Strategy:</strong> 
-                                    <p class="text-slate-300">Recommendations for upstream sediment management (sand traps) and specialized material coatings to minimize wear from high-velocity particles.</p>
-                                </div>
-                            </li>
+                            <li class="flex items-start"><div class="bg-hydro-primary/20 p-2 rounded-full mr-4 flex-shrink-0"><svg data-lucide="scan" class="w-6 h-6 text-hydro-primary"></svg></div><div><strong class="text-white text-xl block mb-1">Nozzle System Precision:</strong> <p class="text-slate-300">Micro-level alignment checks.</p></div></li>
+                            <li class="flex items-start"><div class="bg-hydro-primary/20 p-2 rounded-full mr-4 flex-shrink-0"><svg data-lucide="hard-hat" class="w-6 h-6 text-hydro-primary"></svg></div><div><strong class="text-white text-xl block mb-1">Bucket Wear Analysis:</strong> <p class="text-slate-300">Non-destructive testing (NDT).</p></div></li>
+                            <li class="flex items-start"><div class="bg-hydro-primary/20 p-2 rounded-full mr-4 flex-shrink-0"><svg data-lucide="shield-off" class="w-6 h-6 text-hydro-primary"></svg></div><div><strong class="text-white text-xl block mb-1">Abrasion Mitigation Strategy:</strong> <p class="text-slate-300">Recommendations for upstream sediment management.</p></div></li>
                         </ul>
                     </div>
                 </div>
-
                 <div class="mt-12 text-center fade-in-up delay-1400">
-                    <a href="contact.html" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-lg font-bold rounded-full text-hydro-charcoal bg-hydro-primary hover:bg-cyan-500 transition duration-300 transform hover:scale-105 shadow-xl uppercase tracking-wider">
-                        Schedule Pelton Turbine Audit &rarr;
-                    </a>
+                    <a href="contact.html" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-lg font-bold rounded-full text-hydro-charcoal bg-hydro-primary hover:bg-cyan-500 transition duration-300 transform hover:scale-105 shadow-xl">Schedule Pelton Turbine Audit &rarr;</a>
                 </div>
-
             </div>
         </section>
     </main>
     
-    <!-- FOOTER -->
-    <div class="md:hidden mobile-sticky-cta text-center">
-        <a href="contact.html" class="w-full block text-center bg-hydro-primary hover:bg-cyan-500 text-hydro-charcoal px-5 py-3 font-bold tracking-wider uppercase shadow-2xl">
-            SCHEDULE AUDIT
-        </a>
-    </div>
-
     <footer class="bg-hydro-slate text-hydro-gray py-8 text-center border-t border-hydro-light-slate" role="contentinfo">
         <div class="container mx-auto px-6">
            <a href="index.html#hero" class="mb-4 block" aria-label="Anohubs Logo - Back to top">
                <img src="logo.svg" alt="Anohubs Logo" class="anohubs-logo-compact">
            </a>
            <p class="text-slate-400 mb-6">Establishing the global standard for hydro integrity.</p>
-           <nav class="flex justify-center space-x-6 text-sm mb-4">
+           <nav class="flex justify-center space-x-6 text-sm mb-6">
                <a href="about-us-vision.html" class="text-slate-400 hover:text-hydro-primary">About</a>
-               <a href="index.html#services" class="text-slate-400 hover:text-hydro-primary">Services</a>
+               <a href="services.html" class="text-slate-400 hover:text-hydro-primary">Services</a>
                <a href="insights/expert-insights.html" class="text-slate-400 hover:text-hydro-primary">Insights</a>
                <a href="case-studies.html" class="text-slate-400 hover:text-hydro-primary">Case Studies</a>
-               <a href="app-iframe.html" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-hydro-secondary">ANO HUB</a>
                <a href="gallery.html" class="text-slate-400 hover:text-hydro-primary">Gallery</a>
                <a href="protocol.html" class="text-slate-400 hover:text-hydro-primary">Protocol</a>
                <a href="contact.html" class="text-slate-400 hover:text-hydro-primary">Contact</a>
@@ -275,14 +169,9 @@
         </div>
     </footer>
 
-    <!-- SKRIPTE -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
     <script src="js/ui_core.js"></script>
     <script src="js/animation_logic.js"></script>
     <script src="js/turbine-3d-logic.js"></script>
-    
 </body>
 </html>
-```
-
-Tako smo uspješno riješili "razbijeni" izgled na sve tri stranice turbina, uz ispravnu navigaciju i 3D logiku.

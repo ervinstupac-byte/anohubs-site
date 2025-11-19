@@ -14,10 +14,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
     
-    <!-- 3. KRITIČNO: TAILWIND CSS CDN -->
+    <!-- 3. TAILWIND CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- 4. TAILWIND KONFIGURACIJA -->
+    <!-- 4. TAILWIND CONFIG -->
     <script>
         tailwind.config = {
             theme: {
@@ -43,11 +43,10 @@
     <!-- 5. GLOBALNI STILOVI -->
     <link href="css/anohubs.css" rel="stylesheet">
 
-    <!-- KRITIČNO: CDN ZA 3D MODEL VIEWER -->
+    <!-- 3D MODEL VIEWER -->
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/1.13.0/model-viewer.min.js"></script>
     
     <style>
-        /* CSS STILOVI SPECIFIČNI ZA OVU STRANICU */
         body {
             background-image: url('orljani_Una.jpg'); 
             background-size: cover;
@@ -55,13 +54,10 @@
             background-position: center; 
             min-height: 100vh;
         }
-        
-        /* HEADER & NAVIGATION */
         .header-bg { background-color: rgba(17, 24, 39, 0.95); }
         .anohubs-logo-compact { width: 90px; height: auto; color: #22d3ee; }
         @media (min-width: 768px) { .anohubs-logo-compact { width: 120px; } }
 
-        /* OVERLAY NAD SADRŽAJEM */
         .content-overlay {
             background-color: rgba(30, 41, 59, 0.75);
             padding: 3rem 2rem;
@@ -73,7 +69,6 @@
         }
         .text-glow { text-shadow: 0 0 15px rgba(34, 211, 238, 0.7); }
 
-        /* KRITIČNO: STIL ZA 3D MODEL VIEWER */
         model-viewer {
             width: 100%;
             height: 400px;
@@ -85,7 +80,6 @@
             --progress-bar-color: #22d3ee; 
             --poster-color: #111827; 
         }
-        /* STIL ZA PROGRESS BAR */
         .progress-bar {
             display: flex;
             flex-direction: column;
@@ -113,7 +107,6 @@
             width: 0%;
             transition: width 0.3s;
         }
-        /* DODATNO: STILOVI ZA LISTE */
         .tech-list li {
             padding: 0.75rem;
             background-color: rgba(51, 65, 85, 0.5); 
@@ -126,14 +119,12 @@
     <!-- HEADER -->
     <header class="header-bg shadow-2xl sticky top-0 z-50 border-b border-hydro-primary/50" role="banner">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-1 flex justify-between items-center">
-            
             <a href="index.html#hero" class="focus:outline-none transition" aria-label="Anohubs Logo - Back to top" aria-current="page">
                  <img src="logo.svg" alt="Anohubs Logo" class="anohubs-logo-compact">
             </a>
-            
             <nav class="hidden md:flex items-center space-x-4 font-extrabold text-sm" role="navigation" aria-label="Main navigation">
                 <a href="about-us-vision.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">About</a>
-                <a href="index.html#services" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Services</a> 
+                <a href="services.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Services</a> 
                 <a href="insights/expert-insights.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Insights</a>
                 <a href="case-studies.html" class="nav-link relative text-slate-300 hover:text-hydro-secondary transition tracking-wider p-2 uppercase">Case Studies</a>
                 <a href="app-iframe.html" target="_blank" rel="noopener noreferrer" class="nav-link relative text-hydro-secondary hover:text-green-500 transition tracking-widest font-extrabold text-lg p-2 uppercase">ANO HUB</a>
@@ -141,16 +132,12 @@
                 <a href="protocol.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Protocol</a>
                 <a href="contact.html" class="bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-6 py-2.5 rounded-full transition transform hover:scale-105 shadow-xl font-bold tracking-wider uppercase text-base">Contact</a>
             </nav>
-            
             <div class="md:hidden">
-                <button id="mobile-menu-button" aria-label="Open menu" type="button" class="p-2 text-white">
-                    <svg data-lucide="menu" class="w-8 h-8"></svg> 
-                </button>
+                <button id="mobile-menu-button" aria-label="Open menu" type="button" class="p-2 text-white"><svg data-lucide="menu" class="w-8 h-8"></svg></button>
             </div>
-            
             <div id="mobile-menu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2 text-center bg-hydro-charcoal" aria-label="Mobile navigation menu">
                 <a href="about-us-vision.html" class="block hover:text-hydro-primary transition tracking-wider py-2">About</a>
-                <a href="index.html#services" class="block hover:text-hydro-primary transition tracking-wider py-2">Services</a>
+                <a href="services.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Services</a>
                 <a href="insights/expert-insights.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Insights</a>
                 <a href="case-studies.html" class="block hover:text-hydro-secondary transition tracking-wider py-2">Case Studies</a>
                 <a href="app-iframe.html" target="_blank" rel="noopener noreferrer" class="block hover:text-hydro-secondary transition tracking-wider py-2">ANO HUB</a>
@@ -164,135 +151,50 @@
     <main role="main">
         <section class="py-16 text-white flex items-center justify-center min-h-[90vh]">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 content-overlay zoom-in"> 
-                
-                <h1 class="text-5xl md:text-6xl font-extrabold text-hydro-primary mb-4 text-glow tracking-tight fade-in-up">
-                    KAPLAN TURBINE INTEGRITY ANALYSIS
-                </h1>
-                <p class="text-xl md:text-2xl font-light text-slate-300 mb-8 border-b pb-4 border-slate-700 fade-in-up delay-200">
-                    Precision diagnostics for low-head turbines: Ensuring optimal adjustable blade performance and mitigating cavitation risk.
-                </p>
+                <h1 class="text-5xl md:text-6xl font-extrabold text-hydro-primary mb-4 text-glow tracking-tight fade-in-up">KAPLAN TURBINE INTEGRITY ANALYSIS</h1>
+                <p class="text-xl md:text-2xl font-light text-slate-300 mb-8 border-b pb-4 border-slate-700 fade-in-up delay-200">Precision diagnostics for low-head turbines: Ensuring optimal adjustable blade performance and mitigating cavitation risk.</p>
                 
                 <div class="bg-hydro-light-slate/80 p-6 rounded-lg shadow-lg fade-in-up delay-400">
-                    <h2 class="text-3xl font-bold text-white mb-4 flex items-center gap-3">
-                        <svg data-lucide="layers-3d" class="w-7 h-7 text-hydro-secondary"></svg> Interactive 3D Model: Kaplan Hydraulic Hub
-                    </h2>
-                    
+                    <h2 class="text-3xl font-bold text-white mb-4 flex items-center gap-3"><svg data-lucide="layers-3d" class="w-7 h-7 text-hydro-secondary"></svg> Interactive 3D Model: Kaplan Hydraulic Hub</h2>
                     <div class="relative">
-                        <!-- KRITIČNO: 3D MODEL VIEWER -->
-                        <model-viewer 
-                            src="H_Kaplan_Spiral.glb" 
-                            alt="3D Horizontal Kaplan Turbine with Spiral Casing"
-                            camera-controls 
-                            auto-rotate 
-                            ar 
-                            loading="eager" 
-                            shadow-intensity="1"
-                            draco 
-                            exposure="1.5"
-                            camera-orbit="180deg 85deg 1.5m"
-                            draco-libraries="https://www.gstatic.com/draco/versioned/decoders/1.5.6/">
-                            
-                            <!-- Custom Progress Bar za vizualno učitavanje -->
-                            <div slot="progress-bar" class="progress-bar text-sm text-white">
-                                Loading 3D Model... Please wait.
-                                <div class="update-bar">
-                                    <div></div>
-                                </div>
-                            </div>
+                        <model-viewer src="H_Kaplan_Spiral.glb" alt="3D Horizontal Kaplan Turbine" camera-controls auto-rotate ar loading="eager" shadow-intensity="1" draco exposure="1.5" camera-orbit="180deg 85deg 1.5m" draco-libraries="https://www.gstatic.com/draco/versioned/decoders/1.5.6/">
+                            <div slot="progress-bar" class="progress-bar text-sm text-white">Loading 3D Model... Please wait.<div class="update-bar"><div></div></div></div>
                         </model-viewer>
                     </div>
                 </div>
                 
                 <div class="space-y-10 text-lg mt-8 fade-in-up delay-600">
                     <div class="p-6 rounded-xl bg-hydro-light-slate/80 shadow-lg"> 
-                        <h2 class="text-2xl font-bold text-white mb-3 flex items-center gap-2">
-                            <svg data-lucide="compass" class="w-6 h-6 text-hydro-cta"></svg> The Kaplan Challenge: Adjustable Blade Dynamics
-                        </h2>
-                        <p class="text-slate-300 leading-relaxed">
-                            The **Kaplan Turbine**, ideal for high flow rates and low-to-medium head applications, relies fundamentally on the precise control of its **adjustable runner blades**. Any wear or misalignment in the hydraulic hub mechanism leads to **blade pitch errors**, causing significant hydraulic instability, increased vibrations, and major efficiency loss.
-                        </p>
-                        <p class="text-slate-400 mt-3">
-                            Maintaining the integrity of the hydraulic hub and servo system is paramount, as the Kaplan's high efficiency across varied water flow depends entirely on its mechanical precision.
-                        </p>
+                        <h2 class="text-2xl font-bold text-white mb-3 flex items-center gap-2"><svg data-lucide="compass" class="w-6 h-6 text-hydro-cta"></svg> The Kaplan Challenge: Adjustable Blade Dynamics</h2>
+                        <p class="text-slate-300 leading-relaxed">The Kaplan Turbine relies fundamentally on the precise control of its adjustable runner blades. Any wear or misalignment leads to blade pitch errors.</p>
                     </div>
-
                     <div class="space-y-6 fade-in-up delay-800">
-                        <h2 class="text-3xl font-bold text-hydro-secondary mb-4 flex items-center gap-3">
-                            <svg data-lucide="check-square" class="w-7 h-7"></svg> Focus Protocol: Dynamic Stability and Wear
-                        </h2>
-                        
-                        <p class="text-slate-300">We target the dynamic mechanisms unique to the Kaplan design:</p>
-                        
+                        <h2 class="text-3xl font-bold text-hydro-secondary mb-4 flex items-center gap-3"><svg data-lucide="check-square" class="w-7 h-7"></svg> Focus Protocol: Dynamic Stability</h2>
                         <ul class="space-y-6 tech-list">
-                            <li class="flex items-start p-4 bg-hydro-slate/70 rounded-lg shadow-md hover:bg-hydro-slate transition duration-300 delay-1000">
-                                <div class="bg-hydro-primary/20 p-2 rounded-full mr-4 flex-shrink-0">
-                                    <svg data-lucide="settings" class="w-6 h-6 text-hydro-primary"></svg>
-                                </div>
-                                <div>
-                                    <strong class="text-white text-xl block mb-1">Adjustable Blade Mechanism Check:</strong> 
-                                    <p class="text-slate-300 text-base">Detailed diagnostic of the hydraulic servo system and control rods to ensure precise pitch control, eliminate mechanical play, and prevent flow instability.</p>
-                                </div>
-                            </li>
-                            <li class="flex items-start p-4 bg-hydro-slate/70 rounded-lg shadow-md hover:bg-hydro-slate transition duration-300 delay-1100">
-                                <div class="bg-hydro-primary/20 p-2 rounded-full mr-4 flex-shrink-0">
-                                    <svg data-lucide="zap" class="w-6 h-6 text-hydro-primary"></svg>
-                                </div>
-                                <div>
-                                    <strong class="text-white text-xl block mb-1">Vibration & Alignment Verification:</strong> 
-                                    <p class="text-slate-300 text-base">Re-verification of shaft alignment against the **0.05 mm/m** standard, crucial for eliminating the introduction of the 48% dynamic instability factor inherent in misalignment.</p>
-                                </div>
-                            </li>
-                            <li class="flex items-start p-4 bg-hydro-slate/70 rounded-lg shadow-md hover:bg-hydro-slate transition duration-300 delay-1200">
-                                <div class="bg-hydro-primary/20 p-2 rounded-full mr-4 flex-shrink-0">
-                                    <svg data-lucide="wind" class="w-6 h-6 text-hydro-primary"></svg>
-                                </div>
-                                <div>
-                                    <strong class="text-white text-xl block mb-1">Cavitation Prevention:</strong> 
-                                    <p class="text-slate-300 text-base">Focused diagnostics on the Draft Tube and runner hub, utilizing acoustic monitoring to detect the precise onset of pit cavitation before significant damage occurs.</p>
-                                </div>
-                            </li>
-                            <li class="flex items-start p-4 bg-hydro-slate/70 rounded-lg shadow-md hover:bg-hydro-slate transition duration-300 delay-1300">
-                                <div class="bg-hydro-primary/20 p-2 rounded-full mr-4 flex-shrink-0">
-                                    <svg data-lucide="link" class="w-6 h-6 text-hydro-primary"></svg>
-                                </div>
-                                <div>
-                                    <strong class="text-white text-xl block mb-1">Governor System Calibration:</strong> 
-                                    <p class="text-slate-300 text-base">Ensuring the hydraulic governor and control logic are optimally calibrated for fast, stable load changes without introducing damaging pressure transients.</p>
-                                </div>
-                            </li>
+                            <li class="flex items-start"><div class="bg-hydro-primary/20 p-2 rounded-full mr-4 flex-shrink-0"><svg data-lucide="settings" class="w-6 h-6 text-hydro-primary"></svg></div><div><strong class="text-white text-xl block mb-1">Blade System Performance:</strong> <p class="text-slate-300 text-base">Detailed diagnostic of the hydraulic servo system and control rods.</p></div></li>
+                            <li class="flex items-start"><div class="bg-hydro-primary/20 p-2 rounded-full mr-4 flex-shrink-0"><svg data-lucide="zap" class="w-6 h-6 text-hydro-primary"></svg></div><div><strong class="text-white text-xl block mb-1">Vibration & Alignment Verification:</strong> <p class="text-slate-300 text-base">Re-verification of shaft alignment against the 0.05 mm/m standard.</p></div></li>
+                            <li class="flex items-start"><div class="bg-hydro-primary/20 p-2 rounded-full mr-4 flex-shrink-0"><svg data-lucide="wind" class="w-6 h-6 text-hydro-primary"></svg></div><div><strong class="text-white text-xl block mb-1">Cavitation Prevention:</strong> <p class="text-slate-300 text-base">Focused diagnostics on the Draft Tube and runner hub.</p></div></li>
                         </ul>
                     </div>
                 </div>
-
                 <div class="mt-12 text-center fade-in-up delay-1400">
-                    <a href="contact.html" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-lg font-bold rounded-full text-hydro-charcoal bg-hydro-primary hover:bg-cyan-500 transition duration-300 transform hover:scale-105 shadow-xl uppercase tracking-wider">
-                        Schedule Kaplan Turbine Audit &rarr;
-                    </a>
+                    <a href="contact.html" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-lg font-bold rounded-full text-hydro-charcoal bg-hydro-primary hover:bg-cyan-500 transition duration-300 transform hover:scale-105 shadow-xl uppercase tracking-wider">Schedule Kaplan Turbine Audit &rarr;</a>
                 </div>
-
             </div>
         </section>
     </main>
     
-    <!-- FOOTER -->
-    <div class="md:hidden mobile-sticky-cta text-center">
-        <a href="contact.html" class="w-full block text-center bg-hydro-primary hover:bg-cyan-500 text-hydro-charcoal px-5 py-3 font-bold tracking-wider uppercase shadow-2xl">
-            SCHEDULE AUDIT
-        </a>
-    </div>
-
     <footer class="bg-hydro-slate text-hydro-gray py-8 text-center border-t border-hydro-light-slate" role="contentinfo">
         <div class="container mx-auto px-6">
            <a href="index.html#hero" class="mb-4 block" aria-label="Anohubs Logo - Back to top">
                <img src="logo.svg" alt="Anohubs Logo" class="anohubs-logo-compact">
            </a>
            <p class="text-slate-400 mb-6">Establishing the global standard for hydro integrity.</p>
-           <nav class="flex justify-center space-x-6 text-sm mb-4">
+           <nav class="flex justify-center space-x-6 text-sm mb-6">
                <a href="about-us-vision.html" class="text-slate-400 hover:text-hydro-primary">About</a>
-               <a href="index.html#services" class="text-slate-400 hover:text-hydro-primary">Services</a>
+               <a href="services.html" class="text-slate-400 hover:text-hydro-primary">Services</a>
                <a href="insights/expert-insights.html" class="text-slate-400 hover:text-hydro-primary">Insights</a>
                <a href="case-studies.html" class="text-slate-400 hover:text-hydro-primary">Case Studies</a>
-               <a href="app-iframe.html" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-hydro-secondary">ANO HUB</a>
                <a href="gallery.html" class="text-slate-400 hover:text-hydro-primary">Gallery</a>
                <a href="protocol.html" class="text-slate-400 hover:text-hydro-primary">Protocol</a>
                <a href="contact.html" class="text-slate-400 hover:text-hydro-primary">Contact</a>
@@ -306,11 +208,9 @@
         </div>
     </footer>
 
-    <!-- KRITIČNO: MODULARNA JS STRUKTURA -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
     <script src="js/ui_core.js"></script>
     <script src="js/animation_logic.js"></script>
     <script src="js/turbine-3d-logic.js"></script>
-    
 </body>
 </html>

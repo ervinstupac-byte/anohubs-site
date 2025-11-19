@@ -1,10 +1,9 @@
 // ==============================================
 // GALLERY LOGIC (js/gallery-logic.js)
-// Rukuje Lightboxom, Slideshowom, i generisanjem thumbnailova.
+// Napredna logika za Lightbox, Slideshow i Fullscreen
 // ==============================================
 
-// === KLIJENTSKA LOGIKA ZA GALERIJU - UMETNUTA LISTA FAJLOVA ===
-// NAPOMENA: Sve slike se očekuju u subfolderu 'slike/gallery/'
+// 1. LISTA SLIKA (Vaša kompletna lista)
 const imageFilenames = [
     '20180628_141406_result.webp', '20180628_144319_result.webp', '20180702_084645_result.webp', '20180711_113934_result.webp',
     '20180711_114028_result.webp', '20180713_175456_result.webp', '20180724_094021_result.webp', '20180809_165247_result.webp',
@@ -81,10 +80,10 @@ const imageFilenames = [
     'dji_fly_20230630_105622_454_1688093955943_photo_optimized_result.webp', 'dji_fly_20230703_174842_482_1688377737493_photo_optimized_result.webp',
 ];
 
-// Priprema galerije (putanja do slika)
+// Priprema galerije (putanja do slika - OČEKUJE SE FOLDER 'slike/gallery/')
 const galleryImages = imageFilenames.map(filename => ({
     src: 'slike/gallery/' + filename, 
-    caption: '' // Prazan opis
+    caption: '' 
 }));
  
 let currentIndex = 0;
@@ -96,23 +95,22 @@ const LIGHTBOX_HIDE_DELAY = 5000;
 let modalElement;
 let slideshowBtn;
 
-// === FULL SCREEN LOGIKA (Dostupna globalno) ===
+// === FULL SCREEN LOGIKA ===
 window.toggleFullScreen = () => {
     const element = document.getElementById('lightbox-window');
     if (!document.fullscreenElement) {
         element.requestFullscreen().catch(err => {
             console.error(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
         });
+        // Promjena ikone/teksta u "Exit Fullscreen" bi mogla ići ovdje
     } else {
         document.exitFullscreen();
     }
 }
 
-// === LOGIKA ZA SKRIVANJE/PRIKAZIVANJE KONTROLA ===
+// === UI HELPERI ===
 function showControls() {
-    if (modalElement) {
-        modalElement.classList.remove('controls-hidden');
-    }
+    if (modalElement) modalElement.classList.remove('controls-hidden');
 }
 
 function hideControls() {
@@ -124,26 +122,20 @@ function hideControls() {
 function resetControlTimeout() {
     clearTimeout(controlHideTimeout);
     showControls();
-    
     if (slideshowBtn && !slideshowBtn.textContent.includes('Stop')) {
          controlHideTimeout = setTimeout(hideControls, LIGHTBOX_HIDE_DELAY); 
     }
 }
-// =================================================
 
-// === KLIJENTSKA LOGIKA (GLAVNE FUNKCIJE) ===
-
+// === GLAVNE FUNKCIJE GALERIJE ===
 window.openModal = (index) => {
     currentIndex = index;
-    
     if (slideshowInterval) {
-        window.toggleSlideshow(slideshowBtn);
+        window.toggleSlideshow(slideshowBtn); // Zaustavi ako radi
     }
-    
     updateImage(false); 
     modalElement.classList.remove('hidden');
-    document.body.classList.add('overflow-hidden');
-    
+    document.body.classList.add('overflow-hidden'); // Spriječi skrolanje pozadine
     resetControlTimeout(); 
 }
 
@@ -153,24 +145,29 @@ function updateImage(useTransition = true) {
     
     const animationClass = useTransition ? 'animate-fade-in' : '';
     
+    // Umetanje slike
     container.innerHTML = `
         <img src="${img.src}" alt="AnoHUB Gallery Image" class="max-w-full max-h-full object-contain ${animationClass}" style="animation-duration: 0.3s;">
     `;
     
-    document.getElementById('lightbox-counter').textContent = `Image ${currentIndex + 1} of ${totalImages}`;
+    // Ažuriranje brojača
+    const counter = document.getElementById('lightbox-counter');
+    if(counter) counter.textContent = `Image ${currentIndex + 1} of ${totalImages}`;
     
-    document.getElementById('prev-btn').disabled = (currentIndex === 0);
-    document.getElementById('next-btn').disabled = (currentIndex === totalImages - 1);
+    // Onemogućavanje dugmadi na krajevima (opcionalno, ovdje je kružno pa nije nužno)
+    // document.getElementById('prev-btn').disabled = (currentIndex === 0);
+    // document.getElementById('next-btn').disabled = (currentIndex === totalImages - 1);
 }
 
 window.navigateGallery = (direction) => {
-    const newIndex = currentIndex + direction;
+    let newIndex = currentIndex + direction;
+    // Kružna navigacija
+    if (newIndex < 0) newIndex = totalImages - 1;
+    if (newIndex >= totalImages) newIndex = 0;
 
-    if (newIndex >= 0 && newIndex < totalImages) {
-        currentIndex = newIndex;
-        updateImage(true); 
-        resetControlTimeout(); 
-    }
+    currentIndex = newIndex;
+    updateImage(true); 
+    resetControlTimeout(); 
 };
 
 window.toggleSlideshow = (button) => {
@@ -179,31 +176,21 @@ window.toggleSlideshow = (button) => {
         clearInterval(slideshowInterval);
         slideshowInterval = null;
         button.innerHTML = '▶️ Start Slideshow';
-        button.classList.remove('bg-red-600');
-        button.classList.add('bg-hydro-secondary');
+        button.classList.remove('bg-red-600', 'hover:bg-red-700');
+        button.classList.add('bg-hydro-secondary', 'hover:bg-green-500');
         resetControlTimeout(); 
     } else {
         // POKRETANJE
         clearTimeout(controlHideTimeout); 
         showControls(); 
 
-        if (currentIndex === totalImages - 1) {
-            currentIndex = 0;
-            updateImage(false);
-        }
-
         button.innerHTML = '⏸️ Stop Slideshow';
-        button.classList.remove('bg-hydro-secondary');
-        button.classList.add('bg-red-600');
+        button.classList.remove('bg-hydro-secondary', 'hover:bg-green-500');
+        button.classList.add('bg-red-600', 'hover:bg-red-700');
         
         slideshowInterval = setInterval(() => {
-            if (currentIndex < totalImages - 1) {
-                window.navigateGallery(1); 
-            } else {
-                currentIndex = 0;
-                updateImage(true); 
-            }
-        }, 3500); 
+            window.navigateGallery(1); 
+        }, 3000); // 3 sekunde
     }
 };
 
@@ -212,68 +199,67 @@ window.closeModal = () => {
     document.body.classList.remove('overflow-hidden');
     
     if (slideshowInterval) {
-         window.toggleSlideshow(slideshowBtn);
+         // Reset dugmeta ako se zatvori dok slideshow radi
+         const btn = document.getElementById('slideshow-btn');
+         if(btn) window.toggleSlideshow(btn);
     }
-
     if (document.fullscreenElement) {
         document.exitFullscreen();
     }
     clearTimeout(controlHideTimeout);
 }
 
-// === INICIJALIZACIJA ===
-
+// === INICIJALIZACIJA NA LOAD ===
 document.addEventListener("DOMContentLoaded", function() {
     modalElement = document.getElementById('lightbox-modal');
     slideshowBtn = document.getElementById('slideshow-btn');
 
+    // Inicijalizacija ikonica
     if (typeof lucide !== 'undefined') {
         lucide.createIcons();
     }
     
+    // Renderovanje Thumbnailova
     const grid = document.querySelector('.gallery-grid');
     if (grid) {
-        // Generisanje svih thumbnailova (za brzinu)
+        let htmlContent = '';
         galleryImages.forEach((img, index) => {
-            grid.innerHTML += `
-                <div onclick="openModal(${index})" class="thumbnail-item">
-                    <img src="${img.src}" alt="AnoHUB Gallery Image" 
-                            class="thumbnail-img w-full h-36 object-cover rounded-lg" 
-                            loading="lazy">
+            htmlContent += `
+                <div onclick="openModal(${index})" class="thumbnail-item group relative overflow-hidden rounded-lg shadow-lg cursor-pointer border border-slate-700 hover:border-hydro-primary transition duration-300">
+                    <img src="${img.src}" alt="Gallery Thumbnail" 
+                         class="thumbnail-img w-full h-48 object-cover transform group-hover:scale-110 transition duration-500" 
+                         loading="lazy">
+                    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition duration-300"></div>
                 </div>
             `;
         });
+        grid.innerHTML = htmlContent;
     }
 
-    // KRITIČNO: POPRAVAK PRIKAZA BROJA SLIKA
+    // Prikaz ukupnog broja slika u tekstu
     const totalCountElements = document.querySelectorAll('.total-images-placeholder');
     totalCountElements.forEach(el => {
         el.textContent = totalImages;
     });
 
-
-    // Listener za navigaciju tastaturom
+    // Tastatura prečice
     document.addEventListener('keydown', (e) => {
-        if (!modalElement.classList.contains('hidden')) {
-            if (e.key === 'ArrowLeft') {
-                window.navigateGallery(-1); 
-            } else if (e.key === 'ArrowRight') {
-                window.navigateGallery(1);
-            } else if (e.key === 'Escape') {
-                window.closeModal();
+        if (modalElement && !modalElement.classList.contains('hidden')) {
+            if (e.key === 'ArrowLeft') window.navigateGallery(-1); 
+            if (e.key === 'ArrowRight') window.navigateGallery(1);
+            if (e.key === 'Escape') window.closeModal();
+            if (e.key === ' ') { // Space za pauzu/play
+                 e.preventDefault();
+                 if(slideshowBtn) window.toggleSlideshow(slideshowBtn);
             }
         }
     });
 
-    // Listener za automatsko skrivanje kontrola (unutar cijelog lightboksa)
+    // Automatsko skrivanje kontrola
     if (modalElement) {
         modalElement.addEventListener('mousemove', resetControlTimeout);
-        
-        // Zatvaranje klika na pozadinu
         modalElement.onclick = (event) => {
-            if (event.target === modalElement) {
-                window.closeModal();
-            }
+            if (event.target === modalElement) window.closeModal();
         };
     }
 });

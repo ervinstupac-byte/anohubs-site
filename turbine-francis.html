@@ -6,7 +6,7 @@
     <title>Francis Turbine Integrity | Anohubs: Advanced Analytics</title>
     <meta name="description" content="In-depth integrity analysis for Francis turbines focusing on optimal blade geometry, cavitation risk mitigation, and CFD optimization protocols.">
     
-    <!-- 1. STANDARDNA JS INICIJALIZACIJA -->
+    <!-- 1. JS INICIJALIZACIJA -->
     <script src="js/head-init.js"></script>
 
     <!-- 2. FONTOVI -->
@@ -14,10 +14,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
     
-    <!-- 3. KRITIČNO: TAILWIND CSS CDN -->
+    <!-- 3. TAILWIND CDN (KRITIČNO) -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- 4. TAILWIND KONFIGURACIJA -->
+    <!-- 4. TAILWIND CONFIG -->
     <script>
         tailwind.config = {
             theme: {
@@ -35,7 +35,7 @@
                     fontSize: {
                         'h1-hero': 'clamp(2.5rem, 5vw + 1rem, 4.5rem)',
                     },
-                },
+                }
             }
         }
     </script>
@@ -43,26 +43,21 @@
     <!-- 5. GLOBALNI STILOVI -->
     <link href="css/anohubs.css" rel="stylesheet">
 
-    <!-- KRITIČNO: CDN ZA 3D MODEL VIEWER -->
+    <!-- 3D MODEL VIEWER -->
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/1.13.0/model-viewer.min.js"></script>
     
     <style>
-        /* CSS STILOVI SPECIFIČNI ZA OVU STRANICU */
         body {
-            /* POZADINA: ORLJANI UNA */
             background-image: url('orljani_Una.jpg'); 
             background-size: cover;
             background-attachment: fixed;
             background-position: center; 
             min-height: 100vh;
         }
-        
-        /* HEADER & NAVIGATION */
         .header-bg { background-color: rgba(17, 24, 39, 0.95); }
         .anohubs-logo-compact { width: 90px; height: auto; color: #22d3ee; }
         @media (min-width: 768px) { .anohubs-logo-compact { width: 120px; } }
 
-        /* OVERLAY NAD SADRŽAJEM */
         .content-overlay {
             background-color: rgba(30, 41, 59, 0.75);
             padding: 3rem 2rem;
@@ -74,7 +69,6 @@
         }
         .text-glow { text-shadow: 0 0 15px rgba(34, 211, 238, 0.7); }
 
-        /* STIL ZA 3D MODEL VIEWER */
         model-viewer {
             width: 100%;
             height: 400px;
@@ -86,7 +80,6 @@
             --progress-bar-color: #22d3ee; 
             --poster-color: #111827; 
         }
-        /* STIL ZA PROGRESS BAR */
         .progress-bar {
             display: flex;
             flex-direction: column;
@@ -114,7 +107,6 @@
             width: 0%;
             transition: width 0.3s;
         }
-        /* DODATNO: STILOVI ZA LISTE */
         .tech-list li {
             padding: 0.75rem;
             background-color: rgba(51, 65, 85, 0.5); 
@@ -134,7 +126,7 @@
             
             <nav class="hidden md:flex items-center space-x-4 font-extrabold text-sm" role="navigation" aria-label="Main navigation">
                 <a href="about-us-vision.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">About</a>
-                <a href="index.html#services" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Services</a> 
+                <a href="services.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Services</a>
                 <a href="insights/expert-insights.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Insights</a>
                 <a href="case-studies.html" class="nav-link relative text-slate-300 hover:text-hydro-secondary transition tracking-wider p-2 uppercase">Case Studies</a>
                 <a href="app-iframe.html" target="_blank" rel="noopener noreferrer" class="nav-link relative text-hydro-secondary hover:text-green-500 transition tracking-widest font-extrabold text-lg p-2 uppercase">ANO HUB</a>
@@ -151,7 +143,7 @@
             
             <div id="mobile-menu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2 text-center bg-hydro-charcoal" aria-label="Mobile navigation menu">
                 <a href="about-us-vision.html" class="block hover:text-hydro-primary transition tracking-wider py-2">About</a>
-                <a href="index.html#services" class="block hover:text-hydro-primary transition tracking-wider py-2">Services</a>
+                <a href="services.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Services</a>
                 <a href="insights/expert-insights.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Insights</a>
                 <a href="case-studies.html" class="block hover:text-hydro-secondary transition tracking-wider py-2">Case Studies</a>
                 <a href="app-iframe.html" target="_blank" rel="noopener noreferrer" class="block hover:text-hydro-secondary transition tracking-wider py-2">ANO HUB</a>
@@ -159,7 +151,6 @@
                 <a href="protocol.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Protocol</a>
                 <a href="contact.html" class="block bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-5 py-2 rounded-full transition shadow-md font-bold tracking-wider mt-2 text-center">Contact</a>
             </div>
-
         </div>
     </header>
     
@@ -180,7 +171,6 @@
                     </h2>
                     
                     <div class="relative">
-                        <!-- KRITIČNO: 3D MODEL VIEWER -->
                         <model-viewer 
                             src="francis_turbine.glb" 
                             alt="3D Francis Turbine Runner"
@@ -193,7 +183,6 @@
                             exposure="1.5"
                             camera-orbit="180deg 85deg 1.5m">
                             
-                            <!-- Custom Progress Bar za vizualno učitavanje -->
                             <div slot="progress-bar" class="progress-bar text-sm text-white">
                                 Loading 3D Model... Please wait.
                                 <div class="update-bar">
@@ -212,54 +201,24 @@
                         <p class="text-slate-300 leading-relaxed">
                             The Francis turbine operates under immense hydraulic pressure where efficiency hinges on maintaining perfect flow over the complex runner geometry. Our specialized audits ensure that this geometry is optimal and that pressure differentials do not lead to localized structural failure.
                         </p>
-                        <p class="text-slate-400 mt-3">
-                            Its unique setup—where water enters the runner radially and exits axially—is what gives it its unique, powerful hydraulic signature. For us, maintaining the integrity of this design is paramount, as every fraction of efficiency contributes directly to sustainable power generation.
-                        </p>
                     </div>
 
                     <div class="space-y-6 fade-in-up delay-800">
                         <h2 class="text-3xl font-bold text-hydro-secondary mb-4 flex items-center gap-3">
                             <svg data-lucide="check-square" class="w-7 h-7"></svg> Focus Protocol: Maximizing Lifespan
                         </h2>
-                        
-                        <p class="text-slate-300">We target the specific vulnerabilities of Francis runners and guide vanes:</p>
-                        
                         <ul class="space-y-6 tech-list">
-                            <li class="flex items-start p-4 bg-hydro-slate/70 rounded-lg shadow-md hover:bg-hydro-slate transition duration-300 delay-1000">
-                                <div class="bg-hydro-primary/20 p-2 rounded-full mr-4 flex-shrink-0">
-                                    <svg data-lucide="maximize" class="w-6 h-6 text-hydro-primary"></svg>
-                                </div>
-                                <div>
-                                    <strong class="text-white text-xl block mb-1">CFD Optimization:</strong> 
-                                    <p class="text-slate-300 text-base">Utilizing Computational Fluid Dynamics (CFD) to validate and adjust blade profiles and flow paths, ensuring maximum hydraulic efficiency and reducing hydraulic hammer risks.</p>
-                                </div>
+                            <li class="flex items-start">
+                                <div class="bg-hydro-primary/20 p-2 rounded-full mr-4 flex-shrink-0"><svg data-lucide="maximize" class="w-6 h-6 text-hydro-primary"></svg></div>
+                                <div><strong class="text-white text-xl block mb-1">CFD Optimization:</strong> <p class="text-slate-300 text-base">Utilizing Computational Fluid Dynamics (CFD) to validate and adjust blade profiles.</p></div>
                             </li>
-                            <li class="flex items-start p-4 bg-hydro-slate/70 rounded-lg shadow-md hover:bg-hydro-slate transition duration-300 delay-1100">
-                                <div class="bg-hydro-primary/20 p-2 rounded-full mr-4 flex-shrink-0">
-                                    <svg data-lucide="ear" class="w-6 h-6 text-hydro-primary"></svg>
-                                </div>
-                                <div>
-                                    <strong class="text-white text-xl block mb-1">Acoustic Emission Monitoring (AEM):</strong> 
-                                    <p class="text-slate-300 text-base">Non-invasive acoustic monitoring to detect the precise onset and location of cavitation, allowing for preemptive intervention and repair before damage escalates.</p>
-                                </div>
+                            <li class="flex items-start">
+                                <div class="bg-hydro-primary/20 p-2 rounded-full mr-4 flex-shrink-0"><svg data-lucide="ear" class="w-6 h-6 text-hydro-primary"></svg></div>
+                                <div><strong class="text-white text-xl block mb-1">Acoustic Emission Monitoring (AEM):</strong> <p class="text-slate-300 text-base">Non-invasive acoustic monitoring to detect the precise onset of cavitation.</p></div>
                             </li>
-                            <li class="flex items-start p-4 bg-hydro-slate/70 rounded-lg shadow-md hover:bg-hydro-slate transition duration-300 delay-1200">
-                                <div class="bg-hydro-primary/20 p-2 rounded-full mr-4 flex-shrink-0">
-                                    <svg data-lucide="minus-square" class="w-6 h-6 text-hydro-primary"></svg>
-                                </div>
-                                <div>
-                                    <strong class="text-white text-xl block mb-1">Partial Load Instability:</strong> 
-                                    <p class="text-slate-300 text-base">Auditing turbine performance and control logic during off-design (partial load) operation, where flow separation and resulting vibrations pose the greatest long-term threat.</p>
-                                </div>
-                            </li>
-                            <li class="flex items-start p-4 bg-hydro-slate/70 rounded-lg shadow-md hover:bg-hydro-slate transition duration-300 delay-1300">
-                                <div class="bg-hydro-primary/20 p-2 rounded-full mr-4 flex-shrink-0">
-                                    <svg data-lucide="link" class="w-6 h-6 text-hydro-primary"></svg>
-                                </div>
-                                <div>
-                                    <strong class="text-white text-xl block mb-1">Rotor-Stator Interaction (RSI) Mitigation:</strong> 
-                                    <p class="text-slate-300 text-base">Detailed analysis of the clearances and hydraulic forces between the runner and guide vanes to minimize dynamic excitation and noise generation.</p>
-                                </div>
+                            <li class="flex items-start">
+                                <div class="bg-hydro-primary/20 p-2 rounded-full mr-4 flex-shrink-0"><svg data-lucide="minus-square" class="w-6 h-6 text-hydro-primary"></svg></div>
+                                <div><strong class="text-white text-xl block mb-1">Partial Load Instability:</strong> <p class="text-slate-300 text-base">Auditing turbine performance during off-design operation.</p></div>
                             </li>
                         </ul>
                     </div>
@@ -285,12 +244,12 @@
     <footer class="bg-hydro-slate text-hydro-gray py-8 text-center border-t border-hydro-light-slate" role="contentinfo">
         <div class="container mx-auto px-6">
            <a href="index.html#hero" class="mb-4 block" aria-label="Anohubs Logo - Back to top">
-               <img src="logo.svg" alt="Anohubs Logo" class="anohubs-logo-compact">
+               <img src="logo.svg" alt="Anohubs Logo" class="anohubs-logo mx-auto">
            </a>
            <p class="text-slate-400 mb-6">Establishing the global standard for hydro integrity.</p>
-           <nav class="flex justify-center space-x-6 text-sm mb-4">
+           <nav class="flex justify-center space-x-6 text-sm mb-6">
                <a href="about-us-vision.html" class="text-slate-400 hover:text-hydro-primary">About</a>
-               <a href="index.html#services" class="text-slate-400 hover:text-hydro-primary">Services</a>
+               <a href="services.html" class="text-slate-400 hover:text-hydro-primary">Services</a>
                <a href="insights/expert-insights.html" class="text-slate-400 hover:text-hydro-primary">Insights</a>
                <a href="case-studies.html" class="text-slate-400 hover:text-hydro-primary">Case Studies</a>
                <a href="gallery.html" class="text-slate-400 hover:text-hydro-primary">Gallery</a>
@@ -306,7 +265,7 @@
         </div>
     </footer>
 
-    <!-- KRITIČNO: MODULARNA JS STRUKTURA -->
+    <!-- SKRIPTE -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
     <script src="js/ui_core.js"></script>
     <script src="js/animation_logic.js"></script>
