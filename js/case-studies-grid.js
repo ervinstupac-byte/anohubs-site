@@ -1,9 +1,3 @@
-// ==============================================
-// CASE STUDIES GRID (Data + Render Logic)
-// Objedinjeni fajl za prikaz studija slučaja
-// ==============================================
-
-// 1. PODACI (DATA)
 const caseStudiesData = [
     {
         "id": "cs01",
@@ -115,7 +109,6 @@ const caseStudiesData = [
     }
 ];
 
-// 2. LOGIKA ZA RENDEROWANJE
 function createCaseStudyCard(study) {
     return `
         <a href="${study.content_file}" class="turbine-card block transform hover:scale-[1.02] zoom-in bg-hydro-slate border border-hydro-light-slate hover:border-hydro-secondary rounded-xl shadow-lg transition duration-300 h-full p-6 text-left">
@@ -127,7 +120,7 @@ function createCaseStudyCard(study) {
             </div>
             <h2 class="text-2xl font-extrabold text-white mb-2">${study.title}</h2>
             <p class="text-slate-400 text-sm mb-4 flex-grow">${study.subtitle}</p>
-            <span class="mt-auto inline-flex items-center text-hydro-primary font-semibold text-sm">
+            <span class="mt-auto inline-flex items-center text-hydro-secondary font-semibold text-sm">
                 View Full Study →
             </span>
         </a>
@@ -136,34 +129,19 @@ function createCaseStudyCard(study) {
 
 function renderCaseStudiesArchive() {
     const container = document.getElementById('case-studies-grid');
-    
-    if (!container) {
-        console.error("Greška: Element #case-studies-grid nije pronađen na stranici!");
-        return;
-    }
-
-    let allCardsHtml = '';
-    caseStudiesData.forEach((study, index) => {
-        // Dodajemo delay za ljepšu animaciju
-        let cardHtml = createCaseStudyCard(study);
-        // Ručno ubacivanje delay klase u string (opcionalno, ali ljepše)
-        const delayClass = `delay-${Math.min((index % 4) * 200, 800)}`; 
-        cardHtml = cardHtml.replace('zoom-in', `zoom-in ${delayClass}`);
-        
-        allCardsHtml += cardHtml;
-    });
-
-    container.innerHTML = allCardsHtml;
-    
-    // Ponovno pokretanje Lucide ikona ako su potrebne
-    if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
+    if (container) {
+        let html = '';
+        caseStudiesData.forEach((study, index) => {
+            // Dodajemo delay klasu za ljepšu animaciju
+            let cardHtml = createCaseStudyCard(study);
+            let delay = (index % 5) * 200; // 0, 200, 400, 600...
+            cardHtml = cardHtml.replace('zoom-in', `zoom-in delay-${delay}`);
+            html += cardHtml;
+        });
+        container.innerHTML = html;
+    } else {
+        console.error("Kontejner #case-studies-grid nije pronađen!");
     }
 }
 
-// Pokreni renderovanje čim se fajl učita
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', renderCaseStudiesArchive);
-} else {
-    renderCaseStudiesArchive();
-}
+document.addEventListener('DOMContentLoaded', renderCaseStudiesArchive);
