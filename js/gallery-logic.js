@@ -1,9 +1,8 @@
 // ==============================================
-// GALLERY LOGIC (js/gallery-logic.js)
-// Napredna logika za Lightbox, Slideshow i Fullscreen
+// GALLERY LOGIC (OPTIMIZED)
+// Brže učitavanje i sakrivanje grešaka
 // ==============================================
 
-// 1. LISTA SLIKA (Vaša kompletna lista)
 const imageFilenames = [
     '20180628_141406_result.webp', '20180628_144319_result.webp', '20180702_084645_result.webp', '20180711_113934_result.webp',
     '20180711_114028_result.webp', '20180713_175456_result.webp', '20180724_094021_result.webp', '20180809_165247_result.webp',
@@ -153,7 +152,7 @@ function updateImage(useTransition = true) {
     const animationClass = useTransition ? 'animate-fade-in' : '';
     
     container.innerHTML = `
-        <img src="${img.src}" alt="AnoHUB Gallery Image" class="max-w-full max-h-full object-contain ${animationClass}" style="animation-duration: 0.3s;">
+        <img src="${img.src}" alt="AnoHUB Gallery Image" class="max-w-full max-h-full object-contain ${animationClass}" style="animation-duration: 0.3s;" onerror="this.style.display='none'; this.parentElement.innerHTML='<p class=\'text-red-500\'>Image not found: ${img.src}</p>'">
     `;
     
     const counter = document.getElementById('lightbox-counter');
@@ -235,10 +234,12 @@ document.addEventListener("DOMContentLoaded", function() {
         let htmlContent = '';
         galleryImages.forEach((img, index) => {
             htmlContent += `
-                <div onclick="openModal(${index})" class="thumbnail-item">
-                    <img src="${img.src}" alt="AnoHUB Gallery Image" 
-                            class="thumbnail-img w-full h-36 object-cover rounded-lg" 
-                            loading="lazy">
+                <div onclick="openModal(${index})" class="thumbnail-item group relative overflow-hidden rounded-lg shadow-lg cursor-pointer border border-slate-700 hover:border-hydro-primary transition duration-300">
+                    <img src="${img.src}" alt="Gallery Thumbnail" 
+                         class="thumbnail-img w-full h-48 object-cover transform group-hover:scale-110 transition duration-500" 
+                         loading="lazy" 
+                         onerror="this.parentElement.style.display='none'">
+                    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition duration-300"></div>
                 </div>
             `;
         });
