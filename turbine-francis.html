@@ -17,7 +17,7 @@
     <!-- 3. KRITIČNO: TAILWIND CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- 4. TAILWIND CONFIG -->
+    <!-- 4. TAILWIND KONFIGURACIJA -->
     <script>
         tailwind.config = {
             theme: {
@@ -47,7 +47,6 @@
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/1.13.0/model-viewer.min.js"></script>
     
     <style>
-        /* CSS STILOVI SPECIFIČNI ZA OVU STRANICU */
         body {
             background-image: url('orljani_Una.jpg'); 
             background-size: cover;
@@ -55,12 +54,12 @@
             background-position: center; 
             min-height: 100vh;
         }
-        
         .header-bg { background-color: rgba(17, 24, 39, 0.95); }
         .anohubs-logo-compact { width: 90px; height: auto; color: #22d3ee; }
-        
+        @media (min-width: 768px) { .anohubs-logo-compact { width: 120px; } }
+
         .content-overlay {
-            background-color: rgba(30, 41, 59, 0.75);
+            background-color: rgba(30, 41, 59, 0.85); /* Malo tamnije za bolji kontrast */
             padding: 3rem 2rem;
             border-radius: 0.75rem; 
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6); 
@@ -69,9 +68,17 @@
         }
         .text-glow { text-shadow: 0 0 15px rgba(34, 211, 238, 0.7); }
 
-        model-viewer { width: 100%; height: 400px; }
-        .progress-bar { z-index: 10; position: absolute; }
-        .tech-list li { padding: 0.75rem; background-color: rgba(51, 65, 85, 0.5); border-radius: 0.5rem; }
+        model-viewer { width: 100%; height: 450px; background-color: #111827; border-radius: 0.5rem; }
+        .progress-bar { z-index: 10; position: absolute; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.8); }
+        
+        .tech-list li { 
+            padding: 1rem; 
+            background-color: rgba(51, 65, 85, 0.6); 
+            border-radius: 0.5rem; 
+            border-left: 3px solid #22d3ee;
+            transition: transform 0.2s;
+        }
+        .tech-list li:hover { transform: translateX(5px); }
     </style>
 </head>
 <body class="text-white bg-hydro-charcoal">
@@ -110,62 +117,104 @@
     
     <main role="main">
         <section class="py-16 text-white flex items-center justify-center min-h-[90vh]">
-            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 content-overlay zoom-in"> 
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 content-overlay zoom-in"> 
                 
-                <h1 class="text-5xl md:text-6xl font-extrabold text-hydro-primary mb-4 text-glow tracking-tight fade-in-up">FRANCIS TURBINE INTEGRITY ANALYSIS</h1>
-                <p class="text-xl md:text-2xl font-light text-slate-300 mb-8 border-b pb-4 border-slate-700 fade-in-up delay-200">Targeted analysis for medium-head turbines: Focusing on hydraulic stability, cavitation, and component longevity.</p>
+                <h1 class="text-5xl md:text-6xl font-extrabold text-hydro-primary mb-4 text-glow tracking-tight fade-in-up text-center">
+                    FRANCIS TURBINE INTEGRITY
+                </h1>
+                <p class="text-xl md:text-2xl font-light text-slate-300 mb-8 border-b pb-4 border-slate-700 fade-in-up delay-200 text-center">
+                    Targeted analysis for medium-head turbines: Focusing on hydraulic stability, cavitation, and component longevity.
+                </p>
                 
-                <div class="bg-hydro-light-slate/80 p-6 rounded-lg shadow-lg fade-in-up delay-400">
-                    <h2 class="text-3xl font-bold text-white mb-4 flex items-center gap-3"><svg data-lucide="layers-3d" class="w-7 h-7 text-hydro-secondary"></svg> Interactive 3D Model: Francis Runner Integrity</h2>
+                <!-- 3D MODEL -->
+                <div class="bg-hydro-charcoal p-4 rounded-lg shadow-2xl fade-in-up delay-400 border border-slate-700">
+                    <div class="flex justify-between items-center mb-2 px-2">
+                        <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                            <svg data-lucide="layers-3d" class="w-5 h-5 text-hydro-secondary"></svg> Interactive Model
+                        </h2>
+                        <span class="text-xs text-slate-500 uppercase tracking-widest">Drag to Rotate</span>
+                    </div>
+                    
                     <div class="relative">
-                        <model-viewer src="francis_turbine.glb" alt="3D Francis Turbine Runner" camera-controls auto-rotate ar loading="eager" shadow-intensity="1" draco exposure="1.5" camera-orbit="180deg 85deg 1.5m">
-                            <div slot="progress-bar" class="progress-bar text-sm text-white">Loading 3D Model... Please wait.<div class="update-bar"><div></div></div></div>
+                        <model-viewer 
+                            src="francis_turbine.glb" 
+                            alt="3D Francis Turbine Runner"
+                            camera-controls 
+                            auto-rotate 
+                            ar 
+                            loading="eager" 
+                            shadow-intensity="1"
+                            draco 
+                            exposure="1.2"
+                            camera-orbit="45deg 55deg 2.5m">
+                            
+                            <div slot="progress-bar" class="progress-bar text-sm text-white">
+                                Loading 3D Model...
+                            </div>
                         </model-viewer>
                     </div>
                 </div>
                 
-                <div class="space-y-10 text-lg mt-8 fade-in-up delay-600">
-                    <div class="p-6 rounded-xl bg-hydro-light-slate/80 shadow-lg"> 
-                        <h2 class="text-2xl font-bold text-white mb-3 flex items-center gap-2"><svg data-lucide="compass" class="w-6 h-6 text-hydro-cta"></svg> The Francis Challenge: Pressure and Flow Dynamics</h2>
-                        <p class="text-slate-300 leading-relaxed">The Francis turbine operates under immense hydraulic pressure where efficiency hinges on maintaining perfect flow over the complex runner geometry. Our specialized audits ensure that this geometry is optimal and that pressure differentials do not lead to localized structural failure.</p>
+                <!-- CONTENT GRID -->
+                <div class="grid md:grid-cols-2 gap-8 mt-12 fade-in-up delay-600">
+                    
+                    <!-- LEFT: The Challenge -->
+                    <div class="p-6 rounded-xl bg-hydro-light-slate/40 border border-slate-600"> 
+                        <h2 class="text-2xl font-bold text-white mb-3 flex items-center gap-2">
+                            <svg data-lucide="alert-triangle" class="w-6 h-6 text-hydro-cta"></svg> The Challenge
+                        </h2>
+                        <p class="text-slate-300 leading-relaxed text-sm">
+                            The Francis turbine operates under immense hydraulic pressure. Efficiency hinges on maintaining perfect flow over complex runner geometry. Our specialized audits ensure optimal geometry and prevent pressure differentials that lead to localized structural failure and cavitation.
+                        </p>
                     </div>
 
-                    <div class="space-y-6 fade-in-up delay-800">
-                        <h2 class="text-3xl font-bold text-hydro-secondary mb-4 flex items-center gap-3"><svg data-lucide="check-square" class="w-7 h-7"></svg> Focus Protocol: Maximizing Lifespan</h2>
-                        <ul class="space-y-6 tech-list">
-                            <li class="flex items-start p-4 bg-hydro-slate/70 rounded-lg shadow-md hover:bg-hydro-slate transition duration-300 delay-1000">
-                                <div class="bg-hydro-primary/20 p-2 rounded-full mr-4 flex-shrink-0"><svg data-lucide="maximize" class="w-6 h-6 text-hydro-primary"></svg></div>
-                                <div><strong class="text-white text-xl block mb-1">CFD Optimization:</strong> <p class="text-slate-300 text-base">Utilizing Computational Fluid Dynamics (CFD) to validate and adjust blade profiles.</p></div>
+                    <!-- RIGHT: Focus Protocol -->
+                    <div>
+                        <h2 class="text-2xl font-bold text-hydro-secondary mb-4 flex items-center gap-2">
+                            <svg data-lucide="check-square" class="w-6 h-6"></svg> Focus Protocol
+                        </h2>
+                        <ul class="space-y-4 tech-list text-sm">
+                            <li>
+                                <strong class="text-hydro-primary block mb-1">CFD Optimization:</strong> 
+                                Utilizing Computational Fluid Dynamics to validate and adjust blade profiles.
                             </li>
-                            <li class="flex items-start p-4 bg-hydro-slate/70 rounded-lg shadow-md hover:bg-hydro-slate transition duration-300 delay-1100">
-                                <div class="bg-hydro-primary/20 p-2 rounded-full mr-4 flex-shrink-0"><svg data-lucide="ear" class="w-6 h-6 text-hydro-primary"></svg></div>
-                                <div><strong class="text-white text-xl block mb-1">Acoustic Emission Monitoring (AEM):</strong> <p class="text-slate-300 text-base">Non-invasive acoustic monitoring to detect the precise onset of cavitation.</p></div>
+                            <li>
+                                <strong class="text-hydro-primary block mb-1">Acoustic Emission (AEM):</strong> 
+                                Non-invasive monitoring to detect the precise onset of cavitation.
                             </li>
-                            <li class="flex items-start p-4 bg-hydro-slate/70 rounded-lg shadow-md hover:bg-hydro-slate transition duration-300 delay-1200">
-                                <div class="bg-hydro-primary/20 p-2 rounded-full mr-4 flex-shrink-0"><svg data-lucide="minus-square" class="w-6 h-6 text-hydro-primary"></svg></div>
-                                <div><strong class="text-white text-xl block mb-1">Partial Load Instability:</strong> <p class="text-slate-300 text-base">Auditing turbine performance during off-design operation.</p></div>
+                            <li>
+                                <strong class="text-hydro-primary block mb-1">Partial Load Instability:</strong> 
+                                Auditing performance during off-design operation to prevent vortex rope.
                             </li>
                         </ul>
                     </div>
                 </div>
 
-                <!-- NOVO: LOGISTIKA I PODRŠKA -->
-                <div class="mt-16 pt-8 border-t border-slate-700 fade-in-up delay-1000">
-                    <h2 class="text-3xl font-bold text-hydro-secondary mb-6">AnoHUB Execution Service: 24/7 Support</h2>
-                    <div class="grid md:grid-cols-2 gap-8 text-sm">
-                        <div class="space-y-4">
-                            <h3 class="text-xl font-bold text-white flex items-center gap-2"><svg data-lucide="truck" class="w-6 h-6 text-hydro-cta"></svg> Supply Chain & Procurement</h3>
-                            <p class="text-slate-400">Pored dijagnostike, vršimo organizaciju, nabavku, kupnju rezervnih dijelova i izradu nacrta za nove dijelove. Surađujemo samo s najboljim partnerima.</p>
+                <!-- NOVO: LOGISTIKA I PODRŠKA (DODANO ZA KONZISTENTNOST) -->
+                <div class="mt-12 pt-8 border-t border-slate-600 fade-in-up delay-800">
+                    <h2 class="text-2xl font-bold text-white mb-6 text-center">AnoHUB Execution Service</h2>
+                    <div class="grid md:grid-cols-2 gap-6 text-sm">
+                        <div class="bg-hydro-charcoal/60 p-4 rounded-lg flex gap-4 items-start">
+                            <svg data-lucide="truck" class="w-8 h-8 text-hydro-cta flex-shrink-0"></svg>
+                            <div>
+                                <h3 class="font-bold text-white">Supply Chain & Procurement</h3>
+                                <p class="text-slate-400 mt-1">We organize and procure spare parts, creating blueprints for obsolete components and sourcing from top-tier partners.</p>
+                            </div>
                         </div>
-                         <div class="space-y-4">
-                            <h3 class="text-xl font-bold text-white flex items-center gap-2"><svg data-lucide="phone-call" class="w-6 h-6 text-hydro-secondary"></svg> 365/24/7 Availability</h3>
-                            <p class="text-slate-400">Stojimo na raspolaganju digitalno (Digital Supervision) i lično (dolazimo na gradilišta). Prvi upiti i procjene rizika Vas **ništa ne koštaju**.</p>
+                         <div class="bg-hydro-charcoal/60 p-4 rounded-lg flex gap-4 items-start">
+                            <svg data-lucide="phone-call" class="w-8 h-8 text-hydro-secondary flex-shrink-0"></svg>
+                            <div>
+                                <h3 class="font-bold text-white">365/24/7 Availability</h3>
+                                <p class="text-slate-400 mt-1">From Digital Supervision to on-site presence. Your first inquiry and risk assessment are always **free of charge**.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="mt-12 text-center fade-in-up delay-1600">
-                    <a href="contact.html" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-lg font-bold rounded-full text-hydro-charcoal bg-hydro-primary hover:bg-cyan-500 transition duration-300 transform hover:scale-105 shadow-xl uppercase tracking-wider">Schedule Francis Turbine Audit &rarr;</a>
+                <div class="mt-12 text-center fade-in-up delay-1000">
+                    <a href="contact.html" class="inline-flex items-center justify-center px-8 py-4 border border-transparent text-lg font-bold rounded-full text-hydro-charcoal bg-hydro-primary hover:bg-cyan-500 transition duration-300 transform hover:scale-105 shadow-xl uppercase tracking-wider">
+                        Schedule Francis Audit &rarr;
+                    </a>
                 </div>
 
             </div>
@@ -196,7 +245,6 @@
         </div>
     </footer>
 
-    <!-- SKRIPTE -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
     <script src="js/ui_core.js"></script>
     <script src="js/animation_logic.js"></script>
