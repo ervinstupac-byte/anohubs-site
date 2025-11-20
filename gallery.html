@@ -45,7 +45,16 @@
 
     <!-- CSS STILOVI ZA GALERIJU I LIGHTBOX -->
     <style>
-        body { background-color: #111827; }
+        body { 
+            background-color: #111827; 
+            /* NOVO: Pozadinska slika sa overlay-om */
+            background-image: linear-gradient(rgba(17, 24, 39, 0.85), rgba(17, 24, 39, 0.95)), url('slike/gallery-background.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            min-height: 100vh;
+        }
+
         .header-bg { background-color: rgba(17, 24, 39, 0.95); }
         
         .h1-glow {
@@ -143,7 +152,7 @@
         @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
         .animate-fade-in { animation: fadeIn 0.4s ease-out; }
         
-        /* Thumbnail stilovi iz prethodne logike su potrebni u HTML-u ili CSS-u */
+        /* Thumbnail stilovi */
         .thumbnail-item {
             overflow: hidden;
             border-radius: 0.5rem;
@@ -189,7 +198,8 @@
     </header>
     
     <main role="main">
-        <section class="py-20 bg-hydro-slate text-white min-h-screen">
+        <!-- Uklonjen bg-hydro-slate da se vidi pozadinska slika -->
+        <section class="py-20 text-white min-h-screen backdrop-blur-sm">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 
                 <h1 class="text-5xl md:text-6xl font-extrabold text-hydro-primary mb-4 tracking-tighter fade-in-up h1-glow">
