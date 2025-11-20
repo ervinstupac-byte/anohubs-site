@@ -6,7 +6,7 @@
     <title>The Engineering Immunity Protocol | Anohubs: Advanced Analytics</title>
     <meta name="description" content="Anohubs' Engineering Immunity Protocol: The definitive strategic manifesto for neutralizing 48% Dynamic Risk and ensuring absolute precision in hydropower operations.">
     
-    <!-- 1. JS INICIJALIZACIJA -->
+    <!-- 1. STANDARDNA JS INICIJALIZACIJA -->
     <script src="js/head-init.js"></script>
 
     <!-- 2. FONTOVI -->
@@ -32,6 +32,9 @@
                         'hydro-light-slate': '#334155', 
                         'hydro-gray': '#475569',
                     },
+                    boxShadow: {
+                        'glow': '0 0 20px rgba(34, 211, 238, 0.3)',
+                    },
                     fontSize: {
                         'h1-hero': 'clamp(2.5rem, 5vw + 1rem, 4.5rem)',
                     },
@@ -51,12 +54,16 @@
             color: #E5E7EB;
         }
 
-        /* PROTOCOL HERO SEKCIJA */
+        /* KOREKCIJA VELIČINE LOGA */
+        .anohubs-logo { width: 140px; height: auto; }
+        .anohubs-logo-compact { width: 90px; height: auto; }
+
+        /* --- HERO SEKCIJA --- */
         #hero-protocol {
             background-image: url('personal_vision.jpg'); 
             background-size: cover;
             background-attachment: fixed;
-            /* Slika je fokusirana LIJEVO (gdje ste Vi) */
+            /* KLJUČNO: Fokusira sliku na LIJEVOJ strani (gdje ste Vi) */
             background-position: center left; 
             position: relative;
             min-height: 90vh; 
@@ -71,14 +78,14 @@
             top: 0; left: 0; right: 0; bottom: 0;
             background: linear-gradient(90deg, 
                 rgba(17, 24, 39, 0.0) 0%,   /* Potpuno prozirno lijevo */
-                rgba(17, 24, 39, 0.0) 20%,  /* I dalje prozirno da se figura jasno vidi */
+                rgba(17, 24, 39, 0.2) 30%,  /* I dalje prozirno */
                 rgba(17, 24, 39, 0.8) 60%,  /* Počinje tamniti */
                 rgba(17, 24, 39, 1) 100%    /* Potpuno tamno desno za tekst */
             );
             z-index: 0;
         }
 
-        /* KARTICA ZAKLETVE */
+        /* --- GLASSMORPHISM KARTICA ZA ZAKLETVU --- */
         .pledge-card {
             background: rgba(30, 41, 59, 0.6); 
             backdrop-filter: blur(10px);
@@ -91,16 +98,40 @@
             border-color: #22d3ee;
         }
 
-        /* LINK KARTICE */
+        /* --- PROTOCOL LINK CARDS (HOVER EFEKTI) --- */
         .protocol-link-card {
             background-color: #1E293B; 
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             border-left: 4px solid #4ade80; 
+            position: relative;
+            overflow: hidden;
+        }
+        .protocol-link-card::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+            transform: translateX(-100%);
+            transition: 0.5s;
         }
         .protocol-link-card:hover {
-             transform: translateY(-5px);
+             transform: translateY(-5px) scale(1.01);
              box-shadow: 0 10px 30px rgba(74, 222, 128, 0.15);
              border-left-color: #22d3ee;
+        }
+        .protocol-link-card:hover::after {
+            transform: translateX(100%);
+        }
+
+        /* SCROLL PROGRESS BAR */
+        #scroll-progress {
+            position: fixed;
+            top: 0; left: 0;
+            height: 4px;
+            background: #22d3ee;
+            width: 0%;
+            z-index: 100;
+            transition: width 0.1s;
         }
 
         /* Animacije */
@@ -117,11 +148,14 @@
 </head>
 <body class="text-white bg-hydro-charcoal">
 
+    <!-- SCROLL PROGRESS BAR -->
+    <div id="scroll-progress"></div>
+
     <!-- HEADER -->
     <header class="bg-hydro-charcoal text-white shadow-2xl sticky top-0 z-50 border-b border-hydro-primary/50" role="banner">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex justify-between items-center">
             <a href="index.html#hero" class="focus:outline-none transition" aria-label="Anohubs Logo - Back to top">
-                <img src="logo.svg" alt="Anohubs Logo" style="width: 140px; height: auto;">
+                <img src="logo.svg" alt="Anohubs Logo" class="anohubs-logo">
             </a>
             <nav class="hidden md:flex items-center space-x-6 font-extrabold text-sm" role="navigation">
                 <a href="about-us-vision.html" class="text-slate-300 hover:text-hydro-primary transition">About</a>
@@ -154,17 +188,17 @@
 
     <main role="main">
         
-        <!-- 1. HERO SEKCIJA (SADRŽAJ NA DESNOJ STRANI) -->
+        <!-- 1. HERO SEKCIJA (Obrnuti raspored za Vašu sliku) -->
         <section id="hero-protocol" class="relative text-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 text-white h-full flex items-center">
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center w-full">
                     
                     <!-- LIJEVA STRANA: PRAZNA (Da se vidite Vi na slici) -->
                     <div class="lg:col-span-5 hidden lg:block h-96">
-                        <!-- Ovaj prostor je namjerno prazan -->
+                        <!-- Ovaj prostor je namjerno prazan da bi se vidjela Vaša figura na lijevoj strani slike -->
                     </div>
 
-                    <!-- DESNA STRANA: SVI ELEMENTI -->
+                    <!-- DESNA STRANA: Tekst i Zakletva (Na tamnoj podlozi) -->
                     <div class="lg:col-span-7 fade-in-up delay-200 text-right flex flex-col items-end justify-center h-full">
                         
                         <h1 class="text-5xl md:text-7xl font-black leading-tight mb-6 text-hydro-primary" style="text-shadow: 0 0 20px rgba(34, 211, 238, 0.9);">
@@ -176,7 +210,7 @@
                             <span class="text-white font-bold">Guaranteed Operational Performance</span>.
                         </p>
                         
-                        <!-- ZAKLETVA (Ubačena ovdje na desnu stranu) -->
+                        <!-- GLASSMORPHISM KARTICA ZA ZAKLETVU -->
                         <div class="pledge-card p-6 max-w-lg mb-8 text-left w-full">
                             <div class="flex items-center gap-4 mb-3">
                                 <img src="ervin_stupac_portrait.jpg" alt="Ervin Stupac" class="w-16 h-16 rounded-full border-2 border-hydro-secondary object-cover">
@@ -272,12 +306,12 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid md:grid-cols-2 gap-16 items-center">
                     <div class="fade-in-up">
-                        <img src="protocol_eng_immunity.jpg" alt="Engineering Immunity" class="rounded-xl shadow-2xl border-4 border-hydro-charcoal w-full h-auto object-cover">
+                        <img src="protocol_eng_immunity.jpg" alt="Engineering Immunity in Action" class="rounded-xl shadow-2xl border-4 border-hydro-charcoal w-full h-auto object-cover">
                     </div>
                     <div class="fade-in-up delay-200">
                         <h2 class="text-4xl font-black text-white mb-6">Our Methodology: <span class="text-hydro-risk">Zero Compromise</span></h2>
                         <p class="text-slate-300 text-lg mb-8 leading-relaxed">
-                            The Anohubs protocol is not a guideline; it's a mandate. We don't just reduce risk; we systematically eliminate it through multi-tier verification.
+                            The Anohubs protocol is not a guideline; it's a <strong class="text-white">mandate for perfection</strong>. From material stress tests to installation alignment within micrometers, every step is rigorously documented and verified. We don't just reduce risk; we systematically eliminate it.
                         </p>
                         
                         <div class="space-y-6">
@@ -298,14 +332,17 @@
     </main>
 
     <!-- FOOTER -->
-    <footer class="bg-hydro-slate text-hydro-gray py-8 text-center border-t border-hydro-light-slate footer-compact">
+    <div class="md:hidden mobile-sticky-cta text-center">
+        <a href="contact.html" class="w-full block text-center bg-hydro-primary hover:bg-cyan-500 text-hydro-charcoal px-5 py-3 font-bold tracking-wider uppercase shadow-2xl">SCHEDULE AUDIT</a>
+    </div>
+
+    <footer class="bg-hydro-slate text-hydro-gray py-8 text-center border-t border-hydro-light-slate footer-compact" role="contentinfo">
         <div class="container mx-auto px-6">
            <a href="index.html#hero" class="mb-2 block">
-             <img src="logo.svg" alt="Anohubs Logo" style="width: 90px; margin: 0 auto;">
+             <img src="logo.svg" alt="Anohubs Logo" class="anohubs-logo-compact">
            </a>
            <p class="text-slate-400 mb-3 text-sm">Establishing the global standard for hydro integrity.</p>
-           
-           <nav class="flex justify-center space-x-4 text-xs mb-2">
+           <nav class="flex justify-center space-x-4 text-xs mb-2 footer-nav-links">
                <a href="about-us-vision.html" class="text-slate-400 hover:text-hydro-primary">About</a>
                <a href="services.html" class="text-slate-400 hover:text-hydro-primary">Services</a>
                <a href="contact.html" class="text-slate-400 hover:text-hydro-primary">Contact</a>
