@@ -23,6 +23,8 @@
             background-attachment: fixed;
             color: #E5E7EB;
         }
+        .technical-table th { background-color: #334155; color: #22d3ee; }
+        .technical-table td { border-bottom: 1px solid #334155; padding: 12px; }
         .alert-box { background: rgba(239, 68, 68, 0.1); border-left: 4px solid #ef4444; }
     </style>
 </head>
@@ -49,9 +51,6 @@
                     <h1 class="text-3xl md:text-4xl font-black text-white mb-2">M-E Synergy Audit</h1>
                     <p class="text-hydro-primary font-mono text-sm">REF: DOC-ELEC-012 | REV: 1.4</p>
                 </div>
-                <button class="hidden md:flex items-center gap-2 bg-hydro-light-slate hover:bg-hydro-gray px-4 py-2 rounded text-sm transition">
-                    <svg data-lucide="download" class="w-4 h-4"></svg> Download Checklist
-                </button>
             </div>
 
             <section id="threat" class="mb-12">
@@ -59,32 +58,46 @@
                     <svg data-lucide="zap-off" class="w-6 h-6 text-hydro-risk"></svg> 1. The Electro-Erosion Threat
                 </h2>
                 <div class="alert-box p-4 rounded-r-lg mb-4">
-                    <strong class="text-white">WARNING:</strong> Electrical failures (poor grounding) directly transfer energy into the mechanical system. This "Synergy Gap" causes rapid bearing failure.
+                    <strong class="text-white">WARNING:</strong> Shaft voltages as low as 1.0V can cause electrical discharge machining (EDM) in bearings.
                 </div>
-                <p>The goal is zero stray current on the shaft line. Any measurable voltage above 0.5V is considered a critical non-conformance.</p>
+                <p>When grounding is compromised, the path of least resistance for stray currents becomes the thin oil film in the guide bearings. This micro-arcing pits the metal surface, leading to rapid mechanical failure often misdiagnosed as simple "wear and tear."</p>
             </section>
 
             <section id="diagnostics" class="mb-12">
                 <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-2">
                     <svg data-lucide="activity" class="w-6 h-6 text-hydro-secondary"></svg> 2. Diagnostic Protocol
                 </h2>
-                <div class="grid md:grid-cols-2 gap-6">
-                    <div class="bg-hydro-charcoal p-4 rounded-lg border border-hydro-gray">
-                        <h3 class="text-white font-bold mb-2">Phase A: Grounding</h3>
-                        <ul class="list-disc ml-4 text-sm space-y-1">
-                            <li>Grid Resistance: ≤ 1 Ohm</li>
-                            <li>Bonding Integrity Check</li>
-                            <li>Shaft Current Measurement</li>
-                        </ul>
-                    </div>
-                    <div class="bg-hydro-charcoal p-4 rounded-lg border border-hydro-gray">
-                        <h3 class="text-white font-bold mb-2">Phase B: Correlation</h3>
-                        <ul class="list-disc ml-4 text-sm space-y-1">
-                            <li>Thermography (Hot Spots)</li>
-                            <li>Vibration Spectral Analysis</li>
-                            <li>Harmonic Distortion Check</li>
-                        </ul>
-                    </div>
+                
+                <h3 class="text-white font-bold mt-6 mb-2">Identifying "Ghost Vibrations"</h3>
+                <p class="mb-4">We differentiate between mechanical and electrically-induced vibration:</p>
+                
+                <div class="overflow-x-auto rounded-lg border border-hydro-gray mb-6">
+                    <table class="w-full technical-table text-left text-sm">
+                        <thead>
+                            <tr>
+                                <th class="p-4">Symptom</th>
+                                <th class="p-4">Mechanical Cause</th>
+                                <th class="p-4">Electrical Cause (M-E Synergy)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="p-4 font-medium text-white">Vibration Frequency</td>
+                                <td class="p-4">1x RPM (Unbalance)</td>
+                                <td class="p-4 text-hydro-secondary">2x Line Frequency (e.g. 100Hz/120Hz)</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 font-medium text-white">Load Dependency</td>
+                                <td class="p-4">Often constant</td>
+                                <td class="p-4 text-hydro-secondary">Changes instantly with Excitation</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 font-medium text-white">Sound</td>
+                                <td class="p-4">Rumbling / Grinding</td>
+                                <td class="p-4 text-hydro-secondary">Magnetic Hum / Drone</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </section>
 
@@ -92,7 +105,16 @@
                 <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-2">
                     <svg data-lucide="shield" class="w-6 h-6 text-hydro-secondary"></svg> 3. Mitigation Strategy
                 </h2>
-                <p>Corrective actions include mandatory installation of electrically insulated bearings and permanent shaft grounding brushes.</p>
+                <ul class="space-y-4">
+                    <li class="bg-hydro-charcoal p-4 rounded border-l-4 border-hydro-primary">
+                        <strong class="text-white block">1. Shaft Grounding Brushes</strong>
+                        <span class="text-sm">Installation of silver-graphite brushes to passively bleed static charge from the shaft to ground.</span>
+                    </li>
+                    <li class="bg-hydro-charcoal p-4 rounded border-l-4 border-hydro-secondary">
+                        <strong class="text-white block">2. Insulated Bearings</strong>
+                        <span class="text-sm">Mandatory use of NDE (Non-Drive End) bearings with ceramic or polymer insulation to break the circuit.</span>
+                    </li>
+                </ul>
                 <div class="mt-8 pt-6 border-t border-hydro-gray text-center">
                     <a href="../contact.html" class="inline-flex items-center justify-center px-8 py-3 bg-hydro-cta text-hydro-charcoal font-bold rounded-full hover:bg-yellow-500 transition shadow-lg">
                         REQUEST SYNERGY AUDIT
@@ -102,19 +124,14 @@
 
         </main>
 
-        <!-- SIDEBAR -->
         <aside class="hidden lg:block lg:col-span-1">
             <div class="sticky top-24 bg-hydro-slate p-6 rounded-xl border border-hydro-light-slate shadow-lg">
                 <h3 class="text-hydro-primary font-bold uppercase tracking-wider text-sm mb-4">Contents</h3>
                 <ul class="space-y-3 text-sm">
-                    <li><a href="#threat" class="hover:text-white transition">1. Threat Assessment</a></li>
-                    <li><a href="#diagnostics" class="hover:text-white transition">2. Diagnostic Protocol</a></li>
-                    <li><a href="#mitigation" class="hover:text-white transition">3. Mitigation Strategy</a></li>
+                    <li><a href="#threat" class="hover:text-white transition">1. Electro-Erosion</a></li>
+                    <li><a href="#diagnostics" class="hover:text-white transition">2. Ghost Vibrations</a></li>
+                    <li><a href="#mitigation" class="hover:text-white transition">3. Mitigation</a></li>
                 </ul>
-                 <div class="mt-8 pt-6 border-t border-hydro-gray">
-                    <h4 class="text-white font-bold mb-2 text-xs uppercase">Related Protocols</h4>
-                    <a href="doc-precision-alignment.html" class="block text-xs text-slate-400 hover:text-hydro-secondary mb-2">→ Precision Alignment</a>
-                </div>
             </div>
         </aside>
 

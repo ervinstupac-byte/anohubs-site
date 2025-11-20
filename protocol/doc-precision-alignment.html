@@ -26,12 +26,12 @@
             color: #E5E7EB;
         }
         .technical-table th { background-color: #334155; color: #22d3ee; }
-        .technical-table td { border-bottom: 1px solid #334155; }
+        .technical-table td { border-bottom: 1px solid #334155; padding: 12px; }
+        .step-number { background: #22d3ee; color: #111827; font-weight: bold; width: 24px; height: 24px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; margin-right: 8px; }
     </style>
 </head>
 <body class="text-slate-300 font-sans antialiased">
 
-    <!-- HEADER -->
     <header class="bg-hydro-charcoal shadow-xl sticky top-0 z-50 border-b border-hydro-primary/30">
         <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
             <a href="../index.html#hero" class="flex items-center gap-2 text-white font-bold hover:text-hydro-primary transition">
@@ -46,96 +46,97 @@
 
     <div class="max-w-7xl mx-auto px-4 py-12 grid lg:grid-cols-4 gap-10">
         
-        <!-- MAIN CONTENT -->
         <main class="lg:col-span-3 bg-hydro-slate p-8 rounded-xl shadow-2xl border border-hydro-light-slate">
             
             <div class="flex justify-between items-start border-b border-hydro-gray pb-6 mb-8">
                 <div>
                     <h1 class="text-3xl md:text-4xl font-black text-white mb-2">Precision Alignment Protocol</h1>
-                    <p class="text-hydro-primary font-mono text-sm">REF: DOC-ALIGN-005 | REV: 2.0</p>
+                    <p class="text-hydro-primary font-mono text-sm">REF: DOC-ALIGN-005 | REV: 2.0 | STATUS: MANDATORY</p>
                 </div>
-                <button class="hidden md:flex items-center gap-2 bg-hydro-light-slate hover:bg-hydro-gray px-4 py-2 rounded text-sm transition">
-                    <svg data-lucide="download" class="w-4 h-4"></svg> Download PDF
-                </button>
             </div>
 
             <section id="executive-summary" class="mb-12">
                 <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-                    <svg data-lucide="file-text" class="w-6 h-6 text-hydro-secondary"></svg> 1. Executive Summary
+                    <svg data-lucide="file-text" class="w-6 h-6 text-hydro-secondary"></svg> 1. Executive Summary & Mandate
                 </h2>
                 <p class="leading-relaxed mb-4">
-                    This document defines the mandatory specifications for turbine-generator shaft alignment. The objective is to eliminate the <strong>48% dynamic instability risk</strong> caused by the "Organizational Execution Gap."
+                    Dynamic instability accounts for nearly <strong>48% of premature failures</strong> in vertical hydro units. This protocol defines the mandatory specifications for turbine-generator shaft alignment. It is not a guideline; it is a rigid standard.
                 </p>
                 <div class="bg-hydro-charcoal border-l-4 border-hydro-risk p-4 rounded-r-lg">
-                    <p class="text-white font-semibold">CRITICAL MANDATE:</p>
-                    <p class="text-sm mt-1">Alignment must achieve a tolerance of <span class="text-hydro-primary font-bold">0.05 mm per meter</span>. Standard "fast alignment" techniques are strictly prohibited.</p>
+                    <p class="text-white font-semibold text-lg">CRITICAL TOLERANCE:</p>
+                    <p class="text-slate-300 mt-1">Total shaft runout must not exceed <span class="text-hydro-primary font-bold">0.05 mm per meter</span> (0.002 in/ft) of shaft length. Exceeding this voids the operational guarantee.</p>
+                </div>
+            </section>
+
+            <section id="pre-alignment" class="mb-12">
+                <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+                    <svg data-lucide="clipboard-list" class="w-6 h-6 text-hydro-secondary"></svg> 2. Pre-Alignment Prerequisites
+                </h2>
+                <p class="mb-4">Before laser measurement begins, the following physical conditions must be verified to prevent "False Good" readings:</p>
+                <div class="space-y-3">
+                    <div class="flex items-start">
+                        <span class="step-number">1</span>
+                        <div><strong>Soft Foot Check:</strong> Loosen each hold-down bolt individually. If shaft movement > 0.03mm is detected, the baseplate foundation is compromised and must be shimmed/grouted before alignment proceeds.</div>
+                    </div>
+                    <div class="flex items-start">
+                        <span class="step-number">2</span>
+                        <div><strong>Thermal Growth Calculation:</strong> Alignment targets must be offset to account for operational temperature expansion (ΔT). Cold alignment targets are calculated using the coefficient of expansion for the specific shaft steel grade.</div>
+                    </div>
+                    <div class="flex items-start">
+                        <span class="step-number">3</span>
+                        <div><strong>Bearing Clearance:</strong> Guide bearing clearances must be measured and centered prior to shaft coupling.</div>
+                    </div>
                 </div>
             </section>
 
             <section id="methodology" class="mb-12">
                 <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-                    <svg data-lucide="compass" class="w-6 h-6 text-hydro-secondary"></svg> 2. Methodology & Tolerances
+                    <svg data-lucide="compass" class="w-6 h-6 text-hydro-secondary"></svg> 3. Methodology & ISO Tolerances
                 </h2>
-                <p class="mb-4">Measurements must be performed using calibrated laser systems. Dial indicators are permitted only for secondary verification.</p>
+                <p class="mb-4">We utilize dual-laser measurement systems. The following table outlines the AnoHUB standard compared to generic ISO 10816 limits:</p>
                 
                 <div class="overflow-x-auto rounded-lg border border-hydro-gray">
                     <table class="w-full technical-table text-left text-sm">
                         <thead>
                             <tr>
                                 <th class="p-4">Parameter</th>
-                                <th class="p-4">AnoHUB Tolerance</th>
-                                <th class="p-4">Risk of Deviation</th>
+                                <th class="p-4">Standard Industry Limit</th>
+                                <th class="p-4 border-l border-hydro-light-slate">AnoHUB Mandate</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td class="p-4 font-medium text-white">Shaft Radial Runout</td>
-                                <td class="p-4 text-hydro-secondary font-mono">≤ 0.01 mm</td>
-                                <td class="p-4">Bearing overheating.</td>
+                                <td class="p-4 font-mono">0.10 mm</td>
+                                <td class="p-4 text-hydro-secondary font-bold font-mono border-l border-hydro-light-slate">≤ 0.05 mm</td>
                             </tr>
                             <tr>
-                                <td class="p-4 font-medium text-white">Shaft Concentricity</td>
-                                <td class="p-4 text-hydro-secondary font-mono">≤ 0.05 mm/m</td>
-                                <td class="p-4">Dynamic Instability (48% Risk).</td>
+                                <td class="p-4 font-medium text-white">Angular Misalignment</td>
+                                <td class="p-4 font-mono">0.07 mm/100mm</td>
+                                <td class="p-4 text-hydro-secondary font-bold font-mono border-l border-hydro-light-slate">≤ 0.03 mm/100mm</td>
                             </tr>
                             <tr>
-                                <td class="p-4 font-medium text-white">Generator Air Gap</td>
-                                <td class="p-4 text-hydro-secondary font-mono">± 5% Nominal</td>
-                                <td class="p-4">Magnetic pull & vibration.</td>
+                                <td class="p-4 font-medium text-white">Generator Air Gap Deviation</td>
+                                <td class="p-4 font-mono">± 10%</td>
+                                <td class="p-4 text-hydro-secondary font-bold font-mono border-l border-hydro-light-slate">± 5% Nominal</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </section>
 
-            <section id="validation">
-                <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-                    <svg data-lucide="check-circle" class="w-6 h-6 text-hydro-secondary"></svg> 3. Post-Assembly Validation
-                </h2>
-                <p class="mb-4">Validation is not complete until dynamic load testing confirms thermal stability and vibration signatures below ISO 10816 Zone A limits.</p>
-                <div class="mt-8 pt-6 border-t border-hydro-gray text-center">
-                    <a href="../contact.html" class="inline-flex items-center justify-center px-8 py-3 bg-hydro-cta text-hydro-charcoal font-bold rounded-full hover:bg-yellow-500 transition shadow-lg">
-                        REQUEST ALIGNMENT AUDIT
-                    </a>
-                </div>
-            </section>
-
         </main>
 
-        <!-- SIDEBAR NAVIGATION (Novo poboljšanje) -->
         <aside class="hidden lg:block lg:col-span-1">
             <div class="sticky top-24 bg-hydro-slate p-6 rounded-xl border border-hydro-light-slate shadow-lg">
-                <h3 class="text-hydro-primary font-bold uppercase tracking-wider text-sm mb-4">Contents</h3>
+                <h3 class="text-hydro-primary font-bold uppercase tracking-wider text-sm mb-4">Navigation</h3>
                 <ul class="space-y-3 text-sm">
-                    <li><a href="#executive-summary" class="hover:text-white transition flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-hydro-secondary"></span> Executive Summary</a></li>
-                    <li><a href="#methodology" class="hover:text-white transition flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-hydro-gray"></span> Methodology</a></li>
-                    <li><a href="#validation" class="hover:text-white transition flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-hydro-gray"></span> Validation</a></li>
+                    <li><a href="#executive-summary" class="hover:text-white transition">1. Mandate & Risk</a></li>
+                    <li><a href="#pre-alignment" class="hover:text-white transition">2. Pre-Alignment</a></li>
+                    <li><a href="#methodology" class="hover:text-white transition">3. ISO Tolerances</a></li>
                 </ul>
-                
                 <div class="mt-8 pt-6 border-t border-hydro-gray">
-                    <h4 class="text-white font-bold mb-2 text-xs uppercase">Related Protocols</h4>
-                    <a href="doc-me-synergy-audit.html" class="block text-xs text-slate-400 hover:text-hydro-secondary mb-2">→ M-E Synergy Audit</a>
-                    <a href="doc-methodology-zero.html" class="block text-xs text-slate-400 hover:text-hydro-secondary">→ Forensic NDT</a>
+                    <a href="doc-me-synergy-audit.html" class="block text-xs text-slate-400 hover:text-hydro-secondary">→ Next: M-E Synergy</a>
                 </div>
             </div>
         </aside>
@@ -143,7 +144,7 @@
     </div>
 
     <footer class="text-center py-8 text-slate-500 text-sm bg-hydro-charcoal border-t border-hydro-light-slate">
-        &copy; 2025 Anohubs Inc. | Engineering Immunity Protocol
+        &copy; 2025 Anohubs Inc. | Precision Standard
     </footer>
 
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>

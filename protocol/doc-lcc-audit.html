@@ -23,6 +23,8 @@
             background-attachment: fixed;
             color: #E5E7EB;
         }
+        .technical-table th { background-color: #334155; color: #22d3ee; }
+        .technical-table td { border-bottom: 1px solid #334155; padding: 12px; }
     </style>
 </head>
 <body class="text-slate-300 font-sans antialiased">
@@ -48,9 +50,6 @@
                     <h1 class="text-3xl md:text-4xl font-black text-white mb-2">LCC & Procurement Veto</h1>
                     <p class="text-hydro-primary font-mono text-sm">REF: DOC-FIN-003 | REV: 1.1</p>
                 </div>
-                <button class="hidden md:flex items-center gap-2 bg-hydro-light-slate hover:bg-hydro-gray px-4 py-2 rounded text-sm transition">
-                    <svg data-lucide="download" class="w-4 h-4"></svg> Download Model
-                </button>
             </div>
 
             <section id="summary" class="mb-12">
@@ -58,36 +57,70 @@
                     <svg data-lucide="trending-down" class="w-6 h-6 text-hydro-risk"></svg> 1. The Cost of "Cheap"
                 </h2>
                 <p class="leading-relaxed mb-4">
-                    This protocol mandates a comprehensive **Life Cycle Cost (LCC)** analysis. We actively veto procurement decisions based solely on lowest CAPEX if the material integrity audit predicts failure within the first 30% of the asset's lifecycle.
+                    Procurement decisions based solely on CAPEX (lowest bid) statistically result in a 40% higher Total Cost of Ownership (TCO) over 20 years.
                 </p>
             </section>
 
             <section id="materials" class="mb-12">
                 <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-                    <svg data-lucide="flask-conical" class="w-6 h-6 text-hydro-secondary"></svg> 2. Material Compatibility
+                    <svg data-lucide="flask-conical" class="w-6 h-6 text-hydro-secondary"></svg> 2. Material Compatibility Matrix
                 </h2>
-                <p class="mb-4">Preventing Galvanic Corrosion is our primary material directive. We verify all alloys for potential electrochemical reactions.</p>
-                <div class="bg-hydro-charcoal p-6 rounded-lg border border-hydro-gray text-center">
-                    <p class="text-xl font-bold text-white">VETO TRIGGER</p>
-                    <p class="text-sm text-slate-400">Any mix of metals with a potential difference > 0.25V in the operating environment triggers an immediate procurement halt.</p>
+                <p class="mb-4">Galvanic corrosion occurs when dissimilar metals are electrically connected in water. The further apart they are on the galvanic series, the faster the corrosion.</p>
+                
+                <div class="overflow-x-auto rounded-lg border border-hydro-gray">
+                    <table class="w-full technical-table text-left text-sm">
+                        <thead>
+                            <tr>
+                                <th class="p-4">Component Pair</th>
+                                <th class="p-4">Risk Level</th>
+                                <th class="p-4">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="p-4 font-medium text-white">Stainless Steel (316) + Bronze</td>
+                                <td class="p-4 text-hydro-secondary font-bold">LOW</td>
+                                <td class="p-4">Permitted</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 font-medium text-white">Stainless Steel + Carbon Steel</td>
+                                <td class="p-4 text-yellow-500 font-bold">MODERATE</td>
+                                <td class="p-4">Requires Coating / Isolation</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 font-medium text-white">Carbon Steel + Brass</td>
+                                <td class="p-4 text-hydro-risk font-bold">CRITICAL</td>
+                                <td class="p-4">VETO (Forbidden)</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </section>
             
             <section id="roi">
                  <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-                    <svg data-lucide="bar-chart-4" class="w-6 h-6 text-hydro-secondary"></svg> 3. Financial Modeling
+                    <svg data-lucide="bar-chart-4" class="w-6 h-6 text-hydro-secondary"></svg> 3. Financial Modeling (TCO)
                 </h2>
-                <p class="mb-4">Our LCC Audit proves that initial savings are an illusion:</p>
-                <div class="grid grid-cols-2 gap-4 text-center">
-                    <div class="bg-hydro-charcoal p-4 rounded">
-                        <p class="text-hydro-risk font-bold text-xl">Scenario A (Low Bid)</p>
-                        <p class="text-xs">High Maintenance, 10yr Lifespan</p>
+                
+                <div class="grid grid-cols-2 gap-6 text-center my-6">
+                    <div class="bg-hydro-charcoal p-6 rounded border-t-4 border-hydro-risk">
+                        <p class="text-hydro-risk font-bold text-xl mb-2">Low Bid Scenario</p>
+                        <p class="text-sm text-slate-400">Initial Cost: $1.0M</p>
+                        <p class="text-sm text-slate-400">Maintenance (20yr): $1.5M</p>
+                        <p class="text-white font-bold mt-2">Total: $2.5M</p>
                     </div>
-                    <div class="bg-hydro-charcoal p-4 rounded border border-hydro-secondary">
-                        <p class="text-hydro-secondary font-bold text-xl">Scenario B (AnoHUB)</p>
-                        <p class="text-xs">Low Maintenance, 30yr Lifespan</p>
+                    <div class="bg-hydro-charcoal p-6 rounded border-t-4 border-hydro-secondary">
+                        <p class="text-hydro-secondary font-bold text-xl mb-2">AnoHUB Verified</p>
+                        <p class="text-sm text-slate-400">Initial Cost: $1.2M</p>
+                        <p class="text-sm text-slate-400">Maintenance (20yr): $0.4M</p>
+                        <p class="text-white font-bold mt-2">Total: $1.6M</p>
                     </div>
                 </div>
+                
+                <div class="text-center bg-hydro-charcoal/50 p-4 rounded">
+                    <p class="text-hydro-primary font-bold">NET SAVINGS: $900,000 (36%)</p>
+                </div>
+                
                  <div class="mt-8 pt-6 border-t border-hydro-gray text-center">
                     <a href="../contact.html" class="inline-flex items-center justify-center px-8 py-3 bg-hydro-cta text-hydro-charcoal font-bold rounded-full hover:bg-yellow-500 transition shadow-lg">
                         REQUEST LCC AUDIT
@@ -102,8 +135,8 @@
                 <h3 class="text-hydro-primary font-bold uppercase tracking-wider text-sm mb-4">Contents</h3>
                 <ul class="space-y-3 text-sm">
                     <li><a href="#summary" class="hover:text-white transition">1. Executive Summary</a></li>
-                    <li><a href="#materials" class="hover:text-white transition">2. Material Integrity</a></li>
-                    <li><a href="#roi" class="hover:text-white transition">3. Financial Modeling</a></li>
+                    <li><a href="#materials" class="hover:text-white transition">2. Material Matrix</a></li>
+                    <li><a href="#roi" class="hover:text-white transition">3. TCO Calculation</a></li>
                 </ul>
             </div>
         </aside>
