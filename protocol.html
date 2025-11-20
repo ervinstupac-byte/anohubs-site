@@ -51,12 +51,22 @@
             color: #E5E7EB;
         }
 
+        /* KOREKCIJA VELIČINE LOGA (Failsafe) */
+        .anohubs-logo {
+            width: 140px; /* Konzistentna veličina loga u headeru */
+            height: auto;
+        }
+        .anohubs-logo-compact { 
+            width: 90px; /* Veličina loga u footeru */
+            height: auto;
+        }
+
         /* PROTOCOL HERO SEKCIJA - POZADINA S PARALLAXOM */
         #hero-protocol {
             background-image: url('personal_vision.jpg'); 
             background-size: cover;
             background-attachment: fixed;
-            background-position: center left; /* Fokusira sliku na LIJEVOJ strani */
+            background-position: center left; 
             position: relative;
             min-height: 90vh; 
             display: flex;
@@ -106,7 +116,7 @@
              box-shadow: 0 15px 30px rgba(74, 222, 128, 0.2);
         }
 
-        /* Animacije */
+        /* ANIMACIJE */
         .fade-in-up, .zoom-in { opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
         .zoom-in { transform: scale(0.95); }
         .fade-in-up.is-visible, .zoom-in.is-visible { opacity: 1; transform: translateY(0) scale(1); }
@@ -117,6 +127,11 @@
         .delay-1000 { transition-delay: 1000ms; }
         .mobile-sticky-cta { position: fixed; bottom: 0; left: 0; right: 0; z-index: 40; padding: 0.5rem 0; }
         
+        /* KOMPAKTNI FOOTER */
+        .footer-compact {
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
     </style>
 </head>
 <body class="text-white bg-hydro-charcoal">
@@ -162,7 +177,6 @@
                     <!-- LIJEVA STRANA (Inženjerska Zakletva/Profil) -->
                     <div class="lg:col-span-5 flex flex-col items-center lg:items-start fade-in-up delay-200">
                         <div class="bg-hydro-slate/90 p-6 rounded-xl shadow-2xl border border-hydro-primary max-w-sm backdrop-blur-md relative mt-8 lg:mt-0">
-                            <!-- ISPRAVLJENA PUTANJA SLIKE (root) -->
                             <div class="absolute -top-12 left-1/2 transform -translate-x-1/2">
                                 <img src="ervin_stupac_portrait.jpg" alt="Ervin Stupac" class="w-24 h-24 rounded-full border-4 border-hydro-secondary shadow-lg object-cover">
                             </div>
@@ -174,7 +188,7 @@
                         </div>
                     </div>
 
-                    <!-- DESNA STRANA (Naslov i Tekst, sada tamna zona radi citljivosti) -->
+                    <!-- DESNA STRANA (Naslov i Tekst, tamna zona za čitljivost) -->
                     <div class="lg:col-span-7 fade-in-up delay-400">
                         <h1 class="text-5xl md:text-7xl font-black leading-tight mb-6 text-hydro-primary" style="text-shadow: 0 0 20px rgba(34, 211, 238, 0.9);">
                             The Engineering <br> Immunity Manifesto
@@ -203,7 +217,7 @@
                 <a href="protocol/doc-precision-alignment.html" class="protocol-link-card block p-6 rounded-xl mb-6 zoom-in delay-200">
                     <div class="flex justify-between items-center">
                         <div class="flex items-center">
-                            <svg data-lucide="compass" class="w-10 h-1- text-hydro-secondary mr-4"></svg>
+                            <svg data-lucide="compass" class="w-10 h-10 text-hydro-secondary mr-4"></svg>
                             <div>
                                 <h3 class="text-2xl font-bold text-hydro-primary">The Non-Negotiable Standard: Precision First</h3>
                                 <p class="text-slate-400">Detailed methodology for achieving and verifying the 0.05 mm/m shaft alignment standard.</p>
@@ -255,7 +269,6 @@
                     </div>
                 </a>
 
-
             </div>
         </section>
 
@@ -266,22 +279,22 @@
         <a href="contact.html" class="w-full block text-center bg-hydro-primary hover:bg-cyan-500 text-hydro-charcoal px-5 py-3 font-bold tracking-wider uppercase shadow-2xl">SCHEDULE AUDIT</a>
     </div>
 
-    <footer class="bg-hydro-slate text-hydro-gray py-8 text-center border-t border-hydro-light-slate" role="contentinfo">
+    <footer class="bg-hydro-slate text-hydro-gray py-8 text-center border-t border-hydro-light-slate footer-compact" role="contentinfo">
         <div class="container mx-auto px-6">
-           <a href="index.html#hero" class="mb-4 block" aria-label="Anohubs Logo - Back to top">
+           <a href="index.html#hero" class="mb-2 block" aria-label="Anohubs Logo - Back to top">
              <img src="logo.svg" alt="Anohubs Logo" class="anohubs-logo-compact">
            </a>
-           <p class="text-slate-400 mb-6">Establishing the global standard for hydro integrity.</p>
-           <nav class="flex justify-center space-x-6 text-sm mb-4">
+           <p class="text-slate-400 mb-3 text-sm">Establishing the global standard for hydro integrity.</p>
+           
+           <!-- SMANJENA NAVIGACIJA -->
+           <nav class="flex justify-center space-x-4 text-xs mb-2 footer-nav-links">
                <a href="about-us-vision.html" class="text-slate-400 hover:text-hydro-primary">About</a>
                <a href="services.html" class="text-slate-400 hover:text-hydro-primary">Services</a>
                <a href="insights/expert-insights.html" class="text-slate-400 hover:text-hydro-primary">Insights</a>
-               <a href="case-studies.html" class="text-slate-400 hover:text-hydro-primary">Case Studies</a>
-               <a href="gallery.html" class="text-slate-400 hover:text-hydro-primary">Gallery</a>
-               <a href="protocol.html" class="text-slate-400 hover:text-hydro-primary">Protocol</a>
                <a href="contact.html" class="text-slate-400 hover:text-hydro-primary">Contact</a>
            </nav>
-           <div class="flex justify-center space-x-4 text-xs mb-4">
+           <!-- PRAVNI LINKOVI -->
+           <div class="flex justify-center space-x-4 text-xs mb-2">
                 <a href="privacy-policy.html" class="text-slate-500 hover:text-slate-300 underline">Privacy Policy</a>
                 <span class="text-slate-500">|</span>
                 <a href="terms-of-use.html" class="text-slate-500 hover:text-slate-300 underline">Terms of Use</a>
