@@ -46,24 +46,32 @@
     <style>
         body { background-color: #111827; }
 
+        /* HERO SEKCIJA SA POZADINOM (VRAĆENO) */
         .archive-header {
-            background-color: #1E293B; 
-            padding: 3rem 0;
-            border-bottom: 5px solid #22d3ee; 
+            /* Slika digitalnog blizanca sa tamnim filterom */
+            background-image: linear-gradient(rgba(17, 24, 39, 0.85), rgba(17, 24, 39, 0.95)), url('../slike/digital_twin_main.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            padding: 5rem 0;
+            border-bottom: 5px solid #22d3ee; /* hydro-primary */
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
         }
+
         .insights-grid-container {
             min-height: 100vh;
         }
+        
         /* Stilovi za Filter/Topic sekciju */
         .topic-button {
             transition: all 0.2s ease;
             cursor: pointer;
-            border: 1px solid #475569;
+            border: 1px solid #475569; /* hydro-gray */
             color: #94a3b8;
         }
         .topic-button:hover {
-            border-color: #4ade80;
-            background-color: rgba(74, 222, 128, 0.05);
+            border-color: #4ade80; /* hydro-secondary */
+            background-color: rgba(74, 222, 128, 0.1);
             color: white;
         }
         /* Aktivno stanje filtera (dodaje JS) */
@@ -78,7 +86,7 @@
 </head>
 <body class="bg-hydro-charcoal text-white"> 
     
-    <!-- HEADER (Navigacija sa ../ putanjama) -->
+    <!-- HEADER -->
     <header class="bg-hydro-charcoal text-white shadow-2xl sticky top-0 z-50 border-b border-hydro-primary/50" role="banner">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex justify-between items-center">
             <a href="../index.html#hero" class="focus:outline-none transition" aria-label="Anohubs Logo - Back to Home">
@@ -87,7 +95,6 @@
             
             <nav class="hidden md:flex items-center space-x-6 font-extrabold text-sm" role="navigation" aria-label="Main navigation">
                 <a href="../about-us-vision.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">About</a>
-                <!-- POPRAVLJEN LINK: vodi na ../services.html -->
                 <a href="../services.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Services</a>
                 <!-- Aktivan link -->
                 <a href="expert-insights.html" class="nav-link relative text-hydro-primary transition tracking-wider p-2 uppercase" aria-current="page">Insights</a>
@@ -119,37 +126,50 @@
 
     <main role="main" class="insights-grid-container">
         
+        <!-- HERO SEKCIJA (SADA SA SLIKOM) -->
         <section class="archive-header text-white text-center">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-                <h1 class="text-5xl font-extrabold text-hydro-primary mb-3">Expert Insights & Archive</h1>
-                <p class="text-xl text-slate-300 max-w-3xl mx-auto">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <span class="text-hydro-secondary font-bold tracking-widest text-xs uppercase mb-3 inline-block border border-hydro-secondary px-3 py-1 rounded-full bg-hydro-secondary/10">Knowledge Base</span>
+                <h1 class="text-5xl md:text-6xl font-extrabold text-white mb-6 tracking-tight" style="text-shadow: 0 0 20px rgba(34, 211, 238, 0.6);">
+                    Expert Insights & <span class="text-hydro-primary">Intelligence</span>
+                </h1>
+                <p class="text-xl text-slate-200 max-w-3xl mx-auto leading-relaxed font-light">
                     The complete library of AnoHUB thought leadership. Uncover the strategic and engineering principles necessary to eliminate the Execution Gap and guarantee asset integrity.
                 </p>
             </div>
         </section>
 
         <!-- SEKCIJA ZA FILTRIRANJE -->
-        <section class="py-10 bg-hydro-charcoal border-b border-hydro-slate">
+        <section class="py-10 bg-hydro-charcoal border-b border-hydro-slate sticky top-16 z-40 shadow-lg backdrop-blur-sm bg-opacity-95">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-2xl font-bold text-white mb-6">Explore By Strategic Topic:</h2>
-                <div class="flex flex-wrap justify-center md:justify-start gap-4 text-sm font-semibold">
-                    <!-- Data-topic atributi moraju odgovarati kategorijama u JS fajlu -->
-                    <button class="topic-button px-4 py-2 rounded-full active" data-topic="all">All Insights</button>
-                    <button class="topic-button px-4 py-2 rounded-full" data-topic="fluid">🌊 Fluid Dynamics</button>
-                    <button class="topic-button px-4 py-2 rounded-full" data-topic="finance">💰 Financial Risk</button>
-                    <button class="topic-button px-4 py-2 rounded-full" data-topic="tech">💻 Digital Twin</button>
-                    <button class="topic-button px-4 py-2 rounded-full" data-topic="culture">🤝 Culture Gap</button>
+                <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                    
+                    <div class="flex flex-wrap justify-center md:justify-start gap-3 text-sm font-semibold">
+                        <!-- Filteri -->
+                        <button class="topic-button px-4 py-2 rounded-full active" data-topic="all">All Insights</button>
+                        <button class="topic-button px-4 py-2 rounded-full" data-topic="fluid">🌊 Fluid Dynamics</button>
+                        <button class="topic-button px-4 py-2 rounded-full" data-topic="finance">💰 Financial Risk</button>
+                        <button class="topic-button px-4 py-2 rounded-full" data-topic="tech">💻 Digital Twin</button>
+                        <button class="topic-button px-4 py-2 rounded-full" data-topic="culture">🤝 Culture Gap</button>
+                    </div>
+                    
+                    <div class="text-slate-500 text-xs font-mono hidden lg:block">
+                        ARCHIVE STATUS: ONLINE
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- GLAVNI KONTEJNER ZA KARTICE -->
-        <section class="py-16 bg-hydro-slate">
+        <section class="py-16 bg-hydro-slate min-h-screen">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 
                 <!-- OVDJE SKRIPTA UBACUJE KARTICE -->
                 <div id="insights-archive-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <p class="text-slate-400 text-center col-span-full">Loading insights...</p>
+                    <div class="col-span-full text-center py-20">
+                        <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-hydro-primary mb-4"></div>
+                        <p class="text-slate-400">Loading insights...</p>
+                    </div>
                 </div>
                 
             </div>
@@ -157,7 +177,7 @@
         
     </main>
     
-    <!-- FOOTER (Sa putanjama ../) -->
+    <!-- FOOTER -->
     <div class="md:hidden mobile-sticky-cta text-center">
         <a href="../contact.html" class="w-full block text-center bg-hydro-primary hover:bg-cyan-500 text-hydro-charcoal px-5 py-3 font-bold tracking-wider uppercase shadow-2xl">
             SCHEDULE AUDIT
@@ -192,15 +212,11 @@
     </footer>
 
     <!-- MODULARNE SKRIPTE (Sa putanjama ../) -->
-    
-    <!-- 1. Lucide Ikone -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
-    
-    <!-- 2. UI i Animacije -->
     <script src="../js/ui_core.js"></script>
     <script src="../js/animation_logic.js"></script>
     
-    <!-- 3. GLAVNA SKRIPTA ZA INSIGHTS (Sada sa logikom filtriranja) -->
+    <!-- OBAVEZNO: Skripta koja crta kartice -->
     <script src="../js/insights-grid.js"></script>
 
 </body>
