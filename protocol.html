@@ -6,7 +6,7 @@
     <title>The Engineering Immunity Protocol | Anohubs: Advanced Analytics</title>
     <meta name="description" content="Anohubs' Engineering Immunity Protocol: The definitive strategic manifesto for neutralizing 48% Dynamic Risk and ensuring absolute precision in hydropower operations.">
     
-    <!-- 1. STANDARDNA JS INICIJALIZACIJA -->
+    <!-- 1. JS INICIJALIZACIJA -->
     <script src="js/head-init.js"></script>
 
     <!-- 2. FONTOVI -->
@@ -32,6 +32,9 @@
                         'hydro-light-slate': '#334155', 
                         'hydro-gray': '#475569',
                     },
+                    boxShadow: {
+                        'glow': '0 0 20px rgba(34, 211, 238, 0.3)',
+                    },
                     fontSize: {
                         'h1-hero': 'clamp(2.5rem, 5vw + 1rem, 4.5rem)',
                     },
@@ -51,21 +54,16 @@
             color: #E5E7EB;
         }
 
-        /* KOREKCIJA VELIČINE LOGA (Failsafe) */
-        .anohubs-logo {
-            width: 140px; /* Konzistentna veličina loga u headeru */
-            height: auto;
-        }
-        .anohubs-logo-compact { 
-            width: 90px; /* Veličina loga u footeru */
-            height: auto;
-        }
+        /* KOREKCIJA VELIČINE LOGA */
+        .anohubs-logo { width: 140px; height: auto; }
+        .anohubs-logo-compact { width: 90px; height: auto; }
 
-        /* PROTOCOL HERO SEKCIJA - POZADINA S PARALLAXOM */
+        /* --- HERO SEKCIJA (REDESIGNED) --- */
         #hero-protocol {
             background-image: url('personal_vision.jpg'); 
             background-size: cover;
             background-attachment: fixed;
+            /* Slika je fokusirana LIJEVO (gdje ste Vi) */
             background-position: center left; 
             position: relative;
             min-height: 90vh; 
@@ -73,50 +71,72 @@
             align-items: center; 
         }
 
-        /* OVERLAY - Gradient za obrnuti kontrast */
+        /* GRADIENT OVERLAY: Prozirno LIJEVO (Vi) -> Tamno DESNO (Tekst) */
         #hero-protocol::before {
             content: "";
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            /* KRITIČNI GRADIENT: Transparentno (lijevo) -> Tamno (desno, gdje je tekst) */
+            top: 0; left: 0; right: 0; bottom: 0;
             background: linear-gradient(90deg, 
-                rgba(17, 24, 39, 0.1) 0%, 
-                rgba(30, 41, 59, 0.4) 30%, 
-                rgba(17, 24, 39, 0.95) 75%, 
-                rgba(17, 24, 39, 1) 100% 
+                rgba(17, 24, 39, 0.0) 0%,   /* Potpuno prozirno lijevo */
+                rgba(17, 24, 39, 0.6) 40%, 
+                rgba(17, 24, 39, 0.95) 70%, 
+                rgba(17, 24, 39, 1) 100%    /* Potpuno tamno desno */
             );
             z-index: 0;
         }
 
-        .protocol-card {
-            background-color: #1E293B; 
-            border-left: 5px solid #22d3ee; 
-            padding: 2.5rem;
-            border-radius: 0.75rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        /* --- GLASSMORPHISM KARTICA ZA ZAKLETVU --- */
+        .pledge-card {
+            background: rgba(30, 41, 59, 0.4); /* Polu-prozirna tamna */
+            backdrop-filter: blur(12px);       /* Zamućenje pozadine */
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(34, 211, 238, 0.2); /* Suptilni cijan okvir */
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            border-radius: 1rem;
+            transition: transform 0.3s ease;
         }
-        .protocol-card:hover {
+        .pledge-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+            border-color: rgba(34, 211, 238, 0.5);
         }
 
-        /* LINKSKE KARTICE U DETALJIMA */
+        /* --- PROTOCOL LINK CARDS (HOVER EFEKTI) --- */
         .protocol-link-card {
             background-color: #1E293B; 
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
-            border-top: 4px solid #4ade80;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-left: 4px solid #4ade80; /* Zelena linija */
+            position: relative;
+            overflow: hidden;
+        }
+        .protocol-link-card::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+            transform: translateX(-100%);
+            transition: 0.5s;
         }
         .protocol-link-card:hover {
-             transform: translateY(-5px);
-             box-shadow: 0 15px 30px rgba(74, 222, 128, 0.2);
+             transform: translateY(-5px) scale(1.01);
+             box-shadow: 0 10px 30px rgba(74, 222, 128, 0.15);
+             border-left-color: #22d3ee; /* Promjena boje u cijan na hover */
+        }
+        .protocol-link-card:hover::after {
+            transform: translateX(100%);
         }
 
-        /* ANIMACIJE */
+        /* SCROLL PROGRESS BAR */
+        #scroll-progress {
+            position: fixed;
+            top: 0; left: 0;
+            height: 4px;
+            background: #22d3ee;
+            width: 0%;
+            z-index: 100;
+            transition: width 0.1s;
+        }
+
+        /* Animacije */
         .fade-in-up, .zoom-in { opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
         .zoom-in { transform: scale(0.95); }
         .fade-in-up.is-visible, .zoom-in.is-visible { opacity: 1; transform: translateY(0) scale(1); }
@@ -124,25 +144,23 @@
         .delay-400 { transition-delay: 400ms; }
         .delay-600 { transition-delay: 600ms; }
         .delay-800 { transition-delay: 800ms; }
-        .delay-1000 { transition-delay: 1000ms; }
-        .mobile-sticky-cta { position: fixed; bottom: 0; left: 0; right: 0; z-index: 40; padding: 0.5rem 0; }
         
-        /* KOMPAKTNI FOOTER */
-        .footer-compact {
-            padding-top: 1rem;
-            padding-bottom: 1rem;
-        }
+        /* Footer */
+        .footer-compact { padding-top: 1rem; padding-bottom: 1rem; }
     </style>
 </head>
 <body class="text-white bg-hydro-charcoal">
 
+    <!-- SCROLL PROGRESS BAR -->
+    <div id="scroll-progress"></div>
+
     <!-- HEADER -->
     <header class="bg-hydro-charcoal text-white shadow-2xl sticky top-0 z-50 border-b border-hydro-primary/50" role="banner">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex justify-between items-center">
-            <a href="index.html#hero" class="focus:outline-none transition" aria-label="Anohubs Logo - Back to top" aria-current="page">
+            <a href="index.html#hero" class="focus:outline-none transition" aria-label="Anohubs Logo - Back to top">
                 <img src="logo.svg" alt="Anohubs Logo" class="anohubs-logo">
             </a>
-            <nav class="hidden md:flex items-center space-x-6 font-extrabold text-sm" role="navigation" aria-label="Main navigation">
+            <nav class="hidden md:flex items-center space-x-6 font-extrabold text-sm" role="navigation">
                 <a href="about-us-vision.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">About</a>
                 <a href="services.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Services</a>
                 <a href="insights/expert-insights.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Insights</a>
@@ -155,7 +173,7 @@
             <div class="md:hidden">
                 <button id="mobile-menu-button" aria-label="Open menu" type="button" class="p-2 text-white"><svg data-lucide="menu" class="w-8 h-8"></svg></button>
             </div>
-            <div id="mobile-menu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2 text-center bg-hydro-charcoal" aria-label="Mobile navigation menu">
+            <div id="mobile-menu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2 text-center bg-hydro-charcoal">
                 <a href="about-us-vision.html" class="block hover:text-hydro-primary transition tracking-wider py-2">About</a>
                 <a href="services.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Services</a>
                 <a href="insights/expert-insights.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Insights</a>
@@ -169,106 +187,151 @@
     </header>
 
     <main role="main">
-        <!-- 1. HERO SEKCIJA -->
+        
+        <!-- 1. HERO SEKCIJA (Obrnuti raspored za Vašu sliku) -->
         <section id="hero-protocol" class="relative text-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 text-white h-full flex items-center">
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center w-full">
                     
-                    <!-- LIJEVA STRANA (Inženjerska Zakletva/Profil) -->
-                    <div class="lg:col-span-5 flex flex-col items-center lg:items-start fade-in-up delay-200">
-                        <div class="bg-hydro-slate/90 p-6 rounded-xl shadow-2xl border border-hydro-primary max-w-sm backdrop-blur-md relative mt-8 lg:mt-0">
-                            <div class="absolute -top-12 left-1/2 transform -translate-x-1/2">
-                                <img src="ervin_stupac_portrait.jpg" alt="Ervin Stupac" class="w-24 h-24 rounded-full border-4 border-hydro-secondary shadow-lg object-cover">
-                            </div>
-                            <h3 class="text-center text-xl font-bold text-white mt-10 mb-2">The Engineer's Pledge</h3>
-                            <blockquote class="text-slate-300 italic text-center text-sm">
-                                "I build trust through verifiable precision. The 48% risk is not just a statistic—it is a promise I guarantee to neutralize through absolute discipline."
-                            </blockquote>
-                            <p class="text-center text-hydro-primary font-bold mt-4 text-xs uppercase tracking-widest">Ervin Stupac, Founder</p>
-                        </div>
+                    <!-- LIJEVA STRANA: PRAZNA (Da se vidite Vi na slici) -->
+                    <div class="lg:col-span-5 hidden lg:block">
+                        <!-- Ovaj prostor ostavljamo prazan da bi pozadinska slika (Vi) bila vidljiva -->
                     </div>
 
-                    <!-- DESNA STRANA (Naslov i Tekst, tamna zona za čitljivost) -->
-                    <div class="lg:col-span-7 fade-in-up delay-400">
+                    <!-- DESNA STRANA: Tekst i Zakletva (Na tamnoj podlozi) -->
+                    <div class="lg:col-span-7 fade-in-up delay-200 text-right flex flex-col items-end">
+                        
                         <h1 class="text-5xl md:text-7xl font-black leading-tight mb-6 text-hydro-primary" style="text-shadow: 0 0 20px rgba(34, 211, 238, 0.9);">
                             The Engineering <br> Immunity Manifesto
                         </h1>
-                        <p class="text-xl md:text-3xl font-light text-cyan-100 mb-8 border-l-4 border-hydro-secondary pl-6 py-2 bg-hydro-charcoal/40 rounded-r-lg backdrop-blur-sm">
+                        
+                        <p class="text-xl md:text-3xl font-light text-cyan-100 mb-8 border-r-4 border-hydro-secondary pr-6 py-2 bg-hydro-charcoal/60 rounded-l-lg backdrop-blur-sm max-w-2xl">
                             We transform the unpredictable <span class="font-black text-hydro-risk underline decoration-2">48% dynamic risk</span> into 
                             <span class="text-white font-bold">Guaranteed Operational Performance</span>.
                         </p>
                         
+                        <!-- GLASSMORPHISM KARTICA ZA ZAKLETVU -->
+                        <div class="pledge-card p-6 max-w-lg mb-8 text-left">
+                            <div class="flex items-center gap-4 mb-3">
+                                <div class="bg-hydro-primary/20 p-2 rounded-full">
+                                    <svg data-lucide="shield-check" class="w-6 h-6 text-hydro-primary"></svg>
+                                </div>
+                                <h3 class="text-xl font-bold text-white">The Engineer's Pledge</h3>
+                            </div>
+                            <blockquote class="text-slate-200 italic text-sm leading-relaxed">
+                                "I build trust through verifiable precision. The 48% risk is not just a statistic—it is a promise I guarantee to neutralize through absolute discipline."
+                            </blockquote>
+                            <p class="text-right text-hydro-secondary font-bold mt-3 text-xs uppercase tracking-widest">— Ervin Stupac, Founder</p>
+                        </div>
+
                         <a href="contact.html" class="inline-flex items-center justify-center px-10 py-4 border border-transparent text-lg font-bold rounded-full text-hydro-charcoal bg-hydro-cta hover:bg-yellow-600 transition duration-300 transform hover:scale-105 shadow-2xl">
                             Request Personal Consultation &rarr;
                         </a>
+
                     </div>
                     
                 </div>
             </div>
         </section>
 
-        <!-- 2. DETALJI PROTOKOLA - LINKOVI KA DOKUMENTIMA (ČVORIŠTE) -->
+        <!-- 2. DETALJI PROTOKOLA - DOKUMENTACIJA -->
         <section id="protocol-details" class="py-24 bg-hydro-charcoal text-white relative">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 
                 <h2 class="text-4xl font-extrabold text-white mb-12 text-center fade-in-up">Explore Our Full Protocol Documentation</h2>
 
-                <!-- Link 1: PRECISION STANDARD (0.05 MM) -->
-                <a href="protocol/doc-precision-alignment.html" class="protocol-link-card block p-6 rounded-xl mb-6 zoom-in delay-200">
-                    <div class="flex justify-between items-center">
-                        <div class="flex items-center">
-                            <svg data-lucide="compass" class="w-10 h-10 text-hydro-secondary mr-4"></svg>
-                            <div>
-                                <h3 class="text-2xl font-bold text-hydro-primary">The Non-Negotiable Standard: Precision First</h3>
-                                <p class="text-slate-400">Detailed methodology for achieving and verifying the 0.05 mm/m shaft alignment standard.</p>
+                <div class="grid gap-6">
+                    <!-- Link 1: PRECISION STANDARD -->
+                    <a href="protocol/doc-precision-alignment.html" class="protocol-link-card block p-8 rounded-xl zoom-in delay-200">
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-start gap-6">
+                                <div class="bg-hydro-slate p-3 rounded-lg"><svg data-lucide="compass" class="w-8 h-8 text-hydro-secondary"></svg></div>
+                                <div>
+                                    <h3 class="text-2xl font-bold text-hydro-primary mb-1">The Non-Negotiable Standard: Precision First</h3>
+                                    <p class="text-slate-400 text-sm md:text-base">Detailed methodology for achieving and verifying the 0.05 mm/m shaft alignment standard.</p>
+                                </div>
                             </div>
+                            <svg data-lucide="arrow-right" class="w-6 h-6 text-white transform group-hover:translate-x-2 transition"></svg>
                         </div>
-                        <svg data-lucide="arrow-right" class="w-6 h-6 text-white"></svg>
-                    </div>
-                </a>
+                    </a>
 
-                <!-- Link 2: M-E Synergy Audit -->
-                <a href="protocol/doc-me-synergy-audit.html" class="protocol-link-card block p-6 rounded-xl mb-6 zoom-in delay-400">
-                    <div class="flex justify-between items-center">
-                        <div class="flex items-center">
-                            <svg data-lucide="zap" class="w-10 h-10 text-hydro-secondary mr-4"></svg>
-                            <div>
-                                <h3 class="text-2xl font-bold text-hydro-primary">M-E Synergy Audit: Electro-Mechanical Immunity</h3>
-                                <p class="text-slate-400">Technical guide on identifying and neutralizing stray currents and grounding issues (Electro-Erosion).</p>
+                    <!-- Link 2: M-E Synergy -->
+                    <a href="protocol/doc-me-synergy-audit.html" class="protocol-link-card block p-8 rounded-xl zoom-in delay-400">
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-start gap-6">
+                                <div class="bg-hydro-slate p-3 rounded-lg"><svg data-lucide="zap" class="w-8 h-8 text-hydro-secondary"></svg></div>
+                                <div>
+                                    <h3 class="text-2xl font-bold text-hydro-primary mb-1">M-E Synergy Audit: Electro-Mechanical Immunity</h3>
+                                    <p class="text-slate-400 text-sm md:text-base">Technical guide on identifying and neutralizing stray currents and grounding issues (Electro-Erosion).</p>
+                                </div>
                             </div>
+                            <svg data-lucide="arrow-right" class="w-6 h-6 text-white"></svg>
                         </div>
-                        <svg data-lucide="arrow-right" class="w-6 h-6 text-white"></svg>
-                    </div>
-                </a>
-                
-                <!-- Link 3: LCC & Procurement -->
-                <a href="protocol/doc-lcc-audit.html" class="protocol-link-card block p-6 rounded-xl mb-6 zoom-in delay-600">
-                    <div class="flex justify-between items-center">
-                        <div class="flex items-center">
-                            <svg data-lucide="bar-chart-3" class="w-10 h-10 text-hydro-secondary mr-4"></svg>
-                            <div>
-                                <h3 class="text-2xl font-bold text-hydro-primary">LCC & Procurement Integrity Veto</h3>
-                                <p class="text-slate-400">Financial framework for prioritizing Life Cycle Cost over CAPEX and verifying material compatibility.</p>
+                    </a>
+                    
+                    <!-- Link 3: LCC & Procurement -->
+                    <a href="protocol/doc-lcc-audit.html" class="protocol-link-card block p-8 rounded-xl zoom-in delay-600">
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-start gap-6">
+                                <div class="bg-hydro-slate p-3 rounded-lg"><svg data-lucide="bar-chart-3" class="w-8 h-8 text-hydro-secondary"></svg></div>
+                                <div>
+                                    <h3 class="text-2xl font-bold text-hydro-primary mb-1">LCC & Procurement Integrity Veto</h3>
+                                    <p class="text-slate-400 text-sm md:text-base">Financial framework for prioritizing Life Cycle Cost over CAPEX and verifying material compatibility.</p>
+                                </div>
                             </div>
+                            <svg data-lucide="arrow-right" class="w-6 h-6 text-white"></svg>
                         </div>
-                        <svg data-lucide="arrow-right" class="w-6 h-6 text-white"></svg>
-                    </div>
-                </a>
-                
-                <!-- Link 4: ZERO COMPROMISE METODOLOGIJA -->
-                <a href="protocol/doc-methodology-zero.html" class="protocol-link-card block p-6 rounded-xl mb-6 zoom-in delay-800">
-                    <div class="flex justify-between items-center">
-                        <div class="flex items-center">
-                            <svg data-lucide="crosshair" class="w-10 h-10 text-hydro-secondary mr-4"></svg>
-                            <div>
-                                <h3 class="text-2xl font-bold text-hydro-primary">Forensic NDT and Continuous Verification</h3>
-                                <p class="text-slate-400">Our mandate for perfection: Multi-tier verification processes and sub-surface NDT protocols.</p>
+                    </a>
+                    
+                    <!-- Link 4: Zero Compromise -->
+                    <a href="protocol/doc-methodology-zero.html" class="protocol-link-card block p-8 rounded-xl zoom-in delay-800">
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-start gap-6">
+                                <div class="bg-hydro-slate p-3 rounded-lg"><svg data-lucide="crosshair" class="w-8 h-8 text-hydro-secondary"></svg></div>
+                                <div>
+                                    <h3 class="text-2xl font-bold text-hydro-primary mb-1">Forensic NDT and Continuous Verification</h3>
+                                    <p class="text-slate-400 text-sm md:text-base">Our mandate for perfection: Multi-tier verification processes and sub-surface NDT protocols.</p>
+                                </div>
                             </div>
+                            <svg data-lucide="arrow-right" class="w-6 h-6 text-white"></svg>
                         </div>
-                        <svg data-lucide="arrow-right" class="w-6 h-6 text-white"></svg>
-                    </div>
-                </a>
+                    </a>
+                </div>
 
+            </div>
+        </section>
+        
+        <!-- 3. METODOLOGIJA & VRIJEDNOSTI -->
+        <section class="py-24 bg-hydro-slate border-t border-slate-700">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid md:grid-cols-2 gap-16 items-center">
+                    
+                    <div class="fade-in-up">
+                        <img src="protocol_eng_immunity.jpg" alt="Engineering Immunity in Action" class="rounded-xl shadow-2xl border-4 border-hydro-charcoal w-full h-auto object-cover transform hover:scale-105 transition duration-500">
+                    </div>
+
+                    <div class="fade-in-up delay-200">
+                        <h2 class="text-4xl font-black text-white mb-6">Our Methodology: <span class="text-hydro-risk">Zero Compromise</span></h2>
+                        <p class="text-slate-300 text-lg mb-8 leading-relaxed">
+                            The Anohubs protocol is not a guideline; it's a <strong class="text-white">mandate for perfection</strong>. From material stress tests to installation alignment within micrometers, every step is rigorously documented and verified. We don't just reduce risk; we systematically eliminate it.
+                        </p>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-center p-4 bg-hydro-charcoal rounded-lg border-l-4 border-hydro-secondary">
+                                <svg data-lucide="check-circle-2" class="w-6 h-6 text-hydro-secondary mr-4 flex-shrink-0"></svg>
+                                <span class="text-slate-200"><strong>Multi-tier Verification:</strong> Independent double-checks on all critical parameters.</span>
+                            </div>
+                            <div class="flex items-center p-4 bg-hydro-charcoal rounded-lg border-l-4 border-hydro-primary">
+                                <svg data-lucide="refresh-cw" class="w-6 h-6 text-hydro-primary mr-4 flex-shrink-0"></svg>
+                                <span class="text-slate-200"><strong>Continuous Improvement:</strong> Feedback loops from every project enhance future protocols.</span>
+                            </div>
+                            <div class="flex items-center p-4 bg-hydro-charcoal rounded-lg border-l-4 border-hydro-cta">
+                                <svg data-lucide="shield" class="w-6 h-6 text-hydro-cta mr-4 flex-shrink-0"></svg>
+                                <span class="text-slate-200"><strong>Ethical Sourcing:</strong> Only partners who meet our strict integrity standards.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -285,15 +348,12 @@
              <img src="logo.svg" alt="Anohubs Logo" class="anohubs-logo-compact">
            </a>
            <p class="text-slate-400 mb-3 text-sm">Establishing the global standard for hydro integrity.</p>
-           
-           <!-- SMANJENA NAVIGACIJA -->
            <nav class="flex justify-center space-x-4 text-xs mb-2 footer-nav-links">
                <a href="about-us-vision.html" class="text-slate-400 hover:text-hydro-primary">About</a>
                <a href="services.html" class="text-slate-400 hover:text-hydro-primary">Services</a>
                <a href="insights/expert-insights.html" class="text-slate-400 hover:text-hydro-primary">Insights</a>
                <a href="contact.html" class="text-slate-400 hover:text-hydro-primary">Contact</a>
            </nav>
-           <!-- PRAVNI LINKOVI -->
            <div class="flex justify-center space-x-4 text-xs mb-2">
                 <a href="privacy-policy.html" class="text-slate-500 hover:text-slate-300 underline">Privacy Policy</a>
                 <span class="text-slate-500">|</span>
@@ -307,5 +367,15 @@
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
     <script src="js/ui_core.js"></script>
     <script src="js/animation_logic.js"></script>
+    
+    <script>
+        // Jednostavna logika za scroll progress bar
+        window.onscroll = function() {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            let scrolled = (winScroll / height) * 100;
+            document.getElementById("scroll-progress").style.width = scrolled + "%";
+        };
+    </script>
 </body>
 </html>
