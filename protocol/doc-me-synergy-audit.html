@@ -6,10 +6,10 @@
     <title>M-E Synergy Audit: Electro-Mechanical Immunity | AnoHUB Documentation</title>
     <meta name="description" content="Technical documentation for identifying and neutralizing stray currents and grounding issues (Electro-Erosion), which accelerate mechanical bearing wear.">
     
-    <!-- 1. JS INICIJALIZACIJA (../ za izlaz iz 'protocol' foldera) -->
+    <!-- 1. JS INICIJALIZACIJA (../) -->
     <script src="../js/head-init.js"></script>
 
-    <!-- FONTOVI, TAILWIND CDN, CONFIG -->
+    <!-- FONTOVI, TAILWIND CDN -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
@@ -20,32 +20,31 @@
         }
     </script>
 
-    <!-- GLOBALNI STILOVI (../) -->
+    <!-- GLOBALNI STILOVI -->
     <link href="../css/anohubs.css" rel="stylesheet">
     <link href="../css/article-styles.css" rel="stylesheet">
 
     <style>
-        .article-body {
-            line-height: 1.8;
-            font-size: 1.1rem;
-            color: #4A5568; 
+        /* POZADINA ZA DOKUMENT */
+        body { 
+            background-image: linear-gradient(rgba(17, 24, 39, 0.9), rgba(17, 24, 39, 0.95)), url('../slike/protocol_doc_background.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center; 
+            min-height: 100vh;
         }
-        .technical-box {
-            border: 1px solid #22d3ee50;
-            background-color: #1E293B;
-            color: #E5E7EB;
-        }
+        .article-body { line-height: 1.8; font-size: 1.1rem; color: #4A5568; }
+        .technical-box { border-left: 5px solid #22d3ee; background-color: #1E293B; color: #E5E7EB; }
     </style>
 </head>
 <body class="bg-gray-100"> 
     
-    <!-- HEADER (Putanje su ../) -->
+    <!-- HEADER -->
     <header class="bg-hydro-charcoal text-white shadow-2xl sticky top-0 z-50 border-b border-hydro-primary/50" role="banner">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex justify-between items-center">
             <a href="../index.html#hero" class="focus:outline-none transition" aria-label="Anohubs Logo - Back to Home">
                 <img src="../logo.svg" alt="Anohubs Logo" class="anohubs-logo">
             </a>
-            
             <nav class="hidden md:flex items-center space-x-6 font-extrabold text-sm" role="navigation" aria-label="Main navigation">
                 <a href="../about-us-vision.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">About</a>
                 <a href="../services.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Services</a>
@@ -56,6 +55,19 @@
                 <a href="../protocol.html" class="nav-link relative text-hydro-primary transition tracking-wider p-2 uppercase">Protocol</a>
                 <a href="../contact.html" class="bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-6 py-2.5 rounded-full transition transform hover:scale-105 shadow-xl font-bold tracking-wider uppercase text-base">Contact</a>
             </nav>
+            <div class="md:hidden">
+                <button id="mobile-menu-button" aria-label="Open menu" type="button" class="p-2 text-white"><svg data-lucide="menu" class="w-8 h-8"></svg></button>
+            </div>
+            <div id="mobile-menu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2 text-center bg-hydro-charcoal" aria-label="Mobile navigation menu">
+                <a href="../about-us-vision.html" class="block hover:text-hydro-primary transition tracking-wider py-2">About</a>
+                <a href="../services.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Services</a>
+                <a href="../insights/expert-insights.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Insights</a>
+                <a href="../case-studies.html" class="block hover:text-hydro-secondary transition tracking-wider py-2">Case Studies</a>
+                <a href="../app-iframe.html" target="_blank" rel="noopener noreferrer" class="block hover:text-hydro-secondary transition tracking-wider py-2">ANO HUB</a>
+                <a href="../gallery.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Gallery</a>
+                <a href="../protocol.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Protocol</a>
+                <a href="../contact.html" class="block bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-5 py-2 rounded-full transition shadow-md font-bold tracking-wider mt-2 text-center">Contact</a>
+            </div>
         </div>
     </header>
 
@@ -75,8 +87,8 @@
                     The **M-E Synergy Gap** describes the vulnerability where electrical failures (poor grounding, inadequate shielding) directly transfer energy into the mechanical system, resulting in **electro-erosion**—a silent killer of bearings and rotating components. This audit protocol is mandatory for eliminating this risk, which accelerates costly maintenance and unscheduled downtime.
                 </p>
 
-                <div class="technical-box p-4 my-6 rounded-lg text-sm bg-hydro-slate">
-                    <h3 class="text-hydro-secondary font-bold mb-2">KEY SYNERGY MANDATE</h3>
+                <div class="technical-box p-6 my-6 rounded-lg text-sm shadow-lg">
+                    <h3 class="text-hydro-secondary font-bold mb-2 text-lg">KEY SYNERGY MANDATE</h3>
                     <p class="text-white">The audit must identify and correct all grounding path deficiencies to ensure that stray currents are safely redirected away from the generator shaft and turbine guide bearings.</p>
                 </div>
                 
@@ -86,28 +98,28 @@
                 <h3 class="mt-6 text-xl font-bold text-hydro-charcoal">2.1. Grounding System Integrity Check</h3>
                 <p>Measuring the resistance and conductivity of all grounding points using high-precision instruments:</p>
                 <div class="overflow-x-auto my-4">
-                    <table class="min-w-full divide-y divide-gray-300 text-sm">
+                    <table class="min-w-full divide-y divide-gray-300 text-sm border border-gray-200">
                         <thead class="bg-gray-100">
                             <tr>
-                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Check Point</th>
-                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Method</th>
-                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tolerance / Result</th>
+                                <th class="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Check Point</th>
+                                <th class="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Method</th>
+                                <th class="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Tolerance / Result</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-gray-200">
+                        <tbody class="divide-y divide-gray-200 bg-white">
                             <tr class="hover:bg-gray-50">
-                                <td class="px-4 py-2 whitespace-nowrap font-medium">Grounding Grid Resistance</td>
-                                <td class="px-4 py-2 whitespace-nowrap">Fall-of-Potential</td>
+                                <td class="px-4 py-2 whitespace-nowrap font-medium text-gray-900">Grounding Grid Resistance</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-gray-600">Fall-of-Potential</td>
                                 <td class="px-4 py-2 whitespace-nowrap text-hydro-secondary font-bold">≤ 1 Ohm (per VDE/IEEE)</td>
                             </tr>
                             <tr class="hover:bg-gray-50">
-                                <td class="px-4 py-2 whitespace-nowrap font-medium">Shaft Current Measurement</td>
-                                <td class="px-4 py-2 whitespace-nowrap">Carbon Brush Contact</td>
+                                <td class="px-4 py-2 whitespace-nowrap font-medium text-gray-900">Shaft Current Measurement</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-gray-600">Carbon Brush Contact</td>
                                 <td class="px-4 py-2 whitespace-nowrap text-hydro-risk font-bold">Must be Zero (No Stray Current)</td>
                             </tr>
                             <tr class="hover:bg-gray-50">
-                                <td class="px-4 py-2 whitespace-nowrap font-medium">Insulation Resistance (IR)</td>
-                                <td class="px-4 py-2 whitespace-nowrap">Megohmmeter</td>
+                                <td class="px-4 py-2 whitespace-nowrap font-medium text-gray-900">Insulation Resistance (IR)</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-gray-600">Megohmmeter</td>
                                 <td class="px-4 py-2 whitespace-nowrap text-hydro-secondary font-bold">IR > 500 MΩ</td>
                             </tr>
                         </tbody>
@@ -116,23 +128,23 @@
 
                 <h3 class="mt-6 text-xl font-bold text-hydro-charcoal">2.2. Thermal and Vibration Correlation</h3>
                 <p>Abnormal electrical load manifests as heat and vibration. Thermal imaging and vibration spectral analysis are used to correlate electrical deficiencies with mechanical stress:</p>
-                <ul class="list-disc ml-6">
+                <ul class="list-disc ml-6 mb-6">
                     <li>**Thermography:** Identify hot spots (overheating) in electrical connections that indicate high resistance and potential current leakage points.</li>
                     <li>**Vibration Analysis:** Look for abnormal harmonics (e.g., frequencies related to electrical noise) that are distinct from mechanical imbalances.</li>
                 </ul>
                 
                 <h2>3. Mitigation and Immunity</h2>
                 <p class="mt-4">Final mitigation involves corrective action to secure immunity:</p>
-                <ol class="list-decimal ml-6">
+                <ol class="list-decimal ml-6 mb-6">
                     <li>**Re-Bonding and Shielding:** Corrective action to ensure metallic components are properly bonded and electrical shielding is adequate.</li>
                     <li>**Insulated Bearings:** Mandating the use of electrically insulated bearings as a physical barrier to prevent stray currents from reaching the shaft line.</li>
                     <li>**Continous Monitoring:** Integrating permanent shaft current monitors into the predictive maintenance system.</li>
                 </ol>
                 
-                <div class="cta-footer">
-                    <strong class="text-hydro-charcoal">Eliminate the Electro-Erosion threat and secure your bearing lifespan.</strong>
-                    <p class="mt-2 text-slate-700">Request a consultation for a full M-E Synergy Audit today.</p>
-                    <a href="../contact.html" class="cta-button">REQUEST SYNERGY AUDIT</a>
+                <div class="cta-footer mt-10 p-6 bg-gray-50 rounded-lg border border-gray-200 text-center">
+                    <strong class="text-hydro-charcoal text-lg block mb-2">Eliminate the Electro-Erosion threat and secure your bearing lifespan.</strong>
+                    <p class="mt-2 text-slate-600 mb-6">Request a consultation for a full M-E Synergy Audit today.</p>
+                    <a href="../contact.html" class="inline-block bg-hydro-cta text-hydro-charcoal font-bold py-3 px-8 rounded-full hover:bg-yellow-500 transition shadow-lg">REQUEST SYNERGY AUDIT</a>
                 </div>
 
             </div>
@@ -142,13 +154,9 @@
     </main>
     
     <!-- FOOTER -->
-    <div class="md:hidden mobile-sticky-cta text-center">
-        <a href="../contact.html" class="w-full block text-center bg-hydro-primary hover:bg-cyan-500 text-hydro-charcoal px-5 py-3 font-bold tracking-wider uppercase shadow-2xl">SCHEDULE AUDIT</a>
-    </div>
-
-    <footer class="bg-hydro-slate text-hydro-gray py-8 text-center border-t border-hydro-light-slate" role="contentinfo">
+    <footer class="bg-hydro-slate text-hydro-gray py-8 text-center border-t border-hydro-light-slate mt-12" role="contentinfo">
         <div class="container mx-auto px-6">
-           <p class="text-sm">&copy; <span id="year"></span> Anohubs Inc. All rights reserved. | <a href="../privacy-policy.html">Privacy</a> | <a href="../terms-of-use.html">Terms</a></p>
+           <p class="text-sm">&copy; 2025 Anohubs Inc. All rights reserved. | <a href="../privacy-policy.html" class="hover:text-white">Privacy</a> | <a href="../terms-of-use.html" class="hover:text-white">Terms</a></p>
         </div>
     </footer>
 
