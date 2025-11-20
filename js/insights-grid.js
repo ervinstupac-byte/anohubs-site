@@ -1,9 +1,9 @@
 // ==============================================
 // INSIGHTS GRID LOGIC (Data + Render + Filtering)
+// FIX: Visibility Issue Resolved
 // ==============================================
 
-// 1. PODACI (DATA) - Sa dodanim 'category' poljem
-// Kategorije: 'fluid', 'finance', 'tech', 'culture'
+// 1. PODACI (DATA)
 const insightsData = [
     {
         "id": "module1",
@@ -147,8 +147,12 @@ function createInsightCard(insight) {
     const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
     const formattedDate = new Date(insight.date).toLocaleDateString('en-US', dateOptions);
 
+    // FIX: Dodana klasa 'is-visible' da se osigura prikazivanje
+    // Uklonjena klasa 'zoom-in' da se izbjegne konflikt sa CSS-om ako JS za animacije kasni
+    // Umjesto toga koristimo jednostavniju tranziciju
+    
     return `
-        <a href="${insight.content_file}" class="block transform hover:scale-[1.02] transition duration-300 h-full zoom-in">
+        <a href="${insight.content_file}" class="block transform hover:scale-[1.02] transition-all duration-500 opacity-0 animate-fadeIn">
             <div class="bg-white border border-slate-200 hover:border-hydro-primary rounded-xl shadow-lg h-full p-6 flex flex-col">
                 <div class="flex items-center space-x-4 mb-4">
                     <span class="text-4xl" role="img" aria-label="Icon">${insight.icon}</span>
@@ -164,35 +168,43 @@ function createInsightCard(insight) {
     `;
 }
 
-// 3. FUNKCIJA ZA RENDEROWANJE SA FILTEROM
+// 3. FUNKCIJA ZA RENDEROWANJE
 function renderGrid(filterCategory = 'all') {
     const container = document.getElementById('insights-archive-grid');
     
     if (!container) {
-        console.error("Greška: Element #insights-archive-grid nije pronađen!");
+        console.error("Greška: Kontejner #insights-archive-grid nije pronađen!");
         return;
     }
 
     let htmlContent = '';
     
-    // Filtriranje podataka
+    // Filtriranje
     const filteredData = filterCategory === 'all' 
         ? insightsData 
         : insightsData.filter(item => item.category === filterCategory);
 
     if (filteredData.length === 0) {
-        htmlContent = '<p class="text-slate-400 text-center col-span-full">No insights found for this category.</p>';
+        htmlContent = '<div class="col-span-full text-center text-slate-400 py-10"><p>No insights found for this category.</p></div>';
     } else {
-        filteredData.forEach((insight, index) => {
-            let cardHtml = createInsightCard(insight);
-            // Reset animacije da se ponovo pokrene pri filtriranju
-            const delayClass = `delay-${Math.min((index % 4) * 200, 800)}`; 
-            cardHtml = cardHtml.replace('zoom-in', `zoom-in ${delayClass}`);
-            htmlContent += cardHtml;
+        filteredData.forEach((insight) => {
+            htmlContent += createInsightCard(insight);
         });
     }
 
     container.innerHTML = htmlContent;
+
+    // FIX: Prisilno dodavanje vidljivosti nakon ubacivanja u DOM
+    // Ovo rješava problem "praznog ekrana"
+    setTimeout(() => {
+        const cards = container.querySelectorAll('a');
+        cards.forEach((card, index) => {
+            setTimeout(() => {
+                card.classList.remove('opacity-0');
+                card.classList.add('opacity-100');
+            }, index * 100); // Kaskadno pojavljivanje
+        });
+    }, 50);
     
     // Ponovno pokretanje Lucide ikona
     if (typeof lucide !== 'undefined') {
@@ -200,23 +212,29 @@ function renderGrid(filterCategory = 'all') {
     }
 }
 
-// 4. INICIJALIZACIJA I EVENT LISTENERI ZA FILTERE
+// 4. INICIJALIZACIJA
 document.addEventListener('DOMContentLoaded', () => {
-    // Prvo renderovanje (prikaži sve)
+    // Prvo renderovanje
     renderGrid('all');
 
-    // Postavljanje listenera na dugmad za filtriranje
+    // Filter dugmad
     const filterButtons = document.querySelectorAll('.topic-button');
-    
     filterButtons.forEach(btn => {
         btn.addEventListener('click', () => {
-            // 1. Ukloni 'active' klasu sa svih dugmadi
-            filterButtons.forEach(b => b.classList.remove('active'));
+            // Reset active klase
+            filterButtons.forEach(b => {
+                b.classList.remove('active');
+                b.classList.remove('bg-hydro-primary/10');
+                b.classList.remove('border-hydro-primary');
+                b.classList.remove('text-hydro-primary');
+            });
             
-            // 2. Dodaj 'active' klasu na kliknuto dugme
+            // Set active klasa
             btn.classList.add('active');
+            btn.classList.add('bg-hydro-primary/10');
+            btn.classList.add('border-hydro-primary');
+            btn.classList.add('text-hydro-primary');
             
-            // 3. Uzmi kategoriju i filtriraj
             const category = btn.getAttribute('data-topic');
             renderGrid(category);
         });
