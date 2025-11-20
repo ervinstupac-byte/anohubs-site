@@ -6,12 +6,18 @@
     <title>Pelton Turbine Integrity | Anohubs: Advanced Analytics</title>
     <meta name="description" content="Integrity analysis for Pelton turbines focusing on nozzle system precision, bucket wear, and impulse energy conversion efficiency.">
     
+    <!-- 1. STANDARDNA JS INICIJALIZACIJA -->
     <script src="js/head-init.js"></script>
+
+    <!-- 2. FONTOVI -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- 3. KRITIČNO: TAILWIND CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 
+    <!-- 4. TAILWIND CONFIG -->
     <script>
         tailwind.config = {
             theme: {
@@ -29,15 +35,19 @@
                     fontSize: {
                         'h1-hero': 'clamp(2.5rem, 5vw + 1rem, 4.5rem)',
                     },
-                }
+                },
             }
         }
     </script>
 
+    <!-- 5. GLOBALNI STILOVI -->
     <link href="css/anohubs.css" rel="stylesheet">
+
+    <!-- 3D MODEL VIEWER -->
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/1.13.0/model-viewer.min.js"></script>
     
     <style>
+        /* CSS STILOVI SPECIFIČNI ZA OVU STRANICU */
         body {
             background-image: url('orljani_Una.jpg'); 
             background-size: cover;
@@ -45,40 +55,29 @@
             background-position: center; 
             min-height: 100vh;
         }
+        
         .header-bg { background-color: rgba(17, 24, 39, 0.95); }
         .anohubs-logo-compact { width: 90px; height: auto; color: #22d3ee; }
-        @media (min-width: 768px) { .anohubs-logo-compact { width: 120px; } }
-        
+
         .content-overlay {
             background-color: rgba(30, 41, 59, 0.75);
             padding: 3rem 2rem;
             border-radius: 0.75rem; 
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6); 
             border-top: 5px solid #22d3ee;
-            will-change: transform, box-shadow; 
             transform: translateZ(0); 
         }
         .text-glow { text-shadow: 0 0 15px rgba(34, 211, 238, 0.7); }
 
-        model-viewer {
-            width: 100%;
-            height: 400px;
-            background-color: #111827;
-            border-radius: 0.5rem;
-            box-shadow: 0 0 15px rgba(34, 211, 238, 0.5);
-            margin: 20px auto; 
-            display: block; 
-        }
-        .tech-list li {
-            padding: 0.75rem;
-            background-color: rgba(51, 65, 85, 0.5); 
-            border-radius: 0.5rem;
-        }
+        model-viewer { width: 100%; height: 400px; }
+        .progress-bar { z-index: 10; position: absolute; }
+        .tech-list li { padding: 0.75rem; background-color: rgba(51, 65, 85, 0.5); border-radius: 0.5rem; }
     </style>
 </head>
 <body class="text-white bg-hydro-charcoal">
 
-    <header class="header-bg shadow-2xl sticky top-0 z-50 border-b border-hydro-primary/50" role="banner">
+    <!-- HEADER -->
+    <header class="bg-hydro-charcoal shadow-2xl sticky top-0 z-50 border-b border-hydro-primary/50" role="banner">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-1 flex justify-between items-center">
             <a href="index.html#hero" class="focus:outline-none transition" aria-label="Anohubs Logo - Back to top" aria-current="page">
                  <img src="logo.svg" alt="Anohubs Logo" class="anohubs-logo-compact">
@@ -112,6 +111,7 @@
     <main role="main">
         <section class="py-16 text-white flex items-center justify-center min-h-[90vh]">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 content-overlay zoom-in"> 
+                
                 <h1 class="text-5xl md:text-6xl font-extrabold text-hydro-primary mb-4 text-glow tracking-tight fade-in-up">PELTON TURBINE INTEGRITY ANALYSIS</h1>
                 <p class="text-xl md:text-2xl font-light text-slate-300 mb-8 border-b pb-4 border-slate-700 fade-in-up delay-200">Focused inspection on the impulse system: Ensuring maximum nozzle precision and mitigating high-velocity abrasion.</p>
                 
@@ -129,18 +129,45 @@
                         <h2 class="text-2xl font-bold text-white mb-3 flex items-center gap-2"><svg data-lucide="droplet" class="w-6 h-6 text-hydro-cta"></svg> The Pelton Challenge: Impulse Precision</h2>
                         <p class="text-slate-300 leading-relaxed">The Pelton Turbine operates on microscopic precision. Maximum efficiency relies entirely on the precise geometry of the water jet and the impact angle on the runner buckets.</p>
                     </div>
+                    
                     <div class="space-y-6 fade-in-up delay-800">
                         <h2 class="text-3xl font-bold text-hydro-secondary mb-4 flex items-center gap-3"><svg data-lucide="check-square" class="w-7 h-7"></svg> Focus Protocol: Nozzle and Bucket Precision</h2>
                         <ul class="space-y-6 tech-list">
-                            <li class="flex items-start"><div class="bg-hydro-primary/20 p-2 rounded-full mr-4 flex-shrink-0"><svg data-lucide="scan" class="w-6 h-6 text-hydro-primary"></svg></div><div><strong class="text-white text-xl block mb-1">Nozzle System Precision:</strong> <p class="text-slate-300">Micro-level alignment checks.</p></div></li>
-                            <li class="flex items-start"><div class="bg-hydro-primary/20 p-2 rounded-full mr-4 flex-shrink-0"><svg data-lucide="hard-hat" class="w-6 h-6 text-hydro-primary"></svg></div><div><strong class="text-white text-xl block mb-1">Bucket Wear Analysis:</strong> <p class="text-slate-300">Non-destructive testing (NDT).</p></div></li>
-                            <li class="flex items-start"><div class="bg-hydro-primary/20 p-2 rounded-full mr-4 flex-shrink-0"><svg data-lucide="shield-off" class="w-6 h-6 text-hydro-primary"></svg></div><div><strong class="text-white text-xl block mb-1">Abrasion Mitigation Strategy:</strong> <p class="text-slate-300">Recommendations for upstream sediment management.</p></div></li>
+                            <li class="flex items-start p-4 bg-hydro-slate/70 rounded-lg shadow-md hover:bg-hydro-slate transition duration-300 delay-1000">
+                                <div class="bg-hydro-primary/20 p-2 rounded-full mr-4 flex-shrink-0"><svg data-lucide="scan" class="w-6 h-6 text-hydro-primary"></svg></div>
+                                <div><strong class="text-white text-xl block mb-1">Nozzle System Precision:</strong> <p class="text-slate-300">Micro-level alignment checks to ensure ideal water jet geometry and velocity.</p></div>
+                            </li>
+                            <li class="flex items-start p-4 bg-hydro-slate/70 rounded-lg shadow-md hover:bg-hydro-slate transition duration-300 delay-1100">
+                                <div class="bg-hydro-primary/20 p-2 rounded-full mr-4 flex-shrink-0"><svg data-lucide="hard-hat" class="w-6 h-6 text-hydro-primary"></svg></div>
+                                <div><strong class="text-white text-xl block mb-1">Bucket Wear Analysis:</strong> <p class="text-slate-300">Non-destructive testing (NDT) to precisely quantify abrasion damage.</p></div>
+                            </li>
+                            <li class="flex items-start p-4 bg-hydro-slate/70 rounded-lg shadow-md hover:bg-hydro-slate transition duration-300 delay-1300">
+                                <div class="bg-hydro-primary/20 p-2 rounded-full mr-4 flex-shrink-0"><svg data-lucide="shield-off" class="w-6 h-6 text-hydro-primary"></svg></div>
+                                <div><strong class="text-white text-xl block mb-1">Abrasion Mitigation Strategy:</strong> <p class="text-slate-300">Recommendations for upstream sediment management and specialized material coatings.</p></div>
+                            </li>
                         </ul>
                     </div>
                 </div>
-                <div class="mt-12 text-center fade-in-up delay-1400">
-                    <a href="contact.html" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-lg font-bold rounded-full text-hydro-charcoal bg-hydro-primary hover:bg-cyan-500 transition duration-300 transform hover:scale-105 shadow-xl">Schedule Pelton Turbine Audit &rarr;</a>
+
+                <!-- NOVO: LOGISTIKA I PODRŠKA -->
+                <div class="mt-16 pt-8 border-t border-slate-700 fade-in-up delay-1000">
+                    <h2 class="text-3xl font-bold text-hydro-secondary mb-6">AnoHUB Execution Service: 24/7 Support</h2>
+                    <div class="grid md:grid-cols-2 gap-8 text-sm">
+                        <div class="space-y-4">
+                            <h3 class="text-xl font-bold text-white flex items-center gap-2"><svg data-lucide="truck" class="w-6 h-6 text-hydro-cta"></svg> Supply Chain & Procurement</h3>
+                            <p class="text-slate-400">Pored dijagnostike, vršimo organizaciju, nabavku, kupnju rezervnih dijelova i izradu nacrta za nove dijelove. Surađujemo samo s najboljim partnerima.</p>
+                        </div>
+                         <div class="space-y-4">
+                            <h3 class="text-xl font-bold text-white flex items-center gap-2"><svg data-lucide="phone-call" class="w-6 h-6 text-hydro-secondary"></svg> 365/24/7 Availability</h3>
+                            <p class="text-slate-400">Stojimo na raspolaganju digitalno (Digital Supervision) i lično (dolazimo na gradilišta). Prvi upiti i procjene rizika Vas **ništa ne koštaju**.</p>
+                        </div>
+                    </div>
                 </div>
+
+                <div class="mt-12 text-center fade-in-up delay-1600">
+                    <a href="contact.html" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-lg font-bold rounded-full text-hydro-charcoal bg-hydro-primary hover:bg-cyan-500 transition duration-300 transform hover:scale-105 shadow-xl uppercase tracking-wider">Schedule Pelton Turbine Audit &rarr;</a>
+                </div>
+
             </div>
         </section>
     </main>
