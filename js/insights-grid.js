@@ -1,12 +1,13 @@
 // ==============================================
-// INSIGHTS GRID LOGIC (Data + Render)
-// Objedinjeni fajl za prikaz članaka na expert-insights.html
+// INSIGHTS GRID LOGIC (Data + Render + Filtering)
 // ==============================================
 
-// 1. PODACI (DATA) - Svih 15 članaka
+// 1. PODACI (DATA) - Sa dodanim 'category' poljem
+// Kategorije: 'fluid', 'finance', 'tech', 'culture'
 const insightsData = [
     {
         "id": "module1",
+        "category": "tech",
         "icon": "🌊",
         "title": "Engineering Immunity: Neutralizing 48% Dynamic Risk",
         "subtitle": "The Strategic Pivot from Execution Gap to Asset Integrity.",
@@ -15,6 +16,7 @@ const insightsData = [
     },
     {
         "id": "module2",
+        "category": "finance",
         "icon": "💰",
         "title": "The True Cost of Low Bid: The CapEx vs. LCC Catastrophe",
         "subtitle": "Why chasing the cheapest contract guarantees financial failure.",
@@ -23,6 +25,7 @@ const insightsData = [
     },
     {
         "id": "module3",
+        "category": "tech",
         "icon": "❄️",
         "title": "Winter Challenges & M-E Synergy",
         "subtitle": "Extreme Conditions and Electro-Mechanical Stress.",
@@ -31,6 +34,7 @@ const insightsData = [
     },
     {
         "id": "module4", 
+        "category": "culture",
         "icon": "🛡️",
         "title": "Precision Leadership: DACH Region",
         "subtitle": "How Precision Reclaims Leadership and secures asset value.",
@@ -39,6 +43,7 @@ const insightsData = [
     },
     {
         "id": "module5", 
+        "category": "culture",
         "icon": "🤝",
         "title": "The Human Sensor",
         "subtitle": "Why Ethics and Experience Guarantee Precision.",
@@ -47,6 +52,7 @@ const insightsData = [
     },
     {
         "id": "module6",
+        "category": "finance",
         "icon": "💣",
         "title": "Hidden Costs & Ticking Bombs",
         "subtitle": "Systematic Review of Mechanical Maintenance Risks.",
@@ -55,6 +61,7 @@ const insightsData = [
     },
     {
         "id": "module7", 
+        "category": "finance",
         "icon": "🏰",
         "title": "Your Hydropower Plant as a Fortress",
         "subtitle": "How to Take Control of Maintenance and Profit.",
@@ -63,6 +70,7 @@ const insightsData = [
     },
     {
         "id": "module8",
+        "category": "culture",
         "icon": "🌱",
         "title": "Beyond the Kilowatt-Hour",
         "subtitle": "The Symbiosis Standard for Sustainable Hydropower.",
@@ -71,6 +79,7 @@ const insightsData = [
     },
     {
         "id": "module9",
+        "category": "fluid",
         "icon": "🌍",
         "title": "A Holistic View",
         "subtitle": "The River's Condition as an Operational Indicator.",
@@ -79,6 +88,7 @@ const insightsData = [
     },
     {
         "id": "module10",
+        "category": "tech",
         "icon": "🌡️",
         "title": "The 'Check Engine Light' of Your Turbine",
         "subtitle": "5 Symptoms You Should Never Ignore.",
@@ -87,6 +97,7 @@ const insightsData = [
     },
     {
         "id": "module11",
+        "category": "tech",
         "icon": "💻",
         "title": "From Reactive to Predictive",
         "subtitle": "The Digital Twin’s Role in Hydropower Maintenance.",
@@ -95,6 +106,7 @@ const insightsData = [
     },
     {
         "id": "module12",
+        "category": "tech",
         "icon": "🔌",
         "title": "M-E Synergy: The Holistic Audit",
         "subtitle": "Protection Against Electro-Mechanical Failures.",
@@ -103,6 +115,7 @@ const insightsData = [
     },
     {
         "id": "module13",
+        "category": "fluid",
         "icon": "⏳",
         "title": "The Unseen Threat: Sediment and Silt",
         "subtitle": "Eroding Profits, Endangering Assets.",
@@ -111,6 +124,7 @@ const insightsData = [
     },
     {
         "id": "module14",
+        "category": "fluid",
         "icon": "🔬",
         "title": "3D Flow Analysis: Ultra-High Head Risk",
         "subtitle": "The Necessity of Full System Simulation (CFD).",
@@ -119,6 +133,7 @@ const insightsData = [
     },
     {
         "id": "module15",
+        "category": "finance",
         "icon": "📈",
         "title": "The SCADA-to-CEO Gap",
         "subtitle": "Bridging Data and Strategic Budgeting via HHI.",
@@ -127,15 +142,14 @@ const insightsData = [
     }
 ];
 
-// 2. FUNKCIJE ZA RENDEROWANJE (LOGIKA)
+// 2. FUNKCIJA ZA KREIRANJE KARTICE
 function createInsightCard(insight) {
     const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
     const formattedDate = new Date(insight.date).toLocaleDateString('en-US', dateOptions);
 
-    // Kreira HTML karticu
     return `
-        <a href="${insight.content_file}" class="block transform hover:scale-[1.02] transition duration-300 h-full">
-            <div class="bg-white border border-slate-200 hover:border-hydro-primary rounded-xl shadow-lg h-full p-6 flex flex-col zoom-in">
+        <a href="${insight.content_file}" class="block transform hover:scale-[1.02] transition duration-300 h-full zoom-in">
+            <div class="bg-white border border-slate-200 hover:border-hydro-primary rounded-xl shadow-lg h-full p-6 flex flex-col">
                 <div class="flex items-center space-x-4 mb-4">
                     <span class="text-4xl" role="img" aria-label="Icon">${insight.icon}</span>
                     <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">${formattedDate}</span>
@@ -150,7 +164,8 @@ function createInsightCard(insight) {
     `;
 }
 
-function renderGrid() {
+// 3. FUNKCIJA ZA RENDEROWANJE SA FILTEROM
+function renderGrid(filterCategory = 'all') {
     const container = document.getElementById('insights-archive-grid');
     
     if (!container) {
@@ -158,28 +173,52 @@ function renderGrid() {
         return;
     }
 
-    console.log("Renderujem Insights Grid...");
     let htmlContent = '';
     
-    insightsData.forEach((insight, index) => {
-        let cardHtml = createInsightCard(insight);
-        // Dodajemo animaciju sa zakašnjenjem
-        const delayClass = `delay-${Math.min((index % 4) * 200, 800)}`; 
-        cardHtml = cardHtml.replace('zoom-in', `zoom-in ${delayClass}`);
-        htmlContent += cardHtml;
-    });
+    // Filtriranje podataka
+    const filteredData = filterCategory === 'all' 
+        ? insightsData 
+        : insightsData.filter(item => item.category === filterCategory);
+
+    if (filteredData.length === 0) {
+        htmlContent = '<p class="text-slate-400 text-center col-span-full">No insights found for this category.</p>';
+    } else {
+        filteredData.forEach((insight, index) => {
+            let cardHtml = createInsightCard(insight);
+            // Reset animacije da se ponovo pokrene pri filtriranju
+            const delayClass = `delay-${Math.min((index % 4) * 200, 800)}`; 
+            cardHtml = cardHtml.replace('zoom-in', `zoom-in ${delayClass}`);
+            htmlContent += cardHtml;
+        });
+    }
 
     container.innerHTML = htmlContent;
     
-    // Pokrećemo animacije ako je biblioteka dostupna
-    if (typeof initScrollAnimations === 'function') {
-        initScrollAnimations();
+    // Ponovno pokretanje Lucide ikona
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
     }
 }
 
-// Pokreni renderovanje čim se fajl učita
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', renderGrid);
-} else {
-    renderGrid();
-}
+// 4. INICIJALIZACIJA I EVENT LISTENERI ZA FILTERE
+document.addEventListener('DOMContentLoaded', () => {
+    // Prvo renderovanje (prikaži sve)
+    renderGrid('all');
+
+    // Postavljanje listenera na dugmad za filtriranje
+    const filterButtons = document.querySelectorAll('.topic-button');
+    
+    filterButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // 1. Ukloni 'active' klasu sa svih dugmadi
+            filterButtons.forEach(b => b.classList.remove('active'));
+            
+            // 2. Dodaj 'active' klasu na kliknuto dugme
+            btn.classList.add('active');
+            
+            // 3. Uzmi kategoriju i filtriraj
+            const category = btn.getAttribute('data-topic');
+            renderGrid(category);
+        });
+    });
+});
