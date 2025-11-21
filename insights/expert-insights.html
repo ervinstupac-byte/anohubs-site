@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Expert Insights Archive | Anohubs: Hydro Integrity Thought Leadership</title>
-    <meta name="description" content="Access the full archive of AnoHUB's thought leadership articles on hydro integrity, mitigating 48% dynamic risk, M-E synergy, Digital Twins, and Life Cycle Cost (LCC) analysis.">
+    <title>Expert Insights & Intelligence Hub | Anohubs</title>
+    <meta name="description" content="The AnoHUB Intelligence Center: Access thought leadership on hydro integrity, 48% dynamic risk mitigation, and the future of predictive maintenance.">
     
     <!-- 1. JS INICIJALIZACIJA (Sa ../ jer je u podfolderu) -->
     <script src="../js/head-init.js"></script>
@@ -46,17 +46,20 @@
     <style>
         body { background-color: #111827; }
 
-        /* HERO SEKCIJA SA POZADINOM (VRAĆENO) */
+        /* HERO SEKCIJA SA POZADINOM */
         .archive-header {
-            /* Slika digitalnog blizanca sa tamnim filterom */
+            /* Slika iz foldera slike/ (jedan nivo gore) */
             background-image: linear-gradient(rgba(17, 24, 39, 0.85), rgba(17, 24, 39, 0.95)), url('../slike/digital_twin_main.png');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            padding: 5rem 0;
+            padding: 6rem 0;
             border-bottom: 5px solid #22d3ee; /* hydro-primary */
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            position: relative;
         }
+        
+        .text-glow { text-shadow: 0 0 15px rgba(34, 211, 238, 0.5); }
 
         .insights-grid-container {
             min-height: 100vh;
@@ -64,15 +67,17 @@
         
         /* Stilovi za Filter/Topic sekciju */
         .topic-button {
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             cursor: pointer;
-            border: 1px solid #475569; /* hydro-gray */
+            border: 1px solid #475569; 
             color: #94a3b8;
+            background-color: rgba(30, 41, 59, 0.5);
         }
         .topic-button:hover {
-            border-color: #4ade80; /* hydro-secondary */
+            border-color: #4ade80; 
             background-color: rgba(74, 222, 128, 0.1);
             color: white;
+            transform: translateY(-2px);
         }
         /* Aktivno stanje filtera (dodaje JS) */
         .topic-button.active {
@@ -80,13 +85,28 @@
             background-color: rgba(34, 211, 238, 0.15);
             color: #22d3ee;
             font-weight: 700;
+            box-shadow: 0 0 10px rgba(34, 211, 238, 0.2);
+        }
+
+        /* NEWSLETTER SEKCIJA - Premium izgled */
+        .newsletter-gradient {
+            background: linear-gradient(135deg, #1E293B 0%, #0f172a 100%);
+        }
+        .newsletter-input {
+            background-color: rgba(17, 24, 39, 0.8);
+            border: 1px solid #475569;
+            transition: all 0.3s;
+        }
+        .newsletter-input:focus {
+            border-color: #22d3ee;
+            box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.2);
         }
     </style>
 
 </head>
 <body class="bg-hydro-charcoal text-white"> 
     
-    <!-- HEADER -->
+    <!-- HEADER (Sa putanjama ../ za povratak na root) -->
     <header class="bg-hydro-charcoal text-white shadow-2xl sticky top-0 z-50 border-b border-hydro-primary/50" role="banner">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex justify-between items-center">
             <a href="../index.html#hero" class="focus:outline-none transition" aria-label="Anohubs Logo - Back to Home">
@@ -126,11 +146,11 @@
 
     <main role="main" class="insights-grid-container">
         
-        <!-- HERO SEKCIJA (SADA SA SLIKOM) -->
+        <!-- HERO SEKCIJA (SA SLIKOM I PREKLOPOM) -->
         <section class="archive-header text-white text-center">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <span class="text-hydro-secondary font-bold tracking-widest text-xs uppercase mb-3 inline-block border border-hydro-secondary px-3 py-1 rounded-full bg-hydro-secondary/10">Knowledge Base</span>
-                <h1 class="text-5xl md:text-6xl font-extrabold text-white mb-6 tracking-tight" style="text-shadow: 0 0 20px rgba(34, 211, 238, 0.6);">
+                <span class="text-hydro-secondary font-bold tracking-widest text-xs uppercase mb-4 inline-block border border-hydro-secondary px-4 py-1 rounded-full bg-hydro-secondary/10 shadow-glow">Knowledge Base</span>
+                <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-6 tracking-tight text-glow">
                     Expert Insights & <span class="text-hydro-primary">Intelligence</span>
                 </h1>
                 <p class="text-xl text-slate-200 max-w-3xl mx-auto leading-relaxed font-light">
@@ -140,44 +160,76 @@
         </section>
 
         <!-- SEKCIJA ZA FILTRIRANJE -->
-        <section class="py-10 bg-hydro-charcoal border-b border-hydro-slate sticky top-16 z-40 shadow-lg backdrop-blur-sm bg-opacity-95">
+        <section class="py-8 bg-hydro-charcoal border-b border-hydro-slate sticky top-16 z-40 shadow-lg backdrop-blur-sm bg-opacity-95">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex flex-col md:flex-row justify-between items-center gap-4">
                     
                     <div class="flex flex-wrap justify-center md:justify-start gap-3 text-sm font-semibold">
-                        <!-- Filteri -->
-                        <button class="topic-button px-4 py-2 rounded-full active" data-topic="all">All Insights</button>
-                        <button class="topic-button px-4 py-2 rounded-full" data-topic="fluid">🌊 Fluid Dynamics</button>
-                        <button class="topic-button px-4 py-2 rounded-full" data-topic="finance">💰 Financial Risk</button>
-                        <button class="topic-button px-4 py-2 rounded-full" data-topic="tech">💻 Digital Twin</button>
-                        <button class="topic-button px-4 py-2 rounded-full" data-topic="culture">🤝 Culture Gap</button>
+                        <!-- Filteri - data-topic odgovara JS kategorijama -->
+                        <button class="topic-button px-5 py-2 rounded-full active" data-topic="all">All Insights</button>
+                        <button class="topic-button px-5 py-2 rounded-full" data-topic="fluid">🌊 Fluid Dynamics</button>
+                        <button class="topic-button px-5 py-2 rounded-full" data-topic="finance">💰 Financial Risk</button>
+                        <button class="topic-button px-5 py-2 rounded-full" data-topic="tech">💻 Digital Twin</button>
+                        <button class="topic-button px-5 py-2 rounded-full" data-topic="culture">🤝 Culture Gap</button>
                     </div>
                     
-                    <div class="text-slate-500 text-xs font-mono hidden lg:block">
-                        ARCHIVE STATUS: ONLINE
+                    <div class="text-slate-500 text-xs font-mono hidden lg:block flex items-center gap-2">
+                        <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span> ARCHIVE STATUS: ONLINE
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- GLAVNI KONTEJNER ZA KARTICE -->
-        <section class="py-16 bg-hydro-slate min-h-screen">
+        <!-- GLAVNI GRID ZA KARTICE -->
+        <section class="py-20 bg-hydro-slate min-h-screen">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 
-                <!-- OVDJE SKRIPTA UBACUJE KARTICE -->
+                <!-- OVDJE JS UBACUJE KARTICE -->
                 <div id="insights-archive-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <div class="col-span-full text-center py-20">
                         <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-hydro-primary mb-4"></div>
-                        <p class="text-slate-400">Loading insights...</p>
+                        <p class="text-slate-400">Loading intelligence database...</p>
                     </div>
                 </div>
                 
             </div>
         </section>
+
+        <!-- NEWSLETTER SUBSCRIPTION SEKCIJA (DODANO!) -->
+        <section class="py-24 bg-hydro-charcoal border-t border-hydro-slate relative overflow-hidden">
+            <!-- Pozadinski dekorativni element -->
+            <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-full max-w-4xl h-1 bg-gradient-to-r from-transparent via-hydro-primary to-transparent opacity-50"></div>
+            
+            <div class="max-w-4xl mx-auto px-4">
+                <div class="newsletter-gradient rounded-2xl p-10 md:p-16 text-center shadow-2xl border border-hydro-light-slate relative z-10">
+                    
+                    <div class="mb-8">
+                        <span class="bg-hydro-primary/20 text-hydro-primary px-3 py-1 rounded text-xs font-bold uppercase tracking-widest">Monthly Digest</span>
+                    </div>
+
+                    <h2 class="text-3xl md:text-4xl font-black text-white mb-6">Stay Ahead of the Curve</h2>
+                    <p class="text-slate-300 mb-10 max-w-xl mx-auto text-lg">
+                        Don't let the Execution Gap catch you off guard. Get our latest technical briefs, risk analysis reports, and exclusive case studies delivered directly to your inbox.
+                    </p>
+                    
+                    <form class="flex flex-col sm:flex-row gap-4 justify-center max-w-lg mx-auto" action="https://formspree.io/f/xqaywlaq" method="POST">
+                        <input type="email" name="email" placeholder="Enter your business email" class="newsletter-input px-6 py-4 rounded-lg text-white placeholder-slate-400 w-full outline-none" required>
+                        <input type="hidden" name="_subject" value="Newsletter Subscription Request">
+                        <button type="submit" class="px-8 py-4 bg-hydro-primary text-hydro-charcoal font-bold rounded-lg hover:bg-cyan-400 transition shadow-lg whitespace-nowrap transform hover:scale-105">
+                            Subscribe Free
+                        </button>
+                    </form>
+                    
+                    <p class="text-xs text-slate-500 mt-6">
+                        Zero spam. Unsubscribe at any time. Read our <a href="../privacy-policy.html" class="text-slate-400 hover:text-white underline">Privacy Policy</a>.
+                    </p>
+                </div>
+            </div>
+        </section>
         
     </main>
     
-    <!-- FOOTER -->
+    <!-- FOOTER (Sa putanjama ../) -->
     <div class="md:hidden mobile-sticky-cta text-center">
         <a href="../contact.html" class="w-full block text-center bg-hydro-primary hover:bg-cyan-500 text-hydro-charcoal px-5 py-3 font-bold tracking-wider uppercase shadow-2xl">
             SCHEDULE AUDIT
