@@ -1,17 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="hr" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AnoHUB | Neural Command Interface v3.1</title>
-    <meta name="description" content="Central command interface for Anohubs Engineering Immunity Protocols.">
+    <title>AnoHUB | Central Command Interface v4.0</title>
+    <meta name="description" content="Konačni centralni kontrolni interfejs za svih pet AnoHUB protokola inženjerskog imuniteta.">
     
-    <!-- 1. FONTOVI -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- FONTS -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     
-    <!-- 2. TAILWIND CSS -->
+    <!-- TAILWIND -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = { 
@@ -24,21 +22,24 @@
                         'h-yellow': '#facc15', 'h-dark': '#020617', 'h-panel': '#0f172a', 
                         'h-border': '#1e293b' 
                     },
+                    backgroundImage: {
+                        'neural': "radial-gradient(circle, rgba(249,115,22,0.1) 0%, rgba(0,0,0,0) 70%)",
+                        'laser-target': "radial-gradient(circle, #ef4444 2px, transparent 3px), repeating-radial-gradient(circle, transparent 0, transparent 9px, #334155 10px, transparent 11px)",
+                    },
                     animation: {
                         'pulse-fast': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'spin-slow': 'spin 20s linear infinite',
-                        'float': 'float 6s ease-in-out infinite',
-                        'scroll': 'scroll 45s linear infinite',
-                        'ping-slow': 'ping 3s cubic-bezier(0, 0, 0.2, 1) infinite',
+                        'pendulum': 'pendulum 3s ease-in-out infinite',
+                        'scan-horizontal': 'scanHorizontal 2s cubic-bezier(0.4, 0, 0.2, 1) infinite',
                     },
                     keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-10px)' },
+                        pendulum: {
+                            '0%, 100%': { transform: 'rotate(1deg)' },
+                            '50%': { transform: 'rotate(-1deg)' },
                         },
-                        scroll: {
-                            '0%': { transform: 'translateX(0)' },
-                            '100%': { transform: 'translateX(-50%)' }, /* Scroll half because content is duplicated */
+                        scanHorizontal: {
+                            '0%': { transform: 'translateX(-100%)', opacity: '0' },
+                            '50%': { opacity: '1' },
+                            '100%': { transform: 'translateX(200%)', opacity: '0' }
                         }
                     }
                 } 
@@ -46,298 +47,431 @@
         }
     </script>
 
-    <!-- 3. CUSTOM STYLES -->
     <style>
-        body { background-color: #000; color: #cbd5e1; overflow-x: hidden; }
-        
-        /* CRT Scanline Effect Overlay */
-        .crt::before {
-            content: " "; display: block; position: fixed; top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
-            z-index: 999; background-size: 100% 2px, 3px 100%; pointer-events: none;
-        }
-
-        /* Glass Panels */
+        body { background-color: #020617; color: #cbd5e1; }
         .scada-panel { 
-            background: rgba(15, 23, 42, 0.7); 
+            background: rgba(15, 23, 42, 0.90); 
             backdrop-filter: blur(12px); 
-            border: 1px solid rgba(6, 182, 212, 0.2);
-            box-shadow: 0 0 15px rgba(6, 182, 212, 0.05);
-            transition: all 0.3s ease;
+            border: 1px solid rgba(51, 65, 85, 0.6);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .tab-content { display: none; animation: fadeIn 0.4s; }
+        .tab-content.active { display: block; }
+        
+        .tab-button.active { background-color: var(--color-bg); color: var(--color); border-bottom: 2px solid var(--color); }
+
+        /* General styles for simulators inside the tabs */
+        .input-range::-webkit-slider-thumb {
+            -webkit-appearance: none; height: 16px; width: 16px; border-radius: 50%;
+            cursor: pointer; border: 2px solid white; margin-top: -6px;
+        }
+        .input-range::-webkit-slider-runnable-track {
+            width: 100%; height: 4px; background: #334155; border-radius: 2px;
         }
         
-        /* Module Card Hover Effects */
-        .module-card:hover {
-            transform: translateY(-5px) scale(1.01);
-            background: rgba(15, 23, 42, 0.95);
-            border-color: var(--hover-color);
-            box-shadow: 0 0 30px var(--hover-glow);
-        }
+        /* Chart Line Animation */
+        path { stroke-dasharray: 1000; stroke-dashoffset: 1000; animation: dash 3s ease-out forwards; }
+        @keyframes dash { to { stroke-dashoffset: 0; } }
 
-        /* Ticker Animation Setup */
-        .ticker-wrap {
-            width: 100%; overflow: hidden; background: rgba(2, 6, 23, 0.9); 
-            border-bottom: 1px solid rgba(6, 182, 212, 0.2); white-space: nowrap;
-            position: fixed; top: 0; z-index: 100; height: 32px; display: flex; align-items: center;
-        }
-        .ticker-move { display: inline-block; white-space: nowrap; animation: scroll 40s linear infinite; }
-        .ticker-item { display: inline-block; padding: 0 2rem; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #94a3b8; }
-        .ticker-val { color: #fff; font-weight: bold; }
-        .ticker-warn { color: #ef4444; font-weight: bold; }
-
-        /* Canvas Background Layer */
-        #network-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.6; }
+        /* Circular Progress */
+        .circle-bg { fill: none; stroke: #1e293b; stroke-width: 8; }
+        .circle-progress { fill: none; stroke-width: 8; stroke-linecap: round; transition: stroke-dashoffset 1s ease-out, stroke 0.3s; transform: rotate(-90deg); transform-origin: 50% 50%; }
         
-        /* 3D Perspective Container */
-        .perspective-1000 { perspective: 1000px; }
+        /* PAUT Scan Line */
+        .paut-scanline {
+             position: absolute; left: 0; width: 100%; height: 2px; background: #8b5cf6;
+             box-shadow: 0 0 10px #8b5cf6; animation: scanVertical 4s linear infinite;
+        }
+        @keyframes scanVertical { 0% { top: 0%; } 100% { top: 100%; } }
     </style>
 </head>
-<body class="min-h-screen flex flex-col font-sans selection:bg-h-cyan selection:text-black crt">
+<body class="min-h-screen flex flex-col font-sans selection:bg-h-cyan selection:text-black">
 
-    <!-- DYNAMIC BACKGROUND -->
-    <canvas id="network-canvas"></canvas>
-
-    <!-- LIVE DATA TICKER (Top Bar) -->
-    <div class="ticker-wrap backdrop-blur-md">
-        <div class="ticker-move">
-            <!-- Original Data -->
-            <span class="ticker-item">UNIT 01: EFF <span class="ticker-val">94.2%</span></span>
-            <span class="ticker-item">UNIT 02: VIB <span class="ticker-val">0.05mm/s</span></span>
-            <span class="ticker-item">UNIT 03: SHAFT <span class="ticker-warn">1.2V [RISK]</span></span>
-            <span class="ticker-item">GLOBAL GRID: <span class="ticker-val">50.02Hz</span></span>
-            <span class="ticker-item">LCC ALGORITHM: <span class="ticker-val text-h-cyan">ACTIVE</span></span>
-            <span class="ticker-item">NDT SCAN: <span class="ticker-val">COMPLETE</span></span>
-            <span class="ticker-item">ORG ENTROPY: <span class="ticker-val">LOW</span></span>
-            <span class="ticker-item">UNIT 04: TEMP <span class="ticker-val">65°C</span></span>
-            <!-- Duplicated Data for Seamless Loop -->
-            <span class="ticker-item">UNIT 01: EFF <span class="ticker-val">94.2%</span></span>
-            <span class="ticker-item">UNIT 02: VIB <span class="ticker-val">0.05mm/s</span></span>
-            <span class="ticker-item">UNIT 03: SHAFT <span class="ticker-warn">1.2V [RISK]</span></span>
-            <span class="ticker-item">GLOBAL GRID: <span class="ticker-val">50.02Hz</span></span>
-            <span class="ticker-item">LCC ALGORITHM: <span class="ticker-val text-h-cyan">ACTIVE</span></span>
-            <span class="ticker-item">NDT SCAN: <span class="ticker-val">COMPLETE</span></span>
-            <span class="ticker-item">ORG ENTROPY: <span class="ticker-val">LOW</span></span>
-            <span class="ticker-item">UNIT 04: TEMP <span class="ticker-val">65°C</span></span>
-        </div>
-    </div>
-
-    <!-- MAIN NAVIGATION -->
-    <header class="fixed w-full z-50 top-8 border-b border-h-cyan/10 bg-h-dark/80 backdrop-blur-md">
+    <!-- NAV -->
+    <header class="fixed w-full z-50 scada-panel border-b border-h-cyan/20">
         <div class="max-w-7xl mx-auto px-4 h-16 flex justify-between items-center">
             <div class="flex items-center gap-3">
                 <a href="index.html" class="flex items-center gap-2 group">
-                    <!-- Logo Placeholder -->
-                    <div class="w-8 h-8 bg-h-cyan text-black font-black flex items-center justify-center text-xl shadow-[0_0_15px_rgba(6,182,212,0.6)] rounded">A</div>
+                    <div class="w-8 h-8 bg-h-cyan text-black font-black flex items-center justify-center text-xl shadow-[0_0_15px_rgba(6,182,212,0.4)] group-hover:scale-105 transition rounded">A</div>
                     <div class="leading-tight">
-                        <h1 class="font-bold text-white tracking-tight group-hover:text-h-cyan transition">AnoHUB <span class="text-h-cyan">PRTCL</span></h1>
-                        <p class="text-[10px] font-mono text-slate-500 tracking-widest uppercase group-hover:text-white transition">Command Center</p>
+                        <h1 class="font-bold text-white tracking-tight">AnoHUB <span class="text-h-cyan">PROTOCOLS</span></h1>
+                        <p class="text-[10px] font-mono text-h-cyan tracking-widest uppercase">Command Center</p>
                     </div>
                 </a>
             </div>
-            <div class="flex items-center gap-6 text-xs font-mono">
-                <div class="hidden md:flex items-center gap-2">
-                    <span class="text-slate-500">LATENCY:</span>
-                    <span class="text-h-cyan" id="ping-counter">12ms</span>
+            <div class="flex items-center gap-4 text-xs font-mono">
+                <!-- DYNAMIC PHI STATUS -->
+                <div id="phi-status" class="flex items-center gap-2 text-h-cyan">
+                    <div class="w-2 h-2 bg-h-cyan rounded-full animate-pulse-fast"></div>
+                    SYSTEM STATUS: ONLINE
                 </div>
-                <div class="flex items-center gap-2 text-h-cyan bg-h-cyan/5 px-3 py-1 rounded border border-h-cyan/30 shadow-[0_0_10px_rgba(6,182,212,0.1)]">
-                    <div class="w-1.5 h-1.5 bg-h-cyan rounded-full animate-pulse-fast"></div>
-                    SECURE LINK
-                </div>
+                <a href="contact.html" class="bg-h-cta hover:bg-h-amber text-black px-3 py-1 rounded font-bold uppercase">KONTAKT</a>
             </div>
         </div>
     </header>
 
-    <!-- CONTENT WRAPPER -->
-    <main class="pt-32 pb-12 px-4 max-w-7xl mx-auto space-y-20 relative z-10">
+    <!-- MAIN CONTENT AREA -->
+    <div class="pt-24 pb-12 px-4 max-w-7xl mx-auto w-full">
 
-        <!-- HERO: HOLOGRAPHIC SYSTEM -->
-        <section class="relative grid lg:grid-cols-2 gap-12 items-center min-h-[60vh]">
+        <!-- MODULE TABS -->
+        <div class="scada-panel p-2 rounded-xl mb-8 sticky top-24 z-40 bg-h-dark/95">
+            <nav class="flex justify-between md:justify-around space-x-2 overflow-x-auto">
+                <button class="tab-button active px-4 py-2 text-sm font-bold uppercase rounded-lg whitespace-nowrap" data-tab="lcc" 
+                    style="--color: #06b6d4; --color-bg: #06b6d41a;" title="LCC Veto Protokol">
+                    LCC VETO (Financije)
+                </button>
+                <button class="tab-button px-4 py-2 text-sm font-bold uppercase rounded-lg whitespace-nowrap" data-tab="ndt" 
+                    style="--color: #8b5cf6; --color-bg: #8b5cf61a;" title="NDT Forenzika i Metrologija">
+                    NDT & METROLOGY
+                </button>
+                 <button class="tab-button px-4 py-2 text-sm font-bold uppercase rounded-lg whitespace-nowrap" data-tab="org" 
+                    style="--color: #f97316; --color-bg: #f973161a;" title="Organizacijska Inteligencija">
+                    ORG. INTEL
+                </button>
+                <button class="tab-button px-4 py-2 text-sm font-bold uppercase rounded-lg whitespace-nowrap" data-tab="synergy" 
+                    style="--color: #facc15; --color-bg: #facc151a;" title="Elektro-Mehanička Simbioza">
+                    M-E SYNERGY
+                </button>
+                <button class="tab-button px-4 py-2 text-sm font-bold uppercase rounded-lg whitespace-nowrap" data-tab="alignment" 
+                    style="--color: #3b82f6; --color-bg: #3b82f61a;" title="Precizno Poravnavanje">
+                    ALIGNMENT
+                </button>
+            </nav>
+        </div>
+
+        <!-- TAB CONTENT CONTAINER -->
+        <div id="tab-container" class="space-y-12">
             
-            <!-- Left: Interactive Manifesto -->
-            <div class="relative z-10 space-y-8">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded bg-slate-900/80 border border-slate-700 text-[10px] font-mono text-h-cyan tracking-widest uppercase">
-                    <svg data-lucide="shield-check" class="w-3 h-3"></svg>
-                    Engineering Immunity v3.1
-                </div>
-                
-                <h1 class="text-5xl md:text-6xl lg:text-7xl font-black text-white leading-none tracking-tight">
-                    The <span class="text-transparent bg-clip-text bg-gradient-to-r from-h-cyan via-blue-400 to-purple-500 animate-pulse">Zero Compromise</span> <br>Standard.
-                </h1>
-                
-                <div class="border-l-2 border-h-cyan pl-6 space-y-4">
-                    <p class="text-lg text-slate-300 leading-relaxed max-w-xl">
-                        We don't just manage risk; we digitize, analyze, and neutralize it. 
-                        <strong class="text-white">The AnoHUB Protocol</strong> is a synchronized defense system against the 48% dynamic failure rate in hydropower assets.
+            <!-- MODULE 01: LCC VETO (Financial Model) -->
+            <div id="lcc" class="tab-content active">
+                <div class="scada-panel p-8 border-l-4 border-l-h-cyan">
+                    <h2 class="text-3xl font-black text-white mb-6 tracking-tight">LCC & Procurement Veto</h2>
+                    <p class="text-slate-300 mb-8 max-w-3xl">
+                        Koristite simulaciju ispod za procjenu isplativosti najniže ponude. Ako je **Ukupni Trošak Posjedovanja (LCC)** veći od bazne cijene, aktivira se **VETO** preporuka.
                     </p>
-                    <div class="flex gap-8 text-xs font-mono text-slate-500 pt-2">
-                        <div><span class="block text-xl text-white font-bold">12</span> Audited Sites</div>
-                        <div><span class="block text-xl text-h-cyan font-bold">100%</span> Uptime</div>
-                        <div><span class="block text-xl text-white font-bold">0.05</span> Precision</div>
+
+                    <div id="lcc-simulator" class="grid lg:grid-cols-5 gap-8 border-t border-slate-700 pt-8">
+                        
+                        <!-- Inputs -->
+                        <div class="lg:col-span-2 space-y-6">
+                            <h3 class="font-bold text-h-cyan mb-4">Parametri Ponude</h3>
+                            
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <label class="text-xs font-bold text-h-cyan uppercase">Bid CAPEX ($)</label>
+                                    <span id="val-capex" class="text-xs font-mono text-white">$850,000</span>
+                                </div>
+                                <input type="range" id="in-capex" min="500000" max="1500000" step="10000" value="850000" class="input-range" style="--thumb-color: #06b6d4;">
+                            </div>
+
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <label class="text-xs font-bold text-h-cyan uppercase">Garantovana Efikasnost (%)</label>
+                                    <span id="val-eff" class="text-xs font-mono text-white">93.0%</span>
+                                </div>
+                                <input type="range" id="in-eff" min="90" max="96" step="0.1" value="93.0" class="input-range" style="--thumb-color: #06b6d4;">
+                                <div class="text-[10px] text-h-red mt-1 font-mono" id="eff-warn">Gap to Baseline (94.5%): -1.5%</div>
+                            </div>
+                            
+                            <div class="space-y-3 pt-4 border-t border-slate-700">
+                                <label class="text-xs font-bold text-slate-400 uppercase">Materijal</label>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <button id="mat-std" class="mat-btn active p-2 border border-h-cyan bg-h-cyan/10 text-center text-xs text-white font-bold rounded">13Cr-4Ni (Standard)</button>
+                                    <button id="mat-low" class="mat-btn p-2 border border-slate-600 bg-slate-800 text-center text-xs text-slate-400 rounded hover:border-h-red">Carbon Steel (Niska K)</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Visual Graph & Results -->
+                        <div class="lg:col-span-3 space-y-6">
+                            <div class="bg-black/40 border border-slate-700 rounded p-4 h-64 relative flex flex-col">
+                                <div class="flex-grow relative w-full h-full">
+                                    <svg id="chart-svg" class="w-full h-full overflow-visible" viewBox="0 0 100 100" preserveAspectRatio="none">
+                                        <!-- Grid Lines / Axes -->
+                                        <line x1="0" y1="100%" x2="100%" y2="100%" stroke="#334155" stroke-width="0.5" />
+                                        <text x="50" y="100%" dy="10" text-anchor="middle" fill="#94a3b8" font-size="5" font-family="monospace">Godine</text>
+                                        <text x="0" y="50" dx="-10" text-anchor="end" fill="#94a3b8" font-size="5" font-family="monospace">Milioni $</text>
+                                        
+                                        <!-- Paths -->
+                                        <path id="path-baseline" fill="none" stroke="#64748b" stroke-width="2" stroke-dasharray="4 4" />
+                                        <path id="path-bid" fill="none" stroke="#06b6d4" stroke-width="3" />
+                                        
+                                        <!-- Crossover Point -->
+                                        <circle id="breakeven-point" r="2" fill="#ef4444" class="opacity-0" />
+                                        <text id="breakeven-text" x="0" y="0" fill="#ef4444" font-size="4" font-family="monospace" class="opacity-0">CROSSOVER</text>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <!-- Results Summary -->
+                            <div class="grid grid-cols-3 gap-4">
+                                <div class="scada-panel p-3 border-l-2 border-l-slate-500">
+                                    <div class="text-[10px] text-slate-500 uppercase">Ponuda CAPEX</div>
+                                    <div class="text-lg font-mono text-white font-bold" id="res-capex">$850k</div>
+                                </div>
+                                <div class="scada-panel p-3 border-l-2 border-l-h-red">
+                                    <div class="text-[10px] text-slate-500 uppercase">Gubitak Efikasnosti (NPV)</div>
+                                    <div class="text-lg font-mono text-h-red font-bold" id="res-loss">$1.2M</div>
+                                </div>
+                                <div id="verdict-panel" class="scada-panel p-3 flex flex-col justify-center items-center bg-h-red/10 border border-h-red">
+                                    <div class="text-sm font-black text-h-red" id="verdict-text">VETO BID</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-
-                <div class="flex flex-wrap gap-4 pt-4">
-                    <button onclick="document.getElementById('modules-grid').scrollIntoView({behavior: 'smooth'})" class="bg-h-cyan hover:bg-cyan-300 text-black font-bold px-8 py-4 rounded shadow-[0_0_30px_rgba(6,182,212,0.4)] transition flex items-center gap-2 group">
-                        INITIALIZE SYSTEMS <svg data-lucide="power" class="w-4 h-4 group-hover:scale-110 transition"></svg>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Right: 3D Tilt Hologram (Interactive) -->
-            <div id="hologram-container" class="relative h-[500px] w-full flex items-center justify-center perspective-1000 hidden lg:flex cursor-crosshair">
-                <!-- Inner container moves with JS -->
-                <div id="hologram-content" class="relative w-full h-full flex items-center justify-center transition-transform duration-100 ease-out" style="transform-style: preserve-3d;">
                     
-                    <!-- Central Core Node -->
-                    <div class="absolute w-40 h-40 bg-black/40 rounded-full border border-h-cyan flex items-center justify-center shadow-[0_0_60px_rgba(6,182,212,0.2)] backdrop-blur-sm z-20" style="transform: translateZ(50px);">
-                        <div class="text-center">
-                            <div class="text-4xl font-black text-white tracking-tighter">Ano</div>
-                            <div class="text-xs font-mono text-h-cyan animate-pulse">NEXUS</div>
-                        </div>
+                    <!-- Case Study Link -->
+                    <div class="pt-6 mt-4 border-t border-slate-700">
+                         <a href="case-studies/cs-lcc-procurement-audit.html" class="text-xs font-bold text-h-cyan hover:text-white transition flex items-center gap-2">
+                             <svg data-lucide="book-open" class="w-4 h-4"></svg> POVEZANA STUDIJA: Procurement Integrity Veto
+                         </a>
                     </div>
+                </div>
+            </section>
 
-                    <!-- Orbital Rings -->
-                    <div class="absolute w-[500px] h-[500px] border border-slate-800 rounded-full animate-spin-slow border-dashed opacity-40" style="transform: translateZ(0px);"></div>
-                    <div class="absolute w-[350px] h-[350px] border border-h-cyan/20 rounded-full animate-spin-slow opacity-60" style="animation-direction: reverse; animation-duration: 30s; transform: translateZ(20px);"></div>
-
-                    <!-- Satellites (Floating Data Points) -->
-                    <div class="absolute top-10 right-20 bg-black/80 border-l-2 border-h-cyan p-2 rounded text-[10px] font-mono text-h-cyan shadow-lg animate-float" style="transform: translateZ(80px);">
-                        <div class="text-white font-bold">LCC ENGINE</div>
-                        <div>Status: Optimal</div>
-                    </div>
+            <!-- MODULE 02: NDT & METROLOGY (Forensic) -->
+            <div id="ndt" class="tab-content">
+                <div class="scada-panel p-8 border-l-4 border-l-h-purple">
+                    <h2 class="text-3xl font-black text-white mb-6 tracking-tight">Forensic NDT & Metrology</h2>
+                    <p class="text-slate-300 leading-relaxed text-lg mb-8 max-w-3xl">
+                        PAUT (Phased Array Ultrasonic) i Laserska Metrologija eliminišu nagađanja. Koristimo sub-milimetarsku preciznost za detekciju pukotina i geometrijskih odstupanja nevidljivih golim okom.
+                    </p>
                     
-                    <div class="absolute bottom-20 left-10 bg-black/80 border-l-2 border-h-purple p-2 rounded text-[10px] font-mono text-h-purple shadow-lg animate-float" style="animation-delay: 1s; transform: translateZ(60px);">
-                        <div class="text-white font-bold">NDT ARRAY</div>
-                        <div>Scanning...</div>
-                    </div>
-
-                    <div class="absolute top-1/2 right-0 bg-black/80 border-l-2 border-h-yellow p-2 rounded text-[10px] font-mono text-h-yellow shadow-lg animate-float" style="animation-delay: 2s; transform: translateZ(40px);">
-                        <div class="text-white font-bold">M-E SYNERGY</div>
-                        <div>Volts: 0.02V</div>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <a href="services-integrity.html" class="scada-panel p-6 border-t-2 border-t-h-purple hover:bg-h-panel transition group">
+                            <div class="flex justify-between items-center mb-3">
+                                <h3 class="text-white font-bold m-0">PAUT Vremenski Modul</h3>
+                                <svg data-lucide="waves" class="w-6 h-6 text-h-purple group-hover:scale-110 transition"></svg>
+                            </div>
+                            <p class="text-sm text-slate-400">Volumetrijski sken zavarenih spojeva i kritičnih dijelova Francis turbine. Eliminiše opasnu radiografiju.</p>
+                            <span class="text-[10px] font-mono text-h-purple mt-4 block">DETEKCIJA: 0.5 MM @ 100% VOLUME</span>
+                        </a>
+                        <a href="contact.html" class="scada-panel p-6 border-t-2 border-t-h-purple hover:bg-h-panel transition group">
+                            <div class="flex justify-between items-center mb-3">
+                                <h3 class="font-bold text-white m-0">HVOF Premazi</h3>
+                                <svg data-lucide="flame" class="w-6 h-6 text-h-purple group-hover:scale-110 transition"></svg>
+                            </div>
+                            <p class="text-sm text-slate-400">Hipersonični premazi volfram-karbida (HVOF) za zaštitu od abrazije u Pelton i Francis turbinama.</p>
+                            <span class="text-[10px] font-mono text-h-purple mt-4 block">TVRDOĆA: 1250 HV | POROZNOST: < 1%</span>
+                        </a>
+                        <!-- Case Study Link -->
+                        <div class="lg:col-span-2 pt-4 border-t border-slate-700">
+                             <a href="case-studies/cs-forensic-ndt-fatigue.html" class="text-xs font-bold text-h-purple hover:text-white transition flex items-center gap-2">
+                                 <svg data-lucide="book-open" class="w-4 h-4"></svg> POVEZANA STUDIJA: Material Integrity (Francis Blade)
+                             </a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </section>
 
-        <!-- MODULES GRID -->
-        <section id="modules-grid">
-            <div class="flex items-center gap-4 mb-10">
-                <div class="h-px bg-gradient-to-r from-transparent via-h-cyan to-transparent flex-grow opacity-30"></div>
-                <h2 class="text-xs font-mono text-h-cyan uppercase tracking-[0.3em] text-center px-4 border border-h-cyan/30 rounded py-1 bg-h-cyan/5 shadow-[0_0_15px_rgba(6,182,212,0.1)]">Active Defense Modules</h2>
-                <div class="h-px bg-gradient-to-r from-transparent via-h-cyan to-transparent flex-grow opacity-30"></div>
-            </div>
+            <!-- MODULE 03: ORG. INTEL (Entropy Simulator) -->
+            <div id="org" class="tab-content">
+                <div class="scada-panel p-8 border-l-4 border-l-h-orange">
+                    <h2 class="text-3xl font-black text-white mb-6 tracking-tight">Organizational Intelligence</h2>
+                    <p class="text-slate-300 mb-8 max-w-3xl">
+                        Koristite simulator ispod za mjerenje "Informacijske Entropije" (gubitka informacija) unutar vašeg lanca komande, što je ključni uzrok neuspjeha montaže.
+                    </p>
 
-            <!-- GRID OF CARDS -->
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="grid md:grid-cols-2 gap-12 border-t border-slate-700 pt-8">
+                        
+                        <!-- Inputs -->
+                        <div class="space-y-6">
+                            <h3 class="font-bold text-h-orange mb-4">Input Parametri</h3>
+                            
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <label class="text-xs font-bold text-slate-400 uppercase">Broj Menadžerskih Slojeva</label>
+                                    <span id="org-val-layers" class="text-xs font-mono text-h-orange font-bold">4</span>
+                                </div>
+                                <input type="range" id="org-in-layers" min="1" max="8" step="1" value="4" class="input-range" style="--thumb-color: #f97316;">
+                            </div>
 
-                <!-- MODULE 01: LCC (Finance) -->
-                <a href="protocol/anohub_protocol_v2.html" class="scada-panel p-6 rounded-xl module-card group relative overflow-hidden block h-full" style="--hover-color: #22d3ee; --hover-glow: rgba(34,211,238,0.2)">
-                    <div class="absolute inset-0 bg-gradient-to-b from-transparent to-h-cyan/5 opacity-0 group-hover:opacity-100 transition duration-500"></div>
-                    <div class="flex justify-between items-start mb-6">
-                        <div class="bg-black/50 p-3 rounded border border-h-cyan/30 text-h-cyan shadow-[0_0_10px_rgba(34,211,238,0.1)]">
-                            <svg data-lucide="bar-chart-3" class="w-6 h-6"></svg>
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <label class="text-xs font-bold text-slate-400 uppercase">Kompleksnost Stakeholdera</label>
+                                    <span id="org-val-stakeholders" class="text-xs font-mono text-h-orange font-bold">Medium</span>
+                                </div>
+                                <input type="range" id="org-in-stakeholders" min="1" max="3" step="1" value="2" class="input-range" style="--thumb-color: #f97316;">
+                                <div class="flex justify-between text-[10px] text-slate-600 mt-1">
+                                    <span>Single Client</span>
+                                    <span>Multi-National</span>
+                                </div>
+                            </div>
                         </div>
-                        <span class="text-[9px] font-mono text-slate-500 group-hover:text-h-cyan transition">SYS-01</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-h-cyan transition">LCC & Procurement Veto</h3>
-                    <p class="text-sm text-slate-400 mb-6 leading-relaxed">Algorithmic financial firewall. Rejects low-CAPEX bids by calculating 20-year efficiency degradation costs and ROI.</p>
-                    <div class="absolute bottom-6 left-6 right-6 pt-4 border-t border-slate-800 flex justify-between items-center">
-                        <span class="text-[10px] font-mono text-slate-500 group-hover:text-white">STATUS: <span class="text-h-cyan">ONLINE</span></span>
-                        <svg data-lucide="external-link" class="w-4 h-4 text-slate-600 group-hover:text-h-cyan transition"></svg>
-                    </div>
-                </a>
 
-                <!-- MODULE 02: NDT (Materials) -->
-                <a href="protocol/anohub_methodology_v2.html" class="scada-panel p-6 rounded-xl module-card group relative overflow-hidden block h-full" style="--hover-color: #8b5cf6; --hover-glow: rgba(139,92,246,0.2)">
-                    <div class="absolute inset-0 bg-gradient-to-b from-transparent to-h-purple/5 opacity-0 group-hover:opacity-100 transition duration-500"></div>
-                    <div class="flex justify-between items-start mb-6">
-                        <div class="bg-black/50 p-3 rounded border border-h-purple/30 text-h-purple shadow-[0_0_10px_rgba(139,92,246,0.1)]">
-                            <svg data-lucide="scan-line" class="w-6 h-6"></svg>
+                        <!-- Outputs / Gauge -->
+                        <div class="flex flex-col items-center justify-center relative">
+                            <div class="relative w-48 h-48">
+                                <svg class="w-full h-full" viewBox="0 0 100 100">
+                                    <circle class="circle-bg" cx="50" cy="50" r="45"></circle>
+                                    <circle id="entropy-circle" class="circle-progress" cx="50" cy="50" r="45" stroke="#f97316" stroke-dasharray="283" stroke-dashoffset="100"></circle>
+                                </svg>
+                                <div class="absolute inset-0 flex flex-col items-center justify-center">
+                                    <span id="org-res-entropy" class="text-5xl font-black text-white drop-shadow-[0_0_10px_rgba(249,115,22,0.5)]">45%</span>
+                                    <span class="text-[10px] text-slate-500 uppercase tracking-widest mt-2 font-bold">Informacijski Gubitak</span>
+                                </div>
+                            </div>
+
+                            <div id="org-verdict-box" class="mt-8 px-8 py-3 rounded bg-h-orange/10 border border-h-orange text-h-orange font-bold text-sm tracking-wide shadow-lg">
+                                HIGH RISK: SILOS DETECTED
+                            </div>
+                            
+                            <p id="org-verdict-desc" class="text-xs text-center text-slate-500 mt-4 max-w-xs leading-relaxed">
+                                Nivo gubitka instrukcija od Uprave do Izvršioca.
+                            </p>
+                            <button onclick="updateOrgSim()" class="bg-h-dark text-h-orange border border-h-orange/30 hover:border-h-orange transition mt-4 py-2 px-4 rounded text-xs font-bold">Run Simulation</button>
                         </div>
-                        <span class="text-[9px] font-mono text-slate-500 group-hover:text-h-purple transition">SYS-02</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-h-purple transition">Forensic NDT & Metrology</h3>
-                    <p class="text-sm text-slate-400 mb-6 leading-relaxed">Deep-scan protocols. PAUT volumetric testing, HVOF surface hardening, and 3D Laser geometric verification.</p>
-                    <div class="absolute bottom-6 left-6 right-6 pt-4 border-t border-slate-800 flex justify-between items-center">
-                        <span class="text-[10px] font-mono text-slate-500 group-hover:text-white">STATUS: <span class="text-h-purple">ACTIVE</span></span>
-                        <svg data-lucide="external-link" class="w-4 h-4 text-slate-600 group-hover:text-h-purple transition"></svg>
-                    </div>
-                </a>
-
-                <!-- MODULE 03: ORG (Intelligence) -->
-                <a href="protocol/anohub_organization_v2.html" class="scada-panel p-6 rounded-xl module-card group relative overflow-hidden block h-full" style="--hover-color: #f97316; --hover-glow: rgba(249,115,22,0.2)">
-                    <div class="absolute inset-0 bg-gradient-to-b from-transparent to-h-orange/5 opacity-0 group-hover:opacity-100 transition duration-500"></div>
-                    <div class="flex justify-between items-start mb-6">
-                        <div class="bg-black/50 p-3 rounded border border-h-orange/30 text-h-orange shadow-[0_0_10px_rgba(249,115,22,0.1)]">
-                            <svg data-lucide="network" class="w-6 h-6"></svg>
+                        <!-- Case Study Link -->
+                        <div class="lg:col-span-2 pt-4 border-t border-slate-700">
+                             <a href="case-studies/cs-digital-protocol-roi.html" class="text-xs font-bold text-h-orange hover:text-white transition flex items-center gap-2">
+                                 <svg data-lucide="book-open" class="w-4 h-4"></svg> POVEZANA STUDIJA: SCADA-to-CEO Gap Closed
+                             </a>
                         </div>
-                        <span class="text-[9px] font-mono text-slate-500 group-hover:text-h-orange transition">SYS-03</span>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-h-orange transition">Organizational Intelligence</h3>
-                    <p class="text-sm text-slate-400 mb-6 leading-relaxed">Preventing execution gap. AI-driven governance models to map responsibilities and reduce information entropy.</p>
-                    <div class="absolute bottom-6 left-6 right-6 pt-4 border-t border-slate-800 flex justify-between items-center">
-                        <span class="text-[10px] font-mono text-slate-500 group-hover:text-white">STATUS: <span class="text-h-orange">LEARNING</span></span>
-                        <svg data-lucide="external-link" class="w-4 h-4 text-slate-600 group-hover:text-h-orange transition"></svg>
-                    </div>
-                </a>
-
-                <!-- MODULE 04: SYNERGY (Electro-Mech) -->
-                <a href="protocol/anohub_synergy_v2.html" class="scada-panel p-6 rounded-xl module-card group relative overflow-hidden block h-full" style="--hover-color: #facc15; --hover-glow: rgba(250,204,21,0.2)">
-                    <div class="absolute inset-0 bg-gradient-to-b from-transparent to-h-yellow/5 opacity-0 group-hover:opacity-100 transition duration-500"></div>
-                    <div class="flex justify-between items-start mb-6">
-                        <div class="bg-black/50 p-3 rounded border border-h-yellow/30 text-h-yellow shadow-[0_0_10px_rgba(250,204,21,0.1)]">
-                            <svg data-lucide="zap" class="w-6 h-6"></svg>
-                        </div>
-                        <span class="text-[9px] font-mono text-slate-500 group-hover:text-h-yellow transition">SYS-04</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-h-yellow transition">M-E Synergy Audit</h3>
-                    <p class="text-sm text-slate-400 mb-6 leading-relaxed">Electro-Mechanical diagnostics. Isolating stray current threats (EDM) and ghost vibrations before bearing failure.</p>
-                    <div class="absolute bottom-6 left-6 right-6 pt-4 border-t border-slate-800 flex justify-between items-center">
-                        <span class="text-[10px] font-mono text-slate-500 group-hover:text-white">STATUS: <span class="text-h-yellow">MONITORING</span></span>
-                        <svg data-lucide="external-link" class="w-4 h-4 text-slate-600 group-hover:text-h-yellow transition"></svg>
-                    </div>
-                </a>
-
-                <!-- MODULE 05: ALIGNMENT (Precision) -->
-                <a href="protocol/anohub_alignment_v2.html" class="scada-panel p-6 rounded-xl module-card group relative overflow-hidden block h-full" style="--hover-color: #3b82f6; --hover-glow: rgba(59,130,246,0.2)">
-                    <div class="absolute inset-0 bg-gradient-to-b from-transparent to-h-blue/5 opacity-0 group-hover:opacity-100 transition duration-500"></div>
-                    <div class="flex justify-between items-start mb-6">
-                        <div class="bg-black/50 p-3 rounded border border-h-blue/30 text-h-blue shadow-[0_0_10px_rgba(59,130,246,0.1)]">
-                            <svg data-lucide="crosshair" class="w-6 h-6"></svg>
-                        </div>
-                        <span class="text-[9px] font-mono text-slate-500 group-hover:text-h-blue transition">SYS-05</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-h-blue transition">Precision Alignment</h3>
-                    <p class="text-sm text-slate-400 mb-6 leading-relaxed">Mandatory 0.05mm tolerances. Virtual laser simulation, plumbness verification, and thrust load equalization.</p>
-                    <div class="absolute bottom-6 left-6 right-6 pt-4 border-t border-slate-800 flex justify-between items-center">
-                        <span class="text-[10px] font-mono text-slate-500 group-hover:text-white">STATUS: <span class="text-h-blue">READY</span></span>
-                        <svg data-lucide="external-link" class="w-4 h-4 text-slate-600 group-hover:text-h-blue transition"></svg>
-                    </div>
-                </a>
-
-                <!-- MODULE 06: AI (Locked) -->
-                <div class="scada-panel p-6 rounded-xl border-dashed border-slate-800 opacity-40 flex flex-col justify-center items-center text-center relative overflow-hidden h-full">
-                    <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAiIGhlaWdodD0iMTAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTEwIDEwTDAgME0wIDEwTDEwIDAiIHN0cm9rZT0iIzMzNDE1NSIgc3Ryb2tlLXdpZHRoPSIwLjUiLz48L3N2Zz4=')] opacity-10"></div>
-                    <svg data-lucide="lock" class="w-10 h-10 text-slate-600 mb-4"></svg>
-                    <h3 class="text-sm font-bold text-slate-500 uppercase">Module 06: Hydro-AI</h3>
-                    <p class="text-xs text-slate-600 mt-2">Neural Load Forecasting</p>
-                    <span class="mt-4 text-[9px] bg-slate-900 px-2 py-1 rounded text-slate-500 font-mono border border-slate-800">ENCRYPTED / COMING SOON</span>
                 </div>
-
             </div>
-        </section>
 
-    </main>
+            <!-- MODULE 04: M-E SYNERGY (Stray Current) -->
+            <div id="synergy" class="tab-content">
+                <div class="scada-panel p-8 border-l-4 border-l-h-yellow">
+                    <h2 class="text-3xl font-black text-white mb-6 tracking-tight">M-E Synergy Audit</h2>
+                    <p class="text-slate-300 leading-relaxed text-lg mb-8 max-w-3xl">
+                        Simulirajte utjecaj neispravnog uzemljenja i nestandardnih ležajeva na napon osovine (Shaft Voltage), koji uzrokuje **elektro-eroziju (EDM)** ležajeva.
+                    </p>
+
+                    <div class="grid md:grid-cols-2 gap-12 border-t border-slate-700 pt-8">
+                        
+                        <!-- Solutions -->
+                        <div class="space-y-6">
+                            <h3 class="font-bold text-h-yellow mb-4">Aktivacija Kontra-Mjera</h3>
+                            
+                            <!-- Toggle 1 -->
+                            <div class="flex items-center justify-between bg-slate-900 p-4 rounded border border-slate-700">
+                                <div>
+                                    <div class="text-sm font-bold text-white">Uzemljivačke Četkice</div>
+                                    <div class="text-[10px] text-slate-500">Ag-C (Silver Graphite) Passive Bleed</div>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" id="toggle-brush" class="sr-only peer">
+                                    <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-h-yellow"></div>
+                                </label>
+                            </div>
+
+                            <!-- Toggle 2 -->
+                            <div class="flex items-center justify-between bg-slate-900 p-4 rounded border border-slate-700">
+                                <div>
+                                    <div class="text-sm font-bold text-white">Izolirani Ležaj (NDE)</div>
+                                    <div class="text-[10px] text-slate-500">Keramički/Polimerni Prekid Kruga</div>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" id="toggle-insulation" class="sr-only peer">
+                                    <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-h-yellow"></div>
+                                </label>
+                            </div>
+                            
+                            <a href="case-studies/cs-me-synergy-erosion.html" class="text-sm text-slate-400 hover:text-white transition block pt-4 border-t border-slate-700 flex items-center gap-2">
+                                <svg data-lucide="book-open" class="w-4 h-4"></svg> Povezani Case Study: M-E Synergy Erosion
+                            </a>
+                        </div>
+
+                        <!-- Result Gauge -->
+                        <div class="flex flex-col items-center justify-center">
+                            <div class="relative w-48 h-48 flex items-center justify-center border-4 border-slate-700 rounded-full bg-slate-900 shadow-[inset_0_0_20px_rgba(0,0,0,0.5)]">
+                                <div class="text-center">
+                                    <div class="text-[10px] text-slate-500 uppercase tracking-widest">Potencijal Osovine</div>
+                                    <div id="sim-voltage" class="text-5xl font-black text-h-red transition-all duration-500">1.80</div>
+                                    <div class="text-sm text-slate-400">Volts</div>
+                                </div>
+                                <div id="sim-ring" class="absolute inset-0 border-4 border-h-red rounded-full opacity-50 animate-pulse"></div>
+                            </div>
+                            <div id="sim-verdict-synergy" class="mt-6 text-xs font-bold text-h-red bg-h-red/10 px-4 py-2 rounded border border-h-red uppercase tracking-wider">
+                                DANGER: EDM IMMINENT
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            
+            <!-- MODULE 05: PRECISION ALIGNMENT (Simulator) -->
+            <div id="alignment" class="tab-content">
+                <div class="scada-panel p-8 border-l-4 border-l-h-blue">
+                    <h2 class="text-3xl font-black text-white mb-6 tracking-tight">Precision Alignment Protocol</h2>
+                    <p class="text-slate-300 mb-8 max-w-3xl">
+                        Koristite klizače da simulirate utjecaj podložaka (Shim) na poravnanje. Cilj je postići **Offset** i **Angular** unutar 0.05 mm (unutar zelene zone).
+                    </p>
+                    
+                    <div class="grid md:grid-cols-2 gap-8 border-t border-slate-700 pt-8">
+                        
+                        <!-- Visualizer (Left) -->
+                        <div class="p-8 bg-black/50 relative flex items-center justify-center border-r border-slate-700 min-h-[300px] rounded-xl">
+                            <!-- Target Background -->
+                            <div class="absolute w-48 h-48 rounded-full border border-slate-700 bg-laser-target opacity-30 target-crosshair"></div>
+                            
+                            <!-- Tolerance Box (Green Zone) -->
+                            <div class="absolute w-12 h-12 border-2 border-h-green/30 bg-h-green/5 rounded"></div>
+
+                            <!-- Laser Point -->
+                            <div id="laser-dot" class="absolute w-3 h-3 bg-h-red rounded-full shadow-[0_0_10px_#ef4444] transition-all duration-300 ease-out" style="transform: translate(40px, -30px)"></div>
+                            
+                            <!-- Axis Labels -->
+                            <div class="absolute top-4 text-[10px] text-slate-600 font-mono">V-OFFSET</div>
+                            <div class="absolute right-4 text-[10px] text-slate-600 font-mono rotate-90">H-ANGULAR</div>
+                        </div>
+
+                        <!-- Controls (Right) -->
+                        <div class="p-6 space-y-6">
+                            
+                            <!-- Shim Controls -->
+                            <h3 class="font-bold text-h-blue mb-4">Korekcija Podlošcima (Shim)</h3>
+                            
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <label class="text-xs font-bold text-white uppercase">Prednji Podložak</label>
+                                    <span class="text-xs font-mono text-h-blue" id="val-front">0.00 mm</span>
+                                </div>
+                                <input type="range" id="shim-front" min="-2.0" max="2.0" step="0.05" value="0.8" class="input-range" style="--thumb-color: #3b82f6;">
+                            </div>
+
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <label class="text-xs font-bold text-white uppercase">Stražnji Podložak</label>
+                                    <span class="text-xs font-mono text-h-blue" id="val-back">0.00 mm</span>
+                                </div>
+                                <input type="range" id="shim-back" min="-2.0" max="2.0" step="0.05" value="-0.5" class="w-full input-range" style="--thumb-color: #3b82f6;">
+                            </div>
+
+                            <!-- Live Readings -->
+                            <div class="grid grid-cols-2 gap-4 mt-6">
+                                <div class="bg-black/50 p-3 rounded border border-slate-700">
+                                    <div class="text-[10px] text-slate-500 uppercase">Vertikalni Offset</div>
+                                    <div class="text-xl font-mono text-white font-bold" id="read-offset">0.45</div>
+                                    <div class="text-[10px] text-h-red text-right" id="tol-offset">FAIL</div>
+                                </div>
+                                <div class="bg-black/50 p-3 rounded border border-slate-700">
+                                    <div class="text-[10px] text-slate-500 uppercase">Kutno Odstupanje</div>
+                                    <div class="text-xl font-mono text-white font-bold" id="read-angle">0.12</div>
+                                    <div class="text-[10px] text-h-red text-right" id="tol-angle">FAIL</div>
+                                </div>
+                            </div>
+                        </div>
+                         <!-- Case Study Link -->
+                        <div class="lg:col-span-2 pt-4 border-t border-slate-700">
+                             <a href="case-studies/cs-francis-misalignment.html" class="text-xs font-bold text-h-blue hover:text-white transition flex items-center gap-2">
+                                 <svg data-lucide="book-open" class="w-4 h-4"></svg> POVEZANA STUDIJA: Francis Misalignment Fix
+                             </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+        </main>
+    </div>
 
     <!-- FOOTER -->
-    <footer class="border-t border-slate-900 bg-black py-10 mt-auto relative z-10">
-        <div class="max-w-7xl mx-auto px-4 text-center text-slate-600 text-xs font-mono space-y-4">
-            <div class="flex justify-center gap-8 mb-4 opacity-60">
-                <span class="flex items-center gap-2"><div class="w-1.5 h-1.5 bg-h-green rounded-full"></div> SECURE SERVER CONNECTED</span>
-                <span>ISO 27001 CERTIFIED</span>
-            </div>
-            <div class="h-px w-24 bg-slate-800 mx-auto"></div>
-            <p>© 2025 ANO_HUB // ENGINEERING DIVISION</p>
+    <footer class="border-t border-slate-800 bg-black py-8 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 text-center text-slate-600 text-xs font-mono">
+            ANO_HUB // ENGINEERING DIVISION // ISO 10816
         </div>
     </footer>
 
@@ -347,129 +481,396 @@
         document.addEventListener('DOMContentLoaded', () => {
             lucide.createIcons();
 
-            // === 1. DYNAMIC NEURAL NETWORK CANVAS ===
-            const canvas = document.getElementById('network-canvas');
-            const ctx = canvas.getContext('2d');
-            let width, height;
-            let particles = [];
+            // --- LCC CONSTANTS ---
+            const BASELINE_CAPEX = 1200000;
+            const BASELINE_EFF = 94.5;
+            const REVENUE_POTENTIAL = 2000000;
+            const YEARS = 20;
+            const DISCOUNT = 0.085;
+            const CIRCLE_CIRCUMFERENCE = 283;
+            const DIST_FRONT = 500;
+            const DIST_BACK = 1000;
+            
+            // --- LCC STATE ---
+            let lccState = { capex: 850000, eff: 93.0, material: 'std' };
+            
+            // --- DOM ELEMENTS (Consolidated fetch) ---
+            const elCapex = document.getElementById('in-capex');
+            const elEff = document.getElementById('in-eff');
+            const dispCapex = document.getElementById('val-capex');
+            const dispEff = document.getElementById('val-eff');
+            const warnEff = document.getElementById('eff-warn');
+            const btnMatStd = document.getElementById('mat-std');
+            const btnMatLow = document.getElementById('mat-low');
+            const resCapex = document.getElementById('res-capex');
+            const resLoss = document.getElementById('res-loss');
+            const verdictText = document.getElementById('verdict-text');
+            const verdictPanel = document.getElementById('verdict-panel');
+            const svgBase = document.getElementById('path-baseline');
+            const svgBid = document.getElementById('path-bid');
+            const ptBreak = document.getElementById('breakeven-point');
+            const txtBreak = document.getElementById('breakeven-text');
+            
+            const toggleBrush = document.getElementById('toggle-brush');
+            const toggleInsulation = document.getElementById('toggle-insulation');
+            const simVoltage = document.getElementById('sim-voltage');
+            const simVerdictSynergy = document.getElementById('sim-verdict-synergy');
+            const simRing = document.getElementById('sim-ring');
+            
+            const shimFront = document.getElementById('shim-front');
+            const shimBack = document.getElementById('shim-back');
+            const valFront = document.getElementById('val-front');
+            const valBack = document.getElementById('val-back');
+            const readOffset = document.getElementById('read-offset');
+            const readAngle = document.getElementById('read-angle');
+            const tolOffset = document.getElementById('tol-offset');
+            const tolAngle = document.getElementById('tol-angle');
+            const laserDot = document.getElementById('laser-dot');
+            const statusLed = document.getElementById('status-led');
+            const statusText = document.getElementById('status-text');
 
-            function resize() {
-                width = window.innerWidth;
-                height = window.innerHeight;
-                canvas.width = width;
-                canvas.height = height;
+            const orgInLayers = document.getElementById('org-in-layers');
+            const orgInStake = document.getElementById('org-in-stakeholders');
+            const orgValLayers = document.getElementById('org-val-layers');
+            const orgValStake = document.getElementById('org-val-stakeholders');
+            const orgEntropyCircle = document.getElementById('entropy-circle');
+            const orgResEntropy = document.getElementById('org-res-entropy');
+            const orgVerdictBox = document.getElementById('org-verdict-box');
+            const orgVerdictDesc = document.getElementById('org-verdict-desc');
+
+
+            // ====================================================================================
+            // CORE UTILITY FUNCTIONS
+            // ====================================================================================
+            
+            function formatCurrency(num) {
+                const absNum = Math.abs(num);
+                if (absNum > 1000000) return '$' + (absNum/1000000).toFixed(2) + 'M';
+                return '$' + (absNum/1000).toFixed(0) + 'k';
             }
-            window.addEventListener('resize', resize);
-            resize();
-
-            class Particle {
-                constructor() {
-                    this.x = Math.random() * width;
-                    this.y = Math.random() * height;
-                    this.vx = (Math.random() - 0.5) * 0.3; // Slower speed for background
-                    this.vy = (Math.random() - 0.5) * 0.3;
-                    this.size = Math.random() * 2;
-                }
-                update() {
-                    this.x += this.vx;
-                    this.y += this.vy;
-                    if (this.x < 0 || this.x > width) this.vx *= -1;
-                    if (this.y < 0 || this.y > height) this.vy *= -1;
-                }
-                draw() {
-                    ctx.fillStyle = 'rgba(6, 182, 212, 0.4)'; // Cyan dots
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                    ctx.fill();
-                }
+            
+            function updateEffGap() {
+                if(!elEff || !warnEff) return;
+                const effVal = parseFloat(elEff.value);
+                const gap = (effVal - BASELINE_EFF).toFixed(1);
+                warnEff.innerText = `Gap to Baseline (${BASELINE_EFF.toFixed(1)}%): ${gap}%`;
+                warnEff.className = gap < 0 ? "text-[10px] text-h-red mt-1 font-mono" : "text-[10px] text-h-green mt-1 font-mono";
             }
-
-            // Create particles
-            for (let i = 0; i < 70; i++) particles.push(new Particle());
-
-            // Mouse interaction
-            let mouse = { x: null, y: null };
-            window.addEventListener('mousemove', (e) => {
-                mouse.x = e.x;
-                mouse.y = e.y;
-            });
-            // Clear mouse on leave so lines don't stick
-            window.addEventListener('mouseleave', () => { mouse.x = null; mouse.y = null; });
-
-            function animateNetwork() {
-                ctx.clearRect(0, 0, width, height);
+            
+            function drawChart(base, bid, breakYear) {
+                if(!svgBase) return;
+                const points = base.length;
+                const maxVal = Math.max(...bid, ...base) * 1.1;
+                const minVal = Math.min(...bid, ...base) * 0.9;
                 
-                particles.forEach(p => {
-                    p.update();
-                    p.draw();
-                    
-                    // Connect particles to each other
-                    particles.forEach(p2 => {
-                        const dx = p.x - p2.x;
-                        const dy = p.y - p2.y;
-                        const dist = Math.sqrt(dx*dx + dy*dy);
-                        if (dist < 100) {
-                            ctx.strokeStyle = `rgba(6, 182, 212, ${0.1 - dist/1000})`;
-                            ctx.lineWidth = 0.5;
-                            ctx.beginPath();
-                            ctx.moveTo(p.x, p.y);
-                            ctx.lineTo(p2.x, p2.y);
-                            ctx.stroke();
-                        }
-                    });
+                const getCoords = (arr) => {
+                    return arr.map((val, i) => {
+                        const x = (i / (points-1)) * 100;
+                        const y = 100 - ((val - minVal) / (maxVal - minVal)) * 100; // Normalize
+                        return `${x},${y}`;
+                    }).join(" ");
+                };
 
-                    // Connect particles to mouse
-                    if (mouse.x) {
-                        const dx = p.x - mouse.x;
-                        const dy = p.y - mouse.y;
-                        const dist = Math.sqrt(dx*dx + dy*dy);
-                        if (dist < 150) {
-                            ctx.strokeStyle = `rgba(6, 182, 212, ${0.2 - dist/750})`;
-                            ctx.lineWidth = 0.8;
-                            ctx.beginPath();
-                            ctx.moveTo(p.x, p.y);
-                            ctx.lineTo(mouse.x, mouse.y);
-                            ctx.stroke();
-                        }
+                svgBase.setAttribute('d', `M ${getCoords(base)}`);
+                svgBid.setAttribute('d', `M ${getCoords(bid)}`);
+
+                // Breakeven Dot
+                if(breakYear) {
+                    const idx = breakYear;
+                    const x = (idx / (points-1)) * 100;
+                    const y = 100 - ((bid[idx] - minVal) / (maxVal - minVal)) * 100;
+                    
+                    ptBreak.setAttribute('cx', `${x}%`);
+                    ptBreak.setAttribute('cy', `${y}%`);
+                    ptBreak.classList.remove('opacity-0');
+                    
+                    txtBreak.setAttribute('x', `${x + 2}%`);
+                    txtBreak.setAttribute('y', `${y - 5}%`);
+                    txtBreak.innerHTML = `ROI END YR ${breakYear}`;
+                    txtBreak.classList.remove('opacity-0');
+                } else {
+                    ptBreak.classList.add('opacity-0');
+                    txtBreak.classList.add('opacity-0');
+                }
+            }
+
+
+            // ====================================================================================
+            // MODULE SIMULATION WRAPPERS
+            // ====================================================================================
+
+            function calculateLCC() {
+                if (!elCapex || !elEff) return;
+
+                const bidCapex = parseFloat(elCapex.value);
+                const bidEff = parseFloat(elEff.value);
+                
+                let baseData = [], bidData = [];
+                let bidCum = bidCapex;
+                let breakYear = null;
+
+                const degradeBase = 0.0002;
+                const degradeBid = lccState.material === 'std' ? 0.0002 : 0.0015;
+                
+                const maintBase = 45000;
+                const maintBid = lccState.material === 'low' ? 65000 : 45000;
+                
+
+                let currentBaseEff = BASELINE_EFF / 100;
+                let currentBidEff = bidEff / 100;
+
+                for(let i=0; i<=YEARS; i++) {
+                    if(i===0) {
+                        baseData.push(BASELINE_CAPEX);
+                        bidData.push(bidCum);
+                        continue;
                     }
-                });
-                requestAnimationFrame(animateNetwork);
-            }
-            animateNetwork();
 
-
-            // === 2. 3D HOLOGRAPHIC TILT EFFECT ===
-            // This script tilts the hologram container based on mouse position
-            const holoContainer = document.getElementById('hologram-container');
-            const holoContent = document.getElementById('hologram-content');
-
-            if (holoContainer && holoContent) {
-                holoContainer.addEventListener('mousemove', (e) => {
-                    const rect = holoContainer.getBoundingClientRect();
-                    // Calculate mouse position relative to the container center
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
+                    let revBase = REVENUE_POTENTIAL * currentBaseEff;
+                    let revBid = REVENUE_POTENTIAL * currentBidEff;
+                    let annualLoss = revBase - revBid; 
+                    let npvLoss = annualLoss / Math.pow(1+DISCOUNT, i);
                     
-                    // Calculate rotation angles (Max tilt: 15 deg)
-                    const xRot = ((y / rect.height) - 0.5) * -20; // Invert Y for natural feel
-                    const yRot = ((x / rect.width) - 0.5) * 20;
+                    let npvMaintDiff = (maintBid - maintBase) / Math.pow(1+DISCOUNT, i);
 
-                    // Apply transform with perspective
-                    holoContent.style.transform = `perspective(1000px) rotateX(${xRot}deg) rotateY(${yRot}deg)`;
-                });
+                    bidCum += npvLoss + npvMaintDiff;
 
-                // Reset on mouse leave
-                holoContainer.addEventListener('mouseleave', () => {
-                    holoContent.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg)`;
-                });
+                    currentBaseEff -= degradeBase;
+                    currentBidEff -= degradeBid;
+
+                    baseData.push(BASELINE_CAPEX);
+                    bidData.push(bidCum);
+
+                    if (bidCum > BASELINE_CAPEX && !breakYear) breakYear = i;
+                }
+
+                updateLCCUI(baseData, bidData, bidCum, breakYear);
+            }
+            
+            function updateLCCUI(base, bid, finalBidCost, breakYear) {
+                if (!dispCapex || !elCapex) return;
+
+                dispCapex.innerText = formatCurrency(parseFloat(elCapex.value));
+                dispEff.innerText = parseFloat(elEff.value).toFixed(1) + '%';
+                
+                updateEffGap();
+
+                resCapex.innerText = formatCurrency(parseFloat(elCapex.value));
+                
+                let totalLossNPV = finalBidCost - BASELINE_CAPEX;
+                resLoss.innerText = formatCurrency(Math.max(0, totalLossNPV));
+
+                // Verdict Logic
+                if (finalBidCost > (BASELINE_CAPEX * 1.1)) {
+                    verdictText.innerText = "VETO BID";
+                    verdictPanel.className = "scada-panel p-3 flex flex-col justify-center items-center bg-h-red/10 border border-h-red shadow-[0_0_15px_rgba(239,68,68,0.3)]";
+                } else if (finalBidCost > BASELINE_CAPEX) {
+                     verdictText.innerText = "RISK: CLOSE MONITOR";
+                    verdictPanel.className = "scada-panel p-3 flex flex-col justify-center items-center bg-h-yellow/10 border border-h-yellow shadow-[0_0_15px_rgba(250,204,21,0.3)]";
+                } else {
+                    verdictText.innerText = "APPROVED";
+                    verdictPanel.className = "scada-panel p-3 flex flex-col justify-center items-center bg-h-green/10 border border-h-green";
+                }
+
+                drawChart(base, bid, breakYear);
+            }
+            
+            function runLCCSimulation() {
+                if(elCapex && elEff) {
+                    elCapex.value = lccState.capex;
+                    elEff.value = lccState.eff;
+                    calculateLCC();
+                }
+            }
+            
+            function runSynergySimulation() {
+                if(!simVoltage) return;
+                let voltage = 1.80; 
+                
+                if (toggleBrush && toggleBrush.checked) voltage -= 0.9;
+                if (toggleInsulation && toggleInsulation.checked) voltage -= 0.7;
+                
+                voltage = Math.max(0.05, voltage + (Math.random() * 0.05));
+
+                simVoltage.innerText = voltage.toFixed(2);
+
+                if (voltage < 1.0) {
+                    simVoltage.className = "text-5xl font-black text-h-green transition-all duration-500";
+                    simVerdictSynergy.className = "mt-6 text-xs font-bold text-h-green bg-h-green/10 px-4 py-2 rounded border border-h-green uppercase tracking-wider";
+                    simVerdictSynergy.innerText = "STATUS: PASS (SAFE)";
+                    simRing.className = "absolute inset-0 border-4 border-h-green rounded-full opacity-20";
+                } else {
+                    simVoltage.className = "text-5xl font-black text-h-red transition-all duration-500";
+                    simVerdictSynergy.className = "mt-6 text-xs font-bold text-h-red bg-h-red/10 px-4 py-2 rounded border border-h-red uppercase tracking-wider";
+                    simVerdictSynergy.innerText = "DANGER: EDM IMMINENT";
+                    simRing.className = "absolute inset-0 border-4 border-h-red rounded-full opacity-50 animate-pulse";
+                }
+            }
+            
+            function runAlignmentSimulation() {
+                if(!shimFront) return;
+                const f = parseFloat(shimFront.value);
+                const b = parseFloat(shimBack.value);
+
+                valFront.innerText = (f > 0 ? "+" : "") + f.toFixed(2) + " mm";
+                valBack.innerText = (b > 0 ? "+" : "") + b.toFixed(2) + " mm";
+
+                const slope = (b - f) / (DIST_BACK - DIST_FRONT); 
+                const angleVal = slope * 100; 
+                const offsetVal = f - (slope * DIST_FRONT);
+
+                readOffset.innerText = offsetVal.toFixed(2);
+                readAngle.innerText = angleVal.toFixed(2);
+
+                const isOffsetOk = Math.abs(offsetVal) <= 0.05;
+                const isAngleOk = Math.abs(angleVal) <= 0.05;
+
+                tolOffset.className = isOffsetOk ? "text-[10px] text-h-green text-right font-bold" : "text-[10px] text-h-red text-right font-bold";
+                tolOffset.innerText = isOffsetOk ? "OK" : "FAIL";
+                
+                tolAngle.className = isAngleOk ? "text-[10px] text-h-green text-right font-bold" : "text-[10px] text-h-red text-right font-bold";
+                tolAngle.innerText = isAngleOk ? "OK" : "FAIL";
+
+                const x = angleVal * 400; 
+                const y = offsetVal * -100; 
+                laserDot.style.transform = `translate(${x}px, ${y}px)`;
+
+                if (isOffsetOk && isAngleOk) {
+                    laserDot.className = "absolute w-3 h-3 bg-h-green rounded-full shadow-[0_0_10px_#10b981] transition-all duration-300 ease-out";
+                    statusLed.className = "w-3 h-3 bg-h-green rounded-full";
+                    statusText.innerText = "STATUS: ALIGNED";
+                    statusText.className = "font-mono text-xs text-h-green font-bold";
+                } else {
+                    laserDot.className = "absolute w-3 h-3 bg-h-red rounded-full shadow-[0_0_10px_#ef4444] transition-all duration-300 ease-out";
+                    statusLed.className = "w-3 h-3 bg-h-red rounded-full animate-pulse";
+                    statusText.innerText = "STATUS: MISALIGNED";
+                    statusText.className = "font-mono text-xs text-white";
+                }
+            }
+            
+            function updateOrgSim() {
+                if(!orgInLayers) return;
+                const layers = parseInt(orgInLayers.value);
+                const stake = parseInt(orgInStake.value);
+
+                orgValLayers.innerText = layers;
+                const stakeLabels = ["Low", "Medium", "High"];
+                orgValStake.innerText = stakeLabels[stake - 1];
+
+                let baseLoss = (layers - 1) * 8; 
+                let multiplier = 1 + (stake * 0.3);
+                let loss = baseLoss * multiplier;
+                
+                if (loss > 95) loss = 95;
+                if (loss < 0) loss = 0;
+
+                orgResEntropy.innerText = Math.round(loss) + '%';
+                
+                const offset = CIRCLE_CIRCUMFERENCE - ((loss / 100) * CIRCLE_CIRCUMFERENCE);
+                orgEntropyCircle.style.strokeDashoffset = offset;
+
+                // Verdict Logic
+                if (loss < 15) {
+                    orgEntropyCircle.style.stroke = '#10b981';
+                    orgVerdictBox.className = "mt-8 px-8 py-3 rounded bg-h-green/10 border border-h-green text-h-green font-bold text-sm tracking-wide shadow-lg";
+                    orgVerdictBox.innerText = "OPTIMAL FLOW";
+                    orgVerdictDesc.innerText = "Direct line of command. Minimal distortion.";
+                } else if (loss < 40) {
+                    orgEntropyCircle.style.stroke = '#facc15';
+                    orgVerdictBox.className = "mt-8 px-8 py-3 rounded bg-h-yellow/10 border border-h-yellow text-h-yellow font-bold text-sm tracking-wide shadow-lg";
+                    orgVerdictBox.innerText = "CAUTION: NOISE DETECTED";
+                    orgVerdictDesc.innerText = "Standard corporate friction. Requires digitized SOPs to manage.";
+                } else if (loss < 65) {
+                    orgEntropyCircle.style.stroke = '#f97316';
+                    orgVerdictBox.className = "mt-8 px-8 py-3 rounded bg-h-orange/10 border border-h-orange text-h-orange font-bold text-sm tracking-wide shadow-lg";
+                    orgVerdictBox.innerText = "HIGH RISK: SILOS DETECTED";
+                    orgVerdictDesc.innerText = `At this level, instructions are ${Math.round(loss)}% distorted before execution.`;
+                } else {
+                    orgEntropyCircle.style.stroke = '#ef4444';
+                    orgVerdictBox.className = "mt-8 px-8 py-3 rounded bg-h-red/10 border border-h-red text-h-red font-bold text-sm tracking-wide shadow-lg animate-pulse";
+                    orgVerdictBox.innerText = "CRITICAL: EXECUTION FAILURE";
+                    orgVerdictDesc.innerText = "Total breakdown of command chain. Immediate restructuring required.";
+                }
+            }
+            
+
+            // === PHI HEADER LOGIC ===
+            const PHI_MAP = {
+                lcc: { color: '#06b6d4', text: 'FINANCIAL RISK MONITOR' },
+                ndt: { color: '#8b5cf6', text: 'FORENSIC SCANNER ACTIVE' },
+                org: { color: '#f97316', text: 'ORG. INTEL ANALYSIS' },
+                synergy: { color: '#facc15', text: 'M-E POTENTIAL DANGER' },
+                alignment: { color: '#3b82f6', text: 'PRECISION ENFORCED' }
+            };
+            
+            function updatePHIHeader(tabId) {
+                const statusEl = document.getElementById('phi-status');
+                const statusData = PHI_MAP[tabId];
+                if (statusEl && statusData) {
+                    statusEl.innerHTML = `
+                        <div class="w-2 h-2 rounded-full animate-pulse-fast" style="background-color: ${statusData.color}"></div>
+                        ${statusData.text}
+                    `;
+                    statusEl.style.color = statusData.color;
+                }
             }
 
-            // === 3. SIMULATED PING COUNTER ===
-            // Updates latency number every 2 seconds to look "alive"
-            setInterval(() => {
-                const ping = Math.floor(Math.random() * 12) + 8; // Random between 8ms and 20ms
-                document.getElementById('ping-counter').innerText = ping + "ms";
-            }, 2000);
+            // === TABS LOGIC (RE-INTEGRATED AND FIXED) ===
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            function openTab(tabId) {
+                tabContents.forEach(content => {
+                    content.classList.remove('active');
+                });
+                tabButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                document.getElementById(tabId).classList.add('active');
+                document.querySelector(`[data-tab="${tabId}"]`).classList.add('active');
+                
+                updatePHIHeader(tabId);
+                
+                // --- Run Simulators Only When Tab is Opened ---
+                if (tabId === 'lcc') runLCCSimulation();
+                if (tabId === 'synergy') runSynergySimulation();
+                if (tabId === 'alignment') runAlignmentSimulation();
+                if (tabId === 'org') updateOrgSim();
+            }
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    openTab(button.dataset.tab);
+                });
+            });
+
+            // --- INITIALIZATION ---
+            
+            // LCC Events
+            if (elCapex) {
+                elCapex.addEventListener('input', calculateLCC);
+                elEff.addEventListener('input', calculateLCC);
+                btnMatStd.addEventListener('click', () => { lccState.material = 'std'; calculateLCC(); });
+                btnMatLow.addEventListener('click', () => { lccState.material = 'low'; calculateLCC(); });
+            }
+
+            // Synergy Events
+            if (toggleBrush) toggleBrush.addEventListener('change', runSynergySimulation);
+            if (toggleInsulation) toggleInsulation.addEventListener('change', runSynergySimulation);
+
+            // Alignment Events
+            if (shimFront) shimFront.addEventListener('input', runAlignmentSimulation);
+            if (shimBack) shimBack.addEventListener('input', runAlignmentSimulation);
+            
+            // Org Events
+            if (orgInLayers) {
+                 orgInLayers.addEventListener('input', updateOrgSim);
+                 orgInStake.addEventListener('input', updateOrgSim);
+            }
+
+            // Init Final
+            openTab('lcc'); 
         });
     </script>
 </body>
