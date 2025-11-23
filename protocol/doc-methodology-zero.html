@@ -1,127 +1,517 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hr" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Methodology: Forensic NDT & Zero Compromise | AnoHUB Documentation</title>
-    <meta name="description" content="Our mandate for perfection: Multi-tier verification processes and sub-surface NDT protocols.">
+    <title>AnoHUB | Forensic NDT & Zero Compromise v3.0</title>
     
-    <script src="../js/head-init.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
+    <!-- FONTS -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- TAILWIND -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = { 
-            theme: { extend: { colors: { 'hydro-primary': '#22d3ee', 'hydro-secondary': '#4ade80', 'hydro-risk': '#ef4444', 'hydro-cta': '#f59e0b', 'hydro-charcoal': '#111827', 'hydro-slate': '#1E293B', 'hydro-light-slate': '#334155', 'hydro-gray': '#475569', }, } }
+            theme: { 
+                extend: { 
+                    fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
+                    colors: { 
+                        'h-cyan': '#06b6d4', 'h-green': '#10b981', 'h-red': '#ef4444', 
+                        'h-purple': '#8b5cf6', 'h-amber': '#f59e0b', 
+                        'h-dark': '#0b1120', 'h-panel': '#151f32', 'h-border': '#334155' 
+                    },
+                    backgroundImage: {
+                        'grid-pattern': "linear-gradient(to right, #1e293b 1px, transparent 1px), linear-gradient(to bottom, #1e293b 1px, transparent 1px)",
+                        'carbon-fiber': "radial-gradient(black 15%, transparent 16%) 0 0, radial-gradient(black 15%, transparent 16%) 8px 8px, radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 0 1px, radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 8px 9px",
+                    },
+                    animation: {
+                        'scan-vertical': 'scanVertical 3s ease-in-out infinite',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        scanVertical: {
+                            '0%, 100%': { top: '0%' },
+                            '50%': { top: '100%' },
+                        }
+                    }
+                } 
+            }
         }
     </script>
-    <link href="../css/anohubs.css" rel="stylesheet">
 
     <style>
-        body { 
-            background-image: linear-gradient(to bottom, rgba(17, 24, 39, 0.95), rgba(17, 24, 39, 0.98)), url('../slike/protocol_doc_background.jpg');
-            background-size: cover;
-            background-attachment: fixed;
-            color: #E5E7EB;
+        body { background-color: #020617; color: #cbd5e1; }
+        .scada-panel { 
+            background: rgba(15, 23, 42, 0.85); 
+            backdrop-filter: blur(12px); 
+            border: 1px solid rgba(51, 65, 85, 0.6);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         }
-        .method-card { border: 1px solid #475569; transition: all 0.3s; }
-        .method-card:hover { border-color: #22d3ee; transform: translateY(-3px); }
+        .tech-card { transition: all 0.3s ease; }
+        .tech-card:hover { border-color: #06b6d4; transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(6, 182, 212, 0.1); }
+        
+        /* Scan Line Animation */
+        .scan-line {
+            position: absolute; width: 100%; height: 2px; background: #06b6d4;
+            box-shadow: 0 0 10px #06b6d4; animation: scan 2s linear infinite; display: none;
+        }
+        @keyframes scan { 0% { top: 0%; } 100% { top: 100%; } }
+        
+        .blink { animation: blinker 1.5s linear infinite; }
+        @keyframes blinker { 50% { opacity: 0; } }
+
+        /* Hardness Bar Animation */
+        .fill-bar { width: 0%; transition: width 1.5s ease-out; }
+
+        /* Heatmap Gradient for Metrology */
+        .heatmap-gradient {
+            background: radial-gradient(circle at 50% 50%, #10b981 0%, #06b6d4 40%, #1e293b 70%);
+        }
     </style>
 </head>
-<body class="text-slate-300 font-sans antialiased">
+<body class="min-h-screen flex flex-col font-sans selection:bg-h-purple selection:text-white">
 
-    <header class="bg-hydro-charcoal shadow-xl sticky top-0 z-50 border-b border-hydro-primary/30">
-        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
-            <a href="../index.html#hero" class="flex items-center gap-2 text-white font-bold hover:text-hydro-primary transition">
-                <img src="../logo.svg" alt="Anohubs" class="h-8 w-auto">
-                <span class="hidden sm:inline">Anohubs Protocol Hub</span>
-            </a>
-            <a href="../protocol.html" class="text-sm text-hydro-secondary hover:text-white transition flex items-center gap-1">
-                &larr; Back to Manifesto
-            </a>
+    <!-- NAV -->
+    <header class="fixed w-full z-50 scada-panel border-b border-h-purple/20">
+        <div class="max-w-7xl mx-auto px-4 h-16 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 bg-h-purple text-white font-black flex items-center justify-center text-xl">A</div>
+                <div class="leading-tight">
+                    <h1 class="font-bold text-white tracking-tight">AnoHUB <span class="text-h-purple">PROTOCOLS</span></h1>
+                    <p class="text-[10px] font-mono text-h-purple tracking-widest uppercase">Methodology Center</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-4 text-xs font-mono">
+                <a href="anohub_protocol_v2.html" class="text-slate-400 hover:text-white transition flex items-center gap-2">
+                    <svg data-lucide="arrow-left" class="w-3 h-3"></svg> BACK TO LCC
+                </a>
+                <div class="hidden md:flex items-center gap-2 text-h-green">
+                    <div class="w-2 h-2 bg-h-green rounded-full blink"></div>
+                    NDT SENSORS ACTIVE
+                </div>
+            </div>
         </div>
     </header>
 
-    <div class="max-w-7xl mx-auto px-4 py-12 grid lg:grid-cols-4 gap-10">
-        
-        <main class="lg:col-span-3 bg-hydro-slate p-8 rounded-xl shadow-2xl border border-hydro-light-slate">
-            
-            <div class="flex justify-between items-start border-b border-hydro-gray pb-6 mb-8">
-                <div>
-                    <h1 class="text-3xl md:text-4xl font-black text-white mb-2">Zero Compromise Methodology</h1>
-                    <p class="text-hydro-primary font-mono text-sm">REF: DOC-ZERO-001 | REV: 3.0</p>
+    <!-- MAIN GRID -->
+    <div class="pt-24 pb-12 px-4 max-w-7xl mx-auto grid lg:grid-cols-12 gap-8">
+
+        <!-- LEFT SIDEBAR -->
+        <aside class="hidden lg:block lg:col-span-3">
+            <div class="sticky top-24 space-y-6">
+                <!-- Nav -->
+                <div class="scada-panel rounded p-4">
+                    <h3 class="text-h-purple font-mono text-[10px] font-bold uppercase tracking-widest mb-3">Sections</h3>
+                    <nav class="space-y-1">
+                        <a href="#ndt" class="flex items-center gap-3 px-3 py-2 text-sm text-white bg-white/5 border-l-2 border-h-purple transition">
+                            <span class="font-mono text-h-purple opacity-50">01</span> Forensic NDT
+                        </a>
+                        <a href="#surface" class="flex items-center gap-3 px-3 py-2 text-sm text-slate-400 hover:text-white hover:bg-white/5 border-l-2 border-transparent hover:border-slate-500 transition">
+                            <span class="font-mono text-slate-600">02</span> HVOF Surface
+                        </a>
+                        <a href="#traceability" class="flex items-center gap-3 px-3 py-2 text-sm text-slate-400 hover:text-white hover:bg-white/5 border-l-2 border-transparent hover:border-slate-500 transition">
+                            <span class="font-mono text-slate-600">03</span> Digital Passport
+                        </a>
+                         <a href="#metrology" class="flex items-center gap-3 px-3 py-2 text-sm text-slate-400 hover:text-white hover:bg-white/5 border-l-2 border-transparent hover:border-slate-500 transition">
+                            <span class="font-mono text-slate-600">04</span> 3D Metrology
+                        </a>
+                         <a href="#predictive" class="flex items-center gap-3 px-3 py-2 text-sm text-slate-400 hover:text-white hover:bg-white/5 border-l-2 border-transparent hover:border-slate-500 transition">
+                            <span class="font-mono text-slate-600">05</span> AI Predictive
+                        </a>
+                    </nav>
+                </div>
+                
+                <!-- Lab Status -->
+                <div class="scada-panel p-4 border-t-2 border-t-h-amber">
+                    <h4 class="text-h-amber font-mono text-[10px] font-bold uppercase mb-2">Live Calibration Feed</h4>
+                    <div class="space-y-3 text-xs font-mono text-slate-400">
+                        <div class="flex justify-between items-center border-b border-slate-700 pb-1">
+                            <span>PAUT Probe #4A</span> 
+                            <span class="text-h-green flex items-center gap-1"><div class="w-1.5 h-1.5 rounded-full bg-h-green"></div> CALIBRATED</span>
+                        </div>
+                        <div class="flex justify-between items-center border-b border-slate-700 pb-1">
+                            <span>HVOF Temp</span> 
+                            <span class="text-white">2,800°C</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span>ISO Cert Validity</span> 
+                            <span class="text-white">240 Days</span>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </aside>
 
-            <section id="ndt" class="mb-12">
-                <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-                    <svg data-lucide="crosshair" class="w-6 h-6 text-hydro-secondary"></svg> 1. Forensic NDT Protocols
-                </h2>
-                <p class="mb-6">We employ a multi-spectrum approach to identify defects before they become failures.</p>
+        <!-- CENTER CONTENT -->
+        <main class="lg:col-span-9 space-y-12">
+            
+            <!-- HERO -->
+            <section class="relative scada-panel rounded-none border-l-4 border-l-h-purple p-8 overflow-hidden group">
+                <div class="absolute right-0 top-0 w-64 h-64 bg-h-purple/10 blur-3xl rounded-full -mr-16 -mt-16 pointer-events-none"></div>
+                <div class="relative z-10">
+                    <div class="flex gap-2 mb-4">
+                        <span class="bg-h-purple/20 text-h-purple px-2 py-0.5 text-[10px] font-mono font-bold border border-h-purple/30">ZERO COMPROMISE</span>
+                        <span class="text-slate-500 font-mono text-[10px]">DOC-ZERO-001 | REV 3.0</span>
+                    </div>
+                    <h2 class="text-4xl font-black text-white mb-6 uppercase tracking-tight">Forensic Engineering <br/>& NDT Methodology</h2>
+                    <p class="text-slate-300 leading-relaxed text-lg max-w-2xl">
+                        Perfection is not an accident; it is a discipline. We utilize <span class="text-h-cyan font-bold">Phased Array Ultrasonics</span> and <span class="text-h-amber font-bold">Hypersonic Coatings</span> to eliminate defects at the molecular level before they manifest as failures.
+                    </p>
+                </div>
+            </section>
+
+            <!-- SECTION 1: NDT -->
+            <section id="ndt">
+                <div class="flex items-center gap-3 mb-6 border-b border-slate-800 pb-2">
+                    <span class="text-h-purple font-mono">01 //</span>
+                    <h3 class="text-xl font-bold text-white">Non-Destructive Testing (NDT) Matrix</h3>
+                </div>
                 
                 <div class="grid md:grid-cols-2 gap-6">
-                    <div class="method-card bg-hydro-charcoal p-5 rounded-lg">
-                        <div class="flex items-center gap-3 mb-2">
-                            <div class="bg-hydro-primary/20 p-2 rounded"><svg data-lucide="waves" class="w-5 h-5 text-hydro-primary"></svg></div>
-                            <h3 class="text-white font-bold">Ultrasonic Phased Array (PAUT)</h3>
+                    <!-- PAUT CARD -->
+                    <div class="scada-panel p-6 tech-card border border-slate-700">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="p-2 bg-h-cyan/10 rounded border border-h-cyan/30 text-h-cyan">
+                                <svg data-lucide="waves" class="w-6 h-6"></svg>
+                            </div>
+                            <span class="text-[10px] font-mono bg-black px-2 py-1 rounded text-slate-400">ASME SEC V</span>
                         </div>
-                        <p class="text-sm">Advanced imaging of internal structure. Essential for checking weld integrity on Francis runners and Kaplan blades.</p>
+                        <h4 class="text-lg font-bold text-white mb-2">Phased Array Ultrasonic (PAUT)</h4>
+                        <p class="text-sm text-slate-400 mb-4 h-12">Volumetric inspection of runner welds using multi-element probes. Replaces dangerous Radiography.</p>
+                        
+                        <div class="grid grid-cols-2 gap-2 text-xs font-mono bg-slate-900/50 p-2 rounded">
+                            <div class="text-slate-500">Detection Limit:</div>
+                            <div class="text-right text-h-cyan">0.5 mm</div>
+                            <div class="text-slate-500">Coverage:</div>
+                            <div class="text-right text-white">100% Volume</div>
+                        </div>
+                    </div>
+
+                    <!-- MPI CARD -->
+                    <div class="scada-panel p-6 tech-card border border-slate-700">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="p-2 bg-h-purple/10 rounded border border-h-purple/30 text-h-purple">
+                                <svg data-lucide="magnet" class="w-6 h-6"></svg>
+                            </div>
+                            <span class="text-[10px] font-mono bg-black px-2 py-1 rounded text-slate-400">ISO 9934</span>
+                        </div>
+                        <h4 class="text-lg font-bold text-white mb-2">Magnetic Particle (MPI)</h4>
+                        <p class="text-sm text-slate-400 mb-4 h-12">Fluorescent detection of surface micro-cracks in ferromagnetic shafts and hubs.</p>
+                        
+                        <div class="grid grid-cols-2 gap-2 text-xs font-mono bg-slate-900/50 p-2 rounded">
+                            <div class="text-slate-500">Sensitivity:</div>
+                            <div class="text-right text-h-purple">Level 4 (Fluoro)</div>
+                            <div class="text-slate-500">Surface:</div>
+                            <div class="text-right text-white">Machined</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 2: SURFACE ENGINEERING -->
+            <section id="surface">
+                <div class="flex items-center gap-3 mb-6 border-b border-slate-800 pb-2">
+                    <span class="text-h-purple font-mono">02 //</span>
+                    <h3 class="text-xl font-bold text-white">Hyper-Velocity Surface Hardening</h3>
+                </div>
+
+                <div class="scada-panel p-0 overflow-hidden flex flex-col md:flex-row border-l-4 border-l-h-amber">
+                    <!-- Content Side -->
+                    <div class="p-6 md:w-2/3">
+                        <h4 class="font-bold text-white mb-2 flex items-center gap-2 text-lg">
+                            <svg data-lucide="flame" class="w-5 h-5 text-h-amber"></svg>
+                            HVOF Tungsten Carbide
+                        </h4>
+                        <p class="text-sm text-slate-400 mb-6 leading-relaxed">
+                            For environments with silt >1,000 ppm, standard steel fails. We apply <strong>WC-CoCr (Tungsten Carbide)</strong> using High Velocity Oxygen Fuel spraying at Mach 3 speeds. This creates a density bond virtually impossible to erode.
+                        </p>
+                        
+                        <!-- Specs -->
+                        <div class="grid grid-cols-2 gap-4 text-xs">
+                            <div class="bg-black/30 p-2 rounded border border-slate-700">
+                                <div class="text-slate-500 mb-1">Standard (ISO 14923)</div>
+                                <div class="text-white font-mono">Thermal Spraying</div>
+                            </div>
+                            <div class="bg-black/30 p-2 rounded border border-slate-700">
+                                <div class="text-slate-500 mb-1">Porosity</div>
+                                <div class="text-h-amber font-mono font-bold">< 1.0 %</div>
+                            </div>
+                        </div>
                     </div>
                     
-                    <div class="method-card bg-hydro-charcoal p-5 rounded-lg">
-                        <div class="bg-hydro-primary/20 p-2 rounded"><svg data-lucide="magnet" class="w-5 h-5 text-hydro-primary"></svg></div>
-                        <h3 class="text-white font-bold">Magnetic Particle (MPI)</h3>
-                        <p class="text-sm">Detection of surface and near-surface cracks in ferromagnetic materials. Mandatory for shaft inspections.</p>
+                    <!-- Visual Data Side -->
+                    <div class="md:w-1/3 bg-slate-900 relative border-l border-slate-700 p-6 flex flex-col justify-center">
+                        <div class="text-[10px] text-slate-500 uppercase tracking-widest mb-3 text-center">Vickers Hardness (HV 0.3)</div>
+                        
+                        <!-- Bar Chart -->
+                        <div class="space-y-4 w-full">
+                            <!-- Steel -->
+                            <div class="relative">
+                                <div class="flex justify-between text-[9px] text-slate-400 mb-1"><span>Standard Steel</span> <span>250 HV</span></div>
+                                <div class="h-2 w-full bg-slate-800 rounded overflow-hidden">
+                                    <div class="h-full bg-slate-500 w-[20%]"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Martensitic -->
+                            <div class="relative">
+                                <div class="flex justify-between text-[9px] text-slate-400 mb-1"><span>13Cr-4Ni</span> <span>320 HV</span></div>
+                                <div class="h-2 w-full bg-slate-800 rounded overflow-hidden">
+                                    <div class="h-full bg-h-cyan w-[30%]"></div>
+                                </div>
+                            </div>
+
+                            <!-- HVOF -->
+                            <div class="relative">
+                                <div class="flex justify-between text-[9px] text-white font-bold mb-1"><span>AnoHUB HVOF</span> <span class="text-h-amber">1250 HV</span></div>
+                                <div class="h-3 w-full bg-slate-800 rounded overflow-hidden border border-h-amber/30">
+                                    <div class="fill-bar h-full bg-h-amber w-[0%]" style="width: 95%"></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <section id="biomimicry" class="mb-12">
-                <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-                    <svg data-lucide="droplet" class="w-6 h-6 text-hydro-secondary"></svg> 2. Bio-Inspired Immunity
-                </h2>
-                <p class="mb-4">We validate the **Dual Application Strategy** (Tubercle Technology) through advanced CFD. This reduces drag and flow separation by generating counter-rotating vortices.</p>
-                <div class="bg-hydro-charcoal p-4 rounded border border-hydro-gray">
-                    <h4 class="text-white font-bold text-sm mb-2">CFD Validation Checklist:</h4>
-                    <ul class="list-disc ml-4 text-sm space-y-1">
-                        <li>Grid Independence Study completed.</li>
-                        <li>Turbulence Model: k-omega SST.</li>
-                        <li>Transient simulation (not steady-state).</li>
-                    </ul>
+            <!-- SECTION 3: DIGITAL PASSPORT -->
+            <section id="traceability">
+                <div class="flex items-center gap-3 mb-6 border-b border-slate-800 pb-2">
+                    <span class="text-h-purple font-mono">03 //</span>
+                    <h3 class="text-xl font-bold text-white">Ethical Traceability (Blockchain)</h3>
+                </div>
+
+                <div class="scada-panel border border-h-purple/30 p-8 rounded-xl relative overflow-hidden">
+                    <div class="absolute inset-0 bg-h-purple/5 bg-grid-pattern opacity-50"></div>
+                    
+                    <div class="relative z-10 grid md:grid-cols-2 gap-8 items-center">
+                        <div>
+                            <h4 class="text-2xl font-black text-white mb-2">Verify Component Origin</h4>
+                            <p class="text-sm text-slate-400 mb-6">
+                                Enter the component Serial ID to retrieve its Digital Passport, including Mill Test Certificates (MTR) and Ethical Labor compliance data.
+                            </p>
+                            
+                            <div class="flex gap-2">
+                                <input type="text" id="serial-input" placeholder="e.g. SN-8842-X" class="bg-slate-900 border border-slate-600 text-white px-4 py-3 rounded font-mono text-sm w-full focus:border-h-purple outline-none uppercase">
+                                <button id="scan-btn" class="bg-h-purple hover:bg-purple-500 text-white font-bold px-6 py-3 rounded flex items-center gap-2 transition">
+                                    <svg data-lucide="scan-barcode" class="w-5 h-5"></svg>
+                                    SCAN
+                                </button>
+                            </div>
+                            <div class="mt-2 text-[10px] text-slate-500 font-mono">Try: "SN-8842-X" or "AH-2025"</div>
+                        </div>
+
+                        <!-- RESULT CARD -->
+                        <div id="scan-result" class="bg-black/50 border border-slate-700 rounded-lg p-0 relative h-48 flex items-center justify-center overflow-hidden">
+                            <!-- Placeholder State -->
+                            <div id="scan-placeholder" class="text-center text-slate-600">
+                                <svg data-lucide="search" class="w-8 h-8 mx-auto mb-2 opacity-50"></svg>
+                                <span class="text-xs font-mono uppercase">Awaiting Input...</span>
+                            </div>
+
+                            <!-- Loading State -->
+                            <div id="scan-loading" class="absolute inset-0 bg-slate-900 hidden flex-col items-center justify-center z-20">
+                                <div class="w-full h-full absolute top-0 left-0 bg-grid-pattern opacity-20"></div>
+                                <div class="scan-line block"></div>
+                                <div class="text-h-cyan font-mono text-xs animate-pulse">CONNECTING TO LEDGER...</div>
+                            </div>
+
+                            <!-- Data State -->
+                            <div id="scan-data" class="hidden w-full h-full p-4 relative z-10">
+                                <div class="flex justify-between items-start border-b border-slate-700 pb-2 mb-2">
+                                    <div class="text-h-green text-xs font-bold flex items-center gap-1">
+                                        <svg data-lucide="check-circle-2" class="w-3 h-3"></svg> VERIFIED
+                                    </div>
+                                    <div class="text-[10px] font-mono text-slate-500">BLOCK: #99382</div>
+                                </div>
+                                <div class="space-y-1 font-mono text-xs mb-3">
+                                    <div class="flex justify-between"><span class="text-slate-500">Origin:</span> <span class="text-white">Sandvik, Sweden</span></div>
+                                    <div class="flex justify-between"><span class="text-slate-500">Heat No:</span> <span class="text-white">8842-X-99</span></div>
+                                    <div class="flex justify-between"><span class="text-slate-500">Material:</span> <span class="text-h-cyan">Super Duplex 2507</span></div>
+                                </div>
+                                <!-- Fake Downloads -->
+                                <div class="flex gap-2">
+                                    <button class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-300 text-[10px] py-1 px-2 rounded border border-slate-600 flex items-center justify-center gap-1">
+                                        <svg data-lucide="file-text" class="w-3 h-3"></svg> MTR Cert
+                                    </button>
+                                    <button class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-300 text-[10px] py-1 px-2 rounded border border-slate-600 flex items-center justify-center gap-1">
+                                        <svg data-lucide="shield" class="w-3 h-3"></svg> Labor Audit
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
 
-            <section id="ethics">
-                <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-                    <svg data-lucide="shield-check" class="w-6 h-6 text-hydro-secondary"></svg> 3. Ethical Sourcing Mandate
-                </h2>
-                <p>Technical protocols are upheld by ethical discipline. We mandate strict material traceability. Every component must have a "Digital Passport" verifying its origin, material composition, and manufacturing date.</p>
-                 <div class="mt-8 pt-6 border-t border-hydro-gray text-center">
-                    <a href="../contact.html" class="inline-flex items-center justify-center px-8 py-3 bg-hydro-cta text-hydro-charcoal font-bold rounded-full hover:bg-yellow-500 transition shadow-lg">
-                        REQUEST FULL DOCUMENTATION
-                    </a>
+             <!-- SECTION 4: 3D METROLOGY (NEW) -->
+             <section id="metrology">
+                <div class="flex items-center gap-3 mb-6 border-b border-slate-800 pb-2">
+                    <span class="text-h-purple font-mono">04 //</span>
+                    <h3 class="text-xl font-bold text-white">3D Laser Metrology (Geometric Forensics)</h3>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6 items-stretch">
+                    <!-- Text Side -->
+                    <div class="scada-panel p-6 flex flex-col justify-center">
+                        <div class="mb-4">
+                            <h4 class="font-bold text-white text-lg mb-2">Zero-Tolerance Geometry</h4>
+                            <p class="text-sm text-slate-400">
+                                Casting deviations >0.5mm cause flow separation and efficiency loss. We mandate <strong>Blue Light Laser Scanning</strong> to generate a heat-map comparison against the CFD Design Model.
+                            </p>
+                        </div>
+                        <div class="space-y-3 font-mono text-xs">
+                            <div class="flex justify-between p-2 bg-slate-900 rounded border border-slate-700">
+                                <span class="text-slate-500">Scan Resolution</span>
+                                <span class="text-h-cyan">50 microns</span>
+                            </div>
+                            <div class="flex justify-between p-2 bg-slate-900 rounded border border-slate-700">
+                                <span class="text-slate-500">Points Density</span>
+                                <span class="text-white">1,000 pts / mm²</span>
+                            </div>
+                            <div class="flex justify-between p-2 bg-slate-900 rounded border border-slate-700">
+                                <span class="text-slate-500">Acceptance Criteria</span>
+                                <span class="text-h-red font-bold">IEC 60193 Class A</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Visual Side (Heatmap Simulation) -->
+                    <div class="scada-panel relative overflow-hidden flex items-center justify-center min-h-[250px] group cursor-crosshair">
+                        <!-- Grid Overlay -->
+                        <div class="absolute inset-0 bg-[linear-gradient(rgba(6,182,212,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(6,182,212,0.1)_1px,transparent_1px)] bg-[size:20px_20px]"></div>
+                        
+                        <!-- Heatmap Shape (Abstract Turbine Blade) -->
+                        <div class="w-48 h-64 rounded-[50%_50%_40%_40%_/_60%_60%_30%_30%] heatmap-gradient blur-xl opacity-60 group-hover:opacity-80 transition duration-500"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <svg viewBox="0 0 100 100" class="w-40 h-56 fill-none stroke-white stroke-[0.5] opacity-50">
+                                <path d="M50 10 C 80 10, 90 40, 80 80 C 70 90, 30 90, 20 80 C 10 40, 20 10, 50 10 Z" />
+                                <path d="M50 10 L 50 90" stroke-dasharray="2 2" />
+                                <path d="M20 50 L 80 50" stroke-dasharray="2 2" />
+                            </svg>
+                        </div>
+
+                        <!-- Dynamic Marker -->
+                        <div class="absolute top-1/3 left-1/3 flex items-center gap-2 animate-pulse">
+                            <div class="w-2 h-2 bg-h-red rounded-full"></div>
+                            <span class="text-[10px] font-mono bg-black/50 px-1 text-h-red">+0.12mm (DEV)</span>
+                        </div>
+                         <div class="absolute bottom-1/3 right-1/3 flex items-center gap-2">
+                            <div class="w-2 h-2 bg-h-green rounded-full"></div>
+                            <span class="text-[10px] font-mono bg-black/50 px-1 text-h-green">0.00mm (OK)</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 5: AI PREDICTIVE (NEW) -->
+            <section id="predictive">
+                <div class="flex items-center gap-3 mb-6 border-b border-slate-800 pb-2">
+                    <span class="text-h-purple font-mono">05 //</span>
+                    <h3 class="text-xl font-bold text-white">AI-Driven Spectral Analysis (Active Defense)</h3>
+                </div>
+
+                <div class="scada-panel p-6 border-t-4 border-t-h-cyan">
+                    <div class="flex justify-between items-end mb-6">
+                        <div>
+                            <h4 class="font-bold text-white text-lg">Real-Time Vibration FFT</h4>
+                            <p class="text-xs text-slate-400 font-mono mt-1">SENSOR: #VIB-TURB-01 | SAMPLING: 24kHz</p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                             <span class="flex h-2 w-2 relative">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-h-green opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-2 w-2 bg-h-green"></span>
+                            </span>
+                            <span class="text-xs font-bold text-h-green uppercase">Machine Healthy</span>
+                        </div>
+                    </div>
+
+                    <!-- Graph Visualization -->
+                    <div class="relative h-48 w-full bg-slate-900/50 border border-slate-700 rounded overflow-hidden mb-6">
+                        <!-- Grid -->
+                        <div class="absolute inset-0 border-b border-dashed border-slate-600/30" style="bottom: 25%"></div>
+                        <div class="absolute inset-0 border-b border-dashed border-h-red/30" style="bottom: 75%"></div> <!-- Alarm Threshold -->
+                        <div class="absolute top-2 right-2 text-[10px] text-h-red font-mono">ALARM LIMIT (ISO 10816)</div>
+
+                        <!-- Waveform (SVG) -->
+                        <svg class="absolute bottom-0 left-0 w-full h-full" preserveAspectRatio="none">
+                            <defs>
+                                <linearGradient id="grad1" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.5" />
+                                    <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0" />
+                                </linearGradient>
+                            </defs>
+                            <path d="M0,150 L10,145 L20,148 L30,130 L40,145 L50,140 L60,80 L70,140 L80,145 L90,148 L100,150 L110,145 L120,148 L130,120 L140,145 L150,140 L160,150 L170,145 L180,148 L190,150 L200,140 L210,145 L220,148 L230,150 L240,145 L250,140 L260,90 L270,140 L280,145 L290,148 L300,150 L310,145 L320,148 L330,130 L340,145 L350,140 L360,150 L370,145 L380,148 L390,150 L400,150 V200 H0 Z" fill="url(#grad1)" stroke="#06b6d4" stroke-width="2" class="opacity-80" />
+                        </svg>
+                    </div>
+
+                    <!-- Metrics -->
+                    <div class="grid grid-cols-3 gap-4 text-center">
+                        <div class="bg-black/30 p-2 rounded">
+                            <div class="text-[10px] text-slate-500 uppercase">RMS Velocity</div>
+                            <div class="text-lg font-mono text-white font-bold">1.2 <span class="text-xs text-slate-500 font-normal">mm/s</span></div>
+                        </div>
+                        <div class="bg-black/30 p-2 rounded">
+                            <div class="text-[10px] text-slate-500 uppercase">Peak-to-Peak</div>
+                            <div class="text-lg font-mono text-white font-bold">45 <span class="text-xs text-slate-500 font-normal">µm</span></div>
+                        </div>
+                        <div class="bg-black/30 p-2 rounded border border-h-cyan/20">
+                            <div class="text-[10px] text-h-cyan uppercase">Cavitation Index</div>
+                            <div class="text-lg font-mono text-h-cyan font-bold">LOW</div>
+                        </div>
+                    </div>
                 </div>
             </section>
 
         </main>
-
-        <aside class="hidden lg:block lg:col-span-1">
-            <div class="sticky top-24 bg-hydro-slate p-6 rounded-xl border border-hydro-light-slate shadow-lg">
-                <h3 class="text-hydro-primary font-bold uppercase tracking-wider text-sm mb-4">Contents</h3>
-                <ul class="space-y-3 text-sm">
-                    <li><a href="#ndt" class="hover:text-white transition">1. Forensic NDT</a></li>
-                    <li><a href="#biomimicry" class="hover:text-white transition">2. Bio-Inspired Design</a></li>
-                    <li><a href="#ethics" class="hover:text-white transition">3. Ethical Sourcing</a></li>
-                </ul>
-            </div>
-        </aside>
-
     </div>
 
-    <footer class="text-center py-8 text-slate-500 text-sm bg-hydro-charcoal border-t border-hydro-light-slate">
-        &copy; 2025 Anohubs Inc. | Zero Compromise Standard
+    <!-- FOOTER -->
+    <footer class="border-t border-slate-800 bg-black py-8 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 text-center text-slate-600 text-xs font-mono">
+            ANO_HUB // QUALITY DIVISION // ISO 9001:2015
+        </div>
     </footer>
 
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
-    <script>window.addEventListener('DOMContentLoaded', () => lucide.createIcons());</script>
+    <!-- SCRIPTS -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+
+            // Digital Passport Logic
+            const btn = document.getElementById('scan-btn');
+            const input = document.getElementById('serial-input');
+            const placeholder = document.getElementById('scan-placeholder');
+            const loading = document.getElementById('scan-loading');
+            const data = document.getElementById('scan-data');
+            const scanLine = document.querySelector('.scan-line');
+
+            btn.addEventListener('click', () => {
+                if(!input.value) return;
+
+                // Reset
+                data.classList.add('hidden');
+                placeholder.classList.add('hidden');
+                loading.classList.remove('hidden');
+                scanLine.style.display = 'block';
+
+                // Simulate Network Delay
+                setTimeout(() => {
+                    loading.classList.add('hidden');
+                    scanLine.style.display = 'none';
+                    data.classList.remove('hidden');
+                    
+                    // Trigger bar animation if needed (future expansion)
+                }, 1500);
+            });
+            
+            // Trigger bar animation on load (visual effect)
+            setTimeout(() => {
+                document.querySelectorAll('.fill-bar').forEach(el => {
+                    el.style.width = el.getAttribute('style').split(':')[1];
+                });
+            }, 500);
+        });
+    </script>
 </body>
 </html>
