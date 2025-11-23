@@ -1,498 +1,494 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anohubs | Engineering Immunity & Hydro Intelligence</title>
+    <meta name="description" content="Establishing the global standard for hydro integrity. Neutralizing dynamic risk through forensic engineering and algorithmic governance.">
 
-    <title>Anohubs: The Global Standard for Hydro Integrity | Audits & Optimization</title>
-
-    <meta name="description" content="Establishing the global standard for hydro integrity where technological precision and ethical responsibility drive both sustainable profit and ecological health. Empowering hydropower operators with comprehensive, transparent, and verifiable audits.">
-
-    <!-- 1. STANDARDNA JS INICIJALIZACIJA -->
-    <script src="js/head-init.js"></script>
-
-    <!-- 2. FONTOVI -->
+    <!-- 1. SCRIPTS & FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
-
-    <!-- 3. KRITIČNO: TAILWIND CSS CDN -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- 2. TAILWIND CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- 4. TAILWIND KONFIGURACIJA -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
+                    fontFamily: { 
+                        sans: ['Inter', 'sans-serif'], 
+                        mono: ['JetBrains Mono', 'monospace'] 
+                    },
                     colors: {
-                        'hydro-primary': '#22d3ee',    /* cijan */
-                        'hydro-secondary': '#4ade80',  /* zelena */
-                        'hydro-risk': '#ef4444',       /* crvena */
-                        'hydro-cta': '#f59e0b',        /* žuta/narandžasta */
-                        'hydro-charcoal': '#111827',   /* tamna pozadina */
-                        'hydro-slate': '#1E293B',      /* siva pozadina kartica */
-                        'hydro-light-slate': '#334155',/* svjetlija siva */
-                        'hydro-gray': '#475569',       /* siva za tekst */
+                        'h-cyan': '#06b6d4', 
+                        'h-green': '#10b981', 
+                        'h-red': '#ef4444', 
+                        'h-yellow': '#facc15', 
+                        'h-dark': '#020617', 
+                        'h-panel': '#0f172a', 
+                        'h-border': '#1e293b',
+                        'h-cta': '#f59e0b'
                     },
-                    fontSize: {
-                        'h1-hero': 'clamp(2.5rem, 5vw + 1rem, 4.5rem)',
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                     },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
                 }
             }
         }
     </script>
 
-    <!-- 5. VAŠI PRILAGOĐENI STILOVI -->
-    <link href="css/anohubs.css" rel="stylesheet">
-
     <style>
-        html { scroll-behavior: smooth; }
-        body { font-family: 'Inter', sans-serif; }
+        body { background-color: #020617; color: #f8fafc; overflow-x: hidden; }
         
-        .hero-gradient {
-            background: linear-gradient(180deg, rgba(17, 24, 39, 0.7) 0%, rgba(30, 41, 59, 0.6) 100%);
-            padding-top: 3rem;
-            padding-bottom: 3rem;
-            position: relative;
-            min-height: auto;
-            display: flex;
-            align-items: center;
+        /* Hero Video Overlay */
+        .video-overlay {
+            background: linear-gradient(180deg, rgba(2,6,23,0.3) 0%, rgba(2,6,23,0.7) 60%, #020617 100%);
+            position: absolute; inset: 0; z-index: 1;
         }
         
-        #video-container {
-            position: absolute;
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%;
-            z-index: -1; 
-            overflow: hidden;
+        /* Tech Grid Pattern */
+        .tech-grid {
+            background-image: linear-gradient(rgba(6, 182, 212, 0.05) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(6, 182, 212, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+            position: absolute; inset: 0; z-index: 2; pointer-events: none;
         }
-        #hero-video {
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover;
-        }
-    </style>
 
+        /* Glass Cards */
+        .glass-card {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(51, 65, 85, 0.5);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .glass-card:hover {
+            border-color: #06b6d4;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px -10px rgba(6, 182, 212, 0.15);
+        }
+
+        /* Scroll Bar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #020617; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #06b6d4; }
+
+        /* Section Stripe */
+        .section-stripe { height: 1px; background: linear-gradient(90deg, transparent, #1e293b, transparent); margin: 0; }
+    </style>
 </head>
 
-<body class="text-white bg-hydro-charcoal">
+<body class="antialiased">
 
-    <!-- HEADER -->
-    <header class="bg-hydro-charcoal text-white shadow-2xl sticky top-0 z-50 border-b border-hydro-primary/50" role="banner">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex justify-between items-center">
-            <a href="index.html#hero" class="focus:outline-none focus:ring-4 focus:ring-hydro-primary focus:ring-opacity-50 transition" aria-label="Anohubs Logo - Back to top" aria-current="page">
-                <img src="logo.svg" alt="Anohubs Logo" class="anohubs-logo">
+    <!-- NAV -->
+    <header class="fixed w-full z-50 top-0 border-b border-white/5 bg-h-dark/90 backdrop-blur-md transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 h-20 flex justify-between items-center">
+            
+            <!-- Logo -->
+            <a href="#hero" class="flex items-center gap-3 group">
+                <img src="logo.svg" alt="AnoHUB" class="h-10 w-auto transition group-hover:brightness-125">
+                <div class="hidden md:block">
+                    <span class="block text-lg font-black tracking-tighter text-white leading-none">ANOHUBS</span>
+                    <span class="block text-[10px] font-mono text-h-cyan tracking-widest uppercase">Hydro Intelligence</span>
+                </div>
             </a>
-            
-            <nav class="hidden md:flex items-center space-x-6 font-extrabold text-sm" role="navigation" aria-label="Main navigation">
-                <a href="about-us-vision.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">About</a>
-                <a href="services.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Services</a>
+
+            <!-- Desktop Menu -->
+            <nav class="hidden lg:flex items-center gap-6 text-xs font-bold uppercase tracking-wider">
+                <a href="about-us-vision.html" class="text-slate-400 hover:text-white transition">About</a>
+                <a href="services.html" class="text-slate-400 hover:text-white transition">Services</a>
+                <a href="insights/expert-insights.html" class="text-slate-400 hover:text-white transition">Insights</a>
+                <a href="case-studies.html" class="text-slate-400 hover:text-white transition">Case Studies</a>
+                <a href="app-iframe.html" target="_blank" class="text-h-green hover:text-white transition flex items-center gap-1"><svg data-lucide="layout" class="w-3 h-3"></svg> ANO HUB</a>
+                <a href="gallery.html" class="text-slate-400 hover:text-white transition">Gallery</a>
                 
-                <a href="insights/expert-insights.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Insights</a>
-                <a href="case-studies.html" class="nav-link relative text-slate-300 hover:text-hydro-secondary transition tracking-wider p-2 uppercase">Case Studies</a>
-                
-                <a href="app-iframe.html" target="_blank" rel="noopener noreferrer" class="nav-link relative text-hydro-secondary hover:text-green-500 transition tracking-widest font-extrabold text-lg p-2 uppercase">ANO HUB</a>
-                
-                <a href="gallery.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Gallery</a>
-                <a href="protocol.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Protocol</a>
-                <a href="#contact" class="bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-6 py-2.5 rounded-full transition transform hover:scale-105 shadow-xl font-bold tracking-wider uppercase text-base">Contact</a>
+                <!-- THE BRIDGE BUTTON -->
+                <a href="protocol.html" class="group relative inline-flex items-center gap-2 px-5 py-2 bg-h-cyan/10 text-h-cyan border border-h-cyan/50 rounded-full hover:bg-h-cyan hover:text-black transition-all duration-300">
+                    <span>PROTOCOL</span>
+                    <div class="w-1.5 h-1.5 bg-h-cyan rounded-full animate-pulse-fast group-hover:bg-black"></div>
+                </a>
+
+                <a href="contact.html" class="px-5 py-2 bg-h-cta text-black rounded-full hover:bg-yellow-400 transition shadow-lg shadow-h-cta/20">Contact</a>
             </nav>
-            
-            <div class="md:hidden">
-                <button id="mobile-menu-button" aria-label="Open menu" type="button" class="p-2 text-white">
-                    <svg data-lucide="menu" class="w-8 h-8"></svg>
-                </button>
-            </div>
-            
-            <!-- MOBILE MENU -->
-            <div id="mobile-menu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2 text-center bg-hydro-charcoal" aria-label="Mobile navigation menu">
-                <a href="about-us-vision.html" class="block hover:text-hydro-primary transition tracking-wider py-2">About</a>
-                <a href="services.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Services</a>
-                <a href="insights/expert-insights.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Insights</a>
-                <a href="case-studies.html" class="block hover:text-hydro-secondary transition tracking-wider py-2">Case Studies</a>
-                <a href="app-iframe.html" target="_blank" rel="noopener noreferrer" class="block hover:text-hydro-secondary transition tracking-wider py-2">ANO HUB</a>
-                <a href="gallery.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Gallery</a>
-                <a href="protocol.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Protocol</a>
-                <a href="#contact" class="block bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-5 py-2 rounded-full transition shadow-md font-bold tracking-wider mt-2 text-center">Contact</a>
-            </div>
+
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" class="lg:hidden text-white p-2">
+                <svg data-lucide="menu" class="w-8 h-8"></svg>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu" class="hidden lg:hidden absolute top-20 left-0 w-full bg-h-dark border-b border-h-border p-4 flex flex-col gap-4 shadow-2xl">
+            <a href="about-us-vision.html" class="text-slate-300 hover:text-h-cyan py-2 border-b border-h-border">About</a>
+            <a href="services.html" class="text-slate-300 hover:text-h-cyan py-2 border-b border-h-border">Services</a>
+            <a href="insights/expert-insights.html" class="text-slate-300 hover:text-h-cyan py-2 border-b border-h-border">Insights</a>
+            <a href="case-studies.html" class="text-slate-300 hover:text-h-cyan py-2 border-b border-h-border">Case Studies</a>
+            <a href="app-iframe.html" class="text-h-green font-bold py-2 border-b border-h-border">ANO HUB APP</a>
+            <a href="gallery.html" class="text-slate-300 hover:text-h-cyan py-2 border-b border-h-border">Gallery</a>
+            <a href="protocol.html" class="text-h-cyan font-bold py-2 border-b border-h-border flex items-center gap-2"><svg data-lucide="shield" class="w-4 h-4"></svg> PROTOCOL</a>
+            <a href="contact.html" class="text-h-cta font-bold py-2">Contact Us</a>
         </div>
     </header>
 
+    <main>
 
-    <main role="main">
-        <!-- HERO SEKCIJA -->
-        <section id="hero" class="hero-gradient flex items-center justify-center text-center relative">
-            
-            <!-- VIDEO POZADINA -->
-            <div id="video-container">
-                <video id="hero-video" autoplay loop muted playsinline preload="auto">
+        <!-- HERO SECTION -->
+        <section id="hero" class="relative h-screen flex items-center justify-center overflow-hidden">
+            <!-- Background Video -->
+            <div class="absolute inset-0 z-0">
+                <video autoplay loop muted playsinline class="w-full h-full object-cover opacity-60">
                     <source src="Videoone.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
                 </video>
+                <div class="video-overlay"></div>
+                <div class="tech-grid opacity-30"></div>
             </div>
-            
-            <!-- SADRŽAJ HERO SEKCIJE -->
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
-                <img src="logo.svg" alt="Anohubs Logo" class="anohubs-hero-logo mx-auto fade-in-up">
-                
-                <h1 class="text-white font-extrabold mb-6 tracking-tight fade-in-up delay-200" style="font-size: var(--font-size-h1); line-height: 1.1; text-shadow: 0 0 10px rgba(0,0,0,0.9);">
-                    The Global Standard for <span class="text-hydro-primary" style="text-shadow: 0 0 20px rgba(34, 211, 238, 0.9);">Hydro Integrity</span>
+
+            <!-- Content -->
+            <div class="relative z-10 max-w-7xl mx-auto px-4 text-center pt-12">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm text-xs font-mono text-h-cyan mb-8 animate-[fadeInUp_1s_ease-out]">
+                    <span class="flex h-2 w-2 relative">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-h-cyan opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-h-cyan"></span>
+                    </span>
+                    SYSTEM STATUS: 48% DYNAMIC RISK DETECTED
+                </div>
+
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-black text-white tracking-tight leading-none mb-6 animate-[fadeInUp_1s_ease-out_0.2s_forwards] opacity-0">
+                    ENGINEERING <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-b from-h-cyan to-blue-600">IMMUNITY</span>
                 </h1>
-                
-                <p class="text-3xl font-light text-cyan-300 mb-10 max-w-4xl mx-auto fade-in-up delay-400" style="text-shadow: 0 0 10px rgba(6, 182, 212, 0.5);">
-                    Where technological precision and ethical responsibility drive both sustainable profit and ecological health.
+
+                <p class="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto mb-10 leading-relaxed animate-[fadeInUp_1s_ease-out_0.4s_forwards] opacity-0 font-light">
+                    Where technological precision and ethical responsibility drive both 
+                    <strong class="text-white font-bold">sustainable profit</strong> and <strong class="text-white font-bold">ecological health</strong>.
                 </p>
 
-                <div class="flex flex-col sm:flex-row justify-center items-center gap-4 fade-in-up delay-600">
-                    <a href="#contact" class="inline-flex items-center justify-center px-10 py-4 border border-transparent text-lg font-bold rounded-full text-hydro-charcoal bg-hydro-cta hover:bg-yellow-600 transition duration-300 transform hover:scale-105 shadow-2xl focus:outline-none focus:ring-4 focus:ring-hydro-cta focus:ring-opacity-75 uppercase tracking-wider hero-cta-button">
-                        Schedule an Audit &rarr;
+                <div class="flex flex-col sm:flex-row justify-center gap-4 animate-[fadeInUp_1s_ease-out_0.6s_forwards] opacity-0">
+                    <a href="protocol.html" class="px-8 py-4 bg-h-cyan text-black font-black text-lg rounded hover:bg-cyan-400 transition shadow-[0_0_30px_rgba(6,182,212,0.4)] flex items-center justify-center gap-2 group">
+                        <svg data-lucide="terminal" class="w-5 h-5"></svg> INITIALIZE PROTOCOL
+                        <svg data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></svg>
                     </a>
-                    <a href="about-us-vision.html" class="text-white font-semibold py-4 px-8 rounded-full hover:bg-hydro-slate/50 transition-colors duration-300">
-                        Learn More
+                    <a href="#contact" class="px-8 py-4 border border-slate-600 text-slate-300 font-bold text-lg rounded hover:border-white hover:text-white transition flex items-center justify-center gap-2">
+                        SCHEDULE AUDIT
                     </a>
                 </div>
             </div>
-        </section>
 
-
-        <div class="section-stripe"></div>
-        
-        <!-- ABOUT SEKCIJA -->
-        <section id="about-section" class="py-24 bg-hydro-slate text-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
-                    
-                    <!-- Lijeva kolona: Tekst -->
-                    <div class="fade-in-up">
-                        <h2 class="text-base font-bold tracking-widest text-hydro-primary uppercase">Pioneering Hydro Integrity</h2>
-                        <h3 class="text-3xl md:text-4xl font-extrabold !leading-tight text-white mt-2">
-                            We provide the clarity and confidence needed to power the future responsibly.
-                        </h3>
-                        <p class="mt-4 text-slate-400 text-lg">
-                            Anohubs was founded on the principle that the future of renewable energy depends not just on generation capacity, but on <strong>unwavering operational integrity</strong>. We bridge the gap between raw data and actionable intelligence, empowering hydropower operators with comprehensive, transparent, and verifiable audits.
-                        </p>
-                        
-                        <div class="mt-10 space-y-6">
-                            <div class="flex items-start gap-4">
-                                <div class="flex-shrink-0 bg-hydro-light-slate p-3 rounded-full text-hydro-primary"><svg data-lucide="target" class="w-6 h-6"></svg></div>
-                                <div>
-                                    <h4 class="text-xl font-bold text-white">Technological Precision</h4>
-                                    <p class="mt-1 text-slate-400 text-base">Utilizing state-of-the-art sensors and AI-driven analytics to deliver unparalleled accuracy in our assessments.</p>
-                                </div>
-                            </div>
-                            <div class="flex items-start gap-4">
-                                <div class="flex-shrink-0 bg-hydro-light-slate p-3 rounded-full text-hydro-primary"><svg data-lucide="shield-check" class="w-6 h-6"></svg></div>
-                                <div>
-                                    <h4 class="text-xl font-bold text-white">Ethical Responsibility</h4>
-                                    <p class="mt-1 text-slate-400 text-base">Upholding the highest standards of transparency and accountability to ensure ecological health and community trust.</p>
-                                </div>
-                            </div>
-                            <div class="flex items-start gap-4">
-                                <div class="flex-shrink-0 bg-hydro-light-slate p-3 rounded-full text-hydro-primary"><svg data-lucide="trending-up" class="w-6 h-6"></svg></div>
-                                <div>
-                                    <h4 class="text-xl font-bold text-white">Sustainable Profit</h4>
-                                    <p class="mt-1 text-slate-400 text-base">Our audits identify inefficiencies and mitigate risks, directly translating to improved performance and profitability.</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="mt-12">
-                            <a href="insights/expert-insights.html" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-lg font-bold rounded-full text-hydro-charcoal bg-hydro-secondary hover:bg-green-500 transition duration-300 transform hover:scale-105 shadow-xl uppercase tracking-wider">
-                                View Expert Insights &rarr;
-                            </a>
-                        </div>
-                    </div>
-                    
-                    <!-- Desna kolona: SLIKA (ISPRAVLJENO) -->
-                    <div class="zoom-in delay-300">
-                        <!-- Prikazuje about_intro.jpg. Uvjerite se da je slika u root folderu. -->
-                        <img src="about_intro.jpg" 
-                             alt="Hydro Integrity Inspection Technology" 
-                             class="aspect-square rounded-2xl overflow-hidden shadow-2xl object-cover border-2 border-hydro-light-slate w-full h-full">
-                    </div>
-
-                </div>
+            <!-- Scroll Indicator -->
+            <div class="absolute bottom-10 left-1/2 -translate-x-1/2 text-slate-500 animate-bounce text-xs font-mono opacity-70">
+                SCROLL TO DECRYPT
+                <svg data-lucide="chevron-down" class="w-6 h-6 mx-auto mt-2"></svg>
             </div>
         </section>
 
-
         <div class="section-stripe"></div>
 
-        <!-- QUICK RISK ASSESSMENT SECTION -->
-        <section id="quick-assessment" class="py-20 bg-hydro-charcoal/90 text-white border-t border-b border-hydro-primary/50">
-            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h2 class="text-4xl font-extrabold text-hydro-cta mb-6 fade-in-up">
-                    Quick Risk Assessment: Are You Ready for the 48% Dynamic Risk?
-                </h2>
+        <!-- THE PROBLEM (48% RISK) -->
+        <section id="mission" class="py-24 bg-h-dark relative">
+            <div class="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-16 items-center">
                 
-                <div id="assessment-card" class="bg-hydro-slate p-8 rounded-xl shadow-2xl text-left zoom-in delay-200 border border-hydro-light-slate">
-                    <!-- START SCREEN -->
-                    <div id="assessment-start">
-                        <p class="text-lg text-slate-300 mb-6">
-                            Take this quick, anonymous 3-question survey based on industry data to estimate your plant’s hidden operational risk profile.
+                <!-- Left: The Statistic -->
+                <div class="relative">
+                    <div class="text-[12rem] font-black leading-none text-slate-800 select-none absolute -top-20 -left-10 z-0 opacity-50">48%</div>
+                    <div class="relative z-10">
+                        <h2 class="text-xs font-bold tracking-widest text-h-cyan uppercase mb-2">The Silent Threat</h2>
+                        <h3 class="text-4xl font-bold text-white mb-6">The Dynamic <br><span class="text-h-red">Failure Rate</span></h3>
+                        <p class="text-slate-400 text-lg mb-6 leading-relaxed">
+                            Standard maintenance covers material wear and electrical faults. But <strong>48% of failures</strong> in modern hydropower are dynamic—vibration, cavitation, and resonance that traditional audits miss.
                         </p>
-                        <button id="assessment-start-btn" class="w-full bg-hydro-secondary hover:bg-green-500 text-hydro-charcoal py-3 rounded-md font-bold uppercase transition shadow-lg">
-                            Start Assessment →
+                        <div class="grid gap-4">
+                            <div class="flex items-center gap-4 p-4 rounded-lg bg-white/5 border border-white/10">
+                                <div class="bg-h-red/10 p-2 rounded text-h-red"><svg data-lucide="zap-off" class="w-6 h-6"></svg></div>
+                                <div>
+                                    <h4 class="text-white font-bold">Hidden Erosion</h4>
+                                    <p class="text-xs text-slate-400">Micro-arcing in bearings (EDM) goes undetected until seizure.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4 p-4 rounded-lg bg-white/5 border border-white/10">
+                                <div class="bg-h-red/10 p-2 rounded text-h-red"><svg data-lucide="activity" class="w-6 h-6"></svg></div>
+                                <div>
+                                    <h4 class="text-white font-bold">Resonance Drift</h4>
+                                    <p class="text-xs text-slate-400">Structural frequencies shift over decades, creating silent fatigue.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: The Solution (Bridge to Protocol) -->
+                <div class="glass-card p-10 rounded-2xl relative overflow-hidden group border-l-4 border-l-h-cyan">
+                    <div class="absolute top-0 right-0 p-6 opacity-20 group-hover:opacity-40 transition duration-500"><svg data-lucide="shield-check" class="w-40 h-40 text-h-cyan"></svg></div>
+                    
+                    <div class="relative z-10">
+                        <h3 class="text-sm font-mono text-slate-400 mb-2 uppercase">The Antidote</h3>
+                        <div class="text-3xl md:text-4xl font-black text-white mb-6">ENGINEERING <br><span class="text-h-cyan">IMMUNITY</span></div>
+                        
+                        <p class="text-slate-300 mb-8 text-lg">
+                            We developed the <strong>AnoHUB Protocol</strong>—a rigid, multi-tiered methodology that enforces 0.05mm precision and eliminates the "Organizational Execution Gap".
+                        </p>
+                        
+                        <a href="protocol.html" class="inline-flex items-center gap-3 text-white font-bold bg-h-cyan/10 px-6 py-3 rounded hover:bg-h-cyan hover:text-black transition-all group">
+                            <svg data-lucide="terminal" class="w-5 h-5"></svg>
+                            ACCESS PROTOCOL NETWORK
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <div class="section-stripe"></div>
+
+        <!-- CAPABILITIES GRID (SERVICES) -->
+        <section id="services" class="py-24 bg-h-panel relative">
+            <div class="absolute inset-0 bg-grid-pattern opacity-5"></div>
+            
+            <div class="max-w-7xl mx-auto px-4 relative z-10">
+                <div class="text-center mb-16">
+                    <h2 class="text-sm font-mono text-h-cyan uppercase tracking-widest mb-4">Operational Capabilities</h2>
+                    <h3 class="text-4xl font-black text-white">Total System Assurance</h3>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    
+                    <!-- Service 1 -->
+                    <a href="services-integrity.html" class="glass-card p-8 rounded-xl group block">
+                        <div class="w-14 h-14 bg-h-cyan/10 rounded-xl flex items-center justify-center text-h-cyan mb-6 border border-h-cyan/20 group-hover:bg-h-cyan group-hover:text-black transition">
+                            <svg data-lucide="layers" class="w-8 h-8"></svg>
+                        </div>
+                        <h4 class="text-xl font-bold text-white mb-3">Integrity Audits</h4>
+                        <p class="text-sm text-slate-400 leading-relaxed">Systemic examination using FEA and NDT protocols to ensure zero-defect compliance.</p>
+                    </a>
+
+                    <!-- Service 2 -->
+                    <a href="services-predictive.html" class="glass-card p-8 rounded-xl group block">
+                        <div class="w-14 h-14 bg-h-green/10 rounded-xl flex items-center justify-center text-h-green mb-6 border border-h-green/20 group-hover:bg-h-green group-hover:text-black transition">
+                            <svg data-lucide="bot" class="w-8 h-8"></svg>
+                        </div>
+                        <h4 class="text-xl font-bold text-white mb-3">Predictive AI</h4>
+                        <p class="text-sm text-slate-400 leading-relaxed">Neural models that forecast potential equipment failures months in advance.</p>
+                    </a>
+
+                    <!-- Service 3 -->
+                    <a href="services-compliance.html" class="glass-card p-8 rounded-xl group block">
+                        <div class="w-14 h-14 bg-h-purple/10 rounded-xl flex items-center justify-center text-h-purple mb-6 border border-h-purple/20 group-hover:bg-h-purple group-hover:text-black transition">
+                            <svg data-lucide="clipboard-check" class="w-8 h-8"></svg>
+                        </div>
+                        <h4 class="text-xl font-bold text-white mb-3">Compliance</h4>
+                        <p class="text-sm text-slate-400 leading-relaxed">Automated generation of regulatory documentation for global standards.</p>
+                    </a>
+
+                    <!-- Service 4 -->
+                    <a href="services-optimization.html" class="glass-card p-8 rounded-xl group block">
+                        <div class="w-14 h-14 bg-h-yellow/10 rounded-xl flex items-center justify-center text-h-yellow mb-6 border border-h-yellow/20 group-hover:bg-h-yellow group-hover:text-black transition">
+                            <svg data-lucide="bar-chart-2" class="w-8 h-8"></svg>
+                        </div>
+                        <h4 class="text-xl font-bold text-white mb-3">Optimization</h4>
+                        <p class="text-sm text-slate-400 leading-relaxed">Identify inefficiencies and mitigate the 48% hidden risk for maximum profitability.</p>
+                    </a>
+
+                </div>
+            </div>
+        </section>
+
+        <div class="section-stripe"></div>
+
+        <!-- TURBINE TECH -->
+        <section id="technology" class="py-24 bg-h-dark">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
+                    <div>
+                        <h2 class="text-sm font-mono text-h-cyan uppercase tracking-widest mb-2">Advanced Analytics</h2>
+                        <h3 class="text-4xl font-black text-white">Turbine-Specific Integrity</h3>
+                    </div>
+                    <div class="hidden md:block text-right">
+                        <p class="text-slate-500 text-sm">Optimized for all major hydraulic profiles.</p>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Francis -->
+                    <a href="turbine-francis.html" class="group relative h-96 rounded-2xl overflow-hidden border border-slate-800 hover:border-h-cyan transition-all duration-500 shadow-2xl">
+                        <img src="francis-diagram.jpg" alt="Francis" class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-40 group-hover:scale-105 transition duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 p-8 w-full">
+                            <div class="text-5xl font-black text-white/10 absolute -top-12 right-6 group-hover:text-h-cyan/20 transition">01</div>
+                            <h3 class="text-3xl font-bold text-white mb-1 group-hover:text-h-cyan transition">Francis</h3>
+                            <p class="text-xs font-mono text-slate-400 mb-4">MEDIUM HEAD / MIXED FLOW</p>
+                            <p class="text-sm text-slate-300 line-clamp-2 border-t border-slate-700 pt-4">CFD Optimization & Acoustic Emission for cavitation resistance.</p>
+                        </div>
+                    </a>
+
+                    <!-- Kaplan -->
+                    <a href="turbine-kaplan.html" class="group relative h-96 rounded-2xl overflow-hidden border border-slate-800 hover:border-h-cyan transition-all duration-500 shadow-2xl">
+                        <img src="kaplan-diagram.jpg" alt="Kaplan" class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-40 group-hover:scale-105 transition duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 p-8 w-full">
+                            <div class="text-5xl font-black text-white/10 absolute -top-12 right-6 group-hover:text-h-cyan/20 transition">02</div>
+                            <h3 class="text-3xl font-bold text-white mb-1 group-hover:text-h-cyan transition">Kaplan</h3>
+                            <p class="text-xs font-mono text-slate-400 mb-4">LOW HEAD / AXIAL FLOW</p>
+                            <p class="text-sm text-slate-300 line-clamp-2 border-t border-slate-700 pt-4">Blade angle synchronization and hub oil sealing integrity analysis.</p>
+                        </div>
+                    </a>
+
+                    <!-- Pelton -->
+                    <a href="turbine-pelton.html" class="group relative h-96 rounded-2xl overflow-hidden border border-slate-800 hover:border-h-cyan transition-all duration-500 shadow-2xl">
+                        <img src="pelton-diagram.jpg" alt="Pelton" class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-40 group-hover:scale-105 transition duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 p-8 w-full">
+                            <div class="text-5xl font-black text-white/10 absolute -top-12 right-6 group-hover:text-h-cyan/20 transition">03</div>
+                            <h3 class="text-3xl font-bold text-white mb-1 group-hover:text-h-cyan transition">Pelton</h3>
+                            <p class="text-xs font-mono text-slate-400 mb-4">HIGH HEAD / IMPULSE</p>
+                            <p class="text-sm text-slate-300 line-clamp-2 border-t border-slate-700 pt-4">Nozzle precision alignment and bucket surface hardening verification.</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-stripe"></div>
+
+        <!-- SECURE CONTACT -->
+        <section id="contact" class="py-24 bg-h-panel relative overflow-hidden">
+            <!-- Decorative elements -->
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-h-cyan/5 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+                <h2 class="text-sm font-mono text-h-cta uppercase tracking-widest mb-4">Direct Line</h2>
+                <h3 class="text-4xl md:text-5xl font-black text-white mb-8">Connect With Our Experts</h3>
+                <p class="text-slate-400 mb-12 text-lg">Ready to elevate your operations? Initiate a consultation with our hydro integrity specialists.</p>
+                
+                <div class="bg-h-dark p-8 md:p-12 rounded-2xl border border-slate-700 shadow-2xl">
+                    <form id="contactForm" action="https://formspree.io/f/xqaywlaq" method="POST" class="space-y-6 text-left">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label class="text-xs font-mono text-slate-500 uppercase ml-1">Full Name</label>
+                                <input type="text" name="Full Name" required class="w-full bg-slate-900 border border-slate-700 rounded p-4 text-white focus:border-h-cyan focus:ring-1 focus:ring-h-cyan outline-none transition">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-xs font-mono text-slate-500 uppercase ml-1">Official Email</label>
+                                <input type="email" name="Email" required class="w-full bg-slate-900 border border-slate-700 rounded p-4 text-white focus:border-h-cyan focus:ring-1 focus:ring-h-cyan outline-none transition">
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-xs font-mono text-slate-500 uppercase ml-1">Company / Plant</label>
+                            <input type="text" name="Company" required class="w-full bg-slate-900 border border-slate-700 rounded p-4 text-white focus:border-h-cyan focus:ring-1 focus:ring-h-cyan outline-none transition">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-xs font-mono text-slate-500 uppercase ml-1">Operational Challenge</label>
+                            <textarea name="Message" rows="4" class="w-full bg-slate-900 border border-slate-700 rounded p-4 text-white focus:border-h-cyan focus:ring-1 focus:ring-h-cyan outline-none transition"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="w-full bg-h-cta hover:bg-yellow-500 text-black font-black py-5 rounded-lg shadow-lg transition uppercase tracking-widest text-lg transform hover:scale-[1.01]">
+                            Send Inquiry
                         </button>
-                    </div>
-                    <!-- Pitanja -->
-                    <div id="question-1" style="display:none;">
-                        <h4 class="text-2xl font-bold text-hydro-primary mb-4">Question 1/3: Installation Precision</h4>
-                        <p class="mb-6 text-slate-300">Has your turbine shaft alignment been verified within the non-negotiable **0.05 mm per meter** precision standard?</p>
-                        <button onclick="handleAnswer(1, 'yes')" class="w-full mb-3 bg-hydro-secondary hover:bg-green-500 text-hydro-charcoal py-3 rounded-md font-bold transition">Yes (Low Risk)</button>
-                        <button onclick="handleAnswer(1, 'no')" class="w-full bg-hydro-risk/80 hover:bg-hydro-risk text-white py-3 rounded-md font-bold transition">No (High Risk)</button>
-                    </div>
-                    <div id="question-2" style="display:none;">
-                        <h4 class="text-2xl font-bold text-hydro-primary mb-4">Question 2/3: Maintenance Culture</h4>
-                        <p class="mb-6 text-slate-300">Does your plant rely on scheduled, preventative maintenance, or mostly on reactive maintenance?</p>
-                        <button onclick="handleAnswer(2, 'scheduled')" class="w-full mb-3 bg-hydro-secondary hover:bg-green-500 text-hydro-charcoal py-3 rounded-md font-bold transition">Scheduled/Predictive</button>
-                        <button onclick="handleAnswer(2, 'always')" class="w-full bg-hydro-cta/80 hover:bg-hydro-cta text-hydro-charcoal py-3 rounded-md font-bold transition">Mostly Reactive</button>
-                    </div>
-                    <div id="question-3" style="display:none;">
-                        <h4 class="text-2xl font-bold text-hydro-primary mb-4">Question 3/3: Digital Monitoring</h4>
-                        <p class="mb-6 text-slate-300">What level of monitoring do you use to detect hidden electro-mechanical issues?</p>
-                        <button onclick="handleAnswer(3, 'full')" class="w-full mb-3 bg-hydro-secondary hover:bg-green-500 text-hydro-charcoal py-3 rounded-md font-bold transition">Full Sensor/AI</button>
-                        <button onclick="handleAnswer(3, 'basic')" class="w-full mb-3 bg-hydro-cta/80 hover:bg-hydro-cta text-hydro-charcoal py-3 rounded-md font-bold transition">Basic Only</button>
-                        <button onclick="handleAnswer(3, 'none')" class="w-full bg-hydro-risk/80 hover:bg-hydro-risk text-white py-3 rounded-md font-bold transition">None</button>
-                    </div>
-                    <!-- Rezultati -->
-                    <div id="assessment-results" style="display:none;"></div>
+                        <p id="formMessage" class="mt-4 text-center text-sm hidden"></p>
+                    </form>
                 </div>
             </div>
         </section>
 
-        <div class="section-stripe"></div>
-        
-        <!-- METRICS SEKCIJA -->
-        <section id="metrics" class="py-16 bg-hydro-charcoal">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h2 class="text-4xl font-extrabold text-hydro-primary mb-12 tracking-tight fade-in-up">UNWAVERING OPERATIONAL INTEGRITY: Guaranteed Measurable Parameters</h2>
-                
-                <div id="counter-group" class="grid md:grid-cols-4 gap-8 text-white">
-                    
-                    <div class="p-6 bg-hydro-slate rounded-xl shadow-inner border border-hydro-primary zoom-in">
-                        <p class="text-6xl font-black text-hydro-primary mb-2">
-                            <span class="counter-number" data-target="98.5" data-decimal="1">0</span>%
-                        </p>
-                        <p class="text-lg font-bold text-slate-300 uppercase tracking-wider">Availability Factor</p>
-                        <p class="text-sm text-hydro-gray mt-1">Minimum target after our protocol is applied.</p>
-                    </div>
-
-                    <div class="p-6 bg-hydro-slate rounded-xl shadow-inner border border-hydro-primary zoom-in delay-200">
-                        <p class="text-6xl font-black text-hydro-primary mb-2">
-                            +<span class="counter-number" data-target="3.2" data-decimal="1">0</span>%
-                        </p>
-                        <p class="text-lg font-bold text-slate-300 uppercase tracking-wider">Efficiency Gain</p>
-                        <p class="text-sm text-hydro-gray mt-1">Minimum target post-CFD tuning</p>
-                    </div>
-
-                    <div class="p-6 bg-hydro-slate rounded-xl shadow-inner border border-hydro-risk zoom-in delay-400">
-                        <p class="text-6xl font-black text-hydro-risk mb-2">
-                            <span class="counter-number" data-target="75" data-decimal="0">0</span>%
-                        </p>
-                        <p class="text-lg font-bold text-slate-300 uppercase tracking-wider">Cavitation Reduction</p>
-                        <p class="text-sm text-hydro-gray mt-1">Directly translates to reduced overhaul costs.</p>
-                    </div>
-
-                    <div class="p-6 bg-hydro-slate rounded-xl shadow-inner border border-hydro-primary zoom-in delay-600">
-                        <p class="text-6xl font-black text-hydro-primary mb-2">
-                            &gt;<span class="counter-number" data-target="15000" data-decimal="0">0</span>
-                        </p>
-                        <p class="text-lg font-bold text-slate-300 uppercase tracking-wider">Hands-on Shaft Hours</p>
-                        <p class="text-sm text-hydro-gray mt-1">Direct experience enforcing the 0.05 mm/m standard.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-
-        <div class="section-stripe"></div>
-        
-        <!-- SERVICES SEKCIJA -->
-        <section id="services" class="py-24 bg-hydro-slate text-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h2 class="text-base font-bold tracking-widest text-hydro-primary uppercase fade-in-up">Our Core Services</h2>
-                <p class="mt-4 text-4xl md:text-5xl font-extrabold text-white fade-in-up delay-200">
-                    A New Paradigm in Hydropower Management
-                </p>
-                
-                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mt-16">
-                    
-                    <!-- Systemic Integrity Audits -->
-                    <a href="services-integrity.html" class="block">
-                        <div class="p-8 rounded-2xl bg-hydro-charcoal border border-hydro-light-slate hover:border-hydro-primary shadow-lg h-full zoom-in delay-400 text-left transition transform hover:scale-[1.03]">
-                            <div class="bg-hydro-light-slate inline-block p-4 rounded-xl text-hydro-primary mb-6"><svg data-lucide="layers" class="w-8 h-8"></svg></div>
-                            <h3 class="text-2xl font-bold text-white mb-4">Systemic Integrity Audits</h3>
-                            <p class="text-slate-400 text-base">A holistic examination of your entire hydropower system, ensuring every component meets global excellence standards. Includes FEA and NDT protocols.</p>
-                        </div>
-                    </a>
-
-                    <!-- AI-Powered Predictive Maintenance -->
-                    <a href="services-predictive.html" class="block">
-                        <div class="p-8 rounded-2xl bg-hydro-charcoal border border-hydro-light-slate hover:border-hydro-primary shadow-lg h-full zoom-in delay-600 text-left transition transform hover:scale-[1.03]">
-                            <div class="bg-hydro-light-slate inline-block p-4 rounded-xl text-hydro-primary mb-6"><svg data-lucide="bot" class="w-8 h-8"></svg></div>
-                            <h3 class="text-2xl font-bold text-white mb-4">AI-Powered Predictive Maintenance</h3>
-                            <p class="text-slate-400 text-base">Leverage our proprietary AI models to forecast potential equipment failures, reduce downtime, and optimize maintenance schedules for cost savings.</p>
-                        </div>
-                    </a>
-
-                    <!-- Regulatory & Compliance Reporting -->
-                    <a href="services-compliance.html" class="block">
-                        <div class="p-8 rounded-2xl bg-hydro-charcoal border border-hydro-light-slate hover:border-hydro-primary shadow-lg h-full zoom-in delay-800 text-left transition transform hover:scale-[1.03]">
-                            <div class="bg-hydro-light-slate inline-block p-4 rounded-xl text-hydro-primary mb-6"><svg data-lucide="clipboard-check" class="w-8 h-8"></svg></div>
-                            <h3 class="text-2xl font-bold text-white mb-4">Regulatory & Compliance Reporting</h3>
-                            <p class="text-slate-400 text-base">Automate and streamline complex compliance reporting. Our platform generates audit-ready documentation verifying adherence to regulations.</p>
-                        </div>
-                    </a>
-
-                    <!-- Performance Optimization Analysis -->
-                    <a href="services-optimization.html" class="block">
-                        <div class="p-8 rounded-2xl bg-hydro-charcoal border border-hydro-light-slate hover:border-hydro-primary shadow-lg h-full zoom-in delay-1000 text-left transition transform hover:scale-[1.03]">
-                            <div class="bg-hydro-light-slate inline-block p-4 rounded-xl text-hydro-primary mb-6"><svg data-lucide="bar-chart-2" class="w-8 h-8"></svg></div>
-                            <h3 class="text-2xl font-bold text-white mb-4">Performance Optimization Analysis</h3>
-                            <p class="text-slate-400 text-base">We identify inefficiencies and mitigate risks (including the **48% hidden risk**), translating to improved energy output and profitability.</p>
-                        </div>
-                    </a>
-
-                </div>
-            </div>
-        </section>
-
-
-        <div class="section-stripe"></div>
-
-        <!-- ADVANCED ANALYTICS: CLICKABLE TURBINE CARDS -->
-        <section id="technology" class="py-24 bg-hydro-slate text-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-base font-bold tracking-widest text-hydro-primary uppercase text-center fade-in-up">Advanced Analytics</h2>
-                <p class="mt-4 text-4xl md:text-5xl font-extrabold text-white text-center mb-16 fade-in-up delay-200">
-                    Turbine-Specific Integrity Analysis
-                </p>
-
-                <div class="max-w-5xl mx-auto space-y-12">
-                    
-                    <!-- FRANCIS TURBINE CARD (CLICKABLE) -->
-                    <a href="turbine-francis.html" class="turbine-card grid lg:grid-cols-5 gap-8 items-center bg-hydro-charcoal p-6 rounded-xl shadow-xl zoom-in delay-400 border border-hydro-primary/20">
-                        <div class="lg:col-span-2 aspect-square rounded-lg bg-hydro-slate flex items-center justify-center text-hydro-gray">
-                            <img src="francis-diagram.jpg" alt="Francis Turbine Diagram" class="w-full h-full object-cover">
-                        </div>
-                        <div class="lg:col-span-3">
-                            <h3 class="text-3xl font-bold text-hydro-primary mb-3">Francis Turbine</h3>
-                            <p class="text-slate-400">
-                                Ideal for medium head and flow rates, the Francis turbine is the most common. Our audits ensure <strong>optimal blade geometry</strong> and flow dynamics, maximizing efficiency and lifespan.
-                            </p>
-                            <p class="text-cyan-400 mt-2 font-semibold">Focus: CFD Optimization & Acoustic Emission (Cavitation) &rarr;</p>
-                        </div>
-                    </a>
-
-                    <!-- KAPLAN TURBINE CARD (CLICKABLE) -->
-                    <a href="turbine-kaplan.html" class="turbine-card grid lg:grid-cols-5 gap-8 items-center bg-hydro-charcoal p-6 rounded-xl shadow-xl zoom-in delay-600 border border-hydro-primary/20">
-                        <div class="lg:col-span-2 aspect-square rounded-lg bg-hydro-slate flex items-center justify-center text-hydro-gray">
-                            <img src="kaplan-diagram.jpg" alt="Kaplan Turbine Diagram" class="w-full h-full object-cover">
-                        </div>
-                        <div class="lg:col-span-3">
-                            <h3 class="text-3xl font-bold text-hydro-primary mb-3">Kaplan Turbine</h3>
-                            <p class="text-slate-400">
-                                A propeller-type turbine for low head and high flow rates. Our analysis focuses on <strong>adjustable blade performance</strong> and <strong>cavitation prevention</strong>, crucial for maintaining peak output.
-                            </p>
-                            <p class="text-cyan-400 mt-2 font-semibold">Focus: Adjustable Blade Performance & Real-time Load Simulation &rarr;</p>
-                        </div>
-                    </a>
-
-                    <!-- PELTON TURBINE CARD (CLICKABLE) -->
-                    <a href="turbine-pelton.html" class="turbine-card grid lg:grid-cols-5 gap-8 items-center bg-hydro-charcoal p-6 rounded-xl shadow-xl zoom-in delay-800 border border-hydro-primary/20">
-                        <div class="lg:col-span-2 aspect-square rounded-lg bg-hydro-slate flex items-center justify-center text-hydro-gray">
-                            <img src="pelton-diagram.jpg" alt="Pelton Turbine Diagram" class="w-full h-full object-cover">
-                        </div>
-                        <div class="lg:col-span-3">
-                            <h3 class="text-3xl font-bold text-hydro-primary mb-3">Pelton Turbine</h3>
-                            <p class="text-slate-400">
-                                Designed for very high head and low flow applications. We provide integrity checks on the <strong>nozzle and bucket systems</strong>, ensuring impulse energy conversion is precise and wear is minimized.
-                            </p>
-                            <p class="text-cyan-400 mt-2 font-semibold">Focus: Nozzle System Precision & Impulse Energy Conversion &rarr;</p>
-                        </div>
-                    </a>
-
-                </div>
-            </div>
-        </section>
-
-
-        <div class="section-stripe"></div>
-
-        <!-- KONTAKT SEKCIJA -->
-        <section id="contact" class="py-24 bg-hydro-charcoal" aria-labelledby="kontakt-naslov">
-            <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-base font-bold tracking-widest text-hydro-primary uppercase text-center fade-in-up">Get in Touch</h2>
-                <p id="kontakt-naslov" class="mt-4 text-4xl font-extrabold text-white mb-4 text-center tracking-tight fade-in-up delay-200">Connect With Our Experts</p>
-                <p class="text-xl text-hydro-cta mb-10 text-center fade-in-up delay-400">
-                    Ready to elevate your operations? Fill out the form below to schedule a consultation with our hydro integrity specialists.
-                </p>
-                
-                <form id="contactForm" class="space-y-6 bg-hydro-slate p-8 rounded-xl shadow-2xl zoom-in delay-600" action="https://formspree.io/f/xqaywlaq" method="POST">
-                    <input type="text" id="ime" name="Full Name" placeholder="Full Name" required class="mt-1 block w-full px-4 py-3 bg-hydro-light-slate border border-hydro-gray rounded-md text-white focus:ring-hydro-primary focus:border-hydro-primary transition">
-                    <input type="email" id="email" name="Email (Business)" placeholder="Email Address" required class="mt-1 block w-full px-4 py-3 bg-hydro-light-slate border border-hydro-gray rounded-md text-white focus:ring-hydro-primary focus:border-hydro-primary transition">
-                    <input type="text" id="kompanija" name="Company / Plant" placeholder="Company" required class="mt-1 block w-full px-4 py-3 bg-hydro-light-slate border border-hydro-gray rounded-md text-white focus:ring-hydro-primary focus:border-hydro-primary transition">
-                    <textarea id="poruka" name="Message" rows="4" placeholder="Message" class="mt-1 block w-full px-4 py-3 bg-hydro-light-slate border border-hydro-gray rounded-md text-white focus:ring-hydro-primary focus:border-hydro-primary transition"></textarea>
-                    
-                    <input type="hidden" name="_subject" value="Consultation Request (Final Site)">
-                    <button type="submit" class="w-full flex justify-center py-3.5 px-4 border border-transparent rounded-md shadow-sm text-lg font-bold text-hydro-charcoal bg-hydro-cta hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-hydro-cta uppercase tracking-wider transition transform hover:scale-[1.01]">
-                        Send Inquiry
-                    </button>
-                    <p id="formMessage" class="mt-4 text-center text-sm hidden" role="status" aria-live="polite"></p>
-                </form>
-            </div>
-        </section>
     </main>
 
-
     <!-- FOOTER -->
-    <div class="md:hidden mobile-sticky-cta text-center">
-        <a href="#contact" class="w-full block text-center bg-hydro-primary hover:bg-cyan-500 text-hydro-charcoal px-5 py-3 font-bold tracking-wider uppercase shadow-2xl">
-            SCHEDULE AUDIT
-        </a>
-    </div>
-
-    <footer class="bg-hydro-slate text-hydro-gray py-8 text-center border-t border-hydro-light-slate" role="contentinfo">
-        <div class="container mx-auto px-6">
-           <a href="#hero" class="mb-4 block" aria-label="Anohubs Logo - Back to top">
-               <img src="logo.svg" alt="Anohubs Logo" class="anohubs-logo mx-auto">
-           </a>
-           <p class="text-slate-400 mb-6">Establishing the global standard for hydro integrity.</p>
-           
-           <nav class="flex justify-center space-x-6 text-sm mb-4">
-               <a href="about-us-vision.html" class="text-slate-400 hover:text-hydro-primary">About</a>
-               <a href="services.html" class="text-slate-400 hover:text-hydro-primary">Services</a>
-               <a href="insights/expert-insights.html" class="text-slate-400 hover:text-hydro-primary">Insights</a>
-               <a href="case-studies.html" class="text-slate-400 hover:text-hydro-primary">Case Studies</a>
-               <a href="gallery.html" class="text-slate-400 hover:text-hydro-primary">Gallery</a>
-               <a href="protocol.html" class="text-slate-400 hover:text-hydro-primary">Protocol</a>
-               <a href="#contact" class="text-slate-400 hover:text-hydro-primary">Contact</a>
-           </nav>
-           
-           <!-- PRAVNI LINKOVI -->
-           <div class="flex justify-center space-x-4 text-xs mb-4">
-                <a href="privacy-policy.html" class="text-slate-500 hover:text-slate-300 underline">Privacy Policy</a>
-                <span class="text-slate-500">|</span>
-                <a href="terms-of-use.html" class="text-slate-500 hover:text-slate-300 underline">Terms of Use</a>
-           </div>
-           
-           <p class="text-sm">&copy; <span id="year"></span> Anohubs Inc. All rights reserved.</p>
+    <footer class="bg-black border-t border-slate-900 py-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-8 mb-8">
+                <a href="#hero">
+                    <img src="logo.svg" alt="Logo" class="h-8 opacity-50 grayscale hover:grayscale-0 transition">
+                </a>
+                <div class="flex flex-wrap justify-center gap-8 text-sm text-slate-400 font-medium">
+                    <a href="about-us-vision.html" class="hover:text-h-cyan transition">About</a>
+                    <a href="services.html" class="hover:text-h-cyan transition">Services</a>
+                    <a href="insights/expert-insights.html" class="hover:text-h-cyan transition">Insights</a>
+                    <a href="contact.html" class="hover:text-h-cyan transition">Contact</a>
+                </div>
+            </div>
+            
+            <div class="h-px bg-slate-900 w-full mb-8"></div>
+            
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-mono text-slate-600">
+                <p>© 2025 Anohubs Inc. | Establishing the Global Standard.</p>
+                <div class="flex gap-6">
+                    <a href="privacy-policy.html" class="hover:text-white transition">PRIVACY_POLICY</a>
+                    <a href="terms-of-use.html" class="hover:text-white transition">TERMS_OF_USE</a>
+                </div>
+            </div>
         </div>
     </footer>
 
-    <!-- KRITIČNO: MODULARNA JS STRUKTURA -->
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
-    <script src="js/ui_core.js"></script>
-    <script src="js/animation_logic.js"></script>
-    <script src="contact_logic.js"></script> 
-    
-    <!-- NOVO: Zaštita slika -->
-    <script src="js/gallery-protection.js"></script>
-    <!-- NOVO: Alat za procjenu rizika -->
-    <script src="js/risk-assessment.js"></script>
+    <!-- ICONS & SCRIPTS -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="js/ui_core.js"></script> <!-- Keeping your existing core JS reference -->
+    <script>
+        // Icons
+        lucide.createIcons();
+        
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('shadow-lg', 'bg-h-dark/95', 'py-0');
+                nav.classList.remove('bg-h-dark/80');
+            } else {
+                nav.classList.remove('shadow-lg', 'bg-h-dark/95', 'py-0');
+                nav.classList.add('bg-h-dark/80');
+            }
+        });
+
+        // Mobile Menu Logic
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Form Handling (Simple feedback)
+        const form = document.getElementById('contactForm');
+        const msg = document.getElementById('formMessage');
+        
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = form.querySelector('button');
+            const originalText = btn.innerText;
+            btn.innerText = 'TRANSMITTING...';
+            
+            const formData = new FormData(form);
+            
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: { 'Accept': 'application/json' }
+                });
+                
+                if (response.ok) {
+                    msg.innerText = "TRANSMISSION RECEIVED. STAND BY FOR CONTACT.";
+                    msg.className = "mt-4 text-center text-sm font-mono text-h-green";
+                    msg.classList.remove('hidden');
+                    form.reset();
+                } else {
+                    throw new Error('Network response was not ok');
+                }
+            } catch (error) {
+                msg.innerText = "TRANSMISSION ERROR. PLEASE RETRY.";
+                msg.className = "mt-4 text-center text-sm font-mono text-h-red";
+                msg.classList.remove('hidden');
+            } finally {
+                btn.innerText = originalText;
+            }
+        });
+    </script>
 </body>
 </html>
