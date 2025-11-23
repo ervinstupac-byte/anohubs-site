@@ -1,186 +1,211 @@
-// ==============================================
-// CASE STUDIES GRID (Data + Render Logic)
-// DEBUGGED VERSION
-// ==============================================
-
-// 1. PODACI (DATA)
-const caseStudiesData = [
-    {
-        "id": "cs01",
-        "icon": "🛡️",
-        "title": "98% Availability: Neutralizing Hidden Dynamic Risk",
-        "subtitle": "Case Study: Francis Turbine Misalignment Correction in a DACH-region plant.",
-        "metrics": "RISK REDUCTION: 48% eliminated",
-        "date": "2024-09-15",
-        "content_file": "case-studies/cs-francis-misalignment.html"
-    },
-    {
-        "id": "cs02",
-        "icon": "⚡",
-        "title": "+3.1% Efficiency Gain Post-Modernization",
-        "subtitle": "Case Study: Hydraulic Hub Optimization and LCC Analysis for Kaplan Fleet.",
-        "metrics": "ROI: 14 months",
-        "date": "2024-10-20",
-        "content_file": "case-studies/cs-kaplan-optimization.html"
-    },
-    {
-        "id": "cs03",
-        "icon": "🔬",
-        "title": "Electro-Erosion Stopped: M-E Synergy Audit Success",
-        "subtitle": "Case Study: Identifying hidden grounding flaws causing catastrophic bearing wear.",
-        "metrics": "BEARING LIFESPAN: Extended by 5 years",
-        "date": "2024-11-05",
-        "content_file": "case-studies/cs-me-synergy-erosion.html"
-    },
-    {
-        "id": "cs04",
-        "icon": "💧",
-        "title": "Abrasion Risk Zeroed: Pelton Nozzle & Bucket Integrity",
-        "subtitle": "Case Study: Mitigation of high-velocity abrasion damage on a high-head Pelton unit.",
-        "metrics": "WEAR REDUCTION: 90%",
-        "date": "2025-01-10",
-        "content_file": "case-studies/cs-pelton-abrasion.html"
-    },
-    {
-        "id": "cs05",
-        "icon": "🤖",
-        "title": "Predictive Certainty: 100% Elimination of Unplanned Downtime",
-        "subtitle": "Case Study: Validating AI anomaly detection accuracy for 3 years, optimizing maintenance windows.",
-        "metrics": "DOWNTIME: 0 Unplanned Hours",
-        "date": "2025-02-15",
-        "content_file": "case-studies/cs-predictive-maintenance-roi.html"
-    },
-    {
-        "id": "cs06",
-        "icon": "⚖️",
-        "title": "Compliance Shield: Avoiding €200K Fines with Automated Reporting",
-        "subtitle": "Case Study: Implementing verifiaible Digital Protocol to satisfy regulatory bodies and secure permanent license renewal.",
-        "metrics": "FINES AVOIDED: €200,000",
-        "date": "2025-03-01",
-        "content_file": "case-studies/cs-compliance-shield.html"
-    },
-    {
-        "id": "cs07",
-        "icon": "💥",
-        "title": "Pressure Pulse Control: Eliminating Hydraulic Hammer Risk",
-        "subtitle": "Case Study: Governor system recalibration and transient analysis to mitigate water hammer effects and protect penstock integrity.",
-        "metrics": "PRESSURE SURGE: -40% reduction",
-        "date": "2025-04-10",
-        "content_file": "case-studies/cs-hydraulic-hammer-mitigation.html"
-    },
-    {
-        "id": "cs08",
-        "icon": "🧪",
-        "title": "Material Integrity: Forensic NDT Stops Early Fatigue",
-        "subtitle": "Case Study: Utilizing sub-surface NDT protocols to detect stress corrosion cracking in high-stress zones of Francis runners.",
-        "metrics": "FATIGUE RISK: 95% mitigated",
-        "date": "2025-05-20",
-        "content_file": "case-studies/cs-forensic-ndt-fatigue.html"
-    },
-    {
-        "id": "cs09",
-        "icon": "💸",
-        "title": "Procurement Integrity: LCC Audit Secures 30-Year Value",
-        "subtitle": "Case Study: Pre-contract LCC and material compatibility audit prevents catastrophic failure linked to low-bid component sourcing.",
-        "metrics": "LCC SAVINGS: 18% over asset lifespan",
-        "date": "2025-06-15",
-        "content_file": "case-studies/cs-lcc-procurement-audit.html"
-    },
-    {
-        "id": "cs10",
-        "icon": "🐠",
-        "title": "Symbiosis Success: Fish Passage and Ecological Flow Verification",
-        "subtitle": "Case Study: Implementing verifiable ecological monitoring protocols to secure public trust and permanent operating licenses.",
-        "metrics": "LICENSE RISK: Eliminated (Verified Flow)",
-        "date": "2026-01-20",
-        "content_file": "case-studies/cs-fish-passage-optimization.html"
-    },
-    {
-        "id": "cs11",
-        "icon": "⚙️",
-        "title": "Shaft System Reliability: Micrometer Precision Mitigates 48% Risk",
-        "subtitle": "Case Study: Advanced precision measurement and re-alignment eliminates latent dynamic instability and structural fatigue on a large vertical unit.",
-        "metrics": "VIBRATION: 85% reduction",
-        "date": "2026-03-05",
-        "content_file": "case-studies/cs-shaft-system-stability.html"
-    },
-    {
-        "id": "cs12",
-        "icon": "📈",
-        "title": "SCADA-to-CEO Gap Closed: Verifiable ROI on Digital Protocol",
-        "subtitle": "Case Study: Quantifying the financial impact of centralizing data, reducing maintenance labor and insurance premiums.",
-        "metrics": "INSURANCE: 15% Premium Reduction",
-        "date": "2026-04-15",
-        "content_file": "case-studies/cs-digital-protocol-roi.html"
-    }
-];
-
-// 2. LOGIKA ZA RENDEROWANJE
-function createCaseStudyCard(study) {
-    return `
-        <a href="${study.content_file}" class="turbine-card block transform hover:scale-[1.02] zoom-in bg-hydro-slate border border-hydro-light-slate hover:border-hydro-secondary rounded-xl shadow-lg transition duration-300 h-full p-6 text-left">
-            <div class="flex items-center space-x-4 mb-4">
-                <span class="text-4xl" role="img" aria-label="Icon">${study.icon}</span>
-                <div class="text-xs font-bold text-slate-500 uppercase tracking-widest">
-                    ${study.metrics}
-                </div>
-            </div>
-            <h2 class="text-2xl font-extrabold text-white mb-2">${study.title}</h2>
-            <p class="text-slate-400 text-sm mb-4 flex-grow">${study.subtitle}</p>
-            <span class="mt-auto inline-flex items-center text-hydro-secondary font-semibold text-sm">
-                View Full Study →
-            </span>
-        </a>
-    `;
-}
-
-function renderCaseStudiesArchive() {
-    const container = document.getElementById('case-studies-grid');
+document.addEventListener('DOMContentLoaded', () => {
     
-    if (!container) {
-        console.error("Greška: Element #case-studies-grid nije pronađen na stranici!");
-        return;
-    }
+    // === DATA: THE 12 MISSION FILES ===
+    const casesData = [
+        {
+            id: '001',
+            title: 'Compliance Shield',
+            type: 'finance',
+            file: 'cs-compliance-shield.html',
+            risk: 'Regulatory Fines',
+            outcome: '€200k Saved',
+            color: 'text-h-green',
+            borderClass: 'type-finance'
+        },
+        {
+            id: '002',
+            title: 'Digital Protocol ROI',
+            type: 'finance',
+            file: 'cs-digital-protocol-roi.html',
+            risk: 'Budget Bloat',
+            outcome: '25% Labor Cut',
+            color: 'text-h-blue',
+            borderClass: 'type-finance'
+        },
+        {
+            id: '003',
+            title: 'Fish Passage Opt.',
+            type: 'kaplan',
+            file: 'cs-fish-passage-optimization.html',
+            risk: 'License Revocation',
+            outcome: '100% Compliance',
+            color: 'text-h-green',
+            borderClass: 'type-kaplan'
+        },
+        {
+            id: '004',
+            title: 'Forensic NDT Fatigue',
+            type: 'francis',
+            file: 'cs-forensic-ndt-fatigue.html',
+            risk: 'Blade Separation',
+            outcome: 'Fatigue Arrested',
+            color: 'text-h-purple',
+            borderClass: 'type-francis'
+        },
+        {
+            id: '005',
+            title: 'Francis Misalignment',
+            type: 'francis',
+            file: 'cs-francis-misalignment.html',
+            risk: 'Bearing Failure',
+            outcome: '99.1% Uptime',
+            color: 'text-h-cyan',
+            borderClass: 'type-francis'
+        },
+        {
+            id: '006',
+            title: 'Hydraulic Hammer',
+            type: 'pelton',
+            file: 'cs-hydraulic-hammer-mitigation.html',
+            risk: 'Penstock Rupture',
+            outcome: '-40% Surge',
+            color: 'text-h-cta',
+            borderClass: 'type-pelton'
+        },
+        {
+            id: '007',
+            title: 'Kaplan Optimization',
+            type: 'kaplan',
+            file: 'cs-kaplan-optimization.html',
+            risk: 'Efficiency Loss',
+            outcome: '+3.1% Output',
+            color: 'text-h-green',
+            borderClass: 'type-kaplan'
+        },
+        {
+            id: '008',
+            title: 'LCC Procurement Audit',
+            type: 'finance',
+            file: 'cs-lcc-procurement-audit.html',
+            risk: 'Low-Bid Failure',
+            outcome: '18% LCC Savings',
+            color: 'text-h-blue',
+            borderClass: 'type-finance'
+        },
+        {
+            id: '009',
+            title: 'M-E Synergy Erosion',
+            type: 'pelton',
+            file: 'cs-me-synergy-erosion.html',
+            risk: 'Electro-Erosion',
+            outcome: 'Shaft Voltage 0V',
+            color: 'text-h-yellow',
+            borderClass: 'type-pelton'
+        },
+        {
+            id: '010',
+            title: 'Pelton Abrasion',
+            type: 'pelton',
+            file: 'cs-pelton-abrasion.html',
+            risk: 'Bucket Wear',
+            outcome: '5yr Life Ext.',
+            color: 'text-h-cta',
+            borderClass: 'type-pelton'
+        },
+        {
+            id: '011',
+            title: 'Predictive Maint. ROI',
+            type: 'finance',
+            file: 'cs-predictive-maintenance-roi.html',
+            risk: 'Unplanned Outage',
+            outcome: 'Zero Downtime',
+            color: 'text-h-green',
+            borderClass: 'type-finance'
+        },
+        {
+            id: '012',
+            title: 'Shaft Stability',
+            type: 'francis',
+            file: 'cs-shaft-system-stability.html',
+            risk: 'Vibration Trip',
+            outcome: '-85% Amplitude',
+            color: 'text-h-cta',
+            borderClass: 'type-francis'
+        }
+    ];
 
-    console.log("Pronađen kontejner, počinjem renderovanje...");
+    // === RENDER LOGIC ===
+    const grid = document.getElementById('cases-grid');
     
-    let allCardsHtml = '';
-    
-    if (typeof caseStudiesData !== 'undefined' && Array.isArray(caseStudiesData)) {
-        caseStudiesData.forEach((study, index) => {
-            // Dodajemo delay klasu za ljepšu animaciju
-            let cardHtml = createCaseStudyCard(study);
-            // Ručno ubacivanje delay klase u string
-            const delayClass = `delay-${Math.min((index % 4) * 200, 800)}`; 
-            // Zamjena klase zoom-in sa zoom-in + delay
-            cardHtml = cardHtml.replace('zoom-in', `zoom-in ${delayClass}`);
+    // Check if grid exists to avoid errors on other pages
+    if(!grid) return;
+
+    function renderCases(filterType) {
+        grid.innerHTML = '';
+        const filtered = filterType === 'all' ? casesData : casesData.filter(c => c.type === filterType);
+        
+        if(filtered.length === 0) {
+            grid.innerHTML = '<div class="col-span-full text-center py-20 text-slate-500 font-mono border border-dashed border-slate-800 rounded-xl">NO MISSIONS FOUND IN THIS SECTOR.</div>';
+            return;
+        }
+
+        filtered.forEach((item, index) => {
+            const delay = index * 100; // Stagger animation
+            const card = document.createElement('a');
+            card.href = `case-studies/${item.file}`;
+            card.className = `dossier-card rounded-xl p-6 group block ${item.borderClass} animate-[fadeInUp_0.5s_ease-out]`;
+            card.style.animationDelay = `${delay}ms`;
             
-            allCardsHtml += cardHtml;
+            card.innerHTML = `
+                <div class="flex justify-between items-start mb-6">
+                    <div>
+                        <div class="text-[10px] font-mono text-slate-500 mb-1">CASE ID: ${item.id}</div>
+                        <h3 class="text-xl font-bold text-white group-hover:text-white transition">${item.title}</h3>
+                    </div>
+                    <div class="bg-white/5 px-2 py-1 rounded text-[10px] font-bold border border-white/10 uppercase text-slate-400 group-hover:text-white group-hover:border-white/30 transition">
+                        ${item.type.toUpperCase()}
+                    </div>
+                </div>
+
+                <div class="mt-auto space-y-3">
+                    <div class="flex justify-between text-xs border-b border-slate-700 pb-2">
+                        <span class="text-slate-500 font-mono">THREAT</span>
+                        <span class="text-h-red font-bold text-right">${item.risk}</span>
+                    </div>
+                    <div class="flex justify-between text-sm pt-1">
+                        <span class="text-slate-400 font-mono uppercase text-[10px]">RESULT</span>
+                        <span class="${item.color} font-black text-right">${item.outcome}</span>
+                    </div>
+                </div>
+
+                <div class="absolute bottom-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition transform translate-y-2 group-hover:translate-y-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </div>
+            `;
+            grid.appendChild(card);
         });
-
-        container.innerHTML = allCardsHtml;
-        console.log("Renderovanje završeno.");
-        
-        // Ponovno pokretanje Lucide ikona ako su potrebne
-        if (typeof lucide !== 'undefined') {
-            lucide.createIcons();
-        }
-        
-        // Pokreni animacije
-        if (typeof initScrollAnimations === 'function') {
-             initScrollAnimations();
-        }
-        
-    } else {
-        console.error("Podaci caseStudiesData nisu definisani!");
-        container.innerHTML = "<p class='text-red-500 text-center'>Greška: Podaci nisu učitani.</p>";
     }
-}
 
-// SIGURNO POKRETANJE: Provjerava da li je DOM već učitan
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', renderCaseStudiesArchive);
-} else {
-    // Ako je skripta učitana nakon DOM-a (npr. defer), pokreni odmah
-    renderCaseStudiesArchive();
-}
+    // === FILTER LOGIC ===
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            // Active state
+            filterBtns.forEach(b => b.classList.remove('active'));
+            e.target.classList.add('active');
+            const filter = e.target.getAttribute('data-filter');
+            renderCases(filter);
+        });
+    });
+
+    // === SEARCH LOGIC ===
+    const searchInput = document.getElementById('search-input');
+    if(searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            const cards = document.querySelectorAll('.dossier-card');
+            
+            cards.forEach(card => {
+                const text = card.innerText.toLowerCase();
+                if (text.includes(term)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    }
+
+    // Initial Render
+    renderCases('all');
+});
