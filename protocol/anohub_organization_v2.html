@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AnoHUB | Organizational Intelligence & AI Governance</title>
+    <title>AnoHUB | Organizational Intelligence & AI Governance v3.0</title>
     
     <!-- FONTS -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -22,16 +22,22 @@
                     },
                     backgroundImage: {
                         'grid-pattern': "linear-gradient(to right, #1e293b 1px, transparent 1px), linear-gradient(to bottom, #1e293b 1px, transparent 1px)",
-                        'neural': "radial-gradient(circle, rgba(6,182,212,0.1) 0%, rgba(0,0,0,0) 70%)",
+                        'neural': "radial-gradient(circle, rgba(249,115,22,0.1) 0%, rgba(0,0,0,0) 70%)",
                     },
                     animation: {
                         'flow': 'flow 20s linear infinite',
                         'pulse-fast': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'scan-horizontal': 'scanHorizontal 3s cubic-bezier(0.4, 0, 0.2, 1) infinite',
                     },
                     keyframes: {
                         flow: {
                             '0%': { backgroundPosition: '0 0' },
                             '100%': { backgroundPosition: '40px 40px' },
+                        },
+                        scanHorizontal: {
+                            '0%': { transform: 'translateX(-100%)', opacity: '0' },
+                            '50%': { opacity: '1' },
+                            '100%': { transform: 'translateX(200%)', opacity: '0' }
                         }
                     }
                 } 
@@ -50,9 +56,10 @@
         .tech-box { border-left: 3px solid #f97316; background: rgba(249, 115, 22, 0.05); }
         
         /* Network Animation Nodes */
-        .node { width: 8px; height: 8px; background: #06b6d4; border-radius: 50%; position: absolute; box-shadow: 0 0 10px #06b6d4; }
-        .link { position: absolute; height: 1px; background: rgba(6, 182, 212, 0.3); transform-origin: 0 0; }
-        
+        .node { width: 12px; height: 12px; background: #f97316; border-radius: 50%; position: relative; box-shadow: 0 0 10px #f97316; z-index: 10; }
+        .connection-line { position: absolute; top: 50%; left: 0; width: 100%; height: 2px; background: #334155; z-index: 0; transform: translateY(-50%); overflow: hidden; }
+        .data-packet { width: 40%; height: 100%; background: #f97316; opacity: 0.8; position: absolute; animation: scanHorizontal 2s infinite; box-shadow: 0 0 10px #f97316; }
+
         input[type=range] { -webkit-appearance: none; background: transparent; }
         input[type=range]::-webkit-slider-thumb {
             -webkit-appearance: none; height: 16px; width: 16px; border-radius: 50%;
@@ -61,6 +68,10 @@
         input[type=range]::-webkit-slider-runnable-track {
             width: 100%; height: 4px; background: #334155; border-radius: 2px;
         }
+        
+        /* Circular Progress */
+        .circle-bg { fill: none; stroke: #1e293b; stroke-width: 8; }
+        .circle-progress { fill: none; stroke-width: 8; stroke-linecap: round; transition: stroke-dashoffset 1s ease-out, stroke 0.3s; transform: rotate(-90deg); transform-origin: 50% 50%; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col font-sans selection:bg-h-orange selection:text-white">
@@ -73,13 +84,13 @@
                     <div class="w-8 h-8 bg-h-orange text-white font-black flex items-center justify-center text-xl shadow-[0_0_15px_rgba(249,115,22,0.4)] group-hover:scale-105 transition">A</div>
                     <div class="leading-tight">
                         <h1 class="font-bold text-white tracking-tight">AnoHUB <span class="text-h-orange">PROTOCOLS</span></h1>
-                        <p class="text-[10px] font-mono text-h-orange tracking-widest uppercase">Organizational Neural Net</p>
+                        <p class="text-[10px] font-mono text-h-orange tracking-widest uppercase">Module 03: Org. Intelligence</p>
                     </div>
                 </a>
             </div>
             <div class="flex items-center gap-4 text-xs font-mono">
-                <a href="anohub_methodology_v2.html" class="text-slate-400 hover:text-white transition flex items-center gap-2">
-                    <svg data-lucide="arrow-left" class="w-3 h-3"></svg> BACK TO METHODOLOGY
+                <a href="../protocol.html" class="text-slate-400 hover:text-white transition flex items-center gap-2 group">
+                    <svg data-lucide="layout-grid" class="w-3 h-3 group-hover:text-h-orange"></svg> BACK TO COMMAND
                 </a>
                 <div class="hidden md:flex items-center gap-2 text-h-green">
                     <div class="w-2 h-2 bg-h-green rounded-full animate-pulse-fast"></div>
@@ -95,9 +106,31 @@
         <!-- LEFT SIDEBAR -->
         <aside class="hidden lg:block lg:col-span-3">
             <div class="sticky top-24 space-y-6">
-                <!-- Nav -->
+                <!-- Protocol Network Menu -->
+                <div class="scada-panel rounded p-4 border-l-2 border-l-h-orange">
+                    <h3 class="text-slate-500 font-mono text-[10px] font-bold uppercase tracking-widest mb-3">Protocol Network</h3>
+                    <nav class="space-y-1 font-mono text-xs">
+                        <a href="anohub_protocol_v2.html" class="block px-3 py-2 text-slate-400 hover:text-white hover:bg-white/5 rounded transition">
+                            01. LCC Veto
+                        </a>
+                        <a href="anohub_methodology_v2.html" class="block px-3 py-2 text-slate-400 hover:text-white hover:bg-white/5 rounded transition">
+                            02. NDT & Zero Comp.
+                        </a>
+                        <div class="block px-3 py-2 text-h-orange bg-h-orange/10 border border-h-orange/20 rounded font-bold">
+                            03. Org. Intelligence
+                        </div>
+                        <a href="anohub_synergy_v2.html" class="block px-3 py-2 text-slate-400 hover:text-white hover:bg-white/5 rounded transition">
+                            04. M-E Synergy
+                        </a>
+                        <a href="anohub_alignment_v2.html" class="block px-3 py-2 text-slate-400 hover:text-white hover:bg-white/5 rounded transition">
+                            05. Precision Align.
+                        </a>
+                    </nav>
+                </div>
+
+                <!-- Page Navigation -->
                 <div class="scada-panel rounded p-4">
-                    <h3 class="text-h-orange font-mono text-[10px] font-bold uppercase tracking-widest mb-3">Protocol Sections</h3>
+                    <h3 class="text-h-orange font-mono text-[10px] font-bold uppercase tracking-widest mb-3">Module Sections</h3>
                     <nav class="space-y-1">
                         <a href="#summary" class="flex items-center gap-3 px-3 py-2 text-sm text-white bg-white/5 border-l-2 border-h-orange transition">
                             <span class="font-mono text-h-orange opacity-50">01</span> The Execution Gap
@@ -112,8 +145,8 @@
                 </div>
                 
                 <!-- AI Status -->
-                <div class="scada-panel p-4 border-t-2 border-t-h-cyan">
-                    <h4 class="text-h-cyan font-mono text-[10px] font-bold uppercase mb-2">Knowledge Base Stats</h4>
+                <div class="scada-panel p-4 border-t-2 border-t-h-orange">
+                    <h4 class="text-h-orange font-mono text-[10px] font-bold uppercase mb-2">Knowledge Base Stats</h4>
                     <div class="space-y-3 text-xs font-mono text-slate-400">
                         <div class="flex justify-between items-center border-b border-slate-700 pb-1">
                             <span>SOP Vectors</span> 
@@ -143,7 +176,7 @@
                 <div class="relative z-10">
                     <div class="flex gap-2 mb-4">
                         <span class="bg-h-orange/20 text-h-orange px-2 py-0.5 text-[10px] font-mono font-bold border border-h-orange/30">MANAGEMENT PROTOCOL</span>
-                        <span class="text-slate-500 font-mono text-[10px]">DOC-ORG-004 | REV 2.0</span>
+                        <span class="text-slate-500 font-mono text-[10px]">DOC-ORG-004 | REV 3.0</span>
                     </div>
                     <h1 class="text-4xl font-black text-white mb-6 uppercase tracking-tight">
                         Bridging the <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-h-orange to-h-red">Execution Gap</span>
@@ -178,57 +211,56 @@
                         <p class="text-sm text-slate-400 mb-4">
                             Hydropower projects span decades. Senior engineers retire. To prevent "Brain Drain," we use a Vector Database to index every technical decision, creating an immortal corporate memory.
                         </p>
-                        <ul class="space-y-2 text-xs font-mono text-slate-300">
-                            <li class="flex items-center gap-2">
-                                <svg data-lucide="database" class="w-3 h-3 text-h-cyan"></svg>
+                        <ul class="space-y-3 text-xs font-mono text-slate-300">
+                            <li class="flex items-center gap-2 p-2 bg-slate-900 rounded border border-slate-700">
+                                <svg data-lucide="database" class="w-4 h-4 text-h-orange"></svg>
                                 Vectorized SOPs & Standards
                             </li>
-                            <li class="flex items-center gap-2">
-                                <svg data-lucide="bot" class="w-3 h-3 text-h-cyan"></svg>
+                            <li class="flex items-center gap-2 p-2 bg-slate-900 rounded border border-slate-700">
+                                <svg data-lucide="bot" class="w-4 h-4 text-h-orange"></svg>
                                 AI Retrieval Augmented Generation (RAG)
                             </li>
-                            <li class="flex items-center gap-2">
-                                <svg data-lucide="network" class="w-3 h-3 text-h-cyan"></svg>
+                            <li class="flex items-center gap-2 p-2 bg-slate-900 rounded border border-slate-700">
+                                <svg data-lucide="network" class="w-4 h-4 text-h-orange"></svg>
                                 Cross-Silo Semantic Search
                             </li>
                         </ul>
                     </div>
 
                     <!-- Visual: Silo Breaker -->
-                    <div class="scada-panel relative h-48 bg-black/40 overflow-hidden flex items-center justify-center border border-slate-700">
+                    <div class="scada-panel relative h-64 bg-black/40 overflow-hidden flex items-center justify-center border border-slate-700">
                         <div class="absolute inset-0 bg-grid-pattern opacity-20 animate-flow"></div>
                         
-                        <!-- Connecting Nodes Animation -->
-                        <div class="relative w-full h-full flex justify-around items-center px-10">
-                            <div class="text-center z-10">
-                                <div class="w-12 h-12 rounded-full border-2 border-slate-600 bg-slate-900 flex items-center justify-center mb-2">
-                                    <svg data-lucide="hard-hat" class="w-6 h-6 text-slate-500"></svg>
+                        <!-- Connected Nodes Animation -->
+                        <div class="relative w-full px-8 flex items-center justify-between">
+                            <!-- Left Node (Civil) -->
+                            <div class="flex flex-col items-center z-10">
+                                <div class="w-16 h-16 rounded-full bg-slate-800 border-2 border-slate-600 flex items-center justify-center shadow-lg">
+                                    <svg data-lucide="hard-hat" class="w-8 h-8 text-slate-400"></svg>
                                 </div>
-                                <span class="text-[10px] text-slate-500 uppercase">Civil</span>
-                            </div>
-                            
-                            <!-- Connection Line -->
-                            <div class="h-[2px] flex-grow bg-slate-800 relative overflow-hidden mx-2">
-                                <div class="absolute inset-0 bg-h-orange w-1/2 animate-scan-horizontal"></div>
+                                <span class="text-[10px] font-mono text-slate-500 mt-2">CIVIL DEPT</span>
                             </div>
 
-                            <div class="text-center z-10">
-                                <div class="w-16 h-16 rounded-full border-2 border-h-cyan bg-h-cyan/10 flex items-center justify-center mb-2 shadow-[0_0_20px_rgba(6,182,212,0.3)]">
-                                    <svg data-lucide="brain-circuit" class="w-8 h-8 text-h-cyan"></svg>
-                                </div>
-                                <span class="text-[10px] text-h-cyan font-bold uppercase">AnoHUB AI Core</span>
+                            <!-- Connection Lines -->
+                            <div class="absolute left-[15%] right-[15%] top-1/2 h-[2px] bg-slate-800 z-0 -translate-y-8">
+                                <div class="absolute top-0 left-0 w-1/2 h-full bg-h-orange animate-scan-horizontal"></div>
+                                <div class="absolute top-0 right-0 w-1/2 h-full bg-h-orange animate-scan-horizontal" style="animation-delay: 1s;"></div>
                             </div>
 
-                            <!-- Connection Line -->
-                            <div class="h-[2px] flex-grow bg-slate-800 relative overflow-hidden mx-2">
-                                <div class="absolute inset-0 bg-h-orange w-1/2 animate-scan-horizontal" style="animation-delay: 0.5s"></div>
+                            <!-- Center Node (AI Core) -->
+                            <div class="flex flex-col items-center z-20 -mt-4">
+                                <div class="w-24 h-24 rounded-full bg-h-orange/10 border-2 border-h-orange flex items-center justify-center shadow-[0_0_30px_rgba(249,115,22,0.3)] animate-pulse-fast">
+                                    <svg data-lucide="brain-circuit" class="w-12 h-12 text-h-orange"></svg>
+                                </div>
+                                <span class="text-xs font-mono text-h-orange font-bold mt-2">AnoHUB CORE</span>
                             </div>
 
-                            <div class="text-center z-10">
-                                <div class="w-12 h-12 rounded-full border-2 border-slate-600 bg-slate-900 flex items-center justify-center mb-2">
-                                    <svg data-lucide="zap" class="w-6 h-6 text-slate-500"></svg>
+                            <!-- Right Node (Electro) -->
+                            <div class="flex flex-col items-center z-10">
+                                <div class="w-16 h-16 rounded-full bg-slate-800 border-2 border-slate-600 flex items-center justify-center shadow-lg">
+                                    <svg data-lucide="zap" class="w-8 h-8 text-slate-400"></svg>
                                 </div>
-                                <span class="text-[10px] text-slate-500 uppercase">Electrical</span>
+                                <span class="text-[10px] font-mono text-slate-500 mt-2">ELECTRO DEPT</span>
                             </div>
                         </div>
                     </div>
@@ -246,27 +278,38 @@
                     <div class="grid md:grid-cols-2 gap-12">
                         
                         <!-- Inputs -->
-                        <div class="space-y-6">
-                            <h4 class="font-bold text-white mb-4">Input Parameters</h4>
+                        <div class="space-y-8">
+                            <div class="flex items-center gap-2 mb-4">
+                                <svg data-lucide="sliders-horizontal" class="w-5 h-5 text-h-orange"></svg>
+                                <h4 class="font-bold text-white">Input Parameters</h4>
+                            </div>
                             
                             <div>
                                 <div class="flex justify-between mb-2">
                                     <label class="text-xs font-bold text-slate-400 uppercase">Management Layers</label>
-                                    <span id="val-layers" class="text-xs font-mono text-h-orange">4</span>
+                                    <span id="val-layers" class="text-xs font-mono text-h-orange font-bold">4</span>
                                 </div>
-                                <input type="range" id="in-layers" min="1" max="10" step="1" value="4">
+                                <input type="range" id="in-layers" min="1" max="8" step="1" value="4">
+                                <div class="flex justify-between text-[10px] text-slate-600 mt-1">
+                                    <span>Flat (1)</span>
+                                    <span>Bureaucratic (8)</span>
+                                </div>
                             </div>
 
                             <div>
                                 <div class="flex justify-between mb-2">
                                     <label class="text-xs font-bold text-slate-400 uppercase">Stakeholder Complexity</label>
-                                    <span id="val-stakeholders" class="text-xs font-mono text-h-orange">High</span>
+                                    <span id="val-stakeholders" class="text-xs font-mono text-h-orange font-bold">High</span>
                                 </div>
                                 <input type="range" id="in-stakeholders" min="1" max="3" step="1" value="3">
+                                <div class="flex justify-between text-[10px] text-slate-600 mt-1">
+                                    <span>Single Client</span>
+                                    <span>Multi-National</span>
+                                </div>
                             </div>
                             
-                            <div class="bg-slate-900 p-4 rounded border border-slate-700">
-                                <div class="text-[10px] text-slate-500 uppercase mb-2">Formula: Shannon's Information Entropy</div>
+                            <div class="bg-slate-900 p-4 rounded border border-slate-700 mt-4">
+                                <div class="text-[10px] text-slate-500 uppercase mb-2">Calculation Model</div>
                                 <div class="text-xs font-mono text-slate-300">
                                     $$ H(x) = - \sum p(x) \log p(x) \times Layers $$
                                 </div>
@@ -274,25 +317,27 @@
                         </div>
 
                         <!-- Outputs / Gauge -->
-                        <div class="flex flex-col items-center justify-center relative">
+                        <div class="flex flex-col items-center justify-center relative p-6 bg-black/20 rounded-xl border border-slate-700/50">
                             <!-- Circular Progress -->
-                            <div class="relative w-48 h-48">
-                                <svg class="w-full h-full transform -rotate-90">
-                                    <circle cx="96" cy="96" r="88" stroke="#1e293b" stroke-width="12" fill="none" />
-                                    <circle id="entropy-circle" cx="96" cy="96" r="88" stroke="#f97316" stroke-width="12" fill="none" stroke-dasharray="552" stroke-dashoffset="100" class="transition-all duration-1000 ease-out" />
+                            <div class="relative w-56 h-56">
+                                <svg class="w-full h-full" viewBox="0 0 100 100">
+                                    <!-- Background Circle -->
+                                    <circle class="circle-bg" cx="50" cy="50" r="45"></circle>
+                                    <!-- Progress Circle -->
+                                    <circle id="entropy-circle" class="circle-progress" cx="50" cy="50" r="45" stroke="#f97316" stroke-dasharray="283" stroke-dashoffset="100"></circle>
                                 </svg>
                                 <div class="absolute inset-0 flex flex-col items-center justify-center">
-                                    <span id="res-entropy" class="text-4xl font-black text-white">45%</span>
-                                    <span class="text-[10px] text-slate-500 uppercase tracking-widest mt-1">Information Loss</span>
+                                    <span id="res-entropy" class="text-5xl font-black text-white drop-shadow-[0_0_10px_rgba(249,115,22,0.5)]">45%</span>
+                                    <span class="text-[10px] text-slate-500 uppercase tracking-widest mt-2 font-bold">Information Loss</span>
                                 </div>
                             </div>
 
                             <!-- Verdict -->
-                            <div id="verdict-box" class="mt-6 px-6 py-2 rounded bg-h-orange/10 border border-h-orange text-h-orange font-bold text-sm tracking-wide">
+                            <div id="verdict-box" class="mt-8 px-8 py-3 rounded bg-h-orange/10 border border-h-orange text-h-orange font-bold text-sm tracking-wide shadow-lg">
                                 HIGH RISK: SILOS DETECTED
                             </div>
                             
-                            <p class="text-xs text-center text-slate-500 mt-4 max-w-xs">
+                            <p id="verdict-desc" class="text-xs text-center text-slate-500 mt-4 max-w-xs leading-relaxed">
                                 At this level, instructions from the C-Suite are 45% distorted before reaching the site foreman.
                             </p>
                         </div>
@@ -313,9 +358,6 @@
 
     <!-- SCRIPTS -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             lucide.createIcons();
@@ -328,8 +370,10 @@
             const entropyCircle = document.getElementById('entropy-circle');
             const resEntropy = document.getElementById('res-entropy');
             const verdictBox = document.getElementById('verdict-box');
+            const verdictDesc = document.getElementById('verdict-desc');
 
-            const CIRCLE_CIRCUMFERENCE = 552;
+            // SVG Circle Circumference = 2 * PI * r (r=45) ~= 283
+            const CIRCLE_CIRCUMFERENCE = 283;
 
             function updateSim() {
                 const layers = parseInt(inLayers.value);
@@ -340,34 +384,54 @@
                 const stakeLabels = ["Low", "Medium", "High"];
                 valStake.innerText = stakeLabels[stake - 1];
 
-                // Algorithm: Entropy increases with layers and complexity
-                // Base loss 5% per layer, multiplier by stakeholder complexity
-                let loss = (layers * 5) * (stake * 0.6);
-                if (loss > 100) loss = 100;
+                // Algorithm: Entropy logic
+                // Base loss per layer increases exponentially
+                // Stakeholder complexity is a multiplier
+                
+                // Simple model for demo:
+                // 1 layer = 0% loss (perfect)
+                // Each added layer adds base loss
+                let baseLoss = (layers - 1) * 8; 
+                let multiplier = 1 + (stake * 0.3);
+                
+                let loss = baseLoss * multiplier;
+                
+                if (loss > 95) loss = 95;
                 if (loss < 0) loss = 0;
 
-                // Update UI
+                // Update UI Text
                 resEntropy.innerText = Math.round(loss) + '%';
                 
-                // Circle Offset (Stroke Dashoffset)
-                // 100% loss = 0 offset (full circle)
-                // 0% loss = 552 offset (empty circle)
-                const offset = CIRCLE_CIRCUMFERENCE - (loss / 100 * CIRCLE_CIRCUMFERENCE);
+                // Update Circle (Stroke Dashoffset)
+                // 0% loss = 283 offset (empty - actually we want full if 0% loss? No, gauge is "Loss Meter")
+                // Let's make gauge fill up as loss increases.
+                // 0% loss -> empty gauge -> offset 283
+                // 100% loss -> full gauge -> offset 0
+                
+                const offset = CIRCLE_CIRCUMFERENCE - ((loss / 100) * CIRCLE_CIRCUMFERENCE);
                 entropyCircle.style.strokeDashoffset = offset;
 
-                // Color & Verdict
-                if (loss < 20) {
+                // Logic for Colors & Verdict
+                if (loss < 15) {
                     entropyCircle.style.stroke = '#10b981'; // Green
-                    verdictBox.className = "mt-6 px-6 py-2 rounded bg-h-green/10 border border-h-green text-h-green font-bold text-sm tracking-wide";
+                    verdictBox.className = "mt-8 px-8 py-3 rounded bg-h-green/10 border border-h-green text-h-green font-bold text-sm tracking-wide shadow-lg";
                     verdictBox.innerText = "OPTIMAL FLOW";
-                } else if (loss < 50) {
+                    verdictDesc.innerText = "Direct line of command. Minimal distortion.";
+                } else if (loss < 40) {
+                    entropyCircle.style.stroke = '#facc15'; // Yellow/Amber
+                    verdictBox.className = "mt-8 px-8 py-3 rounded bg-h-amber/10 border border-h-amber text-h-amber font-bold text-sm tracking-wide shadow-lg";
+                    verdictBox.innerText = "CAUTION: NOISE DETECTED";
+                    verdictDesc.innerText = "Standard corporate friction. Requires digitized SOPs to manage.";
+                } else if (loss < 65) {
                     entropyCircle.style.stroke = '#f97316'; // Orange
-                    verdictBox.className = "mt-6 px-6 py-2 rounded bg-h-orange/10 border border-h-orange text-h-orange font-bold text-sm tracking-wide";
-                    verdictBox.innerText = "RISK: SILOS DETECTED";
+                    verdictBox.className = "mt-8 px-8 py-3 rounded bg-h-orange/10 border border-h-orange text-h-orange font-bold text-sm tracking-wide shadow-lg";
+                    verdictBox.innerText = "HIGH RISK: SILOS DETECTED";
+                    verdictDesc.innerText = `At this level, instructions are ${Math.round(loss)}% distorted before execution.`;
                 } else {
                     entropyCircle.style.stroke = '#ef4444'; // Red
-                    verdictBox.className = "mt-6 px-6 py-2 rounded bg-h-red/10 border border-h-red text-h-red font-bold text-sm tracking-wide";
+                    verdictBox.className = "mt-8 px-8 py-3 rounded bg-h-red/10 border border-h-red text-h-red font-bold text-sm tracking-wide shadow-lg animate-pulse";
                     verdictBox.innerText = "CRITICAL: EXECUTION FAILURE";
+                    verdictDesc.innerText = "Total breakdown of command chain. Immediate restructuring required.";
                 }
             }
 
@@ -379,16 +443,5 @@
             updateSim();
         });
     </script>
-    
-    <style>
-         @keyframes scanHorizontal {
-            0% { transform: translateX(-100%); opacity: 0; }
-            50% { opacity: 1; }
-            100% { transform: translateX(200%); opacity: 0; }
-        }
-        .animate-scan-horizontal {
-            animation: scanHorizontal 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-        }
-    </style>
 </body>
 </html>
