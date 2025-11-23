@@ -1,107 +1,394 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hr" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DOCUMENT TITLE | AnoHUB Protocol Details</title>
-    <meta name="description" content="Detailed technical documentation for the AnoHUB protocol focusing on [Specific Topic].">
+    <title>AnoHUB | Organizational Intelligence & AI Governance</title>
     
-    <!-- 1. JS INICIJALIZACIJA (../ za izlaz iz 'protocol' foldera) -->
-    <script src="../js/head-init.js"></script>
-
-    <!-- FONTOVI, TAILWIND CDN, CONFIG -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
+    <!-- FONTS -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- TAILWIND -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        tailwind.config = { /* ... (Tailwind config ide ovdje) ... */ }
+        tailwind.config = { 
+            theme: { 
+                extend: { 
+                    fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
+                    colors: { 
+                        'h-cyan': '#06b6d4', 'h-green': '#10b981', 'h-red': '#ef4444', 
+                        'h-orange': '#f97316', 'h-amber': '#f59e0b', 
+                        'h-dark': '#0b1120', 'h-panel': '#151f32', 'h-border': '#334155' 
+                    },
+                    backgroundImage: {
+                        'grid-pattern': "linear-gradient(to right, #1e293b 1px, transparent 1px), linear-gradient(to bottom, #1e293b 1px, transparent 1px)",
+                        'neural': "radial-gradient(circle, rgba(6,182,212,0.1) 0%, rgba(0,0,0,0) 70%)",
+                    },
+                    animation: {
+                        'flow': 'flow 20s linear infinite',
+                        'pulse-fast': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        flow: {
+                            '0%': { backgroundPosition: '0 0' },
+                            '100%': { backgroundPosition: '40px 40px' },
+                        }
+                    }
+                } 
+            }
+        }
     </script>
 
-    <!-- GLOBALNI STILOVI (../) -->
-    <link href="../css/anohubs.css" rel="stylesheet">
-    <link href="../css/article-styles.css" rel="stylesheet">
-
     <style>
-        .article-body {
-            /* Osnovni stilovi tijela članka */
-            line-height: 1.8;
-            font-size: 1.1rem;
-            color: #4A5568; /* Tamnija boja za tekst */
+        body { background-color: #020617; color: #cbd5e1; }
+        .scada-panel { 
+            background: rgba(15, 23, 42, 0.90); 
+            backdrop-filter: blur(12px); 
+            border: 1px solid rgba(51, 65, 85, 0.6);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
-        .technical-box {
-            border: 1px solid #22d3ee50;
-            background-color: #1E293B;
-            color: #E5E7EB;
+        .tech-box { border-left: 3px solid #f97316; background: rgba(249, 115, 22, 0.05); }
+        
+        /* Network Animation Nodes */
+        .node { width: 8px; height: 8px; background: #06b6d4; border-radius: 50%; position: absolute; box-shadow: 0 0 10px #06b6d4; }
+        .link { position: absolute; height: 1px; background: rgba(6, 182, 212, 0.3); transform-origin: 0 0; }
+        
+        input[type=range] { -webkit-appearance: none; background: transparent; }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none; height: 16px; width: 16px; border-radius: 50%;
+            background: #f97316; cursor: pointer; margin-top: -6px; border: 2px solid white;
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%; height: 4px; background: #334155; border-radius: 2px;
         }
     </style>
 </head>
-<body class="bg-gray-100"> 
-    
-    <!-- HEADER (Putanje su ../) -->
-    <header class="bg-hydro-charcoal text-white shadow-2xl sticky top-0 z-50 border-b border-hydro-primary/50" role="banner">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex justify-between items-center">
-            <a href="../index.html#hero" class="focus:outline-none transition" aria-label="Anohubs Logo - Back to Home">
-                <img src="../logo.svg" alt="Anohubs Logo" class="anohubs-logo">
-            </a>
-            
-            <nav class="hidden md:flex items-center space-x-6 font-extrabold text-sm" role="navigation" aria-label="Main navigation">
-                <a href="../about-us-vision.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">About</a>
-                <a href="../services.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Services</a>
-                <a href="../insights/expert-insights.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Insights</a>
-                <a href="../case-studies.html" class="nav-link relative text-slate-300 hover:text-hydro-secondary transition tracking-wider p-2 uppercase">Case Studies</a>
-                <a href="../app-iframe.html" target="_blank" rel="noopener noreferrer" class="nav-link relative text-slate-300 hover:text-green-500 transition tracking-widest font-extrabold text-lg p-2 uppercase">ANO HUB</a>
-                <a href="../gallery.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Gallery</a>
-                <a href="../protocol.html" class="nav-link relative text-hydro-primary transition tracking-wider p-2 uppercase">Protocol</a>
-                <a href="../contact.html" class="bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-6 py-2.5 rounded-full transition transform hover:scale-105 shadow-xl font-bold tracking-wider uppercase text-base">Contact</a>
-            </nav>
+<body class="min-h-screen flex flex-col font-sans selection:bg-h-orange selection:text-white">
+
+    <!-- NAV -->
+    <header class="fixed w-full z-50 scada-panel border-b border-h-orange/20">
+        <div class="max-w-7xl mx-auto px-4 h-16 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <a href="../index.html" class="flex items-center gap-2 group">
+                    <div class="w-8 h-8 bg-h-orange text-white font-black flex items-center justify-center text-xl shadow-[0_0_15px_rgba(249,115,22,0.4)] group-hover:scale-105 transition">A</div>
+                    <div class="leading-tight">
+                        <h1 class="font-bold text-white tracking-tight">AnoHUB <span class="text-h-orange">PROTOCOLS</span></h1>
+                        <p class="text-[10px] font-mono text-h-orange tracking-widest uppercase">Organizational Neural Net</p>
+                    </div>
+                </a>
+            </div>
+            <div class="flex items-center gap-4 text-xs font-mono">
+                <a href="anohub_methodology_v2.html" class="text-slate-400 hover:text-white transition flex items-center gap-2">
+                    <svg data-lucide="arrow-left" class="w-3 h-3"></svg> BACK TO METHODOLOGY
+                </a>
+                <div class="hidden md:flex items-center gap-2 text-h-green">
+                    <div class="w-2 h-2 bg-h-green rounded-full animate-pulse-fast"></div>
+                    AI GOVERNANCE ACTIVE
+                </div>
+            </div>
         </div>
     </header>
 
-    <main class="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8">
-        
-        <a href="../protocol.html" class="inline-block text-lg font-bold text-hydro-primary hover:text-cyan-500 mt-4 mb-6">← Back to Protocol Manifesto</a>
+    <!-- MAIN GRID -->
+    <div class="pt-24 pb-12 px-4 max-w-7xl mx-auto grid lg:grid-cols-12 gap-8">
 
-        <div class="bg-white p-8 shadow-2xl rounded-lg text-gray-800">
-            
-            <h1 class="text-4xl font-black text-hydro-charcoal mb-4">DOCUMENT TITLE</h1>
-            <p class="text-lg text-slate-500 mb-8 border-b pb-4">Detailed Technical Standard for [Sub-Topic].</p>
-
-            <div class="article-body">
-                
-                <h2>1. Executive Summary: Why This Standard Exists</h2>
-                <p>Ovaj dokument pruža tehničke specifikacije i procedure za izvršavanje [SPECIFIČNI PROCES]. Svrha je eliminisati **Organizational Execution Gap** i osigurati da je [KOMPONENTA] usklađena sa **0.05 mm/m** standardom.</p>
-
-                <div class="technical-box p-4 my-6 rounded-lg text-sm">
-                    <h3 class="text-hydro-secondary font-bold mb-2">KEY TECHNICAL MANDATE</h3>
-                    <p>All measurements and tolerances must be documented and verified by independent auditors. Failure to comply with these standards invalidates the guarantee of Engineering Immunity.</p>
+        <!-- LEFT SIDEBAR -->
+        <aside class="hidden lg:block lg:col-span-3">
+            <div class="sticky top-24 space-y-6">
+                <!-- Nav -->
+                <div class="scada-panel rounded p-4">
+                    <h3 class="text-h-orange font-mono text-[10px] font-bold uppercase tracking-widest mb-3">Protocol Sections</h3>
+                    <nav class="space-y-1">
+                        <a href="#summary" class="flex items-center gap-3 px-3 py-2 text-sm text-white bg-white/5 border-l-2 border-h-orange transition">
+                            <span class="font-mono text-h-orange opacity-50">01</span> The Execution Gap
+                        </a>
+                        <a href="#digital-twin" class="flex items-center gap-3 px-3 py-2 text-sm text-slate-400 hover:text-white hover:bg-white/5 border-l-2 border-transparent hover:border-slate-500 transition">
+                            <span class="font-mono text-slate-600">02</span> Org. Digital Twin
+                        </a>
+                        <a href="#simulation" class="flex items-center gap-3 px-3 py-2 text-sm text-slate-400 hover:text-white hover:bg-white/5 border-l-2 border-transparent hover:border-slate-500 transition">
+                            <span class="font-mono text-slate-600">03</span> Entropy Simulator
+                        </a>
+                    </nav>
                 </div>
                 
-                <h2>2. Detailed Verification Protocol (NDT/CFD)</h2>
-                <p>The following tables and diagrams illustrate the non-destructive testing (NDT) methodologies required for material verification...</p>
-                
-                <!-- OVDJE IDU TEHNIČKI DIJAGRAMI I TEKST -->
-
+                <!-- AI Status -->
+                <div class="scada-panel p-4 border-t-2 border-t-h-cyan">
+                    <h4 class="text-h-cyan font-mono text-[10px] font-bold uppercase mb-2">Knowledge Base Stats</h4>
+                    <div class="space-y-3 text-xs font-mono text-slate-400">
+                        <div class="flex justify-between items-center border-b border-slate-700 pb-1">
+                            <span>SOP Vectors</span> 
+                            <span class="text-white">12,405</span>
+                        </div>
+                        <div class="flex justify-between items-center border-b border-slate-700 pb-1">
+                            <span>Retention Rate</span> 
+                            <span class="text-h-green">99.8%</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span>Silo Detection</span> 
+                            <span class="text-h-orange animate-pulse">2 Risks Found</span>
+                        </div>
+                    </div>
+                </div>
             </div>
+        </aside>
 
-        </div>
-        
-    </main>
-    
-    <!-- FOOTER -->
-    <div class="md:hidden mobile-sticky-cta text-center">
-        <a href="../contact.html" class="w-full block text-center bg-hydro-primary hover:bg-cyan-500 text-hydro-charcoal px-5 py-3 font-bold tracking-wider uppercase shadow-2xl">SCHEDULE AUDIT</a>
+        <!-- CENTER CONTENT -->
+        <main class="lg:col-span-9 space-y-12">
+            
+            <!-- HERO -->
+            <section id="summary" class="relative scada-panel rounded-none border-l-4 border-l-h-orange p-8 overflow-hidden group">
+                <!-- Abstract Neural BG -->
+                <div class="absolute inset-0 bg-neural opacity-30 pointer-events-none"></div>
+                
+                <div class="relative z-10">
+                    <div class="flex gap-2 mb-4">
+                        <span class="bg-h-orange/20 text-h-orange px-2 py-0.5 text-[10px] font-mono font-bold border border-h-orange/30">MANAGEMENT PROTOCOL</span>
+                        <span class="text-slate-500 font-mono text-[10px]">DOC-ORG-004 | REV 2.0</span>
+                    </div>
+                    <h1 class="text-4xl font-black text-white mb-6 uppercase tracking-tight">
+                        Bridging the <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-h-orange to-h-red">Execution Gap</span>
+                    </h1>
+                    <p class="text-slate-300 leading-relaxed text-lg border-l border-slate-700 pl-4 max-w-3xl">
+                        70% of engineering failures are not calculation errors—they are <span class="text-h-orange font-bold">interface errors</span> between departments. We use AI-driven Algorithmic Governance to eliminate organizational silos and ensure that the "As-Built" matches the "As-Designed" within <strong>0.05 mm/m</strong>.
+                    </p>
+
+                    <!-- Technical Mandate Box -->
+                    <div class="mt-8 tech-box p-4 rounded text-sm font-mono text-slate-300">
+                        <h3 class="text-h-orange font-bold mb-2 flex items-center gap-2">
+                            <svg data-lucide="triangle-alert" class="w-4 h-4"></svg> KEY TECHNICAL MANDATE
+                        </h3>
+                        <p>
+                            All decision-trees must be digitized. Verbal instructions on critical path items are forbidden. 
+                            The <strong>"Information Entropy"</strong> between the Chief Engineer and the Site Foreman must remain below <span class="text-white">5%</span>.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 2: DIGITAL TWIN -->
+            <section id="digital-twin">
+                <div class="flex items-center gap-3 mb-6 border-b border-slate-800 pb-2">
+                    <span class="text-h-orange font-mono">02 //</span>
+                    <h3 class="text-xl font-bold text-white">The Organizational Digital Twin</h3>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="scada-panel p-6 flex flex-col justify-center">
+                        <h4 class="text-white font-bold mb-3">Knowledge Retention Architecture</h4>
+                        <p class="text-sm text-slate-400 mb-4">
+                            Hydropower projects span decades. Senior engineers retire. To prevent "Brain Drain," we use a Vector Database to index every technical decision, creating an immortal corporate memory.
+                        </p>
+                        <ul class="space-y-2 text-xs font-mono text-slate-300">
+                            <li class="flex items-center gap-2">
+                                <svg data-lucide="database" class="w-3 h-3 text-h-cyan"></svg>
+                                Vectorized SOPs & Standards
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <svg data-lucide="bot" class="w-3 h-3 text-h-cyan"></svg>
+                                AI Retrieval Augmented Generation (RAG)
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <svg data-lucide="network" class="w-3 h-3 text-h-cyan"></svg>
+                                Cross-Silo Semantic Search
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Visual: Silo Breaker -->
+                    <div class="scada-panel relative h-48 bg-black/40 overflow-hidden flex items-center justify-center border border-slate-700">
+                        <div class="absolute inset-0 bg-grid-pattern opacity-20 animate-flow"></div>
+                        
+                        <!-- Connecting Nodes Animation -->
+                        <div class="relative w-full h-full flex justify-around items-center px-10">
+                            <div class="text-center z-10">
+                                <div class="w-12 h-12 rounded-full border-2 border-slate-600 bg-slate-900 flex items-center justify-center mb-2">
+                                    <svg data-lucide="hard-hat" class="w-6 h-6 text-slate-500"></svg>
+                                </div>
+                                <span class="text-[10px] text-slate-500 uppercase">Civil</span>
+                            </div>
+                            
+                            <!-- Connection Line -->
+                            <div class="h-[2px] flex-grow bg-slate-800 relative overflow-hidden mx-2">
+                                <div class="absolute inset-0 bg-h-orange w-1/2 animate-scan-horizontal"></div>
+                            </div>
+
+                            <div class="text-center z-10">
+                                <div class="w-16 h-16 rounded-full border-2 border-h-cyan bg-h-cyan/10 flex items-center justify-center mb-2 shadow-[0_0_20px_rgba(6,182,212,0.3)]">
+                                    <svg data-lucide="brain-circuit" class="w-8 h-8 text-h-cyan"></svg>
+                                </div>
+                                <span class="text-[10px] text-h-cyan font-bold uppercase">AnoHUB AI Core</span>
+                            </div>
+
+                            <!-- Connection Line -->
+                            <div class="h-[2px] flex-grow bg-slate-800 relative overflow-hidden mx-2">
+                                <div class="absolute inset-0 bg-h-orange w-1/2 animate-scan-horizontal" style="animation-delay: 0.5s"></div>
+                            </div>
+
+                            <div class="text-center z-10">
+                                <div class="w-12 h-12 rounded-full border-2 border-slate-600 bg-slate-900 flex items-center justify-center mb-2">
+                                    <svg data-lucide="zap" class="w-6 h-6 text-slate-500"></svg>
+                                </div>
+                                <span class="text-[10px] text-slate-500 uppercase">Electrical</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 3: INTERACTIVE SIMULATOR -->
+            <section id="simulation">
+                <div class="flex items-center gap-3 mb-6 border-b border-slate-800 pb-2">
+                    <span class="text-h-orange font-mono">03 //</span>
+                    <h3 class="text-xl font-bold text-white">Organizational Entropy Simulator</h3>
+                </div>
+
+                <div class="scada-panel p-8 border-t-4 border-t-h-orange">
+                    <div class="grid md:grid-cols-2 gap-12">
+                        
+                        <!-- Inputs -->
+                        <div class="space-y-6">
+                            <h4 class="font-bold text-white mb-4">Input Parameters</h4>
+                            
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <label class="text-xs font-bold text-slate-400 uppercase">Management Layers</label>
+                                    <span id="val-layers" class="text-xs font-mono text-h-orange">4</span>
+                                </div>
+                                <input type="range" id="in-layers" min="1" max="10" step="1" value="4">
+                            </div>
+
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <label class="text-xs font-bold text-slate-400 uppercase">Stakeholder Complexity</label>
+                                    <span id="val-stakeholders" class="text-xs font-mono text-h-orange">High</span>
+                                </div>
+                                <input type="range" id="in-stakeholders" min="1" max="3" step="1" value="3">
+                            </div>
+                            
+                            <div class="bg-slate-900 p-4 rounded border border-slate-700">
+                                <div class="text-[10px] text-slate-500 uppercase mb-2">Formula: Shannon's Information Entropy</div>
+                                <div class="text-xs font-mono text-slate-300">
+                                    $$ H(x) = - \sum p(x) \log p(x) \times Layers $$
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Outputs / Gauge -->
+                        <div class="flex flex-col items-center justify-center relative">
+                            <!-- Circular Progress -->
+                            <div class="relative w-48 h-48">
+                                <svg class="w-full h-full transform -rotate-90">
+                                    <circle cx="96" cy="96" r="88" stroke="#1e293b" stroke-width="12" fill="none" />
+                                    <circle id="entropy-circle" cx="96" cy="96" r="88" stroke="#f97316" stroke-width="12" fill="none" stroke-dasharray="552" stroke-dashoffset="100" class="transition-all duration-1000 ease-out" />
+                                </svg>
+                                <div class="absolute inset-0 flex flex-col items-center justify-center">
+                                    <span id="res-entropy" class="text-4xl font-black text-white">45%</span>
+                                    <span class="text-[10px] text-slate-500 uppercase tracking-widest mt-1">Information Loss</span>
+                                </div>
+                            </div>
+
+                            <!-- Verdict -->
+                            <div id="verdict-box" class="mt-6 px-6 py-2 rounded bg-h-orange/10 border border-h-orange text-h-orange font-bold text-sm tracking-wide">
+                                HIGH RISK: SILOS DETECTED
+                            </div>
+                            
+                            <p class="text-xs text-center text-slate-500 mt-4 max-w-xs">
+                                At this level, instructions from the C-Suite are 45% distorted before reaching the site foreman.
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+        </main>
     </div>
 
-    <footer class="bg-hydro-slate text-hydro-gray py-8 text-center border-t border-hydro-light-slate" role="contentinfo">
-        <div class="container mx-auto px-6">
-           <p class="text-sm">&copy; <span id="year"></span> Anohubs Inc. All rights reserved. | <a href="../privacy-policy.html">Privacy</a> | <a href="../terms-of-use.html">Terms</a></p>
+    <!-- FOOTER -->
+    <footer class="border-t border-slate-800 bg-black py-8 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 text-center text-slate-600 text-xs font-mono">
+            ANO_HUB // GOVERNANCE DIVISION // ISO 55000
         </div>
     </footer>
 
-    <!-- SKRIPTE -->
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
-    <script src="../js/ui_core.js"></script>
-    <script src="../js/animation_logic.js"></script>
+    <!-- SCRIPTS -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+
+            // === SIMULATOR LOGIC ===
+            const inLayers = document.getElementById('in-layers');
+            const inStake = document.getElementById('in-stakeholders');
+            const valLayers = document.getElementById('val-layers');
+            const valStake = document.getElementById('val-stakeholders');
+            const entropyCircle = document.getElementById('entropy-circle');
+            const resEntropy = document.getElementById('res-entropy');
+            const verdictBox = document.getElementById('verdict-box');
+
+            const CIRCLE_CIRCUMFERENCE = 552;
+
+            function updateSim() {
+                const layers = parseInt(inLayers.value);
+                const stake = parseInt(inStake.value); // 1=Low, 2=Med, 3=High
+
+                // Update Labels
+                valLayers.innerText = layers;
+                const stakeLabels = ["Low", "Medium", "High"];
+                valStake.innerText = stakeLabels[stake - 1];
+
+                // Algorithm: Entropy increases with layers and complexity
+                // Base loss 5% per layer, multiplier by stakeholder complexity
+                let loss = (layers * 5) * (stake * 0.6);
+                if (loss > 100) loss = 100;
+                if (loss < 0) loss = 0;
+
+                // Update UI
+                resEntropy.innerText = Math.round(loss) + '%';
+                
+                // Circle Offset (Stroke Dashoffset)
+                // 100% loss = 0 offset (full circle)
+                // 0% loss = 552 offset (empty circle)
+                const offset = CIRCLE_CIRCUMFERENCE - (loss / 100 * CIRCLE_CIRCUMFERENCE);
+                entropyCircle.style.strokeDashoffset = offset;
+
+                // Color & Verdict
+                if (loss < 20) {
+                    entropyCircle.style.stroke = '#10b981'; // Green
+                    verdictBox.className = "mt-6 px-6 py-2 rounded bg-h-green/10 border border-h-green text-h-green font-bold text-sm tracking-wide";
+                    verdictBox.innerText = "OPTIMAL FLOW";
+                } else if (loss < 50) {
+                    entropyCircle.style.stroke = '#f97316'; // Orange
+                    verdictBox.className = "mt-6 px-6 py-2 rounded bg-h-orange/10 border border-h-orange text-h-orange font-bold text-sm tracking-wide";
+                    verdictBox.innerText = "RISK: SILOS DETECTED";
+                } else {
+                    entropyCircle.style.stroke = '#ef4444'; // Red
+                    verdictBox.className = "mt-6 px-6 py-2 rounded bg-h-red/10 border border-h-red text-h-red font-bold text-sm tracking-wide";
+                    verdictBox.innerText = "CRITICAL: EXECUTION FAILURE";
+                }
+            }
+
+            // Events
+            inLayers.addEventListener('input', updateSim);
+            inStake.addEventListener('input', updateSim);
+
+            // Init
+            updateSim();
+        });
+    </script>
+    
+    <style>
+         @keyframes scanHorizontal {
+            0% { transform: translateX(-100%); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateX(200%); opacity: 0; }
+        }
+        .animate-scan-horizontal {
+            animation: scanHorizontal 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+    </style>
 </body>
 </html>
