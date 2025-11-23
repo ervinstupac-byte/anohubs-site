@@ -34,17 +34,16 @@
                     },
                     animation: {
                         'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
-                        'scan': 'scan 4s linear infinite',
-                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'fade-in': 'fadeIn 0.3s ease-out forwards',
                     },
                     keyframes: {
                         fadeInUp: {
                             '0%': { opacity: '0', transform: 'translateY(20px)' },
                             '100%': { opacity: '1', transform: 'translateY(0)' },
                         },
-                        scan: {
-                            '0%': { top: '0%' },
-                            '100%': { top: '100%' },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
                         }
                     }
                 }
@@ -64,40 +63,36 @@
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
         }
 
-        /* Image Feed Card */
-        .feed-card {
-            position: relative;
-            overflow: hidden;
-            border: 1px solid #1e293b;
-            background: #0f172a;
-            transition: all 0.3s ease;
-        }
-        .feed-card:hover {
-            border-color: #06b6d4;
-            transform: translateY(-5px);
-            box-shadow: 0 10px 40px -10px rgba(6, 182, 212, 0.3);
-        }
-        .feed-overlay {
-            background: linear-gradient(0deg, rgba(2,6,23,0.9) 0%, rgba(2,6,23,0) 60%);
-            position: absolute; inset: 0; opacity: 0; transition: opacity 0.3s;
-            display: flex; flex-direction: column; justify-content: flex-end; padding: 1.5rem;
-        }
-        .feed-card:hover .feed-overlay { opacity: 1; }
-
-        /* Lightbox HUD */
-        .lightbox-modal { background-color: rgba(2, 6, 23, 0.95); backdrop-filter: blur(10px); }
-        .lightbox-hud { border: 1px solid rgba(6, 182, 212, 0.3); background: rgba(15, 23, 42, 0.8); }
+        /* Lightbox Styles */
+        .lightbox-modal { background-color: rgba(2, 6, 23, 0.98); backdrop-filter: blur(10px); }
         
-        /* Scanlines on images */
-        .feed-img { filter: contrast(1.1) saturate(0.9); transition: all 0.5s; width: 100%; height: 300px; object-fit: cover; }
-        .feed-card:hover .feed-img { filter: contrast(1) saturate(1.1) scale(1.05); }
-
-        /* Filter Button */
-        .filter-btn.active {
-            background-color: rgba(6, 182, 212, 0.1);
-            border-color: #06b6d4;
-            color: #06b6d4;
+        /* Navigation Arrows */
+        .nav-arrow {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            background: rgba(0,0,0,0.5); color: white; border: 1px solid #334155;
+            padding: 10px; border-radius: 50%; cursor: pointer; z-index: 60;
+            transition: all 0.2s;
         }
+        .nav-arrow:hover { background: #06b6d4; color: black; border-color: #06b6d4; }
+        #prev-btn { left: 20px; }
+        #next-btn { right: 20px; }
+
+        /* Controls Bar */
+        .lightbox-controls-bar {
+            position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+            background: rgba(15, 23, 42, 0.9); border: 1px solid #334155;
+            padding: 10px 20px; border-radius: 30px;
+            display: flex; gap: 20px; align-items: center; z-index: 60;
+        }
+
+        /* Hidden Controls State */
+        .controls-hidden .lightbox-controls-bar, 
+        .controls-hidden .nav-arrow { 
+            opacity: 0; pointer-events: none; transition: opacity 0.5s; 
+        }
+        
+        /* Thumbnail Hover Effect */
+        .thumbnail-item:hover .thumbnail-overlay { opacity: 1; }
     </style>
 </head>
 
@@ -107,8 +102,6 @@
     <!-- NAV -->
     <header class="fixed w-full z-50 top-0 border-b border-white/5 bg-h-dark/90 backdrop-blur-md transition-all duration-300" id="navbar">
         <div class="max-w-7xl mx-auto px-4 h-20 flex justify-between items-center">
-            
-            <!-- Logo -->
             <a href="index.html" class="flex items-center gap-3 group">
                 <img src="logo.svg" alt="AnoHUB" class="h-10 w-auto transition group-hover:brightness-125">
                 <div class="hidden md:block">
@@ -116,26 +109,24 @@
                     <span class="block text-[10px] font-mono text-h-cyan tracking-widest uppercase">Surveillance</span>
                 </div>
             </a>
-
-            <!-- Desktop Menu -->
             <nav class="hidden lg:flex items-center gap-6 text-xs font-bold uppercase tracking-wider">
                 <a href="index.html" class="text-slate-400 hover:text-white transition">Home</a>
+                <a href="about-us-vision.html" class="text-slate-400 hover:text-white transition">About</a>
                 <a href="services.html" class="text-slate-400 hover:text-white transition">Services</a>
                 <a href="case-studies.html" class="text-slate-400 hover:text-white transition">Case Studies</a>
-                <a href="gallery.html" class="text-h-cyan transition" aria-current="page">Gallery</a>
+                <a href="gallery-v2.html" class="text-h-cyan transition" aria-current="page">Gallery</a>
                 <a href="protocol.html" class="group relative inline-flex items-center gap-2 px-5 py-2 bg-h-cyan/10 text-h-cyan border border-h-cyan/50 rounded-full hover:bg-h-cyan hover:text-black transition-all duration-300">
                     <span>PROTOCOL</span>
                     <div class="w-1.5 h-1.5 bg-h-cyan rounded-full animate-pulse-fast group-hover:bg-black"></div>
                 </a>
                 <a href="contact.html" class="px-5 py-2 bg-h-cta text-black rounded-full hover:bg-yellow-400 transition">Contact</a>
             </nav>
-
-            <!-- Mobile Menu Button -->
             <button id="mobile-menu-btn" class="lg:hidden text-white p-2">
                 <svg data-lucide="menu" class="w-8 h-8"></svg>
             </button>
         </div>
-        <!-- Mobile Menu Overlay -->
+        
+        <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden lg:hidden absolute top-20 left-0 w-full bg-h-dark border-b border-h-border p-4 flex flex-col gap-4 shadow-2xl">
             <a href="index.html" class="text-slate-300 hover:text-h-cyan py-2 border-b border-h-border">Home</a>
             <a href="protocol.html" class="text-h-cyan font-bold py-2 border-b border-h-border flex items-center gap-2"><svg data-lucide="shield" class="w-4 h-4"></svg> PROTOCOL</a>
@@ -145,7 +136,7 @@
 
     <main class="pt-32 pb-20">
 
-        <!-- HERO: ARCHIVE HEADER -->
+        <!-- HERO -->
         <section class="max-w-7xl mx-auto px-4 mb-12 text-center">
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-xs font-mono text-slate-400 mb-6 animate-[fadeInUp_1s_ease-out]">
                 <svg data-lucide="database" class="w-3 h-3 text-h-cyan"></svg>
@@ -155,79 +146,68 @@
                 VISUAL <br>
                 <span class="text-transparent bg-clip-text bg-gradient-to-r from-h-cyan to-blue-500">INTELLIGENCE</span>
             </h1>
-            <p class="text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed animate-[fadeInUp_1s_ease-out_0.4s_forwards] opacity-0">
-                A secured archive of global hydro assets. Visual verification of structural integrity, NDT analysis, and operational environments.
+            <p class="text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed mb-8 animate-[fadeInUp_1s_ease-out_0.4s_forwards] opacity-0">
+                Secured archive containing <span class="text-white font-bold total-images-placeholder">...</span> verified assets. 
+                High-resolution NDT scans and site recon data.
             </p>
-        </section>
-
-        <!-- CONTROLS & FILTERS -->
-        <section class="max-w-7xl mx-auto px-4 mb-12 sticky top-24 z-40">
-            <div class="bg-h-dark/90 backdrop-blur-md border border-h-border p-4 rounded-xl flex flex-wrap justify-between items-center gap-4 shadow-2xl animate-[fadeInUp_1s_ease-out_0.6s_forwards] opacity-0">
-                
-                <div class="flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0">
-                    <button class="filter-btn active px-4 py-2 rounded border border-transparent text-xs font-bold text-slate-400 hover:text-white uppercase transition font-mono" onclick="filterGallery('all')">All Feeds</button>
-                    <button class="filter-btn px-4 py-2 rounded border border-transparent text-xs font-bold text-slate-400 hover:text-white uppercase transition font-mono" onclick="filterGallery('machinery')">Machinery</button>
-                    <button class="filter-btn px-4 py-2 rounded border border-transparent text-xs font-bold text-slate-400 hover:text-white uppercase transition font-mono" onclick="filterGallery('aerial')">Aerial Recon</button>
-                    <button class="filter-btn px-4 py-2 rounded border border-transparent text-xs font-bold text-slate-400 hover:text-white uppercase transition font-mono" onclick="filterGallery('ndt')">Macro NDT</button>
-                </div>
-
-                <div class="flex items-center gap-4 text-xs font-mono text-slate-500">
-                    <span class="hidden md:inline">LIVE FEEDS: <span class="text-white" id="total-count">0</span></span>
-                    <button id="slideshow-toggle" class="flex items-center gap-2 px-4 py-2 bg-h-cyan/10 text-h-cyan border border-h-cyan/30 rounded hover:bg-h-cyan hover:text-black transition">
-                        <svg data-lucide="play" class="w-3 h-3"></svg> AUTO-CYCLE
-                    </button>
-                </div>
+            
+            <!-- Start Button -->
+            <div class="animate-[fadeInUp_1s_ease-out_0.6s_forwards] opacity-0">
+                 <button onclick="openModal(0); toggleSlideshow(document.getElementById('slideshow-btn'))" 
+                        class="inline-flex items-center px-8 py-3 bg-h-green text-black font-bold rounded-full hover:bg-green-400 transition shadow-[0_0_20px_rgba(16,185,129,0.3)] uppercase tracking-widest text-sm">
+                    <svg data-lucide="play" class="w-4 h-4 mr-2"></svg> Start Full Experience
+                 </button>
             </div>
         </section>
 
-        <!-- IMAGE GRID (GENERATED BY JS) -->
+        <!-- GALLERY GRID CONTAINER -->
         <section class="max-w-7xl mx-auto px-4 min-h-[60vh]">
-            <div id="gallery-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- JS WILL INJECT CARDS HERE -->
+            
+            <!-- 
+                VAŽNO: Klasa 'gallery-grid' je ono što JS traži da bi ubacio slike.
+                Vaša skripta 'js/gallery-logic.js' će automatski generirati HTML unutar ovog div-a.
+            -->
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 gallery-grid pb-20">
                 <div class="col-span-full text-center py-20 text-slate-500 font-mono animate-pulse">
-                    INITIALIZING VISUAL FEED...
+                    INITIALIZING SECURE FEED...
                 </div>
             </div>
+
         </section>
 
     </main>
 
-    <!-- LIGHTBOX (HUD STYLE) -->
-    <div id="lightbox-modal" class="lightbox-modal hidden fixed inset-0 z-[100] flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
-        <!-- Overlay Click to Close -->
-        <div class="absolute inset-0 bg-black/90" onclick="closeModal()"></div>
-
-        <div class="relative w-full max-w-6xl max-h-[90vh] flex flex-col items-center z-10">
+    <!-- LIGHTBOX MODAL (Skriven po defaultu) -->
+    <div id="lightbox-modal" class="lightbox-modal hidden fixed inset-0 z-[100] flex items-center justify-center">
+        <div id="lightbox-window" class="w-full h-full flex flex-col justify-center items-center relative">
             
-            <!-- Image Wrapper -->
-            <div class="relative border border-h-border bg-black shadow-2xl rounded-lg overflow-hidden">
-                <!-- HUD Corners -->
-                <div class="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-h-cyan z-20"></div>
-                <div class="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-h-cyan z-20"></div>
-                <div class="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-h-cyan z-20"></div>
-                <div class="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-h-cyan z-20"></div>
-                
-                <img id="lightbox-img" src="" class="max-h-[80vh] w-auto object-contain">
-                
-                <!-- Navigation Arrows -->
-                <button class="absolute top-1/2 left-4 -translate-y-1/2 bg-black/50 p-3 rounded-full text-white hover:bg-h-cyan hover:text-black transition" onclick="changeImage(-1)">
-                    <svg data-lucide="chevron-left" class="w-6 h-6"></svg>
-                </button>
-                <button class="absolute top-1/2 right-4 -translate-y-1/2 bg-black/50 p-3 rounded-full text-white hover:bg-h-cyan hover:text-black transition" onclick="changeImage(1)">
-                    <svg data-lucide="chevron-right" class="w-6 h-6"></svg>
-                </button>
+            <!-- Image Container -->
+            <div id="lightbox-image-wrapper" class="relative flex justify-center items-center w-full h-full p-4 md:p-10">
+                <!-- JS ubacuje <img> ovdje -->
             </div>
+            
+            <!-- Controls -->
+            <button id="prev-btn" class="nav-arrow" onclick="navigateGallery(-1)" aria-label="Previous Image">
+                <svg data-lucide="chevron-left" class="w-8 h-8"></svg>
+            </button>
+            <button id="next-btn" class="nav-arrow" onclick="navigateGallery(1)" aria-label="Next Image">
+                <svg data-lucide="chevron-right" class="w-8 h-8"></svg>
+            </button>
 
-            <!-- Data Readout -->
-            <div class="mt-4 w-full flex justify-between items-end text-white font-mono text-xs">
-                <div>
-                    <h3 id="lightbox-title" class="text-lg font-bold text-h-cyan mb-1">TARGET ID</h3>
-                    <p id="lightbox-desc" class="text-slate-400">Analysis Pending...</p>
-                </div>
-                <div class="text-right text-slate-500">
-                    <span id="lightbox-counter">01 / 00</span>
-                    <button onclick="closeModal()" class="ml-4 text-white hover:text-h-red">[CLOSE]</button>
-                </div>
+            <div class="lightbox-controls-bar">
+                <div class="text-slate-300 font-mono text-xs mr-4" id="lightbox-counter">00 / 00</div>
+                
+                <button onclick="toggleFullScreen()" class="hover:text-h-cyan transition" title="Toggle Fullscreen">
+                    <svg data-lucide="maximize" class="w-5 h-5"></svg>
+                </button>
+                
+                <button onclick="toggleSlideshow(this)" id="slideshow-btn" class="flex items-center gap-2 bg-h-green text-black px-4 py-1.5 rounded-full font-bold text-[10px] uppercase hover:bg-green-400 transition min-w-[120px] justify-center">
+                    <span>▶️ Start</span>
+                </button>
+                
+                <button onclick="closeModal()" class="hover:text-h-red transition ml-4" title="Close Gallery">
+                    <svg data-lucide="x" class="w-6 h-6"></svg>
+                </button>
             </div>
         </div>
     </div>
@@ -240,133 +220,37 @@
 
     <!-- SCRIPTS -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="js/ui_core.js"></script>
+    <script src="js/animation_logic.js"></script>
     
+    <!-- OBAVEZNO: Uključivanje vaše logike galerije -->
+    <script src="js/gallery-logic.js"></script>
+    
+    <!-- OBAVEZNO: Zaštita sadržaja -->
+    <script src="js/gallery-protection.js"></script>
+
     <script>
-        // === MOCK DATA (Replace with real image paths later) ===
-        // U stvarnosti, ove putanje moraju biti ispravne (root/slike/...)
-        const galleryData = [
-            { id: 1, src: 'slike/gallery1.jpg', cat: 'machinery', title: 'Francis Runner Assembly', desc: 'Laser alignment verification at 0.05mm tolerance.' },
-            { id: 2, src: 'slike/gallery2.jpg', cat: 'aerial', title: 'Alpine Storage Reservoir', desc: 'Drone recon for sedimentation analysis.' },
-            { id: 3, src: 'slike/gallery3.jpg', cat: 'ndt', title: 'Micro-Crack Detection', desc: 'MPI Fluorescent inspection of shaft coupling.' },
-            { id: 4, src: 'slike/gallery4.jpg', cat: 'machinery', title: 'Guide Vane Mechanism', desc: 'Hydraulic actuation stress test.' },
-            { id: 5, src: 'slike/gallery5.jpg', cat: 'aerial', title: 'Drava River Intake', desc: 'Flow dynamics monitoring station.' },
-            { id: 6, src: 'slike/gallery6.jpg', cat: 'ndt', title: 'Cavitation Pitting', desc: 'Grade 3 erosion on discharge ring (Pre-repair).' },
-            { id: 7, src: 'slike/gallery7.jpg', cat: 'machinery', title: 'Generator Rotor', desc: 'Air gap measurement and balancing.' },
-             { id: 8, src: 'slike/gallery8.jpg', cat: 'aerial', title: 'Dam Spillway', desc: 'Structural integrity check via thermal imaging.' }
-        ];
-
-        let currentIdx = 0;
-        let activeData = [...galleryData];
-
-        document.addEventListener('DOMContentLoaded', () => {
-            lucide.createIcons();
-            renderGallery(galleryData);
-            
-            // Mobile Menu
-            document.getElementById('mobile-menu-btn').addEventListener('click', () => {
-                document.getElementById('mobile-menu').classList.toggle('hidden');
-            });
-        });
-
-        // === RENDER LOGIC ===
-        function renderGallery(data) {
-            const grid = document.getElementById('gallery-grid');
-            const count = document.getElementById('total-count');
-            grid.innerHTML = '';
-            activeData = data;
-            count.innerText = data.length;
-
-            // Add fallback if images are missing (for demo purposes)
-            data.forEach((item, index) => {
-                const card = document.createElement('div');
-                card.className = 'feed-card rounded-xl group cursor-pointer animate-[fadeInUp_0.5s_ease-out]';
-                card.onclick = () => openLightbox(index);
-                
-                // Note: Using a placeholder background if src fails, or you can ensure files exist
-                card.innerHTML = `
-                    <div class="relative h-64 w-full bg-slate-800">
-                        <img src="${item.src}" class="feed-img w-full h-full object-cover" onerror="this.src='https://placehold.co/600x400/0f172a/22d3ee?text=SECURE+IMG'">
-                        
-                        <div class="feed-overlay">
-                            <div class="flex justify-between items-end">
-                                <div>
-                                    <div class="text-[10px] font-mono text-h-cyan mb-1">ID: IMG-00${item.id}</div>
-                                    <h4 class="text-white font-bold text-lg leading-none">${item.title}</h4>
-                                </div>
-                                <div class="bg-h-cyan/20 p-2 rounded text-h-cyan backdrop-blur-sm">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-scan-eye"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><circle cx="12" cy="12" r="1"/><path d="M5 12s2.5-5 7-5 7 5 7 5-2.5 5-7 5-7-5-7-5"/></svg>
-                                </div>
-                            </div>
-                            <div class="mt-2 pt-2 border-t border-white/10 flex justify-between text-[10px] font-mono text-slate-400">
-                                <span>CAT: ${item.cat.toUpperCase()}</span>
-                                <span>STATUS: VERIFIED</span>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                grid.appendChild(card);
+        lucide.createIcons();
+        
+        // Mobile Menu Logic (Za svaki slučaj ako ui_core ne učita)
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if(menuBtn) {
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
             });
         }
 
-        // === FILTER LOGIC ===
-        function filterGallery(category) {
-            // Update buttons
-            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-
-            if (category === 'all') {
-                renderGallery(galleryData);
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('shadow-lg', 'bg-h-dark/95');
+                nav.classList.remove('bg-h-dark/90');
             } else {
-                const filtered = galleryData.filter(item => item.cat === category);
-                renderGallery(filtered);
+                nav.classList.remove('shadow-lg', 'bg-h-dark/95');
+                nav.classList.add('bg-h-dark/90');
             }
-        }
-
-        // === LIGHTBOX LOGIC ===
-        function openLightbox(index) {
-            currentIdx = index;
-            updateLightboxContent();
-            const modal = document.getElementById('lightbox-modal');
-            modal.classList.remove('hidden');
-            // Small timeout for fade in
-            setTimeout(() => modal.classList.remove('opacity-0'), 10);
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('lightbox-modal');
-            modal.classList.add('opacity-0');
-            setTimeout(() => modal.classList.add('hidden'), 300);
-        }
-
-        function changeImage(dir) {
-            currentIdx += dir;
-            if (currentIdx >= activeData.length) currentIdx = 0;
-            if (currentIdx < 0) currentIdx = activeData.length - 1;
-            updateLightboxContent();
-        }
-
-        function updateLightboxContent() {
-            const item = activeData[currentIdx];
-            const img = document.getElementById('lightbox-img');
-            
-            // Fade out slightly
-            img.style.opacity = 0.5;
-            
-            setTimeout(() => {
-                img.src = item.src;
-                img.onerror = function() { this.src='https://placehold.co/800x600/0f172a/22d3ee?text=IMAGE+NOT+FOUND'; };
-                document.getElementById('lightbox-title').innerText = item.title;
-                document.getElementById('lightbox-desc').innerText = item.desc;
-                document.getElementById('lightbox-counter').innerText = `0${currentIdx + 1} / 0${activeData.length}`;
-                img.style.opacity = 1;
-            }, 150);
-        }
-
-        // Close on Escape key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeModal();
-            if (e.key === 'ArrowRight') changeImage(1);
-            if (e.key === 'ArrowLeft') changeImage(-1);
         });
     </script>
 </body>
