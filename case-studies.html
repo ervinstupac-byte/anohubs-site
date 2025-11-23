@@ -1,196 +1,442 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Case Studies & Success Stories | Anohubs: Guaranteed ROI</title>
-    <meta name="description" content="Verifiable proof of concept: Explore how Anohubs eliminates 48% dynamic risk and achieves measurable efficiency gains and reduced downtime across global hydro assets.">
-    
-    <!-- 1. STANDARDNA JS INICIJALIZACIJA -->
-    <script src="js/head-init.js"></script>
+    <title>Mission Archive: Proven Results | AnoHUB</title>
+    <meta name="description" content="Documented case studies of Engineering Immunity. Real-world applications of the AnoHUB Protocol in neutralizing dynamic risk.">
 
-    <!-- 2. FONTOVI -->
+    <!-- 1. FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     
-    <!-- 3. KRITIČNO: TAILWIND CSS CDN -->
+    <!-- 2. TAILWIND -->
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- 4. TAILWIND KONFIGURACIJA -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
+                    fontFamily: { 
+                        sans: ['Inter', 'sans-serif'], 
+                        mono: ['JetBrains Mono', 'monospace'] 
+                    },
                     colors: {
-                        'hydro-primary': '#22d3ee', 
-                        'hydro-secondary': '#4ade80', 
-                        'hydro-risk': '#ef4444', 
-                        'hydro-cta': '#f59e0b', 
-                        'hydro-charcoal': '#111827', 
-                        'hydro-slate': '#1E293B', 
-                        'hydro-light-slate': '#334155', 
-                        'hydro-gray': '#475569',
+                        'h-cyan': '#06b6d4', 
+                        'h-green': '#10b981', 
+                        'h-red': '#ef4444', 
+                        'h-yellow': '#facc15', 
+                        'h-dark': '#020617', 
+                        'h-panel': '#0f172a', 
+                        'h-border': '#1e293b',
+                        'h-cta': '#f59e0b'
                     },
-                    fontSize: {
-                        'h1-hero': 'clamp(2.5rem, 5vw + 1rem, 4.5rem)',
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                     },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
                 }
             }
         }
     </script>
 
-    <!-- 5. GLOBALNI STILOVI -->
-    <link href="css/anohubs.css" rel="stylesheet">
-    
     <style>
-        /* Stilovi specifični za Case Studies Arhivu */
-        body { background-color: #111827; }
+        body { background-color: #020617; color: #f8fafc; overflow-x: hidden; }
         
-        .archive-header {
-            /* AŽURIRANO: Pozadinska slika orljani_Una.jpg */
-            background-image: linear-gradient(rgba(17, 24, 39, 0.85), rgba(17, 24, 39, 0.95)), url('orljani_Una.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            padding: 6rem 0; /* Povećan padding za bolji vizuelni dojam */
-            border-bottom: 5px solid #4ade80; /* hydro-secondary za uspjeh */
-            position: relative;
+        /* Tech Grid Background */
+        .tech-bg {
+            background-image: 
+                linear-gradient(rgba(6, 182, 212, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(6, 182, 212, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
         }
-        
-        .text-hero-glow { text-shadow: 0 0 20px rgba(74, 222, 128, 0.6); }
-        
-        /* Osigurava da grid zauzme visinu ekrana ako je malo sadržaja */
-        .case-studies-container {
-            min-height: 80vh;
+
+        /* Dossier Card Style */
+        .dossier-card {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(51, 65, 85, 0.5);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .dossier-card:hover {
+            border-color: #06b6d4;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px -10px rgba(6, 182, 212, 0.15);
+        }
+        .dossier-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%;
+            background: #334155; transition: background 0.3s;
+        }
+        .dossier-card:hover::before { background: #06b6d4; }
+
+        /* Scroll Bar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #020617; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #06b6d4; }
+
+        /* Filter Button Active State */
+        .filter-btn.active {
+            background-color: rgba(6, 182, 212, 0.1);
+            border-color: #06b6d4;
+            color: #06b6d4;
         }
     </style>
-
 </head>
-<body class="bg-hydro-charcoal text-white"> 
-    
-    <!-- HEADER -->
-    <header class="bg-hydro-charcoal text-white shadow-2xl sticky top-0 z-50 border-b border-hydro-primary/50" role="banner">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex justify-between items-center">
-            <a href="index.html#hero" class="focus:outline-none transition" aria-label="Anohubs Logo - Back to Home">
-                <img src="logo.svg" alt="Anohubs Logo" class="anohubs-logo">
+
+<body class="antialiased">
+    <div class="tech-bg"></div>
+
+    <!-- NAV -->
+    <header class="fixed w-full z-50 top-0 border-b border-white/5 bg-h-dark/90 backdrop-blur-md transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 h-20 flex justify-between items-center">
+            
+            <!-- Logo -->
+            <a href="index.html" class="flex items-center gap-3 group">
+                <img src="logo.svg" alt="AnoHUB" class="h-10 w-auto transition group-hover:brightness-125">
+                <div class="hidden md:block">
+                    <span class="block text-lg font-black tracking-tighter text-white leading-none">ANOHUBS</span>
+                    <span class="block text-[10px] font-mono text-h-cyan tracking-widest uppercase">Operational Archive</span>
+                </div>
             </a>
-            
-            <nav class="hidden md:flex items-center space-x-6 font-extrabold text-sm" role="navigation" aria-label="Main navigation">
-                <a href="about-us-vision.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">About</a>
-                <a href="services.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Services</a>
-                <a href="insights/expert-insights.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Insights</a>
-                <!-- Aktivni link -->
-                <a href="case-studies.html" class="nav-link relative text-hydro-secondary transition tracking-wider p-2 uppercase" aria-current="page">Case Studies</a>
-                <a href="app-iframe.html" target="_blank" rel="noopener noreferrer" class="nav-link relative text-hydro-secondary hover:text-green-500 transition tracking-widest font-extrabold text-lg p-2 uppercase">ANO HUB</a>
-                <a href="gallery.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Gallery</a>
-                <a href="protocol.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Protocol</a>
-                <a href="contact.html" class="bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-6 py-2.5 rounded-full transition transform hover:scale-105 shadow-xl font-bold tracking-wider uppercase text-base">Contact</a>
+
+            <!-- Desktop Menu -->
+            <nav class="hidden lg:flex items-center gap-6 text-xs font-bold uppercase tracking-wider">
+                <a href="index.html" class="text-slate-400 hover:text-white transition">Home</a>
+                <a href="about-us-vision.html" class="text-slate-400 hover:text-white transition">About</a>
+                <a href="services.html" class="text-slate-400 hover:text-white transition">Services</a>
+                <a href="protocol.html" class="group relative inline-flex items-center gap-2 px-5 py-2 bg-h-cyan/10 text-h-cyan border border-h-cyan/50 rounded-full hover:bg-h-cyan hover:text-black transition-all duration-300">
+                    <span>PROTOCOL</span>
+                    <div class="w-1.5 h-1.5 bg-h-cyan rounded-full animate-pulse-fast group-hover:bg-black"></div>
+                </a>
+                <a href="contact.html" class="px-5 py-2 bg-h-cta text-black rounded-full hover:bg-yellow-400 transition">Contact</a>
             </nav>
-            
-            <div class="md:hidden">
-                <button id="mobile-menu-button" aria-label="Open menu" type="button" class="p-2 text-white">
-                    <svg data-lucide="menu" class="w-8 h-8"></svg>
-                </button>
-            </div>
-            
-            <div id="mobile-menu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2 text-center bg-hydro-charcoal" aria-label="Mobile navigation menu">
-                <a href="about-us-vision.html" class="block hover:text-hydro-primary transition tracking-wider py-2">About</a>
-                <a href="services.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Services</a>
-                <a href="insights/expert-insights.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Insights</a>
-                <a href="case-studies.html" class="block hover:text-hydro-secondary transition tracking-wider py-2">Case Studies</a>
-                <a href="app-iframe.html" target="_blank" rel="noopener noreferrer" class="block hover:text-hydro-secondary transition tracking-wider py-2">ANO HUB</a>
-                <a href="gallery.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Gallery</a>
-                <a href="protocol.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Protocol</a>
-                <a href="contact.html" class="block bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-5 py-2 rounded-full transition shadow-md font-bold tracking-wider mt-2 text-center">Contact</a>
-            </div>
+
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" class="lg:hidden text-white p-2">
+                <svg data-lucide="menu" class="w-8 h-8"></svg>
+            </button>
+        </div>
+        
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu" class="hidden lg:hidden absolute top-20 left-0 w-full bg-h-dark border-b border-h-border p-4 flex flex-col gap-4 shadow-2xl">
+            <a href="index.html" class="text-slate-300 hover:text-h-cyan py-2 border-b border-h-border">Home</a>
+            <a href="protocol.html" class="text-h-cyan font-bold py-2 border-b border-h-border flex items-center gap-2"><svg data-lucide="shield" class="w-4 h-4"></svg> PROTOCOL</a>
+            <a href="contact.html" class="text-h-cta font-bold py-2">Contact Us</a>
         </div>
     </header>
 
-    <main role="main" class="case-studies-container">
-        
-        <!-- HERO SEKCIJA ARHIVE (Sada sa pozadinom) -->
-        <section class="archive-header text-white text-center">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <span class="text-hydro-secondary font-bold tracking-widest text-xs uppercase mb-3 inline-block border border-hydro-secondary px-3 py-1 rounded-full bg-hydro-secondary/10">Proven Results</span>
-                <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-4 text-hero-glow tracking-tight">
-                    VERIFIABLE SUCCESS STORIES
-                </h1>
-                <p class="text-xl text-slate-200 max-w-3xl mx-auto font-light leading-relaxed">
-                    Measurable results matter. Explore our archive of Case Studies demonstrating <span class="text-hydro-secondary font-bold">guaranteed ROI</span>, <span class="text-hydro-risk font-bold">48% risk elimination</span>, and extended asset longevity through the AnoHUB Protocol.
-                </p>
+    <main class="pt-32 pb-20">
+
+        <!-- HERO: MISSION LOG -->
+        <section class="max-w-7xl mx-auto px-4 mb-16 text-center">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-xs font-mono text-h-green mb-6 animate-[fadeInUp_1s_ease-out]">
+                <span class="w-2 h-2 bg-h-green rounded-full animate-pulse"></span>
+                ARCHIVE ACCESS: GRANTED
+            </div>
+            <h1 class="text-5xl md:text-6xl font-black text-white mb-6 tracking-tight leading-none animate-[fadeInUp_1s_ease-out_0.2s_forwards] opacity-0">
+                DECLASSIFIED <br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-h-cyan to-blue-500">MISSION LOGS</span>
+            </h1>
+            <p class="text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed animate-[fadeInUp_1s_ease-out_0.4s_forwards] opacity-0">
+                Verifiable proof of the <strong class="text-white">Engineering Immunity Protocol</strong> in action. Real data. Real risk neutralization.
+            </p>
+        </section>
+
+        <!-- CONTROL BAR (FILTERS) -->
+        <section class="max-w-7xl mx-auto px-4 mb-12 sticky top-24 z-40">
+            <div class="bg-h-dark/90 backdrop-blur-md border border-h-border p-4 rounded-xl flex flex-col md:flex-row justify-between items-center gap-4 shadow-2xl">
+                
+                <div class="flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0">
+                    <button class="filter-btn active px-4 py-2 rounded border border-transparent text-xs font-bold text-slate-400 hover:text-white uppercase transition" data-filter="all">All Missions</button>
+                    <button class="filter-btn px-4 py-2 rounded border border-transparent text-xs font-bold text-slate-400 hover:text-white uppercase transition" data-filter="francis">Francis</button>
+                    <button class="filter-btn px-4 py-2 rounded border border-transparent text-xs font-bold text-slate-400 hover:text-white uppercase transition" data-filter="kaplan">Kaplan</button>
+                    <button class="filter-btn px-4 py-2 rounded border border-transparent text-xs font-bold text-slate-400 hover:text-white uppercase transition" data-filter="pelton">Pelton</button>
+                </div>
+
+                <div class="relative w-full md:w-64">
+                    <svg data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500"></svg>
+                    <input type="text" id="search-input" placeholder="Search Protocol ID..." class="w-full bg-slate-900 border border-h-border rounded-lg pl-10 pr-4 py-2 text-sm text-white focus:border-h-cyan focus:outline-none transition">
+                </div>
             </div>
         </section>
 
-        <!-- GLAVNI KONTEJNER ZA KARTICE -->
-        <section class="py-20 bg-hydro-slate">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                
-                <!-- OVDJE SKRIPTA CRTA KARTICE -->
-                <!-- ID mora biti tačan: case-studies-grid -->
-                <div id="case-studies-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="col-span-full text-center py-20">
-                        <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-hydro-primary mb-4"></div>
-                        <p class="text-slate-400">Loading case studies...</p>
+        <!-- CASE STUDIES GRID -->
+        <section class="max-w-7xl mx-auto px-4">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="cases-grid">
+
+                <!-- CASE 1: PERUCA (FRANCIS) -->
+                <div class="dossier-card rounded-xl p-6 group" data-category="francis">
+                    <div class="flex justify-between items-start mb-6">
+                        <div>
+                            <div class="text-[10px] font-mono text-h-cyan mb-1">ID: CASE-FR-042</div>
+                            <h3 class="text-2xl font-bold text-white">Peruća Dam</h3>
+                        </div>
+                        <div class="bg-h-red/10 text-h-red px-2 py-1 rounded text-[10px] font-bold border border-h-red/20 uppercase">Critical</div>
+                    </div>
+
+                    <div class="space-y-4 mb-8">
+                        <div>
+                            <p class="text-xs font-mono text-slate-500 uppercase mb-1">The Threat</p>
+                            <p class="text-sm text-slate-300">Severe cavitation on runner blades leading to 2.1% efficiency loss. Vibration levels exceeded ISO limits by 40%.</p>
+                        </div>
+                        <div>
+                            <p class="text-xs font-mono text-slate-500 uppercase mb-1">The Protocol</p>
+                            <p class="text-sm text-slate-300">Deployed <span class="text-white font-bold">3D Metrology</span> to map erosion. Applied <span class="text-h-cyan">HVOF Tungsten Carbide</span> coating.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-black/40 p-4 rounded-lg border border-slate-700 relative overflow-hidden">
+                        <p class="text-[10px] font-mono text-slate-400 uppercase mb-2">ROI Verification</p>
+                        <div class="flex justify-between items-end">
+                            <div>
+                                <span class="text-3xl font-black text-h-green">+3.5%</span>
+                                <span class="text-xs text-slate-400 block">Efficiency Gain</span>
+                            </div>
+                            <div class="h-8 w-24 flex items-end gap-1">
+                                <div class="w-1/3 bg-slate-700 h-[40%]"></div>
+                                <div class="w-1/3 bg-h-green h-[100%] animate-pulse"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                
+
+                <!-- CASE 2: IRON GATES (KAPLAN) -->
+                <div class="dossier-card rounded-xl p-6 group" data-category="kaplan">
+                    <div class="flex justify-between items-start mb-6">
+                        <div>
+                            <div class="text-[10px] font-mono text-h-cyan mb-1">ID: CASE-KP-089</div>
+                            <h3 class="text-2xl font-bold text-white">Iron Gates</h3>
+                        </div>
+                        <div class="bg-h-yellow/10 text-h-yellow px-2 py-1 rounded text-[10px] font-bold border border-h-yellow/20 uppercase">Warning</div>
+                    </div>
+
+                    <div class="space-y-4 mb-8">
+                        <div>
+                            <p class="text-xs font-mono text-slate-500 uppercase mb-1">The Threat</p>
+                            <p class="text-sm text-slate-300">Blade synchronization error causing dynamic instability. Oil leakage detected in hub assembly.</p>
+                        </div>
+                        <div>
+                            <p class="text-xs font-mono text-slate-500 uppercase mb-1">The Protocol</p>
+                            <p class="text-sm text-slate-300">Initiated <span class="text-white font-bold">M-E Synergy Audit</span>. Recalibrated servo-motors and verified hub seal integrity via NDT.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-black/40 p-4 rounded-lg border border-slate-700 relative overflow-hidden">
+                        <p class="text-[10px] font-mono text-slate-400 uppercase mb-2">ROI Verification</p>
+                        <div class="flex justify-between items-end">
+                            <div>
+                                <span class="text-3xl font-black text-h-green">-80%</span>
+                                <span class="text-xs text-slate-400 block">Vibration Reduction</span>
+                            </div>
+                            <svg data-lucide="activity" class="w-8 h-8 text-h-green"></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CASE 3: ALPINE STORAGE (PELTON) -->
+                <div class="dossier-card rounded-xl p-6 group" data-category="pelton">
+                    <div class="flex justify-between items-start mb-6">
+                        <div>
+                            <div class="text-[10px] font-mono text-h-cyan mb-1">ID: CASE-PL-012</div>
+                            <h3 class="text-2xl font-bold text-white">Alpine Storage</h3>
+                        </div>
+                        <div class="bg-h-cyan/10 text-h-cyan px-2 py-1 rounded text-[10px] font-bold border border-h-cyan/20 uppercase">Optimization</div>
+                    </div>
+
+                    <div class="space-y-4 mb-8">
+                        <div>
+                            <p class="text-xs font-mono text-slate-500 uppercase mb-1">The Threat</p>
+                            <p class="text-sm text-slate-300">Nozzle misalignment causing jet dispersion and rapid bucket wear. Expected failure in < 2 years.</p>
+                        </div>
+                        <div>
+                            <p class="text-xs font-mono text-slate-500 uppercase mb-1">The Protocol</p>
+                            <p class="text-sm text-slate-300">Executed <span class="text-white font-bold">Precision Alignment</span> (0.05mm tolerance). Laser-verified jet trajectory.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-black/40 p-4 rounded-lg border border-slate-700 relative overflow-hidden">
+                        <p class="text-[10px] font-mono text-slate-400 uppercase mb-2">ROI Verification</p>
+                        <div class="flex justify-between items-end">
+                            <div>
+                                <span class="text-3xl font-black text-h-green">+10 Yrs</span>
+                                <span class="text-xs text-slate-400 block">Asset Life Extension</span>
+                            </div>
+                            <svg data-lucide="infinity" class="w-8 h-8 text-h-green"></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CASE 4: DRAVA RIVER (KAPLAN) -->
+                <div class="dossier-card rounded-xl p-6 group" data-category="kaplan">
+                    <div class="flex justify-between items-start mb-6">
+                        <div>
+                            <div class="text-[10px] font-mono text-h-cyan mb-1">ID: CASE-KP-101</div>
+                            <h3 class="text-2xl font-bold text-white">Drava River</h3>
+                        </div>
+                        <div class="bg-h-red/10 text-h-red px-2 py-1 rounded text-[10px] font-bold border border-h-red/20 uppercase">Emergency</div>
+                    </div>
+
+                    <div class="space-y-4 mb-8">
+                        <div>
+                            <p class="text-xs font-mono text-slate-500 uppercase mb-1">The Threat</p>
+                            <p class="text-sm text-slate-300">Sudden resonance drift detected. Structure vibrating dangerously close to natural frequency.</p>
+                        </div>
+                        <div>
+                            <p class="text-xs font-mono text-slate-500 uppercase mb-1">The Protocol</p>
+                            <p class="text-sm text-slate-300">Deployed <span class="text-white font-bold">Spectral Analysis</span>. Identified loose foundation bolts via Organizational Audit.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-black/40 p-4 rounded-lg border border-slate-700 relative overflow-hidden">
+                        <p class="text-[10px] font-mono text-slate-400 uppercase mb-2">ROI Verification</p>
+                        <div class="flex justify-between items-end">
+                            <div>
+                                <span class="text-3xl font-black text-h-green">SECURE</span>
+                                <span class="text-xs text-slate-400 block">Operational Safety</span>
+                            </div>
+                            <div class="w-2 h-2 bg-h-green rounded-full animate-pulse"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CASE 5: LCC VETO EXAMPLE (FINANCE) -->
+                <div class="dossier-card rounded-xl p-6 group" data-category="francis">
+                    <div class="flex justify-between items-start mb-6">
+                        <div>
+                            <div class="text-[10px] font-mono text-h-cyan mb-1">ID: CASE-FIN-001</div>
+                            <h3 class="text-2xl font-bold text-white">Procurement Veto</h3>
+                        </div>
+                        <div class="bg-h-purple/10 text-h-purple px-2 py-1 rounded text-[10px] font-bold border border-h-purple/20 uppercase">Governance</div>
+                    </div>
+
+                    <div class="space-y-4 mb-8">
+                        <div>
+                            <p class="text-xs font-mono text-slate-500 uppercase mb-1">The Threat</p>
+                            <p class="text-sm text-slate-300">Client considering "Lowest Bid" runner ($800k) made of inferior Carbon Steel.</p>
+                        </div>
+                        <div>
+                            <p class="text-xs font-mono text-slate-500 uppercase mb-1">The Protocol</p>
+                            <p class="text-sm text-slate-300">Ran <span class="text-white font-bold">LCC Algorithm</span>. Proved $2.5M loss over 20 years due to erosion. Vetoed bid.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-black/40 p-4 rounded-lg border border-slate-700 relative overflow-hidden">
+                        <p class="text-[10px] font-mono text-slate-400 uppercase mb-2">ROI Verification</p>
+                        <div class="flex justify-between items-end">
+                            <div>
+                                <span class="text-3xl font-black text-h-green">$1.7M</span>
+                                <span class="text-xs text-slate-400 block">Avoided Loss (NPV)</span>
+                            </div>
+                            <svg data-lucide="trending-up" class="w-8 h-8 text-h-green"></svg>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </section>
-        
-        <!-- CTA SECTION -->
-        <section class="py-20 bg-hydro-charcoal text-center border-t border-hydro-light-slate">
-            <div class="max-w-4xl mx-auto px-4">
-                <h2 class="text-3xl font-bold text-white mb-6">Have a Similar Challenge?</h2>
-                <p class="text-lg text-slate-300 mb-8">
-                    Our protocols are adaptable to any hydro environment. Share your operational pain points, and we will provide a preliminary analysis.
-                </p>
-                <a href="contact.html" class="inline-flex items-center justify-center px-10 py-4 border border-transparent text-lg font-bold rounded-full text-hydro-charcoal bg-hydro-primary hover:bg-cyan-400 transition duration-300 transform hover:scale-105 shadow-xl uppercase tracking-wider">
-                    Consult With An Expert &rarr;
+
+        <!-- CTA: BRIDGE TO PROTOCOL -->
+        <section class="mt-24 text-center px-4">
+            <div class="max-w-3xl mx-auto glass-card p-10 rounded-2xl relative overflow-hidden group border-t-4 border-t-h-cyan">
+                
+                <h2 class="text-3xl font-black text-white mb-4">See The Tools Behind These Results</h2>
+                <p class="text-slate-400 mb-8">Access the same diagnostic engines we used to solve these cases.</p>
+                
+                <a href="protocol.html" class="inline-flex items-center gap-3 bg-h-cyan hover:bg-cyan-400 text-black font-black px-8 py-4 rounded transition shadow-lg hover:shadow-cyan-500/50">
+                    ENTER COMMAND CENTER <svg data-lucide="arrow-right" class="w-5 h-5"></svg>
                 </a>
             </div>
         </section>
 
     </main>
-    
-    <!-- FOOTER -->
-    <div class="md:hidden mobile-sticky-cta text-center">
-        <a href="contact.html" class="w-full block text-center bg-hydro-primary hover:bg-cyan-500 text-hydro-charcoal px-5 py-3 font-bold tracking-wider uppercase shadow-2xl">
-            SCHEDULE AUDIT
-        </a>
-    </div>
 
-    <footer class="bg-hydro-slate text-hydro-gray py-8 text-center border-t border-hydro-light-slate" role="contentinfo">
-        <div class="container mx-auto px-6">
-           <a href="index.html#hero" class="mb-4 block" aria-label="Anohubs Logo - Back to Home">
-               <img src="logo.svg" alt="Anohubs Logo" class="anohubs-logo mx-auto">
-           </a>
-           <p class="text-slate-400 mb-6">Establishing the global standard for hydro integrity.</p>
-           <nav class="flex justify-center space-x-6 text-sm mb-4">
-               <a href="about-us-vision.html" class="text-slate-400 hover:text-hydro-primary">About</a>
-               <a href="services.html" class="text-slate-400 hover:text-hydro-primary">Services</a>
-               <a href="insights/expert-insights.html" class="text-slate-400 hover:text-hydro-primary">Insights</a>
-               <a href="case-studies.html" class="text-slate-400 hover:text-hydro-primary">Case Studies</a>
-               <a href="gallery.html" class="text-slate-400 hover:text-hydro-primary">Gallery</a>
-               <a href="protocol.html" class="text-slate-400 hover:text-hydro-primary">Protocol</a>
-               <a href="contact.html" class="text-slate-400 hover:text-hydro-primary">Contact</a>
-           </nav>
-           <div class="flex justify-center space-x-4 text-xs mb-4">
-                <a href="privacy-policy.html" class="text-slate-500 hover:text-slate-300 underline">Privacy Policy</a>
-                <span class="text-slate-500">|</span>
-                <a href="terms-of-use.html" class="text-slate-500 hover:text-slate-300 underline">Terms of Use</a>
-           </div>
-           <p class="text-sm">&copy; <span id="year"></span> Anohubs Inc. All rights reserved.</p>
+    <!-- FOOTER -->
+    <footer class="bg-black border-t border-slate-900 py-12 text-center mt-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <img src="logo.svg" alt="Logo" class="h-8 mx-auto mb-6 opacity-50 grayscale hover:grayscale-0 transition">
+            <p class="text-slate-500 text-sm mb-6">© 2025 Anohubs Inc.</p>
+            <div class="flex justify-center gap-6 text-xs font-mono text-slate-600">
+                <a href="#" class="hover:text-white transition">PRIVACY</a>
+                <a href="#" class="hover:text-white transition">TERMS</a>
+            </div>
         </div>
     </footer>
 
-    <!-- KRITIČNO: MODULARNA JS STRUKTURA -->
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
-    <script src="js/ui_core.js"></script>
-    <script src="js/animation_logic.js"></script>
-    
-    <!-- OBAVEZNO: Skripta koja sadrži podatke i logiku za Case Studies -->
-    <script src="js/case-studies-grid.js"></script> 
+    <!-- SCRIPTS -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script>
+        lucide.createIcons();
+        
+        // Mobile Menu
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
 
+        // Navbar Scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('shadow-lg', 'bg-h-dark/95');
+                nav.classList.remove('bg-h-dark/90');
+            } else {
+                nav.classList.remove('shadow-lg', 'bg-h-dark/95');
+                nav.classList.add('bg-h-dark/90');
+            }
+        });
+
+        // FILTERING LOGIC
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const cards = document.querySelectorAll('.dossier-card');
+        const searchInput = document.getElementById('search-input');
+
+        // Filter Buttons
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Active state
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const filter = btn.getAttribute('data-filter');
+                
+                cards.forEach(card => {
+                    if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                        card.style.display = 'block';
+                        // Add fade in animation
+                        card.animate([
+                            { opacity: 0, transform: 'translateY(10px)' },
+                            { opacity: 1, transform: 'translateY(0)' }
+                        ], { duration: 300, easing: 'ease-out' });
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Search Logic
+        searchInput.addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            cards.forEach(card => {
+                const text = card.innerText.toLowerCase();
+                if (text.includes(term)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    </script>
 </body>
 </html>

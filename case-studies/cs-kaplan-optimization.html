@@ -1,184 +1,247 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>+3.1% Efficiency Gain Post-Modernization | Kaplan Turbine Case Study</title>
+    <title>MISSION: +3.1% Efficiency Gain | AnoHUB Case Study</title>
     <meta name="description" content="Case Study: Hydraulic Hub Optimization and LCC Analysis for Kaplan Fleet, achieving a measurable 3.1% efficiency gain post-modernization.">
     
-    <!-- JS & FONT -->
-    <script src="../js/head-init.js"></script>
+    <!-- 1. FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     
-    <!-- TAILWIND -->
+    <!-- 2. TAILWIND -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
+                    fontFamily: { 
+                        sans: ['Inter', 'sans-serif'], 
+                        mono: ['JetBrains Mono', 'monospace'] 
+                    },
                     colors: {
-                        'hydro-primary': '#22d3ee',
-                        'hydro-secondary': '#4ade80',
-                        'hydro-risk': '#ef4444',
-                        'hydro-cta': '#f59e0b',
-                        'hydro-charcoal': '#111827',
-                        'hydro-slate': '#1E293B',
-                        'hydro-light-slate': '#334155',
-                        'hydro-gray': '#475569',
-                    },
-                    fontSize: {
-                        'h1-hero': 'clamp(2.5rem, 5vw + 1rem, 4.5rem)',
-                    },
+                        'h-cyan': '#06b6d4', 
+                        'h-green': '#10b981', /* Green for Kaplan/Efficiency */
+                        'h-red': '#ef4444', 
+                        'h-yellow': '#facc15', 
+                        'h-dark': '#020617', 
+                        'h-panel': '#0f172a', 
+                        'h-border': '#1e293b',
+                        'h-cta': '#f59e0b'
+                    }
                 }
             }
         }
     </script>
 
-    <!-- STILOVI -->
-    <link href="../css/anohubs.css" rel="stylesheet">
-    <link href="../css/article-styles.css" rel="stylesheet">
     <style>
-        body { background-color: #111827; color: #E5E7EB; }
-        .content-overlay { 
-            background-color: rgba(30, 41, 59, 0.95); 
-            padding: 2.5rem; 
-            border-radius: 1rem; 
-            border-top: 4px solid #4ade80; /* Zelena za Kaplan/Efikasnost */
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5); 
+        body { background-color: #020617; color: #cbd5e1; overflow-x: hidden; }
+        
+        /* Tech Background */
+        .tech-bg {
+            background-image: 
+                linear-gradient(rgba(16, 185, 129, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(16, 185, 129, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+        }
+
+        /* Mission Stamp */
+        .mission-stamp {
+            border: 2px solid #10b981;
+            color: #10b981;
+            padding: 0.5rem 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: inline-block;
+            transform: rotate(-5deg);
+            opacity: 0.8;
+        }
+
+        /* Glass Panel */
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid #1e293b;
         }
     </style>
 </head>
-<body class="bg-hydro-charcoal text-white"> 
-    
-    <!-- HEADER -->
-    <header class="bg-hydro-charcoal text-white shadow-2xl sticky top-0 z-50 border-b border-hydro-primary/50" role="banner">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex justify-between items-center">
-            <a href="../index.html#hero" class="focus:outline-none transition" aria-label="Anohubs Logo - Back to Home">
-                <img src="../logo.svg" alt="Anohubs Logo" class="anohubs-logo">
+
+<body class="antialiased selection:bg-h-green selection:text-black">
+    <div class="tech-bg"></div>
+
+    <!-- NAV -->
+    <header class="fixed w-full z-50 top-0 border-b border-white/5 bg-h-dark/90 backdrop-blur-md" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 h-16 flex justify-between items-center">
+            <a href="../index.html" class="flex items-center gap-3 group">
+                <img src="../logo.svg" alt="AnoHUB" class="h-8 w-auto opacity-80 group-hover:opacity-100 transition">
+                <span class="font-mono text-xs text-slate-500 group-hover:text-h-green transition">MISSION ARCHIVE // CASE 007</span>
             </a>
-            <nav class="hidden md:flex items-center space-x-6 font-extrabold text-sm" role="navigation">
-                <a href="../about-us-vision.html" class="text-slate-300 hover:text-hydro-primary transition">About</a>
-                <a href="../services.html" class="text-slate-300 hover:text-hydro-primary transition">Services</a>
-                <a href="../insights/expert-insights.html" class="text-slate-300 hover:text-hydro-primary transition">Insights</a>
-                <a href="../case-studies.html" class="text-hydro-secondary transition">Case Studies</a>
-                <a href="../app-iframe.html" target="_blank" class="text-slate-300 hover:text-green-500 transition">ANO HUB</a>
-                <a href="../gallery.html" class="text-slate-300 hover:text-hydro-primary transition">Gallery</a>
-                <a href="../protocol.html" class="text-slate-300 hover:text-hydro-primary transition">Protocol</a>
-                <a href="../contact.html" class="bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-6 py-2.5 rounded-full transition shadow-md">Contact</a>
-            </nav>
-            <div class="md:hidden">
-                <button id="mobile-menu-button" class="p-2 text-white"><svg data-lucide="menu" class="w-8 h-8"></svg></button>
-            </div>
+            <a href="../case-studies.html" class="text-xs font-bold text-slate-400 hover:text-white uppercase tracking-widest flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                Return to Index
+            </a>
         </div>
     </header>
 
-    <main class="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8 article-container">
-        <a href="../case-studies.html" class="inline-block text-lg font-bold text-hydro-primary hover:text-cyan-500 mt-4 mb-4">← Back to Archive</a>
+    <main class="pt-32 pb-20">
+        <div class="max-w-6xl mx-auto px-4">
 
-        <div class="content-overlay shadow-2xl">
-            <img src="../slike/cs_kaplan_optimization.png" alt="Kaplan turbine runner with detailed optimization mapping" class="w-full h-auto rounded-lg mb-8 shadow-lg border border-slate-600">
-
-            <h1 class="text-3xl md:text-4xl font-black text-white mb-4">+3.1% Efficiency Gain Post-Modernization</h1>
-            <p class="text-lg text-slate-300 mb-8 border-l-4 border-hydro-secondary pl-4 italic">
-                **Client Profile:** Low-head Kaplan Fleet | **Problem:** Efficiency Loss | **Solution:** Hub Optimization | **Outcome:** +3.1% Gain.
-            </p>
-
-            <h2 class="text-2xl font-bold text-hydro-primary mb-4">1. The Challenge: The Performance Gap</h2>
-            <p class="text-slate-300 mb-4 leading-relaxed">
-                The client undertook a modernization of their 40-year-old Kaplan fleet, but conventional alignment and refurbishment methods failed to restore original hydraulic efficiency targets. Efficiency plateaued at 88%, well below the 91% design goal.
-            </p>
-            <p class="text-slate-300 mb-6 leading-relaxed">
-                We identified the root cause: **Hydraulic Hub Wear**. Invisible during static checks, hydraulic play in the blade pitch mechanism caused dynamic flow separation at partial loads.
-            </p>
-
-            <h2 class="text-2xl font-bold text-hydro-primary mb-4">2. The AnoHUB Protocol: Precision & Digital Twin</h2>
-            <ul class="space-y-4 text-slate-300 mb-8">
-                <li class="flex items-start gap-3 bg-hydro-charcoal/50 p-4 rounded-lg border border-slate-700">
-                    <svg data-lucide="cpu" class="w-6 h-6 text-hydro-secondary mt-1 flex-shrink-0"></svg> 
-                    <div>
-                        <strong>Digital Twin CFD:</strong> 
-                        We ran high-fidelity CFD simulations to identify the optimal blade angles and guide vane opening settings specifically for the site's current hydrological conditions.
+            <!-- MISSION HEADER -->
+            <div class="grid lg:grid-cols-12 gap-12 mb-20">
+                <div class="lg:col-span-8">
+                    <div class="flex items-center gap-4 mb-6">
+                        <span class="px-3 py-1 rounded bg-h-green/10 text-h-green border border-h-green/20 text-xs font-mono font-bold">HYDRAULIC OPTIMIZATION</span>
+                        <span class="text-slate-500 text-xs font-mono">DATE: MAY 2025</span>
                     </div>
-                </li>
-                <li class="flex items-start gap-3 bg-hydro-charcoal/50 p-4 rounded-lg border border-slate-700">
-                    <svg data-lucide="settings" class="w-6 h-6 text-hydro-secondary mt-1 flex-shrink-0"></svg> 
-                    <div>
-                        <strong>Hub Precision Check:</strong> 
-                        Used non-destructive testing (NDT) to measure wear in control rods, leading to a micrometre-precision re-machining plan to eliminate play.
-                    </div>
-                </li>
-                <li class="flex items-start gap-3 bg-hydro-charcoal/50 p-4 rounded-lg border border-slate-700">
-                    <svg data-lucide="bar-chart-3" class="w-6 h-6 text-hydro-secondary mt-1 flex-shrink-0"></svg> 
-                    <div>
-                        <strong>LCC Procurement Audit:</strong> 
-                        Advised on upgrading to self-lubricating bushings to minimize future maintenance cycles and eliminate oil pollution risk.
-                    </div>
-                </li>
-            </ul>
-            
-            <!-- REZULTATI GRID -->
-            <div class="grid md:grid-cols-3 gap-4 my-8 text-center">
-                <div class="bg-hydro-charcoal p-6 rounded-lg border border-hydro-secondary shadow-md">
-                    <p class="text-3xl font-black text-hydro-secondary">91.3%</p>
-                    <p class="text-xs uppercase text-slate-400 font-bold tracking-wider">New Peak Efficiency</p>
+                    <h1 class="text-4xl md:text-6xl font-black text-white mb-6 leading-tight">
+                        +3.1% Efficiency Gain: <br> Post-<span class="text-h-green">Modernization</span>
+                    </h1>
+                    <p class="text-xl text-slate-400 leading-relaxed border-l-4 border-h-green pl-6">
+                        <strong>The Mission:</strong> A low-head Kaplan fleet struggled with efficiency loss post-refurbishment. Our objective: Identify hidden mechanical play and optimize the cam curve for maximum output.
+                    </p>
                 </div>
-                <div class="bg-hydro-charcoal p-6 rounded-lg border border-hydro-primary shadow-md">
-                    <p class="text-3xl font-black text-hydro-primary">+3.1%</p>
-                    <p class="text-xs uppercase text-slate-400 font-bold tracking-wider">Total Efficiency Gain</p>
-                </div>
-                <div class="bg-hydro-charcoal p-6 rounded-lg border border-hydro-cta shadow-md">
-                    <p class="text-3xl font-black text-hydro-cta">14 Mo</p>
-                    <p class="text-xs uppercase text-slate-400 font-bold tracking-wider">ROI Period</p>
+                <div class="lg:col-span-4 flex items-center justify-center lg:justify-end">
+                    <div class="mission-stamp p-4 text-center">
+                        MISSION STATUS:<br>
+                        <span class="text-2xl">MAXIMIZED</span>
+                    </div>
                 </div>
             </div>
 
-            <!-- ANO HUB EXECUTION SERVICE SEKCIJA -->
-            <div class="mt-12 pt-8 border-t border-slate-600 bg-hydro-slate/30 p-8 rounded-xl border border-hydro-light-slate/50">
-                <h2 class="text-2xl font-bold text-white mb-6 text-center">AnoHUB Execution Service</h2>
-                <p class="text-center text-slate-400 mb-8 text-sm">Expertise from the workshop to the control room.</p>
+            <!-- EXECUTION DATA -->
+            <div class="grid md:grid-cols-3 gap-6 mb-20">
+                <!-- Metric 1 -->
+                <div class="glass-panel p-6 rounded-xl border-t-4 border-t-h-green text-center">
+                    <div class="text-xs font-mono text-slate-500 uppercase mb-2">Peak Efficiency</div>
+                    <div class="text-5xl font-black text-white mb-2">91.3%</div>
+                    <p class="text-xs text-h-green">New Benchmark</p>
+                </div>
+                <!-- Metric 2 -->
+                <div class="glass-panel p-6 rounded-xl border-t-4 border-t-h-green text-center">
+                    <div class="text-xs font-mono text-slate-500 uppercase mb-2">Total Gain</div>
+                    <div class="text-5xl font-black text-white mb-2">+3.1%</div>
+                    <p class="text-xs text-h-green">Output Increase</p>
+                </div>
+                <!-- Metric 3 -->
+                <div class="glass-panel p-6 rounded-xl border-t-4 border-t-h-green text-center">
+                    <div class="text-xs font-mono text-slate-500 uppercase mb-2">ROI Period</div>
+                    <div class="text-5xl font-black text-white mb-2">14 MO</div>
+                    <p class="text-xs text-h-green">Payback Time</p>
+                </div>
+            </div>
+
+            <!-- DETAILED REPORT -->
+            <div class="grid lg:grid-cols-12 gap-12">
                 
-                <div class="grid md:grid-cols-2 gap-6 text-sm">
-                    <div class="bg-hydro-charcoal/80 p-5 rounded-lg flex gap-4 items-start border border-slate-700 hover:border-hydro-cta transition">
-                        <svg data-lucide="settings" class="w-8 h-8 text-hydro-cta flex-shrink-0"></svg>
-                        <div>
-                            <h3 class="font-bold text-white text-base">Hub Overhaul Management</h3>
-                            <p class="text-slate-400 mt-2 leading-relaxed">We managed the logistics for the hub refurbishment, coordinating with the machine shop to ensure adherence to our strict new tolerances.</p>
-                        </div>
-                    </div>
+                <!-- Left: Narrative -->
+                <div class="lg:col-span-8 space-y-12 text-slate-300">
                     
-                     <div class="bg-hydro-charcoal/80 p-5 rounded-lg flex gap-4 items-start border border-slate-700 hover:border-hydro-secondary transition">
-                        <svg data-lucide="monitor-smartphone" class="w-8 h-8 text-hydro-secondary flex-shrink-0"></svg>
-                        <div>
-                            <h3 class="font-bold text-white text-base">Remote Fine-Tuning</h3>
-                            <p class="text-slate-400 mt-2 leading-relaxed">Post-installation tuning of the governor PID loops was conducted via our Digital Supervision platform, saving travel costs and optimizing startup.</p>
+                    <section>
+                        <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-3">
+                            <span class="bg-h-red/20 text-h-red w-8 h-8 flex items-center justify-center rounded text-sm font-mono">01</span>
+                            The Threat Vector
+                        </h2>
+                        <p>
+                            The client undertook a modernization of their 40-year-old Kaplan fleet, but conventional alignment and refurbishment methods failed to restore original hydraulic efficiency targets. Efficiency plateaued at 88%, well below the 91% design goal.
+                        </p>
+                        <div class="bg-h-red/5 border border-h-red/20 p-4 rounded-lg mt-4">
+                            <p class="text-sm text-h-red font-mono">
+                                > RISK DETECTED: HYDRAULIC HUB WEAR<br>
+                                > CONSEQUENCE: DYNAMIC FLOW SEPARATION
+                            </p>
+                        </div>
+                    </section>
+
+                    <section>
+                        <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-3">
+                            <span class="bg-h-green/20 text-h-green w-8 h-8 flex items-center justify-center rounded text-sm font-mono">02</span>
+                            Tactical Execution
+                        </h2>
+                        <p>We deployed the <strong>AnoHUB Optimization Protocol</strong> to restore precision:</p>
+                        
+                        <ul class="space-y-4 mt-6">
+                            <li class="flex gap-4">
+                                <div class="mt-1"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-h-green"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><path d="M8 12h8"/><path d="M12 8v8"/></svg></div>
+                                <div>
+                                    <strong class="text-white block">Digital Twin CFD</strong>
+                                    Ran high-fidelity CFD simulations to identify optimal blade angles and guide vane settings for current hydrological conditions, correcting outdated assumptions.
+                                </div>
+                            </li>
+                            <li class="flex gap-4">
+                                <div class="mt-1"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-h-green"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg></div>
+                                <div>
+                                    <strong class="text-white block">Hub Precision Check</strong>
+                                    Used NDT to measure wear in control rods, leading to a micrometre-precision re-machining plan to eliminate mechanical play causing blade flutter.
+                                </div>
+                            </li>
+                            <li class="flex gap-4">
+                                <div class="mt-1"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-h-green"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg></div>
+                                <div>
+                                    <strong class="text-white block">LCC Procurement Audit</strong>
+                                    Advised on upgrading to self-lubricating bushings to minimize future maintenance cycles and eliminate oil pollution risk, securing long-term savings.
+                                </div>
+                            </li>
+                        </ul>
+                    </section>
+
+                </div>
+
+                <!-- Right: Sticky Context -->
+                <aside class="lg:col-span-4 space-y-6">
+                    <div class="glass-panel p-6 rounded-xl border-t-2 border-h-green sticky top-24">
+                        <h3 class="text-white font-bold mb-4 uppercase tracking-widest text-sm">Deployed Service</h3>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-3 text-sm text-slate-400">
+                                <div class="bg-h-dark p-2 rounded text-h-green"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.38a2 2 0 0 0-.73-2.73l-.15-.1a2 2 0 0 1-1-1.72v-.51a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg></div>
+                                <span>Hub Overhaul Mgmt</span>
+                            </div>
+                            <div class="flex items-center gap-3 text-sm text-slate-400">
+                                <div class="bg-h-dark p-2 rounded text-h-green"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg></div>
+                                <span>Remote Fine-Tuning</span>
+                            </div>
+                        </div>
+
+                        <div class="mt-8 pt-6 border-t border-slate-700">
+                            <p class="text-xs text-slate-500 mb-4">Output below target?</p>
+                            <a href="../contact.html" class="block w-full text-center bg-h-green hover:bg-emerald-400 text-black font-bold py-3 rounded uppercase tracking-wider text-xs transition">
+                                Optimize Your Plant
+                            </a>
                         </div>
                     </div>
-                </div>
+                </aside>
+
             </div>
 
-            <div class="mt-12 text-center">
-                <a href="../contact.html" class="inline-block bg-hydro-cta text-hydro-charcoal font-bold py-4 px-10 rounded-full hover:bg-yellow-500 transition shadow-xl uppercase tracking-wider transform hover:scale-105">
-                    Optimize Your Plant
+            <!-- FOOTER NAV -->
+            <div class="mt-24 pt-8 border-t border-slate-800 flex justify-between items-center">
+                <a href="cs-hydraulic-hammer-mitigation.html" class="text-slate-500 hover:text-white text-sm flex items-center gap-2 transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                    Back to Water Hammer
+                </a>
+                <a href="cs-lcc-procurement-audit.html" class="text-h-green hover:text-white text-sm flex items-center gap-2 transition">
+                    Next Mission: LCC Audit
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
                 </a>
             </div>
+
         </div>
     </main>
-    
-    <!-- FOOTER -->
-    <div class="md:hidden mobile-sticky-cta text-center">
-        <a href="../contact.html" class="w-full block text-center bg-hydro-primary hover:bg-cyan-500 text-hydro-charcoal px-5 py-3 font-bold tracking-wider uppercase shadow-2xl">SCHEDULE AUDIT</a>
-    </div>
 
-    <footer class="bg-hydro-slate text-hydro-gray py-8 text-center border-t border-hydro-light-slate" role="contentinfo">
-        <div class="container mx-auto px-6">
-           <p class="text-sm">&copy; 2025 Anohubs Inc. All rights reserved.</p>
+    <footer class="bg-black border-t border-slate-900 py-8 text-center text-xs font-mono text-slate-600">
+        <div class="max-w-7xl mx-auto px-4">
+            &copy; 2025 ANOHUBS INC. | MISSION LOG: CLOSED
         </div>
     </footer>
 
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
-    <script src="../js/ui_core.js"></script>
-    <script src="../js/animation_logic.js"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
 </body>
 </html>

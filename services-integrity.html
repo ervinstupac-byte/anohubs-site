@@ -1,194 +1,324 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Systemic Integrity Audits | Anohubs: The Global Standard</title>
-    <meta name="description" content="Holistic examination of your entire hydropower system, ensuring every component meets global excellence standards using FEA and NDT protocols.">
+    <title>Systemic Integrity Audits | AnoHUB Services</title>
+    <meta name="description" content="Holistic examination of hydropower systems using FEA, NDT, and 3D Metrology protocols to ensure zero-defect structural integrity.">
     
-    <script src="js/head-init.js"></script>
+    <!-- 1. FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- 2. TAILWIND -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    colors: {
-                        'hydro-primary': '#22d3ee', 
-                        'hydro-secondary': '#4ade80', 
-                        'hydro-risk': '#ef4444', 
-                        'hydro-cta': '#f59e0b', 
-                        'hydro-charcoal': '#111827', 
-                        'hydro-slate': '#1E293B', 
-                        'hydro-light-slate': '#334155', 
-                        'hydro-gray': '#475569',
+                    fontFamily: { 
+                        sans: ['Inter', 'sans-serif'], 
+                        mono: ['JetBrains Mono', 'monospace'] 
                     },
-                    fontSize: { 'h1-hero': 'clamp(2.5rem, 5vw + 1rem, 4.5rem)' },
+                    colors: {
+                        'h-cyan': '#06b6d4', 
+                        'h-green': '#10b981', 
+                        'h-red': '#ef4444', 
+                        'h-yellow': '#facc15', 
+                        'h-purple': '#8b5cf6',
+                        'h-dark': '#020617', 
+                        'h-panel': '#0f172a', 
+                        'h-border': '#1e293b',
+                        'h-cta': '#f59e0b'
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'scan-line': 'scanLine 3s linear infinite',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        scanLine: {
+                            '0%': { top: '0%', opacity: 0 },
+                            '10%': { opacity: 1 },
+                            '90%': { opacity: 1 },
+                            '100%': { top: '100%', opacity: 0 },
+                        }
+                    }
                 }
             }
         }
     </script>
-    <link href="css/anohubs.css" rel="stylesheet">
+
     <style>
-        html { scroll-behavior: smooth; }
-        body { 
-            font-family: 'Inter', sans-serif; 
-            background-color: #111827; 
-            color: #E5E7EB;
-            background-image: linear-gradient(rgba(17, 24, 39, 0.8), rgba(17, 24, 39, 0.95)), url('orljani_Una.jpg'); 
+        body { background-color: #020617; color: #f8fafc; overflow-x: hidden; }
+        
+        /* Tech Grid Background */
+        .tech-bg {
+            background-image: 
+                linear-gradient(rgba(6, 182, 212, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(6, 182, 212, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+        }
+
+        /* Hero Background */
+        .hero-integrity {
+            background-image: linear-gradient(180deg, rgba(2,6,23,0.8) 0%, rgba(2,6,23,1) 100%), url('orljani_Una.jpg');
             background-size: cover;
+            background-position: center;
             background-attachment: fixed;
-            background-position: center; 
-            min-height: 100vh;
         }
-        .header-bg { background-color: rgba(17, 24, 39, 0.95); }
-        .content-overlay {
-            background-color: rgba(30, 41, 59, 0.9); 
-            padding: 3rem 2rem;
-            border-radius: 0.75rem; 
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8); 
-            border-top: 5px solid #22d3ee;
+
+        /* Glass Cards */
+        .glass-card {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(6, 182, 212, 0.3); /* Cyan border for Integrity */
+            transition: all 0.3s ease;
         }
+        .glass-card:hover {
+            border-color: #06b6d4;
+            box-shadow: 0 0 30px rgba(6, 182, 212, 0.15);
+            transform: translateY(-5px);
+        }
+
+        /* Scanner Effect */
+        .scanner-container { position: relative; overflow: hidden; }
+        .scanner-bar {
+            position: absolute; left: 0; width: 100%; height: 2px;
+            background: #06b6d4;
+            box-shadow: 0 0 15px #06b6d4;
+            animation: scanLine 4s ease-in-out infinite;
+            z-index: 10;
+        }
+
+        /* Scroll Bar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #020617; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #06b6d4; }
     </style>
 </head>
-<body class="text-white bg-hydro-charcoal">
 
-    <!-- HEADER -->
-    <header class="header-bg shadow-2xl sticky top-0 z-50 border-b border-hydro-primary/50" role="banner">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex justify-between items-center">
-            <a href="index.html#hero" class="focus:outline-none transition" aria-label="Anohubs Logo - Back to top">
-                 <img src="logo.svg" alt="Anohubs Logo" class="w-24">
+<body class="antialiased">
+    <div class="tech-bg"></div>
+
+    <!-- NAV -->
+    <header class="fixed w-full z-50 top-0 border-b border-white/5 bg-h-dark/90 backdrop-blur-md transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 h-20 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-3 group">
+                <img src="logo.svg" alt="AnoHUB" class="h-10 w-auto transition group-hover:brightness-125">
+                <div class="hidden md:block">
+                    <span class="block text-lg font-black tracking-tighter text-white leading-none">ANOHUBS</span>
+                    <span class="block text-[10px] font-mono text-h-cyan tracking-widest uppercase">Integrity</span>
+                </div>
             </a>
-            <nav class="hidden md:flex items-center space-x-6 font-extrabold text-sm" role="navigation">
-                <a href="about-us-vision.html" class="text-slate-300 hover:text-hydro-primary transition">About</a>
-                <a href="services.html" class="text-hydro-primary transition">Services</a>
-                <a href="insights/expert-insights.html" class="text-slate-300 hover:text-hydro-primary transition">Insights</a>
-                <a href="case-studies.html" class="text-slate-300 hover:text-hydro-secondary transition">Case Studies</a>
-                <a href="app-iframe.html" target="_blank" class="text-hydro-secondary hover:text-green-500 transition">ANO HUB</a>
-                <a href="gallery.html" class="text-slate-300 hover:text-hydro-primary transition">Gallery</a>
-                <a href="protocol.html" class="text-slate-300 hover:text-hydro-primary transition">Protocol</a>
-                <a href="contact.html" class="bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-6 py-2.5 rounded-full transition shadow-md">Contact</a>
+            <nav class="hidden lg:flex items-center gap-6 text-xs font-bold uppercase tracking-wider">
+                <a href="index.html" class="text-slate-400 hover:text-white transition">Home</a>
+                <a href="services.html" class="text-slate-400 hover:text-white transition">Services</a>
+                <a href="protocol.html" class="group relative inline-flex items-center gap-2 px-5 py-2 bg-h-cyan/10 text-h-cyan border border-h-cyan/50 rounded-full hover:bg-h-cyan hover:text-black transition-all duration-300">
+                    <span>PROTOCOL</span>
+                    <div class="w-1.5 h-1.5 bg-h-cyan rounded-full animate-pulse"></div>
+                </a>
+                <a href="contact.html" class="px-5 py-2 bg-h-cta text-black rounded-full hover:bg-yellow-400 transition">Contact</a>
             </nav>
-            <div class="md:hidden">
-                <button id="mobile-menu-button" class="p-2 text-white"><svg data-lucide="menu" class="w-8 h-8"></svg></button>
-            </div>
-            <div id="mobile-menu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2 text-center bg-hydro-charcoal">
-                <a href="about-us-vision.html" class="block hover:text-hydro-primary py-2">About</a>
-                <a href="services.html" class="block hover:text-hydro-primary py-2">Services</a>
-                <a href="contact.html" class="block bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-5 py-2 rounded-full mt-2">Contact</a>
-            </div>
+            <button id="mobile-menu-btn" class="lg:hidden text-white p-2">
+                <svg data-lucide="menu" class="w-8 h-8"></svg>
+            </button>
+        </div>
+        <div id="mobile-menu" class="hidden lg:hidden absolute top-20 left-0 w-full bg-h-dark border-b border-h-border p-4 flex flex-col gap-4 shadow-2xl">
+            <a href="services.html" class="text-slate-300 hover:text-h-cyan py-2 border-b border-h-border flex items-center gap-2"><svg data-lucide="arrow-left" class="w-4 h-4"></svg> Back to Services</a>
+            <a href="protocol.html" class="text-h-cyan font-bold py-2 border-b border-h-border flex items-center gap-2"><svg data-lucide="shield" class="w-4 h-4"></svg> PROTOCOL</a>
+            <a href="contact.html" class="text-h-cta font-bold py-2">Contact Us</a>
         </div>
     </header>
-    
-    <main role="main">
-        <section class="py-20 text-white flex items-center justify-center min-h-screen">
-            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 content-overlay zoom-in"> 
+
+    <main class="pt-20">
+
+        <!-- HERO -->
+        <section class="hero-integrity min-h-[60vh] flex items-center justify-center relative scanner-container">
+            <!-- Scanner Animation Line -->
+            <div class="scanner-bar"></div>
+
+            <div class="max-w-5xl mx-auto px-4 text-center relative z-10">
+                <a href="services.html" class="inline-flex items-center gap-2 text-h-cyan hover:text-white mb-6 transition text-sm font-mono uppercase tracking-widest">
+                    <svg data-lucide="arrow-left" class="w-4 h-4"></svg> Operational Capabilities
+                </a>
                 
-                <h1 class="text-5xl md:text-6xl font-extrabold text-hydro-primary mb-6 text-center tracking-tight">SYSTEMIC INTEGRITY AUDITS</h1>
-                <p class="text-xl md:text-2xl font-light text-slate-300 mb-12 border-b pb-8 border-slate-600 text-center">
-                    Your complete defense against the **Organizational Execution Gap** and long-term asset degradation. We audit what others ignore.
+                <h1 class="text-5xl md:text-7xl font-black text-white mb-6 tracking-tight leading-none animate-[fadeInUp_1s_ease-out]">
+                    SYSTEMIC <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-h-cyan to-blue-500">INTEGRITY AUDITS</span>
+                </h1>
+                
+                <p class="text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed mb-10 animate-[fadeInUp_1s_ease-out_0.2s_forwards] opacity-0">
+                    We don't guess. We scan. A holistic examination of your entire hydropower system, ensuring zero-defect structural integrity through advanced forensic protocols.
                 </p>
-
-                <!-- CORE PILLARS -->
-                <div class="grid md:grid-cols-2 gap-12 mb-16">
-                    <div class="space-y-6">
-                        <h2 class="text-3xl font-bold text-white mb-4 flex items-center gap-3">
-                            <svg data-lucide="layers" class="w-8 h-8 text-hydro-cta"></svg> The Holistic Mandate
-                        </h2>
-                        <p class="text-slate-300 leading-relaxed text-lg">
-                            We treat the hydropower asset as a single, interdependent system. Most failures occur not because of component design, but because of the **Organizational Execution Gap**—the critical chasm between perfect design and flawed field reality.
-                        </p>
-                        <p class="text-slate-300 leading-relaxed text-lg">
-                            Our audits specifically target the **48% dynamic risk factor**—instabilities introduced during installation that standard maintenance overlooks.
-                        </p>
-                    </div>
-                    
-                    <div class="bg-hydro-slate p-6 rounded-xl border border-hydro-light-slate">
-                        <h3 class="text-xl font-bold text-hydro-secondary mb-4">Audit Scope Includes:</h3>
-                        <ul class="space-y-3 text-sm">
-                            <li class="flex items-center"><svg data-lucide="check" class="w-5 h-5 text-hydro-primary mr-2"></svg> Shaft Line Alignment (0.05mm tolerance)</li>
-                            <li class="flex items-center"><svg data-lucide="check" class="w-5 h-5 text-hydro-primary mr-2"></svg> Bearing Clearance & Oil Film Analysis</li>
-                            <li class="flex items-center"><svg data-lucide="check" class="w-5 h-5 text-hydro-primary mr-2"></svg> M-E Synergy (Grounding & Stray Currents)</li>
-                            <li class="flex items-center"><svg data-lucide="check" class="w-5 h-5 text-hydro-primary mr-2"></svg> Hydraulic Control System Response</li>
-                            <li class="flex items-center"><svg data-lucide="check" class="w-5 h-5 text-hydro-primary mr-2"></svg> Concrete & Foundation Stability</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- DETAILED PROTOCOLS -->
-                <div class="space-y-8 mb-16">
-                    <h2 class="text-3xl font-bold text-hydro-secondary mb-8 flex items-center gap-3 border-b border-slate-700 pb-4">
-                        <svg data-lucide="shield" class="w-8 h-8"></svg> Verification Protocols
-                    </h2>
-                    
-                    <div class="flex items-start p-6 bg-hydro-charcoal/60 rounded-lg border-l-4 border-hydro-primary">
-                        <div class="bg-hydro-slate p-3 rounded-full mr-4 hidden sm:block"><svg data-lucide="target" class="w-8 h-8 text-hydro-primary"></svg></div>
-                        <div>
-                            <strong class="text-white text-xl block mb-2">The 0.05 mm/m Mandate</strong>
-                            <p class="text-slate-300">We rigorously enforce the **0.05 mm per meter** precision standard during installation and re-assembly checks. This is non-negotiable to nullify future vibration and costly bearing wear.</p>
-                        </div>
-                    </div>
-
-                    <div class="flex items-start p-6 bg-hydro-charcoal/60 rounded-lg border-l-4 border-hydro-primary">
-                        <div class="bg-hydro-slate p-3 rounded-full mr-4 hidden sm:block"><svg data-lucide="cpu" class="w-8 h-8 text-hydro-primary"></svg></div>
-                        <div>
-                            <strong class="text-white text-xl block mb-2">Digital Twin Validation (CFD/FEA)</strong>
-                            <p class="text-slate-300">Creating a precise digital replica of your turbine to simulate extreme load scenarios, accurately calibrate safety limits, and predict hydraulic integrity under stress.</p>
-                        </div>
-                    </div>
-
-                    <div class="flex items-start p-6 bg-hydro-charcoal/60 rounded-lg border-l-4 border-hydro-primary">
-                        <div class="bg-hydro-slate p-3 rounded-full mr-4 hidden sm:block"><svg data-lucide="microscope" class="w-8 h-8 text-hydro-primary"></svg></div>
-                        <div>
-                            <strong class="text-white text-xl block mb-2">Forensic NDT & Material Checks</strong>
-                            <p class="text-slate-300">Utilizing Non-Destructive Testing (UT, MPI, PT) to assess hidden micro-defects and mandatory material compatibility audits to prevent galvanic corrosion.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- EXECUTION SERVICE -->
-                <div class="mt-16 pt-10 border-t border-hydro-light-slate bg-hydro-slate/50 p-8 rounded-xl">
-                    <h2 class="text-3xl font-extrabold text-white mb-8 text-center">AnoHUB Execution Service</h2>
-                    <p class="text-center text-slate-300 mb-8 max-w-2xl mx-auto">We don't just write reports; we fix the problems. Our team is ready for deployment.</p>
-                    
-                    <div class="grid md:grid-cols-2 gap-8">
-                        <div class="flex gap-4 items-start">
-                            <div class="bg-hydro-charcoal p-3 rounded-lg border border-hydro-cta"><svg data-lucide="scan" class="w-8 h-8 text-hydro-cta"></svg></div>
-                            <div>
-                                <h3 class="font-bold text-white text-lg">Forensic Field Team</h3>
-                                <p class="text-slate-400 mt-2 text-sm">We deploy NDT specialists to your site to perform live diagnostics, material verification, and vibration analysis within 48 hours of your request.</p>
-                            </div>
-                        </div>
-                        <div class="flex gap-4 items-start">
-                            <div class="bg-hydro-charcoal p-3 rounded-lg border border-hydro-secondary"><svg data-lucide="hammer" class="w-8 h-8 text-hydro-secondary"></svg></div>
-                            <div>
-                                <h3 class="font-bold text-white text-lg">Repair Supervision</h3>
-                                <p class="text-slate-400 mt-2 text-sm">We don't just find cracks; we supervise the welding, grinding, and re-alignment to ensure 0.05 mm precision is actually achieved by contractors.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mt-16 text-center">
-                    <a href="contact.html" class="inline-flex items-center justify-center px-10 py-4 border border-transparent text-xl font-bold rounded-full text-hydro-charcoal bg-hydro-primary hover:bg-cyan-500 transition duration-300 transform hover:scale-105 shadow-2xl uppercase tracking-wider">
-                        Start Integrity Audit &rarr;
-                    </a>
-                    <p class="mt-4 text-slate-400 text-sm">First consultation and initial risk assessment are free.</p>
+                
+                <div class="flex justify-center gap-8 text-xs font-mono text-slate-400 animate-[fadeInUp_1s_ease-out_0.4s_forwards] opacity-0">
+                    <div class="flex items-center gap-2"><div class="w-2 h-2 bg-h-cyan rounded-full"></div> FEA SIMULATION</div>
+                    <div class="flex items-center gap-2"><div class="w-2 h-2 bg-h-cyan rounded-full"></div> NDT PAUT</div>
+                    <div class="flex items-center gap-2"><div class="w-2 h-2 bg-h-cyan rounded-full"></div> 3D METROLOGY</div>
                 </div>
             </div>
         </section>
+
+        <!-- THE CHALLENGE (ICEBERG) -->
+        <section class="py-20 bg-h-dark border-b border-h-border">
+            <div class="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-16 items-center">
+                <div class="order-2 lg:order-1">
+                    <div class="glass-card p-8 rounded-xl border-l-4 border-l-h-cyan">
+                        <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-3">
+                            <svg data-lucide="layers" class="w-6 h-6 text-h-cyan"></svg> The Hidden 48%
+                        </h2>
+                        <p class="text-slate-300 leading-relaxed mb-6">
+                            Visual inspections miss 48% of critical failure modes. Micro-cracks in runner blades, shaft misalignment of 0.07mm, or foundation voids cannot be seen with the naked eye.
+                        </p>
+                        <p class="text-slate-300 leading-relaxed">
+                            The <strong>Organizational Execution Gap</strong> creates blind spots where design intent and field reality diverge. We bridge that gap with forensic data.
+                        </p>
+                    </div>
+                </div>
+                <div class="order-1 lg:order-2 text-center lg:text-left">
+                    <h3 class="text-sm font-mono text-h-cyan uppercase tracking-widest mb-2">The Problem</h3>
+                    <h2 class="text-4xl font-black text-white mb-6">What You Can't See <br>Will Stop You.</h2>
+                    <p class="text-slate-400">Surface-level audits are a liability. True integrity lies beneath the metal.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- THE TECH STACK (GRID) -->
+        <section class="py-24 bg-h-panel relative">
+            <div class="absolute inset-0 bg-grid-pattern opacity-5"></div>
+            <div class="max-w-7xl mx-auto px-4 relative z-10">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl font-black text-white flex items-center justify-center gap-3">
+                        <svg data-lucide="scan-line" class="w-8 h-8 text-h-cyan"></svg> Deep Scan Technology
+                    </h2>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Tech 1 -->
+                    <div class="glass-card p-8 rounded-xl relative group hover:bg-h-cyan/5 transition">
+                        <div class="bg-h-dark p-4 rounded-full w-fit mb-6 border border-h-cyan text-h-cyan"><svg data-lucide="box-select" class="w-8 h-8"></svg></div>
+                        <h3 class="text-xl font-bold text-white mb-3">3D Laser Metrology</h3>
+                        <p class="text-sm text-slate-400">We create a sub-millimeter digital twin of your turbine. This reveals deviations from the OEM design (0.05mm tolerance) that cause flow inefficiency.</p>
+                    </div>
+
+                    <!-- Tech 2 -->
+                    <div class="glass-card p-8 rounded-xl relative group hover:bg-h-cyan/5 transition">
+                        <div class="bg-h-dark p-4 rounded-full w-fit mb-6 border border-h-cyan text-h-cyan"><svg data-lucide="activity" class="w-8 h-8"></svg></div>
+                        <h3 class="text-xl font-bold text-white mb-3">Advanced NDT</h3>
+                        <p class="text-sm text-slate-400">Phased Array Ultrasonic Testing (PAUT) allows us to "see" inside welds and castings, detecting fatigue cracks before they propagate to failure.</p>
+                    </div>
+
+                    <!-- Tech 3 -->
+                    <div class="glass-card p-8 rounded-xl relative group hover:bg-h-cyan/5 transition">
+                        <div class="bg-h-dark p-4 rounded-full w-fit mb-6 border border-h-cyan text-h-cyan"><svg data-lucide="cpu" class="w-8 h-8"></svg></div>
+                        <h3 class="text-xl font-bold text-white mb-3">FEA Simulation</h3>
+                        <p class="text-sm text-slate-400">Finite Element Analysis. We apply digital stress loads to your asset's digital twin to predict exactly where and when it will break under surge conditions.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BLUEPRINT VISUALIZATION -->
+        <section class="py-20 bg-h-dark border-y border-h-border">
+            <div class="max-w-5xl mx-auto px-4">
+                <div class="bg-black/50 border border-slate-700 rounded-2xl p-8 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoNiwgMTgyLCAyMTIsIDAuMSkiIHN0cm9rZT0ibm9uZSIvPjwvc3ZnPg==')] opacity-20"></div>
+                    
+                    <div class="flex flex-col md:flex-row justify-between items-center gap-8 relative z-10">
+                        <div class="text-left">
+                            <h3 class="text-2xl font-bold text-white mb-2">Live Digital Twin</h3>
+                            <p class="text-slate-400 text-sm max-w-md">
+                                Our audits generate a live, interactive model. Click on a component to see its stress rating, material composition, and remaining lifespan.
+                            </p>
+                            <div class="mt-6 flex gap-4">
+                                <div class="flex items-center gap-2 text-xs font-mono text-h-red"><span class="w-2 h-2 rounded-full bg-h-red animate-pulse"></span> STRESS HOTSPOT</div>
+                                <div class="flex items-center gap-2 text-xs font-mono text-h-green"><span class="w-2 h-2 rounded-full bg-h-green"></span> STRUCTURAL INTEGRITY</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Abstract Turbine Blueprint Graphic -->
+                        <div class="relative w-64 h-64 flex items-center justify-center">
+                            <div class="absolute inset-0 border-2 border-dashed border-h-cyan/30 rounded-full animate-spin-slow"></div>
+                            <div class="absolute inset-4 border border-h-cyan/20 rounded-full"></div>
+                            <svg data-lucide="fan" class="w-32 h-32 text-h-cyan opacity-80"></svg>
+                            
+                            <!-- Hotspot Marker -->
+                            <div class="absolute top-10 right-10 w-4 h-4 bg-h-red rounded-full animate-ping"></div>
+                            <div class="absolute top-10 right-10 w-4 h-4 bg-h-red/50 rounded-full border border-h-red"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- EXECUTION SERVICE -->
+        <section class="py-20 bg-h-panel">
+            <div class="max-w-5xl mx-auto px-4 text-center">
+                <h2 class="text-3xl font-black text-white mb-12">Execution Protocols</h2>
+                <div class="grid md:grid-cols-2 gap-8 text-left">
+                    <div class="flex gap-4 items-start p-6 rounded-lg bg-h-dark border border-h-border hover:border-h-cyan transition">
+                        <div class="text-h-cyan"><svg data-lucide="hard-hat" class="w-8 h-8"></svg></div>
+                        <div>
+                            <h4 class="text-white font-bold text-lg">Forensic Field Team</h4>
+                            <p class="text-sm text-slate-400 mt-2">Deploying ISO-certified NDT Level 3 engineers to your site within 48 hours of an anomaly detection.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4 items-start p-6 rounded-lg bg-h-dark border border-h-border hover:border-h-cyan transition">
+                        <div class="text-h-cyan"><svg data-lucide="wrench" class="w-8 h-8"></svg></div>
+                        <div>
+                            <h4 class="text-white font-bold text-lg">Repair Supervision</h4>
+                            <p class="text-sm text-slate-400 mt-2">We oversee third-party contractors to ensure welding and grinding meet the 0.05mm precision standard.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="py-20 text-center">
+            <div class="max-w-3xl mx-auto px-4">
+                <h2 class="text-2xl font-bold text-white mb-4">Ready to Scan?</h2>
+                <p class="text-slate-400 mb-8">Stop guessing. Start knowing. Initialize a forensic audit today.</p>
+                <a href="contact.html" class="inline-flex items-center justify-center px-10 py-4 bg-h-cyan hover:bg-cyan-400 text-black font-black rounded transition shadow-lg shadow-h-cyan/20 uppercase tracking-widest">
+                    Initialize Audit
+                </a>
+            </div>
+        </section>
+
     </main>
-    
-    <footer class="bg-hydro-slate text-hydro-gray py-8 text-center border-t border-hydro-light-slate" role="contentinfo">
-        <div class="container mx-auto px-6">
-           <p class="text-sm">&copy; 2025 Anohubs Inc. All rights reserved.</p>
+
+    <footer class="bg-black border-t border-slate-900 py-12 text-center">
+        <div class="max-w-7xl mx-auto px-4">
+            <p class="text-slate-600 text-xs font-mono">© 2025 Anohubs Inc. | INTEGRITY DIVISION</p>
         </div>
     </footer>
 
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
-    <script src="js/ui_core.js"></script>
-    <script src="js/animation_logic.js"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script>
+        lucide.createIcons();
+        
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('shadow-lg', 'bg-h-dark/95');
+                nav.classList.remove('bg-h-dark/90');
+            } else {
+                nav.classList.remove('shadow-lg', 'bg-h-dark/95');
+                nav.classList.add('bg-h-dark/90');
+            }
+        });
+    </script>
 </body>
 </html>

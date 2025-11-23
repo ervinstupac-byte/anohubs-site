@@ -1,243 +1,265 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy Policy | Anohubs - Hydro Integrity</title>
-    <meta name="description" content="Anohubs' commitment to data privacy and protection. Learn how we collect, use, and protect your personal information.">
-    
-    <!-- 1. STANDARDNA JS INICIJALIZACIJA -->
-    <script src="js/head-init.js"></script>
+    <title>Data Security Protocol | AnoHUB</title>
+    <meta name="description" content="Anohubs' commitment to data privacy and protection. Learn how we collect, use, and protect your operational intelligence.">
 
-    <!-- 2. FONTOVI -->
+    <!-- 1. FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     
-    <!-- 3. KRITIČNO: TAILWIND CSS CDN -->
+    <!-- 2. TAILWIND -->
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- 4. TAILWIND KONFIGURACIJA -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
+                    fontFamily: { 
+                        sans: ['Inter', 'sans-serif'], 
+                        mono: ['JetBrains Mono', 'monospace'] 
+                    },
                     colors: {
-                        'hydro-primary': '#22d3ee', 
-                        'hydro-secondary': '#4ade80', 
-                        'hydro-risk': '#ef4444', 
-                        'hydro-cta': '#f59e0b', 
-                        'hydro-charcoal': '#111827', 
-                        'hydro-slate': '#1E293B', 
-                        'hydro-light-slate': '#334155', 
-                        'hydro-gray': '#475569',
+                        'h-cyan': '#06b6d4', 
+                        'h-green': '#10b981', 
+                        'h-red': '#ef4444', 
+                        'h-yellow': '#facc15', 
+                        'h-dark': '#020617', 
+                        'h-panel': '#0f172a', 
+                        'h-border': '#1e293b',
+                        'h-cta': '#f59e0b'
                     },
-                    fontSize: {
-                        'h1-hero': 'clamp(2.5rem, 5vw + 1rem, 4.5rem)',
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                     },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
                 }
             }
         }
     </script>
 
-    <!-- 5. GLOBALNI STILOVI -->
-    <link href="css/anohubs.css" rel="stylesheet">
-    <link href="css/article-styles.css" rel="stylesheet">
-
     <style>
-        body { 
-            font-family: 'Inter', sans-serif; 
-            background-color: #111827; 
-            color: #E5E7EB;
-            /* Pozadinska slika sa tamnim preklopom za čitljivost */
-            background-image: linear-gradient(to bottom, rgba(17, 24, 39, 0.9), rgba(17, 24, 39, 0.98)), url('orljani_Una.jpg');
-            background-size: cover;
-            background-attachment: fixed;
-            background-position: center;
-        }
+        body { background-color: #020617; color: #f8fafc; overflow-x: hidden; }
         
-        .policy-section {
-            border-bottom: 1px solid #334155;
-            padding-bottom: 2rem;
-            margin-bottom: 2rem;
+        /* Tech Grid Background */
+        .tech-bg {
+            background-image: 
+                linear-gradient(rgba(6, 182, 212, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(6, 182, 212, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
         }
-        .policy-section:last-child {
-            border-bottom: none;
-            padding-bottom: 0;
-            margin-bottom: 0;
+
+        /* Glass Panels */
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(51, 65, 85, 0.5);
+            transition: all 0.3s ease;
         }
+        .glass-panel:hover {
+            border-color: #06b6d4;
+            background: rgba(15, 23, 42, 0.8);
+        }
+
+        /* Section Highlight Line */
+        .section-line {
+            height: 100%; width: 2px; background: #334155; position: absolute; left: 0; top: 0;
+        }
+        .glass-panel:hover .section-line { background: #06b6d4; box-shadow: 0 0 10px #06b6d4; }
+
+        /* Scroll Bar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #020617; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #06b6d4; }
     </style>
 </head>
-<body class="text-white"> 
-    
-    <!-- HEADER -->
-    <header class="bg-hydro-charcoal text-white shadow-2xl sticky top-0 z-50 border-b border-hydro-primary/50" role="banner">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex justify-between items-center">
-            <a href="index.html#hero" class="focus:outline-none transition" aria-label="Anohubs Logo - Back to Home">
-                <img src="logo.svg" alt="Anohubs Logo" class="anohubs-logo">
+
+<body class="antialiased">
+    <div class="tech-bg"></div>
+
+    <!-- NAV -->
+    <header class="fixed w-full z-50 top-0 border-b border-white/5 bg-h-dark/90 backdrop-blur-md transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 h-20 flex justify-between items-center">
+            
+            <!-- Logo -->
+            <a href="index.html" class="flex items-center gap-3 group">
+                <img src="logo.svg" alt="AnoHUB" class="h-10 w-auto transition group-hover:brightness-125">
+                <div class="hidden md:block">
+                    <span class="block text-lg font-black tracking-tighter text-white leading-none">ANOHUBS</span>
+                    <span class="block text-[10px] font-mono text-h-cyan tracking-widest uppercase">Secure Archive</span>
+                </div>
             </a>
-            
-            <nav class="hidden md:flex items-center space-x-6 font-extrabold text-sm" role="navigation" aria-label="Main navigation">
-                <a href="about-us-vision.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">About</a>
-                <a href="services.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Services</a>
-                <a href="insights/expert-insights.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Insights</a>
-                <a href="case-studies.html" class="nav-link relative text-slate-300 hover:text-hydro-secondary transition tracking-wider p-2 uppercase">Case Studies</a>
-                <a href="app-iframe.html" target="_blank" rel="noopener noreferrer" class="nav-link relative text-slate-300 hover:text-green-500 transition tracking-widest font-extrabold text-lg p-2 uppercase">ANO HUB</a>
-                <a href="gallery.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Gallery</a>
-                <a href="protocol.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Protocol</a>
-                <a href="contact.html" class="bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-6 py-2.5 rounded-full transition transform hover:scale-105 shadow-xl font-bold tracking-wider uppercase text-base">Contact</a>
+
+            <!-- Desktop Menu -->
+            <nav class="hidden lg:flex items-center gap-6 text-xs font-bold uppercase tracking-wider">
+                <a href="index.html" class="text-slate-400 hover:text-white transition">Home</a>
+                <a href="protocol.html" class="group relative inline-flex items-center gap-2 px-5 py-2 bg-h-cyan/10 text-h-cyan border border-h-cyan/50 rounded-full hover:bg-h-cyan hover:text-black transition-all duration-300">
+                    <span>PROTOCOL</span>
+                    <div class="w-1.5 h-1.5 bg-h-cyan rounded-full animate-pulse-fast group-hover:bg-black"></div>
+                </a>
+                <a href="contact.html" class="px-5 py-2 bg-h-cta text-black rounded-full hover:bg-yellow-400 transition">Contact</a>
             </nav>
-            
-            <div class="md:hidden">
-                <button id="mobile-menu-button" aria-label="Open menu" type="button" class="p-2 text-white">
-                    <svg data-lucide="menu" class="w-8 h-8"></svg>
-                </button>
-            </div>
-            
-            <div id="mobile-menu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2 text-center bg-hydro-charcoal" aria-label="Mobile navigation menu">
-                <a href="about-us-vision.html" class="block hover:text-hydro-primary transition tracking-wider py-2">About</a>
-                <a href="services.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Services</a>
-                <a href="insights/expert-insights.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Insights</a>
-                <a href="case-studies.html" class="block hover:text-hydro-secondary transition tracking-wider py-2">Case Studies</a>
-                <a href="app-iframe.html" target="_blank" rel="noopener noreferrer" class="block hover:text-hydro-secondary transition tracking-wider py-2">ANO HUB</a>
-                <a href="gallery.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Gallery</a>
-                <a href="protocol.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Protocol</a>
-                <a href="contact.html" class="block bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-5 py-2 rounded-full transition shadow-md font-bold tracking-wider mt-2 text-center">Contact</a>
-            </div>
+
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" class="lg:hidden text-white p-2">
+                <svg data-lucide="menu" class="w-8 h-8"></svg>
+            </button>
+        </div>
+        
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu" class="hidden lg:hidden absolute top-20 left-0 w-full bg-h-dark border-b border-h-border p-4 flex flex-col gap-4 shadow-2xl">
+            <a href="index.html" class="text-slate-300 hover:text-h-cyan py-2 border-b border-h-border">Home</a>
+            <a href="protocol.html" class="text-h-cyan font-bold py-2 border-b border-h-border flex items-center gap-2"><svg data-lucide="shield" class="w-4 h-4"></svg> PROTOCOL</a>
+            <a href="contact.html" class="text-h-cta font-bold py-2">Contact Us</a>
         </div>
     </header>
 
-    <main class="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8 fade-in-up">
-        
-        <!-- HERO HEADER -->
-        <div class="text-center mb-12">
-            <h1 class="text-4xl md:text-5xl font-black text-white mb-4">Privacy Policy</h1>
-            <p class="text-xl text-slate-300 font-light">How we protect and manage your data within the AnoHUB ecosystem.</p>
-            <div class="mt-4 inline-block bg-hydro-secondary/10 text-hydro-secondary px-4 py-1 rounded-full text-xs font-bold tracking-widest border border-hydro-secondary/50">
-                LAST UPDATED: NOVEMBER 2025
-            </div>
-        </div>
+    <main class="pt-32 pb-20">
 
-        <!-- GLAVNI KONTEJNER -->
-        <div class="bg-hydro-slate p-8 md:p-12 rounded-2xl shadow-2xl border border-hydro-light-slate">
+        <!-- HERO -->
+        <section class="max-w-4xl mx-auto px-4 mb-16 text-center">
+            <div class="inline-flex items-center gap-4 mb-8">
+                <div class="flex items-center gap-2 px-3 py-1 rounded border border-h-green/30 bg-h-green/5 text-xs font-mono text-h-green">
+                    <svg data-lucide="lock" class="w-3 h-3"></svg> CONNECTION SECURE
+                </div>
+                <div class="flex items-center gap-2 px-3 py-1 rounded border border-slate-700 bg-slate-800 text-xs font-mono text-slate-400">
+                    ENCRYPTION: TLS 1.3
+                </div>
+            </div>
             
-            <p class="text-lg text-slate-300 mb-10 leading-relaxed border-l-4 border-hydro-primary pl-6">
-                This Privacy Policy describes how Anohubs ("we", "us", or "our") collects, uses, and shares information about you when you use our website and services. We are committed to protecting your privacy and ensuring the security of your operational data.
+            <h1 class="text-4xl md:text-6xl font-black text-white mb-6 tracking-tight leading-none animate-[fadeInUp_1s_ease-out]">
+                DATA SECURITY <br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-h-cyan to-blue-500">PROTOCOL</span>
+            </h1>
+            <p class="text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed animate-[fadeInUp_1s_ease-out_0.2s_forwards] opacity-0">
+                How we protect your operational intelligence within the AnoHUB ecosystem. Last updated: <span class="text-white font-mono">NOV 2025</span>.
             </p>
+        </section>
 
-            <!-- 1. COLLECTION -->
-            <div class="policy-section">
-                <div class="flex items-center gap-3 mb-4">
-                    <div class="bg-hydro-charcoal p-2 rounded-lg border border-hydro-light-slate">
-                        <svg data-lucide="database" class="w-6 h-6 text-hydro-primary"></svg>
-                    </div>
-                    <h2 class="text-2xl font-bold text-white">1. Information We Collect</h2>
-                </div>
-                <p class="text-slate-400 mb-2">We collect information in the following ways:</p>
-                
-                <div class="ml-4 mb-4">
-                    <h3 class="text-white font-bold mb-2">1.1. Information You Provide</h3>
-                    <p class="text-slate-300 text-sm">When you contact us via our contact forms, we collect personal information you voluntarily provide (Name, Business Email, Company Name, Message Content) solely to respond to your inquiries.</p>
-                </div>
+        <!-- CONTENT CONTAINER -->
+        <div class="max-w-4xl mx-auto px-4 space-y-8">
 
-                <div class="ml-4">
-                    <h3 class="text-white font-bold mb-2">1.2. Automated Information (Cookies)</h3>
-                    <p class="text-slate-300 text-sm">We collect anonymous analytics data (page visits, time on site) to optimize user experience. We use essential technical cookies necessary for the basic functionality of the website.</p>
-                </div>
-            </div>
-            
-            <!-- 2. USAGE -->
-            <div class="policy-section">
-                <div class="flex items-center gap-3 mb-4">
-                    <div class="bg-hydro-charcoal p-2 rounded-lg border border-hydro-light-slate">
-                        <svg data-lucide="activity" class="w-6 h-6 text-hydro-secondary"></svg>
-                    </div>
-                    <h2 class="text-2xl font-bold text-white">2. How We Use Your Information</h2>
-                </div>
-                <ul class="list-disc ml-6 space-y-2 text-slate-300">
-                    <li>To respond to your requests and provide the services you seek (primary purpose).</li>
-                    <li>To improve our website and service offerings based on user behavior.</li>
-                    <li>To analyze usage trends and prevent fraudulent activity.</li>
-                </ul>
-            </div>
-
-            <!-- 3. SHARING -->
-            <div class="policy-section">
-                <div class="flex items-center gap-3 mb-4">
-                    <div class="bg-hydro-charcoal p-2 rounded-lg border border-hydro-light-slate">
-                        <svg data-lucide="share-2" class="w-6 h-6 text-hydro-cta"></svg>
-                    </div>
-                    <h2 class="text-2xl font-bold text-white">3. Information Sharing</h2>
-                </div>
-                <p class="text-slate-300">
-                    Anohubs <strong class="text-white">does not sell, rent, or trade your personal information</strong> to third parties. We may share data only with trusted service providers (e.g., email delivery services) who are strictly bound by confidentiality agreements.
+            <!-- INTRO CARD -->
+            <div class="glass-panel p-8 rounded-xl border-l-4 border-l-h-cyan animate-[fadeInUp_1s_ease-out_0.4s_forwards] opacity-0">
+                <p class="text-lg text-slate-300 leading-relaxed">
+                    This Privacy Protocol describes how Anohubs ("we", "us", or "our") manages data integrity. Just as we demand zero tolerance for turbine failure, we demand zero compromise on data security.
                 </p>
             </div>
 
-            <!-- 4. SECURITY -->
-            <div class="policy-section">
-                <div class="flex items-center gap-3 mb-4">
-                    <div class="bg-hydro-charcoal p-2 rounded-lg border border-hydro-light-slate">
-                        <svg data-lucide="lock" class="w-6 h-6 text-white"></svg>
+            <!-- SECTION 1: COLLECTION -->
+            <div class="glass-panel p-8 rounded-xl relative overflow-hidden pl-10 group animate-[fadeInUp_1s_ease-out_0.5s_forwards] opacity-0">
+                <div class="section-line"></div>
+                <div class="flex items-start gap-6">
+                    <div class="bg-slate-800 p-3 rounded-lg text-h-cyan"><svg data-lucide="database" class="w-8 h-8"></svg></div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-white mb-4">1. Intelligence Collection</h2>
+                        <div class="space-y-4 text-slate-400">
+                            <div>
+                                <h3 class="text-white font-bold text-sm uppercase tracking-wider mb-1">1.1 Operational Data</h3>
+                                <p>When you initiate a consultation, we collect specific technical parameters (Name, Coordinates, Plant Specifications) solely for the purpose of audit planning.</p>
+                            </div>
+                            <div>
+                                <h3 class="text-white font-bold text-sm uppercase tracking-wider mb-1">1.2 Telemetry (Cookies)</h3>
+                                <p>We use essential technical cookies for site functionality. We do not use invasive trackers. Your operational footprint remains private.</p>
+                            </div>
+                        </div>
                     </div>
-                    <h2 class="text-2xl font-bold text-white">4. Data Security</h2>
                 </div>
-                <p class="text-slate-300">
-                    We implement robust administrative, technical, and physical safeguards to protect your personal information from loss, theft, misuse, and unauthorized access.
-                </p>
             </div>
 
-            <!-- 5. CONTACT -->
-            <div class="policy-section">
-                <div class="flex items-center gap-3 mb-4">
-                    <div class="bg-hydro-charcoal p-2 rounded-lg border border-hydro-light-slate">
-                        <svg data-lucide="mail" class="w-6 h-6 text-hydro-primary"></svg>
+            <!-- SECTION 2: USAGE -->
+            <div class="glass-panel p-8 rounded-xl relative overflow-hidden pl-10 group animate-[fadeInUp_1s_ease-out_0.6s_forwards] opacity-0">
+                <div class="section-line"></div>
+                <div class="flex items-start gap-6">
+                    <div class="bg-slate-800 p-3 rounded-lg text-h-green"><svg data-lucide="cpu" class="w-8 h-8"></svg></div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-white mb-4">2. Data Utilization Logic</h2>
+                        <ul class="list-disc list-outside ml-4 space-y-2 text-slate-400">
+                            <li>Execution of Engineering Immunity protocols and audits.</li>
+                            <li>Optimization of our AI prediction models (using anonymized datasets).</li>
+                            <li>Establishing secure communication channels for project management.</li>
+                        </ul>
                     </div>
-                    <h2 class="text-2xl font-bold text-white">5. Contact Us</h2>
                 </div>
-                <p class="text-slate-300 mb-4">
-                    If you have any questions about this Privacy Policy or wish to exercise your data rights, please contact us directly:
-                </p>
-                <div class="p-4 bg-hydro-charcoal rounded-md border border-slate-600 inline-block">
-                    <p class="text-hydro-primary font-mono">privacy@anohubs.com</p>
+            </div>
+
+            <!-- SECTION 3: SECURITY -->
+            <div class="glass-panel p-8 rounded-xl relative overflow-hidden pl-10 group animate-[fadeInUp_1s_ease-out_0.7s_forwards] opacity-0">
+                <div class="section-line"></div>
+                <div class="flex items-start gap-6">
+                    <div class="bg-slate-800 p-3 rounded-lg text-h-red"><svg data-lucide="shield-check" class="w-8 h-8"></svg></div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-white mb-4">3. Defense Mechanisms</h2>
+                        <p class="text-slate-400 mb-4">
+                            We implement robust administrative, technical, and physical safeguards (ISO 27001 aligned) to protect your information from loss, theft, and unauthorized access.
+                        </p>
+                        <div class="bg-black/40 p-4 rounded border border-slate-700 font-mono text-xs text-h-green">
+                            > NO THIRD-PARTY DATA SALES PERMITTED.<br>
+                            > EXTERNAL SHARING RESTRICTED TO SECURE PARTNERS.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 4: CONTACT -->
+            <div class="glass-panel p-8 rounded-xl relative overflow-hidden pl-10 group animate-[fadeInUp_1s_ease-out_0.8s_forwards] opacity-0">
+                <div class="section-line"></div>
+                <div class="flex items-start gap-6">
+                    <div class="bg-slate-800 p-3 rounded-lg text-h-cta"><svg data-lucide="mail-question" class="w-8 h-8"></svg></div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-white mb-4">4. Exercise Your Rights</h2>
+                        <p class="text-slate-400 mb-6">
+                            If you wish to request a data purge or review your stored information, contact the Data Governance Officer directly.
+                        </p>
+                        <a href="mailto:privacy@anohubs.com" class="inline-flex items-center gap-2 text-white font-bold hover:text-h-cyan transition">
+                            <svg data-lucide="mail" class="w-4 h-4"></svg> privacy@anohubs.com
+                        </a>
+                    </div>
                 </div>
             </div>
 
         </div>
     </main>
-    
-    <!-- FOOTER -->
-    <div class="md:hidden mobile-sticky-cta text-center">
-        <a href="contact.html" class="w-full block text-center bg-hydro-primary hover:bg-cyan-500 text-hydro-charcoal px-5 py-3 font-bold tracking-wider uppercase shadow-2xl">SCHEDULE AUDIT</a>
-    </div>
 
-    <footer class="bg-hydro-slate text-hydro-gray py-8 text-center border-t border-hydro-light-slate" role="contentinfo">
-        <div class="container mx-auto px-6">
-           <a href="index.html#hero" class="mb-4 block" aria-label="Anohubs Logo - Back to Home">
-               <img src="logo.svg" alt="Anohubs Logo" class="anohubs-logo mx-auto">
-           </a>
-           <p class="text-slate-400 mb-6">Establishing the global standard for hydro integrity.</p>
-           <nav class="flex justify-center space-x-6 text-sm mb-4">
-               <a href="about-us-vision.html" class="text-slate-400 hover:text-hydro-primary">About</a>
-               <a href="services.html" class="text-slate-400 hover:text-hydro-primary">Services</a>
-               <a href="insights/expert-insights.html" class="text-slate-400 hover:text-hydro-primary">Insights</a>
-               <a href="case-studies.html" class="text-slate-400 hover:text-hydro-primary">Case Studies</a>
-               <a href="gallery.html" class="text-slate-400 hover:text-hydro-primary">Gallery</a>
-               <a href="protocol.html" class="text-slate-400 hover:text-hydro-primary">Protocol</a>
-               <a href="contact.html" class="text-slate-400 hover:text-hydro-primary">Contact</a>
-           </nav>
-           <div class="flex justify-center space-x-4 text-xs mb-4">
-                <a href="privacy-policy.html" class="text-slate-500 hover:text-slate-300 underline">Privacy Policy</a>
-                <span class="text-slate-500">|</span>
-                <a href="terms-of-use.html" class="text-slate-500 hover:text-slate-300 underline">Terms of Use</a>
-           </div>
-           <p class="text-sm">&copy; <span id="year"></span> Anohubs Inc. All rights reserved.</p>
+    <footer class="bg-black border-t border-slate-900 py-8 text-center mt-20">
+        <div class="max-w-7xl mx-auto px-4">
+            <p class="text-slate-600 text-xs font-mono">© 2025 Anohubs Inc. | DATA SECURITY DIVISION</p>
         </div>
     </footer>
 
-    <!-- SKRIPTE -->
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
-    <script src="js/ui_core.js"></script>
-    <script src="js/animation_logic.js"></script>
+    <!-- SCRIPTS -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script>
+        lucide.createIcons();
+        
+        // Mobile Menu
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Navbar Scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('shadow-lg', 'bg-h-dark/95');
+                nav.classList.remove('bg-h-dark/90');
+            } else {
+                nav.classList.remove('shadow-lg', 'bg-h-dark/95');
+                nav.classList.add('bg-h-dark/90');
+            }
+        });
+    </script>
 </body>
 </html>

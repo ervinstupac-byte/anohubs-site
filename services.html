@@ -1,370 +1,377 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Comprehensive Services | Anohubs: The Knowledge & Execution Hub</title>
-    <meta name="description" content="Explore the full spectrum of Anohubs services: From digital integrity audits and 24/7 supervision to spare parts manufacturing and procurement. Your complete hydro lifecycle partner.">
+    <title>Operational Capabilities | AnoHUB Services</title>
+    <meta name="description" content="Explore the full spectrum of Anohubs services: From digital integrity audits and 24/7 supervision to spare parts manufacturing and procurement.">
     
-    <!-- 1. STANDARDNA JS INICIJALIZACIJA -->
-    <script src="js/head-init.js"></script>
-
-    <!-- 2. FONTOVI -->
+    <!-- 1. FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     
-    <!-- 3. KRITIČNO: TAILWIND CSS CDN -->
+    <!-- 2. TAILWIND -->
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- 4. TAILWIND KONFIGURACIJA -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
+                    fontFamily: { 
+                        sans: ['Inter', 'sans-serif'], 
+                        mono: ['JetBrains Mono', 'monospace'] 
+                    },
                     colors: {
-                        'hydro-primary': '#22d3ee', 
-                        'hydro-secondary': '#4ade80', 
-                        'hydro-risk': '#ef4444', 
-                        'hydro-cta': '#f59e0b', 
-                        'hydro-charcoal': '#111827', 
-                        'hydro-slate': '#1E293B', 
-                        'hydro-light-slate': '#334155', 
-                        'hydro-gray': '#475569',
+                        'h-cyan': '#06b6d4', 
+                        'h-green': '#10b981', 
+                        'h-red': '#ef4444', 
+                        'h-yellow': '#facc15', 
+                        'h-purple': '#8b5cf6',
+                        'h-dark': '#020617', 
+                        'h-panel': '#0f172a', 
+                        'h-border': '#1e293b',
+                        'h-cta': '#f59e0b'
                     },
-                    fontSize: {
-                        'h1-hero': 'clamp(2.5rem, 5vw + 1rem, 4.5rem)',
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                     },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
                 }
             }
         }
     </script>
 
-    <!-- 5. GLOBALNI STILOVI -->
-    <link href="css/anohubs.css" rel="stylesheet">
-    
     <style>
-        /* Specifični stilovi za Services Hub */
-        body { background-color: #111827; color: #E5E7EB; }
+        body { background-color: #020617; color: #f8fafc; overflow-x: hidden; }
         
-        .services-hero {
-            background-image: linear-gradient(rgba(17, 24, 39, 0.85), rgba(17, 24, 39, 0.95)), url('orljani_Una.jpg');
+        /* Tech Grid Background */
+        .tech-bg {
+            background-image: 
+                linear-gradient(rgba(6, 182, 212, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(6, 182, 212, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+        }
+
+        /* Hero Background */
+        .hero-services {
+            background-image: linear-gradient(180deg, rgba(2,6,23,0.7) 0%, rgba(2,6,23,1) 100%), url('orljani_Una.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            padding: 6rem 0;
-        }
-        
-        .service-card-featured {
-            background: linear-gradient(145deg, #1E293B 0%, #111827 100%);
-            border: 1px solid #334155;
-            transition: all 0.3s ease;
-        }
-        .service-card-featured:hover {
-            border-color: #22d3ee;
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(34, 211, 238, 0.1);
         }
 
-        .membership-card {
-            background: linear-gradient(180deg, rgba(30, 41, 59, 0.6) 0%, rgba(17, 24, 39, 0.9) 100%);
-            border: 2px solid #4ade80;
+        /* Service Module Card */
+        .service-card {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(51, 65, 85, 0.5);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
         }
+        .service-card:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px -10px var(--glow-color);
+        }
+        .service-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+            background: var(--accent-color);
+        }
+
+        /* Membership Card */
+        .membership-card {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            border: 2px solid #4ade80;
+            box-shadow: 0 0 30px rgba(74, 222, 128, 0.1);
+            position: relative;
+        }
         .membership-badge {
-            position: absolute;
-            top: 0;
-            right: 0;
-            background-color: #4ade80;
-            color: #111827;
-            font-weight: bold;
-            padding: 0.5rem 1rem;
+            position: absolute; top: 0; right: 0;
+            background: #4ade80; color: #020617;
+            font-weight: 900; font-size: 0.7rem;
+            padding: 0.25rem 1rem;
             border-bottom-left-radius: 0.5rem;
         }
+
+        /* Scroll Bar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #020617; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #06b6d4; }
     </style>
-
 </head>
-<body class="text-white bg-hydro-charcoal">
 
-    <!-- HEADER -->
-    <header class="bg-hydro-charcoal text-white shadow-2xl sticky top-0 z-50 border-b border-hydro-primary/50" role="banner">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex justify-between items-center">
-            <a href="index.html#hero" class="focus:outline-none transition" aria-label="Anohubs Logo - Back to Home">
-                <img src="logo.svg" alt="Anohubs Logo" class="anohubs-logo">
+<body class="antialiased">
+    <div class="tech-bg"></div>
+
+    <!-- NAV -->
+    <header class="fixed w-full z-50 top-0 border-b border-white/5 bg-h-dark/90 backdrop-blur-md transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 h-20 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-3 group">
+                <img src="logo.svg" alt="AnoHUB" class="h-10 w-auto transition group-hover:brightness-125">
+                <div class="hidden md:block">
+                    <span class="block text-lg font-black tracking-tighter text-white leading-none">ANOHUBS</span>
+                    <span class="block text-[10px] font-mono text-h-cyan tracking-widest uppercase">Capabilities</span>
+                </div>
             </a>
-            
-            <nav class="hidden md:flex items-center space-x-6 font-extrabold text-sm" role="navigation" aria-label="Main navigation">
-                <a href="about-us-vision.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">About</a>
-                <!-- Aktivni link -->
-                <a href="services.html" class="nav-link relative text-hydro-primary transition tracking-wider p-2 uppercase" aria-current="page">Services</a>
-                <a href="insights/expert-insights.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Insights</a>
-                <a href="case-studies.html" class="nav-link relative text-slate-300 hover:text-hydro-secondary transition tracking-wider p-2 uppercase">Case Studies</a>
-                <a href="app-iframe.html" target="_blank" rel="noopener noreferrer" class="nav-link relative text-hydro-secondary hover:text-green-500 transition tracking-widest font-extrabold text-lg p-2 uppercase">ANO HUB</a>
-                <a href="gallery.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Gallery</a>
-                <a href="protocol.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Protocol</a>
-                <a href="contact.html" class="bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-6 py-2.5 rounded-full transition transform hover:scale-105 shadow-xl font-bold tracking-wider uppercase text-base">Contact</a>
+            <nav class="hidden lg:flex items-center gap-6 text-xs font-bold uppercase tracking-wider">
+                <a href="index.html" class="text-slate-400 hover:text-white transition">Home</a>
+                <a href="about-us-vision.html" class="text-slate-400 hover:text-white transition">About</a>
+                <a href="services.html" class="text-h-cyan transition">Services</a>
+                <a href="protocol.html" class="group relative inline-flex items-center gap-2 px-5 py-2 bg-h-cyan/10 text-h-cyan border border-h-cyan/50 rounded-full hover:bg-h-cyan hover:text-black transition-all duration-300">
+                    <span>PROTOCOL</span>
+                    <div class="w-1.5 h-1.5 bg-h-cyan rounded-full animate-pulse"></div>
+                </a>
+                <a href="contact.html" class="px-5 py-2 bg-h-cta text-black rounded-full hover:bg-yellow-400 transition">Contact</a>
             </nav>
-            
-            <div class="md:hidden">
-                <button id="mobile-menu-button" aria-label="Open menu" type="button" class="p-2 text-white">
-                    <svg data-lucide="menu" class="w-8 h-8"></svg>
-                </button>
-            </div>
-            
-            <div id="mobile-menu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2 text-center bg-hydro-charcoal" aria-label="Mobile navigation menu">
-                <a href="about-us-vision.html" class="block hover:text-hydro-primary transition tracking-wider py-2">About</a>
-                <a href="services.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Services</a>
-                <a href="insights/expert-insights.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Insights</a>
-                <a href="case-studies.html" class="block hover:text-hydro-secondary transition tracking-wider py-2">Case Studies</a>
-                <a href="app-iframe.html" target="_blank" rel="noopener noreferrer" class="block hover:text-hydro-secondary transition tracking-wider py-2">ANO HUB</a>
-                <a href="gallery.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Gallery</a>
-                <a href="protocol.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Protocol</a>
-                <a href="contact.html" class="block bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-5 py-2 rounded-full transition shadow-md font-bold tracking-wider mt-2 text-center">Contact</a>
-            </div>
+            <button id="mobile-menu-btn" class="lg:hidden text-white p-2">
+                <svg data-lucide="menu" class="w-8 h-8"></svg>
+            </button>
+        </div>
+        <div id="mobile-menu" class="hidden lg:hidden absolute top-20 left-0 w-full bg-h-dark border-b border-h-border p-4 flex flex-col gap-4 shadow-2xl">
+            <a href="index.html" class="text-slate-300 hover:text-h-cyan py-2 border-b border-h-border">Home</a>
+            <a href="protocol.html" class="text-h-cyan font-bold py-2 border-b border-h-border flex items-center gap-2"><svg data-lucide="shield" class="w-4 h-4"></svg> PROTOCOL</a>
+            <a href="contact.html" class="text-h-cta font-bold py-2">Contact Us</a>
         </div>
     </header>
 
-    <main role="main">
-        
-        <!-- 1. HERO SECTION: THE HUB CONCEPT -->
-        <section class="services-hero text-center text-white">
-            <div class="max-w-5xl mx-auto px-4">
-                <span class="inline-block py-1 px-3 rounded-full bg-hydro-secondary/20 text-hydro-secondary text-sm font-bold tracking-widest mb-4 border border-hydro-secondary/50">
-                    FIRST INQUIRY IS ALWAYS FREE
-                </span>
-                <h1 class="text-5xl md:text-7xl font-black text-white mb-6 tracking-tight" style="text-shadow: 0 0 20px rgba(34, 211, 238, 0.6);">
-                    The Knowledge & Execution HUB
+    <main class="pt-20">
+
+        <!-- HERO SECTION -->
+        <section class="hero-services min-h-[50vh] flex items-center justify-center relative">
+            <div class="max-w-5xl mx-auto px-4 text-center relative z-10">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-black/50 backdrop-blur-md text-xs font-mono text-slate-300 mb-6 animate-[fadeInUp_1s_ease-out]">
+                    <span class="w-2 h-2 bg-h-green rounded-full animate-pulse"></span>
+                    SYSTEM STATUS: OPERATIONAL
+                </div>
+                <h1 class="text-5xl md:text-7xl font-black text-white mb-6 tracking-tight leading-none animate-[fadeInUp_1s_ease-out_0.2s_forwards] opacity-0">
+                    THE KNOWLEDGE & <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-h-cyan to-blue-500">EXECUTION HUB</span>
                 </h1>
-                <p class="text-xl md:text-2xl text-slate-300 font-light max-w-3xl mx-auto mb-10">
-                    We are not just auditors; we are your 365/24/7 partner in modernization. From digital diagnostics to physical parts manufacturing, Anohubs is the central nervous system for your plant's longevity.
+                <p class="text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed mb-10 animate-[fadeInUp_1s_ease-out_0.4s_forwards] opacity-0">
+                    We are not just auditors; we are your 365/24/7 partner. From digital diagnostics to physical parts manufacturing, Anohubs is the central nervous system for asset longevity.
                 </p>
                 
-                <div class="flex flex-col sm:flex-row justify-center gap-4">
-                    <a href="#core-analytics" class="px-8 py-3 rounded-full border border-hydro-primary text-hydro-primary hover:bg-hydro-primary hover:text-hydro-charcoal transition font-bold uppercase tracking-wider">
+                <div class="flex flex-wrap justify-center gap-4 animate-[fadeInUp_1s_ease-out_0.6s_forwards] opacity-0">
+                    <a href="#core-analytics" class="px-8 py-3 rounded border border-h-cyan text-h-cyan hover:bg-h-cyan hover:text-black transition font-bold uppercase tracking-wider text-sm">
                         Explore Analytics
                     </a>
-                    <a href="#supervision" class="px-8 py-3 rounded-full bg-hydro-cta text-hydro-charcoal hover:bg-yellow-500 transition font-bold uppercase tracking-wider shadow-lg">
+                    <a href="#logistics" class="px-8 py-3 rounded bg-h-cta text-black hover:bg-yellow-400 transition font-bold uppercase tracking-wider text-sm shadow-lg shadow-h-cta/20">
                         On-Site Solutions
                     </a>
                 </div>
             </div>
         </section>
 
-        <!-- 2. CORE ANALYTICAL SERVICES (GRID) -->
-        <section id="core-analytics" class="py-20 bg-hydro-slate">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-3xl font-extrabold text-white mb-12 border-l-4 border-hydro-primary pl-4">Core Diagnostic Modules</h2>
-                
+        <!-- CORE ANALYTICS GRID -->
+        <section id="core-analytics" class="py-24 relative">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="flex items-center gap-4 mb-12">
+                    <div class="h-px bg-h-border flex-grow"></div>
+                    <h2 class="text-sm font-mono text-h-cyan uppercase tracking-widest">Core Diagnostic Modules</h2>
+                    <div class="h-px bg-h-border flex-grow"></div>
+                </div>
+
                 <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                     
-                    <!-- 1. Integrity -->
-                    <a href="services-integrity.html" class="service-card-featured p-6 rounded-xl group">
-                        <div class="bg-hydro-charcoal p-3 rounded-full inline-block mb-4 group-hover:bg-hydro-primary/20 transition">
-                            <svg data-lucide="layers" class="w-8 h-8 text-hydro-primary"></svg>
+                    <!-- Module 1 -->
+                    <a href="services-integrity.html" class="service-card p-8 rounded-xl group block h-full" style="--accent-color: #22d3ee; --glow-color: rgba(34, 211, 238, 0.2)">
+                        <div class="bg-h-cyan/10 p-3 rounded-lg w-fit mb-6 text-h-cyan group-hover:scale-110 transition">
+                            <svg data-lucide="layers" class="w-8 h-8"></svg>
                         </div>
-                        <h3 class="text-xl font-bold text-white mb-2">Systemic Integrity Audits</h3>
-                        <p class="text-slate-400 text-sm">Holistic FEA & NDT protocols to ensure structural safety.</p>
-                        <span class="text-hydro-primary text-sm mt-4 block font-bold group-hover:translate-x-1 transition">Learn More &rarr;</span>
+                        <h3 class="text-xl font-bold text-white mb-3">Integrity Audits</h3>
+                        <p class="text-sm text-slate-400 mb-6 leading-relaxed">Holistic FEA & NDT protocols. We X-ray your infrastructure to find sub-surface defects.</p>
+                        <div class="text-xs font-mono text-h-cyan flex items-center gap-2">
+                            OPEN MODULE <svg data-lucide="arrow-right" class="w-3 h-3 group-hover:translate-x-1 transition"></svg>
+                        </div>
                     </a>
 
-                    <!-- 2. Predictive -->
-                    <a href="services-predictive.html" class="service-card-featured p-6 rounded-xl group">
-                        <div class="bg-hydro-charcoal p-3 rounded-full inline-block mb-4 group-hover:bg-hydro-primary/20 transition">
-                            <svg data-lucide="bot" class="w-8 h-8 text-hydro-primary"></svg>
+                    <!-- Module 2 -->
+                    <a href="services-predictive.html" class="service-card p-8 rounded-xl group block h-full" style="--accent-color: #10b981; --glow-color: rgba(16, 185, 129, 0.2)">
+                        <div class="bg-h-green/10 p-3 rounded-lg w-fit mb-6 text-h-green group-hover:scale-110 transition">
+                            <svg data-lucide="bot" class="w-8 h-8"></svg>
                         </div>
-                        <h3 class="text-xl font-bold text-white mb-2">Predictive Maintenance</h3>
-                        <p class="text-slate-400 text-sm">AI-driven forecasting to eliminate unplanned downtime.</p>
-                        <span class="text-hydro-primary text-sm mt-4 block font-bold group-hover:translate-x-1 transition">Learn More &rarr;</span>
+                        <h3 class="text-xl font-bold text-white mb-3">Predictive AI</h3>
+                        <p class="text-sm text-slate-400 mb-6 leading-relaxed">Forecasting failure vectors. Our neural models predict breakdown months before it happens.</p>
+                        <div class="text-xs font-mono text-h-green flex items-center gap-2">
+                            OPEN MODULE <svg data-lucide="arrow-right" class="w-3 h-3 group-hover:translate-x-1 transition"></svg>
+                        </div>
                     </a>
 
-                    <!-- 3. Compliance -->
-                    <a href="services-compliance.html" class="service-card-featured p-6 rounded-xl group">
-                        <div class="bg-hydro-charcoal p-3 rounded-full inline-block mb-4 group-hover:bg-hydro-primary/20 transition">
-                            <svg data-lucide="clipboard-check" class="w-8 h-8 text-hydro-primary"></svg>
+                    <!-- Module 3 -->
+                    <a href="services-compliance.html" class="service-card p-8 rounded-xl group block h-full" style="--accent-color: #8b5cf6; --glow-color: rgba(139, 92, 246, 0.2)">
+                        <div class="bg-h-purple/10 p-3 rounded-lg w-fit mb-6 text-h-purple group-hover:scale-110 transition">
+                            <svg data-lucide="clipboard-check" class="w-8 h-8"></svg>
                         </div>
-                        <h3 class="text-xl font-bold text-white mb-2">Regulatory Compliance</h3>
-                        <p class="text-slate-400 text-sm">Automated reporting for ecological and legal standards.</p>
-                        <span class="text-hydro-primary text-sm mt-4 block font-bold group-hover:translate-x-1 transition">Learn More &rarr;</span>
+                        <h3 class="text-xl font-bold text-white mb-3">Regulatory Compliance</h3>
+                        <p class="text-sm text-slate-400 mb-6 leading-relaxed">Automated legal reporting. We generate audit-ready documentation for global standards.</p>
+                        <div class="text-xs font-mono text-h-purple flex items-center gap-2">
+                            OPEN MODULE <svg data-lucide="arrow-right" class="w-3 h-3 group-hover:translate-x-1 transition"></svg>
+                        </div>
                     </a>
 
-                    <!-- 4. Optimization -->
-                    <a href="services-optimization.html" class="service-card-featured p-6 rounded-xl group">
-                        <div class="bg-hydro-charcoal p-3 rounded-full inline-block mb-4 group-hover:bg-hydro-primary/20 transition">
-                            <svg data-lucide="bar-chart-2" class="w-8 h-8 text-hydro-primary"></svg>
+                    <!-- Module 4 -->
+                    <a href="services-optimization.html" class="service-card p-8 rounded-xl group block h-full" style="--accent-color: #facc15; --glow-color: rgba(250, 204, 21, 0.2)">
+                        <div class="bg-h-yellow/10 p-3 rounded-lg w-fit mb-6 text-h-yellow group-hover:scale-110 transition">
+                            <svg data-lucide="bar-chart-2" class="w-8 h-8"></svg>
                         </div>
-                        <h3 class="text-xl font-bold text-white mb-2">Performance Optimization</h3>
-                        <p class="text-slate-400 text-sm">Closing the 48% gap to maximize energy output and profit.</p>
-                        <span class="text-hydro-primary text-sm mt-4 block font-bold group-hover:translate-x-1 transition">Learn More &rarr;</span>
+                        <h3 class="text-xl font-bold text-white mb-3">Optimization</h3>
+                        <p class="text-sm text-slate-400 mb-6 leading-relaxed">Profit maximization. Closing the 48% dynamic risk gap to increase MWh output.</p>
+                        <div class="text-xs font-mono text-h-yellow flex items-center gap-2">
+                            OPEN MODULE <svg data-lucide="arrow-right" class="w-3 h-3 group-hover:translate-x-1 transition"></svg>
+                        </div>
                     </a>
 
                 </div>
             </div>
         </section>
 
-        <!-- 3. SUPERVISION & PRESENCE (NOVO) -->
-        <section id="supervision" class="py-20 bg-hydro-charcoal">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- SUPERVISION & MEMBERSHIP -->
+        <section id="supervision" class="py-20 bg-h-panel border-y border-h-border">
+            <div class="max-w-7xl mx-auto px-4">
                 <div class="grid lg:grid-cols-2 gap-16 items-center">
                     
-                    <div class="zoom-in">
-                        <h2 class="text-4xl font-extrabold text-white mb-6">
-                            <span class="text-hydro-secondary">24/7/365</span> Supervision & Availability
+                    <!-- Left: Text -->
+                    <div>
+                        <h2 class="text-4xl font-black text-white mb-6">
+                            <span class="text-h-green">24/7</span> Active Presence
                         </h2>
-                        <p class="text-lg text-slate-300 mb-8 leading-relaxed">
-                            We don't just deliver reports and leave. We stand by our clients around the clock. Whether it's a critical installation phase or an emergency troubleshooting session, we are present—physically or digitally.
+                        <p class="text-lg text-slate-400 mb-8 leading-relaxed">
+                            We don't just deliver reports and leave. We stand by our clients. Whether it's a critical installation phase or an emergency troubleshooting session, we are present—physically or digitally.
                         </p>
                         
                         <div class="space-y-6">
                             <div class="flex gap-4">
-                                <div class="bg-hydro-slate p-3 rounded-lg h-fit border border-hydro-light-slate">
-                                    <svg data-lucide="hard-hat" class="w-6 h-6 text-hydro-cta"></svg>
-                                </div>
+                                <div class="bg-h-dark p-3 rounded border border-h-border h-fit"><svg data-lucide="hard-hat" class="w-6 h-6 text-h-cta"></svg></div>
                                 <div>
-                                    <h4 class="text-xl font-bold text-white">Installation Supervision</h4>
-                                    <p class="text-slate-400 text-sm">
-                                        Flexible deployment: A single expert Supervisor, a full technical Team, or a Hybrid model tailored to your project scale. We ensure precision protocols are met on-site.
-                                    </p>
+                                    <h4 class="text-white font-bold">On-Site Command</h4>
+                                    <p class="text-xs text-slate-500 mt-1">Deployment of expert Supervisors to oversee critical path installations.</p>
                                 </div>
                             </div>
-
                             <div class="flex gap-4">
-                                <div class="bg-hydro-slate p-3 rounded-lg h-fit border border-hydro-light-slate">
-                                    <svg data-lucide="monitor-smartphone" class="w-6 h-6 text-hydro-primary"></svg>
-                                </div>
+                                <div class="bg-h-dark p-3 rounded border border-h-border h-fit"><svg data-lucide="monitor-smartphone" class="w-6 h-6 text-h-cyan"></svg></div>
                                 <div>
-                                    <h4 class="text-xl font-bold text-white">Digital Supervision (Cost-Saver)</h4>
-                                    <p class="text-slate-400 text-sm">
-                                        Utilizing remote sensors and cameras, we supervise routine operations without travel costs. Massive savings for remote locations, with instant expert feedback.
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div class="flex gap-4">
-                                <div class="bg-hydro-slate p-3 rounded-lg h-fit border border-hydro-light-slate">
-                                    <svg data-lucide="phone-call" class="w-6 h-6 text-hydro-secondary"></svg>
-                                </div>
-                                <div>
-                                    <h4 class="text-xl font-bold text-white">Emergency Troubleshooting</h4>
-                                    <p class="text-slate-400 text-sm">
-                                        Available 365 days a year. When an alarm sounds, we are your first call for rapid diagnostics and solution implementation.
-                                    </p>
+                                    <h4 class="text-white font-bold">Digital Overwatch</h4>
+                                    <p class="text-xs text-slate-500 mt-1">Remote sensor monitoring to reduce travel costs while maintaining vigilance.</p>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- DESNI STUB - MEMBERSHIP CARD -->
-                    <div class="fade-in-up delay-200">
-                        <div class="membership-card p-8 rounded-2xl shadow-2xl">
-                            <div class="membership-badge">POPULAR</div>
-                            <h3 class="text-3xl font-black text-white mb-2">The AnoHUB Membership</h3>
-                            <p class="text-slate-300 mb-6 text-sm">Secure priority access and constant vigilance.</p>
-                            
-                            <ul class="space-y-4 mb-8">
-                                <li class="flex items-center text-white">
-                                    <svg data-lucide="check" class="w-5 h-5 text-hydro-secondary mr-3"></svg> Priority 24/7 Support Access
-                                </li>
-                                <li class="flex items-center text-white">
-                                    <svg data-lucide="check" class="w-5 h-5 text-hydro-secondary mr-3"></svg> Monthly Digital Health Reports
-                                </li>
-                                <li class="flex items-center text-white">
-                                    <svg data-lucide="check" class="w-5 h-5 text-hydro-secondary mr-3"></svg> Discounted On-Site Visits
-                                </li>
-                                <li class="flex items-center text-white">
-                                    <svg data-lucide="check" class="w-5 h-5 text-hydro-secondary mr-3"></svg> Procurement Management Included
-                                </li>
-                            </ul>
-                            
-                            <a href="contact.html" class="block w-full text-center bg-hydro-secondary hover:bg-green-500 text-hydro-charcoal font-bold py-3 rounded-lg transition uppercase tracking-wider">
-                                Inquire About Membership
-                            </a>
+                    <!-- Right: Membership Card -->
+                    <div class="membership-card p-8 rounded-2xl transform hover:scale-[1.02] transition duration-500">
+                        <div class="membership-badge">PRIORITY TIER</div>
+                        <div class="flex justify-between items-start mb-8">
+                            <div>
+                                <h3 class="text-2xl font-black text-white">AnoHUB Membership</h3>
+                                <p class="text-h-green font-mono text-xs mt-1">STATUS: OPEN FOR APPLICATION</p>
+                            </div>
+                            <svg data-lucide="shield-check" class="w-10 h-10 text-h-green"></svg>
                         </div>
+                        
+                        <ul class="space-y-4 mb-8 text-sm text-slate-300">
+                            <li class="flex items-center gap-3"><div class="w-1.5 h-1.5 bg-h-green rounded-full"></div> Priority 24/7 Emergency Response</li>
+                            <li class="flex items-center gap-3"><div class="w-1.5 h-1.5 bg-h-green rounded-full"></div> Monthly Digital Health Reports</li>
+                            <li class="flex items-center gap-3"><div class="w-1.5 h-1.5 bg-h-green rounded-full"></div> Procurement Management Included</li>
+                            <li class="flex items-center gap-3"><div class="w-1.5 h-1.5 bg-h-green rounded-full"></div> Discounted On-Site Audits</li>
+                        </ul>
+
+                        <a href="contact.html" class="block w-full py-4 text-center bg-h-green hover:bg-green-400 text-black font-black rounded uppercase tracking-widest text-sm transition shadow-lg shadow-h-green/20">
+                            Request Access
+                        </a>
                     </div>
 
                 </div>
             </div>
         </section>
 
-        <!-- 4. LOGISTICS & PROCUREMENT (NOVO) -->
-        <section id="logistics" class="py-20 bg-hydro-slate border-t border-slate-700">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h2 class="text-3xl font-extrabold text-white mb-4">Complete Logistics & Procurement Chain</h2>
-                <p class="text-xl text-slate-300 max-w-3xl mx-auto mb-12">
-                    We don't just identify the broken part; we re-engineer it, source it, and deliver it. We collaborate only with the best global partners to ensure quality.
-                </p>
+        <!-- LOGISTICS & PROCUREMENT -->
+        <section id="logistics" class="py-24">
+            <div class="max-w-7xl mx-auto px-4 text-center">
+                <h2 class="text-3xl font-black text-white mb-12">The Supply Chain Engine</h2>
+                
+                <div class="grid md:grid-cols-3 gap-8 relative">
+                    <!-- Connecting Line (Desktop) -->
+                    <div class="hidden md:block absolute top-1/2 left-10 right-10 h-0.5 bg-gradient-to-r from-h-border via-h-cyan/50 to-h-border -z-10 transform -translate-y-8"></div>
 
-                <div class="grid md:grid-cols-3 gap-8">
-                    <div class="p-6 bg-hydro-charcoal rounded-lg border border-slate-700">
-                        <svg data-lucide="pen-tool" class="w-12 h-12 text-hydro-primary mx-auto mb-4"></svg>
-                        <h3 class="text-xl font-bold text-white mb-2">Reverse Engineering</h3>
-                        <p class="text-slate-400">Creating precise blueprints and CAD models for obsolete or custom turbine parts tailored to your specific needs.</p>
-                    </div>
-                    
-                    <div class="p-6 bg-hydro-charcoal rounded-lg border border-slate-700">
-                        <svg data-lucide="shopping-cart" class="w-12 h-12 text-hydro-cta mx-auto mb-4"></svg>
-                        <h3 class="text-xl font-bold text-white mb-2">Sourcing & Organization</h3>
-                        <p class="text-slate-400">Handling the entire procurement process, from finding the raw materials to negotiating with specialized manufacturers.</p>
+                    <!-- Step 1 -->
+                    <div class="bg-h-dark p-8 rounded-xl border border-h-border relative group hover:border-h-cyan transition">
+                        <div class="w-16 h-16 bg-h-panel rounded-full border-4 border-h-dark flex items-center justify-center mx-auto mb-6 relative z-10 shadow-xl group-hover:scale-110 transition">
+                            <svg data-lucide="pen-tool" class="w-8 h-8 text-h-cyan"></svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2">01. Reverse Engineering</h3>
+                        <p class="text-sm text-slate-400">Creating precise blueprints for obsolete parts using 3D scanning.</p>
                     </div>
 
-                    <div class="p-6 bg-hydro-charcoal rounded-lg border border-slate-700">
-                        <svg data-lucide="truck" class="w-12 h-12 text-hydro-secondary mx-auto mb-4"></svg>
-                        <h3 class="text-xl font-bold text-white mb-2">Production & Delivery</h3>
-                        <p class="text-slate-400">Issuing production orders to verified partners and managing logistics to get the part to your site on time.</p>
+                    <!-- Step 2 -->
+                    <div class="bg-h-dark p-8 rounded-xl border border-h-border relative group hover:border-h-cyan transition">
+                        <div class="w-16 h-16 bg-h-panel rounded-full border-4 border-h-dark flex items-center justify-center mx-auto mb-6 relative z-10 shadow-xl group-hover:scale-110 transition">
+                            <svg data-lucide="shopping-cart" class="w-8 h-8 text-h-cyan"></svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2">02. Global Sourcing</h3>
+                        <p class="text-sm text-slate-400">Negotiating with specialized manufacturers for raw materials.</p>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="bg-h-dark p-8 rounded-xl border border-h-border relative group hover:border-h-cyan transition">
+                        <div class="w-16 h-16 bg-h-panel rounded-full border-4 border-h-dark flex items-center justify-center mx-auto mb-6 relative z-10 shadow-xl group-hover:scale-110 transition">
+                            <svg data-lucide="truck" class="w-8 h-8 text-h-cyan"></svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2">03. Secure Delivery</h3>
+                        <p class="text-sm text-slate-400">Logistics management to ensure on-time arrival at your site.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 5. FINAL CTA BANNER -->
-        <section class="py-16 bg-gradient-to-r from-hydro-primary/20 to-hydro-secondary/10 text-center">
-            <div class="max-w-4xl mx-auto px-4">
-                <h2 class="text-3xl font-black text-white mb-4">YOUR FIRST INQUIRY COSTS NOTHING</h2>
-                <p class="text-lg text-slate-300 mb-8">
-                    We believe in proving our value first. Contact us with your challenge, and we will provide an initial expert assessment free of charge.
-                </p>
-                <a href="contact.html" class="inline-flex items-center justify-center px-10 py-4 bg-white text-hydro-charcoal font-bold rounded-full shadow-xl hover:bg-gray-200 transition transform hover:scale-105 uppercase">
-                    Start the Conversation
+        <!-- CTA -->
+        <section class="py-20 bg-gradient-to-r from-h-dark to-h-panel border-t border-h-border text-center">
+            <div class="max-w-3xl mx-auto px-4">
+                <h2 class="text-2xl font-bold text-white mb-4">First Inquiry Costs Nothing</h2>
+                <p class="text-slate-400 mb-8">We believe in proving value first. Contact us for a preliminary assessment.</p>
+                <a href="contact.html" class="inline-flex items-center gap-2 text-white font-bold border border-h-cta text-h-cta px-8 py-3 rounded hover:bg-h-cta hover:text-black transition uppercase tracking-wider text-sm">
+                    Start Conversation <svg data-lucide="message-square" class="w-4 h-4"></svg>
                 </a>
             </div>
         </section>
 
     </main>
-    
-    <!-- FOOTER -->
-    <div class="md:hidden mobile-sticky-cta text-center">
-        <a href="contact.html" class="w-full block text-center bg-hydro-primary hover:bg-cyan-500 text-hydro-charcoal px-5 py-3 font-bold tracking-wider uppercase shadow-2xl">
-            SCHEDULE AUDIT
-        </a>
-    </div>
 
-    <footer class="bg-hydro-slate text-hydro-gray py-8 text-center border-t border-hydro-light-slate" role="contentinfo">
-        <div class="container mx-auto px-6">
-           <a href="index.html#hero" class="mb-4 block" aria-label="Anohubs Logo - Back to Home">
-               <img src="logo.svg" alt="Anohubs Logo" class="anohubs-logo mx-auto">
-           </a>
-           <p class="text-slate-400 mb-6">Establishing the global standard for hydro integrity.</p>
-           <nav class="flex justify-center space-x-6 text-sm mb-4">
-               <a href="about-us-vision.html" class="text-slate-400 hover:text-hydro-primary">About</a>
-               <a href="services.html" class="text-slate-400 hover:text-hydro-primary">Services</a>
-               <a href="insights/expert-insights.html" class="text-slate-400 hover:text-hydro-primary">Insights</a>
-               <a href="case-studies.html" class="text-slate-400 hover:text-hydro-primary">Case Studies</a>
-               <a href="gallery.html" class="text-slate-400 hover:text-hydro-primary">Gallery</a>
-               <a href="protocol.html" class="text-slate-400 hover:text-hydro-primary">Protocol</a>
-               <a href="contact.html" class="text-slate-400 hover:text-hydro-primary">Contact</a>
-           </nav>
-           <div class="flex justify-center space-x-4 text-xs mb-4">
-                <a href="privacy-policy.html" class="text-slate-500 hover:text-slate-300 underline">Privacy Policy</a>
-                <span class="text-slate-500">|</span>
-                <a href="terms-of-use.html" class="text-slate-500 hover:text-slate-300 underline">Terms of Use</a>
-           </div>
-           <p class="text-sm">&copy; <span id="year"></span> Anohubs Inc. All rights reserved.</p>
+    <footer class="bg-black border-t border-slate-900 py-12 text-center">
+        <div class="max-w-7xl mx-auto px-4">
+            <img src="logo.svg" alt="Logo" class="h-8 mx-auto mb-6 opacity-50 grayscale hover:grayscale-0 transition">
+            <p class="text-slate-500 text-xs mb-6 font-mono">© 2025 Anohubs Inc. | Operational Hub</p>
         </div>
     </footer>
 
-    <!-- SKRIPTE -->
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
-    <script src="js/ui_core.js"></script>
-    <script src="js/animation_logic.js"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script>
+        lucide.createIcons();
+        
+        // Mobile Menu
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        // Navbar Scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('shadow-lg', 'bg-h-dark/95');
+                nav.classList.remove('bg-h-dark/90');
+            } else {
+                nav.classList.remove('shadow-lg', 'bg-h-dark/95');
+                nav.classList.add('bg-h-dark/90');
+            }
+        });
+    </script>
 </body>
 </html>

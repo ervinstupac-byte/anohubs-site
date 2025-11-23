@@ -1,178 +1,242 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Flow Analysis: The Necessity of Full System Simulation for Ultra-High-Head Risk | Anohubs</title>
-    <meta name="description" content="Analysis proving why traditional 1D flow modeling is obsolete for ultra-high-head pump-turbine systems (above 700 m). Full 3D simulation coupling the pipeline and unit is necessary to mitigate 48% dynamic risk.">
+    <title>3D Flow Analysis: Full System Simulation | AnoHUB Intel</title>
+    <meta name="description" content="Intelligence Brief: Why traditional 1D flow modeling is obsolete for ultra-high-head pump-turbine systems and why full 3D coupling is necessary.">
     
-    <!-- 1. JS INICIJALIZACIJA (../) -->
-    <script src="../js/head-init.js"></script>
-
-    <!-- 2. FONTOVI -->
+    <!-- 1. FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     
-    <!-- 3. TAILWIND CDN -->
+    <!-- 2. TAILWIND -->
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- 4. TAILWIND CONFIG -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
+                    fontFamily: { 
+                        sans: ['Inter', 'sans-serif'], 
+                        mono: ['JetBrains Mono', 'monospace'] 
+                    },
                     colors: {
-                        'hydro-primary': '#22d3ee',
-                        'hydro-secondary': '#4ade80',
-                        'hydro-risk': '#ef4444',
-                        'hydro-cta': '#f59e0b',
-                        'hydro-charcoal': '#111827',
-                        'hydro-slate': '#1E293B',
-                        'hydro-light-slate': '#334155',
-                        'hydro-gray': '#475569',
-                    },
-                    fontSize: {
-                        'h1-hero': 'clamp(2.5rem, 5vw + 1rem, 4.5rem)',
-                    },
+                        'h-cyan': '#06b6d4', /* Cyan for CFD/Tech */
+                        'h-green': '#10b981', 
+                        'h-red': '#ef4444', 
+                        'h-yellow': '#facc15', 
+                        'h-dark': '#020617', 
+                        'h-panel': '#0f172a', 
+                        'h-border': '#1e293b',
+                        'h-cta': '#f59e0b'
+                    }
                 }
             }
         }
     </script>
 
-    <!-- 5. STILOVI (../) -->
-    <link href="../css/anohubs.css" rel="stylesheet">
-    <link href="../css/article-styles.css" rel="stylesheet">
+    <style>
+        body { background-color: #020617; color: #cbd5e1; overflow-x: hidden; }
+        
+        /* Progress Bar */
+        #reading-progress {
+            position: fixed; top: 0; left: 0; height: 3px; background: #06b6d4; /* Cyan */
+            width: 0%; z-index: 100; transition: width 0.1s;
+        }
 
+        /* Typography for Article Body */
+        .article-body h2 { font-size: 1.5rem; font-weight: 800; color: white; margin-top: 3rem; margin-bottom: 1rem; letter-spacing: -0.02em; }
+        .article-body h3 { font-size: 1.25rem; font-weight: 700; color: #06b6d4; margin-top: 2rem; margin-bottom: 0.75rem; }
+        .article-body p { margin-bottom: 1.5rem; line-height: 1.8; font-size: 1.05rem; }
+        .article-body ul, .article-body ol { margin-bottom: 1.5rem; padding-left: 1rem; }
+        .article-body li { position: relative; padding-left: 1.5rem; margin-bottom: 0.75rem; }
+        .article-body ul li::before { 
+            content: ">>"; position: absolute; left: 0; color: #06b6d4; font-family: 'JetBrains Mono', monospace; font-size: 0.8em;
+        }
+        .article-body ol { list-style-type: decimal; color: #06b6d4; font-family: 'JetBrains Mono', monospace; }
+        .article-body ol li span { color: #cbd5e1; font-family: 'Inter', sans-serif; }
+        
+        .article-body strong { color: white; font-weight: 700; }
+        .article-body blockquote { 
+            border-left: 4px solid #06b6d4; background: rgba(6, 182, 212, 0.1); 
+            padding: 1.5rem; font-style: italic; color: #67e8f9; margin: 2rem 0; border-radius: 0 0.5rem 0.5rem 0;
+        }
+        
+        /* Image Styles */
+        .article-img { border-radius: 0.75rem; border: 1px solid #334155; box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin: 2rem 0; width: 100%; }
+        
+        /* Sidebar Sticky */
+        .sticky-sidebar { position: sticky; top: 100px; }
+    </style>
 </head>
-<body class="bg-gray-100"> 
+
+<body class="antialiased selection:bg-h-cyan selection:text-black">
     
-    <!-- HEADER -->
-    <header class="bg-hydro-charcoal text-white shadow-2xl sticky top-0 z-50 border-b border-hydro-primary/50" role="banner">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex justify-between items-center">
-            <a href="../index.html#hero" class="focus:outline-none transition" aria-label="Anohubs Logo - Back to Home">
-                <img src="../logo.svg" alt="Anohubs Logo" class="anohubs-logo">
+    <div id="reading-progress"></div>
+
+    <!-- NAV -->
+    <header class="fixed w-full z-50 top-0 border-b border-white/5 bg-h-dark/90 backdrop-blur-md" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 h-16 flex justify-between items-center">
+            <a href="../index.html" class="flex items-center gap-3 group">
+                <img src="../logo.svg" alt="AnoHUB" class="h-8 w-auto opacity-80 group-hover:opacity-100 transition">
+                <span class="font-mono text-xs text-slate-500 group-hover:text-h-cyan transition">INTELLIGENCE // BRIEF 014</span>
             </a>
-            
-            <nav class="hidden md:flex items-center space-x-6 font-extrabold text-sm" role="navigation" aria-label="Main navigation">
-                <a href="../about-us-vision.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">About</a>
-                <a href="../index.html#services" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Services</a>
-                <a href="expert-insights.html" class="nav-link relative text-hydro-primary transition tracking-wider p-2 uppercase">Insights</a>
-                <a href="../case-studies.html" class="nav-link relative text-slate-300 hover:text-hydro-secondary transition tracking-wider p-2 uppercase">Case Studies</a>
-                <a href="../app-iframe.html" target="_blank" rel="noopener noreferrer" class="nav-link relative text-hydro-secondary hover:text-green-500 transition tracking-widest font-extrabold text-lg p-2 uppercase">ANO HUB</a>
-                <a href="../gallery.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Gallery</a>
-                <a href="../protocol.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Protocol</a>
-                <a href="../contact.html" class="bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-6 py-2.5 rounded-full transition transform hover:scale-105 shadow-xl font-bold tracking-wider uppercase text-base">Contact</a>
-            </nav>
-            
-            <div class="md:hidden">
-                <button id="mobile-menu-button" aria-label="Open menu" type="button" class="p-2 text-white">
-                    <svg data-lucide="menu" class="w-8 h-8"></svg>
-                </button>
-            </div>
-            
-            <div id="mobile-menu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2 text-center bg-hydro-charcoal" aria-label="Mobile navigation menu">
-                <a href="../about-us-vision.html" class="block hover:text-hydro-primary transition tracking-wider py-2">About</a>
-                <a href="expert-insights.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Insights</a>
-                <a href="../index.html#services" class="block hover:text-hydro-primary transition tracking-wider py-2">Services</a>
-                <a href="../case-studies.html" class="block hover:text-hydro-secondary transition tracking-wider py-2">Case Studies</a>
-                <a href="../app-iframe.html" target="_blank" rel="noopener noreferrer" class="block hover:text-hydro-secondary transition tracking-wider py-2">ANO HUB</a>
-                <a href="../gallery.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Gallery</a>
-                <a href="../protocol.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Protocol</a>
-                <a href="../contact.html" class="block bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-5 py-2 rounded-full transition shadow-md font-bold tracking-wider mt-2 text-center">Contact</a>
-            </div>
+            <a href="expert-insights.html" class="text-xs font-bold text-slate-400 hover:text-white uppercase tracking-widest flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                Back to Hub
+            </a>
         </div>
     </header>
 
-    <main class="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8 article-container">
-        
-        <a href="expert-insights.html" class="inline-block text-lg font-bold text-hydro-primary hover:text-cyan-500 mt-4 mb-4">← Back to Insights Archive</a>
+    <main class="pt-32 pb-20">
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-12 gap-12">
 
-        <div class="article-container bg-white/90 p-6 shadow-lg">
-            
-            <img src="../slike/cfd_full_system_analysis_main.png" alt="3D CFD simulation of water flow and pressure pulsations in a pump-turbine and long pipeline" class="w-full h-auto rounded-lg mb-8 shadow-lg">
+            <!-- MAIN CONTENT (Left) -->
+            <article class="lg:col-span-8">
+                
+                <!-- HEADER -->
+                <header class="mb-12 border-b border-h-border pb-8">
+                    <div class="flex items-center gap-4 mb-6 text-xs font-mono">
+                        <span class="px-3 py-1 rounded bg-h-cyan/10 text-h-cyan border border-h-cyan/20">CFD SIMULATION</span>
+                        <span class="text-slate-500">DOC ID: INS-014</span>
+                        <span class="text-slate-500">7 MIN READ</span>
+                    </div>
+                    <h1 class="text-4xl md:text-5xl font-black text-white mb-6 leading-tight">
+                        3D Flow Analysis: The Necessity of <span class="text-h-cyan">Full System Simulation</span>
+                    </h1>
+                    <p class="text-xl text-slate-400 leading-relaxed">
+                        Analysis proving why traditional 1D flow modeling is obsolete for ultra-high-head pump-turbine systems (above 700 m).
+                    </p>
+                </header>
 
-            <h1>🔬 3D Flow Analysis: The Necessity of Full System Simulation for Ultra-High-Head Risk</h1>
-            
-            <p class="article-intro">
-                Severe pressure pulsations caused by complex flow fields in pumped-storage power stations significantly threaten operational safety and stability. With ultra-high-head units (above 700 m) and complex conveyance systems becoming common, traditional 1D modeling is obsolete. This analysis demonstrates why a **fully three-dimensional simulation coupling the pipeline and the pump-turbine unit** is essential to eliminate operational uncertainty.
-            </p>
+                <!-- BODY -->
+                <div class="article-body text-slate-300">
+                    
+                    
+                    <img src="../slike/cfd_full_system_analysis_main.png" alt="3D CFD simulation of water flow" class="article-img">
+                    
+                    <p class="article-intro">
+                        Severe pressure pulsations caused by complex flow fields in pumped-storage power stations significantly threaten operational safety and stability. With ultra-high-head units (above 700 m) and complex conveyance systems becoming common, traditional 1D modeling is obsolete. This analysis demonstrates why a <strong>fully three-dimensional simulation coupling the pipeline and the pump-turbine unit</strong> is essential to eliminate operational uncertainty.
+                    </p>
 
-            <h2>1. The Critical Flaw of 1D Modeling: Bidirectional Coupling</h2>
-            <p>Current simulation practices often use 1D models for the long water conveyance pipelines, simplifying them into basic linear systems. Our comprehensive 3D analysis, coupling the full water conveyance system with the prototype pump-turbine, reveals a fundamental flaw in this approach:</p>
-            
-            <blockquote class="mb-6">
-                The study reveals a strong **bidirectional coupling** between the flow in the long outlet pipe and the internal flow within the pump-turbine unit. The existence of complex 3D flow structures propagating along the pipeline underscores the necessity of fully coupled 3D simulations.
-            </blockquote>
-            
-            <p>Ignoring this complex three-dimensional flow within long pipelines—especially those with bifurcations or T-junctions—results in **significant errors** in predicting the unit's internal flow characteristics and dynamic instability, directly contributing to the **48% dynamic risk factor** we seek to mitigate.</p>
+                    <h2>1. The Critical Flaw of 1D Modeling: Bidirectional Coupling</h2>
+                    <p>Current simulation practices often use 1D models for the long water conveyance pipelines, simplifying them into basic linear systems. Our comprehensive 3D analysis, coupling the full water conveyance system with the prototype pump-turbine, reveals a fundamental flaw in this approach:</p>
+                    
+                    <blockquote>
+                        The study reveals a strong <strong>bidirectional coupling</strong> between the flow in the long outlet pipe and the internal flow within the pump-turbine unit. The existence of complex 3D flow structures propagating along the pipeline underscores the necessity of fully coupled 3D simulations.
+                    </blockquote>
+                    
+                    <p>Ignoring this complex three-dimensional flow within long pipelines—especially those with bifurcations or T-junctions—results in <strong>significant errors</strong> in predicting the unit's internal flow characteristics and dynamic instability, directly contributing to the <strong>48% dynamic risk factor</strong> we seek to mitigate.</p>
 
-            <h3>Key Challenges Identified in 3D Modeling:</h3>
-            <ul class="list-disc ml-6 mb-6">
-                <li><strong>Vortex Generation:</strong> Complex 3D vortices arise at structural features like bifurcations and flow impingement points, which cannot be neglected.</li>
-                <li><strong>Pressure Pulsation Propagation:</strong> Pulsations generated by Rotor–Stator Interaction (RSI) in the vaneless space propagate differently than previously assumed, interacting with the entire pipeline.</li>
-                <li><strong>Ultra-High Head Effects:</strong> High-fidelity simulations at prototype scale are critical for systems operating above 700 meters, where fluid compressibility must be accurately modeled.</li>
-            </ul>
+                    <h3>Key Challenges Identified in 3D Modeling:</h3>
+                    <ul>
+                        <li><strong>Vortex Generation:</strong> Complex 3D vortices arise at structural features like bifurcations and flow impingement points, which cannot be neglected.</li>
+                        <li><strong>Pressure Pulsation Propagation:</strong> Pulsations generated by Rotor–Stator Interaction (RSI) in the vaneless space propagate differently than previously assumed, interacting with the entire pipeline.</li>
+                        <li><strong>Ultra-High Head Effects:</strong> High-fidelity simulations at prototype scale are critical for systems operating above 700 meters, where fluid compressibility must be accurately modeled.</li>
+                    </ul>
 
-            <h2>2. Results and the Propagation of Pulsations</h2>
-            <p>The detailed analysis of pressure pulsations reveals how instability spreads throughout the system:</p>
+                    <h2>2. Results and the Propagation of Pulsations</h2>
+                    <p>The detailed analysis of pressure pulsations reveals how instability spreads throughout the system:</p>
 
-            <ul class="list-disc ml-6 mb-6">
-                <li><strong>Near Impeller:</strong> Pressure pulsations are most intense here, dominated by high-frequency components (12f𝑛 harmonics) due to the RSI.</li>
-                <li><strong>Downstream Attenuation:</strong> As pulsations propagate from the impeller to the stay vane outlet, their amplitude gradually decreases.</li>
-                <li><strong>Pipe Dominance:</strong> In the long discharge pipe, high-frequency components dissipate, and low-frequency components (like 0.1f𝑛) become dominant, reflecting large-scale, unsteady vortex motion in the pipeline.</li>
-            </ul>
+                    <ul>
+                        <li><strong>Near Impeller:</strong> Pressure pulsations are most intense here, dominated by high-frequency components (12fn harmonics) due to the RSI.</li>
+                        <li><strong>Downstream Attenuation:</strong> As pulsations propagate from the impeller to the stay vane outlet, their amplitude gradually decreases.</li>
+                        <li><strong>Pipe Dominance:</strong> In the long discharge pipe, high-frequency components dissipate, and low-frequency components (like 0.1fn) become dominant, reflecting large-scale, unsteady vortex motion in the pipeline.</li>
+                    </ul>
 
-            <h3>Strategic Takeaway for Asset Owners:</h3>
-            <p>Understanding these time–frequency and spatial distribution characteristics is crucial for mitigating induced structural vibrations and avoiding resonance within the powerhouse.</p>
-            
-            <div class="p-4 my-6 border border-cyan-500/50 rounded-lg bg-gray-50 text-slate-700">
-                <strong>Conclusion:</strong> Conducting full three-dimensional simulations that incorporate the complete pipeline system is essential for ultra-high-head pump operation, as 1D models risk neglecting complex 3D flows and mutual flow interactions, leading to unreliable stability predictions.
-            </div>
+                    <h3>Strategic Takeaway for Asset Owners:</h3>
+                    <p>Understanding these time–frequency and spatial distribution characteristics is crucial for mitigating induced structural vibrations and avoiding resonance within the powerhouse.</p>
+                    
+                    <div class="mt-8 p-6 bg-h-panel border border-h-border rounded-xl border-l-4 border-l-h-cyan">
+                        <h4 class="text-white font-bold mb-2">Upgrade Your Modeling</h4>
+                        <p class="text-sm mb-4">Is your predictive maintenance based on outdated 1D flow models? Integrate full 3D CFD analysis into your operational strategy.</p>
+                        <a href="../contact.html" class="inline-block bg-h-cyan hover:bg-cyan-400 text-black font-bold py-2 px-6 rounded text-xs uppercase tracking-wider transition shadow-lg">
+                            REQUEST ADVANCED AUDIT
+                        </a>
+                    </div>
 
-            <div class="cta-footer">
-                <strong>Is your predictive maintenance based on outdated 1D flow models?</strong>
-                <p class="mt-2 text-slate-700">Upgrade to the AnoHUB Digital Protocol and integrate full 3D CFD analysis into your operational strategy.</p>
-                <a href="../contact.html" class="cta-button">REQUEST ADVANCED AUDIT</a>
-            </div>
+                </div>
+
+                <!-- SHARE & TAGS -->
+                <div class="mt-16 pt-8 border-t border-h-border flex flex-col md:flex-row justify-between items-center gap-4">
+                    <div class="text-xs font-mono text-slate-500">
+                        TAGS: #CFD #FluidDynamics #Simulation #RiskMitigation
+                    </div>
+                    <div class="flex gap-4">
+                         <button class="text-slate-400 hover:text-white transition"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" x2="12" y1="2" y2="15"/></svg></button>
+                         <button class="text-slate-400 hover:text-white transition"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/></svg></button>
+                    </div>
+                </div>
+
+            </article>
+
+            <!-- SIDEBAR (Right) -->
+            <aside class="lg:col-span-4 space-y-8">
+                
+                <!-- Author Card -->
+                <div class="scada-panel p-6 rounded-xl border-t-2 border-h-cyan sticky-sidebar">
+                    <div class="flex items-center gap-4 mb-4">
+                        <img src="../ervin_stupac_portrait.jpg" alt="Ervin Stupac" class="w-16 h-16 rounded-full border-2 border-slate-600 object-cover">
+                        <div>
+                            <h4 class="text-white font-bold">Ervin Stupac</h4>
+                            <p class="text-xs text-h-cyan font-mono">LEAD ARCHITECT</p>
+                        </div>
+                    </div>
+                    <p class="text-sm text-slate-400 mb-4">Specializing in forensic engineering and hydromechanical optimization. Founder of the AnoHUB Protocol.</p>
+                    <a href="../contact.html" class="block w-full text-center py-2 rounded border border-slate-600 hover:border-white text-xs font-bold text-white transition uppercase">Request Consultation</a>
+                </div>
+
+                <!-- Related Intelligence -->
+                <div class="bg-h-panel border border-h-border rounded-xl p-6">
+                    <h4 class="text-xs font-mono text-slate-500 uppercase mb-4 tracking-widest">Related Briefs</h4>
+                    <div class="space-y-4">
+                        <a href="article-11-digital-twin.html" class="block group">
+                            <h5 class="text-white font-bold text-sm group-hover:text-h-cyan transition">Digital Twin Implementation</h5>
+                            <p class="text-xs text-slate-500 mt-1">Technology Deep Dive</p>
+                        </a>
+                        <div class="h-px bg-slate-800"></div>
+                        <a href="article-2-low-bid.html" class="block group">
+                            <h5 class="text-white font-bold text-sm group-hover:text-h-cyan transition">The Hidden Cost of the "Low Bid"</h5>
+                            <p class="text-xs text-slate-500 mt-1">Financial Forensic</p>
+                        </a>
+                        <div class="h-px bg-slate-800"></div>
+                        <a href="article-13-sediment-silt.html" class="block group">
+                            <h5 class="text-white font-bold text-sm group-hover:text-h-cyan transition">Sediment & Silt Management</h5>
+                            <p class="text-xs text-slate-500 mt-1">Erosion Control</p>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- CTA Box -->
+                <div class="bg-gradient-to-br from-h-cyan/20 to-transparent border border-h-cyan/40 p-6 rounded-xl text-center">
+                    <h4 class="text-white font-bold mb-2">See The Unseen</h4>
+                    <p class="text-xs text-slate-300 mb-4">Explore our advanced Integrity Audits.</p>
+                    <a href="../services-integrity.html" class="inline-block bg-h-cyan hover:bg-cyan-400 text-black font-bold py-2 px-6 rounded text-xs uppercase tracking-wider transition shadow-lg">
+                        View Integrity Services
+                    </a>
+                </div>
+
+            </aside>
+
         </div>
-        
     </main>
-    
-    <!-- FOOTER -->
-    <div class="md:hidden mobile-sticky-cta text-center">
-        <a href="../contact.html" class="w-full block text-center bg-hydro-primary hover:bg-cyan-500 text-hydro-charcoal px-5 py-3 font-bold tracking-wider uppercase shadow-2xl">
-            SCHEDULE AUDIT
-        </a>
-    </div>
 
-    <footer class="bg-hydro-slate text-hydro-gray py-8 text-center border-t border-hydro-light-slate" role="contentinfo">
-        <div class="container mx-auto px-6">
-           <a href="../index.html#hero" class="mb-4 block" aria-label="Anohubs Logo - Back to Home">
-               <img src="../logo.svg" alt="Anohubs Logo" class="anohubs-logo mx-auto">
-           </a>
-           <p class="text-slate-400 mb-6">Establishing the global standard for hydro integrity.</p>
-           <nav class="flex justify-center space-x-6 text-sm mb-6">
-               <a href="../about-us-vision.html" class="text-slate-400 hover:text-hydro-primary">About</a>
-               <a href="../index.html#services" class="text-slate-400 hover:text-hydro-primary">Services</a>
-               <a href="expert-insights.html" class="text-slate-400 hover:text-hydro-primary">Insights</a>
-               <a href="../case-studies.html" class="text-slate-400 hover:text-hydro-primary">Case Studies</a>
-               <a href="../gallery.html" class="text-slate-400 hover:text-hydro-primary">Gallery</a>
-               <a href="../protocol.html" class="text-slate-400 hover:text-hydro-primary">Protocol</a>
-               <a href="../contact.html" class="text-slate-400 hover:text-hydro-primary">Contact</a>
-           </nav>
-           <div class="flex justify-center space-x-4 text-xs mb-4">
-                <a href="../privacy-policy.html" class="text-slate-500 hover:text-slate-300 underline">Privacy Policy</a>
-                <span class="text-slate-500">|</span>
-                <a href="../terms-of-use.html" class="text-slate-500 hover:text-slate-300 underline">Terms of Use</a>
-           </div>
-           <p class="text-sm">&copy; <span id="year"></span> Anohubs Inc. All rights reserved.</p>
+    <!-- FOOTER -->
+    <footer class="bg-black border-t border-slate-900 py-8 text-center text-xs font-mono text-slate-600">
+        <div class="max-w-7xl mx-auto px-4">
+            &copy; 2025 ANOHUBS INC. | INTELLIGENCE DIVISION
         </div>
     </footer>
 
-    <!-- SKRIPTE -->
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
-    <script src="../js/ui_core.js"></script>
-    <script src="../js/animation_logic.js"></script>
+    <script>
+        // Reading Progress Bar
+        window.onscroll = function() {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            let scrolled = (winScroll / height) * 100;
+            document.getElementById("reading-progress").style.width = scrolled + "%";
+        };
+    </script>
 </body>
 </html>

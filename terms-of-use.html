@@ -1,227 +1,250 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terms of Use | Anohubs - Hydro Integrity</title>
+    <title>Terms of Use | AnoHUB Operational Framework</title>
     <meta name="description" content="Anohubs' terms and conditions governing the use of our website, intellectual property, and consultation services.">
-    
-    <!-- 1. STANDARDNA JS INICIJALIZACIJA -->
-    <script src="js/head-init.js"></script>
 
-    <!-- 2. FONTOVI -->
+    <!-- 1. FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     
-    <!-- 3. KRITIČNO: TAILWIND CSS CDN -->
+    <!-- 2. TAILWIND -->
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- 4. TAILWIND KONFIGURACIJA -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
+                    fontFamily: { 
+                        sans: ['Inter', 'sans-serif'], 
+                        mono: ['JetBrains Mono', 'monospace'] 
+                    },
                     colors: {
-                        'hydro-primary': '#22d3ee', 
-                        'hydro-secondary': '#4ade80', 
-                        'hydro-risk': '#ef4444', 
-                        'hydro-cta': '#f59e0b', 
-                        'hydro-charcoal': '#111827', 
-                        'hydro-slate': '#1E293B', 
-                        'hydro-light-slate': '#334155', 
-                        'hydro-gray': '#475569',
+                        'h-cyan': '#06b6d4', 
+                        'h-green': '#10b981', 
+                        'h-red': '#ef4444', 
+                        'h-yellow': '#facc15', 
+                        'h-dark': '#020617', 
+                        'h-panel': '#0f172a', 
+                        'h-border': '#1e293b',
+                        'h-cta': '#f59e0b'
                     },
-                    fontSize: {
-                        'h1-hero': 'clamp(2.5rem, 5vw + 1rem, 4.5rem)',
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
                     },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
                 }
             }
         }
     </script>
 
-    <!-- 5. GLOBALNI STILOVI -->
-    <link href="css/anohubs.css" rel="stylesheet">
-    
     <style>
-        body { 
-            font-family: 'Inter', sans-serif; 
-            background-color: #111827; 
-            color: #E5E7EB;
-            /* Pozadinska slika sa tamnim preklopom za čitljivost */
-            background-image: linear-gradient(to bottom, rgba(17, 24, 39, 0.9), rgba(17, 24, 39, 0.98)), url('orljani_Una.jpg');
-            background-size: cover;
-            background-attachment: fixed;
-            background-position: center;
-        }
+        body { background-color: #020617; color: #f8fafc; overflow-x: hidden; }
         
-        .term-section {
-            border-bottom: 1px solid #334155;
-            padding-bottom: 2rem;
-            margin-bottom: 2rem;
+        /* Tech Grid Background */
+        .tech-bg {
+            background-image: 
+                linear-gradient(rgba(6, 182, 212, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(6, 182, 212, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
         }
-        .term-section:last-child {
-            border-bottom: none;
-            padding-bottom: 0;
-            margin-bottom: 0;
-        }
-    </style>
 
+        /* Glass Panels */
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(51, 65, 85, 0.5);
+            transition: all 0.3s ease;
+        }
+        .glass-panel:hover {
+            border-color: #06b6d4;
+            background: rgba(15, 23, 42, 0.8);
+        }
+
+        /* Section Highlight Line */
+        .section-line {
+            height: 100%; width: 2px; background: #334155; position: absolute; left: 0; top: 0;
+        }
+        .glass-panel:hover .section-line { background: #06b6d4; box-shadow: 0 0 10px #06b6d4; }
+
+        /* Scroll Bar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #020617; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #06b6d4; }
+    </style>
 </head>
-<body class="text-white"> 
-    
-    <!-- HEADER -->
-    <header class="bg-hydro-charcoal text-white shadow-2xl sticky top-0 z-50 border-b border-hydro-primary/50" role="banner">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex justify-between items-center">
-            <a href="index.html#hero" class="focus:outline-none transition" aria-label="Anohubs Logo - Back to Home">
-                <img src="logo.svg" alt="Anohubs Logo" class="anohubs-logo">
+
+<body class="antialiased">
+    <div class="tech-bg"></div>
+
+    <!-- NAV -->
+    <header class="fixed w-full z-50 top-0 border-b border-white/5 bg-h-dark/90 backdrop-blur-md transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 h-20 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-3 group">
+                <img src="logo.svg" alt="AnoHUB" class="h-10 w-auto transition group-hover:brightness-125">
+                <div class="hidden md:block">
+                    <span class="block text-lg font-black tracking-tighter text-white leading-none">ANOHUBS</span>
+                    <span class="block text-[10px] font-mono text-h-cyan tracking-widest uppercase">Terms of Use</span>
+                </div>
             </a>
-            <nav class="hidden md:flex items-center space-x-6 font-extrabold text-sm" role="navigation" aria-label="Main navigation">
-                <a href="about-us-vision.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">About</a>
-                <a href="services.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Services</a>
-                <a href="insights/expert-insights.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Insights</a>
-                <a href="case-studies.html" class="nav-link relative text-slate-300 hover:text-hydro-secondary transition tracking-wider p-2 uppercase">Case Studies</a>
-                <a href="app-iframe.html" target="_blank" rel="noopener noreferrer" class="nav-link relative text-slate-300 hover:text-green-500 transition tracking-widest font-extrabold text-lg p-2 uppercase">ANO HUB</a>
-                <a href="gallery.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Gallery</a>
-                <a href="protocol.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Protocol</a>
-                <a href="contact.html" class="bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-6 py-2.5 rounded-full transition transform hover:scale-105 shadow-xl font-bold tracking-wider uppercase text-base">Contact</a>
+            <nav class="hidden lg:flex items-center gap-6 text-xs font-bold uppercase tracking-wider">
+                <a href="index.html" class="text-slate-400 hover:text-white transition">Home</a>
+                <a href="protocol.html" class="group relative inline-flex items-center gap-2 px-5 py-2 bg-h-cyan/10 text-h-cyan border border-h-cyan/50 rounded-full hover:bg-h-cyan hover:text-black transition-all duration-300">
+                    <span>PROTOCOL</span>
+                    <div class="w-1.5 h-1.5 bg-h-cyan rounded-full animate-pulse-fast group-hover:bg-black"></div>
+                </a>
+                <a href="contact.html" class="px-5 py-2 bg-h-cta text-black rounded-full hover:bg-yellow-400 transition">Contact</a>
             </nav>
-            <div class="md:hidden">
-                <button id="mobile-menu-button" aria-label="Open menu" type="button" class="p-2 text-white"><svg data-lucide="menu" class="w-8 h-8"></svg></button>
-            </div>
-            <div id="mobile-menu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2 text-center bg-hydro-charcoal" aria-label="Mobile navigation menu">
-                <a href="about-us-vision.html" class="block hover:text-hydro-primary transition tracking-wider py-2">About</a>
-                <a href="services.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Services</a>
-                <a href="insights/expert-insights.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Insights</a>
-                <a href="case-studies.html" class="block hover:text-hydro-secondary transition tracking-wider py-2">Case Studies</a>
-                <a href="app-iframe.html" target="_blank" rel="noopener noreferrer" class="block hover:text-hydro-secondary transition tracking-wider py-2">ANO HUB</a>
-                <a href="gallery.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Gallery</a>
-                <a href="protocol.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Protocol</a>
-                <a href="contact.html" class="block bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-5 py-2 rounded-full transition shadow-md font-bold tracking-wider mt-2 text-center">Contact</a>
-            </div>
+            <button id="mobile-menu-btn" class="lg:hidden text-white p-2">
+                <svg data-lucide="menu" class="w-8 h-8"></svg>
+            </button>
+        </div>
+        <div id="mobile-menu" class="hidden lg:hidden absolute top-20 left-0 w-full bg-h-dark border-b border-h-border p-4 flex flex-col gap-4 shadow-2xl">
+            <a href="index.html" class="text-slate-300 hover:text-h-cyan py-2 border-b border-h-border">Home</a>
+            <a href="protocol.html" class="text-h-cyan font-bold py-2 border-b border-h-border flex items-center gap-2"><svg data-lucide="shield" class="w-4 h-4"></svg> PROTOCOL</a>
+            <a href="contact.html" class="text-h-cta font-bold py-2">Contact Us</a>
         </div>
     </header>
 
-    <main class="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8 fade-in-up">
-        
-        <!-- HERO HEADER ZA DOKUMENT -->
-        <div class="text-center mb-12">
-            <h1 class="text-4xl md:text-5xl font-black text-white mb-4">Terms of Service</h1>
-            <p class="text-xl text-slate-300 font-light">Operational framework and legal conditions for the AnoHUB ecosystem.</p>
-            <div class="mt-4 inline-block bg-hydro-secondary/10 text-hydro-secondary px-4 py-1 rounded-full text-xs font-bold tracking-widest border border-hydro-secondary/50">
-                LAST UPDATED: NOVEMBER 2025
-            </div>
-        </div>
+    <main class="pt-32 pb-20">
 
-        <!-- GLAVNI KONTEJNER -->
-        <div class="bg-hydro-slate p-8 md:p-12 rounded-2xl shadow-2xl border border-hydro-light-slate">
+        <!-- HERO -->
+        <section class="max-w-4xl mx-auto px-4 mb-16 text-center">
+            <div class="inline-flex items-center gap-4 mb-8">
+                <div class="flex items-center gap-2 px-3 py-1 rounded border border-slate-700 bg-slate-800 text-xs font-mono text-slate-400">
+                    AGREEMENT VER: 3.0
+                </div>
+                <div class="flex items-center gap-2 px-3 py-1 rounded border border-slate-700 bg-slate-800 text-xs font-mono text-slate-400">
+                    STATUS: ACTIVE
+                </div>
+            </div>
             
-            <p class="text-lg text-slate-300 mb-10 leading-relaxed border-l-4 border-hydro-primary pl-6">
-                These Terms of Use govern your access to and use of the Anohubs website, our digital content (including articles and insights), and pre-contractual services. By accessing or using the Site, you agree to be bound by these verifiable standards.
+            <h1 class="text-4xl md:text-6xl font-black text-white mb-6 tracking-tight leading-none animate-[fadeInUp_1s_ease-out]">
+                OPERATIONAL <br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-h-cyan to-blue-500">FRAMEWORK</span>
+            </h1>
+            <p class="text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed animate-[fadeInUp_1s_ease-out_0.2s_forwards] opacity-0">
+                The legal parameters and intellectual property rights governing the AnoHUB digital ecosystem.
             </p>
+        </section>
 
-            <!-- 1. IP -->
-            <div class="term-section">
-                <div class="flex items-center gap-3 mb-4">
-                    <div class="bg-hydro-charcoal p-2 rounded-lg border border-hydro-light-slate">
-                        <svg data-lucide="copyright" class="w-6 h-6 text-hydro-primary"></svg>
-                    </div>
-                    <h2 class="text-2xl font-bold text-white">1. Intellectual Property & License</h2>
-                </div>
-                <p class="text-slate-400 mb-4">
-                    All content published on Anohubs (including technical articles, diagrams, 3D models, and gallery images) is the exclusive property of Anohubs Inc. and is protected by international copyright laws.
+        <!-- CONTENT CONTAINER -->
+        <div class="max-w-4xl mx-auto px-4 space-y-8">
+
+            <!-- INTRO CARD -->
+            <div class="glass-panel p-8 rounded-xl border-l-4 border-l-h-cyan animate-[fadeInUp_1s_ease-out_0.4s_forwards] opacity-0">
+                <p class="text-lg text-slate-300 leading-relaxed">
+                    By accessing the Anohubs platform ("The Site"), you engage with our proprietary methodologies. These Terms of Use constitute a binding agreement between you and Anohubs Inc.
                 </p>
-                <ul class="list-disc ml-6 space-y-2 text-slate-300">
-                    <li><strong class="text-white">Limited License:</strong> You are granted a limited license to view, download, and print pages for personal, non-commercial use only.</li>
-                    <li><strong class="text-white">Prohibited Use:</strong> You must not republish, sell, rent, or reproduce our proprietary concepts, specifically the <strong>"48% Dynamic Risk"</strong> methodology and <strong>"Engineering Immunity Protocol"</strong>, without express written consent.</li>
-                </ul>
             </div>
 
-            <!-- 2. LIABILITY -->
-            <div class="term-section">
-                <div class="flex items-center gap-3 mb-4">
-                    <div class="bg-hydro-charcoal p-2 rounded-lg border border-hydro-light-slate">
-                        <svg data-lucide="alert-triangle" class="w-6 h-6 text-hydro-cta"></svg>
+            <!-- SECTION 1: INTELLECTUAL PROPERTY -->
+            <div class="glass-panel p-8 rounded-xl relative overflow-hidden pl-10 group animate-[fadeInUp_1s_ease-out_0.5s_forwards] opacity-0">
+                <div class="section-line"></div>
+                <div class="flex items-start gap-6">
+                    <div class="bg-slate-800 p-3 rounded-lg text-h-cyan"><svg data-lucide="copyright" class="w-8 h-8"></svg></div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-white mb-4">1. Intellectual Asset Protection</h2>
+                        <p class="text-slate-400 mb-4">
+                            All content, including but not limited to the <strong>"Engineering Immunity Protocol"</strong>, <strong>"48% Dynamic Risk"</strong> methodology, technical diagrams, and 3D models, is the exclusive intellectual property of Anohubs.
+                        </p>
+                        <ul class="list-disc list-outside ml-4 space-y-2 text-slate-300 text-sm">
+                            <li><strong class="text-white">Restricted Use:</strong> You may not reproduce, duplicate, copy, sell, or exploit any portion of the Service without express written permission.</li>
+                            <li><strong class="text-white">Limited License:</strong> Access is granted for informational and operational evaluation purposes only.</li>
+                        </ul>
                     </div>
-                    <h2 class="text-2xl font-bold text-white">2. Limitation of Liability (Insights)</h2>
-                </div>
-                <p class="text-slate-400 mb-4">
-                    The information provided on this website, including Expert Insights and Quick Risk Assessment results, is for general informational purposes only and does not constitute binding engineering advice.
-                </p>
-                <div class="bg-hydro-charcoal p-4 rounded-lg border-l-4 border-hydro-cta">
-                    <p class="text-sm text-slate-300">
-                        <strong class="text-hydro-cta">Disclaimer:</strong> Every hydropower plant requires a specific, on-site diagnostic. Anohubs accepts no liability for decisions made based solely on website content without a formal contract and audit.
-                    </p>
                 </div>
             </div>
 
-            <!-- 3. SECURITY -->
-            <div class="term-section">
-                <div class="flex items-center gap-3 mb-4">
-                    <div class="bg-hydro-charcoal p-2 rounded-lg border border-hydro-light-slate">
-                        <svg data-lucide="shield-check" class="w-6 h-6 text-hydro-secondary"></svg>
+            <!-- SECTION 2: LIABILITY DISCLAIMER -->
+            <div class="glass-panel p-8 rounded-xl relative overflow-hidden pl-10 group animate-[fadeInUp_1s_ease-out_0.6s_forwards] opacity-0">
+                <div class="section-line" style="background: #facc15;"></div>
+                <div class="flex items-start gap-6">
+                    <div class="bg-slate-800 p-3 rounded-lg text-h-yellow"><svg data-lucide="alert-triangle" class="w-8 h-8"></svg></div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-white mb-4">2. Operational Liability Boundaries</h2>
+                        <p class="text-slate-400 mb-4">
+                            The digital tools (LCC Calculator, Alignment Simulator) provided on this site are for <strong>demonstration and preliminary estimation only</strong>.
+                        </p>
+                        <div class="bg-h-yellow/10 border border-h-yellow/30 p-4 rounded text-sm text-h-yellow font-mono">
+                            WARNING: Do not base critical engineering decisions solely on web-based simulations. A physical, on-site audit by Anohubs certified personnel is required for binding technical recommendations.
+                        </div>
                     </div>
-                    <h2 class="text-2xl font-bold text-white">3. Acceptable Use & Security</h2>
                 </div>
-                <p class="text-slate-400">By using our digital services, you agree not to:</p>
-                <ul class="list-disc ml-6 mt-4 space-y-2 text-slate-300">
-                    <li>Compromise the integrity of the website through automated scraping or data mining.</li>
-                    <li>Attempt to bypass gallery protections to download proprietary imagery.</li>
-                    <li>Use the contact forms for unsolicited marketing (spam).</li>
-                </ul>
             </div>
 
-            <!-- 5. CONTACT -->
-            <div class="term-section">
-                <div class="flex items-center gap-3 mb-4">
-                    <div class="bg-hydro-charcoal p-2 rounded-lg border border-hydro-light-slate">
-                        <svg data-lucide="mail" class="w-6 h-6 text-white"></svg>
+            <!-- SECTION 3: ACCESS & SECURITY -->
+            <div class="glass-panel p-8 rounded-xl relative overflow-hidden pl-10 group animate-[fadeInUp_1s_ease-out_0.7s_forwards] opacity-0">
+                <div class="section-line"></div>
+                <div class="flex items-start gap-6">
+                    <div class="bg-slate-800 p-3 rounded-lg text-h-green"><svg data-lucide="shield-alert" class="w-8 h-8"></svg></div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-white mb-4">3. Access Protocols</h2>
+                        <p class="text-slate-400 mb-4">
+                            Unauthorized attempts to access the backend systems, bypass gallery protections, or inject malicious code will result in immediate IP banning and potential legal action.
+                        </p>
                     </div>
-                    <h2 class="text-2xl font-bold text-white">4. Legal Contact</h2>
                 </div>
-                <p class="text-slate-400 mb-4">
-                    For any legal inquiries regarding these Terms of Use or intellectual property rights, please contact our legal team directly.
-                </p>
-                <div class="p-4 bg-hydro-charcoal rounded-md border border-slate-600 inline-block">
-                    <p class="text-hydro-primary font-mono">legal@anohubs.com</p>
+            </div>
+
+            <!-- SECTION 4: LEGAL CONTACT -->
+            <div class="glass-panel p-8 rounded-xl relative overflow-hidden pl-10 group animate-[fadeInUp_1s_ease-out_0.8s_forwards] opacity-0">
+                <div class="section-line"></div>
+                <div class="flex items-start gap-6">
+                    <div class="bg-slate-800 p-3 rounded-lg text-h-cta"><svg data-lucide="gavel" class="w-8 h-8"></svg></div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-white mb-4">4. Jurisdiction & Arbitration</h2>
+                        <p class="text-slate-400 mb-6">
+                            These Terms shall be governed by the laws of Bosnia & Herzegovina. Any disputes arising from the use of this site shall be resolved through binding arbitration in Bihać.
+                        </p>
+                        <a href="mailto:legal@anohubs.com" class="inline-flex items-center gap-2 text-white font-bold hover:text-h-cyan transition">
+                            <svg data-lucide="mail" class="w-4 h-4"></svg> legal@anohubs.com
+                        </a>
+                    </div>
                 </div>
             </div>
 
         </div>
     </main>
-    
-    <!-- FOOTER -->
-    <div class="md:hidden mobile-sticky-cta text-center">
-        <a href="contact.html" class="w-full block text-center bg-hydro-primary hover:bg-cyan-500 text-hydro-charcoal px-5 py-3 font-bold tracking-wider uppercase shadow-2xl">SCHEDULE AUDIT</a>
-    </div>
 
-    <footer class="bg-hydro-slate text-hydro-gray py-8 text-center border-t border-hydro-light-slate" role="contentinfo">
-        <div class="container mx-auto px-6">
-           <a href="index.html#hero" class="mb-4 block" aria-label="Anohubs Logo - Back to Home">
-               <img src="logo.svg" alt="Anohubs Logo" class="anohubs-logo mx-auto">
-           </a>
-           <p class="text-slate-400 mb-6">Establishing the global standard for hydro integrity.</p>
-           <nav class="flex justify-center space-x-6 text-sm mb-4">
-               <a href="about-us-vision.html" class="text-slate-400 hover:text-hydro-primary">About</a>
-               <a href="services.html" class="text-slate-400 hover:text-hydro-primary">Services</a>
-               <a href="insights/expert-insights.html" class="text-slate-400 hover:text-hydro-primary">Insights</a>
-               <a href="case-studies.html" class="text-slate-400 hover:text-hydro-primary">Case Studies</a>
-               <a href="gallery.html" class="text-slate-400 hover:text-hydro-primary">Gallery</a>
-               <a href="protocol.html" class="text-slate-400 hover:text-hydro-primary">Protocol</a>
-               <a href="contact.html" class="text-slate-400 hover:text-hydro-primary">Contact</a>
-           </nav>
-           <div class="flex justify-center space-x-4 text-xs mb-4">
-                <a href="privacy-policy.html" class="text-slate-500 hover:text-slate-300 underline">Privacy Policy</a>
-                <span class="text-slate-500">|</span>
-                <a href="terms-of-use.html" class="text-slate-500 hover:text-slate-300 underline">Terms of Use</a>
-           </div>
-           <p class="text-sm">&copy; <span id="year"></span> Anohubs Inc. All rights reserved.</p>
+    <footer class="bg-black border-t border-slate-900 py-8 text-center mt-20">
+        <div class="max-w-7xl mx-auto px-4">
+            <p class="text-slate-600 text-xs font-mono">© 2025 Anohubs Inc. | LEGAL DIVISION</p>
         </div>
     </footer>
 
-    <!-- SKRIPTE -->
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
-    <script src="js/ui_core.js"></script>
-    <script src="js/animation_logic.js"></script>
+    <!-- SCRIPTS -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script>
+        lucide.createIcons();
+        
+        // Mobile Menu
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Navbar Scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('shadow-lg', 'bg-h-dark/95');
+                nav.classList.remove('bg-h-dark/90');
+            } else {
+                nav.classList.remove('shadow-lg', 'bg-h-dark/95');
+                nav.classList.add('bg-h-dark/90');
+            }
+        });
+    </script>
 </body>
 </html>

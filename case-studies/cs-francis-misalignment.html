@@ -1,227 +1,247 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>98% Availability: Neutralizing Hidden Dynamic Risk | Anohubs Case Study</title>
+    <title>MISSION: 98% Availability | AnoHUB Case Study</title>
     <meta name="description" content="Case Study: Correcting Francis turbine misalignment to eliminate 48% dynamic risk and achieve 99.1% availability using the AnoHUB Protocol.">
     
-    <!-- 1. JS INICIJALIZACIJA -->
-    <script src="../js/head-init.js"></script>
-
-    <!-- 2. FONTOVI -->
+    <!-- 1. FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     
-    <!-- 3. TAILWIND CDN -->
+    <!-- 2. TAILWIND -->
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- 4. TAILWIND KONFIGURACIJA -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
+                    fontFamily: { 
+                        sans: ['Inter', 'sans-serif'], 
+                        mono: ['JetBrains Mono', 'monospace'] 
+                    },
                     colors: {
-                        'hydro-primary': '#22d3ee', 
-                        'hydro-secondary': '#4ade80', 
-                        'hydro-risk': '#ef4444', 
-                        'hydro-cta': '#f59e0b', 
-                        'hydro-charcoal': '#111827', 
-                        'hydro-slate': '#1E293B', 
-                        'hydro-light-slate': '#334155', 
-                        'hydro-gray': '#475569',
-                    },
-                    fontSize: {
-                        'h1-hero': 'clamp(2.5rem, 5vw + 1rem, 4.5rem)',
-                    },
+                        'h-cyan': '#06b6d4', /* Cyan for Francis/Mech */
+                        'h-green': '#10b981', 
+                        'h-red': '#ef4444', 
+                        'h-yellow': '#facc15', 
+                        'h-dark': '#020617', 
+                        'h-panel': '#0f172a', 
+                        'h-border': '#1e293b',
+                        'h-cta': '#f59e0b'
+                    }
                 }
             }
         }
     </script>
 
-    <!-- 5. STILOVI -->
-    <link href="../css/anohubs.css" rel="stylesheet">
-    <link href="../css/article-styles.css" rel="stylesheet">
-    
     <style>
-        body { background-color: #111827; color: #E5E7EB; }
+        body { background-color: #020617; color: #cbd5e1; overflow-x: hidden; }
         
-        /* STILOVI ZA USKLAĐIVANJE SA PROTOCOL.HTML */
-        .anohubs-logo { width: 140px; height: auto; }
-        .anohubs-logo-compact { width: 90px; height: auto; }
-
-        .content-overlay { 
-            background-color: rgba(30, 41, 59, 0.95); 
-            padding: 2.5rem; 
-            border-radius: 1rem; 
-            border-top: 4px solid #22d3ee; 
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5); 
+        /* Tech Background */
+        .tech-bg {
+            background-image: 
+                linear-gradient(rgba(6, 182, 212, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(6, 182, 212, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
         }
-        .footer-compact { padding-top: 1rem; padding-bottom: 1rem; }
+
+        /* Mission Stamp */
+        .mission-stamp {
+            border: 2px solid #06b6d4;
+            color: #06b6d4;
+            padding: 0.5rem 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: inline-block;
+            transform: rotate(-5deg);
+            opacity: 0.8;
+        }
+
+        /* Glass Panel */
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid #1e293b;
+        }
     </style>
 </head>
-<body class="bg-hydro-charcoal text-white"> 
-    
-    <!-- HEADER -->
-    <header class="bg-hydro-charcoal text-white shadow-2xl sticky top-0 z-50 border-b border-hydro-primary/50" role="banner">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex justify-between items-center">
-            <a href="../index.html#hero" class="focus:outline-none transition" aria-label="Anohubs Logo - Back to Home">
-                <img src="../logo.svg" alt="Anohubs Logo" class="anohubs-logo">
+
+<body class="antialiased selection:bg-h-cyan selection:text-black">
+    <div class="tech-bg"></div>
+
+    <!-- NAV -->
+    <header class="fixed w-full z-50 top-0 border-b border-white/5 bg-h-dark/90 backdrop-blur-md" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 h-16 flex justify-between items-center">
+            <a href="../index.html" class="flex items-center gap-3 group">
+                <img src="../logo.svg" alt="AnoHUB" class="h-8 w-auto opacity-80 group-hover:opacity-100 transition">
+                <span class="font-mono text-xs text-slate-500 group-hover:text-h-cyan transition">MISSION ARCHIVE // CASE 005</span>
             </a>
-            
-            <nav class="hidden md:flex items-center space-x-6 font-extrabold text-sm" role="navigation" aria-label="Main navigation">
-                <a href="../about-us-vision.html" class="text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">About</a>
-                <a href="../services.html" class="text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Services</a>
-                <a href="../insights/expert-insights.html" class="text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Insights</a>
-                <a href="../case-studies.html" class="text-hydro-secondary transition tracking-wider p-2 uppercase">Case Studies</a>
-                <a href="../app-iframe.html" target="_blank" class="text-slate-300 hover:text-green-500 transition tracking-widest font-extrabold text-lg p-2 uppercase">ANO HUB</a>
-                <a href="../gallery.html" class="text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Gallery</a>
-                <a href="../protocol.html" class="text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Protocol</a>
-                <a href="../contact.html" class="bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-6 py-2.5 rounded-full transition shadow-md font-bold tracking-wider uppercase text-base">Contact</a>
-            </nav>
-            
-            <div class="md:hidden">
-                <button id="mobile-menu-button" aria-label="Open menu" type="button" class="p-2 text-white">
-                    <svg data-lucide="menu" class="w-8 h-8"></svg>
-                </button>
-            </div>
-            
-            <!-- MOBILE MENU -->
-            <div id="mobile-menu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2 text-center bg-hydro-charcoal" aria-label="Mobile navigation menu">
-                <a href="../about-us-vision.html" class="block hover:text-hydro-primary transition tracking-wider py-2">About</a>
-                <a href="../services.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Services</a>
-                <a href="../insights/expert-insights.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Insights</a>
-                <a href="../case-studies.html" class="block hover:text-hydro-secondary transition tracking-wider py-2">Case Studies</a>
-                <a href="../app-iframe.html" target="_blank" class="block hover:text-hydro-secondary transition tracking-wider py-2">ANO HUB</a>
-                <a href="../gallery.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Gallery</a>
-                <a href="../protocol.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Protocol</a>
-                <a href="../contact.html" class="block bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-5 py-2 rounded-full transition shadow-md font-bold tracking-wider mt-2 text-center">Contact</a>
-            </div>
+            <a href="../case-studies.html" class="text-xs font-bold text-slate-400 hover:text-white uppercase tracking-widest flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                Return to Index
+            </a>
         </div>
     </header>
 
-    <main class="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8 article-container">
-        
-        <a href="../case-studies.html" class="inline-block text-lg font-bold text-hydro-primary hover:text-cyan-500 mt-4 mb-4">← Back to Case Studies Archive</a>
+    <main class="pt-32 pb-20">
+        <div class="max-w-6xl mx-auto px-4">
 
-        <div class="content-overlay shadow-2xl">
-            
-            <!-- SLIKA STUDIJE -->
-            <img src="../slike/cs_francis_misalignment.png" alt="Francis turbine shaft misalignment correction" class="w-full h-auto rounded-lg mb-8 shadow-lg border border-slate-600">
-
-            <h1 class="text-3xl md:text-4xl font-black text-white mb-4">98% Availability: Neutralizing Hidden Dynamic Risk</h1>
-            
-            <p class="text-lg text-slate-300 mb-8 border-l-4 border-hydro-secondary pl-4 italic">
-                **Problem:** Recurring Vibration | **Solution:** Precision Alignment (0.05mm) | **Outcome:** 48% Risk Eliminated.
-            </p>
-
-            <h2 class="text-2xl font-bold text-hydro-primary mb-4">1. The Challenge: Invisible Instability</h2>
-            <p class="text-slate-300 mb-4 leading-relaxed">
-                The plant (Francis, 25MW) experienced frequent unplanned shutdowns and accelerating bearing wear (guide bearings lasting only 18 months). Previous service providers attributed the issue to "normal component fatigue" and recommended standard replacements. 
-            </p>
-            <p class="text-slate-300 mb-6 leading-relaxed">
-                Our initial audit revealed a systemic <strong>Organizational Execution Gap</strong>: The shaft alignment deviation exceeded 0.15 mm/m, creating a latent dynamic instability (the 48% risk factor) that no bearing replacement could fix.
-            </p>
-
-            <h2 class="text-2xl font-bold text-hydro-primary mb-4">2. The AnoHUB Protocol: Root Cause Correction</h2>
-            <ul class="space-y-4 text-slate-300 mb-8">
-                <li class="flex items-start gap-3 bg-hydro-charcoal/50 p-4 rounded-lg border border-slate-700">
-                    <svg data-lucide="activity" class="w-6 h-6 text-hydro-secondary mt-1 flex-shrink-0"></svg> 
-                    <div><strong>Forensic NDT Audit:</strong> Acoustic monitoring pinpointed specific vibration harmonics (2x RPM) indicative of misalignment, ruling out hydraulic imbalance.</div>
-                </li>
-                <li class="flex items-start gap-3 bg-hydro-charcoal/50 p-4 rounded-lg border border-slate-700">
-                    <svg data-lucide="compass" class="w-6 h-6 text-hydro-secondary mt-1 flex-shrink-0"></svg> 
-                    <div><strong>Precision Alignment:</strong> We enforced the non-negotiable <strong>0.05 mm/m</strong> tolerance on the shaft assembly using dual-laser systems.</div>
-                </li>
-                <li class="flex items-start gap-3 bg-hydro-charcoal/50 p-4 rounded-lg border border-slate-700">
-                    <svg data-lucide="zap" class="w-6 h-6 text-hydro-secondary mt-1 flex-shrink-0"></svg> 
-                    <div><strong>M-E Synergy Check:</strong> Identified hidden grounding issues in the generator, eliminating stray currents that were accelerating bearing wear via electro-erosion.</div>
-                </li>
-            </ul>
-            
-            <!-- REZULTATI GRID -->
-            <div class="grid md:grid-cols-3 gap-4 my-8 text-center">
-                <div class="bg-hydro-charcoal p-6 rounded-lg border border-hydro-secondary shadow-md">
-                    <p class="text-3xl font-black text-hydro-secondary">99.1%</p>
-                    <p class="text-xs uppercase text-slate-400 font-bold tracking-wider">New Availability</p>
+            <!-- MISSION HEADER -->
+            <div class="grid lg:grid-cols-12 gap-12 mb-20">
+                <div class="lg:col-span-8">
+                    <div class="flex items-center gap-4 mb-6">
+                        <span class="px-3 py-1 rounded bg-h-cyan/10 text-h-cyan border border-h-cyan/20 text-xs font-mono font-bold">DYNAMIC STABILIZATION</span>
+                        <span class="text-slate-500 text-xs font-mono">DATE: MAR 2025</span>
+                    </div>
+                    <h1 class="text-4xl md:text-6xl font-black text-white mb-6 leading-tight">
+                        98% Availability: <br> Neutralizing <span class="text-h-cyan">Dynamic Risk</span>
+                    </h1>
+                    <p class="text-xl text-slate-400 leading-relaxed border-l-4 border-h-cyan pl-6">
+                        <strong>The Mission:</strong> A Francis plant (25MW) suffered chronic vibration and bearing failures. Previous "fixes" addressed symptoms. Our objective: Eliminate the root cause misalignment and restore uptime.
+                    </p>
                 </div>
-                <div class="bg-hydro-charcoal p-6 rounded-lg border border-hydro-primary shadow-md">
-                    <p class="text-3xl font-black text-hydro-primary">70%</p>
-                    <p class="text-xs uppercase text-slate-400 font-bold tracking-wider">Vibration Reduction</p>
-                </div>
-                <div class="bg-hydro-charcoal p-6 rounded-lg border border-hydro-cta shadow-md">
-                    <p class="text-3xl font-black text-hydro-cta">€500K</p>
-                    <p class="text-xs uppercase text-slate-400 font-bold tracking-wider">Avoided Costs (5yr)</p>
+                <div class="lg:col-span-4 flex items-center justify-center lg:justify-end">
+                    <div class="mission-stamp p-4 text-center">
+                        MISSION STATUS:<br>
+                        <span class="text-2xl">OPTIMIZED</span>
+                    </div>
                 </div>
             </div>
 
-            <!-- ANO HUB EXECUTION SERVICE SEKCIJA -->
-            <div class="mt-12 pt-8 border-t border-slate-600 bg-hydro-slate/30 p-8 rounded-xl border border-hydro-light-slate/50">
-                <h2 class="text-2xl font-bold text-white mb-6 text-center">AnoHUB Execution Service</h2>
-                <p class="text-center text-slate-400 mb-8 text-sm">We didn't just diagnose; we executed the fix.</p>
+            <!-- EXECUTION DATA -->
+            <div class="grid md:grid-cols-3 gap-6 mb-20">
+                <!-- Metric 1 -->
+                <div class="glass-panel p-6 rounded-xl border-t-4 border-t-h-cyan text-center">
+                    <div class="text-xs font-mono text-slate-500 uppercase mb-2">New Availability</div>
+                    <div class="text-5xl font-black text-white mb-2">99.1%</div>
+                    <p class="text-xs text-h-cyan">Exceeds Target</p>
+                </div>
+                <!-- Metric 2 -->
+                <div class="glass-panel p-6 rounded-xl border-t-4 border-t-h-cyan text-center">
+                    <div class="text-xs font-mono text-slate-500 uppercase mb-2">Vibration Drop</div>
+                    <div class="text-5xl font-black text-white mb-2">-70%</div>
+                    <p class="text-xs text-h-cyan">ISO Zone A Achieved</p>
+                </div>
+                <!-- Metric 3 -->
+                <div class="glass-panel p-6 rounded-xl border-t-4 border-t-h-cyan text-center">
+                    <div class="text-xs font-mono text-slate-500 uppercase mb-2">Avoided Cost</div>
+                    <div class="text-5xl font-black text-white mb-2">€500K</div>
+                    <p class="text-xs text-h-cyan">5-Year Projection</p>
+                </div>
+            </div>
+
+            <!-- DETAILED REPORT -->
+            <div class="grid lg:grid-cols-12 gap-12">
                 
-                <div class="grid md:grid-cols-2 gap-6 text-sm">
-                    <div class="bg-hydro-charcoal/80 p-5 rounded-lg flex gap-4 items-start border border-slate-700 hover:border-hydro-cta transition">
-                        <svg data-lucide="truck" class="w-8 h-8 text-hydro-cta flex-shrink-0"></svg>
-                        <div>
-                            <h3 class="font-bold text-white text-base">Rapid Part Deployment</h3>
-                            <p class="text-slate-400 mt-2 leading-relaxed">We sourced and delivered precision-machined guide bearings within 72 hours of diagnosis to minimize downtime.</p>
-                        </div>
-                    </div>
+                <!-- Left: Narrative -->
+                <div class="lg:col-span-8 space-y-12 text-slate-300">
                     
-                     <div class="bg-hydro-charcoal/80 p-5 rounded-lg flex gap-4 items-start border border-slate-700 hover:border-hydro-secondary transition">
-                        <svg data-lucide="users" class="w-8 h-8 text-hydro-secondary flex-shrink-0"></svg>
-                        <div>
-                            <h3 class="font-bold text-white text-base">On-Site Supervision</h3>
-                            <p class="text-slate-400 mt-2 leading-relaxed">Our Lead Supervisor oversaw the entire re-alignment process, ensuring zero compromise on tolerances by the local contractor.</p>
+                    <section>
+                        <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-3">
+                            <span class="bg-h-red/20 text-h-red w-8 h-8 flex items-center justify-center rounded text-sm font-mono">01</span>
+                            The Threat Vector
+                        </h2>
+                        <p>
+                            The plant experienced frequent unplanned shutdowns and accelerating bearing wear (guide bearings lasting only 18 months vs. expected 5 years). Previous service providers attributed the issue to "normal component fatigue" and recommended standard replacements, ignoring the underlying geometry.
+                        </p>
+                        <div class="bg-h-red/5 border border-h-red/20 p-4 rounded-lg mt-4">
+                            <p class="text-sm text-h-red font-mono">
+                                > RISK DETECTED: SYSTEMIC MISALIGNMENT (>0.15 mm/m)<br>
+                                > CONSEQUENCE: ACCELERATED BEARING DESTRUCTION
+                            </p>
+                        </div>
+                    </section>
+
+                    <section>
+                        <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-3">
+                            <span class="bg-h-cyan/20 text-h-cyan w-8 h-8 flex items-center justify-center rounded text-sm font-mono">02</span>
+                            Tactical Execution
+                        </h2>
+                        <p>We deployed the <strong>AnoHUB Precision Protocol</strong> to correct the root cause:</p>
+                        
+                        <ul class="space-y-4 mt-6">
+                            <li class="flex gap-4">
+                                <div class="mt-1"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-h-cyan"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+                                <div>
+                                    <strong class="text-white block">Forensic NDT Audit</strong>
+                                    Acoustic monitoring pinpointed specific vibration harmonics (2x RPM) indicative of misalignment, definitively ruling out hydraulic imbalance or magnetic pull.
+                                </div>
+                            </li>
+                            <li class="flex gap-4">
+                                <div class="mt-1"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-h-cyan"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></div>
+                                <div>
+                                    <strong class="text-white block">Precision Re-Alignment</strong>
+                                    We enforced the non-negotiable <strong>0.05 mm/m</strong> tolerance on the shaft assembly using dual-laser systems, correcting the 0.15mm deviation.
+                                </div>
+                            </li>
+                            <li class="flex gap-4">
+                                <div class="mt-1"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-h-cyan"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+                                <div>
+                                    <strong class="text-white block">M-E Synergy Check</strong>
+                                    Identified hidden grounding issues in the generator as a secondary factor, eliminating stray currents that were accelerating bearing wear via electro-erosion.
+                                </div>
+                            </li>
+                        </ul>
+                    </section>
+
+                </div>
+
+                <!-- Right: Sticky Context -->
+                <aside class="lg:col-span-4 space-y-6">
+                    <div class="glass-panel p-6 rounded-xl border-t-2 border-h-cyan sticky top-24">
+                        <h3 class="text-white font-bold mb-4 uppercase tracking-widest text-sm">Deployed Service</h3>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-3 text-sm text-slate-400">
+                                <div class="bg-h-dark p-2 rounded text-h-cyan"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="8" x="5" y="2" rx="2"/><rect width="20" height="8" x="2" y="14" rx="2"/><path d="M6 10v4"/><path d="M18 10v4"/></svg></div>
+                                <span>Rapid Part Deployment</span>
+                            </div>
+                            <div class="flex items-center gap-3 text-sm text-slate-400">
+                                <div class="bg-h-dark p-2 rounded text-h-cyan"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+                                <span>On-Site Supervision</span>
+                            </div>
+                        </div>
+
+                        <div class="mt-8 pt-6 border-t border-slate-700">
+                            <p class="text-xs text-slate-500 mb-4">Recurring vibration issues?</p>
+                            <a href="../contact.html" class="block w-full text-center bg-h-cyan hover:bg-cyan-400 text-black font-bold py-3 rounded uppercase tracking-wider text-xs transition">
+                                Request Alignment
+                            </a>
                         </div>
                     </div>
-                </div>
+                </aside>
+
             </div>
 
-            <div class="mt-12 text-center">
-                <a href="../contact.html" class="inline-block bg-hydro-cta text-hydro-charcoal font-bold py-4 px-10 rounded-full hover:bg-yellow-500 transition shadow-xl uppercase tracking-wider transform hover:scale-105">
-                    Request Similar Audit
+            <!-- FOOTER NAV -->
+            <div class="mt-24 pt-8 border-t border-slate-800 flex justify-between items-center">
+                <a href="../case-studies.html" class="text-slate-500 hover:text-white text-sm flex items-center gap-2 transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                    Back to Archive
+                </a>
+                <a href="cs-hydraulic-hammer-mitigation.html" class="text-h-cyan hover:text-white text-sm flex items-center gap-2 transition">
+                    Next Mission: Water Hammer
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
                 </a>
             </div>
+
         </div>
     </main>
-    
-    <!-- FOOTER -->
-    <div class="md:hidden mobile-sticky-cta text-center">
-        <a href="../contact.html" class="w-full block text-center bg-hydro-primary hover:bg-cyan-500 text-hydro-charcoal px-5 py-3 font-bold tracking-wider uppercase shadow-2xl">
-            SCHEDULE AUDIT
-        </a>
-    </div>
 
-    <footer class="bg-hydro-slate text-hydro-gray py-8 text-center border-t border-hydro-light-slate footer-compact" role="contentinfo">
-        <div class="container mx-auto px-6">
-           <a href="../index.html#hero" class="mb-2 block" aria-label="Anohubs Logo - Back to Home">
-               <img src="../logo.svg" alt="Anohubs Logo" class="anohubs-logo-compact">
-           </a>
-           <p class="text-slate-400 mb-3 text-sm">Establishing the global standard for hydro integrity.</p>
-           <nav class="flex justify-center space-x-4 text-xs mb-2">
-               <a href="../about-us-vision.html" class="text-slate-400 hover:text-hydro-primary">About</a>
-               <a href="../services.html" class="text-slate-400 hover:text-hydro-primary">Services</a>
-               <a href="../insights/expert-insights.html" class="text-slate-400 hover:text-hydro-primary">Insights</a>
-               <a href="../case-studies.html" class="text-slate-400 hover:text-hydro-primary">Case Studies</a>
-               <a href="../gallery.html" class="text-slate-400 hover:text-hydro-primary">Gallery</a>
-               <a href="../protocol.html" class="text-slate-400 hover:text-hydro-primary">Protocol</a>
-               <a href="../contact.html" class="text-slate-400 hover:text-hydro-primary">Contact</a>
-           </nav>
-           <div class="flex justify-center space-x-4 text-xs mb-4">
-                <a href="../privacy-policy.html" class="text-slate-500 hover:text-slate-300 underline">Privacy Policy</a>
-                <span class="text-slate-500">|</span>
-                <a href="../terms-of-use.html" class="text-slate-500 hover:text-slate-300 underline">Terms of Use</a>
-           </div>
-           <p class="text-sm">&copy; 2025 Anohubs Inc. All rights reserved.</p>
+    <footer class="bg-black border-t border-slate-900 py-8 text-center text-xs font-mono text-slate-600">
+        <div class="max-w-7xl mx-auto px-4">
+            &copy; 2025 ANOHUBS INC. | MISSION LOG: CLOSED
         </div>
     </footer>
 
-    <!-- SKRIPTE -->
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
-    <script src="../js/ui_core.js"></script>
-    <script src="../js/animation_logic.js"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
 </body>
 </html>

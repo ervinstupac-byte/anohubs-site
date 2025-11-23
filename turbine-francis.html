@@ -1,247 +1,422 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Francis Turbine Integrity | Anohubs: Advanced Analytics</title>
-    <meta name="description" content="In-depth integrity analysis for Francis turbines focusing on optimal blade geometry, cavitation risk mitigation, and CFD optimization protocols.">
+    <title>Francis Turbine Protocol | AnoHUB</title>
+    <meta name="description" content="Advanced integrity analysis for Francis turbines. Hill chart optimization, cavitation mapping, and vibration analysis.">
     
-    <!-- 1. STANDARDNA JS INICIJALIZACIJA -->
-    <script src="js/head-init.js"></script>
-
-    <!-- 2. FONTOVI -->
+    <!-- 1. FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     
-    <!-- 3. KRITIČNO: TAILWIND CSS CDN -->
+    <!-- 2. TAILWIND -->
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- 4. TAILWIND CONFIG -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
+                    fontFamily: { 
+                        sans: ['Inter', 'sans-serif'], 
+                        mono: ['JetBrains Mono', 'monospace'] 
+                    },
                     colors: {
-                        'hydro-primary': '#22d3ee', 
-                        'hydro-secondary': '#4ade80', 
-                        'hydro-risk': '#ef4444', 
-                        'hydro-cta': '#f59e0b', 
-                        'hydro-charcoal': '#111827', 
-                        'hydro-slate': '#1E293B', 
-                        'hydro-light-slate': '#334155', 
-                        'hydro-gray': '#475569',
+                        'h-cyan': '#06b6d4', 
+                        'h-green': '#10b981', 
+                        'h-red': '#ef4444', 
+                        'h-yellow': '#facc15', 
+                        'h-blue': '#3b82f6',
+                        'h-dark': '#020617', 
+                        'h-panel': '#0f172a', 
+                        'h-border': '#1e293b',
+                        'h-cta': '#f59e0b'
                     },
-                    fontSize: {
-                        'h1-hero': 'clamp(2.5rem, 5vw + 1rem, 4.5rem)',
-                    },
-                },
+                    animation: {
+                        'spin-slow': 'spin 10s linear infinite',
+                        'pulse-fast': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }
+                }
             }
         }
     </script>
 
-    <!-- 5. GLOBALNI STILOVI -->
-    <link href="css/anohubs.css" rel="stylesheet">
-
-    <!-- 3D MODEL VIEWER -->
-    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/1.13.0/model-viewer.min.js"></script>
-    
     <style>
-        body {
-            background-image: url('orljani_Una.jpg'); 
+        body { background-color: #020617; color: #f8fafc; overflow-x: hidden; }
+        
+        /* Hero Background */
+        .hero-francis {
+            background-image: linear-gradient(180deg, rgba(2,6,23,0.6) 0%, rgba(2,6,23,0.95) 100%), url('francis-diagram.jpg');
             background-size: cover;
+            background-position: center;
             background-attachment: fixed;
-            background-position: center; 
-            min-height: 100vh;
         }
-        .header-bg { background-color: rgba(17, 24, 39, 0.95); }
-        .anohubs-logo-compact { width: 90px; height: auto; color: #22d3ee; }
-        @media (min-width: 768px) { .anohubs-logo-compact { width: 120px; } }
 
-        .content-overlay {
-            background-color: rgba(30, 41, 59, 0.85);
-            padding: 3rem 2rem;
-            border-radius: 0.75rem; 
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6); 
-            border-top: 5px solid #22d3ee;
-            transform: translateZ(0); 
+        /* Glass Panels */
+        .glass-card {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            transition: all 0.3s ease;
         }
-        .text-glow { text-shadow: 0 0 15px rgba(34, 211, 238, 0.7); }
 
-        model-viewer { width: 100%; height: 450px; background-color: #111827; border-radius: 0.5rem; }
-        .progress-bar { z-index: 10; position: absolute; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.8); }
-        .tech-list li { padding: 1rem; background-color: rgba(51, 65, 85, 0.6); border-radius: 0.5rem; border-left: 3px solid #22d3ee; transition: transform 0.2s; }
-        .tech-list li:hover { transform: translateX(5px); }
+        /* Hill Chart Styles */
+        .hill-chart-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            background: radial-gradient(circle at 50% 50%, rgba(6,182,212,0.1) 0%, transparent 70%);
+            border: 1px solid #334155;
+            border-radius: 1rem;
+            overflow: hidden;
+        }
+        .contour-line {
+            fill: none;
+            stroke: #334155;
+            stroke-width: 1;
+            stroke-dasharray: 5 5;
+        }
+        .op-point {
+            width: 12px; height: 12px;
+            background: #ef4444;
+            border: 2px solid white;
+            border-radius: 50%;
+            position: absolute;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 15px #ef4444;
+            transition: all 0.3s ease-out;
+        }
+        .optimal-zone {
+            position: absolute; top: 50%; left: 50%;
+            width: 100px; height: 60px;
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid #10b981;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            filter: blur(10px);
+        }
+
+        /* Range Slider */
+        input[type=range] { -webkit-appearance: none; background: transparent; }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none; height: 16px; width: 16px; border-radius: 50%;
+            background: #06b6d4; cursor: pointer; margin-top: -6px; border: 2px solid white;
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%; height: 4px; background: #334155; border-radius: 2px;
+        }
     </style>
 </head>
-<body class="text-white bg-hydro-charcoal">
 
-    <!-- HEADER -->
-    <header class="bg-hydro-charcoal shadow-2xl sticky top-0 z-50 border-b border-hydro-primary/50" role="banner">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-1 flex justify-between items-center">
-            <a href="index.html#hero" class="focus:outline-none transition" aria-label="Anohubs Logo - Back to top" aria-current="page">
-                 <img src="logo.svg" alt="Anohubs Logo" class="anohubs-logo-compact">
+<body class="antialiased">
+
+    <!-- NAV -->
+    <header class="fixed w-full z-50 top-0 border-b border-white/5 bg-h-dark/90 backdrop-blur-md transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 h-20 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-3 group">
+                <img src="logo.svg" alt="AnoHUB" class="h-10 w-auto transition group-hover:brightness-125">
+                <div class="hidden md:block">
+                    <span class="block text-lg font-black tracking-tighter text-white leading-none">ANOHUBS</span>
+                    <span class="block text-[10px] font-mono text-h-cyan tracking-widest uppercase">Turbine: Francis</span>
+                </div>
             </a>
-            <nav class="hidden md:flex items-center space-x-4 font-extrabold text-sm" role="navigation" aria-label="Main navigation">
-                <a href="about-us-vision.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">About</a>
-                <!-- POPRAVLJENO: Vodi na services.html -->
-                <a href="services.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Services</a> 
-                <a href="insights/expert-insights.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Insights</a>
-                <a href="case-studies.html" class="nav-link relative text-slate-300 hover:text-hydro-secondary transition tracking-wider p-2 uppercase">Case Studies</a>
-                <a href="app-iframe.html" target="_blank" rel="noopener noreferrer" class="nav-link relative text-hydro-secondary hover:text-green-500 transition tracking-widest font-extrabold text-lg p-2 uppercase">ANO HUB</a>
-                <a href="gallery.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Gallery</a>
-                <a href="protocol.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Protocol</a>
-                <a href="contact.html" class="bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-6 py-2.5 rounded-full transition transform hover:scale-105 shadow-xl font-bold tracking-wider uppercase text-base">Contact</a>
+            <nav class="hidden lg:flex items-center gap-6 text-xs font-bold uppercase tracking-wider">
+                <a href="index.html" class="text-slate-400 hover:text-white transition">Home</a>
+                <a href="services.html" class="text-h-cyan transition flex items-center gap-2"><svg data-lucide="arrow-left" class="w-3 h-3"></svg> Capabilities</a>
+                <a href="protocol.html" class="group relative inline-flex items-center gap-2 px-5 py-2 bg-h-cyan/10 text-h-cyan border border-h-cyan/50 rounded-full hover:bg-h-cyan hover:text-black transition-all duration-300">
+                    <span>PROTOCOL</span>
+                    <div class="w-1.5 h-1.5 bg-h-cyan rounded-full animate-pulse"></div>
+                </a>
+                <a href="contact.html" class="px-5 py-2 bg-h-cta text-black rounded-full hover:bg-yellow-400 transition">Contact</a>
             </nav>
-            <div class="md:hidden">
-                <button id="mobile-menu-button" aria-label="Open menu" type="button" class="p-2 text-white"><svg data-lucide="menu" class="w-8 h-8"></svg></button>
-            </div>
-            <div id="mobile-menu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2 text-center bg-hydro-charcoal" aria-label="Mobile navigation menu">
-                <a href="about-us-vision.html" class="block hover:text-hydro-primary transition tracking-wider py-2">About</a>
-                <a href="services.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Services</a>
-                <a href="insights/expert-insights.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Insights</a>
-                <a href="case-studies.html" class="block hover:text-hydro-secondary transition tracking-wider py-2">Case Studies</a>
-                <a href="app-iframe.html" target="_blank" rel="noopener noreferrer" class="block hover:text-hydro-secondary transition tracking-wider py-2">ANO HUB</a>
-                <a href="gallery.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Gallery</a>
-                <a href="protocol.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Protocol</a>
-                <a href="contact.html" class="block bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-5 py-2 rounded-full transition shadow-md font-bold tracking-wider mt-2 text-center">Contact</a>
-            </div>
+            <button id="mobile-menu-btn" class="lg:hidden text-white p-2">
+                <svg data-lucide="menu" class="w-8 h-8"></svg>
+            </button>
+        </div>
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu" class="hidden lg:hidden absolute top-20 left-0 w-full bg-h-dark border-b border-h-border p-4 flex flex-col gap-4 shadow-2xl">
+            <a href="services.html" class="text-slate-300 hover:text-h-cyan py-2 border-b border-h-border flex items-center gap-2"><svg data-lucide="arrow-left" class="w-4 h-4"></svg> Back to Services</a>
+            <a href="protocol.html" class="text-h-cyan font-bold py-2 border-b border-h-border flex items-center gap-2"><svg data-lucide="shield" class="w-4 h-4"></svg> PROTOCOL</a>
+            <a href="contact.html" class="text-h-cta font-bold py-2">Contact Us</a>
         </div>
     </header>
-    
-    <main role="main">
-        <section class="py-16 text-white flex items-center justify-center min-h-[90vh]">
-            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 content-overlay zoom-in"> 
-                
-                <h1 class="text-5xl md:text-6xl font-extrabold text-hydro-primary mb-4 text-glow tracking-tight fade-in-up text-center">
-                    FRANCIS TURBINE INTEGRITY
+
+    <main class="pt-20">
+
+        <!-- HERO -->
+        <section class="hero-francis min-h-[60vh] flex items-center justify-center relative">
+            <div class="max-w-5xl mx-auto px-4 text-center relative z-10">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-black/50 backdrop-blur-md text-xs font-mono text-slate-300 mb-6 animate-[fadeInUp_1s_ease-out]">
+                    <span class="w-2 h-2 bg-h-cyan rounded-full animate-pulse"></span>
+                    ASSET CLASS: MIXED FLOW
+                </div>
+                <h1 class="text-6xl md:text-8xl font-black text-white mb-6 tracking-tight leading-none animate-[fadeInUp_1s_ease-out]">
+                    FRANCIS
                 </h1>
-                <p class="text-xl md:text-2xl font-light text-slate-300 mb-8 border-b pb-4 border-slate-700 fade-in-up delay-200 text-center">
-                    Targeted analysis for medium-head turbines: Focusing on hydraulic stability, cavitation, and component longevity.
+                <p class="text-xl text-h-cyan font-mono max-w-3xl mx-auto mb-10 animate-[fadeInUp_1s_ease-out_0.2s_forwards] opacity-0">
+                    // THE WORKHORSE OF HYDROPOWER
                 </p>
-                
-                <!-- 3D MODEL -->
-                <div class="bg-hydro-charcoal p-4 rounded-lg shadow-2xl fade-in-up delay-400 border border-slate-700">
-                    <div class="flex justify-between items-center mb-2 px-2">
-                        <h2 class="text-lg font-bold text-white flex items-center gap-2">
-                            <svg data-lucide="layers-3d" class="w-5 h-5 text-hydro-secondary"></svg> Interactive Model
-                        </h2>
-                        <span class="text-xs text-slate-500 uppercase tracking-widest">Drag to Rotate</span>
-                    </div>
-                    
-                    <div class="relative">
-                        <model-viewer 
-                            src="francis_turbine.glb" 
-                            alt="3D Francis Turbine Runner"
-                            camera-controls 
-                            auto-rotate 
-                            ar 
-                            loading="eager" 
-                            shadow-intensity="1"
-                            draco 
-                            exposure="1.2"
-                            camera-orbit="45deg 55deg 2.5m">
-                            
-                            <div slot="progress-bar" class="progress-bar text-sm text-white">
-                                Loading 3D Model...
-                            </div>
-                        </model-viewer>
-                    </div>
-                </div>
-                
-                <!-- CONTENT GRID -->
-                <div class="grid md:grid-cols-2 gap-8 mt-12 fade-in-up delay-600">
-                    
-                    <!-- LEFT: The Challenge -->
-                    <div class="p-6 rounded-xl bg-hydro-light-slate/40 border border-slate-600"> 
-                        <h2 class="text-2xl font-bold text-white mb-3 flex items-center gap-2">
-                            <svg data-lucide="alert-triangle" class="w-6 h-6 text-hydro-cta"></svg> The Challenge
-                        </h2>
-                        <p class="text-slate-300 leading-relaxed text-sm">
-                            The Francis turbine operates under immense hydraulic pressure. Efficiency hinges on maintaining perfect flow over complex runner geometry. Our specialized audits ensure optimal geometry and prevent pressure differentials that lead to localized structural failure and cavitation.
-                        </p>
-                    </div>
-
-                    <!-- RIGHT: Focus Protocol -->
-                    <div>
-                        <h2 class="text-2xl font-bold text-hydro-secondary mb-4 flex items-center gap-2">
-                            <svg data-lucide="check-square" class="w-6 h-6"></svg> Focus Protocol
-                        </h2>
-                        <ul class="space-y-4 tech-list text-sm">
-                            <li>
-                                <strong class="text-hydro-primary block mb-1">CFD Optimization:</strong> 
-                                Utilizing Computational Fluid Dynamics to validate and adjust blade profiles.
-                            </li>
-                            <li>
-                                <strong class="text-hydro-primary block mb-1">Acoustic Emission (AEM):</strong> 
-                                Non-invasive monitoring to detect the precise onset of cavitation.
-                            </li>
-                            <li>
-                                <strong class="text-hydro-primary block mb-1">Partial Load Instability:</strong> 
-                                Auditing performance during off-design operation to prevent vortex rope.
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- NOVO: LOGISTIKA I PODRŠKA -->
-                <div class="mt-12 pt-8 border-t border-slate-600 fade-in-up delay-800">
-                    <h2 class="text-2xl font-bold text-white mb-6 text-center">AnoHUB Execution Service</h2>
-                    <div class="grid md:grid-cols-2 gap-6 text-sm">
-                        <div class="bg-hydro-charcoal/60 p-4 rounded-lg flex gap-4 items-start">
-                            <svg data-lucide="truck" class="w-8 h-8 text-hydro-cta flex-shrink-0"></svg>
-                            <div>
-                                <h3 class="font-bold text-white">Supply Chain & Procurement</h3>
-                                <p class="text-slate-400 mt-1">We organize and procure spare parts, creating blueprints for obsolete components and sourcing from top-tier partners.</p>
-                            </div>
-                        </div>
-                         <div class="bg-hydro-charcoal/60 p-4 rounded-lg flex gap-4 items-start">
-                            <svg data-lucide="phone-call" class="w-8 h-8 text-hydro-secondary flex-shrink-0"></svg>
-                            <div>
-                                <h3 class="font-bold text-white">365/24/7 Availability</h3>
-                                <p class="text-slate-400 mt-1">From Digital Supervision to on-site presence. Your first inquiry and risk assessment are always **free of charge**.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mt-12 text-center fade-in-up delay-1000">
-                    <a href="contact.html" class="inline-flex items-center justify-center px-8 py-4 border border-transparent text-lg font-bold rounded-full text-hydro-charcoal bg-hydro-primary hover:bg-cyan-500 transition duration-300 transform hover:scale-105 shadow-xl uppercase tracking-wider">
-                        Schedule Francis Audit &rarr;
-                    </a>
-                </div>
-
+                <p class="text-lg text-slate-300 max-w-2xl mx-auto mb-10 animate-[fadeInUp_1s_ease-out_0.4s_forwards] opacity-0">
+                    Dominating medium-head applications. Our protocol ensures the delicate balance between pressure integrity and dynamic stability.
+                </p>
             </div>
         </section>
+
+        <!-- INTERACTIVE HILL CHART SIMULATOR -->
+        <section class="py-20 bg-h-dark border-b border-h-border">
+            <div class="max-w-7xl mx-auto px-4">
+                
+                <div class="flex flex-col md:flex-row justify-between items-end mb-10">
+                    <div>
+                        <h2 class="text-3xl font-black text-white flex items-center gap-3">
+                            <svg data-lucide="activity" class="w-8 h-8 text-h-cyan"></svg>
+                            Hill Chart Visualizer
+                        </h2>
+                        <p class="text-slate-400 mt-2">Simulate operating points to detect cavitation zones.</p>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-xs font-mono text-slate-500">LIVE EFFICIENCY</div>
+                        <div class="text-4xl font-black text-h-cyan" id="eff-display">94.2%</div>
+                    </div>
+                </div>
+
+                <div class="grid lg:grid-cols-3 gap-8">
+                    
+                    <!-- Controls -->
+                    <div class="space-y-8 bg-h-panel p-6 rounded-xl border border-h-border">
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <label class="text-xs font-bold text-white uppercase">Net Head (H)</label>
+                                <span class="text-xs font-mono text-h-cyan" id="val-head">100 m</span>
+                            </div>
+                            <input type="range" id="slider-head" min="50" max="150" value="100" class="w-full">
+                            <div class="flex justify-between text-[10px] text-slate-600 mt-1">
+                                <span>Low Head</span>
+                                <span>High Head</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <label class="text-xs font-bold text-white uppercase">Discharge Flow (Q)</label>
+                                <span class="text-xs font-mono text-h-cyan" id="val-flow">50 m³/s</span>
+                            </div>
+                            <input type="range" id="slider-flow" min="10" max="100" value="50" class="w-full">
+                            <div class="flex justify-between text-[10px] text-slate-600 mt-1">
+                                <span>Part Load</span>
+                                <span>Overload</span>
+                            </div>
+                        </div>
+
+                        <div class="p-4 bg-black/50 rounded border border-slate-700 mt-4">
+                            <div class="text-[10px] font-mono text-slate-500 uppercase mb-2">Status Log</div>
+                            <div id="status-log" class="text-sm font-bold text-h-green flex items-center gap-2">
+                                <div class="w-2 h-2 bg-h-green rounded-full animate-pulse"></div> OPTIMAL OPERATION
+                            </div>
+                        </div>
+
+                        <!-- 3D Model Wrapper (Added here to fit layout) -->
+                        <div class="mt-6 pt-6 border-t border-slate-700">
+                             <div class="flex justify-between items-center mb-2">
+                                <span class="text-xs font-bold text-white uppercase">3D Component View</span>
+                                <span class="text-[10px] text-slate-500">Interactive</span>
+                            </div>
+                            <model-viewer 
+                                src="francis_turbine.glb" 
+                                alt="3D Francis Runner" 
+                                auto-rotate 
+                                camera-controls
+                                style="width: 100%; height: 200px; background: #000; border-radius: 0.5rem;">
+                            </model-viewer>
+                        </div>
+                    </div>
+
+                    <!-- The Chart (Visual) -->
+                    <div class="lg:col-span-2 hill-chart-container relative flex items-center justify-center">
+                        <!-- Grid Lines -->
+                        <div class="absolute inset-0" style="background-image: radial-gradient(#334155 1px, transparent 1px); background-size: 20px 20px; opacity: 0.3;"></div>
+                        
+                        <!-- Efficiency Contours (SVG) -->
+                        <svg width="100%" height="100%" viewBox="0 0 400 300" class="absolute inset-0">
+                            <!-- Best Efficiency Point (BEP) -->
+                            <ellipse cx="200" cy="150" rx="30" ry="20" fill="none" stroke="#10b981" stroke-width="2" />
+                            <text x="185" y="155" fill="#10b981" font-size="10" font-family="monospace">95%</text>
+                            
+                            <!-- 90% Contour -->
+                            <ellipse cx="200" cy="150" rx="80" ry="50" fill="none" stroke="#06b6d4" stroke-width="1" stroke-dasharray="4 4" />
+                            <text x="260" y="190" fill="#06b6d4" font-size="10" font-family="monospace">90%</text>
+
+                            <!-- 80% Contour (Cavitation Risk) -->
+                            <ellipse cx="200" cy="150" rx="140" ry="90" fill="none" stroke="#facc15" stroke-width="1" stroke-dasharray="2 2" />
+                            <text x="310" y="220" fill="#facc15" font-size="10" font-family="monospace">80%</text>
+                        </svg>
+
+                        <!-- X/Y Labels -->
+                        <div class="absolute bottom-2 left-1/2 -translate-x-1/2 text-[10px] font-mono text-slate-500">DISCHARGE (Q) &rarr;</div>
+                        <div class="absolute left-2 top-1/2 -translate-y-1/2 text-[10px] font-mono text-slate-500 -rotate-90">HEAD (H) &rarr;</div>
+
+                        <!-- The Moving Dot -->
+                        <div id="op-point" class="op-point"></div>
+                        
+                        <!-- Cavitation Warning Overlay -->
+                        <div id="cavitation-warning" class="absolute inset-0 bg-h-red/10 flex items-center justify-center opacity-0 transition-opacity duration-300 pointer-events-none">
+                            <div class="bg-black/80 border border-h-red text-h-red px-6 py-3 rounded font-bold text-xl animate-bounce">
+                                CAVITATION WARNING
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ANATOMY & VULNERABILITIES -->
+        <section class="py-24 bg-h-panel relative">
+            <div class="max-w-7xl mx-auto px-4">
+                <h2 class="text-3xl font-black text-white mb-12 text-center">Critical Inspection Zones</h2>
+                
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    
+                    <!-- Component 1 -->
+                    <div class="glass-card p-6 rounded-xl relative group">
+                        <div class="text-4xl font-black text-slate-800 absolute top-4 right-4 group-hover:text-h-cyan/20 transition">01</div>
+                        <h3 class="text-lg font-bold text-h-cyan mb-2">Spiral Case</h3>
+                        <p class="text-sm text-slate-400 mb-4">High pressure containment.</p>
+                        <ul class="text-xs text-slate-500 space-y-1 font-mono">
+                            <li>> Weld Seam NDT</li>
+                            <li>> Thickness Checks</li>
+                        </ul>
+                    </div>
+
+                    <!-- Component 2 -->
+                    <div class="glass-card p-6 rounded-xl relative group">
+                        <div class="text-4xl font-black text-slate-800 absolute top-4 right-4 group-hover:text-h-cyan/20 transition">02</div>
+                        <h3 class="text-lg font-bold text-h-cyan mb-2">Wicket Gates</h3>
+                        <p class="text-sm text-slate-400 mb-4">Flow regulation mechanism.</p>
+                        <ul class="text-xs text-slate-500 space-y-1 font-mono">
+                            <li>> Bushing Wear</li>
+                            <li>> Shear Pin Fatigue</li>
+                        </ul>
+                    </div>
+
+                    <!-- Component 3 -->
+                    <div class="glass-card p-6 rounded-xl relative group border-h-red/30 hover:border-h-red">
+                        <div class="text-4xl font-black text-slate-800 absolute top-4 right-4 group-hover:text-h-red/20 transition">03</div>
+                        <h3 class="text-lg font-bold text-h-red mb-2">Runner Blades</h3>
+                        <p class="text-sm text-slate-400 mb-4">Energy conversion core.</p>
+                        <ul class="text-xs text-slate-500 space-y-1 font-mono">
+                            <li>> Cavitation Pitting</li>
+                            <li>> Crack Propagation</li>
+                        </ul>
+                    </div>
+
+                    <!-- Component 4 -->
+                    <div class="glass-card p-6 rounded-xl relative group">
+                        <div class="text-4xl font-black text-slate-800 absolute top-4 right-4 group-hover:text-h-cyan/20 transition">04</div>
+                        <h3 class="text-lg font-bold text-h-cyan mb-2">Draft Tube</h3>
+                        <p class="text-sm text-slate-400 mb-4">Pressure recovery.</p>
+                        <ul class="text-xs text-slate-500 space-y-1 font-mono">
+                            <li>> Vortex Rope Pulses</li>
+                            <li>> Concrete Erosion</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="py-20 text-center bg-h-dark border-t border-h-border">
+            <div class="max-w-3xl mx-auto px-4">
+                <h2 class="text-2xl font-bold text-white mb-4">Schedule a Francis Audit</h2>
+                <p class="text-slate-400 mb-8">Deploy our forensic team to inspect your runner and draft tube.</p>
+                <a href="contact.html" class="inline-flex items-center justify-center px-10 py-4 bg-h-cyan hover:bg-cyan-400 text-black font-black rounded transition shadow-lg shadow-h-cyan/20 uppercase tracking-widest">
+                    Initialize Protocol
+                </a>
+            </div>
+        </section>
+
     </main>
-    
-    <footer class="bg-hydro-slate text-hydro-gray py-8 text-center border-t border-hydro-light-slate" role="contentinfo">
-        <div class="container mx-auto px-6">
-           <a href="index.html#hero" class="mb-4 block" aria-label="Anohubs Logo - Back to top">
-               <img src="logo.svg" alt="Anohubs Logo" class="anohubs-logo-compact">
-           </a>
-           <p class="text-slate-400 mb-6">Establishing the global standard for hydro integrity.</p>
-           <nav class="flex justify-center space-x-6 text-sm mb-4">
-               <a href="about-us-vision.html" class="text-slate-400 hover:text-hydro-primary">About</a>
-               <a href="services.html" class="text-slate-400 hover:text-hydro-primary">Services</a>
-               <a href="insights/expert-insights.html" class="text-slate-400 hover:text-hydro-primary">Insights</a>
-               <a href="case-studies.html" class="text-slate-400 hover:text-hydro-primary">Case Studies</a>
-               <a href="gallery.html" class="text-slate-400 hover:text-hydro-primary">Gallery</a>
-               <a href="protocol.html" class="text-slate-400 hover:text-hydro-primary">Protocol</a>
-               <a href="contact.html" class="text-slate-400 hover:text-hydro-primary">Contact</a>
-           </nav>
-           <div class="flex justify-center space-x-4 text-xs mb-4">
-                <a href="privacy-policy.html" class="text-slate-500 hover:text-slate-300 underline">Privacy Policy</a>
-                <span class="text-slate-500">|</span>
-                <a href="terms-of-use.html" class="text-slate-500 hover:text-slate-300 underline">Terms of Use</a>
-           </div>
-           <p class="text-sm">&copy; <span id="year"></span> Anohubs Inc. All rights reserved.</p>
+
+    <footer class="bg-black border-t border-slate-900 py-12 text-center">
+        <div class="max-w-7xl mx-auto px-4">
+            <p class="text-slate-600 text-xs font-mono">© 2025 Anohubs Inc. | FRANCIS DIVISION</p>
         </div>
     </footer>
 
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
-    <script src="js/ui_core.js"></script>
-    <script src="js/animation_logic.js"></script>
-    <script src="js/turbine-3d-logic.js"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/1.13.0/model-viewer.min.js"></script>
+    <script>
+        lucide.createIcons();
+        
+        // Mobile Menu
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        // === HILL CHART LOGIC ===
+        const sliderHead = document.getElementById('slider-head');
+        const sliderFlow = document.getElementById('slider-flow');
+        const valHead = document.getElementById('val-head');
+        const valFlow = document.getElementById('val-flow');
+        const opPoint = document.getElementById('op-point');
+        const effDisplay = document.getElementById('eff-display');
+        const statusLog = document.getElementById('status-log');
+        const warning = document.getElementById('cavitation-warning');
+
+        function updateChart() {
+            const h = parseInt(sliderHead.value); // 50 - 150
+            const q = parseInt(sliderFlow.value); // 10 - 100
+
+            valHead.innerText = h + " m";
+            valFlow.innerText = q + " m³/s";
+
+            // Map to percentage positions (Container is 100% x 100%)
+            // H (Y axis): 50=Bottom(100%), 150=Top(0%)
+            const yPos = 100 - ((h - 50) / 100 * 100);
+            
+            // Q (X axis): 10=Left(0%), 100=Right(100%)
+            const xPos = (q - 10) / 90 * 100;
+
+            opPoint.style.left = xPos + "%";
+            opPoint.style.top = yPos + "%";
+
+            // Simple Efficiency Logic (Distance from center 50,50)
+            const dist = Math.sqrt(Math.pow(xPos - 50, 2) + Math.pow(yPos - 50, 2));
+            let eff = 95 - (dist * 0.5);
+            if(eff > 95) eff = 95;
+            if(eff < 0) eff = 0;
+            
+            effDisplay.innerText = eff.toFixed(1) + "%";
+
+            // Logic for Status
+            if (dist < 20) {
+                // Optimal
+                statusLog.innerHTML = '<div class="w-2 h-2 bg-h-green rounded-full animate-pulse"></div> OPTIMAL OPERATION';
+                statusLog.className = "text-sm font-bold text-h-green flex items-center gap-2";
+                opPoint.style.backgroundColor = "#10b981";
+                warning.style.opacity = 0;
+            } else if (dist < 40) {
+                // Warning
+                statusLog.innerHTML = '<div class="w-2 h-2 bg-h-yellow rounded-full animate-pulse"></div> OFF-DESIGN';
+                statusLog.className = "text-sm font-bold text-h-yellow flex items-center gap-2";
+                opPoint.style.backgroundColor = "#facc15";
+                warning.style.opacity = 0;
+            } else {
+                // Critical / Cavitation
+                statusLog.innerHTML = '<div class="w-2 h-2 bg-h-red rounded-full animate-pulse"></div> CAVITATION ZONE';
+                statusLog.className = "text-sm font-bold text-h-red flex items-center gap-2";
+                opPoint.style.backgroundColor = "#ef4444";
+                warning.style.opacity = 1;
+            }
+        }
+
+        sliderHead.addEventListener('input', updateChart);
+        sliderFlow.addEventListener('input', updateChart);
+        
+        // Init
+        updateChart();
+
+    </script>
 </body>
 </html>

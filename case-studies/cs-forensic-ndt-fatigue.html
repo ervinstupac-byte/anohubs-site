@@ -1,194 +1,248 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Material Integrity: Forensic NDT Stops Early Fatigue | Anohubs Case Study</title>
+    <title>MISSION: Material Integrity | AnoHUB Case Study</title>
     <meta name="description" content="Case Study: Utilizing sub-surface NDT protocols (PAUT, MPI) to detect and repair stress corrosion cracking in high-stress zones of Francis runners.">
     
-    <!-- 1. JS INICIJALIZACIJA -->
-    <script src="../js/head-init.js"></script>
-
-    <!-- 2. FONTOVI -->
+    <!-- 1. FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     
-    <!-- 3. TAILWIND CDN -->
+    <!-- 2. TAILWIND -->
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- 4. TAILWIND CONFIG -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
+                    fontFamily: { 
+                        sans: ['Inter', 'sans-serif'], 
+                        mono: ['JetBrains Mono', 'monospace'] 
+                    },
                     colors: {
-                        'hydro-primary': '#22d3ee', 
-                        'hydro-secondary': '#4ade80', 
-                        'hydro-risk': '#ef4444', 
-                        'hydro-cta': '#f59e0b', 
-                        'hydro-charcoal': '#111827', 
-                        'hydro-slate': '#1E293B', 
-                        'hydro-light-slate': '#334155', 
-                        'hydro-gray': '#475569',
-                    },
-                    fontSize: {
-                        'h1-hero': 'clamp(2.5rem, 5vw + 1rem, 4.5rem)',
-                    },
+                        'h-cyan': '#06b6d4', 
+                        'h-green': '#10b981', 
+                        'h-red': '#ef4444', 
+                        'h-yellow': '#facc15', 
+                        'h-purple': '#8b5cf6', /* Purple for NDT/Forensic */
+                        'h-dark': '#020617', 
+                        'h-panel': '#0f172a', 
+                        'h-border': '#1e293b',
+                        'h-cta': '#f59e0b'
+                    }
                 }
             }
         }
     </script>
 
-    <!-- 5. STILOVI -->
-    <link href="../css/anohubs.css" rel="stylesheet">
-    <link href="../css/article-styles.css" rel="stylesheet">
-    
     <style>
-        body { background-color: #111827; color: #E5E7EB; }
-        .content-overlay { 
-            background-color: rgba(30, 41, 59, 0.95); 
-            padding: 2.5rem; 
-            border-radius: 1rem; 
-            border-top: 4px solid #22d3ee; /* Primary boja za Integrity */
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5); 
+        body { background-color: #020617; color: #cbd5e1; overflow-x: hidden; }
+        
+        /* Tech Background */
+        .tech-bg {
+            background-image: 
+                linear-gradient(rgba(139, 92, 246, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(139, 92, 246, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+        }
+
+        /* Mission Stamp */
+        .mission-stamp {
+            border: 2px solid #8b5cf6;
+            color: #8b5cf6;
+            padding: 0.5rem 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: inline-block;
+            transform: rotate(-5deg);
+            opacity: 0.8;
+        }
+
+        /* Glass Panel */
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid #1e293b;
         }
     </style>
 </head>
-<body class="bg-hydro-charcoal text-white"> 
-    
-    <!-- HEADER -->
-    <header class="bg-hydro-charcoal text-white shadow-2xl sticky top-0 z-50 border-b border-hydro-primary/50" role="banner">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex justify-between items-center">
-            <a href="../index.html#hero" class="focus:outline-none transition" aria-label="Anohubs Logo - Back to Home">
-                <img src="../logo.svg" alt="Anohubs Logo" class="anohubs-logo">
+
+<body class="antialiased selection:bg-h-purple selection:text-black">
+    <div class="tech-bg"></div>
+
+    <!-- NAV -->
+    <header class="fixed w-full z-50 top-0 border-b border-white/5 bg-h-dark/90 backdrop-blur-md" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 h-16 flex justify-between items-center">
+            <a href="../index.html" class="flex items-center gap-3 group">
+                <img src="../logo.svg" alt="AnoHUB" class="h-8 w-auto opacity-80 group-hover:opacity-100 transition">
+                <span class="font-mono text-xs text-slate-500 group-hover:text-h-purple transition">MISSION ARCHIVE // CASE 004</span>
             </a>
-            <nav class="hidden md:flex items-center space-x-6 font-extrabold text-sm" role="navigation">
-                <a href="../about-us-vision.html" class="text-slate-300 hover:text-hydro-primary transition">About</a>
-                <a href="../services.html" class="text-slate-300 hover:text-hydro-primary transition">Services</a>
-                <a href="../insights/expert-insights.html" class="text-slate-300 hover:text-hydro-primary transition">Insights</a>
-                <a href="../case-studies.html" class="text-hydro-secondary transition">Case Studies</a>
-                <a href="../app-iframe.html" target="_blank" class="text-slate-300 hover:text-green-500 transition">ANO HUB</a>
-                <a href="../gallery.html" class="text-slate-300 hover:text-hydro-primary transition">Gallery</a>
-                <a href="../protocol.html" class="text-slate-300 hover:text-hydro-primary transition">Protocol</a>
-                <a href="../contact.html" class="bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-6 py-2.5 rounded-full transition shadow-md">Contact</a>
-            </nav>
-            <div class="md:hidden">
-                <button id="mobile-menu-button" class="p-2 text-white"><svg data-lucide="menu" class="w-8 h-8"></svg></button>
-            </div>
+            <a href="../case-studies.html" class="text-xs font-bold text-slate-400 hover:text-white uppercase tracking-widest flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                Return to Index
+            </a>
         </div>
     </header>
 
-    <main class="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8 article-container">
-        <a href="../case-studies.html" class="inline-block text-lg font-bold text-hydro-primary hover:text-cyan-500 mt-4 mb-6">← Back to Archive</a>
+    <main class="pt-32 pb-20">
+        <div class="max-w-6xl mx-auto px-4">
 
-        <div class="content-overlay shadow-2xl">
-            
-            <img src="../slike/cs_forensic_ndt_main.png" alt="Forensic NDT testing on a turbine runner blade" class="w-full h-auto rounded-lg mb-8 shadow-lg border border-slate-600">
-
-            <h1 class="text-3xl md:text-4xl font-black text-white mb-4">Material Integrity: Forensic NDT Stops Early Fatigue</h1>
-            
-            <p class="text-lg text-slate-300 mb-8 border-l-4 border-hydro-primary pl-4 italic">
-                **Client Profile:** High-stress Francis Turbine | **Problem:** Invisible Micro-Cracking | **Solution:** Phased Array UT | **Outcome:** Catastrophe Avoided.
-            </p>
-
-            <h2 class="text-2xl font-bold text-hydro-primary mb-4">1. The Challenge: Invisible Threats</h2>
-            <p class="text-slate-300 mb-4 leading-relaxed">
-                During a routine inspection cycle of a 150MW Francis unit, site engineers suspected material degradation in the high-stress zones of the runner blades (near the root and trailing edges). However, traditional visual inspections and standard dye penetrant tests failed to confirm the extent of the damage.
-            </p>
-            <p class="text-slate-300 mb-6 leading-relaxed">
-                The unit was operating under a **"blind" risk** of blade separation due to Stress Corrosion Cracking (SCC), which propagates internally before breaking the surface.
-            </p>
-
-            <h2 class="text-2xl font-bold text-hydro-primary mb-4">2. The AnoHUB Protocol: Looking Beneath the Surface</h2>
-            <ul class="space-y-4 text-slate-300 mb-8">
-                <li class="flex items-start gap-3 bg-hydro-charcoal/50 p-4 rounded-lg border border-slate-700">
-                    <svg data-lucide="waves" class="w-6 h-6 text-hydro-secondary mt-1 flex-shrink-0"></svg> 
-                    <div>
-                        <strong>Advanced Ultrasonic Testing (PAUT):</strong> 
-                        We utilized Phased Array Ultrasonic Testing to scan deep into the blade structure, detecting sub-surface flaws and measuring the exact depth of crack initiation with 0.5mm accuracy.
+            <!-- MISSION HEADER -->
+            <div class="grid lg:grid-cols-12 gap-12 mb-20">
+                <div class="lg:col-span-8">
+                    <div class="flex items-center gap-4 mb-6">
+                        <span class="px-3 py-1 rounded bg-h-purple/10 text-h-purple border border-h-purple/20 text-xs font-mono font-bold">FORENSIC ANALYSIS</span>
+                        <span class="text-slate-500 text-xs font-mono">DATE: FEB 2025</span>
                     </div>
-                </li>
-                <li class="flex items-start gap-3 bg-hydro-charcoal/50 p-4 rounded-lg border border-slate-700">
-                    <svg data-lucide="magnet" class="w-6 h-6 text-hydro-secondary mt-1 flex-shrink-0"></svg> 
-                    <div>
-                        <strong>Magnetic Particle Inspection (MPI):</strong> 
-                        Applied fluorescent MPI under UV light to identify surface-breaking micro-fractures in ferromagnetic stress zones that were invisible to the naked eye.
-                    </div>
-                </li>
-                <li class="flex items-start gap-3 bg-hydro-charcoal/50 p-4 rounded-lg border border-slate-700">
-                    <svg data-lucide="file-search" class="w-6 h-6 text-hydro-secondary mt-1 flex-shrink-0"></svg> 
-                    <div>
-                        <strong>Material Analysis & Repair Blueprint:</strong> 
-                        We mapped the fatigue zones and provided a precise welding and heat-treatment blueprint to arrest crack growth without compromising the runner's hydraulic profile.
-                    </div>
-                </li>
-            </ul>
-            
-            <!-- REZULTATI GRID -->
-            <div class="grid md:grid-cols-3 gap-4 my-8 text-center">
-                <div class="bg-hydro-charcoal p-6 rounded-lg border border-hydro-secondary shadow-md">
-                    <p class="text-3xl font-black text-hydro-secondary">95%</p>
-                    <p class="text-xs uppercase text-slate-400 font-bold tracking-wider">Risk Mitigated</p>
+                    <h1 class="text-4xl md:text-6xl font-black text-white mb-6 leading-tight">
+                        Material Integrity: <br> Halting <span class="text-h-purple">Structural Fatigue</span>
+                    </h1>
+                    <p class="text-xl text-slate-400 leading-relaxed border-l-4 border-h-purple pl-6">
+                        <strong>The Mission:</strong> A high-stress 150MW Francis unit showed signs of performance drift. Site engineers suspected material degradation but lacked proof. Our objective: Deep-scan verification and stabilization.
+                    </p>
                 </div>
-                <div class="bg-hydro-charcoal p-6 rounded-lg border border-hydro-primary shadow-md">
-                    <p class="text-3xl font-black text-hydro-primary">€1.2M</p>
-                    <p class="text-xs uppercase text-slate-400 font-bold tracking-wider">Avoided Repair Costs</p>
-                </div>
-                <div class="bg-hydro-charcoal p-6 rounded-lg border border-hydro-cta shadow-md">
-                    <p class="text-3xl font-black text-hydro-cta">100%</p>
-                    <p class="text-xs uppercase text-slate-400 font-bold tracking-wider">Integrity Verified</p>
+                <div class="lg:col-span-4 flex items-center justify-center lg:justify-end">
+                    <div class="mission-stamp p-4 text-center">
+                        MISSION STATUS:<br>
+                        <span class="text-2xl">SECURED</span>
+                    </div>
                 </div>
             </div>
 
-            <!-- ANO HUB EXECUTION SERVICE SEKCIJA -->
-            <div class="mt-12 pt-8 border-t border-slate-600 bg-hydro-slate/30 p-8 rounded-xl border border-hydro-light-slate/50">
-                <h2 class="text-2xl font-bold text-white mb-6 text-center">AnoHUB Execution Service</h2>
-                <p class="text-center text-slate-400 mb-8 text-sm">From diagnostics to physical repair supervision.</p>
+            <!-- EXECUTION DATA -->
+            <div class="grid md:grid-cols-3 gap-6 mb-20">
+                <!-- Metric 1 -->
+                <div class="glass-panel p-6 rounded-xl border-t-4 border-t-h-purple text-center">
+                    <div class="text-xs font-mono text-slate-500 uppercase mb-2">Risk Mitigation</div>
+                    <div class="text-5xl font-black text-white mb-2">95%</div>
+                    <p class="text-xs text-h-purple">Fatigue Arrested</p>
+                </div>
+                <!-- Metric 2 -->
+                <div class="glass-panel p-6 rounded-xl border-t-4 border-t-h-purple text-center">
+                    <div class="text-xs font-mono text-slate-500 uppercase mb-2">Capital Saved</div>
+                    <div class="text-5xl font-black text-white mb-2">€1.2M</div>
+                    <p class="text-xs text-h-purple">Avoided Runner Replacement</p>
+                </div>
+                <!-- Metric 3 -->
+                <div class="glass-panel p-6 rounded-xl border-t-4 border-t-h-purple text-center">
+                    <div class="text-xs font-mono text-slate-500 uppercase mb-2">Detection Depth</div>
+                    <div class="text-5xl font-black text-white mb-2">0.5<span class="text-lg">mm</span></div>
+                    <p class="text-xs text-h-purple">Scan Resolution</p>
+                </div>
+            </div>
+
+            <!-- DETAILED REPORT -->
+            <div class="grid lg:grid-cols-12 gap-12">
                 
-                <div class="grid md:grid-cols-2 gap-6 text-sm">
-                    <div class="bg-hydro-charcoal/80 p-5 rounded-lg flex gap-4 items-start border border-slate-700 hover:border-hydro-cta transition">
-                        <svg data-lucide="crosshair" class="w-8 h-8 text-hydro-cta flex-shrink-0"></svg>
-                        <div>
-                            <h3 class="font-bold text-white text-base">Mobile NDT Lab</h3>
-                            <p class="text-slate-400 mt-2 leading-relaxed">We brought our advanced testing equipment directly into the scroll case for rapid, on-site analysis, eliminating the need for runner removal.</p>
-                        </div>
-                    </div>
+                <!-- Left: Narrative -->
+                <div class="lg:col-span-8 space-y-12 text-slate-300">
                     
-                     <div class="bg-hydro-charcoal/80 p-5 rounded-lg flex gap-4 items-start border border-slate-700 hover:border-hydro-secondary transition">
-                        <svg data-lucide="flame" class="w-8 h-8 text-hydro-secondary flex-shrink-0"></svg>
-                        <div>
-                            <h3 class="font-bold text-white text-base">Welding Supervision</h3>
-                            <p class="text-slate-400 mt-2 leading-relaxed">We supervised the localized welding repair and post-weld heat treatment to ensure material bonding met our rigorous standards.</p>
+                    <section>
+                        <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-3">
+                            <span class="bg-h-red/20 text-h-red w-8 h-8 flex items-center justify-center rounded text-sm font-mono">01</span>
+                            The Threat Vector
+                        </h2>
+                        <p>
+                            During a routine inspection, site engineers suspected material degradation in the high-stress zones of the runner blades (near the root). However, traditional visual inspections failed to confirm the extent. The unit was operating under a <strong>"blind" risk</strong> of blade separation due to Stress Corrosion Cracking (SCC), which propagates internally before breaking the surface.
+                        </p>
+                        <div class="bg-h-red/5 border border-h-red/20 p-4 rounded-lg mt-4">
+                            <p class="text-sm text-h-red font-mono">
+                                > RISK DETECTED: INTERNAL MICRO-FRACTURES<br>
+                                > CONSEQUENCE: CATASTROPHIC RUNNER FAILURE
+                            </p>
+                        </div>
+                    </section>
+
+                    <section>
+                        <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-3">
+                            <span class="bg-h-purple/20 text-h-purple w-8 h-8 flex items-center justify-center rounded text-sm font-mono">02</span>
+                            Tactical Execution
+                        </h2>
+                        <p>We deployed the <strong>AnoHUB NDT Matrix</strong> to look beneath the surface:</p>
+                        
+                        <ul class="space-y-4 mt-6">
+                            <li class="flex gap-4">
+                                <div class="mt-1"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-h-purple"><path d="M2 12h20"/><path d="M7 22v-8"/><path d="M17 22v-8"/><path d="M2 8h20L12 2z"/></svg></div>
+                                <div>
+                                    <strong class="text-white block">Phased Array Ultrasonic (PAUT)</strong>
+                                    Utilized multi-element probes to scan deep into the blade structure, detecting sub-surface flaws and measuring the exact depth of crack initiation.
+                                </div>
+                            </li>
+                            <li class="flex gap-4">
+                                <div class="mt-1"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-h-purple"><path d="m19 19-7-7 7-7"/><path d="m19 19-7-7 7-7"/><path d="M5 19l7-7-7-7"/></svg></div>
+                                <div>
+                                    <strong class="text-white block">Magnetic Particle (MPI)</strong>
+                                    Applied fluorescent MPI under UV light to identify surface-breaking micro-fractures in ferromagnetic stress zones invisible to the naked eye.
+                                </div>
+                            </li>
+                            <li class="flex gap-4">
+                                <div class="mt-1"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-h-purple"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+                                <div>
+                                    <strong class="text-white block">Repair Blueprint</strong>
+                                    Mapped fatigue zones and provided a precise welding and heat-treatment blueprint to arrest crack growth without compromising the hydraulic profile.
+                                </div>
+                            </li>
+                        </ul>
+                    </section>
+
+                </div>
+
+                <!-- Right: Sticky Context -->
+                <aside class="lg:col-span-4 space-y-6">
+                    <div class="glass-panel p-6 rounded-xl border-t-2 border-h-purple sticky top-24">
+                        <h3 class="text-white font-bold mb-4 uppercase tracking-widest text-sm">Deployed Service</h3>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-3 text-sm text-slate-400">
+                                <div class="bg-h-dark p-2 rounded text-h-purple"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h5"/><path d="M17 12h5"/><path d="M7 12v-4h10v4"/><path d="M7 12v8"/><path d="M17 12v8"/></svg></div>
+                                <span>Mobile NDT Lab</span>
+                            </div>
+                            <div class="flex items-center gap-3 text-sm text-slate-400">
+                                <div class="bg-h-dark p-2 rounded text-h-purple"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="12" x2="12" y1="18" y2="12"/><line x1="9" x2="15" y1="15" y2="15"/></svg></div>
+                                <span>Welding Supervision</span>
+                            </div>
+                        </div>
+
+                        <div class="mt-8 pt-6 border-t border-slate-700">
+                            <p class="text-xs text-slate-500 mb-4">Suspect hidden fatigue?</p>
+                            <a href="../contact.html" class="block w-full text-center bg-h-purple hover:bg-violet-400 text-black font-bold py-3 rounded uppercase tracking-wider text-xs transition">
+                                Initiate Deep Scan
+                            </a>
                         </div>
                     </div>
-                </div>
+                </aside>
+
             </div>
 
-            <div class="mt-12 text-center">
-                <a href="../contact.html" class="inline-block bg-hydro-cta text-hydro-charcoal font-bold py-4 px-10 rounded-full hover:bg-yellow-500 transition shadow-xl uppercase tracking-wider transform hover:scale-105">
-                    Request NDT Inspection
+            <!-- FOOTER NAV -->
+            <div class="mt-24 pt-8 border-t border-slate-800 flex justify-between items-center">
+                <a href="cs-fish-passage-optimization.html" class="text-slate-500 hover:text-white text-sm flex items-center gap-2 transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                    Back to Symbiosis
+                </a>
+                <a href="cs-francis-misalignment.html" class="text-h-purple hover:text-white text-sm flex items-center gap-2 transition">
+                    Next Mission: Francis Align
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
                 </a>
             </div>
+
         </div>
     </main>
-    
-    <!-- FOOTER -->
-    <div class="md:hidden mobile-sticky-cta text-center">
-        <a href="../contact.html" class="w-full block text-center bg-hydro-primary hover:bg-cyan-500 text-hydro-charcoal px-5 py-3 font-bold tracking-wider uppercase shadow-2xl">
-            SCHEDULE AUDIT
-        </a>
-    </div>
 
-    <footer class="bg-hydro-slate text-hydro-gray py-8 text-center border-t border-hydro-light-slate" role="contentinfo">
-        <div class="container mx-auto px-6">
-           <p class="text-sm">&copy; 2025 Anohubs Inc. All rights reserved.</p>
+    <footer class="bg-black border-t border-slate-900 py-8 text-center text-xs font-mono text-slate-600">
+        <div class="max-w-7xl mx-auto px-4">
+            &copy; 2025 ANOHUBS INC. | MISSION LOG: CLOSED
         </div>
     </footer>
 
-    <!-- SKRIPTE -->
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
-    <script src="../js/ui_core.js"></script>
-    <script src="../js/animation_logic.js"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
 </body>
 </html>

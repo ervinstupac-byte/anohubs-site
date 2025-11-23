@@ -1,183 +1,247 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Predictive Certainty: 100% Elimination of Unplanned Downtime | Anohubs Case Study</title>
-    <meta name="description" content="Measurable results achieved: Validating AI anomaly detection accuracy for 3 years, optimizing maintenance windows and achieving 100% elimination of unplanned downtime.">
+    <title>MISSION: Predictive Certainty | AnoHUB Case Study</title>
+    <meta name="description" content="Case Study: Validating AI anomaly detection accuracy for 3 years, optimizing maintenance windows and achieving 100% elimination of unplanned downtime.">
     
-    <!-- 1. JS INICIJALIZACIJA (../) -->
-    <script src="../js/head-init.js"></script>
-
-    <!-- 2. FONTOVI -->
+    <!-- 1. FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     
-    <!-- 3. TAILWIND CDN -->
+    <!-- 2. TAILWIND -->
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- 4. TAILWIND KONFIGURACIJA -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
+                    fontFamily: { 
+                        sans: ['Inter', 'sans-serif'], 
+                        mono: ['JetBrains Mono', 'monospace'] 
+                    },
                     colors: {
-                        'hydro-primary': '#22d3ee',
-                        'hydro-secondary': '#4ade80',
-                        'hydro-risk': '#ef4444',
-                        'hydro-cta': '#f59e0b',
-                        'hydro-charcoal': '#111827',
-                        'hydro-slate': '#1E293B',
-                        'hydro-light-slate': '#334155',
-                        'hydro-gray': '#475569',
-                    },
-                    fontSize: {
-                        'h1-hero': 'clamp(2.5rem, 5vw + 1rem, 4.5rem)',
-                    },
+                        'h-cyan': '#06b6d4', 
+                        'h-green': '#10b981', /* Green for AI/Predictive */
+                        'h-red': '#ef4444', 
+                        'h-yellow': '#facc15', 
+                        'h-dark': '#020617', 
+                        'h-panel': '#0f172a', 
+                        'h-border': '#1e293b',
+                        'h-cta': '#f59e0b'
+                    }
                 }
             }
         }
     </script>
 
-    <!-- 5. STILOVI -->
-    <link href="../css/anohubs.css" rel="stylesheet">
-    <link href="../css/article-styles.css" rel="stylesheet">
     <style>
-        body { background-color: #111827; color: #E5E7EB; }
-        .content-overlay { background-color: rgba(30, 41, 59, 0.95); padding: 2.5rem; border-radius: 1rem; border-top: 4px solid #22d3ee; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+        body { background-color: #020617; color: #cbd5e1; overflow-x: hidden; }
+        
+        /* Tech Background */
+        .tech-bg {
+            background-image: 
+                linear-gradient(rgba(16, 185, 129, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(16, 185, 129, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+        }
+
+        /* Mission Stamp */
+        .mission-stamp {
+            border: 2px solid #10b981;
+            color: #10b981;
+            padding: 0.5rem 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: inline-block;
+            transform: rotate(-5deg);
+            opacity: 0.8;
+        }
+
+        /* Glass Panel */
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid #1e293b;
+        }
     </style>
 </head>
-<body class="bg-hydro-charcoal text-white"> 
-    
-    <!-- HEADER -->
-    <header class="bg-hydro-charcoal text-white shadow-2xl sticky top-0 z-50 border-b border-hydro-primary/50" role="banner">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex justify-between items-center">
-            <a href="../index.html#hero" class="focus:outline-none transition" aria-label="Anohubs Logo - Back to Home">
-                <img src="../logo.svg" alt="Anohubs Logo" class="anohubs-logo">
+
+<body class="antialiased selection:bg-h-green selection:text-black">
+    <div class="tech-bg"></div>
+
+    <!-- NAV -->
+    <header class="fixed w-full z-50 top-0 border-b border-white/5 bg-h-dark/90 backdrop-blur-md" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 h-16 flex justify-between items-center">
+            <a href="../index.html" class="flex items-center gap-3 group">
+                <img src="../logo.svg" alt="AnoHUB" class="h-8 w-auto opacity-80 group-hover:opacity-100 transition">
+                <span class="font-mono text-xs text-slate-500 group-hover:text-h-green transition">MISSION ARCHIVE // CASE 011</span>
             </a>
-            
-            <nav class="hidden md:flex items-center space-x-6 font-extrabold text-sm" role="navigation" aria-label="Main navigation">
-                <a href="../about-us-vision.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">About</a>
-                <a href="../services.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Services</a>
-                <a href="../insights/expert-insights.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Insights</a>
-                <a href="../case-studies.html" class="nav-link relative text-hydro-secondary transition tracking-wider p-2 uppercase">Case Studies</a>
-                <a href="../app-iframe.html" target="_blank" rel="noopener noreferrer" class="nav-link relative text-slate-300 hover:text-green-500 transition tracking-widest font-extrabold text-lg p-2 uppercase">ANO HUB</a>
-                <a href="../gallery.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Gallery</a>
-                <a href="../protocol.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Protocol</a>
-                <a href="../contact.html" class="bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-6 py-2.5 rounded-full transition shadow-md">Contact</a>
-            </nav>
-            
-            <div class="md:hidden">
-                <button id="mobile-menu-button" aria-label="Open menu" type="button" class="p-2 text-white">
-                    <svg data-lucide="menu" class="w-8 h-8"></svg>
-                </button>
-            </div>
-            
-            <!-- MOBILE MENU -->
-            <div id="mobile-menu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2 text-center bg-hydro-charcoal" aria-label="Mobile navigation menu">
-                <a href="../about-us-vision.html" class="block hover:text-hydro-primary transition tracking-wider py-2">About</a>
-                <a href="../services.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Services</a>
-                <a href="../insights/expert-insights.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Insights</a>
-                <a href="../case-studies.html" class="block hover:text-hydro-secondary transition tracking-wider py-2">Case Studies</a>
-                <a href="../app-iframe.html" target="_blank" rel="noopener noreferrer" class="block hover:text-hydro-secondary transition tracking-wider py-2">ANO HUB</a>
-                <a href="../gallery.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Gallery</a>
-                <a href="../protocol.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Protocol</a>
-                <a href="../contact.html" class="block bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-5 py-2 rounded-full transition shadow-md font-bold tracking-wider mt-2 text-center">Contact</a>
-            </div>
+            <a href="../case-studies.html" class="text-xs font-bold text-slate-400 hover:text-white uppercase tracking-widest flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                Return to Index
+            </a>
         </div>
     </header>
 
-    <main class="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8">
-        <a href="../case-studies.html" class="inline-block text-lg font-bold text-hydro-primary hover:text-cyan-500 mt-4 mb-6">← Back to Archive</a>
+    <main class="pt-32 pb-20">
+        <div class="max-w-6xl mx-auto px-4">
 
-        <div class="content-overlay shadow-2xl">
-            <img src="../slike/cs_predictive_roi_main.png" alt="Digital dashboard showing zero unplanned downtime" class="w-full h-auto rounded-lg mb-8 shadow-lg border border-slate-600">
-
-            <h1 class="text-3xl md:text-4xl font-black text-white mb-4">Predictive Certainty: 100% Elimination of Unplanned Downtime</h1>
-            <p class="text-lg text-slate-300 mb-8 border-l-4 border-hydro-primary pl-4 italic">
-                **Problem:** Recurring Surprise Failures | **Solution:** Digital Twin AI | **Outcome:** Zero Downtime (3 Years).
-            </p>
-
-            <h2 class="text-2xl font-bold text-hydro-primary mb-4">1. The Challenge: Unpredictable Failures</h2>
-            <p class="text-slate-300 mb-4 leading-relaxed">
-                The client (Francis/Kaplan Fleet) struggled with recurring, unpredictable outages caused by issues like minor bearing wear and transient electrical faults. Traditional preventative maintenance failed because these **dynamic failures** escalated too rapidly between scheduled checks.
-            </p>
-            <p class="text-slate-300 mb-6 leading-relaxed">
-                The core problem was the **low alarm-to-failure rate**: alarms triggered only when failure was imminent, offering zero lead time for planned intervention.
-            </p>
-
-            <h2 class="text-2xl font-bold text-hydro-primary mb-4">2. The AnoHUB Protocol: Digital Twin & AI Logic</h2>
-            <ul class="space-y-4 text-slate-300 mb-8">
-                <li class="flex items-start gap-3 bg-hydro-charcoal/50 p-3 rounded-lg border border-slate-700">
-                    <svg data-lucide="component" class="w-6 h-6 text-hydro-secondary mt-1 flex-shrink-0"></svg> 
-                    <div><strong>Digital Twin Synchronization:</strong> Installed high-fidelity acoustic and vibration sensors to feed continuous, granular data into the virtual replica for real-time comparison.</div>
-                </li>
-                <li class="flex items-start gap-3 bg-hydro-charcoal/50 p-3 rounded-lg border border-slate-700">
-                    <svg data-lucide="brain" class="w-6 h-6 text-hydro-secondary mt-1 flex-shrink-0"></svg> 
-                    <div><strong>AI Anomaly Detection:</strong> Implemented proprietary ML models trained on normal operational data, allowing the system to predict minute deviations (the true **Anomaly Detection** markers) before they reach critical limits.</div>
-                </li>
-                <li class="flex items-start gap-3 bg-hydro-charcoal/50 p-3 rounded-lg border border-slate-700">
-                    <svg data-lucide="calendar-check" class="w-6 h-6 text-hydro-secondary mt-1 flex-shrink-0"></svg> 
-                    <div><strong>Condition-Based Maintenance:</strong> Maintenance shifted to intervention only when AI confidence exceeded 70%, guaranteeing lead time of **15 to 30 days**.</div>
-                </li>
-            </ul>
-            
-            <div class="grid md:grid-cols-3 gap-4 my-8 text-center">
-                <div class="bg-hydro-charcoal p-4 rounded border border-hydro-secondary">
-                    <p class="text-3xl font-black text-hydro-secondary">0%</p>
-                    <p class="text-xs uppercase text-slate-400">Unplanned Downtime</p>
+            <!-- MISSION HEADER -->
+            <div class="grid lg:grid-cols-12 gap-12 mb-20">
+                <div class="lg:col-span-8">
+                    <div class="flex items-center gap-4 mb-6">
+                        <span class="px-3 py-1 rounded bg-h-green/10 text-h-green border border-h-green/20 text-xs font-mono font-bold">PREDICTIVE MAINTENANCE</span>
+                        <span class="text-slate-500 text-xs font-mono">DATE: SEP 2025</span>
+                    </div>
+                    <h1 class="text-4xl md:text-6xl font-black text-white mb-6 leading-tight">
+                        Predictive Certainty: <br> 100% <span class="text-h-green">Downtime Elimination</span>
+                    </h1>
+                    <p class="text-xl text-slate-400 leading-relaxed border-l-4 border-h-green pl-6">
+                        <strong>The Mission:</strong> A Francis/Kaplan fleet struggled with recurring "surprise" failures. Our objective: Install Digital Twins to predict breakdown vectors weeks before they manifest.
+                    </p>
                 </div>
-                <div class="bg-hydro-charcoal p-4 rounded border border-hydro-primary">
-                    <p class="text-3xl font-black text-hydro-primary">30 Days</p>
-                    <p class="text-xs uppercase text-slate-400">Prediction Lead Time</p>
-                </div>
-                <div class="bg-hydro-charcoal p-4 rounded border border-hydro-cta">
-                    <p class="text-3xl font-black text-hydro-cta">22%</p>
-                    <p class="text-xs uppercase text-slate-400">Maintenance Savings</p>
+                <div class="lg:col-span-4 flex items-center justify-center lg:justify-end">
+                    <div class="mission-stamp p-4 text-center">
+                        MISSION STATUS:<br>
+                        <span class="text-2xl">AUTOMATED</span>
+                    </div>
                 </div>
             </div>
 
-            <!-- EXECUTION SERVICE (NOVO) -->
-            <div class="mt-12 pt-8 border-t border-slate-600 bg-hydro-slate/30 p-6 rounded-xl">
-                <h2 class="text-2xl font-bold text-white mb-6 text-center">AnoHUB Execution Service</h2>
-                <p class="text-center text-slate-400 mb-6 text-sm">We provide the hardware and the remote human expertise to make predictive maintenance a reality.</p>
+            <!-- EXECUTION DATA -->
+            <div class="grid md:grid-cols-3 gap-6 mb-20">
+                <!-- Metric 1 -->
+                <div class="glass-panel p-6 rounded-xl border-t-4 border-t-h-green text-center">
+                    <div class="text-xs font-mono text-slate-500 uppercase mb-2">Unplanned Downtime</div>
+                    <div class="text-5xl font-black text-white mb-2">0%</div>
+                    <p class="text-xs text-h-green">Over 3 Years</p>
+                </div>
+                <!-- Metric 2 -->
+                <div class="glass-panel p-6 rounded-xl border-t-4 border-t-h-green text-center">
+                    <div class="text-xs font-mono text-slate-500 uppercase mb-2">Prediction Lead Time</div>
+                    <div class="text-5xl font-black text-white mb-2">30 <span class="text-lg">DAYS</span></div>
+                    <p class="text-xs text-h-green">Advance Warning</p>
+                </div>
+                <!-- Metric 3 -->
+                <div class="glass-panel p-6 rounded-xl border-t-4 border-t-h-green text-center">
+                    <div class="text-xs font-mono text-slate-500 uppercase mb-2">Maintenance Budget</div>
+                    <div class="text-5xl font-black text-white mb-2">-22%</div>
+                    <p class="text-xs text-h-green">Annual Savings</p>
+                </div>
+            </div>
+
+            <!-- DETAILED REPORT -->
+            <div class="grid lg:grid-cols-12 gap-12">
                 
-                <div class="grid md:grid-cols-2 gap-6 text-sm">
-                    <div class="bg-hydro-charcoal/80 p-4 rounded-lg flex gap-4 items-start border border-slate-700">
-                        <svg data-lucide="cpu" class="w-8 h-8 text-hydro-cta flex-shrink-0"></svg>
-                        <div>
-                            <h3 class="font-bold text-white">Sensor Installation Squad</h3>
-                            <p class="text-slate-400 mt-1">Our certified team physically installs and calibrates high-fidelity IoT sensors on your equipment, ensuring data integrity from the source.</p>
+                <!-- Left: Narrative -->
+                <div class="lg:col-span-8 space-y-12 text-slate-300">
+                    
+                    <section>
+                        <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-3">
+                            <span class="bg-h-red/20 text-h-red w-8 h-8 flex items-center justify-center rounded text-sm font-mono">01</span>
+                            The Threat Vector
+                        </h2>
+                        <p>
+                            The client's fleet suffered from unpredictable outages caused by issues like minor bearing wear and transient electrical faults. Traditional preventative maintenance (calendar-based) failed because these <strong>dynamic failures</strong> escalated too rapidly between scheduled checks.
+                        </p>
+                        <div class="bg-h-red/5 border border-h-red/20 p-4 rounded-lg mt-4">
+                            <p class="text-sm text-h-red font-mono">
+                                > RISK DETECTED: LOW ALARM-TO-FAILURE RATIO<br>
+                                > CONSEQUENCE: REVENUE LOSS FROM EMERGENCY TRIPS
+                            </p>
                         </div>
-                    </div>
-                     <div class="bg-hydro-charcoal/80 p-4 rounded-lg flex gap-4 items-start border border-slate-700">
-                        <svg data-lucide="monitor-smartphone" class="w-8 h-8 text-hydro-secondary flex-shrink-0"></svg>
-                        <div>
-                            <h3 class="font-bold text-white">Remote Monitoring Center (24/7)</h3>
-                            <p class="text-slate-400 mt-1">Our team monitors your Digital Twin 24/7, providing instant alerts and suggested solutions, turning data overload into actionable intelligence.</p>
-                        </div>
-                    </div>
+                    </section>
+
+                    <section>
+                        <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-3">
+                            <span class="bg-h-green/20 text-h-green w-8 h-8 flex items-center justify-center rounded text-sm font-mono">02</span>
+                            Tactical Execution
+                        </h2>
+                        <p>We deployed the <strong>AnoHUB Digital Ecosystem</strong>:</p>
+                        
+                        <ul class="space-y-4 mt-6">
+                            <li class="flex gap-4">
+                                <div class="mt-1"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-h-green"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" x2="12" y1="22.08" y2="12"/></svg></div>
+                                <div>
+                                    <strong class="text-white block">Digital Twin Synchronization</strong>
+                                    Installed high-fidelity acoustic and vibration sensors to feed continuous, granular data into the virtual replica for real-time comparison against the "perfect" model.
+                                </div>
+                            </li>
+                            <li class="flex gap-4">
+                                <div class="mt-1"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-h-green"><path d="M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"/><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12s4.477 10 10 10 10-4.477 10-10ZM12 2a10 10 0 1 1 0 20 10 10 0 0 1 0-20Z"/></svg></div>
+                                <div>
+                                    <strong class="text-white block">AI Anomaly Detection</strong>
+                                    Implemented proprietary ML models trained on normal operational data, allowing the system to predict minute deviations (the true **Anomaly Detection** markers) before they reach critical limits.
+                                </div>
+                            </li>
+                            <li class="flex gap-4">
+                                <div class="mt-1"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-h-green"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/><path d="m9 16 2 2 4-4"/></svg></div>
+                                <div>
+                                    <strong class="text-white block">Condition-Based Shift</strong>
+                                    Maintenance shifted to intervention only when AI confidence exceeded 70%, guaranteeing a lead time of **15 to 30 days** for parts procurement and crew scheduling.
+                                </div>
+                            </li>
+                        </ul>
+                    </section>
+
                 </div>
+
+                <!-- Right: Sticky Context -->
+                <aside class="lg:col-span-4 space-y-6">
+                    <div class="glass-panel p-6 rounded-xl border-t-2 border-h-green sticky top-24">
+                        <h3 class="text-white font-bold mb-4 uppercase tracking-widest text-sm">Deployed Service</h3>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-3 text-sm text-slate-400">
+                                <div class="bg-h-dark p-2 rounded text-h-green"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="12" x="3" y="10" rx="2"/><path d="M12 10V6"/><path d="M12 3v3"/><circle cx="12" cy="3" r="1"/></svg></div>
+                                <span>Sensor Installation Squad</span>
+                            </div>
+                            <div class="flex items-center gap-3 text-sm text-slate-400">
+                                <div class="bg-h-dark p-2 rounded text-h-green"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg></div>
+                                <span>Remote Monitoring Center</span>
+                            </div>
+                        </div>
+
+                        <div class="mt-8 pt-6 border-t border-slate-700">
+                            <p class="text-xs text-slate-500 mb-4">Tired of reactive repairs?</p>
+                            <a href="../contact.html" class="block w-full text-center bg-h-green hover:bg-emerald-400 text-black font-bold py-3 rounded uppercase tracking-wider text-xs transition">
+                                Deploy AI
+                            </a>
+                        </div>
+                    </div>
+                </aside>
+
             </div>
 
-            <div class="mt-10 text-center">
-                <a href="../contact.html" class="inline-block bg-hydro-cta text-hydro-charcoal font-bold py-3 px-8 rounded-full hover:bg-yellow-500 transition shadow-lg uppercase tracking-wider">
-                    Start Digital Twin Integration
+            <!-- FOOTER NAV -->
+            <div class="mt-24 pt-8 border-t border-slate-800 flex justify-between items-center">
+                <a href="cs-pelton-abrasion.html" class="text-slate-500 hover:text-white text-sm flex items-center gap-2 transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                    Back to Pelton
+                </a>
+                <a href="cs-shaft-system-stability.html" class="text-h-green hover:text-white text-sm flex items-center gap-2 transition">
+                    Next Mission: Shaft Stability
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
                 </a>
             </div>
+
         </div>
     </main>
-    
-    <!-- FOOTER -->
-    <footer class="bg-hydro-slate text-hydro-gray py-8 text-center border-t border-hydro-light-slate" role="contentinfo">
-        <div class="container mx-auto px-6">
-           <p class="text-sm">&copy; 2025 Anohubs Inc. All rights reserved.</p>
+
+    <footer class="bg-black border-t border-slate-900 py-8 text-center text-xs font-mono text-slate-600">
+        <div class="max-w-7xl mx-auto px-4">
+            &copy; 2025 ANOHUBS INC. | MISSION LOG: CLOSED
         </div>
     </footer>
 
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
-    <script src="../js/ui_core.js"></script>
-    <script src="../js/animation_logic.js"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
 </body>
 </html>

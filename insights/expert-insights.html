@@ -1,275 +1,452 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Expert Insights & Intelligence Hub | Anohubs</title>
     <meta name="description" content="The AnoHUB Intelligence Center: Access thought leadership on hydro integrity, 48% dynamic risk mitigation, and the future of predictive maintenance.">
     
-    <!-- 1. JS INICIJALIZACIJA (Sa ../ jer je u podfolderu) -->
-    <script src="../js/head-init.js"></script>
-
-    <!-- 2. FONTOVI -->
+    <!-- 1. FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     
-    <!-- 3. KRITIČNO: TAILWIND CSS CDN -->
+    <!-- 2. TAILWIND -->
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- 4. TAILWIND KONFIGURACIJA -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
+                    fontFamily: { 
+                        sans: ['Inter', 'sans-serif'], 
+                        mono: ['JetBrains Mono', 'monospace'] 
+                    },
                     colors: {
-                        'hydro-primary': '#22d3ee',
-                        'hydro-secondary': '#4ade80',
-                        'hydro-risk': '#ef4444',
-                        'hydro-cta': '#f59e0b',
-                        'hydro-charcoal': '#111827',
-                        'hydro-slate': '#1E293B',
-                        'hydro-light-slate': '#334155',
-                        'hydro-gray': '#475569',
+                        'h-cyan': '#06b6d4', 
+                        'h-green': '#10b981', 
+                        'h-red': '#ef4444', 
+                        'h-yellow': '#facc15', 
+                        'h-purple': '#8b5cf6',
+                        'h-dark': '#020617', 
+                        'h-panel': '#0f172a', 
+                        'h-border': '#1e293b',
+                        'h-cta': '#f59e0b'
                     },
-                    fontSize: {
-                        'h1-hero': 'clamp(2.5rem, 5vw + 1rem, 4.5rem)',
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
                     },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
                 }
             }
         }
     </script>
 
-    <!-- 5. GLOBALNI STILOVI (Sa ../) -->
-    <link href="../css/anohubs.css" rel="stylesheet">
-    
     <style>
-        body { background-color: #111827; }
+        body { background-color: #020617; color: #f8fafc; overflow-x: hidden; }
+        
+        /* Tech Grid Background */
+        .tech-bg {
+            background-image: 
+                linear-gradient(rgba(6, 182, 212, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(6, 182, 212, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+        }
 
-        /* HERO SEKCIJA SA POZADINOM */
-        .archive-header {
-            /* Slika iz foldera slike/ (jedan nivo gore) */
-            background-image: linear-gradient(rgba(17, 24, 39, 0.85), rgba(17, 24, 39, 0.95)), url('../slike/digital_twin_main.png');
+        /* Hero Background */
+        .hero-insights {
+            background-image: linear-gradient(180deg, rgba(2,6,23,0.8) 0%, rgba(2,6,23,1) 100%), url('../slike/digital_twin_main.png');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            padding: 6rem 0;
-            border-bottom: 5px solid #22d3ee; /* hydro-primary */
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-            position: relative;
-        }
-        
-        .text-glow { text-shadow: 0 0 15px rgba(34, 211, 238, 0.5); }
-
-        .insights-grid-container {
-            min-height: 100vh;
-        }
-        
-        /* Stilovi za Filter/Topic sekciju */
-        .topic-button {
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: 1px solid #475569; 
-            color: #94a3b8;
-            background-color: rgba(30, 41, 59, 0.5);
-        }
-        .topic-button:hover {
-            border-color: #4ade80; 
-            background-color: rgba(74, 222, 128, 0.1);
-            color: white;
-            transform: translateY(-2px);
-        }
-        /* Aktivno stanje filtera (dodaje JS) */
-        .topic-button.active {
-            border-color: #22d3ee;
-            background-color: rgba(34, 211, 238, 0.15);
-            color: #22d3ee;
-            font-weight: 700;
-            box-shadow: 0 0 10px rgba(34, 211, 238, 0.2);
         }
 
-        /* NEWSLETTER SEKCIJA - Premium izgled */
-        .newsletter-gradient {
-            background: linear-gradient(135deg, #1E293B 0%, #0f172a 100%);
+        /* Intelligence Card */
+        .insight-card {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid #1e293b;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex; flex-direction: column;
         }
-        .newsletter-input {
-            background-color: rgba(17, 24, 39, 0.8);
-            border: 1px solid #475569;
-            transition: all 0.3s;
+        .insight-card:hover {
+            border-color: #06b6d4;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px -10px rgba(6, 182, 212, 0.15);
         }
-        .newsletter-input:focus {
-            border-color: #22d3ee;
-            box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.2);
+
+        /* Category Tags */
+        .tag-tech { color: #06b6d4; border-color: rgba(6, 182, 212, 0.3); background: rgba(6, 182, 212, 0.1); }
+        .tag-finance { color: #facc15; border-color: rgba(250, 204, 21, 0.3); background: rgba(250, 204, 21, 0.1); }
+        .tag-strategy { color: #8b5cf6; border-color: rgba(139, 92, 246, 0.3); background: rgba(139, 92, 246, 0.1); }
+
+        /* Filter Button */
+        .filter-btn.active {
+            background-color: rgba(6, 182, 212, 0.1);
+            border-color: #06b6d4;
+            color: #06b6d4;
         }
+
+        /* Scroll Bar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #020617; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #06b6d4; }
     </style>
-
 </head>
-<body class="bg-hydro-charcoal text-white"> 
-    
-    <!-- HEADER (Sa putanjama ../ za povratak na root) -->
-    <header class="bg-hydro-charcoal text-white shadow-2xl sticky top-0 z-50 border-b border-hydro-primary/50" role="banner">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex justify-between items-center">
-            <a href="../index.html#hero" class="focus:outline-none transition" aria-label="Anohubs Logo - Back to Home">
-                <img src="../logo.svg" alt="Anohubs Logo" class="anohubs-logo">
+
+<body class="antialiased">
+    <div class="tech-bg"></div>
+
+    <!-- NAV (Updated paths for subfolder) -->
+    <header class="fixed w-full z-50 top-0 border-b border-white/5 bg-h-dark/90 backdrop-blur-md transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 h-20 flex justify-between items-center">
+            <a href="../index.html" class="flex items-center gap-3 group">
+                <img src="../logo.svg" alt="AnoHUB" class="h-10 w-auto transition group-hover:brightness-125">
+                <div class="hidden md:block">
+                    <span class="block text-lg font-black tracking-tighter text-white leading-none">ANOHUBS</span>
+                    <span class="block text-[10px] font-mono text-h-cyan tracking-widest uppercase">Intelligence</span>
+                </div>
             </a>
-            
-            <nav class="hidden md:flex items-center space-x-6 font-extrabold text-sm" role="navigation" aria-label="Main navigation">
-                <a href="../about-us-vision.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">About</a>
-                <a href="../services.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Services</a>
-                <!-- Aktivan link -->
-                <a href="expert-insights.html" class="nav-link relative text-hydro-primary transition tracking-wider p-2 uppercase" aria-current="page">Insights</a>
-                <a href="../case-studies.html" class="nav-link relative text-slate-300 hover:text-hydro-secondary transition tracking-wider p-2 uppercase">Case Studies</a>
-                <a href="../app-iframe.html" target="_blank" rel="noopener noreferrer" class="nav-link relative text-hydro-secondary hover:text-green-500 transition tracking-widest font-extrabold text-lg p-2 uppercase">ANO HUB</a>
-                <a href="../gallery.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Gallery</a>
-                <a href="../protocol.html" class="nav-link relative text-slate-300 hover:text-hydro-primary transition tracking-wider p-2 uppercase">Protocol</a>
-                <a href="../contact.html" class="bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-6 py-2.5 rounded-full transition transform hover:scale-105 shadow-xl font-bold tracking-wider uppercase text-base">Contact</a>
+            <nav class="hidden lg:flex items-center gap-6 text-xs font-bold uppercase tracking-wider">
+                <a href="../index.html" class="text-slate-400 hover:text-white transition">Home</a>
+                <a href="../about-us-vision.html" class="text-slate-400 hover:text-white transition">About</a>
+                <a href="../services.html" class="text-slate-400 hover:text-white transition">Services</a>
+                <a href="expert-insights.html" class="text-h-cyan transition">Insights</a>
+                <a href="../protocol.html" class="group relative inline-flex items-center gap-2 px-5 py-2 bg-h-cyan/10 text-h-cyan border border-h-cyan/50 rounded-full hover:bg-h-cyan hover:text-black transition-all duration-300">
+                    <span>PROTOCOL</span>
+                    <div class="w-1.5 h-1.5 bg-h-cyan rounded-full animate-pulse"></div>
+                </a>
+                <a href="../contact.html" class="px-5 py-2 bg-h-cta text-black rounded-full hover:bg-yellow-400 transition">Contact</a>
             </nav>
-            
-            <div class="md:hidden">
-                <button id="mobile-menu-button" aria-label="Open menu" type="button" class="p-2 text-white">
-                    <svg data-lucide="menu" class="w-8 h-8"></svg>
-                </button>
-            </div>
-            
-            <div id="mobile-menu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2 text-center bg-hydro-charcoal" aria-label="Mobile navigation menu">
-                <a href="../about-us-vision.html" class="block hover:text-hydro-primary transition tracking-wider py-2">About</a>
-                <a href="../services.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Services</a>
-                <a href="expert-insights.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Insights</a>
-                <a href="../case-studies.html" class="block hover:text-hydro-secondary transition tracking-wider py-2">Case Studies</a>
-                <a href="../app-iframe.html" target="_blank" rel="noopener noreferrer" class="block hover:text-hydro-secondary transition tracking-wider py-2">ANO HUB</a>
-                <a href="../gallery.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Gallery</a>
-                <a href="../protocol.html" class="block hover:text-hydro-primary transition tracking-wider py-2">Protocol</a>
-                <a href="../contact.html" class="block bg-hydro-cta hover:bg-yellow-600 text-hydro-charcoal px-5 py-2 rounded-full transition shadow-md font-bold tracking-wider mt-2 text-center">Contact</a>
-            </div>
+            <button id="mobile-menu-btn" class="lg:hidden text-white p-2">
+                <svg data-lucide="menu" class="w-8 h-8"></svg>
+            </button>
+        </div>
+        <div id="mobile-menu" class="hidden lg:hidden absolute top-20 left-0 w-full bg-h-dark border-b border-h-border p-4 flex flex-col gap-4 shadow-2xl">
+            <a href="../index.html" class="text-slate-300 hover:text-h-cyan py-2 border-b border-h-border">Home</a>
+            <a href="../protocol.html" class="text-h-cyan font-bold py-2 border-b border-h-border flex items-center gap-2"><svg data-lucide="shield" class="w-4 h-4"></svg> PROTOCOL</a>
+            <a href="../contact.html" class="text-h-cta font-bold py-2">Contact Us</a>
         </div>
     </header>
 
-    <main role="main" class="insights-grid-container">
-        
-        <!-- HERO SEKCIJA (SA SLIKOM I PREKLOPOM) -->
-        <section class="archive-header text-white text-center">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <span class="text-hydro-secondary font-bold tracking-widest text-xs uppercase mb-4 inline-block border border-hydro-secondary px-4 py-1 rounded-full bg-hydro-secondary/10 shadow-glow">Knowledge Base</span>
-                <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-6 tracking-tight text-glow">
-                    Expert Insights & <span class="text-hydro-primary">Intelligence</span>
+    <main class="pt-20">
+
+        <!-- HERO -->
+        <section class="hero-insights min-h-[50vh] flex items-center justify-center relative">
+            <div class="max-w-5xl mx-auto px-4 text-center relative z-10">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-black/50 backdrop-blur-md text-xs font-mono text-slate-300 mb-6 animate-[fadeInUp_1s_ease-out]">
+                    <svg data-lucide="database" class="w-3 h-3 text-h-cyan"></svg>
+                    KNOWLEDGE BASE: ONLINE
+                </div>
+                <h1 class="text-5xl md:text-7xl font-black text-white mb-6 tracking-tight leading-none animate-[fadeInUp_1s_ease-out_0.2s_forwards] opacity-0">
+                    EXPERT <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-h-cyan to-blue-500">INTELLIGENCE</span>
                 </h1>
-                <p class="text-xl text-slate-200 max-w-3xl mx-auto leading-relaxed font-light">
-                    The complete library of AnoHUB thought leadership. Uncover the strategic and engineering principles necessary to eliminate the Execution Gap and guarantee asset integrity.
+                <p class="text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed mb-10 animate-[fadeInUp_1s_ease-out_0.4s_forwards] opacity-0">
+                    Decoding the complexity of hydro integrity. Access our library of technical briefs, case study breakdowns, and strategic forecasts.
                 </p>
             </div>
         </section>
 
-        <!-- SEKCIJA ZA FILTRIRANJE -->
-        <section class="py-8 bg-hydro-charcoal border-b border-hydro-slate sticky top-16 z-40 shadow-lg backdrop-blur-sm bg-opacity-95">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-                    
-                    <div class="flex flex-wrap justify-center md:justify-start gap-3 text-sm font-semibold">
-                        <!-- Filteri - data-topic odgovara JS kategorijama -->
-                        <button class="topic-button px-5 py-2 rounded-full active" data-topic="all">All Insights</button>
-                        <button class="topic-button px-5 py-2 rounded-full" data-topic="fluid">🌊 Fluid Dynamics</button>
-                        <button class="topic-button px-5 py-2 rounded-full" data-topic="finance">💰 Financial Risk</button>
-                        <button class="topic-button px-5 py-2 rounded-full" data-topic="tech">💻 Digital Twin</button>
-                        <button class="topic-button px-5 py-2 rounded-full" data-topic="culture">🤝 Culture Gap</button>
-                    </div>
-                    
-                    <div class="text-slate-500 text-xs font-mono hidden lg:block flex items-center gap-2">
-                        <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span> ARCHIVE STATUS: ONLINE
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- GLAVNI GRID ZA KARTICE -->
-        <section class="py-20 bg-hydro-slate min-h-screen">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- CONTROL BAR (FILTERS & SEARCH) -->
+        <section class="max-w-7xl mx-auto px-4 mb-12 sticky top-24 z-40">
+            <div class="bg-h-dark/90 backdrop-blur-md border border-h-border p-4 rounded-xl flex flex-col md:flex-row justify-between items-center gap-4 shadow-2xl animate-[fadeInUp_1s_ease-out_0.6s_forwards] opacity-0">
                 
-                <!-- OVDJE JS UBACUJE KARTICE -->
-                <div id="insights-archive-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="col-span-full text-center py-20">
-                        <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-hydro-primary mb-4"></div>
-                        <p class="text-slate-400">Loading intelligence database...</p>
-                    </div>
+                <div class="flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0">
+                    <button class="filter-btn active px-4 py-2 rounded border border-transparent text-xs font-bold text-slate-400 hover:text-white uppercase transition font-mono" onclick="filterInsights('all')">All Briefs</button>
+                    <button class="filter-btn px-4 py-2 rounded border border-transparent text-xs font-bold text-slate-400 hover:text-white uppercase transition font-mono" onclick="filterInsights('tech')">Technical</button>
+                    <button class="filter-btn px-4 py-2 rounded border border-transparent text-xs font-bold text-slate-400 hover:text-white uppercase transition font-mono" onclick="filterInsights('finance')">Financial</button>
+                    <button class="filter-btn px-4 py-2 rounded border border-transparent text-xs font-bold text-slate-400 hover:text-white uppercase transition font-mono" onclick="filterInsights('strategy')">Strategic</button>
                 </div>
+
+                <div class="relative w-full md:w-64">
+                    <svg data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500"></svg>
+                    <input type="text" id="search-input" placeholder="Search keywords..." class="w-full bg-slate-900 border border-h-border rounded-lg pl-10 pr-4 py-2 text-sm text-white focus:border-h-cyan focus:outline-none transition">
+                </div>
+            </div>
+        </section>
+
+        <!-- INSIGHTS GRID -->
+        <section class="max-w-7xl mx-auto px-4 mb-24">
+            <div id="insights-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- JS WILL INJECT CARDS HERE -->
+                <div class="col-span-full text-center py-20 text-slate-500 font-mono animate-pulse">
+                    DECRYPTING INTELLIGENCE FEED...
+                </div>
+            </div>
+        </section>
+
+        <!-- NEWSLETTER (SECURE) -->
+        <section class="py-24 bg-h-panel border-t border-h-border relative overflow-hidden">
+            <!-- Decorative element -->
+            <div class="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-h-cyan/5 to-transparent pointer-events-none"></div>
+
+            <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+                <div class="mb-8">
+                    <span class="bg-h-cyan/10 text-h-cyan px-3 py-1 rounded text-xs font-bold uppercase tracking-widest border border-h-cyan/20">Monthly Digest</span>
+                </div>
+                <h2 class="text-3xl md:text-4xl font-black text-white mb-6">Stay Ahead of the Curve</h2>
+                <p class="text-slate-300 mb-10 max-w-xl mx-auto text-lg">
+                    Don't let the Execution Gap catch you off guard. Get our latest technical briefs and risk analysis reports delivered directly to your secure inbox.
+                </p>
                 
+                <form class="flex flex-col sm:flex-row gap-4 justify-center max-w-lg mx-auto" action="https://formspree.io/f/xqaywlaq" method="POST">
+                    <input type="email" name="email" placeholder="Enter business email" class="px-6 py-4 rounded-lg bg-h-dark border border-h-border text-white placeholder-slate-500 w-full outline-none focus:border-h-cyan transition">
+                    <input type="hidden" name="_subject" value="Newsletter Subscription">
+                    <button type="submit" class="px-8 py-4 bg-h-cyan text-black font-bold rounded-lg hover:bg-cyan-400 transition shadow-lg whitespace-nowrap uppercase tracking-wider">
+                        Subscribe
+                    </button>
+                </form>
+                <p class="text-xs text-slate-500 mt-6 font-mono">Zero spam. Unsubscribe anytime. <a href="../privacy-policy.html" class="text-h-cyan hover:underline">Privacy Protocol</a>.</p>
             </div>
         </section>
 
-        <!-- NEWSLETTER SUBSCRIPTION SEKCIJA (DODANO!) -->
-        <section class="py-24 bg-hydro-charcoal border-t border-hydro-slate relative overflow-hidden">
-            <!-- Pozadinski dekorativni element -->
-            <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-full max-w-4xl h-1 bg-gradient-to-r from-transparent via-hydro-primary to-transparent opacity-50"></div>
-            
-            <div class="max-w-4xl mx-auto px-4">
-                <div class="newsletter-gradient rounded-2xl p-10 md:p-16 text-center shadow-2xl border border-hydro-light-slate relative z-10">
-                    
-                    <div class="mb-8">
-                        <span class="bg-hydro-primary/20 text-hydro-primary px-3 py-1 rounded text-xs font-bold uppercase tracking-widest">Monthly Digest</span>
-                    </div>
-
-                    <h2 class="text-3xl md:text-4xl font-black text-white mb-6">Stay Ahead of the Curve</h2>
-                    <p class="text-slate-300 mb-10 max-w-xl mx-auto text-lg">
-                        Don't let the Execution Gap catch you off guard. Get our latest technical briefs, risk analysis reports, and exclusive case studies delivered directly to your inbox.
-                    </p>
-                    
-                    <form class="flex flex-col sm:flex-row gap-4 justify-center max-w-lg mx-auto" action="https://formspree.io/f/xqaywlaq" method="POST">
-                        <input type="email" name="email" placeholder="Enter your business email" class="newsletter-input px-6 py-4 rounded-lg text-white placeholder-slate-400 w-full outline-none" required>
-                        <input type="hidden" name="_subject" value="Newsletter Subscription Request">
-                        <button type="submit" class="px-8 py-4 bg-hydro-primary text-hydro-charcoal font-bold rounded-lg hover:bg-cyan-400 transition shadow-lg whitespace-nowrap transform hover:scale-105">
-                            Subscribe Free
-                        </button>
-                    </form>
-                    
-                    <p class="text-xs text-slate-500 mt-6">
-                        Zero spam. Unsubscribe at any time. Read our <a href="../privacy-policy.html" class="text-slate-400 hover:text-white underline">Privacy Policy</a>.
-                    </p>
-                </div>
-            </div>
-        </section>
-        
     </main>
-    
-    <!-- FOOTER (Sa putanjama ../) -->
-    <div class="md:hidden mobile-sticky-cta text-center">
-        <a href="../contact.html" class="w-full block text-center bg-hydro-primary hover:bg-cyan-500 text-hydro-charcoal px-5 py-3 font-bold tracking-wider uppercase shadow-2xl">
-            SCHEDULE AUDIT
-        </a>
-    </div>
 
-    <footer class="bg-hydro-slate text-hydro-gray py-8 text-center border-t border-hydro-light-slate" role="contentinfo">
-        <div class="container mx-auto px-6">
-           <a href="../index.html#hero" class="mb-4 block" aria-label="Anohubs Logo - Back to Home">
-               <img src="../logo.svg" alt="Anohubs Logo" class="anohubs-logo mx-auto">
-           </a>
-           <p class="text-slate-400 mb-6">Establishing the global standard for hydro integrity.</p>
-           
-           <nav class="flex justify-center space-x-6 text-sm mb-6">
-               <a href="../about-us-vision.html" class="text-slate-400 hover:text-hydro-primary">About</a>
-               <a href="../services.html" class="text-slate-400 hover:text-hydro-primary">Services</a>
-               <a href="expert-insights.html" class="text-slate-400 hover:text-hydro-primary">Insights</a>
-               <a href="../case-studies.html" class="text-slate-400 hover:text-hydro-primary">Case Studies</a>
-               <a href="../gallery.html" class="text-slate-400 hover:text-hydro-primary">Gallery</a>
-               <a href="../protocol.html" class="text-slate-400 hover:text-hydro-primary">Protocol</a>
-               <a href="../contact.html" class="text-slate-400 hover:text-hydro-primary">Contact</a>
-           </nav>
-           
-           <div class="flex justify-center space-x-4 text-xs mb-4">
-                <a href="../privacy-policy.html" class="text-slate-500 hover:text-slate-300 underline">Privacy Policy</a>
-                <span class="text-slate-500">|</span>
-                <a href="../terms-of-use.html" class="text-slate-500 hover:text-slate-300 underline">Terms of Use</a>
-           </div>
-           
-           <p class="text-sm">&copy; <span id="year"></span> Anohubs Inc. All rights reserved.</p>
+    <footer class="bg-black border-t border-slate-900 py-12 text-center">
+        <div class="max-w-7xl mx-auto px-4">
+            <p class="text-slate-600 text-xs font-mono">© 2025 Anohubs Inc. | INTELLIGENCE DIVISION</p>
         </div>
     </footer>
 
-    <!-- MODULARNE SKRIPTE (Sa putanjama ../) -->
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
-    <script src="../js/ui_core.js"></script>
-    <script src="../js/animation_logic.js"></script>
-    
-    <!-- OBAVEZNO: Skripta koja crta kartice -->
-    <script src="../js/insights-grid.js"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script>
+        lucide.createIcons();
+        
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
 
+        // === REAL ARTICLE DATA (Based on provided file list) ===
+        const insightsData = [
+            {
+                id: 1,
+                cat: 'strategy',
+                tag: 'STRATEGY',
+                date: 'DEC 01, 2025',
+                read: '7 MIN',
+                title: 'Engineering Immunity: The New Standard',
+                desc: 'Why traditional maintenance fails and how the "Immunity" protocol neutralizes 48% of dynamic risks.',
+                link: 'article-1-engineering-immunity.html'
+            },
+            {
+                id: 2,
+                cat: 'finance',
+                tag: 'FINANCE',
+                date: 'NOV 28, 2025',
+                read: '5 MIN',
+                title: 'The Hidden Cost of the "Low Bid"',
+                desc: 'A forensic breakdown of why the cheapest component often becomes the most expensive failure.',
+                link: 'article-2-low-bid.html'
+            },
+            {
+                id: 3,
+                cat: 'tech',
+                tag: 'TECHNICAL',
+                date: 'NOV 15, 2025',
+                read: '6 MIN',
+                title: 'Winter Operation Challenges',
+                desc: 'Navigating the specific hydraulic and mechanical stresses of cold-weather hydro operation.',
+                link: 'article-3-winter-challenges.html'
+            },
+            {
+                id: 4,
+                cat: 'strategy',
+                tag: 'LEADERSHIP',
+                date: 'NOV 10, 2025',
+                read: '8 MIN',
+                title: 'DACH Region Leadership Insights',
+                desc: 'Lessons learned from the high-precision standards of the German, Austrian, and Swiss hydro sectors.',
+                link: 'article-4-dach-leadership.html'
+            },
+            {
+                id: 5,
+                cat: 'strategy',
+                tag: 'HUMAN FACTOR',
+                date: 'OCT 25, 2025',
+                read: '5 MIN',
+                title: 'The Human Sensor',
+                desc: 'Why experienced operators often detect faults before sensors, and how to digitize their intuition.',
+                link: 'article-5-human-sensor.html'
+            },
+            {
+                id: 6,
+                cat: 'finance',
+                tag: 'RISK',
+                date: 'OCT 12, 2025',
+                read: '6 MIN',
+                title: 'The Ticking Bomb of Aging Assets',
+                desc: 'Strategies for extending the life of legacy turbines without total replacement.',
+                link: 'article-6-ticking-bomb.html'
+            },
+            {
+                id: 7,
+                cat: 'strategy',
+                tag: 'STRATEGY',
+                date: 'SEP 30, 2025',
+                read: '7 MIN',
+                title: 'Fortress Maintenance',
+                desc: 'Building a defensive maintenance perimeter that prevents cascading failures.',
+                link: 'article-7-fortress-maintenance.html'
+            },
+            {
+                id: 8,
+                cat: 'strategy',
+                tag: 'PHILOSOPHY',
+                date: 'SEP 15, 2025',
+                read: '5 MIN',
+                title: 'The Symbiosis Standard',
+                desc: 'Aligning mechanical integrity with ecological responsibility for sustainable hydro.',
+                link: 'article-8-symbiosis-standard.html'
+            },
+            {
+                id: 9,
+                cat: 'strategy',
+                tag: 'STRATEGY',
+                date: 'AUG 28, 2025',
+                read: '6 MIN',
+                title: 'A Holistic View of Hydro Assets',
+                desc: 'Moving beyond component-level fixes to understand the entire hydraulic system as one organism.',
+                link: 'article-9-holistic-view.html'
+            },
+            {
+                id: 10,
+                cat: 'tech',
+                tag: 'DIAGNOSTICS',
+                date: 'AUG 14, 2025',
+                read: '4 MIN',
+                title: 'The Hydro Check Engine Light',
+                desc: 'Decoding the early warning signals your turbine is sending before critical failure.',
+                link: 'article-10-check-engine-light.html'
+            },
+            {
+                id: 11,
+                cat: 'tech',
+                tag: 'DIGITAL TWIN',
+                date: 'JUL 30, 2025',
+                read: '8 MIN',
+                title: 'Digital Twin Implementation',
+                desc: 'How to successfully deploy a virtual replica of your plant for real-time stress testing.',
+                link: 'article-11-digital-twin.html'
+            },
+            {
+                id: 12,
+                cat: 'tech',
+                tag: 'AUDIT',
+                date: 'JUL 15, 2025',
+                read: '6 MIN',
+                title: 'M-E Synergy Audit Explained',
+                desc: 'Understanding the interplay between Mechanical vibration and Electrical discharge.',
+                link: 'article-12-me-synergy-audit.html'
+            },
+            {
+                id: 13,
+                cat: 'tech',
+                tag: 'EROSION',
+                date: 'JUN 28, 2025',
+                read: '5 MIN',
+                title: 'Sediment & Silt Management',
+                desc: 'Advanced coating and design strategies to combat abrasive wear in high-sediment rivers.',
+                link: 'article-13-sediment-silt.html'
+            },
+            {
+                id: 14,
+                cat: 'tech',
+                tag: 'CFD',
+                date: 'JUN 10, 2025',
+                read: '7 MIN',
+                title: '3D Flow Analysis',
+                desc: 'Using Computational Fluid Dynamics to visualize and correct turbulence within the draft tube.',
+                link: 'article-14-3d-flow-analysis.html'
+            },
+            {
+                id: 15,
+                cat: 'strategy',
+                tag: 'GOVERNANCE',
+                date: 'MAY 25, 2025',
+                read: '9 MIN',
+                title: 'Bridging the SCADA-CEO Gap',
+                desc: 'Translating raw sensor data into executive-level decision intelligence.',
+                link: 'article-15-scada-ceo-gap.html'
+            }
+        ];
+
+        const grid = document.getElementById('insights-grid');
+        const searchInput = document.getElementById('search-input');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+
+        function renderInsights(data) {
+            grid.innerHTML = '';
+            data.forEach(item => {
+                // Determine tag style
+                let tagClass = 'tag-tech';
+                if(item.cat === 'finance') tagClass = 'tag-finance';
+                if(item.cat === 'strategy') tagClass = 'tag-strategy';
+
+                const card = document.createElement('a');
+                card.href = item.link;
+                card.className = 'insight-card rounded-xl p-6 group block animate-[fadeInUp_0.5s_ease-out]';
+                card.innerHTML = `
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="px-2 py-1 rounded text-[10px] font-bold uppercase border ${tagClass}">${item.tag}</span>
+                        <span class="text-[10px] font-mono text-slate-500">${item.read} READ</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-h-cyan transition leading-tight">${item.title}</h3>
+                    <p class="text-sm text-slate-400 mb-6 line-clamp-3 flex-grow">${item.desc}</p>
+                    <div class="flex justify-between items-center border-t border-slate-800 pt-4 mt-auto">
+                        <span class="text-[10px] font-mono text-slate-600">${item.date}</span>
+                        <span class="text-xs font-bold text-white flex items-center gap-2 group-hover:gap-3 transition-all">
+                            READ BRIEF <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                        </span>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Filter Logic
+        function filterInsights(category) {
+            filterBtns.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            if (category === 'all') {
+                renderInsights(insightsData);
+            } else {
+                const filtered = insightsData.filter(item => item.cat === category);
+                renderInsights(filtered);
+            }
+        }
+
+        // Search Logic
+        searchInput.addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            const filtered = insightsData.filter(item => 
+                item.title.toLowerCase().includes(term) || 
+                item.desc.toLowerCase().includes(term)
+            );
+            renderInsights(filtered);
+        });
+
+        // Init
+        renderInsights(insightsData);
+
+        // Navbar Scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('shadow-lg', 'bg-h-dark/95');
+                nav.classList.remove('bg-h-dark/90');
+            } else {
+                nav.classList.remove('shadow-lg', 'bg-h-dark/95');
+                nav.classList.add('bg-h-dark/90');
+            }
+        });
+    </script>
 </body>
 </html>
