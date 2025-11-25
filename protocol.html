@@ -3,33 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AnoHUB | Neural Command Interface v12.0</title>
+    <title>AnoHUB | Neural Command Interface v6.0 [GOD_MODE]</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;500;800&family=Rajdhani:wght@400;600;700&family=Syncopate:wght@700&display=swap" rel="stylesheet">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = { 
             theme: { 
                 extend: { 
-                    fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
+                    fontFamily: { 
+                        sans: ['Rajdhani', 'sans-serif'], 
+                        mono: ['JetBrains Mono', 'monospace'],
+                        display: ['Syncopate', 'sans-serif']
+                    },
                     colors: { 
-                        'h-cyan': '#06b6d4', 'h-green': '#10b981', 'h-red': '#ef4444', 
-                        'h-blue': '#3b82f6', 'h-purple': '#8b5cf6', 'h-orange': '#f97316', 
-                        'h-yellow': '#facc15', 'h-dark': '#020617', 'h-panel': '#0f172a', 
-                        'h-border': '#1e293b' 
+                        'neon-cyan': '#00f3ff', 
+                        'neon-green': '#0aff0a', 
+                        'neon-red': '#ff003c', 
+                        'deep-space': '#020408',
+                        'glass': 'rgba(10, 20, 30, 0.7)',
+                    },
+                    backgroundImage: {
+                        'cyber-gradient': 'linear-gradient(180deg, rgba(2,4,8,0) 0%, rgba(0,243,255,0.05) 100%)',
                     },
                     animation: {
-                        'pulse-fast': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'spin-slow': 'spin 30s linear infinite',
-                        'float': 'float 6s ease-in-out infinite',
-                        'scroll': 'scroll 45s linear infinite',
+                        'spin-slow': 'spin 20s linear infinite',
+                        'spin-reverse': 'spin 25s linear infinite reverse',
+                        'pulse-fast': 'pulse 0.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'glitch': 'glitch 1s linear infinite',
                     },
                     keyframes: {
-                        float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' } },
-                        scroll: { '0%': { transform: 'translateX(0)' }, '100%': { transform: 'translateX(-50%)' } }
+                        glitch: {
+                            '2%, 64%': { transform: 'translate(2px,0) skew(0deg)' },
+                            '4%, 60%': { transform: 'translate(-2px,0) skew(0deg)' },
+                            '62%': { transform: 'translate(0,0) skew(5deg)' }
+                        }
                     }
                 } 
             }
@@ -37,355 +48,430 @@
     </script>
 
     <style>
-        body { background-color: #000; color: #cbd5e1; overflow-x: hidden; }
-        
-        /* CRT Scanline Effect */
-        .crt::before {
-            content: " "; display: block; position: fixed; top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
-            z-index: 999; background-size: 100% 2px, 3px 100%; pointer-events: none;
+        /* --- CORE PHYSICS --- */
+        body { 
+            background-color: #020408; 
+            color: #e2e8f0; 
+            overflow-x: hidden; 
+            cursor: crosshair;
         }
 
-        .scada-panel { 
-            background: rgba(15, 23, 42, 0.85); 
-            backdrop-filter: blur(12px); 
-            border: 1px solid rgba(6, 182, 212, 0.2);
-            box-shadow: 0 0 15px rgba(6, 182, 212, 0.05);
-            transition: all 0.3s ease;
+        /* --- CRT MONITOR FX --- */
+        .crt-overlay {
+            position: fixed; inset: 0; pointer-events: none; z-index: 999;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background-size: 100% 3px, 3px 100%;
+            box-shadow: inset 0 0 100px rgba(0,0,0,0.9);
+            animation: flicker 0.15s infinite;
         }
-        
-        .module-card:hover {
-            transform: translateY(-5px) scale(1.01);
-            background: rgba(15, 23, 42, 0.95);
-            border-color: var(--hover-color);
-            box-shadow: 0 0 30px var(--hover-glow);
+        @keyframes flicker { 0% { opacity: 0.97; } 100% { opacity: 1; } }
+
+        /* --- GLITCH TYPOGRAPHY --- */
+        .glitch-text {
+            position: relative;
+        }
+        .glitch-text::before, .glitch-text::after {
+            content: attr(data-text);
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        }
+        .glitch-text::before {
+            left: 2px; text-shadow: -1px 0 #ff003c; clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim 5s infinite linear alternate-reverse;
+        }
+        .glitch-text::after {
+            left: -2px; text-shadow: -1px 0 #00f3ff; clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim 2 5s infinite linear alternate-reverse;
+        }
+        @keyframes glitch-anim {
+            0% { clip: rect(12px, 9999px, 5px, 0); }
+            5% { clip: rect(89px, 9999px, 86px, 0); }
+            10% { clip: rect(2px, 9999px, 90px, 0); }
+            15% { clip: rect(45px, 9999px, 12px, 0); }
+            100% { clip: rect(1px, 9999px, 11px, 0); }
         }
 
-        /* 3D Styles */
-        .perspective-1000 { perspective: 1200px; }
-        .preserve-3d { transform-style: preserve-3d; }
-        
-        /* Nexus Links in 3D */
-        .nexus-link {
-            position: absolute; cursor: pointer; transition: all 0.3s ease;
-            background: rgba(0,0,0,0.8); padding: 5px 10px; border-radius: 4px;
-            font-family: 'JetBrains Mono', monospace; font-size: 10px;
-            border-left: 2px solid;
-            /* Fix for clicking in 3D */
-            pointer-events: auto !important; 
+        /* --- 3D REACTOR CORE --- */
+        .reactor-container {
+            perspective: 1000px;
+            transform-style: preserve-3d;
         }
-        .nexus-link:hover { transform: scale(1.1) translateZ(30px); z-index: 50; }
+        .reactor-ring {
+            position: absolute; border-radius: 50%;
+            border: 1px solid rgba(0, 243, 255, 0.3);
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.1);
+            transform-style: preserve-3d;
+        }
+        .core-glow {
+            background: radial-gradient(circle, rgba(0,243,255,0.8) 0%, rgba(0,0,0,0) 70%);
+            filter: blur(20px);
+            animation: pulse-core 2s ease-in-out infinite;
+        }
+        @keyframes pulse-core { 0%, 100% { opacity: 0.5; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.2); } }
 
-        /* Canvas BG */
-        #network-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.6; }
+        /* --- GLASS CARDS --- */
+        .cyber-card {
+            background: rgba(10, 15, 25, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 243, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative; overflow: hidden;
+        }
+        .cyber-card::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 243, 255, 0.1), transparent);
+            transition: 0.5s;
+        }
+        .cyber-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            border-color: #00f3ff;
+            box-shadow: 0 0 30px rgba(0, 243, 255, 0.15);
+        }
+        .cyber-card:hover::before { left: 100%; }
+
+        /* --- BOOT SCREEN --- */
+        #boot-screen {
+            position: fixed; inset: 0; background: black; z-index: 10000;
+            display: flex; flex-direction: column; justify-content: flex-end; padding: 2rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .boot-line { opacity: 0; animation: type-line 0.1s forwards; color: #0aff0a; margin-bottom: 2px; font-size: 12px; }
+        @keyframes type-line { to { opacity: 1; } }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: #020408; }
+        ::-webkit-scrollbar-thumb { background: #00f3ff; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col font-sans selection:bg-h-cyan selection:text-black crt">
+<body class="selection:bg-neon-cyan selection:text-black">
 
-    <canvas id="network-canvas"></canvas>
+    <div class="crt-overlay"></div>
+    <div class="fixed inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 pointer-events-none z-[998]"></div>
+    <canvas id="neural-canvas" class="fixed inset-0 z-0 opacity-40 pointer-events-none"></canvas>
 
-    <div id="ai-takeover" class="fixed inset-0 z-[9999] bg-black hidden flex-col items-center justify-center">
-        <canvas id="matrix-rain" class="absolute inset-0 w-full h-full"></canvas>
-        <div class="absolute inset-0 flex flex-col items-center justify-center z-20 pointer-events-none">
-            <div id="ai-status-box" class="bg-black/80 border-2 border-h-cyan p-8 text-center backdrop-blur-xl shadow-[0_0_100px_rgba(0,240,255,0.5)] transform scale-0 transition-transform duration-500 max-w-2xl w-full mx-4">
-                <h1 class="text-4xl md:text-6xl font-black text-white tracking-tighter mb-2">SYSTEM BREACH</h1>
-                <div class="text-h-cyan font-mono text-lg md:text-xl animate-pulse">ESTABLISHING NEURAL HANDSHAKE...</div>
-                <div class="w-full h-1 bg-slate-800 mt-6 overflow-hidden rounded">
-                    <div id="ai-progress-bar" class="h-full bg-h-cyan w-0 transition-all duration-300 ease-out"></div>
-                </div>
-                <div id="ai-logs" class="mt-4 font-mono text-xs text-slate-400 h-32 overflow-hidden text-left space-y-1 border-t border-slate-800 pt-2"></div>
+    <div id="boot-screen"></div>
+
+    <div id="ai-overlay" class="fixed inset-0 z-[5000] bg-black hidden flex-col items-center justify-center font-mono">
+        <canvas id="matrix-rain" class="absolute inset-0 w-full h-full opacity-30"></canvas>
+        <div class="relative z-10 border border-neon-red bg-black/90 p-8 max-w-3xl w-full shadow-[0_0_100px_rgba(255,0,60,0.3)]">
+            <div class="flex justify-between items-center mb-4 border-b border-neon-red/30 pb-2">
+                <h2 class="text-neon-red font-bold text-xl animate-pulse">WARNING: SYSTEM OVERRIDE</h2>
+                <span class="text-xs text-neon-red">ERR_CODE: 0x99_GOD</span>
             </div>
+            <div id="terminal-output" class="h-64 overflow-y-auto text-sm space-y-1 font-bold text-neon-cyan"></div>
         </div>
     </div>
 
-    <header class="fixed w-full z-50 top-0 border-b border-h-cyan/10 bg-h-dark/80 backdrop-blur-md h-16 flex items-center justify-between px-6">
-        <a href="#" class="flex items-center gap-3 group">
-            <div class="w-8 h-8 bg-h-cyan text-black font-black flex items-center justify-center text-xl shadow-[0_0_15px_rgba(6,182,212,0.6)] rounded">A</div>
-            <div class="leading-tight">
-                <h1 class="font-bold text-white tracking-tight group-hover:text-h-cyan transition">AnoHUB <span class="text-h-cyan">PRTCL</span></h1>
-                <p class="text-[10px] font-mono text-slate-500 tracking-widest uppercase">Command Center</p>
+    <header class="fixed w-full z-50 top-0 border-b border-white/5 bg-deep-space/80 backdrop-blur-xl">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+            <div class="flex items-center gap-4 group cursor-pointer">
+                <div class="relative w-10 h-10 border border-neon-cyan flex items-center justify-center overflow-hidden">
+                    <div class="absolute inset-0 bg-neon-cyan opacity-20 group-hover:opacity-40 transition"></div>
+                    <span class="font-display text-neon-cyan font-bold text-xl relative z-10">A</span>
+                    <div class="absolute bottom-0 right-0 w-2 h-2 bg-neon-cyan"></div>
+                </div>
+                <div>
+                    <h1 class="font-display font-bold text-white tracking-widest text-lg group-hover:text-neon-cyan transition duration-300">AnoHUB</h1>
+                    <div class="flex items-center gap-2">
+                        <div class="w-1.5 h-1.5 bg-neon-green rounded-full animate-pulse"></div>
+                        <span class="text-[10px] font-mono text-slate-400 tracking-[0.2em]">SYSTEM OPTIMAL</span>
+                    </div>
+                </div>
             </div>
-        </a>
-        <div class="flex items-center gap-6 text-xs font-mono">
-            <span class="hidden md:inline text-slate-500">LATENCY: <span class="text-h-cyan" id="ping-counter">12ms</span></span>
-            <button onclick="App.deployAI()" class="flex items-center gap-2 text-h-cyan bg-h-cyan/5 px-3 py-1 rounded border border-h-cyan/30 hover:bg-h-cyan hover:text-black transition cursor-pointer">
-                <div class="w-1.5 h-1.5 bg-current rounded-full animate-pulse-fast"></div> DEPLOY AI
+
+            <div class="hidden md:flex gap-8 text-xs font-mono tracking-widest text-slate-400">
+                <div class="hover:text-neon-cyan cursor-pointer transition"> // PROTOCOLS</div>
+                <div class="hover:text-neon-cyan cursor-pointer transition"> // DEFENSE</div>
+                <div class="hover:text-neon-cyan cursor-pointer transition"> // NEURAL_LINK</div>
+            </div>
+
+            <button onclick="App.triggerHack()" class="border border-neon-red/50 text-neon-red px-4 py-2 text-[10px] font-mono hover:bg-neon-red hover:text-black transition duration-300 tracking-widest uppercase">
+                Initialize Override
             </button>
         </div>
     </header>
 
-    <main class="pt-24 pb-12 px-4 max-w-7xl mx-auto space-y-20 relative z-10">
-
-        <section class="relative grid lg:grid-cols-2 gap-12 items-center min-h-[60vh]">
-            <div class="relative z-10 space-y-8">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded bg-slate-900/80 border border-slate-700 text-[10px] font-mono text-h-cyan tracking-widest uppercase">
-                    <svg data-lucide="shield-check" class="w-3 h-3"></svg> Engineering Immunity v3.1
+    <main class="relative z-10 pt-32 pb-20 px-6">
+        
+        <section class="max-w-7xl mx-auto min-h-[70vh] grid lg:grid-cols-2 gap-16 items-center">
+            
+            <div class="space-y-8 relative">
+                <div class="inline-flex items-center gap-2 px-2 py-1 border border-neon-cyan/30 bg-neon-cyan/5 text-[10px] font-mono text-neon-cyan tracking-widest mb-4">
+                    <span>V6.0 STABLE</span>
+                    <span class="w-px h-3 bg-neon-cyan/30"></span>
+                    <span>SECURE CONNECTION</span>
                 </div>
-                <h1 class="text-5xl md:text-6xl lg:text-7xl font-black text-white leading-none tracking-tight">
-                    The <span class="text-transparent bg-clip-text bg-gradient-to-r from-h-cyan via-blue-400 to-purple-500 animate-pulse">Zero Compromise</span> <br>Standard.
+                
+                <h1 class="text-6xl md:text-8xl font-display font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-200 to-slate-500 leading-[0.9] glitch-text" data-text="ZERO COMPROMISE">
+                    ZERO<br>COMPROMISE
                 </h1>
-                <p class="text-lg text-slate-300 leading-relaxed max-w-xl border-l-2 border-h-cyan pl-6">
-                    We don't just manage risk; we digitize, analyze, and neutralize it. 
-                    <strong class="text-white">The AnoHUB Protocol</strong> is a synchronized defense system against the 48% dynamic failure rate.
+                
+                <p class="text-slate-400 text-lg max-w-lg leading-relaxed border-l-2 border-neon-cyan/50 pl-6">
+                    Digitizing industrial risk. <span class="text-white font-bold">AnoHUB</span> creates a synchronized defense system against entropy using advanced NDT arrays and financial algorithms.
                 </p>
-                <button onclick="document.getElementById('modules-grid').scrollIntoView({behavior: 'smooth'})" class="bg-h-cyan hover:bg-cyan-300 text-black font-bold px-8 py-4 rounded shadow-[0_0_30px_rgba(6,182,212,0.4)] transition flex items-center gap-2 group">
-                    INITIALIZE SYSTEMS <svg data-lucide="power" class="w-4 h-4 group-hover:scale-110 transition"></svg>
-                </button>
+
+                <div class="flex gap-4 pt-4">
+                    <button class="bg-neon-cyan text-black font-bold font-mono px-8 py-4 hover:bg-white transition-all duration-300 shadow-[0_0_20px_rgba(0,243,255,0.4)] clip-path-button">
+                        EXECUTE PROTOCOL_A
+                    </button>
+                    <button class="border border-slate-600 text-slate-300 font-mono px-8 py-4 hover:border-neon-cyan hover:text-neon-cyan transition-all duration-300">
+                        VIEW DIAGNOSTICS
+                    </button>
+                </div>
             </div>
 
-            <div id="hologram-container" class="relative h-[500px] w-full flex items-center justify-center perspective-1000 hidden lg:flex cursor-crosshair">
-                <div id="hologram-content" class="relative w-full h-full flex items-center justify-center transition-transform duration-100 ease-out preserve-3d">
+            <div class="relative h-[600px] w-full flex items-center justify-center perspective-1000" id="reactor-scene">
+                <div class="reactor-container relative w-64 h-64 animate-spin-slow preserve-3d">
+                    <div class="core-glow absolute inset-0 rounded-full"></div>
                     
-                    <div class="absolute w-40 h-40 bg-black/40 rounded-full border border-h-cyan flex items-center justify-center shadow-[0_0_60px_rgba(6,182,212,0.2)] backdrop-blur-sm z-20 pointer-events-none" style="transform: translateZ(0px);">
-                        <div class="text-center"><div class="text-4xl font-black text-white tracking-tighter">Ano</div><div class="text-xs font-mono text-h-cyan animate-pulse">NEXUS</div></div>
+                    <div class="reactor-ring w-96 h-96 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 border-dashed border-slate-700" style="transform: rotateX(70deg);"></div>
+                    <div class="reactor-ring w-80 h-80 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 border-neon-cyan opacity-40" style="transform: rotateY(60deg);"></div>
+                    <div class="reactor-ring w-80 h-80 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 border-neon-purple opacity-40" style="transform: rotateY(-60deg);"></div>
+                    
+                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 bg-black/50 border border-neon-cyan rounded-full backdrop-blur-md flex items-center justify-center shadow-[0_0_50px_rgba(0,243,255,0.3)] z-50">
+                        <div class="text-center">
+                            <div class="text-4xl font-display font-bold text-white">5.2</div>
+                            <div class="text-[10px] font-mono text-neon-cyan animate-pulse">TERAFLOPS</div>
+                        </div>
                     </div>
-                    <div class="absolute w-[500px] h-[500px] border border-slate-800 rounded-full animate-spin-slow border-dashed opacity-40 pointer-events-none" style="transform: translateZ(-20px) rotateX(60deg);"></div>
-                    <div class="absolute w-[350px] h-[350px] border border-h-cyan/20 rounded-full animate-spin-slow opacity-60 pointer-events-none" style="animation-direction: reverse; animation-duration: 30s; transform: translateZ(20px) rotateY(30deg);"></div>
 
-                    <a href="protocol/anohub_protocol_v2.html" class="nexus-link border-h-cyan text-h-cyan" style="transform: translate3d(180px, -100px, 50px);"><div class="text-white font-bold">SYS-01</div><div>LCC ENGINE</div></a>
-                    <a href="protocol/anohub_methodology_v2.html" class="nexus-link border-h-purple text-h-purple" style="transform: translate3d(220px, 50px, 0px);"><div class="text-white font-bold">SYS-02</div><div>NDT ARRAY</div></a>
-                    <a href="protocol/anohub_organization_v2.html" class="nexus-link border-h-orange text-h-orange" style="transform: translate3d(120px, 160px, 80px);"><div class="text-white font-bold">SYS-03</div><div>ORG INTEL</div></a>
-                    <a href="protocol/anohub_synergy_v2.html" class="nexus-link border-h-yellow text-h-yellow" style="transform: translate3d(-140px, 160px, 40px);"><div class="text-white font-bold">SYS-04</div><div>M-E SYNERGY</div></a>
-                    <a href="protocol/anohub_alignment_v2.html" class="nexus-link border-h-blue text-h-blue" style="transform: translate3d(-220px, 20px, -20px);"><div class="text-white font-bold">SYS-05</div><div>ALIGNMENT</div></a>
-                    
-                    <div onclick="App.deployAI()" class="nexus-link border-white text-white" style="transform: translate3d(-160px, -120px, 60px);"><div class="font-bold">SYS-99</div><div>AI CORE</div></div>
+                    <div class="absolute top-0 right-0 bg-black/80 border border-neon-cyan p-2 text-[10px] font-mono text-neon-cyan" style="transform: translateZ(100px);">
+                        NDT_ARRAY: ACTIVE
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section id="modules-grid">
-            <div class="flex items-center gap-4 mb-10">
-                <div class="h-px bg-gradient-to-r from-transparent via-h-cyan to-transparent flex-grow opacity-30"></div>
-                <h2 class="text-xs font-mono text-h-cyan uppercase tracking-[0.3em] text-center px-4 border border-h-cyan/30 rounded py-1 bg-h-cyan/5">Active Defense Modules</h2>
-                <div class="h-px bg-gradient-to-r from-transparent via-h-cyan to-transparent flex-grow opacity-30"></div>
+        <section class="max-w-7xl mx-auto mt-20">
+            <div class="flex items-end justify-between mb-8 border-b border-white/10 pb-4">
+                <h2 class="text-2xl font-display text-white">ACTIVE MODULES</h2>
+                <div class="font-mono text-xs text-neon-green animate-pulse">LIVE FEED CONNECTED ●</div>
             </div>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-                <a href="protocol/anohub_protocol_v2.html" class="scada-panel p-6 rounded-xl module-card group relative overflow-hidden block h-full" style="--hover-color: #22d3ee; --hover-glow: rgba(34,211,238,0.2)">
-                    <div class="absolute inset-0 bg-gradient-to-b from-transparent to-h-cyan/5 opacity-0 group-hover:opacity-100 transition duration-500"></div>
-                    <div class="flex justify-between items-start mb-6">
-                        <div class="bg-black/50 p-3 rounded border border-h-cyan/30 text-h-cyan"><svg data-lucide="bar-chart-3" class="w-6 h-6"></svg></div>
-                        <span class="text-[9px] font-mono text-slate-500 group-hover:text-h-cyan transition">SYS-01</span>
+                
+                <a href="#" class="cyber-card p-8 group">
+                    <div class="flex justify-between items-start mb-12">
+                        <div class="text-4xl font-mono font-bold text-slate-700 group-hover:text-neon-cyan transition">01</div>
+                        <svg data-lucide="activity" class="text-neon-cyan w-6 h-6"></svg>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-h-cyan transition">LCC Veto</h3>
-                    <p class="text-sm text-slate-400 mb-6">Financial firewall rejecting low-CAPEX bids.</p>
-                    <div class="absolute bottom-6 left-6 right-6 pt-4 border-t border-slate-800 flex justify-between items-center"><span class="text-[10px] font-mono text-slate-500">STATUS: <span class="text-h-cyan">ONLINE</span></span><svg data-lucide="external-link" class="w-4 h-4 text-slate-600 group-hover:text-h-cyan transition"></svg></div>
+                    <h3 class="text-xl font-bold text-white mb-2">Lifecycle Costing</h3>
+                    <p class="text-sm text-slate-400 font-mono leading-relaxed">Algorithmic financial firewall rejecting low-CAPEX bids based on 20-year degradation curves.</p>
                 </a>
 
-                <a href="protocol/anohub_methodology_v2.html" class="scada-panel p-6 rounded-xl module-card group relative overflow-hidden block h-full" style="--hover-color: #8b5cf6; --hover-glow: rgba(139,92,246,0.2)">
-                    <div class="absolute inset-0 bg-gradient-to-b from-transparent to-h-purple/5 opacity-0 group-hover:opacity-100 transition duration-500"></div>
-                    <div class="flex justify-between items-start mb-6">
-                        <div class="bg-black/50 p-3 rounded border border-h-purple/30 text-h-purple"><svg data-lucide="scan-line" class="w-6 h-6"></svg></div>
-                        <span class="text-[9px] font-mono text-slate-500 group-hover:text-h-purple transition">SYS-02</span>
+                <a href="#" class="cyber-card p-8 group">
+                    <div class="flex justify-between items-start mb-12">
+                        <div class="text-4xl font-mono font-bold text-slate-700 group-hover:text-neon-purple transition">02</div>
+                        <svg data-lucide="scan-line" class="text-purple-400 w-6 h-6"></svg>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-h-purple transition">NDT & Metrology</h3>
-                    <p class="text-sm text-slate-400 mb-6">Deep-scan PAUT & 3D Laser verification.</p>
-                    <div class="absolute bottom-6 left-6 right-6 pt-4 border-t border-slate-800 flex justify-between items-center"><span class="text-[10px] font-mono text-slate-500">STATUS: <span class="text-h-purple">ACTIVE</span></span><svg data-lucide="external-link" class="w-4 h-4 text-slate-600 group-hover:text-h-purple transition"></svg></div>
+                    <h3 class="text-xl font-bold text-white mb-2">Forensic NDT</h3>
+                    <p class="text-sm text-slate-400 font-mono leading-relaxed">PAUT volumetric testing and 3D Laser verification. Sub-millimeter crack detection.</p>
                 </a>
 
-                <a href="protocol/anohub_organization_v2.html" class="scada-panel p-6 rounded-xl module-card group relative overflow-hidden block h-full" style="--hover-color: #f97316; --hover-glow: rgba(249,115,22,0.2)">
-                    <div class="absolute inset-0 bg-gradient-to-b from-transparent to-h-orange/5 opacity-0 group-hover:opacity-100 transition duration-500"></div>
-                    <div class="flex justify-between items-start mb-6">
-                        <div class="bg-black/50 p-3 rounded border border-h-orange/30 text-h-orange"><svg data-lucide="network" class="w-6 h-6"></svg></div>
-                        <span class="text-[9px] font-mono text-slate-500 group-hover:text-h-orange transition">SYS-03</span>
+                <a href="#" class="cyber-card p-8 group">
+                    <div class="flex justify-between items-start mb-12">
+                        <div class="text-4xl font-mono font-bold text-slate-700 group-hover:text-neon-green transition">03</div>
+                        <svg data-lucide="cpu" class="text-neon-green w-6 h-6"></svg>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-h-orange transition">Org Intelligence</h3>
-                    <p class="text-sm text-slate-400 mb-6">Governance models to reduce entropy.</p>
-                    <div class="absolute bottom-6 left-6 right-6 pt-4 border-t border-slate-800 flex justify-between items-center"><span class="text-[10px] font-mono text-slate-500">STATUS: <span class="text-h-orange">LEARNING</span></span><svg data-lucide="external-link" class="w-4 h-4 text-slate-600 group-hover:text-h-orange transition"></svg></div>
+                    <h3 class="text-xl font-bold text-white mb-2">AI Governance</h3>
+                    <p class="text-sm text-slate-400 font-mono leading-relaxed">Preventing execution gap via neural governance models. Reducing organizational entropy.</p>
                 </a>
-
-                <a href="protocol/anohub_synergy_v2.html" class="scada-panel p-6 rounded-xl module-card group relative overflow-hidden block h-full" style="--hover-color: #facc15; --hover-glow: rgba(250,204,21,0.2)">
-                    <div class="absolute inset-0 bg-gradient-to-b from-transparent to-h-yellow/5 opacity-0 group-hover:opacity-100 transition duration-500"></div>
-                    <div class="flex justify-between items-start mb-6">
-                        <div class="bg-black/50 p-3 rounded border border-h-yellow/30 text-h-yellow"><svg data-lucide="zap" class="w-6 h-6"></svg></div>
-                        <span class="text-[9px] font-mono text-slate-500 group-hover:text-h-yellow transition">SYS-04</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-h-yellow transition">M-E Synergy</h3>
-                    <p class="text-sm text-slate-400 mb-6">Isolating stray currents and ghost vibrations.</p>
-                    <div class="absolute bottom-6 left-6 right-6 pt-4 border-t border-slate-800 flex justify-between items-center"><span class="text-[10px] font-mono text-slate-500">STATUS: <span class="text-h-yellow">MONITORING</span></span><svg data-lucide="external-link" class="w-4 h-4 text-slate-600 group-hover:text-h-yellow transition"></svg></div>
-                </a>
-
-                <a href="protocol/anohub_alignment_v2.html" class="scada-panel p-6 rounded-xl module-card group relative overflow-hidden block h-full" style="--hover-color: #3b82f6; --hover-glow: rgba(59,130,246,0.2)">
-                    <div class="absolute inset-0 bg-gradient-to-b from-transparent to-h-blue/5 opacity-0 group-hover:opacity-100 transition duration-500"></div>
-                    <div class="flex justify-between items-start mb-6">
-                        <div class="bg-black/50 p-3 rounded border border-h-blue/30 text-h-blue"><svg data-lucide="crosshair" class="w-6 h-6"></svg></div>
-                        <span class="text-[9px] font-mono text-slate-500 group-hover:text-h-blue transition">SYS-05</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-h-blue transition">Precision Alignment</h3>
-                    <p class="text-sm text-slate-400 mb-6">Laser verification. 0.05mm tolerances.</p>
-                    <div class="absolute bottom-6 left-6 right-6 pt-4 border-t border-slate-800 flex justify-between items-center">
-                        <span class="text-[10px] font-mono text-slate-500 group-hover:text-white">STATUS: <span class="text-h-blue">READY</span></span>
-                        <svg data-lucide="external-link" class="w-4 h-4 text-slate-600 group-hover:text-h-blue transition"></svg>
-                    </div>
-                </a>
-
-                <div onclick="App.deployAI()" class="scada-panel p-6 rounded-xl border-dashed border-slate-800 opacity-60 hover:opacity-100 transition-all flex flex-col justify-center items-center text-center relative overflow-hidden h-full cursor-pointer group">
-                    <div class="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition"></div>
-                    <svg data-lucide="brain-circuit" class="w-10 h-10 text-slate-500 group-hover:text-white mb-4 transition"></svg>
-                    <h3 class="text-sm font-bold text-slate-500 group-hover:text-white uppercase transition">Module 06: Hydro-AI</h3>
-                    <p class="text-xs text-slate-600 mt-2 group-hover:text-slate-400">Neural Load Forecasting</p>
-                    <span class="mt-4 text-[9px] bg-slate-900 px-2 py-1 rounded text-slate-500 font-mono border border-slate-800 group-hover:border-white group-hover:text-white transition">CLICK TO INITIALIZE</span>
-                </div>
 
             </div>
         </section>
+
     </main>
+
+    <footer class="border-t border-white/10 bg-black py-12 relative z-10">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-8 text-xs font-mono text-slate-600">
+            <div>
+                <p class="mb-2 text-slate-400">ANOHUB ENGINEERING SYSTEMS</p>
+                <p>UNIT 42, SECTOR 7G<br>VIENNA, AUSTRIA</p>
+            </div>
+            <div class="md:text-right">
+                <p class="text-neon-cyan">ENCRYPTED: SHA-256</p>
+                <p>STATUS: OPERATIONAL</p>
+            </div>
+        </div>
+    </footer>
 
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <script>
         const App = {
             init() {
                 lucide.createIcons();
+                this.runBootSequence();
                 this.initCanvas();
-                this.initHologram();
-                
-                // Simple Ping Sim
-                setInterval(() => {
-                    const ping = Math.floor(Math.random() * 12) + 8;
-                    const el = document.getElementById('ping-counter');
-                    if(el) el.innerText = ping + "ms";
-                }, 2000);
+                this.handleMouseEffect();
             },
 
-            // === AI MATRIX LOGIC ===
-            deployAI() {
-                const overlay = document.getElementById('ai-takeover');
-                const box = document.getElementById('ai-status-box');
-                const progressBar = document.getElementById('ai-progress-bar');
-                const logs = document.getElementById('ai-logs');
-                const canvas = document.getElementById('matrix-rain');
-                
-                if(!overlay) return;
-
-                // Show Overlay
-                overlay.classList.remove('hidden');
-                overlay.classList.add('flex');
-                setTimeout(() => box.classList.remove('scale-0'), 100);
-                
-                // Start Rain
-                this.initMatrixRain(canvas);
-
-                // Logs
-                const sequence = [
-                    { text: "INITIATING NEURAL HANDSHAKE...", time: 500 },
-                    { text: "BYPASSING FIREWALL LAYER 7...", time: 1500 },
-                    { text: "DECRYPTING BIOS KEYS [0x4A21]...", time: 2500 },
-                    { text: "OPTIMIZING NETWORK TOPOLOGY...", time: 3500 },
-                    { text: "ACCESS GRANTED. WELCOME, ADMIN.", time: 4500 }
+            // BIOS BOOT SEQUENCE
+            runBootSequence() {
+                const screen = document.getElementById('boot-screen');
+                const logs = [
+                    "BIOS DATE 11/25/25 11:12:47 VER 1.02",
+                    "CPU: QUANTUM CORE i9-9900K @ 8.0GHz",
+                    "CHECKING MEMORY........OK",
+                    "LOADING KERNEL.........OK",
+                    "MOUNTING VIRTUAL DRIVES.....OK",
+                    "INITIALIZING NEURAL LINK...",
+                    "ACCESS GRANTED."
                 ];
 
-                logs.innerHTML = '';
-                progressBar.style.width = '0%';
-
-                sequence.forEach((step, index) => {
+                let delay = 0;
+                logs.forEach((log, i) => {
                     setTimeout(() => {
                         const p = document.createElement('div');
-                        p.innerText = `> ${step.text}`;
-                        p.className = index === sequence.length -1 ? "text-h-green font-bold" : "text-h-cyan";
-                        logs.prepend(p);
-                        progressBar.style.width = `${((index + 1) / sequence.length) * 100}%`;
-                    }, step.time);
+                        p.className = 'boot-line';
+                        p.innerText = `> ${log}`;
+                        screen.appendChild(p);
+                    }, delay);
+                    delay += (Math.random() * 300) + 100;
                 });
 
-                // Finish
                 setTimeout(() => {
-                    box.classList.add('scale-0');
-                    setTimeout(() => {
-                        overlay.classList.add('hidden');
-                        overlay.classList.remove('flex');
-                        if (this.matrixInterval) clearInterval(this.matrixInterval);
-                        // Optional: alert("AI Ready"); 
-                    }, 300);
-                }, 6000);
+                    screen.style.transition = "opacity 0.5s ease";
+                    screen.style.opacity = "0";
+                    setTimeout(() => screen.remove(), 500);
+                }, delay + 500);
             },
 
-            initMatrixRain(canvas) {
-                if (!canvas) return;
+            // CANVAS NEURAL NETWORK
+            initCanvas() {
+                const canvas = document.getElementById('neural-canvas');
+                const ctx = canvas.getContext('2d');
+                let width, height;
+                let particles = [];
+
+                const resize = () => {
+                    width = canvas.width = window.innerWidth;
+                    height = canvas.height = window.innerHeight;
+                };
+                window.addEventListener('resize', resize);
+                resize();
+
+                for(let i=0; i<80; i++) {
+                    particles.push({
+                        x: Math.random() * width,
+                        y: Math.random() * height,
+                        vx: (Math.random() - 0.5) * 0.5,
+                        vy: (Math.random() - 0.5) * 0.5,
+                        size: Math.random() * 2
+                    });
+                }
+
+                const draw = () => {
+                    ctx.clearRect(0, 0, width, height);
+                    
+                    particles.forEach((p, i) => {
+                        p.x += p.vx;
+                        p.y += p.vy;
+
+                        if(p.x < 0 || p.x > width) p.vx *= -1;
+                        if(p.y < 0 || p.y > height) p.vy *= -1;
+
+                        ctx.fillStyle = '#00f3ff';
+                        ctx.beginPath();
+                        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                        ctx.fill();
+
+                        // Connect lines
+                        particles.slice(i+1).forEach(p2 => {
+                            const dx = p.x - p2.x;
+                            const dy = p.y - p2.y;
+                            const dist = Math.sqrt(dx*dx + dy*dy);
+
+                            if(dist < 150) {
+                                ctx.strokeStyle = `rgba(0, 243, 255, ${1 - dist/150})`;
+                                ctx.lineWidth = 0.5;
+                                ctx.beginPath();
+                                ctx.moveTo(p.x, p.y);
+                                ctx.lineTo(p2.x, p2.y);
+                                ctx.stroke();
+                            }
+                        });
+                    });
+                    requestAnimationFrame(draw);
+                };
+                draw();
+            },
+
+            // 3D TILT EFFECT FOR REACTOR
+            handleMouseEffect() {
+                const container = document.getElementById('reactor-scene');
+                const target = document.querySelector('.reactor-container');
+                
+                document.addEventListener('mousemove', (e) => {
+                    const x = (window.innerWidth / 2 - e.pageX) / 50;
+                    const y = (window.innerHeight / 2 - e.pageY) / 50;
+                    target.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+                });
+            },
+
+            // MATRIX OVERRIDE
+            triggerHack() {
+                const overlay = document.getElementById('ai-overlay');
+                const terminal = document.getElementById('terminal-output');
+                const canvas = document.getElementById('matrix-rain');
+                
+                overlay.classList.remove('hidden');
+                overlay.classList.add('flex');
+                
+                // Matrix Rain
                 const ctx = canvas.getContext('2d');
                 canvas.width = window.innerWidth;
                 canvas.height = window.innerHeight;
+                const columns = canvas.width / 20;
+                const drops = Array(Math.floor(columns)).fill(1);
                 
-                const characters = 'ANOHUBXYZ0123456789';
-                const fontSize = 14;
-                const columns = Math.floor(canvas.width / fontSize);
-                const drops = Array(columns).fill(1);
-
-                if (this.matrixInterval) clearInterval(this.matrixInterval);
-
                 const drawMatrix = () => {
                     ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
                     ctx.fillRect(0, 0, canvas.width, canvas.height);
-                    ctx.fillStyle = '#06b6d4'; // Cyan
-                    ctx.font = fontSize + 'px monospace';
-
-                    for(let i = 0; i < drops.length; i++) {
-                        const text = characters.charAt(Math.floor(Math.random() * characters.length));
-                        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                        if(drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                    ctx.fillStyle = '#ff003c'; // Red for danger
+                    ctx.font = '15px monospace';
+                    
+                    for(let i=0; i<drops.length; i++) {
+                        const text = String.fromCharCode(0x30A0 + Math.random() * 96);
+                        ctx.fillText(text, i*20, drops[i]*20);
+                        if(drops[i]*20 > canvas.height && Math.random() > 0.975) drops[i] = 0;
                         drops[i]++;
                     }
                 };
-                this.matrixInterval = setInterval(drawMatrix, 33);
-            },
+                
+                const interval = setInterval(drawMatrix, 50);
 
-            // === 3D HOLOGRAM LOGIC ===
-            initHologram() {
-                const container = document.getElementById('hologram-container');
-                const content = document.getElementById('hologram-content');
-                if (!container) return;
-                container.addEventListener('mousemove', (e) => {
-                    const rect = container.getBoundingClientRect();
-                    const x = e.clientX - rect.left; const y = e.clientY - rect.top;
-                    const xRot = ((y / rect.height) - 0.5) * -15; 
-                    const yRot = ((x / rect.width) - 0.5) * 15;
-                    content.style.transform = `perspective(1000px) rotateX(${xRot}deg) rotateY(${yRot}deg)`;
-                });
-                container.addEventListener('mouseleave', () => content.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg)`);
-            },
-
-            // === BACKGROUND NETWORK ===
-            initCanvas() {
-                const canvas = document.getElementById('network-canvas');
-                if(!canvas) return;
-                const ctx = canvas.getContext('2d');
-                let width, height, particles = [];
-
-                const resize = () => { width = window.innerWidth; height = window.innerHeight; canvas.width = width; canvas.height = height; };
-                window.addEventListener('resize', resize); resize();
-
-                class Particle {
-                    constructor() {
-                        this.x = Math.random() * width; this.y = Math.random() * height;
-                        this.vx = (Math.random() - 0.5) * 0.3; this.vy = (Math.random() - 0.5) * 0.3;
-                        this.size = Math.random() * 2;
+                // Terminal Text
+                const commands = [
+                    "INITIATING ROOT KIT...",
+                    "BYPASSING FIREWALL LEVEL 5...",
+                    "INJECTING SQL PAYLOAD...",
+                    "DOWNLOADING NEURAL SCHEMATICS...",
+                    "OVERRIDING SAFETY PROTOCOLS...",
+                    "SYSTEM CONTROL: COMPROMISED",
+                    "GOD MODE: ACTIVE"
+                ];
+                
+                let i = 0;
+                const typeInterval = setInterval(() => {
+                    if(i >= commands.length) {
+                        clearInterval(typeInterval);
+                        setTimeout(() => {
+                            clearInterval(interval);
+                            overlay.classList.add('hidden');
+                            overlay.classList.remove('flex');
+                        }, 2000);
+                        return;
                     }
-                    update() {
-                        this.x += this.vx; this.y += this.vy;
-                        if(this.x < 0 || this.x > width) this.vx *= -1;
-                        if(this.y < 0 || this.y > height) this.vy *= -1;
-                    }
-                    draw() { ctx.fillStyle = 'rgba(6, 182, 212, 0.4)'; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI*2); ctx.fill(); }
-                }
-
-                for(let i=0; i<70; i++) particles.push(new Particle());
-
-                const animateNetwork = () => {
-                    ctx.clearRect(0, 0, width, height);
-                    particles.forEach(p => {
-                        p.update(); p.draw();
-                        particles.forEach(p2 => {
-                            const d = Math.hypot(p.x-p2.x, p.y-p2.y);
-                            if(d < 100) { ctx.strokeStyle = `rgba(6, 182, 212, ${0.1 - d/1000})`; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y); ctx.stroke(); }
-                        });
-                    });
-                    requestAnimationFrame(animateNetwork);
-                };
-                animateNetwork();
+                    const p = document.createElement('div');
+                    p.innerText = `root@anohub:~# ${commands[i]}`;
+                    terminal.appendChild(p);
+                    terminal.scrollTop = terminal.scrollHeight;
+                    i++;
+                }, 800);
             }
         };
 
-        document.addEventListener('DOMContentLoaded', () => App.init());
+        window.addEventListener('DOMContentLoaded', () => App.init());
     </script>
 </body>
 </html>
