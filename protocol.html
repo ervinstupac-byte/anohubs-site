@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ANOHUB_PROTOCOL v8.0 // MASTER</title>
+    <title>ANOHUB_PROTOCOL v9.0 // FIXED</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,12 +27,10 @@
                         'spin-slow': 'spin 30s linear infinite',
                         'float': 'float 6s ease-in-out infinite',
                         'scroll': 'scroll 45s linear infinite',
-                        'pendulum': 'pendulum 3s ease-in-out infinite',
                     },
                     keyframes: {
                         float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' } },
-                        scroll: { '0%': { transform: 'translateX(0)' }, '100%': { transform: 'translateX(-50%)' } },
-                        pendulum: { '0%, 100%': { transform: 'rotate(5deg)' }, '50%': { transform: 'rotate(-5deg)' } }
+                        scroll: { '0%': { transform: 'translateX(0)' }, '100%': { transform: 'translateX(-50%)' } }
                     }
                 }
             }
@@ -42,13 +40,11 @@
     <style>
         body { background-color: #000; color: #94a3b8; overflow-x: hidden; }
         
-        /* Cyber Grid Background */
         .cyber-grid {
             position: fixed; inset: 0; z-index: -1;
             background-size: 50px 50px;
-            background-image:
-                linear-gradient(to right, rgba(0, 240, 255, 0.05) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(0, 240, 255, 0.05) 1px, transparent 1px);
+            background-image: linear-gradient(to right, rgba(0, 240, 255, 0.05) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(0, 240, 255, 0.05) 1px, transparent 1px);
             mask-image: radial-gradient(circle at 50% 50%, black 0%, transparent 90%);
         }
 
@@ -69,9 +65,24 @@
         .preserve-3d { transform-style: preserve-3d; }
         .scrollbar-hide::-webkit-scrollbar { display: none; }
         
-        .nexus-item { transition: all 0.3s ease; cursor: pointer; }
-        .nexus-item:hover { background: rgba(0, 240, 255, 0.2); border-color: #00f0ff; transform: scale(1.1) translateZ(40px); }
+        /* KLJUČNO ZA KLIKANJE: */
+        /* Osigurava da se gumbi mogu kliknuti, a lebde iznad svega */
+        .nexus-item { 
+            transition: all 0.3s ease; 
+            cursor: pointer; 
+            pointer-events: auto !important; /* FORCE CLICK */
+            z-index: 50;
+        }
+        .nexus-item:hover { 
+            background: rgba(0, 240, 255, 0.2); 
+            border-color: #00f0ff; 
+            transform: scale(1.1) translateZ(50px); 
+            z-index: 100;
+        }
         
+        /* Onemogućuje klikanje na dekoracije */
+        .no-click { pointer-events: none; }
+
         .bg-laser-target {
             background-image: radial-gradient(circle, #ef4444 2px, transparent 3px), repeating-radial-gradient(circle, transparent 0, transparent 9px, #334155 10px, transparent 11px);
         }
@@ -97,7 +108,7 @@
         </div>
     </div>
 
-    <div class="fixed top-0 z-50 w-full h-8 overflow-hidden bg-black/90 border-b border-h-cyan/20 flex items-center backdrop-blur-md">
+    <div class="fixed top-0 z-50 w-full h-8 overflow-hidden bg-black/90 border-b border-h-cyan/20 flex items-center backdrop-blur-md pointer-events-none">
         <div class="inline-block whitespace-nowrap animate-scroll text-[10px] font-mono tracking-widest">
             <span class="px-8 text-slate-400">SYS_INTEGRITY: <span class="text-h-cyan">99.9%</span></span>
             <span class="px-8 text-slate-400">AI_NEURAL_NET: <span id="ticker-ai-status" class="text-slate-500">STANDBY</span></span>
@@ -133,22 +144,40 @@
             <div id="hologram-container" class="relative h-[500px] w-full flex items-center justify-center perspective-1000 cursor-crosshair hidden lg:flex">
                 <div id="hologram-content" class="relative w-full h-full flex items-center justify-center transition-transform duration-100 ease-out preserve-3d">
                     
-                    <div class="absolute w-40 h-40 bg-black/60 rounded-full border border-h-cyan flex items-center justify-center shadow-[0_0_60px_rgba(0,240,255,0.3)] backdrop-blur-sm z-20" style="transform: translateZ(0px);">
+                    <div class="absolute w-40 h-40 bg-black/60 rounded-full border border-h-cyan flex items-center justify-center shadow-[0_0_60px_rgba(0,240,255,0.3)] backdrop-blur-sm z-20 no-click" style="transform: translateZ(0px);">
                         <div class="text-center">
                             <div class="text-4xl font-black text-white tracking-tighter">Ano</div>
                             <div class="text-xs font-mono text-h-cyan animate-pulse">NEXUS</div>
                         </div>
                     </div>
 
-                    <div class="absolute w-[550px] h-[550px] border border-slate-800 rounded-full animate-spin-slow border-dashed opacity-30" style="transform: translateZ(-20px) rotateX(60deg);"></div>
-                    <div class="absolute w-[400px] h-[400px] border border-h-cyan/20 rounded-full animate-spin-slow opacity-50" style="animation-direction: reverse; animation-duration: 20s; transform: translateZ(20px) rotateY(30deg);"></div>
+                    <div class="absolute w-[550px] h-[550px] border border-slate-800 rounded-full animate-spin-slow border-dashed opacity-30 no-click" style="transform: translateZ(-20px) rotateX(60deg);"></div>
+                    <div class="absolute w-[400px] h-[400px] border border-h-cyan/20 rounded-full animate-spin-slow opacity-50 no-click" style="animation-direction: reverse; animation-duration: 20s; transform: translateZ(20px) rotateY(30deg);"></div>
 
-                    <div onclick="App.openModal('SYS-01')" class="nexus-item absolute bg-black/80 border-l-2 border-h-cyan p-2 rounded text-[10px] font-mono text-h-cyan shadow-lg" style="transform: translate3d(180px, -100px, 50px);"><div class="text-white font-bold">SYS-01</div><div>LCC VETO</div></div>
-                    <div onclick="App.openModal('SYS-02')" class="nexus-item absolute bg-black/80 border-l-2 border-h-purple p-2 rounded text-[10px] font-mono text-h-purple shadow-lg" style="transform: translate3d(220px, 50px, 0px);"><div class="text-white font-bold">SYS-02</div><div>NDT METROLOGY</div></div>
-                    <div onclick="App.openModal('SYS-03')" class="nexus-item absolute bg-black/80 border-l-2 border-h-orange p-2 rounded text-[10px] font-mono text-h-orange shadow-lg" style="transform: translate3d(120px, 160px, 80px);"><div class="text-white font-bold">SYS-03</div><div>ORG INTEL</div></div>
-                    <div onclick="App.openModal('SYS-04')" class="nexus-item absolute bg-black/80 border-l-2 border-h-yellow p-2 rounded text-[10px] font-mono text-h-yellow shadow-lg" style="transform: translate3d(-140px, 160px, 40px);"><div class="text-white font-bold">SYS-04</div><div>M-E SYNERGY</div></div>
-                    <div onclick="App.openModal('SYS-05')" class="nexus-item absolute bg-black/80 border-l-2 border-h-blue p-2 rounded text-[10px] font-mono text-h-blue shadow-lg" style="transform: translate3d(-220px, 20px, -20px);"><div class="text-white font-bold">SYS-05</div><div>ALIGNMENT</div></div>
-                    <div onclick="App.deployAI()" class="nexus-item absolute bg-black/80 border-l-2 border-white p-2 rounded text-[10px] font-mono text-white shadow-lg" style="transform: translate3d(-160px, -120px, 60px);"><div class="font-bold">SYS-99</div><div>AI CORE</div></div>
+                    <div onclick="App.openModal('SYS-01')" class="nexus-item absolute bg-black/90 border-l-2 border-h-cyan p-2 rounded text-[10px] font-mono text-h-cyan shadow-lg" style="transform: translate3d(220px, -100px, 60px);">
+                        <div class="text-white font-bold">SYS-01</div><div>LCC VETO</div>
+                    </div>
+
+                    <div onclick="App.openModal('SYS-02')" class="nexus-item absolute bg-black/90 border-l-2 border-h-purple p-2 rounded text-[10px] font-mono text-h-purple shadow-lg" style="transform: translate3d(250px, 80px, 20px);">
+                        <div class="text-white font-bold">SYS-02</div><div>NDT METROLOGY</div>
+                    </div>
+
+                    <div onclick="App.openModal('SYS-03')" class="nexus-item absolute bg-black/90 border-l-2 border-h-orange p-2 rounded text-[10px] font-mono text-h-orange shadow-lg" style="transform: translate3d(80px, 220px, 80px);">
+                        <div class="text-white font-bold">SYS-03</div><div>ORG INTEL</div>
+                    </div>
+
+                    <div onclick="App.openModal('SYS-04')" class="nexus-item absolute bg-black/90 border-l-2 border-h-yellow p-2 rounded text-[10px] font-mono text-h-yellow shadow-lg" style="transform: translate3d(-180px, 180px, 40px);">
+                        <div class="text-white font-bold">SYS-04</div><div>M-E SYNERGY</div>
+                    </div>
+
+                    <div onclick="App.openModal('SYS-05')" class="nexus-item absolute bg-black/90 border-l-2 border-h-blue p-2 rounded text-[10px] font-mono text-h-blue shadow-lg" style="transform: translate3d(-250px, 0px, 0px);">
+                        <div class="text-white font-bold">SYS-05</div><div>ALIGNMENT</div>
+                    </div>
+
+                    <div onclick="App.deployAI()" class="nexus-item absolute bg-black/90 border-l-2 border-white p-2 rounded text-[10px] font-mono text-white shadow-lg" style="transform: translate3d(-180px, -150px, 60px);">
+                        <div class="font-bold">SYS-99</div><div>AI CORE</div>
+                    </div>
+
                 </div>
             </div>
         </section>
@@ -283,7 +312,7 @@
         const App = {
             data: {
                 modules: [
-                    // LINKOVI SU OVDJE - TOČNO PREMA TVOJOJ STRUKTURI
+                    // TOČNE PUTANJE (Relative to protocol.html in root)
                     { id: 'SYS-01', name: 'LCC VETO', status: 'ACTIVE', color: 'h-cyan', icon: 'triangle-alert', link: 'protocol/anohub_protocol_v2.html', stats: ['LCC > 15%', 'BID REJECTED', 'SAVINGS: $1.2M'], isUnlocked: true },
                     { id: 'SYS-02', name: 'NDT & METROLOGY', status: 'ACTIVE', color: 'h-purple', icon: 'scan-barcode', link: 'protocol/anohub_methodology_v2.html', stats: ['PASSPORT: VERIFIED', 'TOLERANCE: <0.01mm', 'ORIGIN: SE'], isUnlocked: true },
                     { id: 'SYS-03', name: 'ORG INTEL', status: 'ACTIVE', color: 'h-orange', icon: 'network', link: 'protocol/anohub_organization_v2.html', stats: ['ENTROPY: 45%', 'SILOS: DETECTED', 'LOSS: HIGH'], isUnlocked: true },
@@ -336,8 +365,14 @@
                 document.getElementById('modal-title').innerText = module.name;
                 document.getElementById('modal-id').innerText = id;
                 
-                // IMPORTANT: ASSIGN THE CORRECT LINK
-                document.getElementById('modal-link').href = module.link;
+                // ASSIGN LINK
+                const linkBtn = document.getElementById('modal-link');
+                if (module.id === 'SYS-99') {
+                    linkBtn.style.display = 'none'; // AI Core has no doc
+                } else {
+                    linkBtn.style.display = 'flex';
+                    linkBtn.href = module.link;
+                }
 
                 const desc = document.getElementById('modal-desc');
                 desc.innerHTML = '';
@@ -384,7 +419,6 @@
                     {text: "BYPASSING FIREWALL (LAYER 7)...", color: "text-h-orange"},
                     {text: "ACCESSING KERNEL...", color: "text-h-cyan"},
                     {text: "DECRYPTING BIOS KEYS...", color: "text-h-purple"},
-                    {text: "OPTIMIZING NETWORK TOPOLOGY...", color: "text-h-cyan"},
                     {text: "AI MODEL 'ANOHUB_V8' LOADED.", color: "text-white font-bold"},
                     {text: "SYSTEM CONTROL: GRANTED.", color: "text-h-green font-bold text-xl"}
                 ];
