@@ -3,15 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AnoHUB | Neural Command Interface v3.1</title>
+    <title>AnoHUB | Neural Command Interface v3.2</title>
     <meta name="description" content="Central command interface for Anohubs Engineering Immunity Protocols.">
     
-    <!-- 1. FONTOVI -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     
-    <!-- 2. TAILWIND CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = { 
@@ -29,7 +27,8 @@
                         'spin-slow': 'spin 20s linear infinite',
                         'float': 'float 6s ease-in-out infinite',
                         'scroll': 'scroll 45s linear infinite',
-                        'ping-slow': 'ping 3s cubic-bezier(0, 0, 0.2, 1) infinite',
+                        'shake': 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both',
+                        'glitch': 'glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite',
                     },
                     keyframes: {
                         float: {
@@ -38,7 +37,21 @@
                         },
                         scroll: {
                             '0%': { transform: 'translateX(0)' },
-                            '100%': { transform: 'translateX(-50%)' }, /* Scroll half because content is duplicated */
+                            '100%': { transform: 'translateX(-50%)' },
+                        },
+                        shake: {
+                            '10%, 90%': { transform: 'translate3d(-1px, 0, 0)' },
+                            '20%, 80%': { transform: 'translate3d(2px, 0, 0)' },
+                            '30%, 50%, 70%': { transform: 'translate3d(-4px, 0, 0)' },
+                            '40%, 60%': { transform: 'translate3d(4px, 0, 0)' }
+                        },
+                        glitch: {
+                            '0%': { transform: 'translate(0)' },
+                            '20%': { transform: 'translate(-2px, 2px)' },
+                            '40%': { transform: 'translate(-2px, -2px)' },
+                            '60%': { transform: 'translate(2px, 2px)' },
+                            '80%': { transform: 'translate(2px, -2px)' },
+                            '100%': { transform: 'translate(0)' }
                         }
                     }
                 } 
@@ -46,7 +59,6 @@
         }
     </script>
 
-    <!-- 3. CUSTOM STYLES -->
     <style>
         body { background-color: #000; color: #cbd5e1; overflow-x: hidden; }
         
@@ -54,7 +66,7 @@
         .crt::before {
             content: " "; display: block; position: fixed; top: 0; left: 0; bottom: 0; right: 0;
             background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
-            z-index: 999; background-size: 100% 2px, 3px 100%; pointer-events: none;
+            z-index: 900; background-size: 100% 2px, 3px 100%; pointer-events: none;
         }
 
         /* Glass Panels */
@@ -72,6 +84,7 @@
             background: rgba(15, 23, 42, 0.95);
             border-color: var(--hover-color);
             box-shadow: 0 0 30px var(--hover-glow);
+            cursor: pointer;
         }
 
         /* Ticker Animation Setup */
@@ -85,48 +98,135 @@
         .ticker-val { color: #fff; font-weight: bold; }
         .ticker-warn { color: #ef4444; font-weight: bold; }
 
+        /* Glitch Class (Applied via JS) */
+        .glitch-active {
+            animation: glitch 0.2s cubic-bezier(.25, .46, .45, .94) both infinite;
+            color: #ef4444 !important;
+            text-shadow: 2px 0 #fff, -2px 0 #0ff;
+        }
+
         /* Canvas Background Layer */
         #network-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.6; }
         
         /* 3D Perspective Container */
         .perspective-1000 { perspective: 1000px; }
+
+        /* Modal Overlay */
+        #modal-overlay {
+            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+            background: rgba(0,0,0,0.8); backdrop-filter: blur(8px);
+        }
+        #modal-overlay.active { opacity: 1; pointer-events: auto; }
+        
+        #modal-content {
+            transform: scale(0.95) translateY(20px); opacity: 0; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        #modal-overlay.active #modal-content { transform: scale(1) translateY(0); opacity: 1; }
+
+        /* Boot Screen */
+        #boot-screen {
+            position: fixed; inset: 0; background: #000; z-index: 9999;
+            display: flex; flex-direction: column; justify-content: flex-end; padding: 2rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .boot-line { color: #06b6d4; margin-bottom: 0.2rem; font-size: 0.8rem; text-transform: uppercase; }
+        .boot-success { color: #10b981; }
+        .cursor-blink { animation: blink 1s step-end infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
+
     </style>
 </head>
 <body class="min-h-screen flex flex-col font-sans selection:bg-h-cyan selection:text-black crt">
 
-    <!-- DYNAMIC BACKGROUND -->
-    <canvas id="network-canvas"></canvas>
-
-    <!-- LIVE DATA TICKER (Top Bar) -->
-    <div class="ticker-wrap backdrop-blur-md">
-        <div class="ticker-move">
-            <!-- Original Data -->
-            <span class="ticker-item">UNIT 01: EFF <span class="ticker-val">94.2%</span></span>
-            <span class="ticker-item">UNIT 02: VIB <span class="ticker-val">0.05mm/s</span></span>
-            <span class="ticker-item">UNIT 03: SHAFT <span class="ticker-warn">1.2V [RISK]</span></span>
-            <span class="ticker-item">GLOBAL GRID: <span class="ticker-val">50.02Hz</span></span>
-            <span class="ticker-item">LCC ALGORITHM: <span class="ticker-val text-h-cyan">ACTIVE</span></span>
-            <span class="ticker-item">NDT SCAN: <span class="ticker-val">COMPLETE</span></span>
-            <span class="ticker-item">ORG ENTROPY: <span class="ticker-val">LOW</span></span>
-            <span class="ticker-item">UNIT 04: TEMP <span class="ticker-val">65°C</span></span>
-            <!-- Duplicated Data for Seamless Loop -->
-            <span class="ticker-item">UNIT 01: EFF <span class="ticker-val">94.2%</span></span>
-            <span class="ticker-item">UNIT 02: VIB <span class="ticker-val">0.05mm/s</span></span>
-            <span class="ticker-item">UNIT 03: SHAFT <span class="ticker-warn">1.2V [RISK]</span></span>
-            <span class="ticker-item">GLOBAL GRID: <span class="ticker-val">50.02Hz</span></span>
-            <span class="ticker-item">LCC ALGORITHM: <span class="ticker-val text-h-cyan">ACTIVE</span></span>
-            <span class="ticker-item">NDT SCAN: <span class="ticker-val">COMPLETE</span></span>
-            <span class="ticker-item">ORG ENTROPY: <span class="ticker-val">LOW</span></span>
-            <span class="ticker-item">UNIT 04: TEMP <span class="ticker-val">65°C</span></span>
+    <div id="boot-screen">
+        <div id="boot-text-container" class="mb-4"></div>
+        <div class="w-full h-1 bg-slate-800 rounded overflow-hidden">
+            <div id="boot-progress" class="h-full bg-h-cyan w-0 transition-all duration-100 ease-linear"></div>
         </div>
     </div>
 
-    <!-- MAIN NAVIGATION -->
+    <canvas id="network-canvas"></canvas>
+
+    <div id="modal-overlay" class="fixed inset-0 z-[200] flex items-center justify-center p-4">
+        <div id="modal-content" class="bg-h-panel border border-h-cyan/50 w-full max-w-3xl rounded-xl shadow-[0_0_50px_rgba(6,182,212,0.2)] relative overflow-hidden flex flex-col max-h-[90vh]">
+            <div class="bg-slate-900/50 border-b border-h-cyan/20 p-6 flex justify-between items-center">
+                <div>
+                    <h2 id="modal-title" class="text-2xl font-bold text-white tracking-tight">MODULE TITLE</h2>
+                    <p id="modal-subtitle" class="text-xs font-mono text-h-cyan mt-1">SYSTEM ID: <span id="modal-id">SYS-XX</span></p>
+                </div>
+                <button onclick="closeModal()" class="text-slate-400 hover:text-white transition bg-slate-800 p-2 rounded hover:bg-h-red hover:text-white group">
+                    <svg data-lucide="x" class="w-6 h-6"></svg>
+                </button>
+            </div>
+            
+            <div class="p-8 overflow-y-auto">
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="md:col-span-2 space-y-6">
+                        <p id="modal-desc" class="text-slate-300 leading-relaxed text-sm"></p>
+                        
+                        <div class="h-48 bg-black/40 rounded border border-slate-700 relative overflow-hidden p-4">
+                            <div class="absolute inset-0 grid grid-cols-12 gap-1 opacity-10">
+                                <div class="col-span-1 border-r border-slate-500 h-full"></div>
+                                <div class="col-span-1 border-r border-slate-500 h-full"></div>
+                                <div class="col-span-1 border-r border-slate-500 h-full"></div>
+                                <div class="col-span-1 border-r border-slate-500 h-full"></div>
+                                <div class="col-span-1 border-r border-slate-500 h-full"></div>
+                                <div class="col-span-1 border-r border-slate-500 h-full"></div>
+                            </div>
+                            <div class="flex items-end justify-between h-full gap-2 relative z-10" id="modal-bars">
+                                </div>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-4 border-l border-slate-800 pl-6">
+                        <div>
+                            <span class="text-[10px] font-mono text-slate-500 uppercase block">Efficiency</span>
+                            <span id="modal-stat-1" class="text-xl font-bold text-white">98.4%</span>
+                        </div>
+                        <div>
+                            <span class="text-[10px] font-mono text-slate-500 uppercase block">Last Audit</span>
+                            <span id="modal-stat-2" class="text-xl font-bold text-white">2h ago</span>
+                        </div>
+                        <div>
+                            <span class="text-[10px] font-mono text-slate-500 uppercase block">Risk Factor</span>
+                            <span id="modal-stat-3" class="text-xl font-bold text-h-cyan">LOW</span>
+                        </div>
+                        <div class="pt-4">
+                            <button class="w-full bg-h-cyan/10 hover:bg-h-cyan text-h-cyan hover:text-black border border-h-cyan/50 text-xs font-mono py-2 rounded transition uppercase">
+                                Run Diagnostics
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="access-denied" class="fixed top-20 left-1/2 -translate-x-1/2 bg-h-red/90 text-white px-6 py-3 rounded shadow-[0_0_20px_rgba(239,68,68,0.5)] z-[300] font-mono font-bold text-sm hidden">
+        ⚠ ACCESS DENIED: INSUFFICIENT CLEARANCE
+    </div>
+
+    <div class="ticker-wrap backdrop-blur-md" id="ticker-bar">
+        <div class="ticker-move">
+            <span class="ticker-item">UNIT 01: EFF <span class="ticker-val">94.2%</span></span>
+            <span class="ticker-item">UNIT 02: VIB <span class="ticker-val">0.05mm/s</span></span>
+            <span class="ticker-item">UNIT 03: SHAFT <span class="ticker-warn">1.2V [RISK]</span></span>
+            <span class="ticker-item">GLOBAL GRID: <span class="ticker-val">50.02Hz</span></span>
+            <span class="ticker-item">LCC ALGORITHM: <span class="ticker-val text-h-cyan">ACTIVE</span></span>
+            <span class="ticker-item">NDT SCAN: <span class="ticker-val">COMPLETE</span></span>
+            <span class="ticker-item">ORG ENTROPY: <span class="ticker-val">LOW</span></span>
+            <span class="ticker-item">UNIT 01: EFF <span class="ticker-val">94.2%</span></span>
+            <span class="ticker-item">UNIT 02: VIB <span class="ticker-val">0.05mm/s</span></span>
+            <span class="ticker-item">UNIT 03: SHAFT <span class="ticker-warn">1.2V [RISK]</span></span>
+            <span class="ticker-item">GLOBAL GRID: <span class="ticker-val">50.02Hz</span></span>
+            <span class="ticker-item">LCC ALGORITHM: <span class="ticker-val text-h-cyan">ACTIVE</span></span>
+        </div>
+    </div>
+
     <header class="fixed w-full z-50 top-8 border-b border-h-cyan/10 bg-h-dark/80 backdrop-blur-md">
         <div class="max-w-7xl mx-auto px-4 h-16 flex justify-between items-center">
             <div class="flex items-center gap-3">
-                <a href="index.html" class="flex items-center gap-2 group">
-                    <!-- Logo Placeholder -->
+                <a href="#" onclick="playSound('click')" class="flex items-center gap-2 group">
                     <div class="w-8 h-8 bg-h-cyan text-black font-black flex items-center justify-center text-xl shadow-[0_0_15px_rgba(6,182,212,0.6)] rounded">A</div>
                     <div class="leading-tight">
                         <h1 class="font-bold text-white tracking-tight group-hover:text-h-cyan transition">AnoHUB <span class="text-h-cyan">PRTCL</span></h1>
@@ -147,17 +247,14 @@
         </div>
     </header>
 
-    <!-- CONTENT WRAPPER -->
     <main class="pt-32 pb-12 px-4 max-w-7xl mx-auto space-y-20 relative z-10">
 
-        <!-- HERO: HOLOGRAPHIC SYSTEM -->
         <section class="relative grid lg:grid-cols-2 gap-12 items-center min-h-[60vh]">
             
-            <!-- Left: Interactive Manifesto -->
             <div class="relative z-10 space-y-8">
                 <div class="inline-flex items-center gap-2 px-3 py-1 rounded bg-slate-900/80 border border-slate-700 text-[10px] font-mono text-h-cyan tracking-widest uppercase">
                     <svg data-lucide="shield-check" class="w-3 h-3"></svg>
-                    Engineering Immunity v3.1
+                    Engineering Immunity v3.2
                 </div>
                 
                 <h1 class="text-5xl md:text-6xl lg:text-7xl font-black text-white leading-none tracking-tight">
@@ -177,18 +274,15 @@
                 </div>
 
                 <div class="flex flex-wrap gap-4 pt-4">
-                    <button onclick="document.getElementById('modules-grid').scrollIntoView({behavior: 'smooth'})" class="bg-h-cyan hover:bg-cyan-300 text-black font-bold px-8 py-4 rounded shadow-[0_0_30px_rgba(6,182,212,0.4)] transition flex items-center gap-2 group">
+                    <button onclick="scrollToModules()" class="bg-h-cyan hover:bg-cyan-300 text-black font-bold px-8 py-4 rounded shadow-[0_0_30px_rgba(6,182,212,0.4)] transition flex items-center gap-2 group">
                         INITIALIZE SYSTEMS <svg data-lucide="power" class="w-4 h-4 group-hover:scale-110 transition"></svg>
                     </button>
                 </div>
             </div>
 
-            <!-- Right: 3D Tilt Hologram (Interactive) -->
             <div id="hologram-container" class="relative h-[500px] w-full flex items-center justify-center perspective-1000 hidden lg:flex cursor-crosshair">
-                <!-- Inner container moves with JS -->
                 <div id="hologram-content" class="relative w-full h-full flex items-center justify-center transition-transform duration-100 ease-out" style="transform-style: preserve-3d;">
                     
-                    <!-- Central Core Node -->
                     <div class="absolute w-40 h-40 bg-black/40 rounded-full border border-h-cyan flex items-center justify-center shadow-[0_0_60px_rgba(6,182,212,0.2)] backdrop-blur-sm z-20" style="transform: translateZ(50px);">
                         <div class="text-center">
                             <div class="text-4xl font-black text-white tracking-tighter">Ano</div>
@@ -196,30 +290,27 @@
                         </div>
                     </div>
 
-                    <!-- Orbital Rings -->
                     <div class="absolute w-[500px] h-[500px] border border-slate-800 rounded-full animate-spin-slow border-dashed opacity-40" style="transform: translateZ(0px);"></div>
                     <div class="absolute w-[350px] h-[350px] border border-h-cyan/20 rounded-full animate-spin-slow opacity-60" style="animation-direction: reverse; animation-duration: 30s; transform: translateZ(20px);"></div>
 
-                    <!-- Satellites (Floating Data Points) -->
-                    <div class="absolute top-10 right-20 bg-black/80 border-l-2 border-h-cyan p-2 rounded text-[10px] font-mono text-h-cyan shadow-lg animate-float" style="transform: translateZ(80px);">
+                    <button onclick="openModal('lcc')" class="absolute top-10 right-20 bg-black/80 hover:bg-h-cyan/20 border-l-2 border-h-cyan p-2 rounded text-[10px] font-mono text-h-cyan shadow-lg animate-float cursor-pointer transition" style="transform: translateZ(80px);">
                         <div class="text-white font-bold">LCC ENGINE</div>
                         <div>Status: Optimal</div>
-                    </div>
+                    </button>
                     
-                    <div class="absolute bottom-20 left-10 bg-black/80 border-l-2 border-h-purple p-2 rounded text-[10px] font-mono text-h-purple shadow-lg animate-float" style="animation-delay: 1s; transform: translateZ(60px);">
+                    <button onclick="openModal('ndt')" class="absolute bottom-20 left-10 bg-black/80 hover:bg-h-purple/20 border-l-2 border-h-purple p-2 rounded text-[10px] font-mono text-h-purple shadow-lg animate-float cursor-pointer transition" style="animation-delay: 1s; transform: translateZ(60px);">
                         <div class="text-white font-bold">NDT ARRAY</div>
                         <div>Scanning...</div>
-                    </div>
+                    </button>
 
-                    <div class="absolute top-1/2 right-0 bg-black/80 border-l-2 border-h-yellow p-2 rounded text-[10px] font-mono text-h-yellow shadow-lg animate-float" style="animation-delay: 2s; transform: translateZ(40px);">
+                    <button onclick="openModal('synergy')" class="absolute top-1/2 right-0 bg-black/80 hover:bg-h-yellow/20 border-l-2 border-h-yellow p-2 rounded text-[10px] font-mono text-h-yellow shadow-lg animate-float cursor-pointer transition" style="animation-delay: 2s; transform: translateZ(40px);">
                         <div class="text-white font-bold">M-E SYNERGY</div>
                         <div>Volts: 0.02V</div>
-                    </div>
+                    </button>
                 </div>
             </div>
         </section>
 
-        <!-- MODULES GRID -->
         <section id="modules-grid">
             <div class="flex items-center gap-4 mb-10">
                 <div class="h-px bg-gradient-to-r from-transparent via-h-cyan to-transparent flex-grow opacity-30"></div>
@@ -227,11 +318,9 @@
                 <div class="h-px bg-gradient-to-r from-transparent via-h-cyan to-transparent flex-grow opacity-30"></div>
             </div>
 
-            <!-- GRID OF CARDS -->
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-                <!-- MODULE 01: LCC (Finance) -->
-                <a href="protocol/anohub_protocol_v2.html" class="scada-panel p-6 rounded-xl module-card group relative overflow-hidden block h-full" style="--hover-color: #22d3ee; --hover-glow: rgba(34,211,238,0.2)">
+                <div onclick="openModal('lcc')" class="scada-panel p-6 rounded-xl module-card group relative overflow-hidden block h-full" style="--hover-color: #22d3ee; --hover-glow: rgba(34,211,238,0.2)">
                     <div class="absolute inset-0 bg-gradient-to-b from-transparent to-h-cyan/5 opacity-0 group-hover:opacity-100 transition duration-500"></div>
                     <div class="flex justify-between items-start mb-6">
                         <div class="bg-black/50 p-3 rounded border border-h-cyan/30 text-h-cyan shadow-[0_0_10px_rgba(34,211,238,0.1)]">
@@ -239,16 +328,15 @@
                         </div>
                         <span class="text-[9px] font-mono text-slate-500 group-hover:text-h-cyan transition">SYS-01</span>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-h-cyan transition">LCC & Procurement Veto</h3>
-                    <p class="text-sm text-slate-400 mb-6 leading-relaxed">Algorithmic financial firewall. Rejects low-CAPEX bids by calculating 20-year efficiency degradation costs and ROI.</p>
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-h-cyan transition">LCC & Procurement</h3>
+                    <p class="text-sm text-slate-400 mb-6 leading-relaxed">Algorithmic financial firewall. Rejects low-CAPEX bids by calculating 20-year efficiency degradation costs.</p>
                     <div class="absolute bottom-6 left-6 right-6 pt-4 border-t border-slate-800 flex justify-between items-center">
                         <span class="text-[10px] font-mono text-slate-500 group-hover:text-white">STATUS: <span class="text-h-cyan">ONLINE</span></span>
-                        <svg data-lucide="external-link" class="w-4 h-4 text-slate-600 group-hover:text-h-cyan transition"></svg>
+                        <svg data-lucide="maximize-2" class="w-4 h-4 text-slate-600 group-hover:text-h-cyan transition"></svg>
                     </div>
-                </a>
+                </div>
 
-                <!-- MODULE 02: NDT (Materials) -->
-                <a href="protocol/anohub_methodology_v2.html" class="scada-panel p-6 rounded-xl module-card group relative overflow-hidden block h-full" style="--hover-color: #8b5cf6; --hover-glow: rgba(139,92,246,0.2)">
+                <div onclick="openModal('ndt')" class="scada-panel p-6 rounded-xl module-card group relative overflow-hidden block h-full" style="--hover-color: #8b5cf6; --hover-glow: rgba(139,92,246,0.2)">
                     <div class="absolute inset-0 bg-gradient-to-b from-transparent to-h-purple/5 opacity-0 group-hover:opacity-100 transition duration-500"></div>
                     <div class="flex justify-between items-start mb-6">
                         <div class="bg-black/50 p-3 rounded border border-h-purple/30 text-h-purple shadow-[0_0_10px_rgba(139,92,246,0.1)]">
@@ -256,16 +344,15 @@
                         </div>
                         <span class="text-[9px] font-mono text-slate-500 group-hover:text-h-purple transition">SYS-02</span>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-h-purple transition">Forensic NDT & Metrology</h3>
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-h-purple transition">Forensic NDT</h3>
                     <p class="text-sm text-slate-400 mb-6 leading-relaxed">Deep-scan protocols. PAUT volumetric testing, HVOF surface hardening, and 3D Laser geometric verification.</p>
                     <div class="absolute bottom-6 left-6 right-6 pt-4 border-t border-slate-800 flex justify-between items-center">
                         <span class="text-[10px] font-mono text-slate-500 group-hover:text-white">STATUS: <span class="text-h-purple">ACTIVE</span></span>
-                        <svg data-lucide="external-link" class="w-4 h-4 text-slate-600 group-hover:text-h-purple transition"></svg>
+                        <svg data-lucide="maximize-2" class="w-4 h-4 text-slate-600 group-hover:text-h-purple transition"></svg>
                     </div>
-                </a>
+                </div>
 
-                <!-- MODULE 03: ORG (Intelligence) -->
-                <a href="protocol/anohub_organization_v2.html" class="scada-panel p-6 rounded-xl module-card group relative overflow-hidden block h-full" style="--hover-color: #f97316; --hover-glow: rgba(249,115,22,0.2)">
+                <div onclick="openModal('org')" class="scada-panel p-6 rounded-xl module-card group relative overflow-hidden block h-full" style="--hover-color: #f97316; --hover-glow: rgba(249,115,22,0.2)">
                     <div class="absolute inset-0 bg-gradient-to-b from-transparent to-h-orange/5 opacity-0 group-hover:opacity-100 transition duration-500"></div>
                     <div class="flex justify-between items-start mb-6">
                         <div class="bg-black/50 p-3 rounded border border-h-orange/30 text-h-orange shadow-[0_0_10px_rgba(249,115,22,0.1)]">
@@ -273,16 +360,15 @@
                         </div>
                         <span class="text-[9px] font-mono text-slate-500 group-hover:text-h-orange transition">SYS-03</span>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-h-orange transition">Organizational Intelligence</h3>
-                    <p class="text-sm text-slate-400 mb-6 leading-relaxed">Preventing execution gap. AI-driven governance models to map responsibilities and reduce information entropy.</p>
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-h-orange transition">Org. Intelligence</h3>
+                    <p class="text-sm text-slate-400 mb-6 leading-relaxed">Preventing execution gap. AI-driven governance models to map responsibilities and reduce entropy.</p>
                     <div class="absolute bottom-6 left-6 right-6 pt-4 border-t border-slate-800 flex justify-between items-center">
                         <span class="text-[10px] font-mono text-slate-500 group-hover:text-white">STATUS: <span class="text-h-orange">LEARNING</span></span>
-                        <svg data-lucide="external-link" class="w-4 h-4 text-slate-600 group-hover:text-h-orange transition"></svg>
+                        <svg data-lucide="maximize-2" class="w-4 h-4 text-slate-600 group-hover:text-h-orange transition"></svg>
                     </div>
-                </a>
+                </div>
 
-                <!-- MODULE 04: SYNERGY (Electro-Mech) -->
-                <a href="protocol/anohub_synergy_v2.html" class="scada-panel p-6 rounded-xl module-card group relative overflow-hidden block h-full" style="--hover-color: #facc15; --hover-glow: rgba(250,204,21,0.2)">
+                <div onclick="openModal('synergy')" class="scada-panel p-6 rounded-xl module-card group relative overflow-hidden block h-full" style="--hover-color: #facc15; --hover-glow: rgba(250,204,21,0.2)">
                     <div class="absolute inset-0 bg-gradient-to-b from-transparent to-h-yellow/5 opacity-0 group-hover:opacity-100 transition duration-500"></div>
                     <div class="flex justify-between items-start mb-6">
                         <div class="bg-black/50 p-3 rounded border border-h-yellow/30 text-h-yellow shadow-[0_0_10px_rgba(250,204,21,0.1)]">
@@ -291,15 +377,14 @@
                         <span class="text-[9px] font-mono text-slate-500 group-hover:text-h-yellow transition">SYS-04</span>
                     </div>
                     <h3 class="text-xl font-bold text-white mb-2 group-hover:text-h-yellow transition">M-E Synergy Audit</h3>
-                    <p class="text-sm text-slate-400 mb-6 leading-relaxed">Electro-Mechanical diagnostics. Isolating stray current threats (EDM) and ghost vibrations before bearing failure.</p>
+                    <p class="text-sm text-slate-400 mb-6 leading-relaxed">Electro-Mechanical diagnostics. Isolating stray current threats (EDM) and ghost vibrations before failure.</p>
                     <div class="absolute bottom-6 left-6 right-6 pt-4 border-t border-slate-800 flex justify-between items-center">
                         <span class="text-[10px] font-mono text-slate-500 group-hover:text-white">STATUS: <span class="text-h-yellow">MONITORING</span></span>
-                        <svg data-lucide="external-link" class="w-4 h-4 text-slate-600 group-hover:text-h-yellow transition"></svg>
+                        <svg data-lucide="maximize-2" class="w-4 h-4 text-slate-600 group-hover:text-h-yellow transition"></svg>
                     </div>
-                </a>
+                </div>
 
-                <!-- MODULE 05: ALIGNMENT (Precision) -->
-                <a href="protocol/anohub_alignment_v2.html" class="scada-panel p-6 rounded-xl module-card group relative overflow-hidden block h-full" style="--hover-color: #3b82f6; --hover-glow: rgba(59,130,246,0.2)">
+                <div onclick="openModal('align')" class="scada-panel p-6 rounded-xl module-card group relative overflow-hidden block h-full" style="--hover-color: #3b82f6; --hover-glow: rgba(59,130,246,0.2)">
                     <div class="absolute inset-0 bg-gradient-to-b from-transparent to-h-blue/5 opacity-0 group-hover:opacity-100 transition duration-500"></div>
                     <div class="flex justify-between items-start mb-6">
                         <div class="bg-black/50 p-3 rounded border border-h-blue/30 text-h-blue shadow-[0_0_10px_rgba(59,130,246,0.1)]">
@@ -308,20 +393,19 @@
                         <span class="text-[9px] font-mono text-slate-500 group-hover:text-h-blue transition">SYS-05</span>
                     </div>
                     <h3 class="text-xl font-bold text-white mb-2 group-hover:text-h-blue transition">Precision Alignment</h3>
-                    <p class="text-sm text-slate-400 mb-6 leading-relaxed">Mandatory 0.05mm tolerances. Virtual laser simulation, plumbness verification, and thrust load equalization.</p>
+                    <p class="text-sm text-slate-400 mb-6 leading-relaxed">Mandatory 0.05mm tolerances. Virtual laser simulation, plumbness verification, and load equalization.</p>
                     <div class="absolute bottom-6 left-6 right-6 pt-4 border-t border-slate-800 flex justify-between items-center">
                         <span class="text-[10px] font-mono text-slate-500 group-hover:text-white">STATUS: <span class="text-h-blue">READY</span></span>
-                        <svg data-lucide="external-link" class="w-4 h-4 text-slate-600 group-hover:text-h-blue transition"></svg>
+                        <svg data-lucide="maximize-2" class="w-4 h-4 text-slate-600 group-hover:text-h-blue transition"></svg>
                     </div>
-                </a>
+                </div>
 
-                <!-- MODULE 06: AI (Locked) -->
-                <div class="scada-panel p-6 rounded-xl border-dashed border-slate-800 opacity-40 flex flex-col justify-center items-center text-center relative overflow-hidden h-full">
+                <div id="module-ai" class="scada-panel p-6 rounded-xl border-dashed border-slate-800 opacity-40 flex flex-col justify-center items-center text-center relative overflow-hidden h-full cursor-not-allowed hover:border-h-red/50 transition">
                     <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAiIGhlaWdodD0iMTAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTEwIDEwTDAgME0wIDEwTDEwIDAiIHN0cm9rZT0iIzMzNDE1NSIgc3Ryb2tlLXdpZHRoPSIwLjUiLz48L3N2Zz4=')] opacity-10"></div>
-                    <svg data-lucide="lock" class="w-10 h-10 text-slate-600 mb-4"></svg>
+                    <svg data-lucide="lock" class="w-10 h-10 text-slate-600 mb-4 transition" id="lock-icon"></svg>
                     <h3 class="text-sm font-bold text-slate-500 uppercase">Module 06: Hydro-AI</h3>
                     <p class="text-xs text-slate-600 mt-2">Neural Load Forecasting</p>
-                    <span class="mt-4 text-[9px] bg-slate-900 px-2 py-1 rounded text-slate-500 font-mono border border-slate-800">ENCRYPTED / COMING SOON</span>
+                    <span class="mt-4 text-[9px] bg-slate-900 px-2 py-1 rounded text-slate-500 font-mono border border-slate-800">ENCRYPTED</span>
                 </div>
 
             </div>
@@ -329,7 +413,6 @@
 
     </main>
 
-    <!-- FOOTER -->
     <footer class="border-t border-slate-900 bg-black py-10 mt-auto relative z-10">
         <div class="max-w-7xl mx-auto px-4 text-center text-slate-600 text-xs font-mono space-y-4">
             <div class="flex justify-center gap-8 mb-4 opacity-60">
@@ -341,17 +424,259 @@
         </div>
     </footer>
 
-    <!-- SCRIPTS -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <script>
+        // === 0. DATA SOURCE (The Database) ===
+        const moduleData = {
+            lcc: {
+                title: "LCC & Procurement Veto",
+                id: "SYS-01",
+                desc: "The Life Cycle Cost (LCC) algorithm acts as a financial firewall. It ingests supplier bids and calculates the 20-year operational cost, factoring in efficiency degradation curves and cavitation risk. It automatically flags low-CAPEX bids that result in high-OPEX outcomes.",
+                stats: ["98.4%", "2h ago", "LOW"],
+                bars: [40, 60, 80, 50, 90, 70, 40, 60, 80, 95, 100, 90],
+                color: "bg-h-cyan"
+            },
+            ndt: {
+                title: "Forensic NDT & Metrology",
+                id: "SYS-02",
+                desc: "Non-Destructive Testing array utilizing Phased Array Ultrasonic Testing (PAUT) to detect sub-surface voids in runner blades. Metrology scans verify geometric compliance to 0.05mm against the original CAD model.",
+                stats: ["100%", "Live", "SAFE"],
+                bars: [20, 25, 30, 20, 40, 60, 80, 20, 10, 5, 15, 20],
+                color: "bg-h-purple"
+            },
+            org: {
+                title: "Organizational Intelligence",
+                id: "SYS-03",
+                desc: "Maps the 'Execution Gap' between engineering intent and site reality. Uses RASCI matrix analysis to identify ownership voids in the project management chain.",
+                stats: ["Learning", "Daily", "MED"],
+                bars: [50, 50, 50, 60, 60, 70, 70, 80, 85, 90, 95, 95],
+                color: "bg-h-orange"
+            },
+            synergy: {
+                title: "M-E Synergy Audit",
+                id: "SYS-04",
+                desc: "Analyses the interplay between magnetic flux and mechanical rotation. Specifically monitors for shaft voltages that cause Electric Discharge Machining (EDM) in bearings.",
+                stats: ["0.02V", "Live", "SAFE"],
+                bars: [10, 10, 20, 10, 80, 90, 10, 10, 10, 20, 10, 10],
+                color: "bg-h-yellow"
+            },
+            align: {
+                title: "Precision Alignment",
+                id: "SYS-05",
+                desc: "Laser-guided verticality and centering protocol. Simulates thrust bearing load distribution before the unit is watered up to ensure perfect plumbness.",
+                stats: ["0.01mm", "Pending", "OK"],
+                bars: [90, 92, 91, 93, 90, 92, 95, 95, 94, 93, 92, 95],
+                color: "bg-h-blue"
+            }
+        };
+
+        // === 1. AUDIO ENGINE (Synthesized Sci-Fi Sounds) ===
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        
+        function playSound(type) {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            
+            const osc = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            osc.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+
+            if (type === 'click') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(300, audioCtx.currentTime + 0.1);
+                gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.1);
+            } else if (type === 'error') {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(150, audioCtx.currentTime);
+                osc.frequency.linearRampToValueAtTime(100, audioCtx.currentTime + 0.3);
+                gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.3);
+            } else if (type === 'boot') {
+                osc.type = 'square';
+                osc.frequency.setValueAtTime(100, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(1000, audioCtx.currentTime + 1.5);
+                gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime);
+                gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 1.5);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 1.5);
+            }
+        }
+
+        // === 2. BOOT SEQUENCE ===
         document.addEventListener('DOMContentLoaded', () => {
             lucide.createIcons();
+            
+            const bootLines = [
+                "INITIALIZING KERNEL...",
+                "LOADING DRIVERS [OK]",
+                "MOUNTING FILE SYSTEM...",
+                "ENCRYPTING CONNECTION (AES-256)",
+                "ESTABLISHING HANDSHAKE...",
+                "WELCOME ENGINEER."
+            ];
+            
+            const bootContainer = document.getElementById('boot-text-container');
+            const bootProgress = document.getElementById('boot-progress');
+            const bootScreen = document.getElementById('boot-screen');
+            
+            let delay = 0;
+            
+            playSound('boot');
 
-            // === 1. DYNAMIC NEURAL NETWORK CANVAS ===
+            bootLines.forEach((line, i) => {
+                delay += (Math.random() * 300) + 200;
+                setTimeout(() => {
+                    const div = document.createElement('div');
+                    div.className = i === bootLines.length - 1 ? 'boot-line boot-success' : 'boot-line';
+                    div.innerText = `> ${line}`;
+                    bootContainer.appendChild(div);
+                    
+                    const progress = ((i + 1) / bootLines.length) * 100;
+                    bootProgress.style.width = `${progress}%`;
+                    
+                    if(i === bootLines.length - 1) {
+                        setTimeout(() => {
+                            bootScreen.style.opacity = '0';
+                            bootScreen.style.pointerEvents = 'none';
+                        }, 800);
+                    }
+                }, delay);
+            });
+
+            setupCanvas();
+            setupHologram();
+            setupGlitch();
+            setupLockedModule();
+        });
+
+        // === 3. MODAL LOGIC ===
+        function openModal(key) {
+            playSound('click');
+            const data = moduleData[key];
+            if (!data) return;
+
+            // Populate text
+            document.getElementById('modal-title').innerText = data.title;
+            document.getElementById('modal-id').innerText = data.id;
+            document.getElementById('modal-desc').innerText = data.desc;
+            
+            // Populate stats
+            document.getElementById('modal-stat-1').innerText = data.stats[0];
+            document.getElementById('modal-stat-2').innerText = data.stats[1];
+            document.getElementById('modal-stat-3').innerText = data.stats[2];
+
+            // Generate Charts
+            const barContainer = document.getElementById('modal-bars');
+            barContainer.innerHTML = '';
+            data.bars.forEach(val => {
+                const bar = document.createElement('div');
+                bar.className = `w-full ${data.color} opacity-80 hover:opacity-100 transition-all duration-500 ease-out`;
+                bar.style.height = '0%';
+                barContainer.appendChild(bar);
+                // Animate height after append
+                setTimeout(() => { bar.style.height = `${val}%`; }, 100);
+            });
+
+            // Show Modal
+            document.getElementById('modal-overlay').classList.add('active');
+        }
+
+        function closeModal() {
+            playSound('click');
+            document.getElementById('modal-overlay').classList.remove('active');
+        }
+
+        // Close on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // Scroll helper
+        function scrollToModules() {
+            playSound('click');
+            document.getElementById('modules-grid').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // === 4. LOCKED MODULE GAMIFICATION ===
+        function setupLockedModule() {
+            const lockedBtn = document.getElementById('module-ai');
+            const toast = document.getElementById('access-denied');
+            const lockIcon = document.getElementById('lock-icon');
+
+            lockedBtn.addEventListener('click', () => {
+                playSound('error');
+                
+                // Shake Animation
+                lockedBtn.classList.add('animate-shake');
+                lockIcon.classList.add('text-h-red');
+                setTimeout(() => {
+                    lockedBtn.classList.remove('animate-shake');
+                    lockIcon.classList.remove('text-h-red');
+                }, 500);
+
+                // Show Toast
+                toast.classList.remove('hidden');
+                setTimeout(() => { toast.classList.add('hidden'); }, 2000);
+            });
+        }
+
+        // === 5. GLITCH EFFECT ===
+        function setupGlitch() {
+            const ticker = document.getElementById('ticker-bar');
+            
+            // Randomly glitch the ticker every 5-15 seconds
+            setInterval(() => {
+                if(Math.random() > 0.7) {
+                    ticker.classList.add('glitch-active');
+                    setTimeout(() => {
+                        ticker.classList.remove('glitch-active');
+                    }, 200);
+                }
+            }, 5000);
+        }
+
+        // === 6. HOLOGRAM TILT ===
+        function setupHologram() {
+            const holoContainer = document.getElementById('hologram-container');
+            const holoContent = document.getElementById('hologram-content');
+
+            if (holoContainer && holoContent) {
+                holoContainer.addEventListener('mousemove', (e) => {
+                    const rect = holoContainer.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const xRot = ((y / rect.height) - 0.5) * -20;
+                    const yRot = ((x / rect.width) - 0.5) * 20;
+
+                    holoContent.style.transform = `perspective(1000px) rotateX(${xRot}deg) rotateY(${yRot}deg)`;
+                });
+
+                holoContainer.addEventListener('mouseleave', () => {
+                    holoContent.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg)`;
+                });
+            }
+        }
+
+        // === 7. CANVAS BACKGROUND (Optimized) ===
+        function setupCanvas() {
             const canvas = document.getElementById('network-canvas');
             const ctx = canvas.getContext('2d');
             let width, height;
             let particles = [];
+            let isVisible = true;
+
+            // Intersection Observer to pause when off-screen
+            const observer = new IntersectionObserver((entries) => {
+                isVisible = entries[0].isIntersecting;
+            });
+            observer.observe(canvas);
 
             function resize() {
                 width = window.innerWidth;
@@ -366,7 +691,7 @@
                 constructor() {
                     this.x = Math.random() * width;
                     this.y = Math.random() * height;
-                    this.vx = (Math.random() - 0.5) * 0.3; // Slower speed for background
+                    this.vx = (Math.random() - 0.5) * 0.3;
                     this.vy = (Math.random() - 0.5) * 0.3;
                     this.size = Math.random() * 2;
                 }
@@ -377,100 +702,65 @@
                     if (this.y < 0 || this.y > height) this.vy *= -1;
                 }
                 draw() {
-                    ctx.fillStyle = 'rgba(6, 182, 212, 0.4)'; // Cyan dots
+                    ctx.fillStyle = 'rgba(6, 182, 212, 0.4)';
                     ctx.beginPath();
                     ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                     ctx.fill();
                 }
             }
 
-            // Create particles
             for (let i = 0; i < 70; i++) particles.push(new Particle());
 
-            // Mouse interaction
             let mouse = { x: null, y: null };
-            window.addEventListener('mousemove', (e) => {
-                mouse.x = e.x;
-                mouse.y = e.y;
-            });
-            // Clear mouse on leave so lines don't stick
+            window.addEventListener('mousemove', (e) => { mouse.x = e.x; mouse.y = e.y; });
             window.addEventListener('mouseleave', () => { mouse.x = null; mouse.y = null; });
 
-            function animateNetwork() {
-                ctx.clearRect(0, 0, width, height);
-                
-                particles.forEach(p => {
-                    p.update();
-                    p.draw();
-                    
-                    // Connect particles to each other
-                    particles.forEach(p2 => {
-                        const dx = p.x - p2.x;
-                        const dy = p.y - p2.y;
-                        const dist = Math.sqrt(dx*dx + dy*dy);
-                        if (dist < 100) {
-                            ctx.strokeStyle = `rgba(6, 182, 212, ${0.1 - dist/1000})`;
-                            ctx.lineWidth = 0.5;
-                            ctx.beginPath();
-                            ctx.moveTo(p.x, p.y);
-                            ctx.lineTo(p2.x, p2.y);
-                            ctx.stroke();
+            function animate() {
+                if (isVisible) {
+                    ctx.clearRect(0, 0, width, height);
+                    particles.forEach(p => {
+                        p.update();
+                        p.draw();
+                        
+                        particles.forEach(p2 => {
+                            const dx = p.x - p2.x;
+                            const dy = p.y - p2.y;
+                            const dist = Math.sqrt(dx*dx + dy*dy);
+                            if (dist < 100) {
+                                ctx.strokeStyle = `rgba(6, 182, 212, ${0.1 - dist/1000})`;
+                                ctx.lineWidth = 0.5;
+                                ctx.beginPath();
+                                ctx.moveTo(p.x, p.y);
+                                ctx.lineTo(p2.x, p2.y);
+                                ctx.stroke();
+                            }
+                        });
+
+                        if (mouse.x) {
+                            const dx = p.x - mouse.x;
+                            const dy = p.y - mouse.y;
+                            const dist = Math.sqrt(dx*dx + dy*dy);
+                            if (dist < 150) {
+                                ctx.strokeStyle = `rgba(6, 182, 212, ${0.2 - dist/750})`;
+                                ctx.lineWidth = 0.8;
+                                ctx.beginPath();
+                                ctx.moveTo(p.x, p.y);
+                                ctx.lineTo(mouse.x, mouse.y);
+                                ctx.stroke();
+                            }
                         }
                     });
-
-                    // Connect particles to mouse
-                    if (mouse.x) {
-                        const dx = p.x - mouse.x;
-                        const dy = p.y - mouse.y;
-                        const dist = Math.sqrt(dx*dx + dy*dy);
-                        if (dist < 150) {
-                            ctx.strokeStyle = `rgba(6, 182, 212, ${0.2 - dist/750})`;
-                            ctx.lineWidth = 0.8;
-                            ctx.beginPath();
-                            ctx.moveTo(p.x, p.y);
-                            ctx.lineTo(mouse.x, mouse.y);
-                            ctx.stroke();
-                        }
-                    }
-                });
-                requestAnimationFrame(animateNetwork);
+                }
+                requestAnimationFrame(animate);
             }
-            animateNetwork();
-
-
-            // === 2. 3D HOLOGRAPHIC TILT EFFECT ===
-            // This script tilts the hologram container based on mouse position
-            const holoContainer = document.getElementById('hologram-container');
-            const holoContent = document.getElementById('hologram-content');
-
-            if (holoContainer && holoContent) {
-                holoContainer.addEventListener('mousemove', (e) => {
-                    const rect = holoContainer.getBoundingClientRect();
-                    // Calculate mouse position relative to the container center
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    
-                    // Calculate rotation angles (Max tilt: 15 deg)
-                    const xRot = ((y / rect.height) - 0.5) * -20; // Invert Y for natural feel
-                    const yRot = ((x / rect.width) - 0.5) * 20;
-
-                    // Apply transform with perspective
-                    holoContent.style.transform = `perspective(1000px) rotateX(${xRot}deg) rotateY(${yRot}deg)`;
-                });
-
-                // Reset on mouse leave
-                holoContainer.addEventListener('mouseleave', () => {
-                    holoContent.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg)`;
-                });
-            }
-
-            // === 3. SIMULATED PING COUNTER ===
-            // Updates latency number every 2 seconds to look "alive"
+            animate();
+            
+            // Ping Counter Logic
             setInterval(() => {
-                const ping = Math.floor(Math.random() * 12) + 8; // Random between 8ms and 20ms
+                const ping = Math.floor(Math.random() * 12) + 8;
                 document.getElementById('ping-counter').innerText = ping + "ms";
             }, 2000);
-        });
+        }
     </script>
 </body>
 </html>
