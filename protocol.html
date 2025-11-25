@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ANOHUB_PROTOCOL v9.0 // FIXED</title>
+    <title>ANOHUB_PROTOCOL v9.0 // LINKED</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -53,7 +53,6 @@
             border: 1px solid rgba(30, 41, 59, 0.6); box-shadow: 0 0 30px rgba(0,0,0,0.8);
         }
 
-        /* UI Elements */
         input[type=range] { -webkit-appearance: none; background: transparent; }
         input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; }
         .range-blue { width: 100%; height: 4px; background: #1e293b; border-radius: 2px; }
@@ -65,12 +64,11 @@
         .preserve-3d { transform-style: preserve-3d; }
         .scrollbar-hide::-webkit-scrollbar { display: none; }
         
-        /* KLJUČNO ZA KLIKANJE: */
-        /* Osigurava da se gumbi mogu kliknuti, a lebde iznad svega */
+        /* KLJUČNO ZA 3D KLIKANJE */
         .nexus-item { 
             transition: all 0.3s ease; 
             cursor: pointer; 
-            pointer-events: auto !important; /* FORCE CLICK */
+            pointer-events: auto !important; 
             z-index: 50;
         }
         .nexus-item:hover { 
@@ -79,8 +77,6 @@
             transform: scale(1.1) translateZ(50px); 
             z-index: 100;
         }
-        
-        /* Onemogućuje klikanje na dekoracije */
         .no-click { pointer-events: none; }
 
         .bg-laser-target {
@@ -201,6 +197,7 @@
                     <h3 id="modal-title" class="text-3xl font-bold text-white tracking-tight uppercase">MODULE</h3>
                     <div class="flex items-center gap-4 mt-1">
                         <div class="text-[10px] font-mono text-h-cyan">ID: <span id="modal-id">SYS-XX</span></div>
+                        
                         <a id="modal-link" href="#" target="_blank" class="group flex items-center gap-2 text-[10px] font-bold bg-h-cyan text-black px-4 py-2 rounded hover:bg-white transition shadow-[0_0_15px_rgba(0,240,255,0.3)]">
                             ACCESS FULL DOCUMENTATION <i data-lucide="external-link" class="w-3 h-3 group-hover:translate-x-1 transition-transform"></i>
                         </a>
@@ -221,11 +218,10 @@
     </div>
 
     <div style="display: none;">
-        
         <div id="tpl-SYS-01">
             <div class="p-6 bg-black/30 border border-slate-700 rounded-lg">
                 <h4 class="text-h-cyan font-bold mb-4">FINANCIAL FIREWALL</h4>
-                <p class="text-sm text-slate-300 mb-4">Automated rejection of bids that fail the 20-year TCO (Total Cost of Ownership) threshold.</p>
+                <p class="text-sm text-slate-300 mb-4">Automated rejection of bids failing TCO threshold.</p>
                 <div class="h-32 bg-slate-800 rounded flex items-end gap-1 p-1">
                     <div class="w-1/3 bg-h-red h-[40%] relative"><span class="absolute -top-5 w-full text-center text-[10px]">BID A</span></div>
                     <div class="w-1/3 bg-h-red h-[55%] relative"><span class="absolute -top-5 w-full text-center text-[10px]">BID B</span></div>
@@ -233,7 +229,6 @@
                 </div>
             </div>
         </div>
-
         <div id="tpl-SYS-02">
             <div class="p-6 bg-black/30 border border-slate-700 rounded-lg text-center">
                 <i data-lucide="scan-line" class="w-12 h-12 text-h-purple mx-auto mb-4"></i>
@@ -241,7 +236,6 @@
                 <div class="w-full h-2 bg-slate-800 mt-4 rounded overflow-hidden"><div class="h-full bg-h-purple w-2/3 animate-pulse"></div></div>
             </div>
         </div>
-
         <div id="tpl-SYS-03">
             <div class="grid md:grid-cols-2 gap-12">
                 <div class="space-y-8">
@@ -257,7 +251,6 @@
                 </div>
             </div>
         </div>
-
         <div id="tpl-SYS-04">
             <div class="flex justify-center mb-8">
                 <div class="relative w-40 h-40 flex items-center justify-center border-4 border-slate-700 rounded-full bg-slate-900">
@@ -270,7 +263,6 @@
                 <div class="flex justify-between bg-slate-900 p-4 rounded border border-slate-700"><span>Insulation</span><input type="checkbox" id="toggle-insulation" class="accent-h-cyan"></div>
             </div>
         </div>
-
         <div id="tpl-SYS-05">
             <div class="scada-panel p-0 border-t-4 border-t-h-blue overflow-hidden mb-6">
                 <div class="bg-slate-900 p-4 flex justify-between"><div class="flex gap-2"><div class="w-3 h-3 bg-h-red rounded-full" id="status-led"></div><span id="status-text" class="text-xs text-white">MISALIGNED</span></div></div>
@@ -298,7 +290,6 @@
                 </div>
             </div>
         </div>
-
         <div id="tpl-SYS-99">
             <div class="h-64 bg-black rounded border border-slate-800 relative overflow-hidden">
                 <canvas id="sys99-canvas" class="absolute inset-0 w-full h-full"></canvas>
@@ -311,13 +302,15 @@
     <script>
         const App = {
             data: {
+                // =========================================================
+                // CORRECT FILENAMES FROM YOUR SCREENSHOT
+                // =========================================================
                 modules: [
-                    // TOČNE PUTANJE (Relative to protocol.html in root)
                     { id: 'SYS-01', name: 'LCC VETO', status: 'ACTIVE', color: 'h-cyan', icon: 'triangle-alert', link: 'protocol/anohub_protocol_v2.html', stats: ['LCC > 15%', 'BID REJECTED', 'SAVINGS: $1.2M'], isUnlocked: true },
                     { id: 'SYS-02', name: 'NDT & METROLOGY', status: 'ACTIVE', color: 'h-purple', icon: 'scan-barcode', link: 'protocol/anohub_methodology_v2.html', stats: ['PASSPORT: VERIFIED', 'TOLERANCE: <0.01mm', 'ORIGIN: SE'], isUnlocked: true },
                     { id: 'SYS-03', name: 'ORG INTEL', status: 'ACTIVE', color: 'h-orange', icon: 'network', link: 'protocol/anohub_organization_v2.html', stats: ['ENTROPY: 45%', 'SILOS: DETECTED', 'LOSS: HIGH'], isUnlocked: true },
                     { id: 'SYS-04', name: 'M-E SYNERGY', status: 'ACTIVE', color: 'h-yellow', icon: 'zap', link: 'protocol/anohub_synergy_v2.html', stats: ['SHAFT VOLT: 1.8V', 'MITIGATION: ACTIVE', 'BEARING: SAFE'], isUnlocked: true },
-                    { id: 'SYS-05', name: 'ALIGNMENT', status: 'ACTIVE', color: 'h-blue', icon: 'crosshair', link: 'protocol/doc-precision-alignment.html', stats: ['OFFSET: 0.12mm', 'SHIMS: REQUIRED', 'VIB: CRITICAL'], isUnlocked: true },
+                    { id: 'SYS-05', name: 'ALIGNMENT', status: 'ACTIVE', color: 'h-blue', icon: 'crosshair', link: 'protocol/anohub_alignment_v2.html', stats: ['OFFSET: 0.12mm', 'SHIMS: REQUIRED', 'VIB: CRITICAL'], isUnlocked: true },
                     { id: 'SYS-99', name: 'AI CORE', status: 'LOCKED', color: 'slate-500', icon: 'brain-circuit', link: '#', stats: ['ACCESS: DENIED', 'ENCRYPTION: 256-BIT', 'NEURAL LINK: OFF'], isUnlocked: false }
                 ]
             },
@@ -368,7 +361,7 @@
                 // ASSIGN LINK
                 const linkBtn = document.getElementById('modal-link');
                 if (module.id === 'SYS-99') {
-                    linkBtn.style.display = 'none'; // AI Core has no doc
+                    linkBtn.style.display = 'none'; 
                 } else {
                     linkBtn.style.display = 'flex';
                     linkBtn.href = module.link;
@@ -419,7 +412,7 @@
                     {text: "BYPASSING FIREWALL (LAYER 7)...", color: "text-h-orange"},
                     {text: "ACCESSING KERNEL...", color: "text-h-cyan"},
                     {text: "DECRYPTING BIOS KEYS...", color: "text-h-purple"},
-                    {text: "AI MODEL 'ANOHUB_V8' LOADED.", color: "text-white font-bold"},
+                    {text: "AI MODEL 'ANOHUB_V9' LOADED.", color: "text-white font-bold"},
                     {text: "SYSTEM CONTROL: GRANTED.", color: "text-h-green font-bold text-xl"}
                 ];
 
