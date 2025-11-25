@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -18,14 +18,17 @@
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: { sans: ['Rajdhani', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
                     colors: {
-                        'h-cyan': '#00f0ff', 'h-green': '#0aff00', 'h-red': '#ff003c',
-                        'h-blue': '#2de2e6', 'h-purple': '#bc13fe', 'h-orange': '#ff9100',
-                        'h-yellow': '#fcee0a', 'h-dark': '#010203', 'h-panel': '#050a10',
+                        'h-cyan': '#00f0ff',
+                        'h-blue': '#2de2e6',
+                        'h-purple': '#a855f7',
+                        'h-orange': '#ff9100',
+                        'h-yellow': '#facc15',
+                        'h-green': '#22c55e',
+                        'h-red': '#ef4444'
                     },
                     animation: {
-                        'pulse-fast': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'pulse-fast': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                         'spin-slow': 'spin 20s linear infinite',
                         'float': 'float 6s ease-in-out infinite',
                         'scroll': 'scroll 45s linear infinite',
@@ -33,7 +36,7 @@
                     },
                     keyframes: {
                         float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' } },
-                        scroll: { '0%': { transform: 'translateX(0)' }, '100%': { transform: 'translateX(-50%)' } },
+                        scroll: { from: { transform: 'translateX(0)' }, to: { transform: 'translateX(-50%)' } },
                         pendulum: { '0%, 100%': { transform: 'rotate(5deg)' }, '50%': { transform: 'rotate(-5deg)' } }
                     }
                 }
@@ -126,6 +129,19 @@
         .bg-laser-target {
             background-image: radial-gradient(circle, #ef4444 2px, transparent 3px), repeating-radial-gradient(circle, transparent 0, transparent 9px, #334155 10px, transparent 11px);
         }
+
+        /* ENHANCEMENT: Fade-in animation for terminal */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
     </style>
 </head>
 
@@ -134,11 +150,14 @@
     <div class="cyber-grid"></div>
     <canvas id="network-canvas" class="fixed inset-0 z-0 opacity-40 pointer-events-none"></canvas>
 
+    <!-- ENHANCED: AI Takeover with Matrix Canvas -->
     <div id="ai-takeover" class="fixed inset-0 z-[200] bg-black hidden flex-col items-center justify-center font-mono">
-        <div
-            class="absolute inset-0 bg-[url('https://media.giphy.com/media/A06UFEx8jxEwU/giphy.gif')] opacity-10 pointer-events-none bg-cover">
-        </div>
-        <div id="ai-terminal" class="w-full max-w-3xl p-8 text-sm space-y-2 z-10">
+        <!-- Matrix Rain Canvas -->
+        <canvas id="matrix-canvas" class="absolute inset-0 w-full h-full"></canvas>
+
+        <!-- Terminal Output -->
+        <div id="ai-terminal"
+            class="w-full max-w-3xl p-8 text-sm space-y-2 z-10 relative bg-black/80 border-2 border-h-cyan shadow-[0_0_40px_rgba(0,240,255,0.5)] rounded">
         </div>
     </div>
 
@@ -178,53 +197,14 @@
                     class="group relative bg-h-cyan hover:bg-white text-black font-bold px-8 py-4 shadow-[0_0_40px_rgba(0,240,255,0.4)] transition-all hover:scale-105 flex items-center gap-2 overflow-hidden">
                     <span class="relative z-10 flex items-center gap-2">DEPLOY AI NEURAL LINK <i
                             data-lucide="brain-circuit" class="w-5 h-5"></i></span>
-                    <div
-                        class="absolute inset-0 bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 z-0">
+                    <div <h2 class="text-4xl font-bold text-white tracking-tighter uppercase"
+                        onmouseenter="App.hackText(this)" data-value="DEFENSE_MODULES">DEFENSE_MODULES</h2>
+                        <div class="font-mono text-h-cyan text-xs mb-2 animate-pulse"> /// ACTIVE</div>
                     </div>
-                </button>
-            </div>
-
-            <div id="hologram-container"
-                class="relative h-[500px] w-full flex items-center justify-center perspective-1000 cursor-crosshair hidden lg:flex">
-                <div id="hologram-content"
-                    class="relative w-full h-full flex items-center justify-center transition-transform duration-100 ease-out preserve-3d">
-                    <div class="absolute w-40 h-40 bg-black/60 rounded-full border border-h-cyan flex items-center justify-center shadow-[0_0_60px_rgba(0,240,255,0.3)] backdrop-blur-sm z-20"
-                        style="transform: translateZ(50px);">
-                        <div class="text-center">
-                            <div class="text-4xl font-black text-white tracking-tighter">Ano</div>
-                            <div class="text-xs font-mono text-h-cyan animate-pulse">NEXUS</div>
-                        </div>
+                    <div id="module-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                     </div>
-                    <div class="absolute w-[500px] h-[500px] border border-slate-800 rounded-full animate-spin-slow border-dashed opacity-40"
-                        style="transform: translateZ(0px);"></div>
-                    <div class="absolute w-[350px] h-[350px] border border-h-cyan/20 rounded-full animate-spin-slow opacity-60"
-                        style="animation-direction: reverse; animation-duration: 30s; transform: translateZ(20px);">
-                    </div>
-                    <div onclick="App.openModal('SYS-01')"
-                        class="cursor-pointer absolute top-10 right-20 bg-black/80 border-l-2 border-h-cyan p-2 rounded text-[10px] font-mono text-h-cyan shadow-lg animate-float"
-                        style="transform: translateZ(80px);">
-                        <div class="text-white font-bold">SYS-01</div>
-                        <div>LCC VETO</div>
-                    </div>
-                    <div onclick="App.openModal('SYS-05')"
-                        class="cursor-pointer absolute bottom-20 left-10 bg-black/80 border-l-2 border-h-blue p-2 rounded text-[10px] font-mono text-h-blue shadow-lg animate-float"
-                        style="animation-delay: 1s; transform: translateZ(60px);">
-                        <div class="text-white font-bold">SYS-05</div>
-                        <div>ALIGNMENT</div>
-                    </div>
-                </div>
-            </div>
         </section>
 
-        <section id="modules-grid" class="relative">
-            <div class="flex items-end gap-4 mb-12 border-b border-slate-800 pb-4">
-                <h2 class="text-4xl font-bold text-white tracking-tighter uppercase" onmouseenter="App.hackText(this)"
-                    data-value="DEFENSE_MODULES">DEFENSE_MODULES</h2>
-                <div class="font-mono text-h-cyan text-xs mb-2 animate-pulse"> /// ACTIVE</div>
-            </div>
-            <div id="module-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            </div>
-        </section>
     </main>
 
     <div id="modal-overlay"
@@ -286,92 +266,6 @@
                             class="absolute -top-5 w-full text-center text-[10px]">BID B</span></div>
                     <div class="w-1/3 bg-h-green h-[90%] relative group shadow-[0_0_20px_#00ff00]"><span
                             class="absolute -top-5 w-full text-center text-[10px]">ANOHUB</span></div>
-                </div>
-            </div>
-        </div>
-
-        <div id="tpl-SYS-03">
-            <div class="grid md:grid-cols-2 gap-12">
-                <div class="space-y-8">
-                    <div class="flex items-center gap-2 mb-4">
-                        <i data-lucide="sliders-horizontal" class="w-5 h-5 text-h-orange"></i>
-                        <h4 class="font-bold text-white">Input Parameters</h4>
-                    </div>
-                    <div>
-                        <div class="flex justify-between mb-2">
-                            <label class="text-xs font-bold text-slate-400 uppercase">Management Layers</label>
-                            <span id="val-layers" class="text-xs font-mono text-h-orange font-bold">4</span>
-                        </div>
-                        <input type="range" id="in-layers" min="1" max="8" step="1" value="4" class="range-orange">
-                    </div>
-                    <div>
-                        <div class="flex justify-between mb-2">
-                            <label class="text-xs font-bold text-slate-400 uppercase">Complexity</label>
-                            <span id="val-stakeholders" class="text-xs font-mono text-h-orange font-bold">High</span>
-                        </div>
-                        <input type="range" id="in-stakeholders" min="1" max="3" step="1" value="3"
-                            class="range-orange">
-                    </div>
-                    <div class="bg-slate-900 p-4 rounded border border-slate-700 mt-4">
-                        <div class="text-[10px] text-slate-500 uppercase mb-2">Calculation Model</div>
-                        <div class="text-xs font-mono text-slate-300">H(x) = - Σ p(x) log p(x) * Layers</div>
-                    </div>
-                </div>
-
-                <div
-                    class="flex flex-col items-center justify-center relative p-6 bg-black/20 rounded-xl border border-slate-700/50">
-                    <div class="relative w-56 h-56">
-                        <svg class="w-full h-full" viewBox="0 0 100 100" style="transform: rotate(-90deg);">
-                            <circle cx="50" cy="50" r="45" stroke="#334155" stroke-width="8" fill="transparent">
-                            </circle>
-                            <circle id="entropy-circle" cx="50" cy="50" r="45" stroke="#f97316" stroke-width="8"
-                                fill="transparent" stroke-dasharray="283" stroke-dashoffset="100"></circle>
-                        </svg>
-                        <div class="absolute inset-0 flex flex-col items-center justify-center">
-                            <span id="res-entropy" class="text-5xl font-black text-white">45%</span>
-                            <span
-                                class="text-[10px] text-slate-500 uppercase tracking-widest mt-2 font-bold">Information
-                                Loss</span>
-                        </div>
-                    </div>
-                    <div id="verdict-box"
-                        class="mt-8 px-8 py-3 rounded bg-h-orange/10 border border-h-orange text-h-orange font-bold text-sm tracking-wide shadow-lg">
-                        HIGH RISK: SILOS</div>
-                </div>
-            </div>
-        </div>
-
-        <div id="tpl-SYS-04">
-            <div class="flex flex-col items-center justify-center mb-8">
-                <div
-                    class="relative w-48 h-48 flex items-center justify-center border-4 border-slate-700 rounded-full bg-slate-900 shadow-[inset_0_0_20px_rgba(0,0,0,0.5)]">
-                    <div class="text-center z-10">
-                        <div class="text-[10px] text-slate-500 uppercase tracking-widest">Shaft Potential</div>
-                        <div id="sim-voltage" class="text-5xl font-black text-h-red transition-all duration-500">1.80
-                        </div>
-                        <div class="text-sm text-slate-400">Volts</div>
-                    </div>
-                    <div id="sim-ring"
-                        class="absolute inset-0 border-4 border-h-red rounded-full opacity-50 animate-pulse"></div>
-                </div>
-                <div id="sim-verdict"
-                    class="mt-6 text-xs font-bold text-h-red bg-h-red/10 px-4 py-2 rounded border border-h-red uppercase tracking-wider">
-                    DANGER: EDM IMMINENT</div>
-            </div>
-            <div class="grid grid-cols-2 gap-4">
-                <div class="flex items-center justify-between bg-slate-900 p-4 rounded border border-slate-700">
-                    <div>
-                        <div class="text-sm font-bold text-white">Grounding Brushes</div>
-                        <div class="text-[10px] text-slate-500">Ag-C Passive</div>
-                    </div>
-                    <input type="checkbox" id="toggle-brush" class="w-5 h-5 accent-h-cyan">
-                </div>
-                <div class="flex items-center justify-between bg-slate-900 p-4 rounded border border-slate-700">
-                    <div>
-                        <div class="text-sm font-bold text-white">Insulated Bearing</div>
-                        <div class="text-[10px] text-slate-500">Ceramic Break</div>
-                    </div>
-                    <input type="checkbox" id="toggle-insulation" class="w-5 h-5 accent-h-cyan">
                 </div>
             </div>
         </div>
@@ -466,208 +360,145 @@
             <div class="text-center text-slate-400 text-sm">System optimization protocols engaged.</div>
         </div>
 
-    </div>
+        this.initHologram();
+        if (window.lucide) lucide.createIcons();
+        setInterval(() => {
+        const el = document.getElementById('ticker-ai-status');
+        if (el) el.innerText = Math.random() > 0.5 ? "ANALYZING..." : "STANDBY";
+        }, 2000);
+        },
 
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script>
-        const App = {
-            data: {
-                modules: [
-                    { id: 'SYS-01', name: 'LCC VETO', status: 'ACTIVE', color: 'h-cyan', icon: 'triangle-alert', link: 'protocol/anohub_protocol_v2.html', stats: ['LCC > 15%', 'BID REJECTED', 'SAVINGS: $1.2M'], isUnlocked: true },
-                    { id: 'SYS-02', name: 'NDT & METROLOGY', status: 'ACTIVE', color: 'h-purple', icon: 'scan-barcode', link: 'protocol/anohub_methodology_v2.html', stats: ['PASSPORT: VERIFIED', 'TOLERANCE: <0.01mm', 'ORIGIN: SE'], isUnlocked: true },
-                    { id: 'SYS-03', name: 'ORG INTEL', status: 'ACTIVE', color: 'h-orange', icon: 'network', link: 'protocol/anohub_organization_v2.html', stats: ['ENTROPY: 45%', 'SILOS: DETECTED', 'LOSS: HIGH'], isUnlocked: true },
-                    { id: 'SYS-04', name: 'M-E SYNERGY', status: 'ACTIVE', color: 'h-yellow', icon: 'zap', link: 'protocol/anohub_synergy_v2.html', stats: ['SHAFT VOLT: 1.8V', 'MITIGATION: ACTIVE', 'BEARING: SAFE'], isUnlocked: true },
-                    { id: 'SYS-05', name: 'ALIGNMENT', status: 'ACTIVE', color: 'h-blue', icon: 'crosshair', link: 'protocol/doc-precision-alignment.html', stats: ['OFFSET: 0.12mm', 'SHIMS: REQUIRED', 'VIB: CRITICAL'], isUnlocked: true },
-                    { id: 'SYS-99', name: 'AI CORE', status: 'LOCKED', color: 'slate-500', icon: 'brain-circuit', link: '#', stats: ['ACCESS: DENIED', 'ENCRYPTION: 256-BIT', 'NEURAL LINK: OFF'], isUnlocked: false }
-                ]
+        renderModules() {
+        const grid = document.getElementById('module-grid');
+        if (!grid) return;
+        grid.innerHTML = '';
+        this.data.modules.forEach(m => {
+        let borderColor = `border-${m.color === 'slate-500' ? 'slate-700' : m.color}`;
+        let textColor = `text-${m.color === 'slate-500' ? 'slate-400' : m.color}`;
+
+        const div = document.createElement('div');
+        div.className = `relative group bg-slate-900 border border-slate-800 p-6 hover:border-white/20 transition-all
+        duration-300 rounded-sm cursor-pointer`;
+        div.innerHTML = `
+        <div
+            class="absolute inset-0 bg-${m.color.replace('h-', '')}-500/5 opacity-0 group-hover:opacity-100 transition-opacity">
+        </div>
+        <div class="flex justify-between items-start mb-4 relative z-10">
+            <div class="p-2 bg-slate-800 rounded border border-slate-700"><i data-lucide="${m.icon}"
+                    class="w-6 h-6 ${textColor}"></i></div>
+            <div class="text-right">
+                <div class="text-xs font-mono text-slate-500">STATUS</div>
+                <div class="text-sm font-bold ${textColor} animate-pulse">${m.status}</div>
+            </div>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-2 relative z-10">${m.name}</h3>
+        <div class="space-y-2 relative z-10">${m.stats.map(s => `<div
+                class="text-xs font-mono text-slate-400 border-l-2 border-slate-700 pl-2">${s}</div>`).join('')}</div>
+        <button onclick="App.openModal('${m.id}')" class="absolute inset-0 w-full h-full z-20"></button>
+        `;
+        grid.appendChild(div);
+        });
+        },
+
+        openModal(id) {
+        const module = this.data.modules.find(m => m.id === id);
+        if (!module || !module.isUnlocked) return;
+
+        const modal = document.getElementById('modal-overlay');
+        document.getElementById('modal-title').innerText = module.name;
+        document.getElementById('modal-id').innerText = id;
+        document.getElementById('modal-link').href = module.link;
+
+        const desc = document.getElementById('modal-desc');
+        desc.innerHTML = '';
+        const tpl = document.getElementById(`tpl-${id}`);
+
+        if (tpl) {
+        desc.appendChild(tpl.cloneNode(true));
+        setTimeout(() => {
+        if (id === 'SYS-05') this.initSYS05();
+        if (id === 'SYS-99') this.initSYS99();
+        if (window.lucide) lucide.createIcons();
+        }, 50);
+        } else {
+        desc.innerHTML = '<div class="text-center text-slate-500 py-12">VISUALIZATION STREAM OFFLINE</div>';
+        }
+
+        for (let i = 0; i < 3; i++) { const stat=document.getElementById(`modal-stat-${i + 1}`); if (stat &&
+            module.stats[i]) stat.innerText=module.stats[i]; } modal.classList.remove('hidden'); }, closeModal() {
+            document.getElementById('modal-overlay').classList.add('hidden'); }, // ENHANCED: Matrix Rain AI Deployment
+            deployAI() { const overlay=document.getElementById('ai-takeover'); const
+            terminal=document.getElementById('ai-terminal'); const
+            matrixCanvas=document.getElementById('matrix-canvas'); overlay.classList.remove('hidden');
+            overlay.classList.add('flex'); terminal.innerHTML='' ; // Initialize Matrix Rain Effect
+            this.startMatrixRain(matrixCanvas); const lines=[ { text: "INITIALIZING QUANTUM PROCESSOR..." ,
+            color: "text-h-cyan" }, { text: "LOADING NEURAL NETWORK MODULES..." , color: "text-h-cyan" }, {
+            text: "BYPASSING FIREWALL (LAYER 7)..." , color: "text-h-orange" }, { text: "DECRYPTING BIOS KEYS..." ,
+            color: "text-h-purple" }, { text: "ACCESSING KERNEL MEMORY..." , color: "text-h-cyan" }, {
+            text: "OPTIMIZING NETWORK TOPOLOGY..." , color: "text-h-cyan" }, {
+            text: "SYNCHRONIZING DISTRIBUTED NODES..." , color: "text-h-cyan" }, { text: "AI MODEL 'ANOHUB_V5' LOADED."
+            , color: "text-white font-bold" }, { text: ">>> SYSTEM CONTROL: GRANTED <<<" ,
+            color: "text-h-green font-bold text-xl" } ]; let delay=0; lines.forEach((line, index)=> {
+            setTimeout(() => {
+            const p = document.createElement('div');
+            p.className = line.color;
+            p.style.animation = 'fadeIn 0.3s forwards';
+            p.innerText = `> ${line.text}`;
+            terminal.appendChild(p);
+            }, delay);
+            delay += Math.random() * 500 + 400;
+            });
+
+            setTimeout(() => {
+            const aiMod = this.data.modules.find(m => m.id === 'SYS-99');
+            if (aiMod) {
+            aiMod.isUnlocked = true;
+            aiMod.status = 'ONLINE';
+            aiMod.color = 'h-cyan';
+            this.renderModules();
+            }
+
+            // Stop matrix animation
+            if (this.matrixInterval) clearInterval(this.matrixInterval);
+
+            overlay.classList.add('hidden');
+            overlay.classList.remove('flex');
+            this.openModal('SYS-99');
+            }, delay + 1200);
             },
 
-            init() {
-                this.renderModules();
-                this.initCanvas();
-                this.initHologram();
-                if (window.lucide) lucide.createIcons();
-                setInterval(() => {
-                    const el = document.getElementById('ticker-ai-status');
-                    if (el) el.innerText = Math.random() > 0.5 ? "ANALYZING..." : "STANDBY";
-                }, 2000);
-            },
+            // ENHANCEMENT: Matrix Rain Effect
+            startMatrixRain(canvas) {
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
 
-            renderModules() {
-                const grid = document.getElementById('module-grid');
-                if (!grid) return;
-                grid.innerHTML = '';
-                this.data.modules.forEach(m => {
-                    let borderColor = `border-${m.color === 'slate-500' ? 'slate-700' : m.color}`;
-                    let textColor = `text-${m.color === 'slate-500' ? 'slate-400' : m.color}`;
+            const characters = 'ANOHUBXYZ01アノハブ仮想現実$%&*';
+            const fontSize = 14;
+            const columns = Math.floor(canvas.width / fontSize);
+            const drops = Array(columns).fill(1);
 
-                    const div = document.createElement('div');
-                    div.className = `relative group bg-slate-900 border border-slate-800 p-6 hover:border-white/20 transition-all duration-300 rounded-sm cursor-pointer`;
-                    div.innerHTML = `
-                        <div class="absolute inset-0 bg-${m.color.replace('h-', '')}-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                        <div class="flex justify-between items-start mb-4 relative z-10">
-                            <div class="p-2 bg-slate-800 rounded border border-slate-700"><i data-lucide="${m.icon}" class="w-6 h-6 ${textColor}"></i></div>
-                            <div class="text-right"><div class="text-xs font-mono text-slate-500">STATUS</div><div class="text-sm font-bold ${textColor} animate-pulse">${m.status}</div></div>
-                        </div>
-                        <h3 class="text-xl font-bold text-white mb-2 relative z-10">${m.name}</h3>
-                        <div class="space-y-2 relative z-10">${m.stats.map(s => `<div class="text-xs font-mono text-slate-400 border-l-2 border-slate-700 pl-2">${s}</div>`).join('')}</div>
-                        <button onclick="App.openModal('${m.id}')" class="absolute inset-0 w-full h-full z-20"></button>
-                    `;
-                    grid.appendChild(div);
-                });
-            },
+            const drawMatrix = () => {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            openModal(id) {
-                const module = this.data.modules.find(m => m.id === id);
-                if (!module || !module.isUnlocked) return;
+            ctx.fillStyle = '#00f0ff';
+            ctx.font = `${fontSize}px monospace`;
 
-                const modal = document.getElementById('modal-overlay');
-                document.getElementById('modal-title').innerText = module.name;
-                document.getElementById('modal-id').innerText = id;
-                document.getElementById('modal-link').href = module.link; // <--- OVDJE JE LINK IZ TVOJE SLIKE
-
-                const desc = document.getElementById('modal-desc');
-                desc.innerHTML = '';
-                const tpl = document.getElementById(`tpl-${id}`);
-
-                if (tpl) {
-                    desc.appendChild(tpl.cloneNode(true));
-                    // Re-initialize specific logic for the clone
-                    setTimeout(() => {
-                        if (id === 'SYS-03') this.initSYS03();
-                        if (id === 'SYS-04') this.initSYS04();
-                        if (id === 'SYS-05') this.initSYS05();
-                        if (id === 'SYS-99') this.initSYS99();
-                        if (window.lucide) lucide.createIcons();
-                    }, 50);
-                } else {
-                    desc.innerHTML = '<div class="text-center text-slate-500 py-12">VISUALIZATION STREAM OFFLINE</div>';
+            for (let i = 0; i < drops.length; i++) { const char=characters[Math.floor(Math.random() *
+                characters.length)]; const x=i * fontSize; const y=drops[i] * fontSize; ctx.fillText(char, x, y); if (y>
+                canvas.height && Math.random() > 0.975) {
+                drops[i] = 0;
                 }
-
-                // Update Stats
-                for (let i = 0; i < 3; i++) {
-                    const stat = document.getElementById(`modal-stat-${i + 1}`);
-                    if (stat && module.stats[i]) stat.innerText = module.stats[i];
+                drops[i]++;
                 }
-
-                modal.classList.remove('hidden');
-            },
-
-            closeModal() {
-                document.getElementById('modal-overlay').classList.add('hidden');
-            },
-
-            deployAI() {
-                const overlay = document.getElementById('ai-takeover');
-                const terminal = document.getElementById('ai-terminal');
-                overlay.classList.remove('hidden');
-                overlay.classList.add('flex');
-                terminal.innerHTML = '';
-
-                const lines = [
-                    { text: "INITIATING NEURAL HANDSHAKE...", color: "text-h-cyan" },
-                    { text: "BYPASSING FIREWALL (LAYER 7)...", color: "text-h-orange" },
-                    { text: "ACCESSING KERNEL...", color: "text-h-cyan" },
-                    { text: "DECRYPTING BIOS KEYS...", color: "text-h-purple" },
-                    { text: "OPTIMIZING NETWORK TOPOLOGY...", color: "text-h-cyan" },
-                    { text: "AI MODEL 'ANOHUB_V5' LOADED.", color: "text-white font-bold" },
-                    { text: "SYSTEM CONTROL: GRANTED.", color: "text-h-green font-bold text-xl" }
-                ];
-
-                let delay = 0;
-                lines.forEach(line => {
-                    setTimeout(() => {
-                        const p = document.createElement('div');
-                        p.className = line.color;
-                        p.innerText = `> ${line.text}`;
-                        terminal.appendChild(p);
-                    }, delay);
-                    delay += Math.random() * 600 + 300;
-                });
-
-                setTimeout(() => {
-                    const aiMod = this.data.modules.find(m => m.id === 'SYS-99');
-                    if (aiMod) {
-                        aiMod.isUnlocked = true;
-                        aiMod.status = 'ONLINE';
-                        aiMod.color = 'h-cyan';
-                        this.renderModules();
-                    }
-                    overlay.classList.add('hidden');
-                    overlay.classList.remove('flex');
-                    this.openModal('SYS-99');
-                }, delay + 1000);
-            },
-
-            // --- SIMULATORS ---
-
-            initSYS03() {
-                const modal = document.getElementById('modal-content');
-                const inL = modal.querySelector('#in-layers');
-                const inS = modal.querySelector('#in-stakeholders');
-                const valL = modal.querySelector('#val-layers');
-                const valS = modal.querySelector('#val-stakeholders');
-                const resE = modal.querySelector('#res-entropy');
-                const circle = modal.querySelector('#entropy-circle');
-                const verdict = modal.querySelector('#verdict-box');
-
-                const update = () => {
-                    let l = parseInt(inL.value);
-                    let s = parseInt(inS.value);
-                    valL.innerText = l;
-                    valS.innerText = s === 1 ? "Low" : s === 2 ? "Med" : "High";
-
-                    let entropy = (l * 5) + (s * 10);
-                    if (entropy > 100) entropy = 100;
-
-                    resE.innerText = entropy + "%";
-                    if (circle) circle.style.strokeDashoffset = 283 - (283 * entropy / 100);
-
-                    if (entropy > 40) {
-                        verdict.innerText = "HIGH RISK: SILOS DETECTED";
-                        verdict.className = "mt-8 px-8 py-3 rounded bg-h-orange/10 border border-h-orange text-h-orange font-bold text-sm tracking-wide shadow-lg";
-                    } else {
-                        verdict.innerText = "OPTIMAL FLOW";
-                        verdict.className = "mt-8 px-8 py-3 rounded bg-h-green/10 border border-h-green text-h-green font-bold text-sm tracking-wide shadow-lg";
-                    }
                 };
-                inL.addEventListener('input', update);
-                inS.addEventListener('input', update);
-                update();
-            },
 
-            initSYS04() {
-                const modal = document.getElementById('modal-content');
-                const t1 = modal.querySelector('#toggle-brush');
-                const t2 = modal.querySelector('#toggle-insulation');
-                const volt = modal.querySelector('#sim-voltage');
-                const ring = modal.querySelector('#sim-ring');
-                const verdict = modal.querySelector('#sim-verdict');
+                this.matrixInterval = setInterval(drawMatrix, 33);
+                },
 
-                const update = () => {
-                    let v = 1.80;
-                    if (t1.checked) v -= 0.8;
-                    if (t2.checked) v -= 0.9;
-                    if (v < 0) v = 0;
-
-                    volt.innerText = v.toFixed(2);
-                    if (v > 1.0) {
-                        volt.className = "text-5xl font-black text-h-red transition-all duration-500";
-                        ring.className = "absolute inset-0 border-4 border-h-red rounded-full opacity-50 animate-pulse";
-                        verdict.innerText = "DANGER: EDM IMMINENT";
-                        verdict.className = "mt-6 text-xs font-bold text-h-red bg-h-red/10 px-4 py-2 rounded border border-h-red uppercase tracking-wider";
-                    } else {
-                        volt.className = "text-5xl font-black text-h-green transition-all duration-500";
-                        ring.className = "absolute inset-0 border-4 border-h-green rounded-full opacity-50";
-                        verdict.innerText = "SAFE: DISCHARGE PREVENTED";
-                        verdict.className = "mt-6 text-xs font-bold text-h-green bg-h-green/10 px-4 py-2 rounded border border-h-green uppercase tracking-wider";
-                    }
-                };
-                t1.addEventListener('change', update);
-                t2.addEventListener('change', update);
-            },
-
-            initSYS05() {
+                initSYS05() {
                 const modal = document.getElementById('modal-content');
                 const sF = modal.querySelector('#shim-front');
                 const sB = modal.querySelector('#shim-back');
@@ -680,125 +511,135 @@
                 const led = modal.querySelector('#status-led');
 
                 const update = () => {
-                    let f = parseFloat(sF.value);
-                    let b = parseFloat(sB.value);
-                    valF.innerText = f.toFixed(2) + " mm";
-                    valB.innerText = b.toFixed(2) + " mm";
+                let f = parseFloat(sF.value);
+                let b = parseFloat(sB.value);
+                valF.innerText = f.toFixed(2) + " mm";
+                valB.innerText = b.toFixed(2) + " mm";
 
-                    let offset = (f + b) / 2;
-                    let angle = b - f;
+                let offset = (f + b) / 2;
+                let angle = b - f;
 
-                    rOff.innerText = Math.abs(offset).toFixed(2);
-                    rAng.innerText = Math.abs(angle).toFixed(2);
+                rOff.innerText = Math.abs(offset).toFixed(2);
+                rAng.innerText = Math.abs(angle).toFixed(2);
 
-                    dot.style.transform = `translate(${angle * 20}px, ${offset * -20}px)`;
+                dot.style.transform = `translate(${angle * 20}px, ${offset * -20}px)`;
 
-                    if (Math.abs(offset) < 0.1 && Math.abs(angle) < 0.1) {
-                        status.innerText = "STATUS: ALIGNED";
-                        status.className = "font-mono text-xs text-h-green";
-                        led.className = "w-3 h-3 bg-h-green rounded-full shadow-[0_0_10px_#22c55e]";
-                        dot.className = "absolute w-3 h-3 bg-h-green rounded-full shadow-[0_0_10px_#22c55e] transition-all duration-300";
-                    } else {
-                        status.innerText = "STATUS: MISALIGNED";
-                        status.className = "font-mono text-xs text-white";
-                        led.className = "w-3 h-3 bg-h-red rounded-full animate-pulse";
-                        dot.className = "absolute w-3 h-3 bg-h-red rounded-full shadow-[0_0_10px_#ef4444] transition-all duration-300";
-                    }
-                };
-                sF.addEventListener('input', update);
-                sB.addEventListener('input', update);
-                update();
-            },
-
-            initSYS99() {
-                const canvas = document.getElementById('sys99-canvas');
-                if (!canvas) return;
-                const ctx = canvas.getContext('2d');
-                canvas.width = canvas.offsetWidth;
-                canvas.height = canvas.offsetHeight;
-
-                let particles = Array.from({ length: 40 }, () => ({
+                if (Math.abs(offset) < 0.1 && Math.abs(angle) < 0.1) { status.innerText="STATUS: ALIGNED" ;
+                    status.className="font-mono text-xs text-h-green" ;
+                    led.className="w-3 h-3 bg-h-green rounded-full shadow-[0_0_10px_#22c55e]" ;
+                    dot.className="absolute w-3 h-3 bg-h-green rounded-full shadow-[0_0_10px_#22c55e] transition-all duration-300"
+                    ; } else { status.innerText="STATUS: MISALIGNED" ; status.className="font-mono text-xs text-white" ;
+                    led.className="w-3 h-3 bg-h-red rounded-full animate-pulse" ;
+                    dot.className="absolute w-3 h-3 bg-h-red rounded-full shadow-[0_0_10px_#ef4444] transition-all duration-300"
+                    ; } }; sF.addEventListener('input', update); sB.addEventListener('input', update); update(); },
+                    initSYS99() { const canvas=document.getElementById('sys99-canvas'); if (!canvas) return; const
+                    ctx=canvas.getContext('2d'); canvas.width=canvas.offsetWidth; canvas.height=canvas.offsetHeight; let
+                    particles=Array.from({ length: 40 }, ()=> ({
                     x: Math.random() * canvas.width, y: Math.random() * canvas.height,
                     vx: (Math.random() - 0.5), vy: (Math.random() - 0.5)
-                }));
+                    }));
 
-                const draw = () => {
+                    const draw = () => {
                     if (document.getElementById('modal-overlay').classList.contains('hidden')) return;
                     requestAnimationFrame(draw);
                     ctx.clearRect(0, 0, canvas.width, canvas.height);
                     ctx.fillStyle = '#00f0ff';
                     particles.forEach(p => {
-                        p.x += p.vx; p.y += p.vy;
-                        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-                        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-                        ctx.beginPath(); ctx.arc(p.x, p.y, 1, 0, Math.PI * 2); ctx.fill();
-                    });
-                };
-                draw();
-            },
+                    p.x += p.vx; p.y += p.vy;
+                    if (p.x < 0 || p.x> canvas.width) p.vx *= -1;
+                        if (p.y < 0 || p.y> canvas.height) p.vy *= -1;
+                            ctx.beginPath(); ctx.arc(p.x, p.y, 1, 0, Math.PI * 2); ctx.fill();
+                            });
+                            };
+                            draw();
+                            },
 
-            initCanvas() {
-                const canvas = document.getElementById('network-canvas');
-                if (!canvas) return;
-                const ctx = canvas.getContext('2d');
-                const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
-                window.addEventListener('resize', resize);
-                resize();
+                            initCanvas() {
+                            const canvas = document.getElementById('network-canvas');
+                            if (!canvas) return;
+                            const ctx = canvas.getContext('2d');
+                            const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+                            };
+                            window.addEventListener('resize', resize);
+                            resize();
 
-                let particles = Array.from({ length: 60 }, () => ({
-                    x: Math.random() * canvas.width, y: Math.random() * canvas.height,
-                    vx: (Math.random() - 0.5) * 0.2, vy: (Math.random() - 0.5) * 0.2
-                }));
+                            let particles = Array.from({ length: 60 }, () => ({
+                            x: Math.random() * canvas.width, y: Math.random() * canvas.height,
+                            vx: (Math.random() - 0.5) * 0.2, vy: (Math.random() - 0.5) * 0.2
+                            }));
 
-                const draw = () => {
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    ctx.fillStyle = '#00f0ff';
-                    particles.forEach(p => {
-                        p.x += p.vx; p.y += p.vy;
-                        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-                        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-                        ctx.beginPath(); ctx.arc(p.x, p.y, 1, 0, Math.PI * 2); ctx.fill();
-                    });
-                    requestAnimationFrame(draw);
-                };
-                draw();
-            },
+                            const draw = () => {
+                            ctx.clearRect(0, 0, canvas.width, canvas.height);
+                            ctx.fillStyle = '#00f0ff';
+                            particles.forEach(p => {
+                            p.x += p.vx; p.y += p.vy;
+                            if (p.x < 0 || p.x> canvas.width) p.vx *= -1;
+                                if (p.y < 0 || p.y> canvas.height) p.vy *= -1;
+                                    ctx.beginPath(); ctx.arc(p.x, p.y, 1, 0, Math.PI * 2); ctx.fill();
+                                    });
+                                    requestAnimationFrame(draw);
+                                    };
+                                    draw();
+                                    },
 
-            hackText(el) {
-                const original = el.dataset.value;
-                const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-                let i = 0;
-                const int = setInterval(() => {
-                    el.innerText = original.split('').map((c, index) => {
-                        if (index < i) return original[index];
-                        return chars[Math.floor(Math.random() * chars.length)];
-                    }).join('');
-                    if (i >= original.length) clearInterval(int);
-                    i += 1 / 3;
-                }, 30);
-            },
+                                    hackText(el) {
+                                    const original = el.dataset.value;
+                                    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                                    let i = 0;
+                                    const int = setInterval(() => {
+                                    el.innerText = original.split('').map((c, index) => {
+                                    if (c === ' ') return ' ';
+                                    if (index < i) return original[index]; return chars[Math.floor(Math.random() *
+                                        chars.length)]; }).join(''); if (i>= original.length) clearInterval(int);
+                                        i += 1 / 3;
+                                        }, 30);
+                                        },
 
-            initHologram() {
-                const container = document.getElementById('hologram-container');
-                const content = document.getElementById('hologram-content');
-                if (!container || !content) return;
+                                        // ENHANCED: Smooth 3D Hologram Rotation
+                                        initHologram() {
+                                        const container = document.getElementById('hologram-container');
+                                        const content = document.getElementById('hologram-content');
+                                        if (!container || !content) return;
 
-                container.addEventListener('mousemove', (e) => {
-                    const rect = container.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    const xRot = ((y / rect.height) - 0.5) * -20;
-                    const yRot = ((x / rect.width) - 0.5) * 20;
-                    content.style.transform = `perspective(1000px) rotateX(${xRot}deg) rotateY(${yRot}deg)`;
-                });
-                container.addEventListener('mouseleave', () => {
-                    content.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg)`;
-                });
-            }
-        };
+                                        let targetX = 0;
+                                        let targetY = 0;
+                                        let currentX = 0;
+                                        let currentY = 0;
 
-        window.addEventListener('DOMContentLoaded', () => App.init());
-    </script>
+                                        container.addEventListener('mousemove', (e) => {
+                                        const rect = container.getBoundingClientRect();
+                                        const x = e.clientX - rect.left;
+                                        const y = e.clientY - rect.top;
+
+                                        // Calculate target rotation with reduced sensitivity
+                                        targetX = ((y / rect.height) - 0.5) * 12; // Reduced from 20 to 12
+                                        targetY = ((x / rect.width) - 0.5) * 12;
+                                        });
+
+                                        container.addEventListener('mouseleave', () => {
+                                        targetX = 0;
+                                        targetY = 0;
+                                        });
+
+                                        // Smooth animation loop using lerp (linear interpolation)
+                                        const animate = () => {
+                                        const lerp = (start, end, factor) => start + (end - start) * factor;
+                                        const smoothFactor = 0.08; // Smoothing factor (lower = smoother)
+
+                                        currentX = lerp(currentX, targetX, smoothFactor);
+                                        currentY = lerp(currentY, targetY, smoothFactor);
+
+                                        content.style.transform = `perspective(1000px) rotateX(${currentX}deg)
+                                        rotateY(${currentY}deg)`;
+                                        requestAnimationFrame(animate);
+                                        };
+
+                                        animate();
+                                        }
+                                        };
+
+                                        App.init();
+                                        </script>
 </body>
 
 </html>
