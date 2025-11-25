@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AnoHUB | COMMAND v15.0 // ULTIMATE</title>
+    <title>AnoHUB | COMMAND v16.0 // FINAL</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;500;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
@@ -57,7 +57,6 @@
             z-index: 900; background-size: 100% 2px, 3px 100%; pointer-events: none;
         }
 
-        /* Advanced Glitch Effect Class */
         .glitch-text:hover {
             animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
             color: #06b6d4;
@@ -176,7 +175,7 @@
     </div>
 
     <header class="fixed w-full z-50 top-0 border-b border-h-cyan/10 bg-h-dark/80 backdrop-blur-md h-16 flex items-center justify-between px-6">
-        <a href="#" class="flex items-center gap-3 group" onmouseenter="App.sfx('hover')" onclick="App.sfx('click')">
+        <a href="index.html" class="flex items-center gap-3 group" onmouseenter="App.sfx('hover')" onclick="App.sfx('click')">
             <div class="w-8 h-8 bg-h-cyan text-black font-black flex items-center justify-center text-xl shadow-[0_0_15px_rgba(6,182,212,0.6)] rounded">A</div>
             <div class="leading-tight">
                 <h1 class="font-bold text-white tracking-tight group-hover:text-h-cyan transition glitch-text">AnoHUB <span class="text-h-cyan">PRTCL</span></h1>
@@ -289,7 +288,7 @@
                         <span class="text-[9px] font-mono text-slate-500 group-hover:text-h-blue transition">SYS-05</span>
                     </div>
                     <h3 class="text-xl font-bold text-white mb-2 group-hover:text-h-blue transition">Precision Alignment</h3>
-                    <p class="text-sm text-slate-400 mb-6">Mandatory 0.05mm tolerances. Virtual laser simulation.</p>
+                    <p class="text-sm text-slate-400 mb-6">Laser verification. 0.05mm tolerances.</p>
                     <div class="absolute bottom-6 left-6 right-6 pt-4 border-t border-slate-800 flex justify-between items-center"><span class="text-[10px] font-mono text-slate-500">STATUS: <span class="text-h-blue">READY</span></span><svg data-lucide="external-link" class="w-4 h-4 text-slate-600 group-hover:text-h-blue transition"></svg></div>
                 </a>
 
@@ -357,7 +356,6 @@
                 } catch (e) {}
             },
 
-            // HUD UPGRADE: LIVING NUMBERS
             initHUD() {
                 setInterval(() => {
                     document.getElementById('hud-cpu').innerText = Math.floor(Math.random()*40 + 10) + '%';
@@ -367,7 +365,6 @@
                 }, 1000);
             },
 
-            // HACK TEXT EFFECT FOR TITLE
             hackText(el) {
                 const original = el.dataset.value; const chars = "ABCXYZ0123"; let i = 0;
                 const int = setInterval(() => { el.innerText = original.split('').map((c, x) => x < i ? original[x] : chars[Math.floor(Math.random() * chars.length)]).join(''); if (i >= original.length) clearInterval(int); i += 1 / 3; }, 30);
@@ -411,7 +408,6 @@
                     }, step.time);
                 });
 
-                // SHOW ADMIN GRID
                 setTimeout(() => {
                     overlay.classList.add('hidden');
                     overlay.classList.remove('flex');
@@ -420,13 +416,10 @@
                     adminMode.classList.remove('hidden');
                     this.renderAdminModules();
 
-                    // TRIGGER SECURITY LOCKOUT
                     setTimeout(() => {
                         document.getElementById('security-lockout').classList.remove('hidden');
                         document.getElementById('security-lockout').classList.add('flex');
                         this.sfx('click');
-                        
-                        // Shake effect logic added via CSS class animate-shake
                     }, 4000);
 
                 }, 5500);
