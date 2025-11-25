@@ -32,12 +32,10 @@
                         'spin-slow': 'spin 20s linear infinite',
                         'float': 'float 6s ease-in-out infinite',
                         'scroll': 'scroll 45s linear infinite',
-                        'pendulum': 'pendulum 3s ease-in-out infinite',
                     },
                     keyframes: {
                         float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' } },
-                        scroll: { from: { transform: 'translateX(0)' }, to: { transform: 'translateX(-50%)' } },
-                        pendulum: { '0%, 100%': { transform: 'rotate(5deg)' }, '50%': { transform: 'rotate(-5deg)' } }
+                        scroll: { from: { transform: 'translateX(0)' }, to: { transform: 'translateX(-50%)' } }
                     }
                 }
             }
@@ -51,7 +49,6 @@
             overflow-x: hidden;
         }
 
-        /* JAKA VIZUALNA POZADINA */
         .cyber-grid {
             position: fixed;
             inset: 0;
@@ -70,9 +67,9 @@
             box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
         }
 
-        /* Custom Sliders */
         input[type=range] {
             -webkit-appearance: none;
+            appearance: none;
             background: transparent;
         }
 
@@ -97,23 +94,6 @@
             box-shadow: 0 0 10px #2de2e6;
         }
 
-        .range-orange {
-            width: 100%;
-            height: 4px;
-            background: #1e293b;
-            border-radius: 2px;
-        }
-
-        .range-orange::-webkit-slider-thumb {
-            height: 16px;
-            width: 16px;
-            border-radius: 50%;
-            background: #ff9100;
-            cursor: pointer;
-            margin-top: -6px;
-            box-shadow: 0 0 10px #ff9100;
-        }
-
         .perspective-1000 {
             perspective: 1000px;
         }
@@ -130,7 +110,6 @@
             background-image: radial-gradient(circle, #ef4444 2px, transparent 3px), repeating-radial-gradient(circle, transparent 0, transparent 9px, #334155 10px, transparent 11px);
         }
 
-        /* ENHANCEMENT: Fade-in animation for terminal */
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -150,12 +129,9 @@
     <div class="cyber-grid"></div>
     <canvas id="network-canvas" class="fixed inset-0 z-0 opacity-40 pointer-events-none"></canvas>
 
-    <!-- ENHANCED: AI Takeover with Matrix Canvas -->
+    <!-- Matrix AI Takeover Overlay -->
     <div id="ai-takeover" class="fixed inset-0 z-[200] bg-black hidden flex-col items-center justify-center font-mono">
-        <!-- Matrix Rain Canvas -->
         <canvas id="matrix-canvas" class="absolute inset-0 w-full h-full"></canvas>
-
-        <!-- Terminal Output -->
         <div id="ai-terminal"
             class="w-full max-w-3xl p-8 text-sm space-y-2 z-10 relative bg-black/80 border-2 border-h-cyan shadow-[0_0_40px_rgba(0,240,255,0.5)] rounded">
         </div>
@@ -197,449 +173,277 @@
                     class="group relative bg-h-cyan hover:bg-white text-black font-bold px-8 py-4 shadow-[0_0_40px_rgba(0,240,255,0.4)] transition-all hover:scale-105 flex items-center gap-2 overflow-hidden">
                     <span class="relative z-10 flex items-center gap-2">DEPLOY AI NEURAL LINK <i
                             data-lucide="brain-circuit" class="w-5 h-5"></i></span>
-                    <div <h2 class="text-4xl font-bold text-white tracking-tighter uppercase"
-                        onmouseenter="App.hackText(this)" data-value="DEFENSE_MODULES">DEFENSE_MODULES</h2>
-                        <div class="font-mono text-h-cyan text-xs mb-2 animate-pulse"> /// ACTIVE</div>
+                    <div
+                        class="absolute inset-0 bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 z-0">
                     </div>
-                    <div id="module-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                </button>
+            </div>
+
+            <!-- Enhanced Hologram with ALL 6 Modules -->
+            <div id="hologram-container"
+                class="relative h-[500px] w-full flex items-center justify-center perspective-1000 cursor-crosshair hidden lg:flex">
+                <div id="hologram-content"
+                    class="relative w-full h-full flex items-center justify-center transition-transform duration-100 ease-out preserve-3d">
+
+                    <!-- Central Nexus -->
+                    <div class="absolute w-40 h-40 bg-black/60 rounded-full border border-h-cyan flex items-center justify-center shadow-[0_0_60px_rgba(0,240,255,0.3)] backdrop-blur-sm z-20"
+                        style="transform: translateZ(50px);">
+                        <div class="text-center">
+                            <div class="text-4xl font-black text-white tracking-tighter">Ano</div>
+                            <div class="text-xs font-mono text-h-cyan animate-pulse">NEXUS</div>
+                        </div>
                     </div>
+
+                    <!-- Orbit Rings -->
+                    <div class="absolute w-[500px] h-[500px] border border-slate-800 rounded-full animate-spin-slow border-dashed opacity-40"
+                        style="transform: translateZ(0px);"></div>
+                    <div class="absolute w-[350px] h-[350px] border border-h-cyan/20 rounded-full animate-spin-slow opacity-60"
+                        style="animation-direction: reverse; animation-duration: 30s; transform: translateZ(20px);">
+                    </div>
+
+                    <!-- SYS-01: Top Right -->
+                    <div onclick="App.handleModuleClick('SYS-01')"
+                        class="cursor-pointer absolute top-10 right-20 bg-black/80 border-l-2 border-h-cyan p-2 rounded text-[10px] font-mono text-h-cyan shadow-[0_0_20px_rgba(0,240,255,0.3)] hover:scale-110 transition-transform animate-float"
+                        style="transform: translateZ(80px);">
+                        <div class="text-white font-bold">SYS-01</div>
+                        <div>LCC VETO</div>
+                    </div>
+
+                    <!-- SYS-02: Right -->
+                    <div onclick="App.handleModuleClick('SYS-02')"
+                        class="cursor-pointer absolute top-1/2 right-5 -translate-y-1/2 bg-black/80 border-l-2 border-h-purple p-2 rounded text-[10px] font-mono text-h-purple shadow-[0_0_20px_rgba(168,85,247,0.3)] hover:scale-110 transition-transform animate-float"
+                        style="animation-delay: 0.5s; transform: translateZ(70px) translateY(-50%);">
+                        <div class="text-white font-bold">SYS-02</div>
+                        <div>NDT</div>
+                    </div>
+
+                    <!-- SYS-03: Bottom Right -->
+                    <div onclick="App.handleModuleClick('SYS-03')"
+                        class="cursor-pointer absolute bottom-10 right-16 bg-black/80 border-l-2 border-h-orange p-2 rounded text-[10px] font-mono text-h-orange shadow-[0_0_20px_rgba(255,145,0,0.3)] hover:scale-110 transition-transform animate-float"
+                        style="animation-delay: 1s; transform: translateZ(65px);">
+                        <div class="text-white font-bold">SYS-03</div>
+                        <div>ORG INTEL</div>
+                    </div>
+
+                    <!-- SYS-04: Bottom Left -->
+                    <div onclick="App.handleModuleClick('SYS-04')"
+                        class="cursor-pointer absolute bottom-12 left-20 bg-black/80 border-l-2 border-h-yellow p-2 rounded text-[10px] font-mono text-h-yellow shadow-[0_0_20px_rgba(250,204,21,0.3)] hover:scale-110 transition-transform animate-float"
+                        style="animation-delay: 1.5s; transform: translateZ(75px);">
+                        <div class="text-white font-bold">SYS-04</div>
+                        <div>M-E SYNC</div>
+                    </div>
+
+                    <!-- SYS-05: Left -->
+                    <div onclick="App.handleModuleClick('SYS-05')"
+                        class="cursor-pointer absolute top-1/2 left-5 -translate-y-1/2 bg-black/80 border-l-2 border-h-blue p-2 rounded text-[10px] font-mono text-h-blue shadow-[0_0_20px_rgba(45,226,230,0.3)] hover:scale-110 transition-transform animate-float"
+                        style="animation-delay: 2s; transform: translateZ(60px) translateY(-50%);">
+                        <div class="text-white font-bold">SYS-05</div>
+                        <div>ALIGNMENT</div>
+                    </div>
+
+                    <!-- SYS-99: Top Left (AI Core - Locked initially) -->
+                    <div onclick="App.handleModuleClick('SYS-99')" id="nexus-sys99"
+                        class="cursor-pointer absolute top-12 left-16 bg-black/80 border-l-2 border-slate-600 p-2 rounded text-[10px] font-mono text-slate-400 shadow-[0_0_20px_rgba(100,116,139,0.2)] hover:scale-110 transition-transform animate-float opacity-50"
+                        style="animation-delay: 2.5s; transform: translateZ(55px);">
+                        <div class="text-white font-bold">SYS-99</div>
+                        <div>AI CORE</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Modules Grid Below Hero -->
+        <section id="modules-grid" class="relative">
+            <div class="flex items-end gap-4 mb-12 border-b border-slate-800 pb-4">
+                <h2 class="text-4xl font-bold text-white tracking-tighter uppercase" onmouseenter="App.hackText(this)"
+                    data-value="DEFENSE_MODULES">DEFENSE_MODULES</h2>
+                <div class="font-mono text-h-cyan text-xs mb-2 animate-pulse"> /// ACTIVE</div>
+            </div>
+            <div id="module-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
         </section>
 
     </main>
 
     <div id="modal-overlay"
         class="fixed inset-0 z-[100] hidden bg-black/90 backdrop-blur-sm flex items-center justify-center p-4">
-        <div
-            class="bg-slate-900 border border-slate-700 w-full max-w-5xl max-h-[90vh] overflow-hidden rounded-lg shadow-2xl flex flex-col relative">
-            <div
-                class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/dark-matter.png')] opacity-20 pointer-events-none">
-            </div>
-
-            <div class="p-6 border-b border-slate-800 flex justify-between items-center bg-black/60 z-10">
-                <div>
-                    <h3 id="modal-title" class="text-3xl font-bold text-white tracking-tight uppercase">MODULE</h3>
-                    <div class="flex items-center gap-4 mt-1">
-                        <div class="text-[10px] font-mono text-h-cyan">ID: <span id="modal-id">SYS-XX</span></div>
-                        <a id="modal-link" href="#"
-                            class="text-[10px] font-bold bg-h-cyan text-black px-3 py-1 rounded hover:bg-white transition">
-                            ACCESS FULL DOCUMENTATION <i data-lucide="external-link" class="inline w-3 h-3 ml-1"></i>
-                        </a>
+        <div class="bg-slate-900 border border-slate-700 w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded relative shadow-2xl"
+            id="modal-content">
+            <button onclick="document.getElementById('modal-overlay').classList.add('hidden')"
+                class="absolute top-4 right-4 text-slate-400 hover:text-white z-50">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <div class="p-8">
+                <div class="flex items-center gap-4 mb-8 border-b border-slate-800 pb-6">
+                    <div class="p-3 bg-slate-800 rounded border border-slate-700">
+                        <i data-lucide="cpu" class="w-8 h-8 text-h-cyan"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs font-mono text-slate-500 mb-1">MODULE_ID: <span id="modal-id"
+                                class="text-h-cyan">SYS-00</span></div>
+                        <h2 class="text-3xl font-bold text-white" id="modal-title">MODULE NAME</h2>
                     </div>
                 </div>
-                <button onclick="App.closeModal()"
-                    class="p-2 text-slate-400 hover:text-white transition hover:rotate-90"><i data-lucide="x"
-                        class="w-8 h-8"></i></button>
-            </div>
 
-            <div id="modal-content" class="flex-1 overflow-y-auto p-8 bg-slate-900/80 z-10">
-                <div class="grid grid-cols-3 gap-4 mb-8">
-                    <div class="bg-black/40 p-4 rounded border border-slate-800 text-center">
+                <div class="grid md:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-black/50 p-4 rounded border border-slate-800">
                         <div class="text-[10px] text-slate-500 mb-1">METRIC_01</div>
-                        <div id="modal-stat-1" class="text-lg font-mono text-h-cyan font-bold">--</div>
+                        <div class="text-lg font-mono text-white" id="modal-stat-1">---</div>
                     </div>
-                    <div class="bg-black/40 p-4 rounded border border-slate-800 text-center">
+                    <div class="bg-black/50 p-4 rounded border border-slate-800">
                         <div class="text-[10px] text-slate-500 mb-1">METRIC_02</div>
-                        <div id="modal-stat-2" class="text-lg font-mono text-h-purple font-bold">--</div>
+                        <div class="text-lg font-mono text-white" id="modal-stat-2">---</div>
                     </div>
-                    <div class="bg-black/40 p-4 rounded border border-slate-800 text-center">
+                    <div class="bg-black/50 p-4 rounded border border-slate-800">
                         <div class="text-[10px] text-slate-500 mb-1">METRIC_03</div>
-                        <div id="modal-stat-3" class="text-lg font-mono text-h-green font-bold">--</div>
+                        <div class="text-lg font-mono text-white" id="modal-stat-3">---</div>
                     </div>
                 </div>
 
-                <div id="modal-desc" class="mb-6"></div>
+                <div id="modal-desc" class="prose prose-invert max-w-none">
+                    <!-- Dynamic Content -->
+                </div>
             </div>
         </div>
     </div>
 
-    <div style="display: none;">
-
+    <!-- Templates -->
+    <div class="hidden">
         <div id="tpl-SYS-01">
-            <div class="p-6 bg-black/30 border border-slate-700 rounded-lg">
-                <h4 class="text-h-cyan font-bold mb-4">FINANCIAL FIREWALL</h4>
-                <p class="text-sm text-slate-300 mb-4">Automated rejection of bids that fail the 20-year TCO (Total Cost
-                    of Ownership) threshold.</p>
-                <div class="h-32 bg-slate-800 rounded relative overflow-hidden flex items-end gap-1 p-1">
-                    <div class="w-1/3 bg-h-red h-[40%] relative group"><span
-                            class="absolute -top-5 w-full text-center text-[10px]">BID A</span></div>
-                    <div class="w-1/3 bg-h-red h-[55%] relative group"><span
-                            class="absolute -top-5 w-full text-center text-[10px]">BID B</span></div>
-                    <div class="w-1/3 bg-h-green h-[90%] relative group shadow-[0_0_20px_#00ff00]"><span
-                            class="absolute -top-5 w-full text-center text-[10px]">ANOHUB</span></div>
-                </div>
+            <div class="h-32 bg-slate-800 rounded relative overflow-hidden flex items-end gap-1 p-1">
+                <div class="w-1/3 bg-h-red h-[40%] relative group"><span
+                        class="absolute -top-5 w-full text-center text-[10px]">BID A</span></div>
+                <div class="w-1/3 bg-h-red h-[55%] relative group"><span
+                        class="absolute -top-5 w-full text-center text-[10px]">BID B</span></div>
+                <div class="w-1/3 bg-h-green h-[90%] relative group shadow-[0_0_20px_#00ff00]"><span
+                        class="absolute -top-5 w-full text-center text-[10px]">ANOHUB</span></div>
             </div>
         </div>
-
-        <div id="tpl-SYS-05">
-            <div class="scada-panel p-0 border-t-4 border-t-h-blue overflow-hidden mb-6">
-                <div class="bg-slate-900 p-4 flex justify-between items-center border-b border-slate-700">
-                    <div class="flex items-center gap-3">
-                        <div class="w-3 h-3 bg-h-red rounded-full animate-pulse" id="status-led"></div>
-                        <span class="font-mono text-xs text-white" id="status-text">STATUS: MISALIGNED</span>
-                    </div>
-                    <div class="font-mono text-[10px] text-slate-500">UNIT: MM | METHOD: RIM/FACE</div>
-                </div>
-
-                <div class="grid md:grid-cols-2">
-                    <div
-                        class="p-8 bg-black/50 relative flex items-center justify-center border-r border-slate-700 min-h-[300px]">
-                        <div class="absolute w-48 h-48 rounded-full border border-slate-700 bg-laser-target opacity-30">
-                        </div>
-                        <div class="absolute w-12 h-12 border-2 border-h-green/30 bg-h-green/5 rounded"></div>
-                        <div id="laser-dot"
-                            class="absolute w-3 h-3 bg-h-red rounded-full shadow-[0_0_10px_#ef4444] transition-all duration-300 ease-out"
-                            style="transform: translate(40px, -30px)"></div>
-                        <div class="absolute top-4 text-[10px] text-slate-600 font-mono">V-OFFSET</div>
-                    </div>
-
-                    <div class="p-6 space-y-8 bg-slate-900/50">
-                        <div>
-                            <div class="flex justify-between mb-1"><label class="text-xs font-bold text-white">FRONT
-                                    SHIM</label><span class="text-xs font-mono text-h-blue" id="val-front">0.00
-                                    mm</span></div>
-                            <input type="range" id="shim-front" min="-2.0" max="2.0" step="0.05" value="0.8"
-                                class="range-blue">
-                        </div>
-                        <div>
-                            <div class="flex justify-between mb-1"><label class="text-xs font-bold text-white">BACK
-                                    SHIM</label><span class="text-xs font-mono text-h-blue" id="val-back">0.00 mm</span>
-                            </div>
-                            <input type="range" id="shim-back" min="-2.0" max="2.0" step="0.05" value="-0.5"
-                                class="range-blue">
-                        </div>
-                        <div class="grid grid-cols-2 gap-4 mt-6">
-                            <div class="bg-black p-3 rounded border border-slate-700">
-                                <div class="text-[10px] text-slate-500">OFFSET</div>
-                                <div class="text-xl font-mono text-white font-bold" id="read-offset">0.45</div>
-                            </div>
-                            <div class="bg-black p-3 rounded border border-slate-700">
-                                <div class="text-[10px] text-slate-500">ANGLE</div>
-                                <div class="text-xl font-mono text-white font-bold" id="read-angle">0.12</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="scada-panel p-6">
-                <div class="flex justify-between items-end mb-4">
-                    <h4 class="font-bold text-white">Thrust Bearing Load</h4>
-                    <div class="text-xs font-mono bg-h-red/10 text-h-red px-2 py-1 rounded border border-h-red">
-                        UNEQUALIZED</div>
-                </div>
-                <div class="flex items-end gap-2 h-32 pb-6 border-b border-slate-700">
-                    <div class="flex-1 bg-slate-700 hover:bg-h-blue transition-all h-[80%] group relative"><span
-                            class="absolute -top-6 hidden group-hover:block text-[10px] text-white w-full text-center">80%</span>
-                    </div>
-                    <div class="flex-1 bg-slate-700 hover:bg-h-blue transition-all h-[82%] group relative"><span
-                            class="absolute -top-6 hidden group-hover:block text-[10px] text-white w-full text-center">82%</span>
-                    </div>
-                    <div
-                        class="flex-1 bg-h-red hover:bg-red-400 transition-all h-[98%] group relative shadow-[0_0_10px_#ef4444]">
-                        <span class="absolute -top-6 text-[10px] text-h-red font-bold w-full text-center">98%</span>
-                    </div>
-                    <div class="flex-1 bg-h-blue/30 hover:bg-h-blue transition-all h-[60%] group relative"><span
-                            class="absolute -top-6 hidden group-hover:block text-[10px] text-white w-full text-center">60%</span>
-                    </div>
-                    <div class="flex-1 bg-slate-700 hover:bg-h-blue transition-all h-[85%]"></div>
-                    <div class="flex-1 bg-slate-700 hover:bg-h-blue transition-all h-[78%]"></div>
-                </div>
-            </div>
-        </div>
-
-        <div id="tpl-SYS-99">
-            <div class="relative h-64 bg-black rounded border border-slate-800 overflow-hidden mb-6">
-                <canvas id="sys99-canvas" class="absolute inset-0 w-full h-full"></canvas>
-                <div class="absolute inset-0 z-10 p-4 flex flex-col justify-between">
-                    <div class="text-[10px] text-slate-500 text-right">NEURAL SYNC</div>
-                    <div
-                        class="text-h-cyan font-bold text-xl tracking-widest bg-black/50 px-4 py-2 backdrop-blur self-center">
-                        NEURAL LINK ACTIVE</div>
-                </div>
-            </div>
-            <div class="text-center text-slate-400 text-sm">System optimization protocols engaged.</div>
-        </div>
-
-        this.initHologram();
-        if (window.lucide) lucide.createIcons();
-        setInterval(() => {
-        const el = document.getElementById('ticker-ai-status');
-        if (el) el.innerText = Math.random() > 0.5 ? "ANALYZING..." : "STANDBY";
-        }, 2000);
+        sB.addEventListener('input', update);
+        update();
         },
 
-        renderModules() {
-        const grid = document.getElementById('module-grid');
-        if (!grid) return;
-        grid.innerHTML = '';
-        this.data.modules.forEach(m => {
-        let borderColor = `border-${m.color === 'slate-500' ? 'slate-700' : m.color}`;
-        let textColor = `text-${m.color === 'slate-500' ? 'slate-400' : m.color}`;
+        initSYS99() {
+        const canvas = document.getElementById('sys99-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
 
-        const div = document.createElement('div');
-        div.className = `relative group bg-slate-900 border border-slate-800 p-6 hover:border-white/20 transition-all
-        duration-300 rounded-sm cursor-pointer`;
-        div.innerHTML = `
-        <div
-            class="absolute inset-0 bg-${m.color.replace('h-', '')}-500/5 opacity-0 group-hover:opacity-100 transition-opacity">
-        </div>
-        <div class="flex justify-between items-start mb-4 relative z-10">
-            <div class="p-2 bg-slate-800 rounded border border-slate-700"><i data-lucide="${m.icon}"
-                    class="w-6 h-6 ${textColor}"></i></div>
-            <div class="text-right">
-                <div class="text-xs font-mono text-slate-500">STATUS</div>
-                <div class="text-sm font-bold ${textColor} animate-pulse">${m.status}</div>
-            </div>
-        </div>
-        <h3 class="text-xl font-bold text-white mb-2 relative z-10">${m.name}</h3>
-        <div class="space-y-2 relative z-10">${m.stats.map(s => `<div
-                class="text-xs font-mono text-slate-400 border-l-2 border-slate-700 pl-2">${s}</div>`).join('')}</div>
-        <button onclick="App.openModal('${m.id}')" class="absolute inset-0 w-full h-full z-20"></button>
-        `;
-        grid.appendChild(div);
-        });
-        },
+        let particles = Array.from({ length: 40 }, () => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: (Math.random() - 0.5),
+        vy: (Math.random() - 0.5)
+        }));
 
-        openModal(id) {
-        const module = this.data.modules.find(m => m.id === id);
-        if (!module || !module.isUnlocked) return;
-
-        const modal = document.getElementById('modal-overlay');
-        document.getElementById('modal-title').innerText = module.name;
-        document.getElementById('modal-id').innerText = id;
-        document.getElementById('modal-link').href = module.link;
-
-        const desc = document.getElementById('modal-desc');
-        desc.innerHTML = '';
-        const tpl = document.getElementById(`tpl-${id}`);
-
-        if (tpl) {
-        desc.appendChild(tpl.cloneNode(true));
-        setTimeout(() => {
-        if (id === 'SYS-05') this.initSYS05();
-        if (id === 'SYS-99') this.initSYS99();
-        if (window.lucide) lucide.createIcons();
-        }, 50);
-        } else {
-        desc.innerHTML = '<div class="text-center text-slate-500 py-12">VISUALIZATION STREAM OFFLINE</div>';
-        }
-
-        for (let i = 0; i < 3; i++) { const stat=document.getElementById(`modal-stat-${i + 1}`); if (stat &&
-            module.stats[i]) stat.innerText=module.stats[i]; } modal.classList.remove('hidden'); }, closeModal() {
-            document.getElementById('modal-overlay').classList.add('hidden'); }, // ENHANCED: Matrix Rain AI Deployment
-            deployAI() { const overlay=document.getElementById('ai-takeover'); const
-            terminal=document.getElementById('ai-terminal'); const
-            matrixCanvas=document.getElementById('matrix-canvas'); overlay.classList.remove('hidden');
-            overlay.classList.add('flex'); terminal.innerHTML='' ; // Initialize Matrix Rain Effect
-            this.startMatrixRain(matrixCanvas); const lines=[ { text: "INITIALIZING QUANTUM PROCESSOR..." ,
-            color: "text-h-cyan" }, { text: "LOADING NEURAL NETWORK MODULES..." , color: "text-h-cyan" }, {
-            text: "BYPASSING FIREWALL (LAYER 7)..." , color: "text-h-orange" }, { text: "DECRYPTING BIOS KEYS..." ,
-            color: "text-h-purple" }, { text: "ACCESSING KERNEL MEMORY..." , color: "text-h-cyan" }, {
-            text: "OPTIMIZING NETWORK TOPOLOGY..." , color: "text-h-cyan" }, {
-            text: "SYNCHRONIZING DISTRIBUTED NODES..." , color: "text-h-cyan" }, { text: "AI MODEL 'ANOHUB_V5' LOADED."
-            , color: "text-white font-bold" }, { text: ">>> SYSTEM CONTROL: GRANTED <<<" ,
-            color: "text-h-green font-bold text-xl" } ]; let delay=0; lines.forEach((line, index)=> {
-            setTimeout(() => {
-            const p = document.createElement('div');
-            p.className = line.color;
-            p.style.animation = 'fadeIn 0.3s forwards';
-            p.innerText = `> ${line.text}`;
-            terminal.appendChild(p);
-            }, delay);
-            delay += Math.random() * 500 + 400;
-            });
-
-            setTimeout(() => {
-            const aiMod = this.data.modules.find(m => m.id === 'SYS-99');
-            if (aiMod) {
-            aiMod.isUnlocked = true;
-            aiMod.status = 'ONLINE';
-            aiMod.color = 'h-cyan';
-            this.renderModules();
-            }
-
-            // Stop matrix animation
-            if (this.matrixInterval) clearInterval(this.matrixInterval);
-
-            overlay.classList.add('hidden');
-            overlay.classList.remove('flex');
-            this.openModal('SYS-99');
-            }, delay + 1200);
-            },
-
-            // ENHANCEMENT: Matrix Rain Effect
-            startMatrixRain(canvas) {
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-
-            const characters = 'ANOHUBXYZ01アノハブ仮想現実$%&*';
-            const fontSize = 14;
-            const columns = Math.floor(canvas.width / fontSize);
-            const drops = Array(columns).fill(1);
-
-            const drawMatrix = () => {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            ctx.fillStyle = '#00f0ff';
-            ctx.font = `${fontSize}px monospace`;
-
-            for (let i = 0; i < drops.length; i++) { const char=characters[Math.floor(Math.random() *
-                characters.length)]; const x=i * fontSize; const y=drops[i] * fontSize; ctx.fillText(char, x, y); if (y>
-                canvas.height && Math.random() > 0.975) {
-                drops[i] = 0;
-                }
-                drops[i]++;
-                }
+        const draw = () => {
+        if (document.getElementById('modal-overlay').classList.contains('hidden')) return;
+        requestAnimationFrame(draw);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#00f0ff';
+        particles.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < 0 || p.x> canvas.width) p.vx *= -1;
+            if (p.y < 0 || p.y> canvas.height) p.vy *= -1;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, 1, 0, Math.PI * 2);
+                ctx.fill();
+                });
                 };
-
-                this.matrixInterval = setInterval(drawMatrix, 33);
+                draw();
                 },
 
-                initSYS05() {
-                const modal = document.getElementById('modal-content');
-                const sF = modal.querySelector('#shim-front');
-                const sB = modal.querySelector('#shim-back');
-                const valF = modal.querySelector('#val-front');
-                const valB = modal.querySelector('#val-back');
-                const rOff = modal.querySelector('#read-offset');
-                const rAng = modal.querySelector('#read-angle');
-                const dot = modal.querySelector('#laser-dot');
-                const status = modal.querySelector('#status-text');
-                const led = modal.querySelector('#status-led');
+                initCanvas() {
+                const canvas = document.getElementById('network-canvas');
+                if (!canvas) return;
+                const ctx = canvas.getContext('2d');
+                const resize = () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                };
+                window.addEventListener('resize', resize);
+                resize();
 
-                const update = () => {
-                let f = parseFloat(sF.value);
-                let b = parseFloat(sB.value);
-                valF.innerText = f.toFixed(2) + " mm";
-                valB.innerText = b.toFixed(2) + " mm";
+                let particles = Array.from({ length: 60 }, () => ({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                vx: (Math.random() - 0.5) * 0.2,
+                vy: (Math.random() - 0.5) * 0.2
+                }));
 
-                let offset = (f + b) / 2;
-                let angle = b - f;
+                const draw = () => {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = '#00f0ff';
+                particles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+                if (p.x < 0 || p.x> canvas.width) p.vx *= -1;
+                    if (p.y < 0 || p.y> canvas.height) p.vy *= -1;
+                        ctx.beginPath();
+                        ctx.arc(p.x, p.y, 1, 0, Math.PI * 2);
+                        ctx.fill();
+                        });
+                        requestAnimationFrame(draw);
+                        };
+                        draw();
+                        },
 
-                rOff.innerText = Math.abs(offset).toFixed(2);
-                rAng.innerText = Math.abs(angle).toFixed(2);
-
-                dot.style.transform = `translate(${angle * 20}px, ${offset * -20}px)`;
-
-                if (Math.abs(offset) < 0.1 && Math.abs(angle) < 0.1) { status.innerText="STATUS: ALIGNED" ;
-                    status.className="font-mono text-xs text-h-green" ;
-                    led.className="w-3 h-3 bg-h-green rounded-full shadow-[0_0_10px_#22c55e]" ;
-                    dot.className="absolute w-3 h-3 bg-h-green rounded-full shadow-[0_0_10px_#22c55e] transition-all duration-300"
-                    ; } else { status.innerText="STATUS: MISALIGNED" ; status.className="font-mono text-xs text-white" ;
-                    led.className="w-3 h-3 bg-h-red rounded-full animate-pulse" ;
-                    dot.className="absolute w-3 h-3 bg-h-red rounded-full shadow-[0_0_10px_#ef4444] transition-all duration-300"
-                    ; } }; sF.addEventListener('input', update); sB.addEventListener('input', update); update(); },
-                    initSYS99() { const canvas=document.getElementById('sys99-canvas'); if (!canvas) return; const
-                    ctx=canvas.getContext('2d'); canvas.width=canvas.offsetWidth; canvas.height=canvas.offsetHeight; let
-                    particles=Array.from({ length: 40 }, ()=> ({
-                    x: Math.random() * canvas.width, y: Math.random() * canvas.height,
-                    vx: (Math.random() - 0.5), vy: (Math.random() - 0.5)
-                    }));
-
-                    const draw = () => {
-                    if (document.getElementById('modal-overlay').classList.contains('hidden')) return;
-                    requestAnimationFrame(draw);
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    ctx.fillStyle = '#00f0ff';
-                    particles.forEach(p => {
-                    p.x += p.vx; p.y += p.vy;
-                    if (p.x < 0 || p.x> canvas.width) p.vx *= -1;
-                        if (p.y < 0 || p.y> canvas.height) p.vy *= -1;
-                            ctx.beginPath(); ctx.arc(p.x, p.y, 1, 0, Math.PI * 2); ctx.fill();
-                            });
-                            };
-                            draw();
+                        hackText(el) {
+                        const original = el.dataset.value;
+                        const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                        let i = 0;
+                        const int = setInterval(() => {
+                        el.innerText = original.split('').map((c, index) => {
+                        if (c === ' ') return ' ';
+                        if (index < i) return original[index]; return chars[Math.floor(Math.random() * chars.length)];
+                            }).join(''); if (i>= original.length) clearInterval(int);
+                            i += 1 / 3;
+                            }, 30);
                             },
 
-                            initCanvas() {
-                            const canvas = document.getElementById('network-canvas');
-                            if (!canvas) return;
-                            const ctx = canvas.getContext('2d');
-                            const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+                            initHologram() {
+                            const container = document.getElementById('hologram-container');
+                            const content = document.getElementById('hologram-content');
+                            if (!container || !content) return;
+
+                            let targetX = 0;
+                            let targetY = 0;
+                            let currentX = 0;
+                            let currentY = 0;
+
+                            container.addEventListener('mousemove', (e) => {
+                            const rect = container.getBoundingClientRect();
+                            const x = e.clientX - rect.left;
+                            const y = e.clientY - rect.top;
+
+                            targetX = ((y / rect.height) - 0.5) * 12;
+                            targetY = ((x / rect.width) - 0.5) * 12;
+                            });
+
+                            container.addEventListener('mouseleave', () => {
+                            targetX = 0;
+                            targetY = 0;
+                            });
+
+                            const animate = () => {
+                            const lerp = (start, end, factor) => start + (end - start) * factor;
+                            const smoothFactor = 0.08;
+
+                            currentX = lerp(currentX, targetX, smoothFactor);
+                            currentY = lerp(currentY, targetY, smoothFactor);
+
+                            content.style.transform = `perspective(1000px) rotateX(${currentX}deg)
+                            rotateY(${currentY}deg)`;
+                            requestAnimationFrame(animate);
                             };
-                            window.addEventListener('resize', resize);
-                            resize();
 
-                            let particles = Array.from({ length: 60 }, () => ({
-                            x: Math.random() * canvas.width, y: Math.random() * canvas.height,
-                            vx: (Math.random() - 0.5) * 0.2, vy: (Math.random() - 0.5) * 0.2
-                            }));
+                            animate();
+                            }
+                            };
 
-                            const draw = () => {
-                            ctx.clearRect(0, 0, canvas.width, canvas.height);
-                            ctx.fillStyle = '#00f0ff';
-                            particles.forEach(p => {
-                            p.x += p.vx; p.y += p.vy;
-                            if (p.x < 0 || p.x> canvas.width) p.vx *= -1;
-                                if (p.y < 0 || p.y> canvas.height) p.vy *= -1;
-                                    ctx.beginPath(); ctx.arc(p.x, p.y, 1, 0, Math.PI * 2); ctx.fill();
-                                    });
-                                    requestAnimationFrame(draw);
-                                    };
-                                    draw();
-                                    },
-
-                                    hackText(el) {
-                                    const original = el.dataset.value;
-                                    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-                                    let i = 0;
-                                    const int = setInterval(() => {
-                                    el.innerText = original.split('').map((c, index) => {
-                                    if (c === ' ') return ' ';
-                                    if (index < i) return original[index]; return chars[Math.floor(Math.random() *
-                                        chars.length)]; }).join(''); if (i>= original.length) clearInterval(int);
-                                        i += 1 / 3;
-                                        }, 30);
-                                        },
-
-                                        // ENHANCED: Smooth 3D Hologram Rotation
-                                        initHologram() {
-                                        const container = document.getElementById('hologram-container');
-                                        const content = document.getElementById('hologram-content');
-                                        if (!container || !content) return;
-
-                                        let targetX = 0;
-                                        let targetY = 0;
-                                        let currentX = 0;
-                                        let currentY = 0;
-
-                                        container.addEventListener('mousemove', (e) => {
-                                        const rect = container.getBoundingClientRect();
-                                        const x = e.clientX - rect.left;
-                                        const y = e.clientY - rect.top;
-
-                                        // Calculate target rotation with reduced sensitivity
-                                        targetX = ((y / rect.height) - 0.5) * 12; // Reduced from 20 to 12
-                                        targetY = ((x / rect.width) - 0.5) * 12;
-                                        });
-
-                                        container.addEventListener('mouseleave', () => {
-                                        targetX = 0;
-                                        targetY = 0;
-                                        });
-
-                                        // Smooth animation loop using lerp (linear interpolation)
-                                        const animate = () => {
-                                        const lerp = (start, end, factor) => start + (end - start) * factor;
-                                        const smoothFactor = 0.08; // Smoothing factor (lower = smoother)
-
-                                        currentX = lerp(currentX, targetX, smoothFactor);
-                                        currentY = lerp(currentY, targetY, smoothFactor);
-
-                                        content.style.transform = `perspective(1000px) rotateX(${currentX}deg)
-                                        rotateY(${currentY}deg)`;
-                                        requestAnimationFrame(animate);
-                                        };
-
-                                        animate();
-                                        }
-                                        };
-
-                                        App.init();
-                                        </script>
+                            App.init();
+                            </script>
 </body>
 
 </html>
