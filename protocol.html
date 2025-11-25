@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AnoHUB | OMNISCIENCE INTERFACE // GENESIS</title>
+    <title>AnoHUB | OMNISCIENCE v20.0 // ARCHITECT</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=JetBrains+Mono:wght@200;400;800&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
@@ -19,20 +19,19 @@
                         divine: ['Cinzel', 'serif']
                     },
                     colors: { 
-                        'h-gold': '#FFD700',   /* THE HOLY GOLD */
-                        'h-void': '#030303',   /* DEEP SPACE */
-                        'h-glass': 'rgba(20, 20, 20, 0.8)',
-                        'h-subtle': '#333333'
+                        'h-gold': '#FFD700',   
+                        'h-void': '#020202',   
+                        'h-glass': 'rgba(10, 10, 10, 0.9)',
+                        'h-dim': '#1a1a1a'
                     },
                     animation: {
-                        'spin-slow': 'spin 60s linear infinite',
-                        'float': 'float 8s ease-in-out infinite',
-                        'pulse-gold': 'pulseGold 3s infinite',
+                        'spin-slow': 'spin 80s linear infinite',
+                        'float': 'float 10s ease-in-out infinite',
+                        'pulse-fast': 'pulse 1s infinite',
                         'scan': 'scan 4s linear infinite',
                     },
                     keyframes: {
-                        float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-15px)' } },
-                        pulseGold: { '0%, 100%': { borderColor: 'rgba(255, 215, 0, 0.2)', boxShadow: '0 0 0 0 rgba(255,215,0,0)' }, '50%': { borderColor: 'rgba(255, 215, 0, 0.8)', boxShadow: '0 0 20px 0 rgba(255,215,0,0.3)' } },
+                        float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' } },
                         scan: { '0%': { backgroundPosition: '0% 0%' }, '100%': { backgroundPosition: '0% 100%' } }
                     }
                 } 
@@ -41,402 +40,403 @@
     </script>
 
     <style>
-        body { 
-            background-color: #030303; 
-            color: #e2e8f0; 
-            overflow-x: hidden; 
-            cursor: crosshair;
-        }
+        body { background-color: #020202; color: #e2e8f0; overflow-x: hidden; cursor: crosshair; }
 
-        /* HOLY GRID */
-        .divine-grid {
-            position: fixed; inset: 0; z-index: -1;
-            background-image: 
-                linear-gradient(rgba(255, 215, 0, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 215, 0, 0.03) 1px, transparent 1px);
-            background-size: 40px 40px;
-            mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
-        }
+        /* DUAL LAYERS */
+        .matrix-layer { position: fixed; inset: 0; z-index: -2; opacity: 0.15; pointer-events: none; }
+        .constellation-layer { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
 
-        /* CARD STYLING - HEAVY & EXPENSIVE LOOK */
-        .module-card {
-            background: linear-gradient(145deg, rgba(10,10,10,0.9) 0%, rgba(5,5,5,0.95) 100%);
+        /* UI PANELS */
+        .glass-panel {
+            background: rgba(5, 5, 5, 0.85);
+            backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            overflow: hidden;
+            box-shadow: 0 0 40px rgba(0,0,0,0.8);
         }
-        .module-card::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
-            background: linear-gradient(90deg, transparent, #FFD700, transparent);
-            transform: translateX(-100%); transition: 0.5s;
+        
+        .module-card {
+            position: relative; overflow: hidden;
+            background: linear-gradient(180deg, rgba(20,20,20,0.9) 0%, rgba(10,10,10,1) 100%);
+            border: 1px solid rgba(50,50,50,0.5);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
         .module-card:hover {
-            transform: translateY(-5px) scale(1.02);
+            transform: translateY(-5px);
             border-color: #FFD700;
-            box-shadow: 0 0 40px rgba(255, 215, 0, 0.1);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.15);
         }
-        .module-card:hover::before { transform: translateX(100%); transition: 1s; }
+        .module-card::after {
+            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: skewX(-25deg); transition: 0.5s;
+        }
+        .module-card:hover::after { left: 150%; transition: 0.7s; }
 
-        /* 3D NEXUS LINKS */
+        /* 3D LINKS */
         .nexus-item {
             position: absolute; cursor: pointer;
-            background: rgba(0,0,0,0.9); border: 1px solid rgba(255,255,255,0.15);
-            padding: 8px 16px; font-family: 'Cinzel', serif; font-weight: 700; font-size: 10px; letter-spacing: 2px;
-            color: #ccc; box-shadow: 0 0 15px rgba(0,0,0,0.8);
-            transition: all 0.3s ease; pointer-events: auto !important;
+            background: rgba(0,0,0,0.9); border: 1px solid rgba(255,255,255,0.2);
+            padding: 6px 12px; font-family: 'JetBrains Mono', monospace; font-size: 9px; 
+            color: #aaa; transition: all 0.3s ease; pointer-events: auto !important;
+            text-transform: uppercase; letter-spacing: 1px;
         }
         .nexus-item:hover {
-            border-color: #FFD700; color: #FFD700; text-shadow: 0 0 10px #FFD700;
-            transform: scale(1.2) translateZ(50px); z-index: 100;
+            border-color: #FFD700; color: #FFD700; transform: scale(1.2) translateZ(40px); z-index: 100;
+            box-shadow: 0 0 20px rgba(255,215,0,0.3);
         }
 
-        /* UTILS */
-        .perspective-2000 { perspective: 2000px; }
-        .preserve-3d { transform-style: preserve-3d; }
-        #constellation-canvas { position: fixed; inset: 0; z-index: 0; opacity: 0.6; pointer-events: none; }
+        /* SCROLLBAR */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { background: #333; }
+        
+        /* GOD MODE GRID */
+        .god-cell {
+            background: rgba(0, 20, 0, 0.9); border: 1px solid #00ff00; color: #00ff00;
+            padding: 10px; font-family: monospace; font-size: 9px;
+            opacity: 0; animation: fadeOn 0.2s forwards;
+        }
+        @keyframes fadeOn { to { opacity: 1; } }
     </style>
 </head>
-<body class="min-h-screen flex flex-col font-sans selection:bg-h-gold selection:text-black">
+<body class="min-h-screen flex font-sans selection:bg-h-gold selection:text-black">
 
-    <div id="audio-trigger" class="hidden"></div>
+    <canvas id="matrix-canvas" class="matrix-layer"></canvas>
+    <canvas id="constellation-canvas" class="constellation-layer"></canvas>
 
-    <div class="divine-grid"></div>
-    <canvas id="constellation-canvas"></canvas>
-
-    <div id="genesis-overlay" class="fixed inset-0 z-[10000] bg-black flex flex-col items-center justify-center pointer-events-auto">
-        <div class="text-h-gold font-divine text-3xl tracking-[0.5em] animate-pulse mb-4">ANOHUB</div>
-        <div class="w-64 h-1 bg-gray-900 rounded overflow-hidden">
-            <div id="boot-bar" class="h-full bg-white w-0 transition-all duration-[3000ms] ease-in-out"></div>
-        </div>
-        <div id="boot-log" class="mt-4 font-mono text-[10px] text-slate-500 h-6 overflow-hidden">INITIALIZING CORE...</div>
-        
-        <button onclick="App.enterSystem()" id="enter-btn" class="mt-8 opacity-0 px-8 py-3 border border-h-gold text-h-gold hover:bg-h-gold hover:text-black transition tracking-widest font-bold text-xs hidden">
-            ENTER SANCTUM
-        </button>
-    </div>
-
-    <div id="god-mode" class="fixed inset-0 z-[9000] bg-white hidden flex-col items-center justify-center transition-opacity duration-1000 opacity-0">
-        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/diamond-upholstery.png')] opacity-10"></div>
-        <div class="z-10 text-center space-y-6">
-            <div class="w-32 h-32 border-4 border-black rounded-full mx-auto flex items-center justify-center animate-spin-slow">
-                <div class="w-24 h-24 border-2 border-black rounded-full animate-pulse"></div>
-            </div>
-            <h1 class="text-6xl font-divine text-black tracking-tighter">OMNISCIENCE</h1>
-            <p class="font-mono text-black text-sm tracking-[0.3em]">CALCULATING INFINITE PROBABILITIES...</p>
+    <div id="boot-overlay" class="fixed inset-0 z-[10000] bg-black flex flex-col items-center justify-center">
+        <div class="w-96 p-6 border border-white/10 bg-h-void/90 relative">
+            <div class="absolute top-0 left-0 w-2 h-2 bg-white"></div>
+            <div class="absolute top-0 right-0 w-2 h-2 bg-white"></div>
+            <div class="absolute bottom-0 left-0 w-2 h-2 bg-white"></div>
+            <div class="absolute bottom-0 right-0 w-2 h-2 bg-white"></div>
             
-            <div id="god-grid" class="grid grid-cols-5 gap-2 mt-8 opacity-0 transition-opacity duration-1000">
-                </div>
-        </div>
-    </div>
-
-    <div class="fixed top-0 w-full h-12 z-50 border-b border-white/10 bg-black/80 backdrop-blur-md flex items-center justify-between px-8">
-        <div class="flex gap-8 font-mono text-[10px] text-slate-500">
-            <span class="flex items-center gap-2"><div class="w-1 h-1 bg-h-gold rounded-full animate-pulse"></div> SYSTEM_STATUS: NOMINAL</span>
-            <span>FREQ: <span id="freq-monitor" class="text-white">50.00 Hz</span></span>
-            <span>ENTROPY: <span class="text-h-gold">0.0001%</span></span>
-        </div>
-        <div class="font-divine text-xs text-slate-600 tracking-widest">ENGINEERING DIVISION</div>
-    </div>
-
-    <header class="fixed top-12 w-full z-40 h-24 flex items-center justify-between px-8 pointer-events-none">
-        <a href="index.html" class="pointer-events-auto flex items-center gap-4 group">
-            <div class="w-12 h-12 border border-white/20 flex items-center justify-center text-2xl font-divine text-white group-hover:border-h-gold group-hover:text-h-gold transition duration-500 bg-black/50">A</div>
-            <div>
-                <h1 class="font-divine text-3xl text-white tracking-[0.1em] group-hover:text-h-gold transition duration-500">AnoHUB</h1>
-                <p class="text-[9px] font-mono text-slate-400 tracking-widest uppercase">Protocol Interface</p>
+            <div class="text-center mb-6">
+                <h1 class="font-divine text-2xl text-white tracking-[0.5em]">ANOHUB</h1>
+                <div class="text-[9px] font-mono text-slate-500 mt-1">SECURE BOOTLOADER v9.2</div>
             </div>
-        </a>
-        <button onclick="App.invokeGodMode()" onmouseenter="App.sfx('hover')" class="pointer-events-auto px-6 py-3 border border-h-gold/50 text-h-gold hover:bg-h-gold hover:text-black transition font-mono text-xs tracking-widest font-bold shadow-[0_0_20px_rgba(255,215,0,0.1)]">
-            INVOKE PROTOCOL
+            
+            <div class="font-mono text-[10px] text-h-gold h-32 overflow-hidden border-t border-b border-white/10 py-2 mb-4" id="boot-log">
+                </div>
+            
+            <div class="w-full h-1 bg-slate-800 rounded overflow-hidden">
+                <div id="boot-progress" class="h-full bg-white w-0"></div>
+            </div>
+
+            <button id="enter-btn" onclick="App.enterSystem()" class="w-full mt-4 py-3 border border-white/20 text-white font-mono text-xs hover:bg-white hover:text-black transition hidden opacity-0 duration-500">
+                INITIALIZE INTERFACE
+            </button>
+        </div>
+    </div>
+
+    <div id="god-mode" class="fixed inset-0 z-[9000] bg-black hidden flex-col p-8">
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20"></div>
+        <div class="relative z-10 h-full flex flex-col border-2 border-h-gold p-4">
+            <div class="flex justify-between items-end mb-4 border-b border-h-gold/50 pb-2">
+                <h1 class="text-4xl font-divine text-h-gold">OMNISCIENCE CORE</h1>
+                <div class="font-mono text-xs text-h-gold animate-pulse">ROOT_ACCESS: GRANTED</div>
+            </div>
+            
+            <div id="god-grid" class="grid grid-cols-4 gap-2 flex-1 overflow-hidden"></div>
+            
+            <div id="god-denied" class="absolute inset-0 flex items-center justify-center bg-black/90 hidden backdrop-blur-sm">
+                <div class="border border-red-600 p-10 text-center max-w-xl shadow-[0_0_100px_rgba(220,38,38,0.5)]">
+                    <h2 class="text-5xl font-divine text-red-600 mb-4">UNAUTHORIZED</h2>
+                    <p class="font-mono text-slate-400 text-sm">
+                        Mortal resonance detected. The <strong class="text-white">AnoHUB Core</strong> operates on frequencies beyond standard calibration.
+                    </p>
+                    <div class="mt-6">
+                        <button onclick="location.reload()" class="px-6 py-2 bg-red-600 text-black font-bold text-xs tracking-widest hover:bg-white transition">SYSTEM REBOOT</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <aside class="fixed left-0 top-0 h-full w-16 md:w-64 z-30 border-r border-white/5 bg-black/80 backdrop-blur-sm hidden md:flex flex-col pt-20 pb-10 px-6">
+        <div class="text-[10px] font-mono text-slate-600 mb-6 tracking-widest border-b border-white/10 pb-2">SYS_DIAGNOSTICS</div>
+        
+        <div class="flex-1 overflow-hidden relative mb-6 mask-image-b">
+            <div id="sidebar-logs" class="absolute bottom-0 w-full font-mono text-[9px] text-slate-500 space-y-1"></div>
+        </div>
+
+        <div class="space-y-4">
+            <div>
+                <div class="flex justify-between text-[9px] text-slate-400 mb-1"><span>CPU_01</span><span class="text-h-gold">ACTIVE</span></div>
+                <div class="h-1 bg-white/10 w-full"><div class="h-full bg-white/50 w-[40%] animate-pulse"></div></div>
+            </div>
+            <div>
+                <div class="flex justify-between text-[9px] text-slate-400 mb-1"><span>NET_IO</span><span class="text-h-gold">STABLE</span></div>
+                <div class="h-1 bg-white/10 w-full"><div class="h-full bg-white/50 w-[75%] animate-pulse"></div></div>
+            </div>
+            <div>
+                <div class="flex justify-between text-[9px] text-slate-400 mb-1"><span>RESONANCE</span><span class="text-red-500">LOW</span></div>
+                <div class="h-1 bg-white/10 w-full"><div class="h-full bg-red-500 w-[10%]"></div></div>
+            </div>
+        </div>
+    </aside>
+
+    <header class="fixed top-0 left-0 w-full h-16 z-40 border-b border-white/10 bg-black/90 backdrop-blur flex items-center justify-between px-8">
+        <div class="flex items-center gap-12 pl-0 md:pl-64">
+            <div class="flex items-center gap-3 group cursor-pointer" onclick="location.reload()">
+                <div class="w-8 h-8 border border-white/30 flex items-center justify-center text-white font-divine group-hover:border-h-gold group-hover:text-h-gold transition">A</div>
+                <div>
+                    <h1 class="font-divine text-white tracking-[0.2em] group-hover:text-h-gold transition">AnoHUB</h1>
+                    <p class="text-[8px] font-mono text-slate-500 tracking-widest">PROTOCOL v20.0</p>
+                </div>
+            </div>
+            <div class="hidden lg:flex gap-6 text-[9px] font-mono text-slate-500">
+                <span>UPTIME: <span class="text-white">99.999%</span></span>
+                <span>SECURE: <span class="text-h-gold">TRUE</span></span>
+            </div>
+        </div>
+        
+        <button onclick="App.invokeGodMode()" onmouseenter="App.sfx('hover')" class="px-6 py-2 border border-white/20 bg-white/5 text-white font-mono text-[10px] tracking-widest hover:bg-h-gold hover:text-black hover:border-h-gold transition duration-300">
+            INVOKE OMNISCIENCE
         </button>
     </header>
 
-    <main class="pt-48 pb-20 px-4 max-w-7xl mx-auto relative z-10">
-
+    <main class="pl-0 md:pl-64 pt-32 pb-20 px-8 max-w-full relative z-10">
+        
         <section class="grid lg:grid-cols-2 gap-16 items-center min-h-[50vh] mb-32">
-            <div class="space-y-10">
-                <div class="w-16 h-1 bg-h-gold shadow-[0_0_15px_#FFD700]"></div>
-                <h1 class="text-7xl font-divine text-white leading-none">
+            <div class="space-y-8">
+                <div class="w-12 h-1 bg-h-gold"></div>
+                <h1 class="text-6xl md:text-7xl font-divine text-white leading-none">
                     ZERO <br>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-400 to-slate-600">COMPROMISE</span>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-400 to-slate-700">COMPROMISE</span>
                 </h1>
-                <p class="text-lg font-light text-slate-300 leading-relaxed font-sans max-w-lg border-l border-white/20 pl-6">
-                    We bring light to the chaotic unknown. Digitizing risk. Neutralizing entropy. 
-                    The <strong class="text-white">AnoHUB Protocol</strong> is the absolute standard.
+                <p class="text-lg font-light text-slate-400 leading-relaxed font-sans max-w-lg border-l border-white/10 pl-6">
+                    Engineering immunity through digital omniscience. The <strong class="text-white">AnoHUB Protocol</strong> creates a flawless mirror of your hydroelectric reality.
                 </p>
             </div>
 
-            <div id="hologram-container" class="relative h-[600px] w-full flex items-center justify-center perspective-2000 hidden lg:flex">
+            <div id="hologram-container" class="relative h-[500px] w-full flex items-center justify-center perspective-1000 hidden lg:flex">
                 <div id="hologram-content" class="relative w-full h-full flex items-center justify-center transition-transform duration-700 ease-out preserve-3d">
-                    <div class="absolute w-20 h-20 bg-white rounded-full shadow-[0_0_100px_rgba(255,255,255,0.8)] z-10 pointer-events-none" style="transform: translateZ(0px);"></div>
-                    <div class="absolute w-[500px] h-[500px] border border-white/10 rounded-full animate-spin-slow pointer-events-none" style="transform: rotateX(70deg);"></div>
-                    <div class="absolute w-[400px] h-[400px] border border-h-gold/30 rounded-full animate-spin-slow pointer-events-none" style="transform: rotateY(45deg); animation-duration: 30s;"></div>
-                    <div class="absolute w-[600px] h-[600px] border border-white/5 rounded-full animate-spin-slow pointer-events-none" style="transform: rotateX(-45deg); animation-duration: 90s;"></div>
+                    <div class="absolute w-20 h-20 bg-white rounded-full shadow-[0_0_80px_rgba(255,255,255,0.5)] z-10 pointer-events-none" style="transform: translateZ(0px);"></div>
+                    <div class="absolute w-[400px] h-[400px] border border-white/10 rounded-full animate-spin-slow pointer-events-none" style="transform: rotateX(60deg);"></div>
+                    <div class="absolute w-[500px] h-[500px] border border-white/5 rounded-full animate-spin-slow pointer-events-none" style="transform: rotateY(30deg); animation-duration: 40s;"></div>
+                    <div class="absolute w-[300px] h-[300px] border border-dashed border-h-gold/30 rounded-full animate-spin-slow pointer-events-none" style="transform: rotateX(-45deg); animation-duration: 20s;"></div>
 
-                    <div onclick="window.open('protocol/anohub_protocol_v2.html', '_blank')" onmouseenter="App.sfx('hover')" class="nexus-item" style="transform: translate3d(250px, -100px, 50px);">01 / LCC VETO</div>
-                    <div onclick="window.open('protocol/anohub_methodology_v2.html', '_blank')" onmouseenter="App.sfx('hover')" class="nexus-item" style="transform: translate3d(280px, 100px, 0px);">02 / METROLOGY</div>
-                    <div onclick="window.open('protocol/anohub_organization_v2.html', '_blank')" onmouseenter="App.sfx('hover')" class="nexus-item" style="transform: translate3d(50px, 250px, 80px);">03 / ORG INTEL</div>
-                    <div onclick="window.open('protocol/anohub_synergy_v2.html', '_blank')" onmouseenter="App.sfx('hover')" class="nexus-item" style="transform: translate3d(-200px, 150px, 40px);">04 / SYNERGY</div>
-                    <div onclick="window.open('protocol/anohub_alignment_v2.html', '_blank')" onmouseenter="App.sfx('hover')" class="nexus-item" style="transform: translate3d(-250px, -50px, -20px);">05 / ALIGNMENT</div>
-                    <div onclick="App.invokeGodMode()" onmouseenter="App.sfx('hover')" class="nexus-item border-h-gold text-h-gold" style="transform: translate3d(0px, -250px, 60px);">AI / OMNISCIENCE</div>
+                    <div onclick="window.open('protocol/anohub_protocol_v2.html', '_self')" onmouseenter="App.sfx('hover')" class="nexus-item" style="transform: translate3d(200px, -100px, 50px);">01 / LCC VETO</div>
+                    <div onclick="window.open('protocol/anohub_methodology_v2.html', '_self')" onmouseenter="App.sfx('hover')" class="nexus-item" style="transform: translate3d(220px, 80px, 0px);">02 / METROLOGY</div>
+                    <div onclick="window.open('protocol/anohub_organization_v2.html', '_self')" onmouseenter="App.sfx('hover')" class="nexus-item" style="transform: translate3d(50px, 200px, 80px);">03 / ORG INTEL</div>
+                    <div onclick="window.open('protocol/anohub_synergy_v2.html', '_self')" onmouseenter="App.sfx('hover')" class="nexus-item" style="transform: translate3d(-180px, 150px, 40px);">04 / SYNERGY</div>
+                    <div onclick="window.open('protocol/anohub_alignment_v2.html', '_self')" onmouseenter="App.sfx('hover')" class="nexus-item" style="transform: translate3d(-220px, -50px, -20px);">05 / ALIGNMENT</div>
+                    <div onclick="App.invokeGodMode()" onmouseenter="App.sfx('hover')" class="nexus-item border-h-gold text-h-gold" style="transform: translate3d(0px, -200px, 60px);">AI / OMNISCIENCE</div>
                 </div>
             </div>
         </section>
 
         <section id="modules-grid">
             <div class="flex items-center gap-6 mb-12">
-                <h2 class="text-sm font-mono text-slate-500 tracking-[0.5em] uppercase">Operational Matrix</h2>
+                <h2 class="text-xs font-mono text-slate-500 tracking-[0.4em] uppercase">System Modules</h2>
                 <div class="h-px bg-white/10 flex-grow"></div>
             </div>
 
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 
                 <a href="protocol/anohub_protocol_v2.html" onmouseenter="App.sfx('hover')" class="module-card p-8 block group">
-                    <div class="flex justify-between mb-4"><span class="text-h-gold font-mono text-xs">SYS-01</span><div class="w-2 h-2 bg-green-500 rounded-full shadow-[0_0_10px_#00ff00]"></div></div>
-                    <h3 class="text-2xl font-divine text-white mb-2">LCC VETO</h3>
-                    <p class="text-sm text-slate-400 font-light mb-6">Financial firewall. Automated rejection logic.</p>
-                    <div class="flex items-end gap-1 h-10 mt-4 border-b border-white/10 pb-1">
-                        <div class="w-1/3 bg-red-900/50 h-[40%] animate-pulse"></div>
-                        <div class="w-1/3 bg-red-900/50 h-[60%] animate-pulse" style="animation-delay: 0.2s"></div>
-                        <div class="w-1/3 bg-h-gold h-[90%] shadow-[0_0_10px_#FFD700]"></div>
-                    </div>
+                    <div class="flex justify-between mb-4"><span class="text-h-gold font-mono text-xs">SYS-01</span><div class="w-1.5 h-1.5 bg-green-500 rounded-full shadow-[0_0_10px_#00ff00]"></div></div>
+                    <h3 class="text-xl font-divine text-white mb-2">LCC Veto</h3>
+                    <p class="text-sm text-slate-400 font-light">Financial firewall. Rejection logic.</p>
                 </a>
 
                 <a href="protocol/anohub_methodology_v2.html" onmouseenter="App.sfx('hover')" class="module-card p-8 block group">
-                    <div class="flex justify-between mb-4"><span class="text-h-gold font-mono text-xs">SYS-02</span><div class="w-2 h-2 bg-green-500 rounded-full shadow-[0_0_10px_#00ff00]"></div></div>
-                    <h3 class="text-2xl font-divine text-white mb-2">NDT & Metrology</h3>
-                    <p class="text-sm text-slate-400 font-light mb-6">Deep-scan verification protocols.</p>
-                    <div class="relative h-10 bg-slate-900/50 mt-4 border border-white/5 overflow-hidden">
-                        <div class="absolute top-0 left-0 w-1 h-full bg-purple-500 shadow-[0_0_15px_#a855f7] animate-scan-horizontal" style="animation: scan 2s linear infinite;"></div>
-                    </div>
+                    <div class="flex justify-between mb-4"><span class="text-h-gold font-mono text-xs">SYS-02</span><div class="w-1.5 h-1.5 bg-green-500 rounded-full shadow-[0_0_10px_#00ff00]"></div></div>
+                    <h3 class="text-xl font-divine text-white mb-2">NDT & Metrology</h3>
+                    <p class="text-sm text-slate-400 font-light">Deep-scan verification protocols.</p>
                 </a>
 
                 <a href="protocol/anohub_organization_v2.html" onmouseenter="App.sfx('hover')" class="module-card p-8 block group">
-                    <div class="flex justify-between mb-4"><span class="text-h-gold font-mono text-xs">SYS-03</span><div class="w-2 h-2 bg-green-500 rounded-full shadow-[0_0_10px_#00ff00]"></div></div>
-                    <h3 class="text-2xl font-divine text-white mb-2">Org Intelligence</h3>
-                    <p class="text-sm text-slate-400 font-light mb-6">Reducing entropy in human execution.</p>
-                    <div class="flex justify-center mt-2">
-                         <div class="w-10 h-10 border-2 border-orange-500 rounded-full animate-spin shadow-[0_0_10px_#f97316]"></div>
-                    </div>
+                    <div class="flex justify-between mb-4"><span class="text-h-gold font-mono text-xs">SYS-03</span><div class="w-1.5 h-1.5 bg-green-500 rounded-full shadow-[0_0_10px_#00ff00]"></div></div>
+                    <h3 class="text-xl font-divine text-white mb-2">Org Intelligence</h3>
+                    <p class="text-sm text-slate-400 font-light">Reducing entropy in execution.</p>
                 </a>
 
                 <a href="protocol/anohub_synergy_v2.html" onmouseenter="App.sfx('hover')" class="module-card p-8 block group">
-                    <div class="flex justify-between mb-4"><span class="text-h-gold font-mono text-xs">SYS-04</span><div class="w-2 h-2 bg-green-500 rounded-full shadow-[0_0_10px_#00ff00]"></div></div>
-                    <h3 class="text-2xl font-divine text-white mb-2">M-E Synergy</h3>
-                    <p class="text-sm text-slate-400 font-light mb-6">Harmonizing Mechanical & Electrical forces.</p>
-                    <div class="h-10 flex items-center gap-1 justify-center mt-4">
-                        <div class="w-1 h-4 bg-yellow-500 animate-pulse"></div>
-                        <div class="w-1 h-8 bg-yellow-500 animate-pulse" style="animation-delay: 0.1s"></div>
-                        <div class="w-1 h-6 bg-yellow-500 animate-pulse" style="animation-delay: 0.2s"></div>
-                        <div class="w-1 h-3 bg-yellow-500 animate-pulse" style="animation-delay: 0.3s"></div>
-                    </div>
+                    <div class="flex justify-between mb-4"><span class="text-h-gold font-mono text-xs">SYS-04</span><div class="w-1.5 h-1.5 bg-green-500 rounded-full shadow-[0_0_10px_#00ff00]"></div></div>
+                    <h3 class="text-xl font-divine text-white mb-2">M-E Synergy</h3>
+                    <p class="text-sm text-slate-400 font-light">Harmonizing Mechanical & Electrical.</p>
                 </a>
 
                 <a href="protocol/anohub_alignment_v2.html" onmouseenter="App.sfx('hover')" class="module-card p-8 block group">
-                    <div class="flex justify-between mb-4"><span class="text-h-gold font-mono text-xs">SYS-05</span><div class="w-2 h-2 bg-green-500 rounded-full shadow-[0_0_10px_#00ff00]"></div></div>
-                    <h3 class="text-2xl font-divine text-white mb-2">Alignment</h3>
-                    <p class="text-sm text-slate-400 font-light mb-6">Geometric centering. 0.05mm tolerance.</p>
-                    <div class="flex justify-center mt-2">
-                        <div class="w-10 h-10 border border-blue-500 rounded-full flex items-center justify-center">
-                            <div class="w-1 h-1 bg-blue-500 rounded-full animate-ping"></div>
-                        </div>
-                    </div>
+                    <div class="flex justify-between mb-4"><span class="text-h-gold font-mono text-xs">SYS-05</span><div class="w-1.5 h-1.5 bg-green-500 rounded-full shadow-[0_0_10px_#00ff00]"></div></div>
+                    <h3 class="text-xl font-divine text-white mb-2">Alignment</h3>
+                    <p class="text-sm text-slate-400 font-light">Geometric centering. 0.05mm tolerance.</p>
                 </a>
 
-                <div onclick="App.invokeGodMode(); App.sfx('click')" onmouseenter="App.sfx('hover')" class="module-card p-8 block group border-dashed border-white/30 cursor-pointer">
-                    <div class="flex justify-between mb-4"><span class="text-white font-mono text-xs">SYS-99</span><div class="w-2 h-2 bg-white rounded-full animate-pulse"></div></div>
-                    <h3 class="text-2xl font-divine text-white mb-2">AI Omniscience</h3>
-                    <p class="text-sm text-slate-400 font-light mb-6">Neural Load Forecasting Core.</p>
-                    <div class="mt-6 text-center text-xs font-bold text-white tracking-widest bg-white/10 py-2 rounded border border-white/20 group-hover:bg-white group-hover:text-black transition">INVOKE</div>
+                <div onclick="App.invokeGodMode()" onmouseenter="App.sfx('hover')" class="module-card p-8 block group border-dashed border-white/30 cursor-pointer">
+                    <div class="flex justify-between mb-4"><span class="text-white font-mono text-xs">SYS-99</span><div class="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></div></div>
+                    <h3 class="text-xl font-divine text-white mb-2">AI Omniscience</h3>
+                    <p class="text-sm text-slate-400 font-light">Neural Load Forecasting Core.</p>
+                    <div class="mt-4 text-[9px] font-bold text-h-gold tracking-widest border border-white/10 p-2 text-center group-hover:bg-white group-hover:text-black transition">INVOKE</div>
                 </div>
 
             </div>
         </section>
     </main>
 
-    <footer class="border-t border-white/10 bg-black py-12 mt-auto relative z-10">
-        <div class="max-w-7xl mx-auto px-4 text-center text-slate-600 text-[10px] font-mono tracking-[0.2em]">
-            <p>© 2025 ANO_HUB ENGINEERING</p>
-        </div>
-    </footer>
-
     <script>
         const App = {
             init() {
-                // Start Boot Sequence
                 this.bootSequence();
+                this.initMatrix();
                 this.initConstellation();
                 this.initHologram();
-                
-                setInterval(() => {
-                    document.getElementById('freq-monitor').innerText = (50.00 + (Math.random() * 0.05 - 0.025)).toFixed(3) + " Hz";
-                }, 500);
+                this.startSidebarLogs();
             },
 
+            // --- 1. AUDIO ENGINE ---
             sfx(type) {
-                // Audio Engine (Safe implementation)
                 try {
-                    const AudioContext = window.AudioContext || window.webkitAudioContext;
-                    if (!AudioContext) return;
-                    if (!this.ctx) this.ctx = new AudioContext();
-                    
+                    const AC = window.AudioContext || window.webkitAudioContext;
+                    if (!AC) return;
+                    if (!this.ctx) this.ctx = new AC();
                     const osc = this.ctx.createOscillator();
                     const gain = this.ctx.createGain();
-                    osc.connect(gain);
-                    gain.connect(this.ctx.destination);
-
+                    osc.connect(gain); gain.connect(this.ctx.destination);
                     const now = this.ctx.currentTime;
 
                     if (type === 'hover') {
-                        osc.type = 'sine'; osc.frequency.setValueAtTime(600, now);
-                        gain.gain.setValueAtTime(0.02, now); gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
-                        osc.start(); osc.stop(now + 0.05);
+                        osc.type = 'sine'; osc.frequency.setValueAtTime(800, now);
+                        gain.gain.setValueAtTime(0.02, now); gain.gain.exponentialRampToValueAtTime(0.001, now+0.05);
+                        osc.start(); osc.stop(now+0.05);
                     } else if (type === 'click') {
-                        osc.type = 'triangle'; osc.frequency.setValueAtTime(150, now);
-                        gain.gain.setValueAtTime(0.05, now); gain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
-                        osc.start(); osc.stop(now + 0.1);
-                    } else if (type === 'god') {
-                        // The "Holy" Sound
-                        osc.type = 'sine'; osc.frequency.setValueAtTime(110, now); // A2
-                        gain.gain.setValueAtTime(0, now); gain.gain.linearRampToValueAtTime(0.2, now + 1);
-                        osc.start(); osc.stop(now + 5);
-                        
-                        // Harmonic
-                        const osc2 = this.ctx.createOscillator();
-                        const gain2 = this.ctx.createGain();
-                        osc2.connect(gain2); gain2.connect(this.ctx.destination);
-                        osc2.type = 'triangle'; osc2.frequency.setValueAtTime(220, now);
-                        gain2.gain.setValueAtTime(0, now); gain2.gain.linearRampToValueAtTime(0.05, now + 1);
-                        osc2.start(); osc2.stop(now + 5);
+                        osc.type = 'triangle'; osc.frequency.setValueAtTime(200, now);
+                        gain.gain.setValueAtTime(0.05, now); gain.gain.exponentialRampToValueAtTime(0.001, now+0.1);
+                        osc.start(); osc.stop(now+0.1);
+                    } else if (type === 'drone') {
+                        const drone = this.ctx.createOscillator();
+                        const dGain = this.ctx.createGain();
+                        drone.type = 'sawtooth'; drone.frequency.value = 40;
+                        dGain.gain.value = 0.01;
+                        drone.connect(dGain); dGain.connect(this.ctx.destination);
+                        drone.start();
+                    } else if (type === 'alarm') {
+                        osc.type = 'square'; osc.frequency.setValueAtTime(100, now);
+                        gain.gain.setValueAtTime(0.1, now); 
+                        osc.start(); osc.stop(now + 0.3);
                     }
-                } catch(e) {}
+                } catch(e){}
             },
 
+            // --- 2. BOOT ---
             bootSequence() {
-                const bar = document.getElementById('boot-bar');
+                const bar = document.getElementById('boot-progress');
                 const log = document.getElementById('boot-log');
                 const btn = document.getElementById('enter-btn');
                 
-                // Animation
                 setTimeout(() => { bar.style.width = "100%"; }, 100);
-                
-                const logs = ["LOADING KERNEL...", "MOUNTING VOLUMES...", "CHECKING INTEGRITY...", "CONNECTING TO SATELLITE...", "SYSTEM READY."];
+                const messages = ["BIOS CHECK...", "LOADING KERNEL...", "MOUNTING DRIVES...", "DECRYPTING...", "SYSTEM READY."];
                 let i = 0;
-                const int = setInterval(() => {
-                    if(i < logs.length) log.innerText = logs[i++];
-                }, 600);
-
+                const int = setInterval(() => { if(i<messages.length) log.innerText = `> ${messages[i++]}`; }, 500);
+                
                 setTimeout(() => {
                     clearInterval(int);
                     btn.classList.remove('hidden');
                     setTimeout(() => btn.classList.remove('opacity-0'), 100);
-                }, 3500);
+                }, 3000);
             },
 
             enterSystem() {
                 this.sfx('click');
-                const overlay = document.getElementById('genesis-overlay');
+                this.sfx('drone');
+                const overlay = document.getElementById('boot-overlay');
                 overlay.style.transition = "opacity 1s";
                 overlay.style.opacity = 0;
                 setTimeout(() => overlay.remove(), 1000);
-                
-                // Start Drone Sound
-                this.startDrone();
             },
 
-            startDrone() {
-                try {
-                    if (!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)();
-                    const osc = this.ctx.createOscillator();
-                    const gain = this.ctx.createGain();
-                    osc.type = 'sawtooth'; osc.frequency.value = 40; 
-                    gain.gain.value = 0.02; // Low volume background
-                    osc.connect(gain); gain.connect(this.ctx.destination);
-                    osc.start();
-                } catch(e) {}
-            },
-
+            // --- 3. GOD MODE ---
             invokeGodMode() {
-                this.sfx('god');
+                this.sfx('click');
                 const god = document.getElementById('god-mode');
                 const grid = document.getElementById('god-grid');
+                const denied = document.getElementById('god-denied');
                 god.classList.remove('hidden');
                 god.classList.add('flex');
                 
-                // Fade In White
-                setTimeout(() => god.classList.remove('opacity-0'), 50);
-
-                // Populate Mock Grid (15 items)
+                // Populate Fake Grid
                 grid.innerHTML = '';
-                for(let i=0; i<15; i++) {
+                for(let i=0; i<20; i++) {
                     const div = document.createElement('div');
-                    div.className = "bg-black/10 border border-black/20 p-2 h-16 flex items-center justify-center text-[8px] font-mono tracking-widest";
-                    div.innerText = `MODULE_${i+1}_ACTIVE`;
+                    div.className = 'god-cell';
+                    div.style.animationDelay = `${i*0.05}s`;
+                    div.innerText = `MOD_${i}_ACTIVE`;
                     grid.appendChild(div);
-                    
-                    // Stagger fade in
-                    setTimeout(() => {
-                        div.style.opacity = 1;
-                        div.classList.add('bg-green-100'); // Flash
-                    }, i * 100);
                 }
-                setTimeout(() => grid.classList.remove('opacity-0'), 500);
 
-                // "Kick out" logic
+                // Kick out logic
                 setTimeout(() => {
-                    alert("SECURITY ALERT: CLEARANCE LEVEL INSUFFICIENT. DISCONNECTING...");
-                    god.classList.add('opacity-0');
-                    setTimeout(() => {
-                        god.classList.add('hidden');
-                        god.classList.remove('flex');
-                    }, 1000);
-                }, 4500);
+                    this.sfx('alarm');
+                    denied.classList.remove('hidden');
+                    grid.style.filter = "blur(10px)";
+                }, 4000);
+            },
+
+            // --- 4. SIDEBAR LOGS ---
+            startSidebarLogs() {
+                const container = document.getElementById('sidebar-logs');
+                setInterval(() => {
+                    const hex = '0x' + Math.floor(Math.random()*16777215).toString(16);
+                    const p = document.createElement('div');
+                    p.innerText = `${new Date().toLocaleTimeString()} :: MEM_ADDR ${hex} :: OK`;
+                    container.prepend(p);
+                    if(container.children.length > 10) container.lastChild.remove();
+                }, 800);
+            },
+
+            // --- 5. VISUALS (Matrix + Stars) ---
+            initMatrix() {
+                const c = document.getElementById('matrix-canvas');
+                const ctx = c.getContext('2d');
+                let w = c.width = window.innerWidth; let h = c.height = window.innerHeight;
+                const cols = Math.floor(w/20); const ypos = Array(cols).fill(0);
+
+                setInterval(() => {
+                    ctx.fillStyle = 'rgba(0,0,0,0.05)'; ctx.fillRect(0,0,w,h);
+                    ctx.fillStyle = '#0f0'; ctx.font = '10px monospace';
+                    ypos.forEach((y, i) => {
+                        const text = String.fromCharCode(Math.random()*128);
+                        const x = i*20;
+                        ctx.fillText(text, x, y);
+                        if(y > h && Math.random() > 0.975) ypos[i] = 0;
+                        else ypos[i] = y + 20;
+                    });
+                }, 50);
             },
 
             initConstellation() {
-                const canvas = document.getElementById('constellation-canvas');
-                const ctx = canvas.getContext('2d');
-                let w, h;
-                const resize = () => { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; };
-                window.addEventListener('resize', resize); resize();
-
-                let stars = Array.from({length: 60}, () => ({
-                    x: Math.random()*w, y: Math.random()*h, vx: (Math.random()-0.5)*0.2, vy: (Math.random()-0.5)*0.2
-                }));
-
-                const animate = () => {
+                const c = document.getElementById('constellation-canvas');
+                const ctx = c.getContext('2d');
+                let w = c.width = window.innerWidth; let h = c.height = window.innerHeight;
+                let stars = Array.from({length:50}, () => ({x:Math.random()*w, y:Math.random()*h, vx:(Math.random()-.5)*0.2, vy:(Math.random()-.5)*0.2}));
+                
+                const anim = () => {
                     ctx.clearRect(0,0,w,h);
-                    ctx.fillStyle = "rgba(255,255,255,0.5)";
+                    ctx.fillStyle="rgba(255,255,255,0.5)";
                     stars.forEach(s => {
-                        s.x += s.vx; s.y += s.vy;
-                        if(s.x<0) s.x=w; if(s.x>w) s.x=0; if(s.y<0) s.y=h; if(s.y>h) s.y=0;
-                        ctx.beginPath(); ctx.arc(s.x, s.y, 1, 0, Math.PI*2); ctx.fill();
-                        
+                        s.x+=s.vx; s.y+=s.vy; if(s.x<0)s.x=w; if(s.x>w)s.x=0; if(s.y<0)s.y=h; if(s.y>h)s.y=0;
+                        ctx.beginPath(); ctx.arc(s.x,s.y,1,0,7); ctx.fill();
                         stars.forEach(s2 => {
                             const d = Math.hypot(s.x-s2.x, s.y-s2.y);
-                            if(d < 100) {
-                                ctx.strokeStyle = `rgba(255,215,0,${0.1 - d/1000})`; // Gold lines
-                                ctx.beginPath(); ctx.moveTo(s.x, s.y); ctx.lineTo(s2.x, s2.y); ctx.stroke();
-                            }
+                            if(d<100) { ctx.strokeStyle=`rgba(255,255,255,${0.1-d/1000})`; ctx.beginPath(); ctx.moveTo(s.x,s.y); ctx.lineTo(s2.x,s2.y); ctx.stroke(); }
                         });
                     });
-                    requestAnimationFrame(animate);
+                    requestAnimationFrame(anim);
                 };
-                animate();
+                anim();
             },
 
             initHologram() {
                 const c = document.getElementById('hologram-container');
-                const content = document.getElementById('hologram-content');
+                const t = document.getElementById('hologram-content');
                 if(!c) return;
-                c.addEventListener('mousemove', (e) => {
+                c.addEventListener('mousemove', e => {
                     const r = c.getBoundingClientRect();
-                    const x = (e.clientY - r.top - r.height/2) / 20;
-                    const y = (e.clientX - r.left - r.width/2) / -20;
-                    content.style.transform = `perspective(2000px) rotateX(${x}deg) rotateY(${y}deg)`;
+                    t.style.transform = `perspective(2000px) rotateX(${((e.clientY-r.top-r.height/2)/20)*-1}deg) rotateY(${((e.clientX-r.left-r.width/2)/20)}deg)`;
                 });
-                c.addEventListener('mouseleave', () => content.style.transform = `perspective(2000px) rotateX(0deg) rotateY(0deg)`);
+                c.addEventListener('mouseleave', () => t.style.transform = `perspective(2000px) rotateX(0deg) rotateY(0deg)`);
             }
         };
 
