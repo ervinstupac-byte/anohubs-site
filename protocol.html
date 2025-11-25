@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AnoHUB | Neural Command Interface v4.1</title>
+    <title>AnoHUB | Neural Command Interface v4.2</title>
     <meta name="description" content="Central command interface for Anohubs Engineering Immunity Protocols.">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -60,8 +60,14 @@
     </script>
 
     <style>
-        body { background-color: #000; color: #cbd5e1; overflow-x: hidden; }
+        body { background-color: #000; color: #cbd5e1; overflow-x: hidden; cursor: crosshair; transition: filter 0.5s ease; }
         
+        /* Red Alert Mode - Hue Rotation shifts Cyan (~180deg) to Red (~0deg) */
+        body.alert-mode {
+            filter: hue-rotate(150deg) contrast(1.2);
+        }
+        body.alert-mode .selection\:bg-h-cyan::selection { background-color: #ef4444; }
+
         /* CRT Scanline Effect Overlay */
         .crt::before {
             content: " "; display: block; position: fixed; top: 0; left: 0; bottom: 0; right: 0;
@@ -82,16 +88,13 @@
             backdrop-filter: blur(12px); 
             border: 1px solid rgba(6, 182, 212, 0.2);
             box-shadow: 0 0 15px rgba(6, 182, 212, 0.05);
-            transition: all 0.3s ease;
+            transition: all 0.1s ease-out; /* Faster for parallax */
+            transform-style: preserve-3d;
         }
         
-        /* Module Card Hover Effects */
-        .module-card:hover {
-            transform: translateY(-5px) scale(1.01);
-            background: rgba(15, 23, 42, 0.95);
-            border-color: var(--hover-color);
-            box-shadow: 0 0 30px var(--hover-glow);
-            cursor: pointer;
+        /* Module Card Hover Effects handled in JS now for Parallax, but keep base fallback */
+        .module-card {
+            will-change: transform, border-color, box-shadow;
         }
 
         /* Ticker Animation Setup */
@@ -131,9 +134,51 @@
         .boot-line { color: #06b6d4; margin-bottom: 0.2rem; font-size: 0.8rem; text-transform: uppercase; }
         .boot-success { color: #10b981; }
 
+        /* Custom HUD Cursor */
+        #cursor-hud {
+            position: fixed; pointer-events: none; z-index: 9999;
+            width: 40px; height: 40px;
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-radius: 50%;
+            transition: width 0.2s, height 0.2s, border-color 0.2s, border-radius 0.2s;
+            mix-blend-mode: screen;
+            transform: translate(-50%, -50%);
+            display: none; /* Hidden until mousemove */
+        }
+        
+        #cursor-hud.locked {
+            width: 60px; height: 60px;
+            border: 2px solid rgba(6, 182, 212, 0.8);
+            border-radius: 4px;
+            background: rgba(6, 182, 212, 0.05);
+        }
+
+        #cursor-text {
+            position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+            margin-top: 8px; font-family: 'JetBrains Mono', monospace; font-size: 9px;
+            color: #06b6d4; white-space: nowrap; text-shadow: 0 0 5px rgba(6,182,212,0.5);
+        }
+
+        /* Corner Brackets for Cursor */
+        .cursor-corner { position: absolute; width: 6px; height: 6px; border-color: #06b6d4; transition: all 0.2s; opacity: 0; }
+        #cursor-hud.locked .cursor-corner { opacity: 1; }
+        .tl { top: -2px; left: -2px; border-top: 2px solid; border-left: 2px solid; }
+        .tr { top: -2px; right: -2px; border-top: 2px solid; border-right: 2px solid; }
+        .bl { bottom: -2px; left: -2px; border-bottom: 2px solid; border-left: 2px solid; }
+        .br { bottom: -2px; right: -2px; border-bottom: 2px solid; border-right: 2px solid; }
+
     </style>
 </head>
 <body class="min-h-screen flex flex-col font-sans selection:bg-h-cyan selection:text-black crt">
+
+    <!-- CUSTOM HUD CURSOR -->
+    <div id="cursor-hud">
+        <div class="cursor-corner tl"></div>
+        <div class="cursor-corner tr"></div>
+        <div class="cursor-corner bl"></div>
+        <div class="cursor-corner br"></div>
+        <div id="cursor-text">IDLE</div>
+    </div>
 
     <!-- CLICK TO START OVERLAY (Fixes Audio Context) -->
     <div id="start-overlay" class="fixed inset-0 z-[9999] bg-black flex flex-col items-center justify-center cursor-pointer hover:bg-black/90 transition">
@@ -201,9 +246,10 @@
                     <span class="text-slate-500">LATENCY:</span>
                     <span class="text-h-cyan" id="ping-counter">12ms</span>
                 </div>
-                <div class="flex items-center gap-2 text-h-cyan bg-h-cyan/5 px-3 py-1 rounded border border-h-cyan/30 shadow-[0_0_10px_rgba(6,182,212,0.1)]">
-                    <div class="w-1.5 h-1.5 bg-h-cyan rounded-full animate-pulse-fast"></div>
-                    SECURE LINK
+                <!-- RED ALERT TRIGGER BUTTON -->
+                <div id="secure-link-badge" class="flex items-center gap-2 text-h-cyan bg-h-cyan/5 px-3 py-1 rounded border border-h-cyan/30 shadow-[0_0_10px_rgba(6,182,212,0.1)] cursor-pointer select-none active:scale-95 transition">
+                    <div class="w-1.5 h-1.5 bg-h-cyan rounded-full animate-pulse-fast" id="secure-dot"></div>
+                    <span id="secure-text">SECURE LINK</span>
                 </div>
             </div>
         </div>
@@ -216,7 +262,7 @@
             <div class="relative z-10 space-y-8">
                 <div class="inline-flex items-center gap-2 px-3 py-1 rounded bg-slate-900/80 border border-slate-700 text-[10px] font-mono text-h-cyan tracking-widest uppercase">
                     <svg data-lucide="shield-check" class="w-3 h-3"></svg>
-                    Engineering Immunity v4.1
+                    Engineering Immunity v4.2
                 </div>
                 
                 <h1 class="text-5xl md:text-6xl lg:text-7xl font-black text-white leading-none tracking-tight">
@@ -284,7 +330,7 @@
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
 
                 <!-- SYS-01 LCC -->
-                <a href="protocol/anohub_protocol_v2.html" onclick="navigateWithSound(event, this.href)" class="scada-panel p-6 rounded-xl module-card group relative overflow-hidden block h-full" style="--hover-color: #22d3ee; --hover-glow: rgba(34,211,238,0.2)">
+                <a href="protocol/anohub_protocol_v2.html" onclick="navigateWithSound(event, this.href)" class="scada-panel p-6 rounded-xl module-card group relative overflow-hidden block h-full module-interact" data-id="SYS-01" style="--hover-color: #22d3ee; --hover-glow: rgba(34,211,238,0.2)">
                     <div class="absolute inset-0 bg-gradient-to-b from-transparent to-h-cyan/5 opacity-0 group-hover:opacity-100 transition duration-500"></div>
                     <div class="flex justify-between items-start mb-6">
                         <div class="bg-black/50 p-3 rounded border border-h-cyan/30 text-h-cyan shadow-[0_0_10px_rgba(34,211,238,0.1)]">
@@ -301,7 +347,7 @@
                 </a>
 
                 <!-- SYS-02 NDT -->
-                <a href="protocol/anohub_methodology_v2.html" onclick="navigateWithSound(event, this.href)" class="scada-panel p-6 rounded-xl module-card group relative overflow-hidden block h-full" style="--hover-color: #8b5cf6; --hover-glow: rgba(139,92,246,0.2)">
+                <a href="protocol/anohub_methodology_v2.html" onclick="navigateWithSound(event, this.href)" class="scada-panel p-6 rounded-xl module-card group relative overflow-hidden block h-full module-interact" data-id="SYS-02" style="--hover-color: #8b5cf6; --hover-glow: rgba(139,92,246,0.2)">
                     <div class="absolute inset-0 bg-gradient-to-b from-transparent to-h-purple/5 opacity-0 group-hover:opacity-100 transition duration-500"></div>
                     <div class="flex justify-between items-start mb-6">
                         <div class="bg-black/50 p-3 rounded border border-h-purple/30 text-h-purple shadow-[0_0_10px_rgba(139,92,246,0.1)]">
@@ -318,7 +364,7 @@
                 </a>
 
                 <!-- SYS-03 ORG -->
-                <a href="protocol/anohub_organization_v2.html" onclick="navigateWithSound(event, this.href)" class="scada-panel p-6 rounded-xl module-card group relative overflow-hidden block h-full" style="--hover-color: #f97316; --hover-glow: rgba(249,115,22,0.2)">
+                <a href="protocol/anohub_organization_v2.html" onclick="navigateWithSound(event, this.href)" class="scada-panel p-6 rounded-xl module-card group relative overflow-hidden block h-full module-interact" data-id="SYS-03" style="--hover-color: #f97316; --hover-glow: rgba(249,115,22,0.2)">
                     <div class="absolute inset-0 bg-gradient-to-b from-transparent to-h-orange/5 opacity-0 group-hover:opacity-100 transition duration-500"></div>
                     <div class="flex justify-between items-start mb-6">
                         <div class="bg-black/50 p-3 rounded border border-h-orange/30 text-h-orange shadow-[0_0_10px_rgba(249,115,22,0.1)]">
@@ -335,7 +381,7 @@
                 </a>
 
                 <!-- SYS-04 SYNERGY -->
-                <a href="protocol/anohub_synergy_v2.html" onclick="navigateWithSound(event, this.href)" class="scada-panel p-6 rounded-xl module-card group relative overflow-hidden block h-full" style="--hover-color: #facc15; --hover-glow: rgba(250,204,21,0.2)">
+                <a href="protocol/anohub_synergy_v2.html" onclick="navigateWithSound(event, this.href)" class="scada-panel p-6 rounded-xl module-card group relative overflow-hidden block h-full module-interact" data-id="SYS-04" style="--hover-color: #facc15; --hover-glow: rgba(250,204,21,0.2)">
                     <div class="absolute inset-0 bg-gradient-to-b from-transparent to-h-yellow/5 opacity-0 group-hover:opacity-100 transition duration-500"></div>
                     <div class="flex justify-between items-start mb-6">
                         <div class="bg-black/50 p-3 rounded border border-h-yellow/30 text-h-yellow shadow-[0_0_10px_rgba(250,204,21,0.1)]">
@@ -352,7 +398,7 @@
                 </a>
 
                 <!-- SYS-05 ALIGN -->
-                <a href="protocol/anohub_alignment_v2.html" onclick="navigateWithSound(event, this.href)" class="scada-panel p-6 rounded-xl module-card group relative overflow-hidden block h-full" style="--hover-color: #3b82f6; --hover-glow: rgba(59,130,246,0.2)">
+                <a href="protocol/anohub_alignment_v2.html" onclick="navigateWithSound(event, this.href)" class="scada-panel p-6 rounded-xl module-card group relative overflow-hidden block h-full module-interact" data-id="SYS-05" style="--hover-color: #3b82f6; --hover-glow: rgba(59,130,246,0.2)">
                     <div class="absolute inset-0 bg-gradient-to-b from-transparent to-h-blue/5 opacity-0 group-hover:opacity-100 transition duration-500"></div>
                     <div class="flex justify-between items-start mb-6">
                         <div class="bg-black/50 p-3 rounded border border-h-blue/30 text-h-blue shadow-[0_0_10px_rgba(59,130,246,0.1)]">
@@ -368,7 +414,7 @@
                     </div>
                 </a>
 
-                <div id="module-ai" class="scada-panel p-6 rounded-xl border-dashed border-slate-800 opacity-40 flex flex-col justify-center items-center text-center relative overflow-hidden h-full cursor-not-allowed hover:border-h-red/50 transition">
+                <div id="module-ai" class="scada-panel p-6 rounded-xl border-dashed border-slate-800 opacity-40 flex flex-col justify-center items-center text-center relative overflow-hidden h-full cursor-not-allowed hover:border-h-red/50 transition module-interact" data-id="LOCKED">
                     <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAiIGhlaWdodD0iMTAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTEwIDEwTDAgME0wIDEwTDEwIDAiIHN0cm9rZT0iIzMzNDE1NSIgc3Ryb2tlLXdpZHRoPSIwLjUiLz48L3N2Zz4=')] opacity-10"></div>
                     <svg data-lucide="lock" class="w-10 h-10 text-slate-600 mb-4 transition" id="lock-icon"></svg>
                     <h3 class="text-sm font-bold text-slate-500 uppercase">Module 06: Hydro-AI</h3>
@@ -398,13 +444,12 @@
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         
         function playSound(type) {
-            if (audioCtx.state === 'suspended') return; // Wait for initialization
+            if (audioCtx.state === 'suspended') return; 
             
             const osc = audioCtx.createOscillator();
             const gainNode = audioCtx.createGain();
             osc.connect(gainNode);
             gainNode.connect(audioCtx.destination);
-
             const now = audioCtx.currentTime;
 
             if (type === 'click') {
@@ -415,6 +460,15 @@
                 gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
                 osc.start(now);
                 osc.stop(now + 0.1);
+            } else if (type === 'alert') {
+                // Warning klaxon for Red Alert
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(220, now);
+                osc.frequency.linearRampToValueAtTime(180, now + 0.5);
+                gainNode.gain.setValueAtTime(0.2, now);
+                gainNode.gain.linearRampToValueAtTime(0, now + 0.5);
+                osc.start(now);
+                osc.stop(now + 0.5);
             } else if (type === 'error') {
                 osc.type = 'sawtooth';
                 osc.frequency.setValueAtTime(150, now);
@@ -435,33 +489,115 @@
         }
 
         // === 2. NAVIGATION HANDLING ===
-        // Delays navigation slightly to play sound
         function navigateWithSound(e, url) {
             e.preventDefault();
             playSound('click');
-            
-            // Visual feedback on the card
             const card = e.currentTarget;
             card.style.transform = "scale(0.98)";
             card.style.borderColor = "#fff";
-            
-            setTimeout(() => {
-                window.location.href = url;
-            }, 200);
+            setTimeout(() => { window.location.href = url; }, 200);
         }
 
-        // === 3. INITIALIZATION & BOOT SEQUENCE ===
+        // === 3. RED ALERT EASTER EGG ===
+        let alertClicks = 0;
+        function setupRedAlert() {
+            const badge = document.getElementById('secure-link-badge');
+            const text = document.getElementById('secure-text');
+            const dot = document.getElementById('secure-dot');
+            const body = document.body;
+
+            badge.addEventListener('click', () => {
+                alertClicks++;
+                playSound('click');
+
+                if (alertClicks === 3) {
+                    // Activate Red Alert
+                    body.classList.toggle('alert-mode');
+                    playSound('alert');
+                    
+                    if (body.classList.contains('alert-mode')) {
+                        text.innerText = "BREACH DETECTED";
+                        text.classList.add('text-h-red');
+                        dot.classList.remove('bg-h-cyan');
+                        dot.classList.add('bg-h-red', 'animate-ping');
+                        badge.classList.add('border-h-red', 'bg-h-red/10');
+                        // Reset counter to allow toggle off
+                        alertClicks = 0; 
+                    } else {
+                        // Reset
+                        text.innerText = "SECURE LINK";
+                        text.classList.remove('text-h-red');
+                        dot.classList.remove('bg-h-red', 'animate-ping');
+                        dot.classList.add('bg-h-cyan');
+                        badge.classList.remove('border-h-red', 'bg-h-red/10');
+                        alertClicks = 0;
+                    }
+                }
+            });
+        }
+
+        // === 4. CUSTOM CURSOR & PARALLAX ===
+        function setupInteraction() {
+            const cursor = document.getElementById('cursor-hud');
+            const cursorText = document.getElementById('cursor-text');
+            const cards = document.querySelectorAll('.module-interact');
+
+            // Mouse tracking
+            document.addEventListener('mousemove', (e) => {
+                // Update Cursor position
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+                cursor.style.display = 'block';
+
+                // Default text
+                if (!cursor.classList.contains('locked')) {
+                    const x = Math.round(e.clientX);
+                    const y = Math.round(e.clientY);
+                    cursorText.innerText = `X:${x} Y:${y}`;
+                }
+
+                // Card Parallax Tilt (Subtle)
+                cards.forEach(card => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    // Only apply if mouse is somewhat near (optimization)
+                    const dist = Math.hypot(x - rect.width/2, y - rect.height/2);
+                    if (dist < 400) {
+                        const xRot = ((y / rect.height) - 0.5) * -5; // Max 5deg tilt
+                        const yRot = ((x / rect.width) - 0.5) * 5;
+                        card.style.transform = `perspective(1000px) rotateX(${xRot}deg) rotateY(${yRot}deg) scale(1.02)`;
+                    } else {
+                        card.style.transform = `perspective(1000px) rotateX(0) rotateY(0) scale(1)`;
+                    }
+                });
+            });
+
+            // Hover States
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    cursor.classList.add('locked');
+                    const id = card.getAttribute('data-id');
+                    cursorText.innerText = `ANALYZING: ${id}`;
+                    playSound('click'); // Subtle feedback
+                });
+                card.addEventListener('mouseleave', () => {
+                    cursor.classList.remove('locked');
+                    // Reset transform handled in mousemove
+                });
+            });
+        }
+
+        // === 5. INITIALIZATION & BOOT SEQUENCE ===
         document.addEventListener('DOMContentLoaded', () => {
             lucide.createIcons();
             
-            // Wait for user interaction to start audio context
             const startOverlay = document.getElementById('start-overlay');
             startOverlay.addEventListener('click', () => {
                 if (audioCtx.state === 'suspended') audioCtx.resume();
-                
                 startOverlay.style.opacity = '0';
                 setTimeout(() => startOverlay.remove(), 500);
-                
                 runBootSequence();
             });
 
@@ -471,11 +607,13 @@
             setupLockedModule();
             setupClock();
             setupHackerText();
+            setupRedAlert();
+            setupInteraction();
         });
 
         function runBootSequence() {
             const bootScreen = document.getElementById('boot-screen');
-            bootScreen.classList.add('active'); // Make it visible
+            bootScreen.classList.add('active'); 
             
             const bootLines = [
                 "INITIALIZING KERNEL...",
@@ -499,10 +637,8 @@
                     div.className = i === bootLines.length - 1 ? 'boot-line boot-success' : 'boot-line';
                     div.innerText = `> ${line}`;
                     bootContainer.appendChild(div);
-                    
                     const progress = ((i + 1) / bootLines.length) * 100;
                     bootProgress.style.width = `${progress}%`;
-                    
                     if(i === bootLines.length - 1) {
                         setTimeout(() => {
                             bootScreen.style.opacity = '0';
@@ -513,16 +649,14 @@
             });
         }
 
-        // === 4. HACKER TEXT EFFECT ===
+        // === 6. HACKER TEXT EFFECT ===
         function setupHackerText() {
             const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            
             document.querySelectorAll('.card-title').forEach(h3 => {
                 h3.addEventListener('mouseenter', event => {
                     let iterations = 0;
                     const element = event.target;
                     const originalText = element.dataset.val;
-                    
                     const interval = setInterval(() => {
                         element.innerText = originalText.split("")
                             .map((letter, index) => {
@@ -530,15 +664,14 @@
                                 return letters[Math.floor(Math.random() * 36)];
                             })
                             .join("");
-                        
                         if(iterations >= originalText.length) clearInterval(interval);
-                        iterations += 1 / 2; // Speed of decoding
+                        iterations += 1 / 2;
                     }, 30);
                 });
             });
         }
 
-        // === 5. UTILITIES ===
+        // === 7. UTILITIES ===
         function scrollToModules() {
             playSound('click');
             document.getElementById('modules-grid').scrollIntoView({ behavior: 'smooth' });
@@ -557,7 +690,6 @@
                     lockedBtn.classList.remove('animate-shake');
                     lockIcon.classList.remove('text-h-red');
                 }, 500);
-
                 toast.classList.remove('hidden');
                 setTimeout(() => { toast.classList.add('hidden'); }, 2000);
             });
@@ -584,11 +716,10 @@
             }, 1000);
         }
 
-        // === 6. VISUALS (Hologram & Canvas) ===
+        // === 8. VISUALS (Hologram & Canvas) ===
         function setupHologram() {
             const holoContainer = document.getElementById('hologram-container');
             const holoContent = document.getElementById('hologram-content');
-
             if (holoContainer && holoContent) {
                 holoContainer.addEventListener('mousemove', (e) => {
                     const rect = holoContainer.getBoundingClientRect();
@@ -610,6 +741,7 @@
             let width, height;
             let particles = [];
             let isVisible = true;
+            let clickWave = { x: -1000, y: -1000, age: 0 };
 
             const observer = new IntersectionObserver((entries) => {
                 isVisible = entries[0].isIntersecting;
@@ -625,15 +757,38 @@
             window.addEventListener('resize', resize);
             resize();
 
+            // Click Shockwave
+            window.addEventListener('click', (e) => {
+                clickWave = { x: e.clientX, y: e.clientY, age: 1 };
+            });
+
             class Particle {
                 constructor() {
                     this.x = Math.random() * width;
                     this.y = Math.random() * height;
                     this.vx = (Math.random() - 0.5) * 0.3;
                     this.vy = (Math.random() - 0.5) * 0.3;
+                    this.baseVx = this.vx; // Remember base speed
+                    this.baseVy = this.vy;
                     this.size = Math.random() * 2;
                 }
                 update() {
+                    // Shockwave Logic
+                    if (clickWave.age > 0) {
+                        const dx = this.x - clickWave.x;
+                        const dy = this.y - clickWave.y;
+                        const dist = Math.sqrt(dx*dx + dy*dy);
+                        if (dist < 200 * clickWave.age) {
+                            const force = (200 - dist) / 10;
+                            this.vx += (dx / dist) * force * 0.1;
+                            this.vy += (dy / dist) * force * 0.1;
+                        }
+                    }
+
+                    // Friction to return to normal
+                    this.vx += (this.baseVx - this.vx) * 0.05;
+                    this.vy += (this.baseVy - this.vy) * 0.05;
+
                     this.x += this.vx;
                     this.y += this.vy;
                     if (this.x < 0 || this.x > width) this.vx *= -1;
@@ -656,6 +811,12 @@
             function animate() {
                 if (isVisible) {
                     ctx.clearRect(0, 0, width, height);
+                    
+                    if (clickWave.age > 0) {
+                        clickWave.age -= 0.02; // Fade wave
+                        if (clickWave.age < 0) clickWave.age = 0;
+                    }
+
                     particles.forEach(p => {
                         p.update();
                         p.draw();
