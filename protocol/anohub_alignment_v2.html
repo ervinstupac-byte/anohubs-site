@@ -1,39 +1,39 @@
 <!DOCTYPE html>
-<html lang="hr" class="scroll-smooth">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AnoHUB | Precision Alignment & Dynamics v3.0</title>
+    <title>AnoHUB | PRECISION ALIGNMENT // MODULE 05</title>
     
-    <!-- FONTS -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=JetBrains+Mono:wght@300;500&family=Rajdhani:wght@300;600&display=swap" rel="stylesheet">
     
-    <!-- TAILWIND -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = { 
             theme: { 
                 extend: { 
-                    fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
+                    fontFamily: { 
+                        sans: ['Rajdhani', 'sans-serif'], 
+                        mono: ['JetBrains Mono', 'monospace'],
+                        divine: ['Cinzel', 'serif'] 
+                    },
                     colors: { 
-                        'h-cyan': '#06b6d4', 'h-green': '#10b981', 'h-red': '#ef4444', 
-                        'h-blue': '#3b82f6', 'h-dark': '#0b1120', 'h-panel': '#151f32', 
-                        'h-border': '#334155', 'h-orange': '#f97316', 'h-yellow': '#facc15', 'h-purple': '#8b5cf6'
+                        'h-gold': '#FFD700',   
+                        'h-void': '#020202',   
+                        'h-glass': 'rgba(10, 10, 10, 0.9)',
+                        'h-border': '#333333',
+                        'h-green': '#10b981', 
+                        'h-red': '#ef4444'
                     },
                     backgroundImage: {
-                        'grid-pattern': "linear-gradient(to right, #1e293b 1px, transparent 1px), linear-gradient(to bottom, #1e293b 1px, transparent 1px)",
-                        'laser-target': "radial-gradient(circle, #ef4444 2px, transparent 3px), repeating-radial-gradient(circle, transparent 0, transparent 9px, #334155 10px, transparent 11px)",
+                        'laser-target': "radial-gradient(circle, #ef4444 2px, transparent 3px), repeating-radial-gradient(circle, transparent 0, transparent 9px, #333 10px, transparent 11px)",
                     },
                     animation: {
                         'pulse-fast': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'laser-flicker': 'flicker 0.1s infinite',
                         'pendulum': 'pendulum 3s ease-in-out infinite',
                     },
                     keyframes: {
-                        flicker: {
-                            '0%, 100%': { opacity: 1 },
-                            '50%': { opacity: 0.9 },
-                        },
                         pendulum: {
                             '0%, 100%': { transform: 'rotate(1deg)' },
                             '50%': { transform: 'rotate(-1deg)' },
@@ -45,230 +45,136 @@
     </script>
 
     <style>
-        body { background-color: #020617; color: #cbd5e1; }
-        .scada-panel { 
-            background: rgba(15, 23, 42, 0.90); 
-            backdrop-filter: blur(12px); 
-            border: 1px solid rgba(51, 65, 85, 0.6);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-        .tech-box { border-left: 3px solid #3b82f6; background: rgba(59, 130, 246, 0.05); }
+        body { background-color: #020202; color: #e2e8f0; cursor: crosshair; }
         
-        /* Custom Range Slider */
+        /* DIVINE GRID BACKGROUND */
+        .divine-grid {
+            position: fixed; inset: 0; z-index: -1;
+            background-size: 50px 50px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 215, 0, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 215, 0, 0.03) 1px, transparent 1px);
+            mask-image: radial-gradient(circle at 50% 50%, black 0%, transparent 90%);
+        }
+
+        .scada-panel { 
+            background: rgba(5, 10, 16, 0.85); 
+            backdrop-filter: blur(15px); 
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+        }
+        
+        .tech-box { border-left: 3px solid #FFD700; background: rgba(255, 215, 0, 0.05); }
+        
+        /* Custom Range Slider (Gold Style) */
         input[type=range] { -webkit-appearance: none; background: transparent; }
         input[type=range]::-webkit-slider-thumb {
             -webkit-appearance: none; height: 16px; width: 16px; border-radius: 50%;
-            background: #3b82f6; cursor: pointer; margin-top: -6px; border: 2px solid white;
+            background: #FFD700; cursor: pointer; margin-top: -6px; border: 2px solid #000;
+            box-shadow: 0 0 10px #FFD700;
         }
         input[type=range]::-webkit-slider-runnable-track {
-            width: 100%; height: 4px; background: #334155; border-radius: 2px;
-        }
-
-        /* Crosshair Target */
-        .target-crosshair {
-            background-image: 
-                linear-gradient(#334155 1px, transparent 1px),
-                linear-gradient(90deg, #334155 1px, transparent 1px);
-            background-position: center;
-            background-size: 100% 2px, 2px 100%;
-            background-repeat: no-repeat;
+            width: 100%; height: 2px; background: #333; 
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col font-sans selection:bg-h-blue selection:text-white">
+<body class="min-h-screen flex flex-col font-sans selection:bg-h-gold selection:text-black">
 
-    <!-- NAV -->
-    <header class="fixed w-full z-50 scada-panel border-b border-h-blue/20">
-        <div class="max-w-7xl mx-auto px-4 h-16 flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <a href="../index.html" class="flex items-center gap-2 group">
-                    <div class="w-8 h-8 bg-h-blue text-white font-black flex items-center justify-center text-xl shadow-[0_0_15px_rgba(59,130,246,0.4)] group-hover:scale-105 transition">A</div>
-                    <div class="leading-tight">
-                        <h1 class="font-bold text-white tracking-tight">AnoHUB <span class="text-h-blue">PROTOCOLS</span></h1>
-                        <p class="text-[10px] font-mono text-h-blue tracking-widest uppercase">Module 05: Precision Align</p>
-                    </div>
-                </a>
-            </div>
-            <div class="flex items-center gap-4 text-xs font-mono">
-                <!-- NETWORKED BACK BUTTON -->
-                <a href="../protocol.html" class="text-slate-400 hover:text-white transition flex items-center gap-2 group">
-                    <svg data-lucide="layout-grid" class="w-3 h-3 group-hover:text-h-blue"></svg> BACK TO COMMAND
-                </a>
-                <div class="hidden md:flex items-center gap-2 text-h-cyan">
-                    <div class="w-2 h-2 bg-h-cyan rounded-full animate-pulse-fast"></div>
-                    LASER SENSORS LINKED
+    <div class="divine-grid"></div>
+
+    <header class="fixed w-full z-50 border-b border-white/10 bg-black/90 backdrop-blur-md h-16 flex items-center justify-between px-6">
+        <div class="flex items-center gap-3">
+            <a href="../index.html" class="flex items-center gap-3 group">
+                <div class="w-8 h-8 border border-white/30 flex items-center justify-center text-white font-divine group-hover:border-h-gold group-hover:text-h-gold transition bg-black">A</div>
+                <div class="leading-tight">
+                    <h1 class="font-divine text-lg text-white tracking-[0.1em] group-hover:text-h-gold transition">AnoHUB</h1>
+                    <p class="text-[9px] font-mono text-slate-500 tracking-widest uppercase">Module 05: Precision Align</p>
                 </div>
+            </a>
+        </div>
+        <div class="flex items-center gap-6 text-xs font-mono">
+            <a href="../protocol.html" class="flex items-center gap-2 text-slate-400 hover:text-h-gold transition border border-transparent hover:border-h-gold/30 px-3 py-1 rounded">
+                <svg data-lucide="arrow-left" class="w-3 h-3"></svg> BACK TO COMMAND
+            </a>
+            <div class="hidden md:flex items-center gap-2 text-h-gold">
+                <div class="w-1.5 h-1.5 bg-h-gold rounded-full animate-pulse-fast"></div>
+                LASER LINK ESTABLISHED
             </div>
         </div>
     </header>
 
-    <!-- MAIN GRID -->
-    <div class="pt-24 pb-12 px-4 max-w-7xl mx-auto grid lg:grid-cols-12 gap-8">
+    <div class="pt-24 pb-12 px-4 max-w-7xl mx-auto grid lg:grid-cols-12 gap-8 relative z-10">
 
-        <!-- LEFT SIDEBAR -->
         <aside class="hidden lg:block lg:col-span-3">
             <div class="sticky top-24 space-y-6">
                 
-                <!-- Protocol Network Menu -->
-                <div class="scada-panel rounded p-4 border-l-2 border-l-h-blue">
-                    <h3 class="text-slate-500 font-mono text-[10px] font-bold uppercase tracking-widest mb-3">Protocol Network</h3>
+                <div class="scada-panel p-4 border-l-2 border-l-h-gold">
+                    <h3 class="text-slate-500 font-mono text-[10px] font-bold uppercase tracking-widest mb-3">System Network</h3>
                     <nav class="space-y-1 font-mono text-xs">
-                        <a href="anohub_protocol_v2.html" class="block px-3 py-2 text-slate-400 hover:text-white hover:bg-white/5 rounded transition">
-                            01. LCC Veto
-                        </a>
-                        <a href="anohub_methodology_v2.html" class="block px-3 py-2 text-slate-400 hover:text-white hover:bg-white/5 rounded transition">
-                            02. NDT & Zero Comp.
-                        </a>
-                        <a href="anohub_organization_v2.html" class="block px-3 py-2 text-slate-400 hover:text-white hover:bg-white/5 rounded transition">
-                            03. Org. Intelligence
-                        </a>
-                        <a href="anohub_synergy_v2.html" class="block px-3 py-2 text-slate-400 hover:text-white hover:bg-white/5 rounded transition">
-                            04. M-E Synergy
-                        </a>
-                        <div class="block px-3 py-2 text-h-blue bg-h-blue/10 border border-h-blue/20 rounded font-bold">
-                            05. Precision Align.
-                        </div>
+                        <a href="anohub_protocol_v2.html" class="block px-3 py-2 text-slate-400 hover:text-h-gold hover:bg-white/5 rounded transition">01. LCC Veto</a>
+                        <a href="anohub_methodology_v2.html" class="block px-3 py-2 text-slate-400 hover:text-h-gold hover:bg-white/5 rounded transition">02. NDT & Metrology</a>
+                        <a href="anohub_organization_v2.html" class="block px-3 py-2 text-slate-400 hover:text-h-gold hover:bg-white/5 rounded transition">03. Org. Intelligence</a>
+                        <a href="anohub_synergy_v2.html" class="block px-3 py-2 text-slate-400 hover:text-h-gold hover:bg-white/5 rounded transition">04. M-E Synergy</a>
+                        <div class="block px-3 py-2 text-black bg-h-gold font-bold rounded shadow-[0_0_15px_rgba(255,215,0,0.4)]">05. Precision Align.</div>
                     </nav>
                 </div>
 
-                <!-- Page Navigation -->
-                <div class="scada-panel rounded p-4">
-                    <h3 class="text-h-blue font-mono text-[10px] font-bold uppercase tracking-widest mb-3">Page Sections</h3>
+                <div class="scada-panel p-4">
+                    <h3 class="text-h-gold font-mono text-[10px] font-bold uppercase tracking-widest mb-3">Module Sections</h3>
                     <nav class="space-y-1">
-                        <a href="#summary" class="flex items-center gap-3 px-3 py-2 text-sm text-white bg-white/5 border-l-2 border-h-blue transition">
-                            <span class="font-mono text-h-blue opacity-50">01</span> Mandate & Risk
-                        </a>
-                        <a href="#prereq" class="flex items-center gap-3 px-3 py-2 text-sm text-slate-400 hover:text-white hover:bg-white/5 border-l-2 border-transparent hover:border-slate-500 transition">
-                            <span class="font-mono text-slate-600">02</span> Prerequisites
-                        </a>
-                        <a href="#simulator" class="flex items-center gap-3 px-3 py-2 text-sm text-slate-400 hover:text-white hover:bg-white/5 border-l-2 border-transparent hover:border-slate-500 transition">
-                            <span class="font-mono text-slate-600">03</span> Laser Simulator
-                        </a>
-                        <a href="#verticality" class="flex items-center gap-3 px-3 py-2 text-sm text-slate-400 hover:text-white hover:bg-white/5 border-l-2 border-transparent hover:border-slate-500 transition">
-                            <span class="font-mono text-slate-600">04</span> Verticality (Plumb)
-                        </a>
-                        <a href="#thrust" class="flex items-center gap-3 px-3 py-2 text-sm text-slate-400 hover:text-white hover:bg-white/5 border-l-2 border-transparent hover:border-slate-500 transition">
-                            <span class="font-mono text-slate-600">05</span> Thrust Equalization
-                        </a>
+                        <a href="#summary" class="flex items-center gap-3 px-3 py-2 text-sm text-white bg-white/5 border-l-2 border-h-gold transition"><span class="font-mono text-h-gold opacity-50">01</span> Mandate & Risk</a>
+                        <a href="#simulator" class="flex items-center gap-3 px-3 py-2 text-sm text-slate-400 hover:text-white hover:bg-white/5 border-l-2 border-transparent hover:border-slate-500 transition"><span class="font-mono text-slate-600">02</span> Laser Simulator</a>
+                        <a href="#verticality" class="flex items-center gap-3 px-3 py-2 text-sm text-slate-400 hover:text-white hover:bg-white/5 border-l-2 border-transparent hover:border-slate-500 transition"><span class="font-mono text-slate-600">03</span> Verticality (Plumb)</a>
+                        <a href="#thrust" class="flex items-center gap-3 px-3 py-2 text-sm text-slate-400 hover:text-white hover:bg-white/5 border-l-2 border-transparent hover:border-slate-500 transition"><span class="font-mono text-slate-600">04</span> Thrust Equalization</a>
                     </nav>
                 </div>
                 
-                <!-- Live Status -->
-                <div class="scada-panel p-4 border-t-2 border-t-h-blue">
-                    <h4 class="text-h-blue font-mono text-[10px] font-bold uppercase mb-2">Sensor Telemetry</h4>
+                <div class="scada-panel p-4 border-t-2 border-t-h-gold">
+                    <h4 class="text-h-gold font-mono text-[10px] font-bold uppercase mb-2">Sensor Telemetry</h4>
                     <div class="space-y-3 text-xs font-mono text-slate-400">
-                        <div class="flex justify-between items-center border-b border-slate-700 pb-1">
-                            <span>Laser S</span> 
-                            <span class="text-white">Signal 98%</span>
-                        </div>
-                        <div class="flex justify-between items-center border-b border-slate-700 pb-1">
-                            <span>Laser M</span> 
-                            <span class="text-white">Signal 99%</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span>Rotation</span> 
-                            <span class="text-h-cyan">0° (12:00)</span>
-                        </div>
+                        <div class="flex justify-between items-center border-b border-slate-700 pb-1"><span>Laser S</span> <span class="text-white">Signal 99%</span></div>
+                        <div class="flex justify-between items-center border-b border-slate-700 pb-1"><span>Laser M</span> <span class="text-white">Signal 99%</span></div>
+                        <div class="flex justify-between items-center"><span>Rotation</span> <span class="text-h-gold">0° (12:00)</span></div>
                     </div>
                 </div>
             </div>
         </aside>
 
-        <!-- CENTER CONTENT -->
-        <main class="lg:col-span-9 space-y-12">
+        <main class="lg:col-span-9 space-y-16">
             
-            <!-- HERO -->
-            <section id="summary" class="relative scada-panel rounded-none border-l-4 border-l-h-blue p-8 overflow-hidden group">
-                <!-- Background Laser Effect -->
-                <div class="absolute inset-0 bg-gradient-to-r from-h-blue/5 to-transparent pointer-events-none"></div>
-                
+            <section id="summary" class="relative scada-panel p-8 overflow-hidden group">
                 <div class="relative z-10">
                     <div class="flex gap-2 mb-4">
-                        <span class="bg-h-blue/20 text-h-blue px-2 py-0.5 text-[10px] font-mono font-bold border border-h-blue/30">MANDATORY STANDARD</span>
-                        <span class="text-slate-500 font-mono text-[10px]">DOC-ALIGN-005 | REV 3.0</span>
+                        <span class="bg-h-gold/10 text-h-gold px-2 py-0.5 text-[10px] font-mono font-bold border border-h-gold/30">MANDATORY STANDARD</span>
+                        <span class="text-slate-500 font-mono text-[10px]">DOC-ALIGN-005 | REV 8.0</span>
                     </div>
-                    <h1 class="text-4xl font-black text-white mb-6 uppercase tracking-tight">
-                        Precision Shaft <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-h-blue to-h-cyan">Alignment Protocol</span>
+                    <h1 class="text-5xl font-divine text-white mb-6 tracking-tight">
+                        Precision Shaft <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-h-gold to-yellow-200">Alignment Protocol</span>
                     </h1>
-                    <p class="text-slate-300 leading-relaxed text-lg border-l border-slate-700 pl-4 max-w-3xl">
+                    <p class="text-slate-300 leading-relaxed text-lg border-l border-slate-700 pl-6 max-w-3xl font-light">
                         Dynamic instability accounts for 48% of premature failures. We do not accept "good enough." This protocol defines the rigid standard for turbine-generator alignment, including plumbness and thrust bearing equalization.
                     </p>
 
-                    <!-- Technical Mandate Box -->
-                    <div class="mt-8 tech-box p-4 rounded text-sm font-mono text-slate-300">
-                        <h3 class="text-h-blue font-bold mb-2 flex items-center gap-2">
+                    <div class="mt-8 tech-box p-6 rounded text-sm font-mono text-slate-300 bg-black/40">
+                        <h3 class="text-h-gold font-bold mb-2 flex items-center gap-2">
                             <svg data-lucide="triangle-alert" class="w-4 h-4"></svg> CRITICAL TOLERANCE
                         </h3>
                         <p>
-                            Total shaft runout must not exceed <span class="text-white font-bold bg-h-blue/20 px-1">0.05 mm per meter</span> (0.002 in/ft). 
+                            Total shaft runout must not exceed <span class="text-black font-bold bg-h-gold px-1">0.05 mm per meter</span>. 
                             Exceeding this limit instantly voids the Engineering Immunity guarantee.
                         </p>
                     </div>
                 </div>
             </section>
 
-            <!-- SECTION 2: PREREQUISITES -->
-            <section id="prereq">
-                <div class="flex items-center gap-3 mb-6 border-b border-slate-800 pb-2">
-                    <span class="text-h-blue font-mono">02 //</span>
-                    <h3 class="text-xl font-bold text-white">Pre-Alignment Prerequisites</h3>
-                </div>
-                
-                <div class="grid md:grid-cols-3 gap-4">
-                    <!-- Card 1 -->
-                    <div class="scada-panel p-4 border-t-2 border-t-slate-600 hover:border-t-h-blue transition">
-                        <div class="flex justify-between mb-2">
-                            <h4 class="font-bold text-white">Soft Foot</h4>
-                            <span class="text-[10px] font-mono bg-slate-800 px-2 py-1 rounded">STEP 1</span>
-                        </div>
-                        <p class="text-xs text-slate-400 mb-3">
-                            Loosen each bolt. If movement > 0.03mm is detected, the foundation is compromised.
-                        </p>
-                        <div class="w-full bg-slate-800 h-1 rounded overflow-hidden">
-                            <div class="bg-h-blue w-full h-full"></div>
-                        </div>
-                    </div>
-
-                    <!-- Card 2 -->
-                    <div class="scada-panel p-4 border-t-2 border-t-slate-600 hover:border-t-h-blue transition">
-                        <div class="flex justify-between mb-2">
-                            <h4 class="font-bold text-white">Thermal Growth</h4>
-                            <span class="text-[10px] font-mono bg-slate-800 px-2 py-1 rounded">STEP 2</span>
-                        </div>
-                        <p class="text-xs text-slate-400 mb-3">
-                            Calculate operational expansion (ΔT). Set targets to offset cold alignment.
-                        </p>
-                        <div class="w-full bg-slate-800 h-1 rounded overflow-hidden">
-                            <div class="bg-h-blue w-2/3 h-full"></div>
-                        </div>
-                    </div>
-
-                    <!-- Card 3 -->
-                    <div class="scada-panel p-4 border-t-2 border-t-slate-600 hover:border-t-h-blue transition">
-                        <div class="flex justify-between mb-2">
-                            <h4 class="font-bold text-white">Pipe Strain</h4>
-                            <span class="text-[10px] font-mono bg-slate-800 px-2 py-1 rounded">STEP 3</span>
-                        </div>
-                        <p class="text-xs text-slate-400 mb-3">
-                            Ensure no external forces from cooling pipes distort the machine casing.
-                        </p>
-                        <div class="w-full bg-slate-800 h-1 rounded overflow-hidden">
-                            <div class="bg-h-blue w-1/3 h-full"></div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- SECTION 3: LASER SIMULATOR -->
             <section id="simulator">
                 <div class="flex items-center gap-3 mb-6 border-b border-slate-800 pb-2">
-                    <span class="text-h-blue font-mono">03 //</span>
-                    <h3 class="text-xl font-bold text-white">Interactive Laser Alignment Tool</h3>
+                    <span class="text-h-gold font-mono">02 //</span>
+                    <h3 class="text-2xl font-divine text-white">Interactive Laser Alignment Tool</h3>
                 </div>
 
-                <div class="scada-panel p-0 border-t-4 border-t-h-blue overflow-hidden">
-                    <!-- Simulator Header -->
-                    <div class="bg-slate-900 p-4 flex justify-between items-center border-b border-slate-700">
+                <div class="scada-panel p-0 border-t-4 border-t-h-gold overflow-hidden">
+                    <div class="bg-black p-4 flex justify-between items-center border-b border-slate-700">
                         <div class="flex items-center gap-3">
                             <div class="w-3 h-3 bg-h-red rounded-full animate-pulse" id="status-led"></div>
                             <span class="font-mono text-xs text-white" id="status-text">STATUS: MISALIGNED</span>
@@ -277,157 +183,116 @@
                     </div>
 
                     <div class="grid md:grid-cols-2">
-                        
-                        <!-- Visualizer (Left) -->
-                        <div class="p-8 bg-black/50 relative flex items-center justify-center border-r border-slate-700 min-h-[300px]">
-                            <!-- Target Background -->
-                            <div class="absolute w-48 h-48 rounded-full border border-slate-700 bg-laser-target opacity-30 target-crosshair"></div>
-                            
-                            <!-- Tolerance Box (Green Zone) -->
+                        <div class="p-10 bg-black relative flex items-center justify-center border-r border-slate-800 min-h-[350px]">
+                            <div class="absolute w-56 h-56 rounded-full border border-slate-800 bg-laser-target opacity-40"></div>
                             <div class="absolute w-12 h-12 border-2 border-h-green/30 bg-h-green/5 rounded"></div>
-
-                            <!-- Laser Point -->
-                            <div id="laser-dot" class="absolute w-3 h-3 bg-h-red rounded-full shadow-[0_0_10px_#ef4444] transition-all duration-300 ease-out" style="transform: translate(40px, -30px)"></div>
-                            
-                            <!-- Axis Labels -->
+                            <div id="laser-dot" class="absolute w-3 h-3 bg-h-red rounded-full shadow-[0_0_15px_#ef4444] transition-all duration-300 ease-out" style="transform: translate(40px, -30px)"></div>
                             <div class="absolute top-4 text-[10px] text-slate-600 font-mono">V-OFFSET</div>
                             <div class="absolute right-4 text-[10px] text-slate-600 font-mono rotate-90">H-ANGULAR</div>
                         </div>
 
-                        <!-- Controls (Right) -->
-                        <div class="p-6 space-y-8 bg-slate-900/50">
-                            
-                            <!-- Shim Controls -->
+                        <div class="p-8 space-y-8 bg-black/80">
                             <div>
-                                <div class="flex justify-between mb-1">
-                                    <label class="text-xs font-bold text-white uppercase">Front Foot Shim</label>
-                                    <span class="text-xs font-mono text-h-blue" id="val-front">0.00 mm</span>
+                                <div class="flex justify-between mb-2">
+                                    <label class="text-xs font-bold text-white uppercase tracking-widest">Front Foot Shim</label>
+                                    <span class="text-xs font-mono text-h-gold" id="val-front">0.00 mm</span>
                                 </div>
                                 <input type="range" id="shim-front" min="-2.0" max="2.0" step="0.05" value="0.8">
                             </div>
 
                             <div>
-                                <div class="flex justify-between mb-1">
-                                    <label class="text-xs font-bold text-white uppercase">Back Foot Shim</label>
-                                    <span class="text-xs font-mono text-h-blue" id="val-back">0.00 mm</span>
+                                <div class="flex justify-between mb-2">
+                                    <label class="text-xs font-bold text-white uppercase tracking-widest">Back Foot Shim</label>
+                                    <span class="text-xs font-mono text-h-gold" id="val-back">0.00 mm</span>
                                 </div>
                                 <input type="range" id="shim-back" min="-2.0" max="2.0" step="0.05" value="-0.5">
                             </div>
 
-                            <!-- Live Readings -->
                             <div class="grid grid-cols-2 gap-4 mt-6">
-                                <div class="bg-black p-3 rounded border border-slate-700">
-                                    <div class="text-[10px] text-slate-500 uppercase">Vertical Offset</div>
-                                    <div class="text-xl font-mono text-white font-bold" id="read-offset">0.45</div>
-                                    <div class="text-[10px] text-h-red text-right" id="tol-offset">FAIL</div>
+                                <div class="bg-slate-900 p-4 rounded border border-slate-700 text-center">
+                                    <div class="text-[10px] text-slate-500 uppercase mb-1">Vertical Offset</div>
+                                    <div class="text-2xl font-mono text-white font-bold" id="read-offset">0.45</div>
+                                    <div class="text-[10px] text-h-red font-bold mt-1" id="tol-offset">FAIL</div>
                                 </div>
-                                <div class="bg-black p-3 rounded border border-slate-700">
-                                    <div class="text-[10px] text-slate-500 uppercase">Angular / 100mm</div>
-                                    <div class="text-xl font-mono text-white font-bold" id="read-angle">0.12</div>
-                                    <div class="text-[10px] text-h-red text-right" id="tol-angle">FAIL</div>
+                                <div class="bg-slate-900 p-4 rounded border border-slate-700 text-center">
+                                    <div class="text-[10px] text-slate-500 uppercase mb-1">Angular / 100mm</div>
+                                    <div class="text-2xl font-mono text-white font-bold" id="read-angle">0.12</div>
+                                    <div class="text-[10px] text-h-red font-bold mt-1" id="tol-angle">FAIL</div>
                                 </div>
                             </div>
 
-                            <div class="text-[10px] text-slate-500 text-center pt-4 border-t border-slate-800">
-                                Target: <span class="text-white">0.00 ± 0.05 mm</span>
+                            <div class="text-[10px] text-slate-500 text-center pt-4 border-t border-slate-800 font-mono">
+                                Target: <span class="text-h-gold">0.00 ± 0.05 mm</span>
                             </div>
-
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- SECTION 4: VERTICALITY (PLUMB) -->
             <section id="verticality">
                 <div class="flex items-center gap-3 mb-6 border-b border-slate-800 pb-2">
-                    <span class="text-h-blue font-mono">04 //</span>
-                    <h3 class="text-xl font-bold text-white">Verticality & Plumb Reference</h3>
+                    <span class="text-h-gold font-mono">03 //</span>
+                    <h3 class="text-2xl font-divine text-white">Verticality & Plumb Reference</h3>
                 </div>
 
                 <div class="grid md:grid-cols-2 gap-6">
-                    <!-- Visual Side -->
-                    <div class="scada-panel relative h-64 overflow-hidden flex items-center justify-center bg-black/40 border border-slate-700">
-                        <div class="absolute inset-0 bg-grid-pattern opacity-20"></div>
-                        
-                        <!-- Plumb Line Animation -->
+                    <div class="scada-panel relative h-64 overflow-hidden flex items-center justify-center bg-black/60 border border-slate-700">
                         <div class="relative h-full w-20 flex flex-col items-center origin-top animate-pendulum">
-                            <div class="w-0.5 h-40 bg-h-cyan/50"></div>
-                            <div class="w-6 h-8 bg-gradient-to-b from-slate-600 to-slate-800 border border-h-cyan rounded-b-full shadow-[0_0_15px_rgba(6,182,212,0.5)]"></div>
+                            <div class="w-0.5 h-40 bg-h-gold/50 shadow-[0_0_10px_#FFD700]"></div>
+                            <div class="w-8 h-10 bg-gradient-to-b from-slate-700 to-black border border-h-gold rounded-b-full shadow-[0_0_20px_rgba(255,215,0,0.3)]"></div>
                         </div>
-                        
                         <div class="absolute bottom-4 text-center">
                             <div class="text-[10px] text-slate-500 uppercase tracking-widest mb-1">Deviation X-Y</div>
                             <div class="font-mono text-h-green font-bold">0.01 mm/m</div>
                         </div>
                     </div>
 
-                    <!-- Text Side -->
-                    <div class="scada-panel p-6 flex flex-col justify-center">
-                        <h4 class="font-bold text-white mb-3">Gravity as the Absolute Reference</h4>
-                        <p class="text-sm text-slate-400 mb-4">
-                            For vertical Francis/Kaplan units, shaft straightness is meaningless if the unit is not plumb. We mandate <strong>Hydro-Static Leveling Systems (HLS)</strong> or precision wire plumb bobs damped in oil pots.
+                    <div class="scada-panel p-8 flex flex-col justify-center">
+                        <h4 class="font-bold text-white mb-3 text-lg">Gravity as Absolute Reference</h4>
+                        <p class="text-sm text-slate-400 mb-6 leading-relaxed">
+                            For vertical Francis/Kaplan units, shaft straightness is meaningless if the unit is not plumb. We mandate <strong>Hydro-Static Leveling Systems (HLS)</strong>.
                         </p>
                         <div class="space-y-2 text-xs font-mono">
-                            <div class="flex justify-between p-2 bg-slate-900 rounded border border-slate-700">
+                            <div class="flex justify-between p-3 bg-black rounded border border-slate-800">
                                 <span class="text-slate-500">Max Inclination</span>
                                 <span class="text-h-red font-bold">0.02 mm/m</span>
-                            </div>
-                            <div class="flex justify-between p-2 bg-slate-900 rounded border border-slate-700">
-                                <span class="text-slate-500">Wire Diameter</span>
-                                <span class="text-white">0.5 mm Piano Wire</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- SECTION 5: THRUST EQUALIZATION -->
             <section id="thrust">
                 <div class="flex items-center gap-3 mb-6 border-b border-slate-800 pb-2">
-                    <span class="text-h-blue font-mono">05 //</span>
-                    <h3 class="text-xl font-bold text-white">Thrust Bearing Load Equalization</h3>
+                    <span class="text-h-gold font-mono">04 //</span>
+                    <h3 class="text-2xl font-divine text-white">Thrust Bearing Equalization</h3>
                 </div>
 
-                <div class="scada-panel p-6">
-                    <div class="flex justify-between items-end mb-4">
+                <div class="scada-panel p-8">
+                    <div class="flex justify-between items-end mb-6">
                         <div>
                             <h4 class="font-bold text-white">Segment Load Monitor</h4>
                             <p class="text-xs text-slate-400">Hydraulic Jacking Method (MPa)</p>
                         </div>
-                        <div class="text-xs font-mono bg-h-red/10 text-h-red px-2 py-1 rounded border border-h-red">UNEQUALIZED</div>
+                        <div class="text-xs font-mono bg-h-red/10 text-h-red px-3 py-1 rounded border border-h-red animate-pulse">UNEQUALIZED</div>
                     </div>
 
-                    <!-- Bar Chart Simulation -->
-                    <div class="flex items-end gap-2 h-32 pb-6 border-b border-slate-700">
-                        <!-- Pad 1 -->
-                        <div class="flex-1 bg-slate-700 hover:bg-h-blue transition-all h-[80%] relative group">
-                            <span class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] text-white hidden group-hover:block">80%</span>
+                    <div class="flex items-end gap-4 h-40 pb-6 border-b border-slate-700 px-4">
+                        <div class="flex-1 bg-slate-800 hover:bg-h-gold transition-all h-[80%] relative group rounded-t">
+                            <span class="absolute -top-8 left-1/2 -translate-x-1/2 text-xs font-mono text-white hidden group-hover:block">80%</span>
                         </div>
-                        <!-- Pad 2 -->
-                        <div class="flex-1 bg-slate-700 hover:bg-h-blue transition-all h-[82%] relative group">
-                            <span class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] text-white hidden group-hover:block">82%</span>
+                        <div class="flex-1 bg-slate-800 hover:bg-h-gold transition-all h-[82%] relative group rounded-t"></div>
+                        <div class="flex-1 bg-h-red hover:bg-red-400 transition-all h-[98%] relative group shadow-[0_0_20px_rgba(239,68,68,0.4)] rounded-t">
+                            <span class="absolute -top-8 left-1/2 -translate-x-1/2 text-xs font-mono text-h-red font-bold block">98%</span>
                         </div>
-                        <!-- Pad 3 (Overloaded) -->
-                        <div class="flex-1 bg-h-red hover:bg-red-400 transition-all h-[98%] relative group shadow-[0_0_10px_rgba(239,68,68,0.5)]">
-                            <span class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] text-h-red font-bold block">98%</span>
-                        </div>
-                        <!-- Pad 4 (Underloaded) -->
-                        <div class="flex-1 bg-h-blue/30 hover:bg-h-blue transition-all h-[60%] relative group">
-                            <span class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] text-white hidden group-hover:block">60%</span>
-                        </div>
-                        <!-- Pad 5 -->
-                        <div class="flex-1 bg-slate-700 hover:bg-h-blue transition-all h-[85%] relative group"></div>
-                        <!-- Pad 6 -->
-                        <div class="flex-1 bg-slate-700 hover:bg-h-blue transition-all h-[78%] relative group"></div>
+                        <div class="flex-1 bg-h-blue/30 hover:bg-h-blue transition-all h-[60%] relative group rounded-t"></div>
+                        <div class="flex-1 bg-slate-800 hover:bg-h-gold transition-all h-[85%] relative group rounded-t"></div>
+                        <div class="flex-1 bg-slate-800 hover:bg-h-gold transition-all h-[78%] relative group rounded-t"></div>
                     </div>
                     
-                    <div class="flex justify-between text-[10px] text-slate-500 pt-2 font-mono">
-                        <span>PAD 01</span>
-                        <span>PAD 02</span>
-                        <span class="text-h-red font-bold">PAD 03</span>
-                        <span class="text-h-blue font-bold">PAD 04</span>
-                        <span>PAD 05</span>
-                        <span>PAD 06</span>
+                    <div class="flex justify-between text-[10px] text-slate-500 pt-4 font-mono px-4">
+                        <span>PAD 01</span><span>PAD 02</span><span class="text-h-red font-bold">PAD 03</span>
+                        <span class="text-h-blue font-bold">PAD 04</span><span>PAD 05</span><span>PAD 06</span>
                     </div>
                 </div>
             </section>
@@ -435,14 +300,12 @@
         </main>
     </div>
 
-    <!-- FOOTER -->
     <footer class="border-t border-slate-800 bg-black py-8 mt-auto">
-        <div class="max-w-7xl mx-auto px-4 text-center text-slate-600 text-xs font-mono">
+        <div class="max-w-7xl mx-auto px-4 text-center text-slate-600 text-[10px] font-mono tracking-[0.2em]">
             ANO_HUB // MECHANICAL DIVISION // ISO 10816
         </div>
     </footer>
 
-    <!-- SCRIPTS -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     
     <script>
@@ -454,61 +317,52 @@
             const shimBack = document.getElementById('shim-back');
             const valFront = document.getElementById('val-front');
             const valBack = document.getElementById('val-back');
-            
             const readOffset = document.getElementById('read-offset');
             const readAngle = document.getElementById('read-angle');
             const tolOffset = document.getElementById('tol-offset');
             const tolAngle = document.getElementById('tol-angle');
-            
             const laserDot = document.getElementById('laser-dot');
             const statusLed = document.getElementById('status-led');
             const statusText = document.getElementById('status-text');
 
-            // Constants for machine geometry (mm)
-            const DIST_FRONT = 500; // Dist from coupling to front foot
-            const DIST_BACK = 1000; // Dist from coupling to back foot
+            const DIST_FRONT = 500; 
+            const DIST_BACK = 1000; 
 
             function updateAlignment() {
                 const f = parseFloat(shimFront.value);
                 const b = parseFloat(shimBack.value);
 
-                // Visual Feedback
                 valFront.innerText = (f > 0 ? "+" : "") + f.toFixed(2) + " mm";
                 valBack.innerText = (b > 0 ? "+" : "") + b.toFixed(2) + " mm";
 
-                // Calculate Alignment (Simplified Model)
                 const slope = (b - f) / (DIST_BACK - DIST_FRONT); 
-                const angleVal = slope * 100; // mm/100mm
+                const angleVal = slope * 100; 
                 const offsetVal = f - (slope * DIST_FRONT);
 
-                // Update Readings
                 readOffset.innerText = offsetVal.toFixed(2);
                 readAngle.innerText = angleVal.toFixed(2);
 
-                // Tolerance Check (0.05mm)
                 const isOffsetOk = Math.abs(offsetVal) <= 0.05;
                 const isAngleOk = Math.abs(angleVal) <= 0.05;
 
-                // Update Colors
                 tolOffset.className = isOffsetOk ? "text-[10px] text-h-green text-right font-bold" : "text-[10px] text-h-red text-right font-bold";
                 tolOffset.innerText = isOffsetOk ? "OK" : "FAIL";
                 
                 tolAngle.className = isAngleOk ? "text-[10px] text-h-green text-right font-bold" : "text-[10px] text-h-red text-right font-bold";
                 tolAngle.innerText = isAngleOk ? "OK" : "FAIL";
 
-                // Update Laser Dot Position
+                // Update Laser Position
                 const x = angleVal * 400; 
                 const y = offsetVal * -100; 
                 laserDot.style.transform = `translate(${x}px, ${y}px)`;
 
-                // Update Laser Color
                 if (isOffsetOk && isAngleOk) {
-                    laserDot.className = "absolute w-3 h-3 bg-h-green rounded-full shadow-[0_0_10px_#10b981] transition-all duration-300 ease-out";
-                    statusLed.className = "w-3 h-3 bg-h-green rounded-full";
+                    laserDot.className = "absolute w-3 h-3 bg-h-green rounded-full shadow-[0_0_15px_#10b981] transition-all duration-300 ease-out";
+                    statusLed.className = "w-3 h-3 bg-h-green rounded-full shadow-[0_0_10px_#10b981]";
                     statusText.innerText = "STATUS: ALIGNED";
                     statusText.className = "font-mono text-xs text-h-green font-bold";
                 } else {
-                    laserDot.className = "absolute w-3 h-3 bg-h-red rounded-full shadow-[0_0_10px_#ef4444] transition-all duration-300 ease-out";
+                    laserDot.className = "absolute w-3 h-3 bg-h-red rounded-full shadow-[0_0_15px_#ef4444] transition-all duration-300 ease-out";
                     statusLed.className = "w-3 h-3 bg-h-red rounded-full animate-pulse";
                     statusText.innerText = "STATUS: MISALIGNED";
                     statusText.className = "font-mono text-xs text-white";
@@ -517,8 +371,6 @@
 
             shimFront.addEventListener('input', updateAlignment);
             shimBack.addEventListener('input', updateAlignment);
-
-            // Init
             updateAlignment();
         });
     </script>
