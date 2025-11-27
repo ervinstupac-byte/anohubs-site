@@ -1,28 +1,35 @@
 <!DOCTYPE html>
-<html lang="hr" class="scroll-smooth">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AnoHUB | M-E Synergy & Stray Current Defense v3.0</title>
+    <title>AnoHUB | M-E SYNERGY // MODULE 04</title>
     
-    <!-- FONTS -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=JetBrains+Mono:wght@300;500&family=Rajdhani:wght@300;600&display=swap" rel="stylesheet">
     
-    <!-- TAILWIND -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = { 
             theme: { 
                 extend: { 
-                    fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
+                    fontFamily: { 
+                        sans: ['Rajdhani', 'sans-serif'], 
+                        mono: ['JetBrains Mono', 'monospace'],
+                        divine: ['Cinzel', 'serif'] 
+                    },
                     colors: { 
-                        'h-cyan': '#06b6d4', 'h-green': '#10b981', 'h-red': '#ef4444', 
-                        'h-yellow': '#facc15', 'h-dark': '#0b1120', 'h-panel': '#151f32', 
-                        'h-border': '#334155' 
+                        'h-gold': '#FFD700',   
+                        'h-void': '#020202',   
+                        'h-glass': 'rgba(10, 10, 10, 0.9)',
+                        'h-border': '#333333',
+                        'h-yellow': '#facc15',
+                        'h-red': '#ef4444',
+                        'h-green': '#10b981',
+                        'h-cyan': '#06b6d4'
                     },
                     backgroundImage: {
-                        'grid-pattern': "linear-gradient(to right, #1e293b 1px, transparent 1px), linear-gradient(to bottom, #1e293b 1px, transparent 1px)",
-                        'voltage-gradient': "linear-gradient(180deg, rgba(250,204,21,0.1) 0%, rgba(0,0,0,0) 100%)",
+                        'voltage-gradient': "linear-gradient(180deg, rgba(255, 215, 0, 0.1) 0%, rgba(0,0,0,0) 100%)",
                     },
                     animation: {
                         'pulse-fast': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
@@ -40,16 +47,28 @@
     </script>
 
     <style>
-        body { background-color: #020617; color: #cbd5e1; }
-        .scada-panel { 
-            background: rgba(15, 23, 42, 0.90); 
-            backdrop-filter: blur(12px); 
-            border: 1px solid rgba(51, 65, 85, 0.6);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-        .tech-box { border-left: 3px solid #facc15; background: rgba(250, 204, 21, 0.05); }
+        body { background-color: #020202; color: #e2e8f0; cursor: crosshair; }
         
-        /* Oscilloscope Grid */
+        /* DIVINE GRID */
+        .divine-grid {
+            position: fixed; inset: 0; z-index: -1;
+            background-size: 50px 50px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 215, 0, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 215, 0, 0.03) 1px, transparent 1px);
+            mask-image: radial-gradient(circle at 50% 50%, black 0%, transparent 90%);
+        }
+
+        .scada-panel { 
+            background: rgba(5, 10, 16, 0.85); 
+            backdrop-filter: blur(15px); 
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+        }
+        
+        .tech-box { border-left: 3px solid #FFD700; background: rgba(255, 215, 0, 0.05); }
+        
+        /* Scope Grid */
         .scope-grid {
             background-image: 
                 linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
@@ -57,160 +76,121 @@
             background-size: 20px 20px;
         }
 
-        /* Toggle Switch */
-        .toggle-checkbox:checked {
-            right: 0; border-color: #10b981;
+        /* Custom Checkbox */
+        input[type=checkbox] {
+            appearance: none; width: 40px; height: 20px; background: #333; border-radius: 20px; position: relative; cursor: pointer; border: 1px solid #555;
         }
-        .toggle-checkbox:checked + .toggle-label {
-            background-color: #10b981;
+        input[type=checkbox]::after {
+            content: ''; position: absolute; top: 2px; left: 2px; width: 14px; height: 14px; background: #888; border-radius: 50%; transition: 0.3s;
         }
+        input[type=checkbox]:checked { background: rgba(255, 215, 0, 0.2); border-color: #FFD700; }
+        input[type=checkbox]:checked::after { left: 22px; background: #FFD700; box-shadow: 0 0 10px #FFD700; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col font-sans selection:bg-h-yellow selection:text-black">
+<body class="min-h-screen flex flex-col font-sans selection:bg-h-gold selection:text-black">
 
-    <!-- NAV -->
-    <header class="fixed w-full z-50 scada-panel border-b border-h-yellow/20">
-        <div class="max-w-7xl mx-auto px-4 h-16 flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <a href="../index.html" class="flex items-center gap-2 group">
-                    <div class="w-8 h-8 bg-h-yellow text-black font-black flex items-center justify-center text-xl shadow-[0_0_15px_rgba(250,204,21,0.4)] group-hover:scale-105 transition">A</div>
-                    <div class="leading-tight">
-                        <h1 class="font-bold text-white tracking-tight">AnoHUB <span class="text-h-yellow">PROTOCOLS</span></h1>
-                        <p class="text-[10px] font-mono text-h-yellow tracking-widest uppercase">Module 04: M-E Synergy</p>
-                    </div>
-                </a>
-            </div>
-            <div class="flex items-center gap-4 text-xs font-mono">
-                <a href="../protocol.html" class="text-slate-400 hover:text-white transition flex items-center gap-2 group">
-                    <svg data-lucide="layout-grid" class="w-3 h-3 group-hover:text-h-yellow"></svg> BACK TO COMMAND
-                </a>
-                <div class="hidden md:flex items-center gap-2 text-h-red" id="system-status-light">
-                    <div class="w-2 h-2 bg-h-red rounded-full animate-pulse-fast"></div>
-                    STRAY CURRENT DETECTED
+    <div class="divine-grid"></div>
+
+    <header class="fixed w-full z-50 border-b border-white/10 bg-black/90 backdrop-blur-md h-16 flex items-center justify-between px-6">
+        <div class="flex items-center gap-3">
+            <a href="../index.html" class="flex items-center gap-3 group">
+                <div class="w-8 h-8 border border-white/30 flex items-center justify-center text-white font-divine group-hover:border-h-gold group-hover:text-h-gold transition bg-black">A</div>
+                <div class="leading-tight">
+                    <h1 class="font-divine text-lg text-white tracking-[0.1em] group-hover:text-h-gold transition">AnoHUB</h1>
+                    <p class="text-[9px] font-mono text-slate-500 tracking-widest uppercase">Module 04: M-E Synergy</p>
                 </div>
+            </a>
+        </div>
+        <div class="flex items-center gap-6 text-xs font-mono">
+            <a href="../protocol.html" class="flex items-center gap-2 text-slate-400 hover:text-h-gold transition border border-transparent hover:border-h-gold/30 px-3 py-1 rounded">
+                <svg data-lucide="arrow-left" class="w-3 h-3"></svg> BACK TO COMMAND
+            </a>
+            <div class="hidden md:flex items-center gap-2 text-h-red" id="system-status-light">
+                <div class="w-2 h-2 bg-h-red rounded-full animate-pulse-fast"></div>
+                STRAY CURRENT DETECTED
             </div>
         </div>
     </header>
 
-    <!-- MAIN GRID -->
-    <div class="pt-24 pb-12 px-4 max-w-7xl mx-auto grid lg:grid-cols-12 gap-8">
+    <div class="pt-24 pb-12 px-4 max-w-7xl mx-auto grid lg:grid-cols-12 gap-8 relative z-10">
 
-        <!-- LEFT SIDEBAR -->
         <aside class="hidden lg:block lg:col-span-3">
             <div class="sticky top-24 space-y-6">
-                <!-- Protocol Network Menu -->
-                <div class="scada-panel rounded p-4 border-l-2 border-l-h-yellow">
-                    <h3 class="text-slate-500 font-mono text-[10px] font-bold uppercase tracking-widest mb-3">Protocol Network</h3>
+                
+                <div class="scada-panel p-4 border-l-2 border-l-h-gold">
+                    <h3 class="text-slate-500 font-mono text-[10px] font-bold uppercase tracking-widest mb-3">System Network</h3>
                     <nav class="space-y-1 font-mono text-xs">
-                        <a href="anohub_protocol_v2.html" class="block px-3 py-2 text-slate-400 hover:text-white hover:bg-white/5 rounded transition">
-                            01. LCC Veto
-                        </a>
-                        <a href="anohub_methodology_v2.html" class="block px-3 py-2 text-slate-400 hover:text-white hover:bg-white/5 rounded transition">
-                            02. NDT & Zero Comp.
-                        </a>
-                        <a href="anohub_organization_v2.html" class="block px-3 py-2 text-slate-400 hover:text-white hover:bg-white/5 rounded transition">
-                            03. Org. Intelligence
-                        </a>
-                        <div class="block px-3 py-2 text-h-yellow bg-h-yellow/10 border border-h-yellow/20 rounded font-bold">
-                            04. M-E Synergy
-                        </div>
-                        <a href="anohub_alignment_v2.html" class="block px-3 py-2 text-slate-400 hover:text-white hover:bg-white/5 rounded transition">
-                            05. Precision Align.
-                        </a>
+                        <a href="anohub_protocol_v2.html" class="block px-3 py-2 text-slate-400 hover:text-h-gold hover:bg-white/5 rounded transition">01. LCC Veto</a>
+                        <a href="anohub_methodology_v2.html" class="block px-3 py-2 text-slate-400 hover:text-h-gold hover:bg-white/5 rounded transition">02. NDT & Metrology</a>
+                        <a href="anohub_organization_v2.html" class="block px-3 py-2 text-slate-400 hover:text-h-gold hover:bg-white/5 rounded transition">03. Org. Intelligence</a>
+                        <div class="block px-3 py-2 text-black bg-h-gold font-bold rounded shadow-[0_0_15px_rgba(255,215,0,0.4)]">04. M-E Synergy</div>
+                        <a href="anohub_alignment_v2.html" class="block px-3 py-2 text-slate-400 hover:text-h-gold hover:bg-white/5 rounded transition">05. Precision Align.</a>
                     </nav>
                 </div>
 
-                <!-- Page Navigation -->
-                <div class="scada-panel rounded p-4">
-                    <h3 class="text-h-yellow font-mono text-[10px] font-bold uppercase tracking-widest mb-3">Module Sections</h3>
+                <div class="scada-panel p-4">
+                    <h3 class="text-h-gold font-mono text-[10px] font-bold uppercase tracking-widest mb-3">Module Sections</h3>
                     <nav class="space-y-1">
-                        <a href="#threat" class="flex items-center gap-3 px-3 py-2 text-sm text-white bg-white/5 border-l-2 border-h-yellow transition">
-                            <span class="font-mono text-h-yellow opacity-50">01</span> Electro-Erosion
-                        </a>
-                        <a href="#diagnostics" class="flex items-center gap-3 px-3 py-2 text-sm text-slate-400 hover:text-white hover:bg-white/5 border-l-2 border-transparent hover:border-slate-500 transition">
-                            <span class="font-mono text-slate-600">02</span> Ghost Vibrations
-                        </a>
-                        <a href="#mitigation" class="flex items-center gap-3 px-3 py-2 text-sm text-slate-400 hover:text-white hover:bg-white/5 border-l-2 border-transparent hover:border-slate-500 transition">
-                            <span class="font-mono text-slate-600">03</span> Mitigation Sim
-                        </a>
+                        <a href="#threat" class="flex items-center gap-3 px-3 py-2 text-sm text-white bg-white/5 border-l-2 border-h-gold transition"><span class="font-mono text-h-gold opacity-50">01</span> Electro-Erosion</a>
+                        <a href="#diagnostics" class="flex items-center gap-3 px-3 py-2 text-sm text-slate-400 hover:text-white hover:bg-white/5 border-l-2 border-transparent hover:border-slate-500 transition"><span class="font-mono text-slate-600">02</span> Ghost Vibrations</a>
+                        <a href="#mitigation" class="flex items-center gap-3 px-3 py-2 text-sm text-slate-400 hover:text-white hover:bg-white/5 border-l-2 border-transparent hover:border-slate-500 transition"><span class="font-mono text-slate-600">03</span> Mitigation Sim</a>
                     </nav>
                 </div>
                 
-                <!-- Live Sensors -->
-                <div class="scada-panel p-4 border-t-2 border-t-h-yellow">
-                    <h4 class="text-h-yellow font-mono text-[10px] font-bold uppercase mb-2">Live Shaft Monitor</h4>
+                <div class="scada-panel p-4 border-t-2 border-t-h-gold">
+                    <h4 class="text-h-gold font-mono text-[10px] font-bold uppercase mb-2">Live Shaft Monitor</h4>
                     <div class="space-y-3 text-xs font-mono text-slate-400">
-                        <div class="flex justify-between items-center border-b border-slate-700 pb-1">
-                            <span>Shaft Voltage</span> 
-                            <span class="text-h-red font-bold" id="live-volts">1.8 V</span>
-                        </div>
-                        <div class="flex justify-between items-center border-b border-slate-700 pb-1">
-                            <span>Current Density</span> 
-                            <span class="text-white" id="live-amps">0.8 A/mm²</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span>Risk Level</span> 
-                            <span class="text-h-red animate-pulse" id="live-risk">CRITICAL</span>
-                        </div>
+                        <div class="flex justify-between items-center border-b border-slate-700 pb-1"><span>Shaft Voltage</span> <span class="text-h-red font-bold" id="live-volts">1.8 V</span></div>
+                        <div class="flex justify-between items-center border-b border-slate-700 pb-1"><span>Current Density</span> <span class="text-white" id="live-amps">0.8 A/mm²</span></div>
+                        <div class="flex justify-between items-center"><span>Risk Level</span> <span class="text-h-red animate-pulse" id="live-risk">CRITICAL</span></div>
                     </div>
                 </div>
             </div>
         </aside>
 
-        <!-- CENTER CONTENT -->
         <main class="lg:col-span-9 space-y-12">
             
-            <!-- HERO -->
-            <section id="threat" class="relative scada-panel rounded-none border-l-4 border-l-h-yellow p-8 overflow-hidden group">
-                <!-- Background Gradient -->
+            <section id="threat" class="relative scada-panel p-8 overflow-hidden group">
                 <div class="absolute inset-0 bg-voltage-gradient opacity-10 pointer-events-none"></div>
-                
                 <div class="relative z-10 grid md:grid-cols-2 gap-8">
                     <div>
                         <div class="flex gap-2 mb-4">
-                            <span class="bg-h-yellow/20 text-h-yellow px-2 py-0.5 text-[10px] font-mono font-bold border border-h-yellow/30">M-E SYNERGY</span>
+                            <span class="bg-h-gold/10 text-h-gold px-2 py-0.5 text-[10px] font-mono font-bold border border-h-gold/30">M-E SYNERGY</span>
                             <span class="text-slate-500 font-mono text-[10px]">DOC-ELEC-012 | REV 3.0</span>
                         </div>
-                        <h1 class="text-4xl font-black text-white mb-4 uppercase tracking-tight">
-                            The Electro-Erosion <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-h-yellow to-h-red">Threat Vector</span>
+                        <h1 class="text-4xl font-divine text-white mb-4 tracking-tight">
+                            The Electro-Erosion <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-h-gold to-h-red">Threat Vector</span>
                         </h1>
-                        <p class="text-slate-300 leading-relaxed text-sm border-l border-slate-700 pl-4">
-                            Shaft voltages as low as <span class="text-white font-bold">1.0V</span> cause 
-                            <span class="text-h-yellow">Electrical Discharge Machining (EDM)</span> in bearings. 
-                            The oil film breaks down, micro-arcs pit the white metal, and mechanical failure follows within 6 months.
+                        <p class="text-slate-300 leading-relaxed text-sm border-l border-slate-700 pl-4 font-light">
+                            Shaft voltages as low as <span class="text-white font-bold">1.0V</span> cause <span class="text-h-gold">Electrical Discharge Machining (EDM)</span> in bearings. The oil film breaks down, micro-arcs pit the white metal, and mechanical failure follows within 6 months.
                         </p>
                     </div>
 
-                    <!-- OSCILLOSCOPE VISUAL -->
                     <div class="bg-black border border-slate-700 rounded-lg relative overflow-hidden h-48 flex items-center shadow-inner">
                         <div class="absolute inset-0 scope-grid opacity-20"></div>
-                        <!-- Grid Lines Center -->
                         <div class="absolute top-1/2 left-0 w-full h-px bg-slate-600/50"></div>
                         
-                        <!-- Dynamic Waveform (SVG) -->
                         <svg class="w-full h-full" viewBox="0 0 200 100" preserveAspectRatio="none">
                             <path d="M0,50 L20,50 L22,20 L24,80 L26,50 L50,50 L52,10 L54,90 L56,50 L100,50 L102,5 L104,95 L106,50 L150,50 L152,30 L154,70 L156,50 L200,50" 
-                                  fill="none" stroke="#facc15" stroke-width="2" vector-effect="non-scaling-stroke"
+                                  fill="none" stroke="#FFD700" stroke-width="2" vector-effect="non-scaling-stroke"
                                   class="animate-dash" stroke-dasharray="200" />
                         </svg>
                         
-                        <div class="absolute top-2 right-2 font-mono text-[10px] text-h-yellow">CH1: SHAFT POTENTIAL</div>
+                        <div class="absolute top-2 right-2 font-mono text-[10px] text-h-gold">CH1: SHAFT POTENTIAL</div>
                         <div class="absolute bottom-2 left-2 font-mono text-[10px] text-slate-500">TIMEBASE: 5ms/div</div>
                     </div>
                 </div>
             </section>
 
-            <!-- SECTION 2: DIAGNOSTICS -->
             <section id="diagnostics">
                 <div class="flex items-center gap-3 mb-6 border-b border-slate-800 pb-2">
-                    <span class="text-h-yellow font-mono">02 //</span>
-                    <h3 class="text-xl font-bold text-white">Diagnostic Protocol: "Ghost Vibrations"</h3>
+                    <span class="text-h-gold font-mono">02 //</span>
+                    <h3 class="text-xl font-divine text-white">Diagnostic Protocol: "Ghost Vibrations"</h3>
                 </div>
                 
                 <div class="scada-panel p-6">
                     <div class="grid md:grid-cols-2 gap-8">
                         
-                        <!-- Controls -->
                         <div>
                             <p class="text-sm text-slate-400 mb-6">
                                 How to distinguish mechanical unbalance from magnetic pull? <br>
@@ -218,35 +198,29 @@
                             </p>
                             
                             <div class="space-y-3">
-                                <button id="btn-mech" class="w-full text-left px-4 py-3 rounded bg-slate-800 border border-slate-600 hover:border-h-cyan transition group active-mode">
+                                <button id="btn-mech" class="w-full text-left px-4 py-3 rounded bg-slate-900 border border-slate-700 hover:border-h-cyan transition group active-mode">
                                     <div class="flex justify-between items-center">
                                         <span class="text-xs font-bold text-white group-hover:text-h-cyan uppercase">Mechanical Fault</span>
                                         <span class="text-[10px] font-mono text-slate-500">1x RPM Dominant</span>
                                     </div>
                                 </button>
-                                <button id="btn-elec" class="w-full text-left px-4 py-3 rounded bg-slate-800 border border-transparent hover:border-h-yellow transition group">
+                                <button id="btn-elec" class="w-full text-left px-4 py-3 rounded bg-slate-900 border border-transparent hover:border-h-gold transition group">
                                     <div class="flex justify-between items-center">
-                                        <span class="text-xs font-bold text-white group-hover:text-h-yellow uppercase">Electrical Fault</span>
+                                        <span class="text-xs font-bold text-white group-hover:text-h-gold uppercase">Electrical Fault</span>
                                         <span class="text-[10px] font-mono text-slate-500">2x Line Freq Dominant</span>
                                     </div>
                                 </button>
                             </div>
                         </div>
 
-                        <!-- Spectrum Display -->
-                        <div class="relative bg-black/50 border border-slate-700 rounded-lg h-64 p-4 flex items-end pb-8">
-                            <!-- Y Axis -->
+                        <div class="relative bg-black border border-slate-700 rounded-lg h-64 p-4 flex items-end pb-8">
                             <div class="absolute left-2 top-2 bottom-8 w-px bg-slate-700"></div>
                             <div class="absolute left-0 top-2 text-[9px] text-slate-600 font-mono">AMP</div>
-                            
-                            <!-- X Axis -->
                             <div class="absolute left-2 bottom-6 right-2 h-px bg-slate-700"></div>
                             <div class="absolute right-2 bottom-2 text-[9px] text-slate-600 font-mono">FREQ (Hz)</div>
 
-                            <!-- Bars Container -->
                             <div id="spectrum-container" class="w-full h-full flex items-end justify-around px-4 gap-1">
-                                <!-- JS will inject bars here -->
-                            </div>
+                                </div>
                             
                             <div id="diagnosis-text" class="absolute top-4 right-4 text-xs font-mono text-h-cyan bg-black/80 px-2 py-1 border border-h-cyan rounded">
                                 DIAGNOSIS: UNBALANCE
@@ -257,47 +231,36 @@
                 </div>
             </section>
 
-            <!-- SECTION 3: INTERACTIVE MITIGATION -->
             <section id="mitigation">
                 <div class="flex items-center gap-3 mb-6 border-b border-slate-800 pb-2">
-                    <span class="text-h-yellow font-mono">03 //</span>
-                    <h3 class="text-xl font-bold text-white">Mitigation Strategy Simulator</h3>
+                    <span class="text-h-gold font-mono">03 //</span>
+                    <h3 class="text-xl font-divine text-white">Mitigation Strategy Simulator</h3>
                 </div>
 
-                <div class="scada-panel p-8 border-t-4 border-t-h-yellow relative overflow-hidden">
+                <div class="scada-panel p-8 border-t-4 border-t-h-gold relative overflow-hidden">
                     <div class="relative z-10 grid md:grid-cols-2 gap-12 items-center">
                         
-                        <!-- Solution Toggles -->
                         <div class="space-y-6">
                             <h4 class="font-bold text-white">Activate Counter-Measures</h4>
                             <p class="text-xs text-slate-400">Deploy solutions to bring Shaft Voltage below 1.0V.</p>
 
-                            <!-- Toggle 1 -->
                             <div class="flex items-center justify-between bg-slate-900 p-4 rounded border border-slate-700">
                                 <div>
                                     <div class="text-sm font-bold text-white">Grounding Brushes</div>
-                                    <div class="text-[10px] text-slate-500">Ag-C (Silver Graphite) Passive Bleed</div>
+                                    <div class="text-[10px] text-slate-500">Ag-C Passive Bleed</div>
                                 </div>
-                                <label class="relative inline-flex items-center cursor-pointer">
-                                    <input type="checkbox" id="toggle-brush" class="sr-only peer">
-                                    <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-h-yellow"></div>
-                                </label>
+                                <input type="checkbox" id="toggle-brush">
                             </div>
 
-                            <!-- Toggle 2 -->
                             <div class="flex items-center justify-between bg-slate-900 p-4 rounded border border-slate-700">
                                 <div>
-                                    <div class="text-sm font-bold text-white">Insulated NDE Bearing</div>
-                                    <div class="text-[10px] text-slate-500">Ceramic/Polymer Circuit Break</div>
+                                    <div class="text-sm font-bold text-white">Insulated Bearing</div>
+                                    <div class="text-[10px] text-slate-500">Ceramic Break</div>
                                 </div>
-                                <label class="relative inline-flex items-center cursor-pointer">
-                                    <input type="checkbox" id="toggle-insulation" class="sr-only peer">
-                                    <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-h-yellow"></div>
-                                </label>
+                                <input type="checkbox" id="toggle-insulation">
                             </div>
                         </div>
 
-                        <!-- Result Gauge -->
                         <div class="flex flex-col items-center justify-center">
                             <div class="relative w-48 h-48 flex items-center justify-center border-4 border-slate-700 rounded-full bg-slate-900 shadow-[inset_0_0_20px_rgba(0,0,0,0.5)]">
                                 <div class="text-center">
@@ -305,7 +268,6 @@
                                     <div id="sim-voltage" class="text-5xl font-black text-h-red transition-all duration-500">1.80</div>
                                     <div class="text-sm text-slate-400">Volts</div>
                                 </div>
-                                <!-- Status Ring -->
                                 <div id="sim-ring" class="absolute inset-0 border-4 border-h-red rounded-full opacity-50 animate-pulse"></div>
                             </div>
                             <div id="sim-verdict" class="mt-6 text-xs font-bold text-h-red bg-h-red/10 px-4 py-2 rounded border border-h-red uppercase tracking-wider">
@@ -320,14 +282,12 @@
         </main>
     </div>
 
-    <!-- FOOTER -->
     <footer class="border-t border-slate-800 bg-black py-8 mt-auto">
         <div class="max-w-7xl mx-auto px-4 text-center text-slate-600 text-xs font-mono">
             ANO_HUB // M-E DIVISION // ISO 14801
         </div>
     </footer>
 
-    <!-- SCRIPTS -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -339,102 +299,85 @@
             const spectrumContainer = document.getElementById('spectrum-container');
             const diagnosisText = document.getElementById('diagnosis-text');
 
-            const mechData = [10, 80, 15, 5, 20, 5, 5, 5]; // Peak at 1x (Index 1)
-            const elecData = [5, 10, 15, 90, 10, 5, 5, 5]; // Peak at 100Hz/2x (Index 3)
+            const mechData = [10, 80, 15, 5, 20, 5, 5, 5]; // Peak at 1x
+            const elecData = [5, 10, 15, 90, 10, 5, 5, 5]; // Peak at 2xLF
 
             function drawSpectrum(data, type) {
                 spectrumContainer.innerHTML = '';
                 data.forEach((val, i) => {
                     const bar = document.createElement('div');
-                    bar.className = `w-full rounded-t transition-all duration-500 ${val > 50 ? (type === 'mech' ? 'bg-h-cyan' : 'bg-h-yellow') : 'bg-slate-600'}`;
+                    bar.className = `w-full rounded-t transition-all duration-500 ${val > 50 ? (type === 'mech' ? 'bg-h-cyan' : 'bg-h-gold') : 'bg-slate-600'}`;
                     bar.style.height = `${val}%`;
-                    
-                    // Label specific bars
                     if (i === 1) bar.innerHTML = '<div class="text-[8px] text-center -mt-4 text-white">1x</div>';
                     if (i === 3) bar.innerHTML = '<div class="text-[8px] text-center -mt-4 text-white">2xLF</div>';
-                    
                     spectrumContainer.appendChild(bar);
                 });
 
                 if (type === 'mech') {
                     btnMech.classList.add('border-h-cyan');
-                    btnElec.classList.remove('border-h-yellow');
+                    btnElec.classList.remove('border-h-gold');
                     diagnosisText.innerText = "DIAGNOSIS: MECH UNBALANCE";
                     diagnosisText.className = "absolute top-4 right-4 text-xs font-mono text-h-cyan bg-black/80 px-2 py-1 border border-h-cyan rounded";
                 } else {
-                    btnElec.classList.add('border-h-yellow');
+                    btnElec.classList.add('border-h-gold');
                     btnMech.classList.remove('border-h-cyan');
                     diagnosisText.innerText = "DIAGNOSIS: MAG. ASYMMETRY";
-                    diagnosisText.className = "absolute top-4 right-4 text-xs font-mono text-h-yellow bg-black/80 px-2 py-1 border border-h-yellow rounded";
+                    diagnosisText.className = "absolute top-4 right-4 text-xs font-mono text-h-gold bg-black/80 px-2 py-1 border border-h-gold rounded";
                 }
             }
 
             btnMech.addEventListener('click', () => drawSpectrum(mechData, 'mech'));
             btnElec.addEventListener('click', () => drawSpectrum(elecData, 'elec'));
-            
-            // Init
-            drawSpectrum(mechData, 'mech');
+            drawSpectrum(mechData, 'mech'); // Init
 
-
-            // === MITIGATION SIMULATOR LOGIC ===
+            // === SHAFT VOLTAGE SIMULATOR ===
             const toggleBrush = document.getElementById('toggle-brush');
             const toggleInsulation = document.getElementById('toggle-insulation');
             const simVoltage = document.getElementById('sim-voltage');
             const simVerdict = document.getElementById('sim-verdict');
             const simRing = document.getElementById('sim-ring');
             
-            // Sidebar Live Elements
+            // Sidebar
             const liveVolts = document.getElementById('live-volts');
             const liveAmps = document.getElementById('live-amps');
             const liveRisk = document.getElementById('live-risk');
             const sysStatus = document.getElementById('system-status-light');
 
             function updateSim() {
-                let voltage = 1.80; // Base voltage (Danger)
-                
+                let voltage = 1.80;
                 if (toggleBrush.checked) voltage -= 0.9;
                 if (toggleInsulation.checked) voltage -= 0.7;
-                
-                // Add slight randomness for realism
                 voltage = Math.max(0.05, voltage + (Math.random() * 0.05));
 
-                // Update Main Display
                 simVoltage.innerText = voltage.toFixed(2);
-                
-                // Update Sidebar (Sync)
                 liveVolts.innerText = voltage.toFixed(2) + " V";
 
                 if (voltage < 1.0) {
-                    // SAFE STATE
+                    // SAFE
                     simVoltage.className = "text-5xl font-black text-h-green transition-all duration-500";
                     simVerdict.className = "mt-6 text-xs font-bold text-h-green bg-h-green/10 px-4 py-2 rounded border border-h-green uppercase tracking-wider";
                     simVerdict.innerText = "STATUS: PASS (SAFE)";
                     simRing.className = "absolute inset-0 border-4 border-h-green rounded-full opacity-20";
                     
-                    // Sidebar Safe
                     liveVolts.className = "text-h-green font-bold";
                     liveRisk.innerText = "NOMINAL";
                     liveRisk.className = "text-h-green";
                     liveAmps.innerText = "0.02 A/mm²";
                     
-                    // Header Status
                     sysStatus.innerHTML = '<div class="w-2 h-2 bg-h-green rounded-full"></div> SYSTEM SECURE';
                     sysStatus.className = "hidden md:flex items-center gap-2 text-h-green";
-
                 } else {
-                    // DANGER STATE
+                    // DANGER
                     simVoltage.className = "text-5xl font-black text-h-red transition-all duration-500";
                     simVerdict.className = "mt-6 text-xs font-bold text-h-red bg-h-red/10 px-4 py-2 rounded border border-h-red uppercase tracking-wider";
                     simVerdict.innerText = "DANGER: EDM IMMINENT";
                     simRing.className = "absolute inset-0 border-4 border-h-red rounded-full opacity-50 animate-pulse";
                     
-                    // Sidebar Danger
                     liveVolts.className = "text-h-red font-bold";
                     liveRisk.innerText = "CRITICAL";
                     liveRisk.className = "text-h-red animate-pulse";
                     liveAmps.innerText = "0.8 A/mm²";
-
-                    // Header Status
+                    
                     sysStatus.innerHTML = '<div class="w-2 h-2 bg-h-red rounded-full animate-pulse-fast"></div> STRAY CURRENT DETECTED';
                     sysStatus.className = "hidden md:flex items-center gap-2 text-h-red";
                 }
