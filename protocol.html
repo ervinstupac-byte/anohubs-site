@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AnoHUB | THE CATHEDRAL v25.0</title>
+    <title>AnoHUB | THE HOLY NEXUS</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=JetBrains+Mono:wght@200;400;800&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=JetBrains+Mono:wght@300;500&family=Rajdhani:wght@300;600&display=swap" rel="stylesheet">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -21,27 +21,18 @@
                     },
                     colors: { 
                         'h-gold': '#FFD700',   
-                        'h-void': '#020202',   
-                        'h-glass': 'rgba(10, 10, 10, 0.8)',
-                        'h-dim': '#1a1a1a',
+                        'h-void': '#000000',   
+                        'h-glass': 'rgba(20, 20, 20, 0.6)',
                         'h-cyan': '#06b6d4',
-                        'h-red': '#ef4444'
+                        'h-white': '#F8FAFC'
                     },
                     animation: {
-                        'spin-ultra-slow': 'spin 120s linear infinite',
-                        'spin-reverse': 'spin 60s linear infinite reverse',
-                        'pulse-glow': 'pulseGlow 4s ease-in-out infinite',
-                        'float': 'float 8s ease-in-out infinite',
+                        'spin-orbit': 'spin 120s linear infinite',
+                        'pulse-slow': 'pulse 4s ease-in-out infinite',
+                        'float': 'float 6s ease-in-out infinite',
                     },
                     keyframes: {
-                        pulseGlow: {
-                            '0%, 100%': { boxShadow: '0 0 20px rgba(255, 215, 0, 0.2)' },
-                            '50%': { boxShadow: '0 0 50px rgba(255, 215, 0, 0.6)' },
-                        },
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-20px)' },
-                        }
+                        float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' } }
                     }
                 } 
             }
@@ -49,402 +40,237 @@
     </script>
 
     <style>
-        body { 
-            background-color: #020202; 
-            color: #e2e8f0; 
-            overflow-x: hidden; 
-            cursor: crosshair; 
-        }
+        body { background-color: #000; color: #e2e8f0; overflow: hidden; }
         
-        /* ATMOSPHERE LAYERS */
-        .scanlines {
-            position: fixed; inset: 0; pointer-events: none; z-index: 50;
-            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.2));
-            background-size: 100% 4px;
-        }
-        .vignette {
-            position: fixed; inset: 0; pointer-events: none; z-index: 40;
-            background: radial-gradient(circle, transparent 60%, black 100%);
-        }
-        .divine-grid {
+        /* 1. MATRIX BACKGROUND LAYER */
+        .matrix-layer { position: fixed; inset: 0; z-index: -2; opacity: 0.05; pointer-events: none; }
+        
+        /* 2. HOLY GRID LAYER */
+        .holy-grid {
             position: fixed; inset: 0; z-index: -1;
-            background-image: linear-gradient(rgba(255, 215, 0, 0.03) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(255, 215, 0, 0.03) 1px, transparent 1px);
+            background-image: 
+                linear-gradient(rgba(255, 215, 0, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 215, 0, 0.03) 1px, transparent 1px);
             background-size: 60px 60px;
-        }
-
-        /* 3D ENGINE */
-        .perspective-2000 { perspective: 2000px; }
-        .preserve-3d { transform-style: preserve-3d; }
-        
-        /* NEXUS RINGS (GYROSCOPE) */
-        .gyro-ring {
-            position: absolute; border-radius: 50%;
-            border: 1px solid rgba(255, 215, 0, 0.15);
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.05);
+            mask-image: radial-gradient(circle at center, black 20%, transparent 100%);
             pointer-events: none;
         }
 
-        /* NEXUS SATELLITE LINKS */
-        .nexus-link {
-            position: absolute; 
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            width: 100px; height: 100px;
-            background: rgba(0, 0, 0, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(5px);
-            border-radius: 8px;
+        /* 3D ENGINE */
+        #universe {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            display: flex; align-items: center; justify-content: center;
+            perspective: 1500px; overflow: hidden;
+        }
+
+        #galaxy {
+            position: relative; width: 0; height: 0;
             transform-style: preserve-3d;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            cursor: pointer;
-            /* CRITICAL: Ensures clicks work in 3D space */
-            pointer-events: auto !important; 
+            animation: spin-orbit 80s linear infinite;
         }
         
-        .nexus-link::before {
-            content: ''; position: absolute; top: -20px; left: 50%; width: 1px; height: 20px;
-            background: linear-gradient(to bottom, transparent, #FFD700);
+        /* Stop rotation on hover to allow clicking */
+        #universe:hover #galaxy { animation-play-state: paused; }
+
+        /* THE PLANETS (MODULES) */
+        .planet {
+            position: absolute; left: 50%; top: 50%;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            transform-style: preserve-3d;
+            cursor: pointer; text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .nexus-link:hover {
-            border-color: #FFD700;
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
-            transform: scale(1.2) translateZ(50px);
-            z-index: 1000;
+        .planet-core {
+            width: 12px; height: 12px; background: white; border-radius: 50%;
+            box-shadow: 0 0 15px white; border: 1px solid #FFD700;
+            transition: all 0.3s;
         }
 
-        /* MODULE CARDS */
-        .module-card {
-            background: linear-gradient(160deg, rgba(20,20,20,0.9) 0%, rgba(5,5,5,0.95) 100%);
-            border: 1px solid rgba(50, 50, 50, 0.6);
-            transition: all 0.3s ease;
+        .planet-label {
+            margin-top: 10px; font-family: 'JetBrains Mono', monospace; font-size: 10px;
+            color: #aaa; text-shadow: 0 2px 4px black; background: rgba(0,0,0,0.8);
+            padding: 4px 8px; border: 1px solid #333; border-radius: 4px;
+            white-space: nowrap; pointer-events: none; /* Let clicks pass through label to parent */
+            transition: all 0.3s;
         }
-        .module-card:hover {
-            transform: translateY(-5px);
-            border-color: #FFD700;
-            box-shadow: 0 10px 40px -10px rgba(255, 215, 0, 0.2);
+        
+        .planet-number {
+            font-weight: bold; color: #FFD700; margin-right: 5px;
         }
+
+        /* HOVER EFFECT */
+        .planet:hover { z-index: 1000; }
+        .planet:hover .planet-core { transform: scale(2); background: #FFD700; box-shadow: 0 0 30px #FFD700; }
+        .planet:hover .planet-label { color: white; border-color: #FFD700; transform: scale(1.2); }
+
+        /* CENTRAL SUN */
+        .sun {
+            position: absolute; width: 100px; height: 100px;
+            background: radial-gradient(circle, #fff 20%, #FFD700 100%);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 100px rgba(255, 215, 0, 0.6), inset 0 0 60px white;
+            display: flex; align-items: center; justify-content: center;
+            z-index: 10;
+        }
+        .sun-text { font-family: 'Cinzel', serif; font-weight: 900; color: black; font-size: 24px; letter-spacing: 2px; }
+
     </style>
 </head>
-<body class="min-h-screen flex font-sans selection:bg-h-gold selection:text-black">
+<body>
 
-    <div class="scanlines"></div>
-    <div class="vignette"></div>
-    <div class="divine-grid"></div>
-    <canvas id="network-canvas" class="fixed inset-0 z-0 opacity-30 pointer-events-none"></canvas>
+    <canvas id="matrix-canvas" class="matrix-layer"></canvas>
+    <div class="holy-grid"></div>
 
-    <div id="ai-takeover" class="fixed inset-0 z-[9999] bg-black hidden flex-col items-center justify-center">
-        <canvas id="matrix-rain" class="absolute inset-0 w-full h-full"></canvas>
-        <div class="absolute inset-0 flex flex-col items-center justify-center z-20 pointer-events-none">
-            <div id="ai-status-box" class="bg-black/90 border-2 border-h-gold p-12 text-center backdrop-blur-xl shadow-[0_0_150px_rgba(255,215,0,0.3)] transform scale-0 transition-transform duration-500 w-full max-w-3xl">
-                <h1 class="text-6xl font-black text-white tracking-tighter mb-4 font-divine">OMNISCIENCE</h1>
-                <div class="text-h-gold font-mono text-xl animate-pulse">ESTABLISHING NEURAL HANDSHAKE...</div>
-                <div class="w-full h-1 bg-slate-800 mt-8 overflow-hidden rounded">
-                    <div id="ai-progress-bar" class="h-full bg-h-gold w-0 transition-all duration-300 ease-out"></div>
-                </div>
-                <div id="ai-logs" class="mt-6 font-mono text-xs text-slate-400 h-32 overflow-hidden text-left space-y-2 border-t border-slate-800 pt-4"></div>
-            </div>
+    <div class="fixed top-0 left-0 w-full z-50 p-6 flex justify-between items-start pointer-events-none">
+        <div>
+            <h1 class="text-4xl font-divine text-white tracking-widest drop-shadow-lg">AnoHUB</h1>
+            <div class="h-px w-24 bg-h-gold mt-2"></div>
+            <p class="text-[10px] font-mono text-h-gold mt-1">PROTOCOL INTERFACE v26.0</p>
+        </div>
+        <div class="text-right hidden md:block">
+            <div class="text-[10px] font-mono text-slate-400">SYSTEM STATUS</div>
+            <div class="text-lg font-divine text-white">NOMINAL</div>
         </div>
     </div>
 
-    <div class="fixed top-0 w-full h-12 z-50 border-b border-white/5 bg-black/90 backdrop-blur flex items-center justify-between px-8 pointer-events-none">
-        <div class="flex gap-8 font-mono text-[10px] text-slate-500">
-            <span class="text-h-gold font-bold">SYSTEM: ONLINE</span>
-            <span>FREQ: 50.00 Hz</span>
-            <span>NODES: 21/21</span>
-        </div>
-        <div class="font-divine text-xs text-slate-600 tracking-widest">ENGINEERING DIVISION</div>
-    </div>
-
-    <aside class="fixed left-0 top-0 h-full w-64 z-30 border-r border-white/5 bg-black/80 backdrop-blur-sm hidden xl:flex flex-col pt-24 pb-10 px-6">
-        <div class="text-[10px] font-mono text-slate-600 mb-6 tracking-widest border-b border-white/10 pb-2">LIVE DIAGNOSTICS</div>
-        <div id="sidebar-logs" class="flex-1 overflow-hidden text-[9px] font-mono text-slate-600 space-y-2 relative"></div>
-    </aside>
-
-    <header class="fixed top-12 left-0 w-full h-20 z-40 flex items-center justify-between px-8 pointer-events-none">
-        <div class="pl-0 xl:pl-64 pointer-events-auto">
-            <a href="index.html" class="flex items-center gap-4 group" onmouseenter="App.sfx('hover')" onclick="App.sfx('click')">
-                <div class="w-12 h-12 border border-white/20 flex items-center justify-center text-2xl font-divine text-white group-hover:border-h-gold group-hover:text-h-gold transition bg-black">A</div>
-                <div>
-                    <h1 class="font-divine text-2xl text-white tracking-[0.2em] group-hover:text-h-gold transition">AnoHUB</h1>
-                    <p class="text-[9px] font-mono text-slate-500 tracking-widest uppercase">Protocol Interface v25</p>
-                </div>
-            </a>
-        </div>
-        <button onclick="App.deployAI()" onmouseenter="App.sfx('hover')" class="pointer-events-auto px-8 py-3 border border-white/20 bg-white/5 text-white font-mono text-xs tracking-widest hover:bg-h-gold hover:text-black hover:border-h-gold transition duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)]">
-            DEPLOY AI CORE
-        </button>
-    </header>
-
-    <main class="pl-0 xl:pl-64 pt-40 pb-20 px-8 max-w-full relative z-10">
-
-        <section class="grid lg:grid-cols-2 gap-16 items-center min-h-[60vh] mb-32">
+    <div id="universe">
+        <div id="galaxy">
             
-            <div class="space-y-10">
-                <div class="w-20 h-1 bg-h-gold shadow-[0_0_20px_#FFD700]"></div>
-                <h1 class="text-7xl font-divine text-white leading-none">
-                    ZERO <br>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-300 to-slate-600">COMPROMISE</span>
-                </h1>
-                <p class="text-lg font-light text-slate-400 leading-relaxed font-sans max-w-lg border-l border-white/10 pl-6">
-                    Welcome to the neural center of hydraulic integrity. Select a protocol node from the 
-                    <strong class="text-white">Nexus Hologram</strong> or access the full matrix below.
-                </p>
+            <div class="sun">
+                <span class="sun-text">A</span>
             </div>
 
-            <div id="hologram-container" class="relative h-[600px] w-full flex items-center justify-center perspective-2000 hidden lg:flex cursor-move">
-                <div id="hologram-content" class="relative w-full h-full flex items-center justify-center transition-transform duration-100 ease-out preserve-3d">
-                    
-                    <div class="absolute w-32 h-32 bg-black border-2 border-h-gold rounded-full flex items-center justify-center shadow-[0_0_100px_rgba(255,215,0,0.4)] z-10 animate-pulse-glow pointer-events-none" style="transform: translateZ(0px);">
-                        <div class="text-4xl font-divine text-white">A</div>
-                    </div>
+            <div class="absolute border border-white/10 rounded-full w-[400px] h-[400px] -translate-x-1/2 -translate-y-1/2 transform rotate-x-90"></div>
+            <div class="absolute border border-white/5 rounded-full w-[600px] h-[600px] -translate-x-1/2 -translate-y-1/2 transform rotate-x-90"></div>
+            <div class="absolute border border-h-gold/10 rounded-full w-[800px] h-[800px] -translate-x-1/2 -translate-y-1/2 transform rotate-y-45"></div>
 
-                    <div class="gyro-ring w-[500px] h-[500px] animate-spin-ultra-slow" style="transform: rotateX(60deg);"></div>
-                    <div class="gyro-ring w-[600px] h-[600px] animate-spin-reverse" style="transform: rotateY(45deg);"></div>
-                    <div class="gyro-ring w-[400px] h-[400px] border-dashed opacity-50 animate-spin-ultra-slow" style="transform: rotateX(-30deg);"></div>
-
-                    <a href="protocol/anohub_protocol_v2.html" onmouseenter="App.sfx('hover')" onclick="App.sfx('click')" 
-                       class="nexus-link" style="transform: translate3d(250px, -100px, 50px);">
-                        <div class="text-h-cyan font-bold text-xl">01</div>
-                        <div class="text-white text-[8px] tracking-widest mt-1">LCC VETO</div>
-                    </a>
-
-                    <a href="protocol/anohub_methodology_v2.html" onmouseenter="App.sfx('hover')" onclick="App.sfx('click')" 
-                       class="nexus-link" style="transform: translate3d(280px, 100px, 0px);">
-                        <div class="text-h-cyan font-bold text-xl">02</div>
-                        <div class="text-white text-[8px] tracking-widest mt-1">METROLOGY</div>
-                    </a>
-
-                    <a href="protocol/anohub_organization_v2.html" onmouseenter="App.sfx('hover')" onclick="App.sfx('click')" 
-                       class="nexus-link" style="transform: translate3d(80px, 220px, 80px);">
-                        <div class="text-h-gold font-bold text-xl">03</div>
-                        <div class="text-white text-[8px] tracking-widest mt-1">ORG INTEL</div>
-                    </a>
-
-                    <a href="protocol/anohub_synergy_v2.html" onmouseenter="App.sfx('hover')" onclick="App.sfx('click')" 
-                       class="nexus-link" style="transform: translate3d(-180px, 180px, 40px);">
-                        <div class="text-h-gold font-bold text-xl">04</div>
-                        <div class="text-white text-[8px] tracking-widest mt-1">SYNERGY</div>
-                    </a>
-
-                    <a href="protocol/anohub_alignment_v2.html" onmouseenter="App.sfx('hover')" onclick="App.sfx('click')" 
-                       class="nexus-link" style="transform: translate3d(-250px, 0px, -20px);">
-                        <div class="text-h-gold font-bold text-xl">05</div>
-                        <div class="text-white text-[8px] tracking-widest mt-1">ALIGNMENT</div>
-                    </a>
-
-                    <div onclick="App.deployAI(); App.sfx('click')" onmouseenter="App.sfx('hover')" 
-                         class="nexus-link border-white hover:bg-white hover:text-black" style="transform: translate3d(0px, -250px, 60px); border-color: white;">
-                        <div class="font-bold text-xl">AI</div>
-                        <div class="text-[8px] tracking-widest mt-1">CORE</div>
-                    </div>
-
-                </div>
             </div>
-        </section>
+    </div>
 
-        <section id="modules-grid">
-            <div class="flex items-center gap-6 mb-12">
-                <h2 class="text-xs font-mono text-slate-500 tracking-[0.4em] uppercase">Full Protocol Matrix</h2>
-                <div class="h-px bg-white/10 flex-grow"></div>
-            </div>
+    <div class="fixed bottom-8 w-full text-center pointer-events-none">
+        <p class="text-[10px] font-mono text-slate-500 uppercase tracking-[0.3em] animate-pulse">Hover to pause • Click to access protocol</p>
+    </div>
 
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="modules-container">
-                </div>
-        </section>
-    </main>
-
-    <footer class="border-t border-white/10 bg-black py-12 mt-auto relative z-10 ml-0 xl:ml-64">
-        <div class="max-w-7xl mx-auto px-4 text-center text-slate-600 text-[10px] font-mono tracking-[0.2em]">
-            <p>© 2025 ANO_HUB ENGINEERING // QUANTUM SECURE</p>
-        </div>
-    </footer>
-
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <script>
         const App = {
-            // THE MASTER LIST OF YOUR 21 MODULES
+            // MASTER LIST - TOČNI LINKOVI
             modules: [
-                { id: '01', name: 'LCC Veto', file: 'anohub_protocol_v2.html', color: '#06b6d4', desc: 'Financial firewall.' },
-                { id: '02', name: 'NDT & Metrology', file: 'anohub_methodology_v2.html', color: '#8b5cf6', desc: 'Deep-scan verification.' },
-                { id: '03', name: 'Org. Intelligence', file: 'anohub_organization_v2.html', color: '#f97316', desc: 'Governance entropy.' },
-                { id: '04', name: 'M-E Synergy', file: 'anohub_synergy_v2.html', color: '#facc15', desc: 'Electro-mech harmonics.' },
-                { id: '05', name: 'Precision Align', file: 'anohub_alignment_v2.html', color: '#3b82f6', desc: '0.05mm tolerance.' },
-                { id: '06', name: 'Predictive AI', file: 'anohub_predictive_v2.html', color: '#10b981', desc: 'RUL forecasting.' },
-                { id: '07', name: 'Fluid Dynamics', file: 'anohub_fluid_v2.html', color: '#06b6d4', desc: 'CFD cavitation analysis.' },
-                { id: '08', name: 'Mag Flux', file: 'anohub_flux_v2.html', color: '#ff5722', desc: 'Air gap monitoring.' },
-                { id: '09', name: 'Cost Opt', file: 'anohub_cost_v2.html', color: '#10b981', desc: 'Arbitrage & inventory.' },
-                { id: '10', name: 'Flood Gate', file: 'anohub_flood_v2.html', color: '#3b82f6', desc: 'Spillway control.' },
-                { id: '11', name: 'Vib Damp', file: 'anohub_vib_v2.html', color: '#d946ef', desc: 'Active cancellation.' },
-                { id: '12', name: 'Dam Struct', file: 'anohub_dam_v2.html', color: '#78716c', desc: 'Stability & uplift.' },
-                { id: '13', name: 'Sat Uplink', file: 'anohub_sat_v2.html', color: '#06b6d4', desc: 'Geospatial data.' },
-                { id: '14', name: 'Black Box', file: 'anohub_blackbox_v2.html', color: '#f97316', desc: 'Forensic logging.' },
-                { id: '15', name: 'SCADA OVR', file: 'anohub_scada_v2.html', color: '#ef4444', desc: 'Security override.' },
-                { id: '16', name: 'Asset Life', file: 'anohub_asset_v2.html', color: '#34d399', desc: 'Lifecycle mgmt.' },
-                { id: '17', name: 'ISO Audit', file: 'anohub_iso_v2.html', color: '#FFD700', desc: 'IMS compliance.' },
-                { id: '18', name: 'Global Link', file: 'anohub_global_v2.html', color: '#3b82f6', desc: 'Grid interconnection.' },
-                { id: '19', name: 'Quantum Load', file: 'anohub_quantum_v2.html', color: '#a855f7', desc: 'Optimization algo.' },
-                { id: '20', name: 'Thermal AI', file: 'anohub_thermal_v2.html', color: '#ef4444', desc: 'Hotspot detection.' },
-                { id: '21', name: 'Core Temp', file: 'anohub_core_v2.html', color: '#ff5722', desc: 'Stator integrity.' },
+                { id: '01', name: 'LCC Veto', link: 'protocol/anohub_protocol_v2.html' },
+                { id: '02', name: 'NDT Metrology', link: 'protocol/anohub_methodology_v2.html' },
+                { id: '03', name: 'Org Intelligence', link: 'protocol/anohub_organization_v2.html' },
+                { id: '04', name: 'M-E Synergy', link: 'protocol/anohub_synergy_v2.html' },
+                { id: '05', name: 'Alignment', link: 'protocol/anohub_alignment_v2.html' },
+                { id: '06', name: 'Predictive AI', link: 'protocol/anohub_predictive_v2.html' },
+                { id: '07', name: 'Fluid Dynamics', link: 'protocol/anohub_fluid_v2.html' },
+                { id: '08', name: 'Mag Flux', link: 'protocol/anohub_flux_v2.html' },
+                { id: '09', name: 'Cost Opt', link: 'protocol/anohub_cost_v2.html' },
+                { id: '10', name: 'Flood Gate', link: 'protocol/anohub_flood_v2.html' },
+                { id: '11', name: 'Vib Damp', link: 'protocol/anohub_vib_v2.html' },
+                { id: '12', name: 'Dam Struct', link: 'protocol/anohub_dam_v2.html' },
+                { id: '13', name: 'Sat Uplink', link: 'protocol/anohub_sat_v2.html' },
+                { id: '14', name: 'Black Box', link: 'protocol/anohub_blackbox_v2.html' },
+                { id: '15', name: 'SCADA OVR', link: 'protocol/anohub_scada_v2.html' },
+                { id: '16', name: 'Asset Life', link: 'protocol/anohub_asset_v2.html' },
+                { id: '17', name: 'ISO Audit', link: 'protocol/anohub_iso_v2.html' },
+                { id: '18', name: 'Global Link', link: 'protocol/anohub_global_v2.html' },
+                { id: '19', name: 'Quantum Load', link: 'protocol/anohub_quantum_v2.html' },
+                { id: '20', name: 'Thermal AI', link: 'protocol/anohub_thermal_v2.html' },
+                { id: '21', name: 'Core Temp', link: 'protocol/anohub_core_v2.html' },
+                { id: '99', name: 'AI Core', link: '#', isSpecial: true }
             ],
 
             init() {
-                lucide.createIcons();
-                this.initCanvas();
-                this.initHologram();
-                this.renderGrid();
-                this.startLogs();
+                this.initGalaxy();
+                this.initMatrix();
             },
 
-            // === RENDER THE GRID (AUTOMATICALLY) ===
-            renderGrid() {
-                const container = document.getElementById('modules-container');
-                this.modules.forEach(m => {
-                    const a = document.createElement('a');
-                    a.href = `protocol/${m.file}`;
-                    a.className = 'module-card p-6 block group';
-                    a.style.setProperty('--hover-color', m.color);
-                    a.style.setProperty('--hover-glow', m.color + '40'); // 25% opacity
-                    a.onclick = () => App.sfx('click');
-                    a.onmouseenter = () => App.sfx('hover');
+            // GENERATE THE 3D GALAXY
+            initGalaxy() {
+                const galaxy = document.getElementById('galaxy');
+                const count = this.modules.length;
+                
+                // Fibonacci Sphere Algorithm for even distribution
+                const phi = Math.PI * (3 - Math.sqrt(5)); // Golden angle
 
-                    a.innerHTML = `
-                        <div class="flex justify-between mb-4">
-                            <span class="font-mono text-xs" style="color: ${m.color}">SYS-${m.id}</span>
-                            <div class="w-1.5 h-1.5 rounded-full shadow-[0_0_10px_white]" style="background-color: ${m.color}"></div>
+                this.modules.forEach((m, i) => {
+                    const y = 1 - (i / (count - 1)) * 2; // y goes from 1 to -1
+                    const radius = Math.sqrt(1 - y * y); // Radius at y
+                    
+                    const theta = phi * i; // Golden angle increment
+
+                    const r = 350; // Sphere radius in px
+
+                    const xPos = Math.cos(theta) * radius * r;
+                    const zPos = Math.sin(theta) * radius * r;
+                    const yPos = y * r;
+
+                    // Create Planet Element
+                    const el = document.createElement('a');
+                    el.href = m.link;
+                    el.className = 'planet';
+                    
+                    // 3D Positioning
+                    el.style.transform = `translate3d(${xPos}px, ${yPos}px, ${zPos}px)`;
+                    
+                    // Apply counter-rotation to keep text facing forward (billboard effect via JS later if needed, but CSS preserve-3d handles most)
+                    // Actually, for pure CSS rotation, text will rotate. 
+                    // To fix text readability, we animate the text container counter to the galaxy rotation? 
+                    // Simpler: Just let them float.
+
+                    el.innerHTML = `
+                        <div class="planet-core" style="${m.isSpecial ? 'background:#00f0ff; box-shadow:0 0 20px #00f0ff; border-color:white;' : ''}"></div>
+                        <div class="planet-label">
+                            <span class="planet-number">${m.id}</span> ${m.name}
                         </div>
-                        <h3 class="text-xl font-divine text-white mb-2 group-hover:text-[${m.color}] transition">${m.name}</h3>
-                        <p class="text-sm text-slate-400 font-light">${m.desc}</p>
-                        <div class="mt-4 h-px w-8 bg-white/10 group-hover:w-full transition-all duration-500"></div>
                     `;
-                    container.appendChild(a);
-                });
 
-                // ADD AI CARD MANUALLY AT THE END
-                const aiCard = document.createElement('div');
-                aiCard.className = 'module-card p-6 block group cursor-pointer border-dashed border-white/30';
-                aiCard.onclick = () => { App.sfx('click'); App.deployAI(); };
-                aiCard.onmouseenter = () => App.sfx('hover');
-                aiCard.innerHTML = `
-                    <div class="flex justify-between mb-4"><span class="text-white font-mono text-xs">SYS-99</span><div class="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></div></div>
-                    <h3 class="text-xl font-divine text-white mb-2">AI OMNISCIENCE</h3>
-                    <p class="text-sm text-slate-400 font-light">Neural Load Forecasting.</p>
-                    <div class="mt-4 text-center text-[10px] font-bold text-white tracking-widest bg-white/10 py-2 rounded">CLICK TO INVOKE</div>
-                `;
-                container.appendChild(aiCard);
-            },
-
-            // === AUDIO ENGINE ===
-            sfx(type) {
-                try {
-                    const AC = window.AudioContext || window.webkitAudioContext;
-                    if (!AC) return;
-                    if (!this.ctx) this.ctx = new AC();
-                    const osc = this.ctx.createOscillator();
-                    const gain = this.ctx.createGain();
-                    osc.connect(gain); gain.connect(this.ctx.destination);
-                    const now = this.ctx.currentTime;
-
-                    if (type === 'hover') {
-                        osc.type = 'sine'; osc.frequency.setValueAtTime(600, now);
-                        gain.gain.setValueAtTime(0.02, now); gain.gain.exponentialRampToValueAtTime(0.001, now+0.05);
-                        osc.start(); osc.stop(now+0.05);
-                    } else if (type === 'click') {
-                        osc.type = 'triangle'; osc.frequency.setValueAtTime(150, now);
-                        gain.gain.setValueAtTime(0.05, now); gain.gain.exponentialRampToValueAtTime(0.001, now+0.1);
-                        osc.start(); osc.stop(now+0.1);
+                    // AI Core Special Behavior (Alert only)
+                    if(m.isSpecial) {
+                        el.onclick = (e) => {
+                            e.preventDefault();
+                            alert("AI CORE: MONITORING SYSTEM...");
+                        }
                     }
-                } catch(e){}
-            },
 
-            // === AI MATRIX DEPLOY ===
-            deployAI() {
-                const overlay = document.getElementById('ai-takeover');
-                const box = document.getElementById('ai-status-box');
-                const bar = document.getElementById('ai-progress-bar');
-                const log = document.getElementById('ai-logs');
-                const cvs = document.getElementById('matrix-canvas');
-                
-                overlay.classList.remove('hidden'); overlay.classList.add('flex');
-                setTimeout(() => box.classList.remove('scale-0'), 100);
-                
-                this.matrixEffect(cvs);
-                log.innerHTML = ''; bar.style.width = '0%';
-                
-                const msgs = ["NEURAL HANDSHAKE...", "BYPASSING FIREWALL...", "OPTIMIZING TOPOLOGY...", "ACCESS GRANTED."];
-                msgs.forEach((m, i) => {
-                    setTimeout(() => {
-                        log.innerHTML = `> ${m}<br>` + log.innerHTML;
-                        bar.style.width = `${(i+1)*25}%`;
-                        this.sfx('click');
-                    }, i*1000 + 500);
+                    galaxy.appendChild(el);
                 });
-
-                setTimeout(() => {
-                    box.classList.add('scale-0');
-                    setTimeout(() => { overlay.classList.add('hidden'); overlay.classList.remove('flex'); }, 300);
-                }, 5000);
             },
 
-            matrixEffect(c) {
+            // SUBTLE MATRIX BACKGROUND
+            initMatrix() {
+                const c = document.getElementById('matrix-canvas');
                 const ctx = c.getContext('2d');
                 c.width = window.innerWidth; c.height = window.innerHeight;
-                const cols = Math.floor(c.width/15); const drops = Array(cols).fill(1);
+                
+                const cols = Math.floor(c.width/20); 
+                const drops = Array(cols).fill(1);
+
                 setInterval(() => {
-                    ctx.fillStyle = 'rgba(0,0,0,0.05)'; ctx.fillRect(0,0,c.width,c.height);
-                    ctx.fillStyle = '#FFD700'; ctx.font = '12px monospace';
+                    ctx.fillStyle = 'rgba(0,0,0,0.05)'; 
+                    ctx.fillRect(0,0,c.width,c.height);
+                    ctx.fillStyle = '#0f0'; // Green matrix, very faint
+                    ctx.font = '10px monospace';
+                    
                     for(let i=0; i<drops.length; i++) {
-                        ctx.fillText(String.fromCharCode(Math.random()*128), i*15, drops[i]*15);
-                        if(drops[i]*15 > c.height && Math.random()>0.975) drops[i]=0;
+                        const text = String.fromCharCode(Math.random()*128);
+                        const x = i*20; 
+                        const y = drops[i]*20;
+                        
+                        // Only draw randomly to keep it subtle
+                        if(Math.random() > 0.95) {
+                            ctx.fillStyle = 'rgba(6,182,212,0.3)'; // Cyan faint
+                            ctx.fillText(text, x, y);
+                        }
+
+                        if(y > c.height && Math.random() > 0.975) drops[i] = 0;
                         drops[i]++;
                     }
                 }, 50);
-            },
-
-            // === 3D HOLOGRAM LOGIC ===
-            initHologram() {
-                const c = document.getElementById('hologram-container');
-                const t = document.getElementById('hologram-content');
-                if(!c) return;
-                
-                c.addEventListener('mousemove', e => {
-                    const r = c.getBoundingClientRect();
-                    const x = (e.clientY - r.top - r.height/2) / 25; // Dampened
-                    const y = (e.clientX - r.left - r.width/2) / -25;
-                    t.style.transform = `perspective(2000px) rotateX(${x}deg) rotateY(${y}deg)`;
-                });
-                c.addEventListener('mouseleave', () => t.style.transform = `perspective(2000px) rotateX(0deg) rotateY(0deg)`);
-            },
-
-            // === BACKGROUND PARTICLES ===
-            initCanvas() {
-                const c = document.getElementById('network-canvas');
-                const ctx = c.getContext('2d');
-                let w, h, p=[];
-                const rsz = () => { w=c.width=window.innerWidth; h=c.height=window.innerHeight; };
-                window.addEventListener('resize', rsz); rsz();
-                for(let i=0; i<60; i++) p.push({x:Math.random()*w, y:Math.random()*h, vx:(Math.random()-.5)*.2, vy:(Math.random()-.5)*.2});
-                const draw = () => {
-                    ctx.clearRect(0,0,w,h); ctx.fillStyle='rgba(255,255,255,0.15)';
-                    p.forEach(i => {
-                        i.x+=i.vx; i.y+=i.vy; if(i.x<0)i.x=w; if(i.x>w)i.x=0; if(i.y<0)i.y=h; if(i.y>h)i.y=0;
-                        ctx.beginPath(); ctx.arc(i.x,i.y,1,0,7); ctx.fill();
-                    });
-                    requestAnimationFrame(draw);
-                };
-                draw();
-            },
-
-            startLogs() {
-                const c = document.getElementById('sidebar-logs');
-                setInterval(() => {
-                    const l = document.createElement('div');
-                    l.innerText = `${new Date().toLocaleTimeString()} :: 0x${Math.floor(Math.random()*16777215).toString(16).toUpperCase()} :: OK`;
-                    c.prepend(l);
-                    if(c.children.length>20) c.lastChild.remove();
-                }, 500);
             }
         };
+
         document.addEventListener('DOMContentLoaded', () => App.init());
     </script>
 </body>
