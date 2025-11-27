@@ -3,27 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AnoHUB | ARCHITECT INTERFACE v28.0</title>
+    <title>AnoHUB | CENTRAL COMMAND v30.0</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=JetBrains+Mono:wght@200;400;800&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=JetBrains+Mono:wght@300;500&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = { 
             theme: { 
                 extend: { 
-                    fontFamily: { sans: ['Rajdhani', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'], divine: ['Cinzel', 'serif'] },
+                    fontFamily: { 
+                        sans: ['Rajdhani', 'sans-serif'], 
+                        mono: ['JetBrains Mono', 'monospace'],
+                        divine: ['Cinzel', 'serif'] 
+                    },
                     colors: { 
                         'h-gold': '#FFD700', 'h-void': '#050505', 
-                        // Module Colors
+                        // Module Colors Mapping
                         'm-cyan': '#06b6d4', 'm-purple': '#8b5cf6', 'm-orange': '#f97316', 'm-yellow': '#facc15',
                         'm-blue': '#3b82f6', 'm-green': '#10b981', 'm-red': '#ef4444', 'm-magma': '#ff5722',
                         'm-stone': '#78716c', 'm-emerald': '#34d399', 'm-fuchsia': '#d946ef'
                     },
-                    animation: { 'spin-orbit': 'spin 60s linear infinite', 'pulse-glow': 'pulseGlow 3s infinite' },
+                    animation: { 
+                        'spin-orbit': 'spin 120s linear infinite', 
+                        'pulse-glow': 'pulseGlow 4s ease-in-out infinite' 
+                    },
                     keyframes: {
-                        pulseGlow: { '0%, 100%': { boxShadow: '0 0 20px #FFD700' }, '50%': { boxShadow: '0 0 60px #FFD700' } }
+                        pulseGlow: { '0%, 100%': { boxShadow: '0 0 30px rgba(255, 215, 0, 0.2)' }, '50%': { boxShadow: '0 0 80px rgba(255, 215, 0, 0.5)' } }
                     }
                 } 
             }
@@ -31,216 +38,259 @@
     </script>
 
     <style>
-        body { background-color: #000; color: #e2e8f0; overflow-x: hidden; cursor: crosshair; }
+        body { background-color: #000; color: #e2e8f0; overflow-x: hidden; }
         
-        /* MATRIX LAYER (POJAČANO) */
+        /* 1. SUPTILNI MATRIX (ELEGANTAN) */
         .matrix-layer { 
-            position: fixed; inset: 0; z-index: -2; opacity: 0.3; pointer-events: none; 
-            mix-blend-mode: screen;
+            position: fixed; inset: 0; z-index: -2; 
+            opacity: 0.25; /* Nježno */
+            pointer-events: none; 
+            mix-blend-mode: screen; /* Stapa se s crnom pozadinom */
+        }
+        
+        /* 2. DIVINE GRID */
+        .holy-grid {
+            position: fixed; inset: 0; z-index: -1;
+            background-image: 
+                linear-gradient(rgba(255, 215, 0, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 215, 0, 0.02) 1px, transparent 1px);
+            background-size: 80px 80px;
+            mask-image: radial-gradient(circle at center, black 20%, transparent 100%);
+            pointer-events: none;
         }
 
-        /* 3D SCENE */
-        .universe {
-            position: relative; height: 90vh; width: 100%;
+        /* 3. 3D ENGINE - KLIK POPRAVAK */
+        .universe-container {
+            height: 90vh; width: 100%;
             display: flex; align-items: center; justify-content: center;
-            perspective: 1000px; overflow: hidden;
+            perspective: 1500px; overflow: hidden;
+            position: relative;
         }
 
-        /* ATOMIC RINGS SYSTEM */
-        .solar-system {
+        #galaxy {
             position: relative; width: 0; height: 0;
             transform-style: preserve-3d;
-            transform: rotateX(20deg); /* Tilt for better view */
+            animation: spin-orbit 80s linear infinite;
+            /* Važno: Ovo omogućuje da se vrti, ali ne blokira klikove */
+            pointer-events: none; 
         }
+        
+        /* Zaustavi vrtnju na hover da se lakše klikne */
+        .universe-container:hover #galaxy { animation-play-state: paused; }
 
+        /* ORBIT RINGS (Ne smetaju mišu) */
         .orbit-ring {
-            position: absolute; top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            transform-style: preserve-3d;
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 50%; transform-style: preserve-3d;
+            pointer-events: none;
         }
 
-        /* THE PLANET (MODULE) */
+        /* PLANET LINK (KLIKABILNO) */
         .planet-link {
             position: absolute; top: 50%; left: 50%;
-            width: 40px; height: 40px;
-            margin-left: -20px; margin-top: -20px;
+            width: 40px; height: 40px; margin-left: -20px; margin-top: -20px;
             display: flex; align-items: center; justify-content: center;
-            transform-style: preserve-3d;
-            cursor: pointer; text-decoration: none;
-            /* KLJUČNO ZA KLIKOVE */
+            transform-style: preserve-3d; cursor: pointer; text-decoration: none;
+            
+            /* OVO JE KLJUČNO - Forsira klikabilnost čak i ako je u 3D */
             pointer-events: auto !important; 
             z-index: 100;
         }
 
         .planet-body {
-            width: 16px; height: 16px; border-radius: 50%;
-            background: black; border: 2px solid;
-            box-shadow: 0 0 15px currentColor;
-            transition: all 0.3s ease;
+            width: 14px; height: 14px; border-radius: 50%; background: #000; border: 2px solid;
+            box-shadow: 0 0 15px currentColor; transition: all 0.3s ease;
         }
 
         .planet-label {
-            position: absolute; top: 25px; left: 50%; transform: translateX(-50%);
+            position: absolute; top: 24px; left: 50%; transform: translateX(-50%);
             font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: bold;
-            color: white; background: rgba(0,0,0,0.8); padding: 2px 6px; border-radius: 4px;
-            border: 1px solid #333; white-space: nowrap; opacity: 0.7; transition: all 0.3s;
-            pointer-events: none;
+            color: #aaa; background: rgba(0,0,0,0.8); padding: 2px 6px; border-radius: 4px;
+            border: 1px solid #333; white-space: nowrap; opacity: 0.6; transition: all 0.3s;
+            pointer-events: none; /* Labela ne smeta kliku na tijelo */
         }
 
-        .planet-link:hover .planet-body { transform: scale(2.5); background: white; box-shadow: 0 0 40px white; border-color: white !important; }
-        .planet-link:hover .planet-label { opacity: 1; transform: translateX(-50%) scale(1.2); border-color: white; color: #FFD700; }
+        /* HOVER STATES */
+        .planet-link:hover .planet-body { transform: scale(2.5); background: white; box-shadow: 0 0 50px white; border-color: white !important; }
+        .planet-link:hover .planet-label { opacity: 1; transform: translateX(-50%) scale(1.2); border-color: #FFD700; color: #FFD700; background: black; z-index: 200; }
+        .planet-link:hover { z-index: 1000; } /* Bring to front */
 
-        /* CENTER SUN */
+        /* CENTRAL SUN (Ne smeta mišu) */
         .sun {
-            position: absolute; width: 80px; height: 80px;
-            background: radial-gradient(circle, #fff, #FFD700);
+            position: absolute; width: 100px; height: 100px;
+            background: radial-gradient(circle, #fff 10%, #FFD700 100%);
             border-radius: 50%; transform: translate(-50%, -50%);
-            box-shadow: 0 0 80px #FFD700;
-            z-index: 10; display: flex; align-items: center; justify-content: center;
-            font-family: 'Cinzel', serif; font-weight: 900; color: black; font-size: 24px;
+            box-shadow: 0 0 120px rgba(255, 215, 0, 0.5);
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Cinzel', serif; font-weight: 900; color: black; font-size: 32px;
+            pointer-events: none; /* Klik prolazi kroz sunce */
         }
 
-        /* GRID CARDS */
+        /* CARDS */
         .module-card {
-            background: linear-gradient(180deg, rgba(10,10,10,0.9) 0%, rgba(5,5,5,1) 100%);
-            border: 1px solid rgba(255,255,255,0.15);
-            transition: all 0.2s ease;
+            background: linear-gradient(180deg, rgba(15,15,15,0.95) 0%, rgba(5,5,5,1) 100%);
+            border: 1px solid rgba(255,255,255,0.1); transition: all 0.3s ease;
         }
-        .module-card:hover { transform: translateY(-5px); border-color: var(--hover-color); box-shadow: 0 0 30px var(--hover-glow); }
+        .module-card:hover { transform: translateY(-5px); border-color: var(--hover-color); box-shadow: 0 0 40px var(--hover-glow); }
         
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: #000; }
-        ::-webkit-scrollbar-thumb { background: #FFD700; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #FFD700; }
     </style>
 </head>
 <body>
 
     <canvas id="matrix-canvas" class="matrix-layer"></canvas>
+    <div class="holy-grid"></div>
 
     <div class="fixed top-0 left-0 w-full z-50 p-6 flex justify-between items-start bg-gradient-to-b from-black to-transparent pointer-events-none">
         <div class="pointer-events-auto">
             <a href="index.html" class="group block">
-                <h1 class="text-4xl font-divine text-white tracking-[0.2em] drop-shadow-[0_0_10px_rgba(255,255,255,0.5)] group-hover:text-h-gold transition">AnoHUB</h1>
-                <div class="h-0.5 w-12 bg-h-gold mt-1 mb-1 group-hover:w-32 transition-all duration-500"></div>
-                <p class="text-[10px] font-mono text-h-gold">PROTOCOL MATRIX v28.0</p>
+                <h1 class="text-4xl font-divine text-white tracking-[0.2em] drop-shadow-lg group-hover:text-h-gold transition">AnoHUB</h1>
+                <div class="h-0.5 w-16 bg-h-gold mt-2 group-hover:w-32 transition-all duration-500"></div>
+                <p class="text-[10px] font-mono text-h-gold mt-1">PROTOCOL INTERFACE v30.0</p>
             </a>
         </div>
-        <div class="text-right">
-            <div class="text-[10px] font-mono text-slate-500">SECURE LINK</div>
-            <div class="text-lg font-divine text-h-green animate-pulse">ESTABLISHED</div>
+        <div class="text-right hidden md:block">
+            <div class="text-[10px] font-mono text-slate-400">SYSTEM STATUS</div>
+            <div class="text-lg font-divine text-h-gold animate-pulse">OPERATIONAL</div>
         </div>
     </div>
 
-    <div class="universe">
-        <div class="solar-system" id="solar-system">
+    <div class="universe-container">
+        <div id="galaxy">
+            
             <div class="sun animate-pulse-glow">A</div>
             
-            </div>
+            <div class="orbit-ring w-[350px] h-[350px]" style="transform: translate(-50%, -50%) rotateX(90deg);"></div>
+            <div class="orbit-ring w-[550px] h-[550px]" style="transform: translate(-50%, -50%) rotateX(90deg);"></div>
+            <div class="orbit-ring w-[750px] h-[750px]" style="transform: translate(-50%, -50%) rotateX(90deg);"></div>
 
-        <div class="absolute bottom-10 text-center w-full animate-bounce pointer-events-none text-slate-500 font-mono text-xs">
-            SCROLL FOR LIST VIEW ▼
+            </div>
+        
+        <div class="absolute bottom-10 w-full text-center animate-bounce pointer-events-none">
+            <p class="text-[10px] font-mono text-slate-500 mb-2 tracking-widest">ACCESS FULL MATRIX ▼</p>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFD700" stroke-width="2" class="mx-auto"><path d="m7 13 5 5 5-5"/><path d="m7 6 5 5 5-5"/></svg>
         </div>
     </div>
 
-    <section id="full-matrix" class="relative z-10 bg-black border-t border-h-gold/30 py-20 px-6 min-h-screen">
+    <section id="full-matrix" class="relative z-10 bg-black border-t border-h-gold/20 py-24 px-6 min-h-screen">
         <div class="max-w-7xl mx-auto">
-            <div class="flex items-center gap-4 mb-12">
-                <div class="w-2 h-8 bg-h-gold"></div>
-                <h2 class="text-3xl font-divine text-white tracking-[0.2em]">PROTOCOL INDEX</h2>
+            <div class="flex items-center gap-4 mb-16">
+                <div class="w-2 h-10 bg-h-gold shadow-[0_0_20px_#FFD700]"></div>
+                <h2 class="text-4xl font-divine text-white tracking-[0.15em]">PROTOCOL INDEX</h2>
             </div>
-            <div id="modules-grid" class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+
+            <div id="modules-grid" class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"></div>
         </div>
     </section>
+
+    <div id="ai-takeover" class="fixed inset-0 z-[9999] bg-black hidden flex-col items-center justify-center">
+        <canvas id="matrix-rain-canvas" class="absolute inset-0 w-full h-full"></canvas>
+        <div class="absolute inset-0 flex flex-col items-center justify-center z-20 pointer-events-none">
+            <div id="ai-status-box" class="bg-black/90 border-2 border-h-gold p-12 text-center backdrop-blur-xl shadow-[0_0_150px_rgba(255,215,0,0.3)] transform scale-0 transition-transform duration-500 w-full max-w-3xl">
+                <h1 class="text-6xl font-black text-white tracking-tighter mb-4 font-divine">OMNISCIENCE</h1>
+                <div class="text-h-gold font-mono text-xl animate-pulse">ESTABLISHING NEURAL HANDSHAKE...</div>
+                <div class="w-full h-1 bg-slate-800 mt-8 overflow-hidden rounded"><div id="ai-progress-bar" class="h-full bg-h-gold w-0 transition-all duration-300 ease-out"></div></div>
+                <div id="ai-logs" class="mt-6 font-mono text-xs text-slate-400 h-32 overflow-hidden text-left space-y-2 border-t border-slate-800 pt-4"></div>
+            </div>
+        </div>
+    </div>
 
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <script>
         const App = {
-            // === CONFIGURATION ===
+            // === TOČNA LISTA DATOTEKA (PREMA TVOJOJ SLICI) ===
             modules: [
-                { id: '01', name: 'LCC Veto', link: 'protocol/anohub_protocol_v2.html', color: '#06b6d4' },
-                { id: '02', name: 'NDT Metrology', link: 'protocol/anohub_methodology_v2.html', color: '#8b5cf6' },
-                { id: '03', name: 'Org Intelligence', link: 'protocol/anohub_organization_v2.html', color: '#f97316' },
-                { id: '04', name: 'M-E Synergy', link: 'protocol/anohub_synergy_v2.html', color: '#facc15' },
-                { id: '05', name: 'Alignment', link: 'protocol/anohub_alignment_v2.html', color: '#3b82f6' },
-                { id: '06', name: 'Predictive AI', link: 'protocol/anohub_predictive_v2.html', color: '#10b981' },
-                { id: '07', name: 'Fluid Dynamics', link: 'protocol/anohub_fluid_v2.html', color: '#06b6d4' },
-                { id: '08', name: 'Mag Flux', link: 'protocol/anohub_flux_v2.html', color: '#ff5722' },
-                { id: '09', name: 'Cost Opt', link: 'protocol/anohub_cost_v2.html', color: '#10b981' },
-                { id: '10', name: 'Flood Gate', link: 'protocol/anohub_flood_v2.html', color: '#3b82f6' },
-                { id: '11', name: 'Vib Damp', link: 'protocol/anohub_vib_v2.html', color: '#d946ef' },
-                { id: '12', name: 'Dam Struct', link: 'protocol/anohub_dam_v2.html', color: '#78716c' },
-                { id: '13', name: 'Sat Uplink', link: 'protocol/anohub_sat_v2.html', color: '#06b6d4' },
-                { id: '14', name: 'Black Box', link: 'protocol/anohub_blackbox_v2.html', color: '#f97316' },
-                { id: '15', name: 'SCADA OVR', link: 'protocol/anohub_scada_v2.html', color: '#ef4444' },
-                { id: '16', name: 'Asset Life', link: 'protocol/anohub_asset_v2.html', color: '#34d399' },
-                { id: '17', name: 'ISO Audit', link: 'protocol/anohub_iso_v2.html', color: '#FFD700' },
-                { id: '18', name: 'Global Link', link: 'protocol/anohub_global_v2.html', color: '#3b82f6' },
-                { id: '19', name: 'Quantum Load', link: 'protocol/anohub_quantum_v2.html', color: '#a855f7' },
-                { id: '20', name: 'Thermal AI', link: 'protocol/anohub_thermal_v2.html', color: '#ef4444' },
-                { id: '21', name: 'Core Temp', link: 'protocol/anohub_core_v2.html', color: '#ff5722' }
+                { id: '01', name: 'LCC Veto', file: 'anohub_protocol_v2.html', color: 'm-cyan', desc: 'Financial Firewall.' },
+                { id: '02', name: 'NDT Metrology', file: 'anohub_methodology_v2.html', color: 'm-purple', desc: 'Deep-scan verification.' },
+                { id: '03', name: 'Org Intelligence', file: 'anohub_organization_v2.html', color: 'm-orange', desc: 'Governance models.' },
+                { id: '04', name: 'M-E Synergy', file: 'anohub_synergy_v2.html', color: 'm-yellow', desc: 'Electro-mech harmonics.' },
+                { id: '05', name: 'Alignment', file: 'anohub_alignment_v2.html', color: 'm-blue', desc: 'Precision centering.' },
+                { id: '06', name: 'Predictive AI', file: 'anohub_predictive_v2.html', color: 'm-green', desc: 'RUL forecasting.' },
+                { id: '07', name: 'Fluid Dynamics', file: 'anohub_fluid_v2.html', color: 'm-cyan', desc: 'CFD cavitation.' },
+                { id: '08', name: 'Mag Flux', file: 'anohub_flux_v2.html', color: 'm-magma', desc: 'Air gap monitoring.' },
+                { id: '09', name: 'Cost Opt', file: 'anohub_cost_v2.html', color: 'm-green', desc: 'Arbitrage logic.' },
+                { id: '10', name: 'Flood Gate', file: 'anohub_flood_v2.html', color: 'm-blue', desc: 'Spillway control.' },
+                { id: '11', name: 'Vib Damp', file: 'anohub_vib_v2.html', color: 'm-fuchsia', desc: 'Active cancellation.' },
+                { id: '12', name: 'Dam Struct', file: 'anohub_dam_v2.html', color: 'm-stone', desc: 'Stability & uplift.' },
+                { id: '13', name: 'Sat Uplink', file: 'anohub_sat_v2.html', color: 'm-cyan', desc: 'Geospatial data.' },
+                { id: '14', name: 'Black Box', file: 'anohub_blackbox_v2.html', color: 'm-orange', desc: 'Forensic logging.' },
+                { id: '15', name: 'SCADA OVR', file: 'anohub_scada_v2.html', color: 'm-red', desc: 'Security override.' },
+                { id: '16', name: 'Asset Life', file: 'anohub_asset_v2.html', color: 'm-emerald', desc: 'Lifecycle mgmt.' },
+                { id: '17', name: 'ISO Audit', file: 'anohub_iso_v2.html', color: 'm-gold', desc: 'IMS compliance.' },
+                { id: '18', name: 'Global Link', file: 'anohub_global_v2.html', color: 'm-blue', desc: 'Grid connection.' },
+                { id: '19', name: 'Quantum Load', file: 'anohub_quantum_v2.html', color: 'm-purple', desc: 'Optimization algo.' },
+                { id: '20', name: 'Thermal AI', file: 'anohub_thermal_v2.html', color: 'm-red', desc: 'Hotspot detection.' },
+                { id: '21', name: 'Core Temp', file: 'anohub_core_v2.html', color: 'm-magma', desc: 'Stator integrity.' },
+                { id: '99', name: 'AI Core', file: '#', color: 'm-gold', desc: 'Central Intelligence.', isSpecial: true }
             ],
 
             init() {
                 this.buildSolarSystem();
                 this.buildGrid();
-                this.initMatrix();
+                this.initElegantMatrix(); // Nova, suptilnija matrica
                 lucide.createIcons();
             },
 
-            // === 1. ORBITAL SYSTEM BUILDER ===
+            // === 1. ORBITAL SYSTEM BUILDER (3D) ===
             buildSolarSystem() {
                 const system = document.getElementById('solar-system');
-                
-                // Divide modules into 3 rings
                 const rings = [
-                    { r: 250, speed: 20, items: this.modules.slice(0, 7) },   // Inner
-                    { r: 400, speed: 35, items: this.modules.slice(7, 14) },  // Middle
-                    { r: 550, speed: 50, items: this.modules.slice(14, 21) }  // Outer
+                    { r: 175, speed: 25, items: this.modules.slice(0, 7) },   // Inner Ring (Closer, faster)
+                    { r: 275, speed: 45, items: this.modules.slice(7, 14) },  // Middle Ring
+                    { r: 375, speed: 65, items: this.modules.slice(14, 22) }  // Outer Ring
                 ];
 
-                rings.forEach((ring, ringIndex) => {
-                    // Create Ring Visual
-                    const ringDiv = document.createElement('div');
-                    ringDiv.className = 'orbit-ring';
-                    ringDiv.style.width = (ring.r * 2) + 'px';
-                    ringDiv.style.height = (ring.r * 2) + 'px';
-                    // Rotate ring slightly for 3D effect
-                    ringDiv.style.transform = `translate(-50%, -50%) rotateX(60deg)`; 
-                    system.appendChild(ringDiv);
-
-                    // Create Container for Rotating Planets
+                rings.forEach((ring, idx) => {
+                    // Container for rotating planets
                     const orbitContainer = document.createElement('div');
                     orbitContainer.style.position = 'absolute';
                     orbitContainer.style.top = '50%'; orbitContainer.style.left = '50%';
                     orbitContainer.style.width = '0'; orbitContainer.style.height = '0';
                     orbitContainer.style.transformStyle = 'preserve-3d';
                     orbitContainer.style.animation = `spin-orbit ${ring.speed}s linear infinite`;
-                    // Reverse alternate rings for visual complexity
-                    if (ringIndex % 2 !== 0) orbitContainer.style.animationDirection = 'reverse';
+                    
+                    // Alternate direction for visual variety
+                    if (idx % 2 !== 0) orbitContainer.style.animationDirection = 'reverse';
+                    
+                    // CLICK FIX: Disable pointer events on container so it doesn't block
+                    orbitContainer.style.pointerEvents = 'none'; 
                     
                     system.appendChild(orbitContainer);
 
                     // Place Planets
                     const step = (2 * Math.PI) / ring.items.length;
-                    
+
                     ring.items.forEach((m, i) => {
                         const angle = step * i;
                         const x = Math.cos(angle) * ring.r;
-                        const z = Math.sin(angle) * ring.r; // Use Z for depth in 3D space
+                        const z = Math.sin(angle) * ring.r;
 
                         const link = document.createElement('a');
-                        link.href = m.link;
                         link.className = 'planet-link';
-                        // Counter-rotate to keep text legible? No, let them fly free in 3D
-                        // We use X and Z to place them on the "floor" plane
-                        link.style.transform = `translate3d(${x}px, 0, ${z}px) rotateX(-90deg)`; 
-                        // rotateX(-90deg) makes them stand up facing camera if the ring is flat
+                        
+                        if(m.isSpecial) {
+                            link.href = "#";
+                            link.onclick = (e) => { e.preventDefault(); App.deployAI(); };
+                        } else {
+                            link.href = `protocol/${m.file}`;
+                        }
+                        
+                        // Map colors for inline styles
+                        const colorHex = App.getColor(m.color);
+                        
+                        // Position in 3D Space
+                        // rotateX(-90deg) ensures the circle faces the viewer if the ring is flat
+                        // Using translate3d ensures hardware acceleration
+                        link.style.transform = `translate3d(${x}px, 0, ${z}px) rotateX(-90deg)`;
                         
                         link.innerHTML = `
-                            <div class="planet-body" style="border-color: ${m.color}; box-shadow: 0 0 10px ${m.color}"></div>
-                            <div class="planet-label" style="border-color: ${m.color}">${m.id} ${m.name}</div>
+                            <div class="planet-body" style="border-color: ${colorHex}; box-shadow: 0 0 15px ${colorHex}"></div>
+                            <div class="planet-label" style="border-color: ${colorHex}; color: #fff;">
+                                <span style="color:${colorHex}; font-weight:bold; margin-right:4px;">${m.id}</span> ${m.name}
+                            </div>
                         `;
                         
                         orbitContainer.appendChild(link);
@@ -248,53 +298,126 @@
                 });
             },
 
-            // === 2. GRID BUILDER ===
+            // === 2. GRID BUILDER (LIST VIEW) ===
             buildGrid() {
                 const grid = document.getElementById('modules-grid');
                 this.modules.forEach(m => {
+                    const hex = App.getColor(m.color);
                     const card = document.createElement('a');
-                    card.href = m.link;
                     card.className = 'module-card p-6 block group';
-                    card.style.setProperty('--hover-color', m.color);
-                    card.style.setProperty('--hover-glow', m.color + '40');
+                    card.style.setProperty('--hover-color', hex);
+                    card.style.setProperty('--hover-glow', hex + '40');
+
+                    if(m.isSpecial) {
+                        card.href = "#";
+                        card.onclick = (e) => { e.preventDefault(); App.deployAI(); };
+                    } else {
+                        card.href = `protocol/${m.file}`;
+                    }
 
                     card.innerHTML = `
                         <div class="flex justify-between items-center mb-4">
-                            <span class="font-mono text-xs" style="color:${m.color}">SYS-${m.id}</span>
-                            <div class="w-2 h-2 rounded-full" style="background-color:${m.color}; box-shadow: 0 0 10px ${m.color}"></div>
+                            <span class="font-mono text-xs font-bold" style="color:${hex}">SYS-${m.id}</span>
+                            <div class="w-2 h-2 rounded-full shadow-[0_0_5px_white]" style="background-color:${hex}"></div>
                         </div>
-                        <h3 class="text-xl font-divine text-white group-hover:text-[${m.color}] transition mb-2">${m.name}</h3>
-                        <div class="h-px w-8 bg-white/20 group-hover:w-full transition-all duration-500" style="background-color:${m.color}"></div>
+                        <h3 class="text-xl font-divine text-white group-hover:text-[${hex}] transition mb-2">${m.name}</h3>
+                        <p class="text-sm text-slate-400 font-light mb-4 h-10">${m.desc}</p>
+                        <div class="h-px w-8 bg-white/20 group-hover:w-full transition-all duration-500" style="background-color:${hex}"></div>
                     `;
                     grid.appendChild(card);
                 });
             },
 
-            // === 3. VISIBLE MATRIX ===
-            initMatrix() {
+            // === 3. SUBTLE ELEGANT MATRIX ===
+            initElegantMatrix() {
                 const c = document.getElementById('matrix-canvas');
                 const ctx = c.getContext('2d');
                 c.width = window.innerWidth; c.height = window.innerHeight;
                 
-                const cols = Math.floor(c.width/20);
+                const cols = Math.floor(c.width/25); 
                 const drops = Array(cols).fill(1);
 
                 setInterval(() => {
-                    ctx.fillStyle = 'rgba(0,0,0,0.1)'; // Faster fade for clearer text
+                    // High fade for trails (0.05) -> Subtle
+                    ctx.fillStyle = 'rgba(0,0,0,0.08)'; 
                     ctx.fillRect(0,0,c.width,c.height);
                     
-                    ctx.fillStyle = '#0F0'; // Bright Green
+                    // Gold/Cyan Mix
                     ctx.font = '12px monospace';
-                    ctx.shadowBlur = 5; // GLOW EFFECT
-                    ctx.shadowColor = '#0F0';
-
+                    
                     for(let i=0; i<drops.length; i++) {
-                        const text = String.fromCharCode(0x30A0 + Math.random() * 96); // Matrix Katakana
-                        ctx.fillText(text, i*20, drops[i]*20);
-                        if(drops[i]*20 > c.height && Math.random() > 0.975) drops[i]=0;
+                        const text = String.fromCharCode(Math.random()*128);
+                        const x = i*25; 
+                        const y = drops[i]*25;
+                        
+                        // Randomly draw characters to reduce visual noise
+                        if(Math.random() > 0.97) {
+                            // Golden hue
+                            ctx.fillStyle = 'rgba(255, 215, 0, 0.4)'; 
+                            ctx.fillText(text, x, y);
+                        } else if (Math.random() > 0.98) {
+                            // Cyan hue
+                            ctx.fillStyle = 'rgba(6, 182, 212, 0.4)';
+                            ctx.fillText(text, x, y);
+                        }
+
+                        if(y > c.height && Math.random() > 0.98) drops[i] = 0;
                         drops[i]++;
                     }
-                }, 40);
+                }, 50);
+            },
+
+            // === 4. AI DEPLOY LOGIC ===
+            deployAI() {
+                const overlay = document.getElementById('ai-takeover');
+                const box = document.getElementById('ai-status-box');
+                const bar = document.getElementById('ai-progress-bar');
+                const log = document.getElementById('ai-logs');
+                const cvs = document.getElementById('matrix-rain-canvas');
+                
+                overlay.classList.remove('hidden'); overlay.classList.add('flex');
+                setTimeout(() => box.classList.remove('scale-0'), 100);
+                
+                this.runHeavyMatrix(cvs);
+                log.innerHTML = ''; bar.style.width = '0%';
+                
+                const msgs = ["NEURAL HANDSHAKE...", "BYPASSING FIREWALL...", "OPTIMIZING TOPOLOGY...", "ACCESS GRANTED."];
+                msgs.forEach((m, i) => {
+                    setTimeout(() => {
+                        log.innerHTML = `> ${m}<br>` + log.innerHTML;
+                        bar.style.width = `${(i+1)*25}%`;
+                    }, i*1000 + 500);
+                });
+
+                setTimeout(() => {
+                    box.classList.add('scale-0');
+                    setTimeout(() => { overlay.classList.add('hidden'); overlay.classList.remove('flex'); }, 300);
+                }, 5000);
+            },
+
+            runHeavyMatrix(c) {
+                const ctx = c.getContext('2d');
+                c.width = window.innerWidth; c.height = window.innerHeight;
+                const cols = Math.floor(c.width/20); const drops = Array(cols).fill(1);
+                setInterval(() => {
+                    ctx.fillStyle = 'rgba(0,0,0,0.05)'; ctx.fillRect(0,0,c.width,c.height);
+                    ctx.fillStyle = '#FFD700'; ctx.font = '14px monospace';
+                    for(let i=0; i<drops.length; i++) {
+                        ctx.fillText(String.fromCharCode(Math.random()*128), i*20, drops[i]*20);
+                        if(drops[i]*20 > c.height && Math.random()>0.975) drops[i]=0;
+                        drops[i]++;
+                    }
+                }, 30);
+            },
+
+            // Helper to map class names to hex for inline styles
+            getColor(cls) {
+                const map = {
+                    'm-cyan': '#06b6d4', 'm-purple': '#8b5cf6', 'm-orange': '#f97316', 'm-yellow': '#facc15',
+                    'm-blue': '#3b82f6', 'm-green': '#10b981', 'm-red': '#ef4444', 'm-magma': '#ff5722',
+                    'm-stone': '#78716c', 'm-emerald': '#34d399', 'm-fuchsia': '#d946ef', 'm-gold': '#FFD700'
+                };
+                return map[cls] || '#fff';
             }
         };
 
