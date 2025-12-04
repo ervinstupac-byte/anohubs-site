@@ -6,12 +6,10 @@
     <title>Mission Archive: Proven Results | AnoHUB</title>
     <meta name="description" content="Documented case studies of Engineering Immunity. Real-world applications of the AnoHUB Protocol in neutralizing dynamic risk.">
 
-    <!-- 1. FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     
-    <!-- 2. TAILWIND -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -82,7 +80,7 @@
             background: #334155; transition: background 0.3s;
         }
         
-        /* Dynamic Border Colors based on Type (Matched via JS logic or specific CSS) */
+        /* Dynamic Border Colors based on Type */
         .type-finance:hover { border-color: #3b82f6; }
         .type-finance:hover::before { background: #3b82f6; }
 
@@ -107,7 +105,6 @@
 <body class="antialiased">
     <div class="tech-bg"></div>
 
-    <!-- NAV -->
     <header class="fixed w-full z-50 top-0 border-b border-white/5 bg-h-dark/90 backdrop-blur-md" id="navbar">
         <div class="max-w-7xl mx-auto px-4 h-20 flex justify-between items-center">
             <a href="index.html" class="flex items-center gap-3 group">
@@ -141,7 +138,6 @@
 
     <main class="pt-32 pb-20">
 
-        <!-- HERO: MISSION LOG -->
         <section class="max-w-7xl mx-auto px-4 mb-16 text-center">
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-xs font-mono text-h-green mb-6 animate-[fadeInUp_1s_ease-out]">
                 <span class="w-2 h-2 bg-h-green rounded-full animate-pulse"></span>
@@ -156,16 +152,15 @@
             </p>
         </section>
 
-        <!-- CONTROL BAR (FILTERS) -->
         <section class="max-w-7xl mx-auto px-4 mb-12 sticky top-24 z-40">
             <div class="bg-h-dark/90 backdrop-blur-md border border-h-border p-4 rounded-xl flex flex-col md:flex-row justify-between items-center gap-4 shadow-2xl animate-[fadeInUp_1s_ease-out_0.6s_forwards] opacity-0">
                 
                 <div class="flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0">
-                    <button class="filter-btn active px-4 py-2 rounded border border-transparent text-xs font-bold text-slate-400 hover:text-white uppercase transition font-mono" onclick="filterCases('all')">All Missions</button>
-                    <button class="filter-btn px-4 py-2 rounded border border-transparent text-xs font-bold text-slate-400 hover:text-white uppercase transition font-mono" onclick="filterCases('finance')">Strategy & Finance</button>
-                    <button class="filter-btn px-4 py-2 rounded border border-transparent text-xs font-bold text-slate-400 hover:text-white uppercase transition font-mono" onclick="filterCases('francis')">Francis</button>
-                    <button class="filter-btn px-4 py-2 rounded border border-transparent text-xs font-bold text-slate-400 hover:text-white uppercase transition font-mono" onclick="filterCases('kaplan')">Kaplan</button>
-                    <button class="filter-btn px-4 py-2 rounded border border-transparent text-xs font-bold text-slate-400 hover:text-white uppercase transition font-mono" onclick="filterCases('pelton')">Pelton</button>
+                    <button class="filter-btn active px-4 py-2 rounded border border-transparent text-xs font-bold text-slate-400 hover:text-white uppercase transition font-mono" data-filter="all">All Missions</button>
+                    <button class="filter-btn px-4 py-2 rounded border border-transparent text-xs font-bold text-slate-400 hover:text-white uppercase transition font-mono" data-filter="finance">Strategy & Finance</button>
+                    <button class="filter-btn px-4 py-2 rounded border border-transparent text-xs font-bold text-slate-400 hover:text-white uppercase transition font-mono" data-filter="francis">Francis</button>
+                    <button class="filter-btn px-4 py-2 rounded border border-transparent text-xs font-bold text-slate-400 hover:text-white uppercase transition font-mono" data-filter="kaplan">Kaplan</button>
+                    <button class="filter-btn px-4 py-2 rounded border border-transparent text-xs font-bold text-slate-400 hover:text-white uppercase transition font-mono" data-filter="pelton">Pelton</button>
                 </div>
 
                 <div class="relative w-full md:w-64">
@@ -175,17 +170,14 @@
             </div>
         </section>
 
-        <!-- CASE STUDIES GRID -->
         <section class="max-w-7xl mx-auto px-4">
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="cases-grid">
-                <!-- KARTICE SE GENERIRAJU OVDE (pomoću JavaScripta ispod) -->
                 <div class="col-span-full text-center py-20 text-slate-500 font-mono animate-pulse">
                     LOADING MISSION DATA...
                 </div>
             </div>
         </section>
 
-        <!-- CTA -->
         <section class="mt-24 text-center px-4 pb-20">
             <div class="max-w-3xl mx-auto glass-panel p-10 rounded-2xl relative overflow-hidden group border-t-4 border-t-h-cyan bg-h-dark/50">
                 <h2 class="text-3xl font-black text-white mb-4">Have a similar challenge?</h2>
@@ -207,7 +199,6 @@
 
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     
-    <!-- === LOGIKA ZA CASE STUDIES (INTEGRIRANA U HTML) === -->
     <script>
         lucide.createIcons();
         
@@ -223,24 +214,8 @@
             { id: '008', title: 'LCC Procurement Audit', type: 'finance', file: 'cs-lcc-procurement-audit.html', risk: 'Low-Bid Failure', outcome: '18% LCC Savings', color: 'text-h-blue', borderClass: 'type-finance' },
             { id: '009', title: 'M-E Synergy Erosion', type: 'pelton', file: 'cs-me-synergy-erosion.html', risk: 'Electro-Erosion', outcome: 'Shaft Voltage 0V', color: 'text-h-yellow', borderClass: 'type-pelton' },
             { id: '010', title: 'Pelton Abrasion', type: 'pelton', file: 'cs-pelton-abrasion.html', risk: 'Bucket Wear', outcome: '5yr Life Ext.', color: 'text-h-cta', borderClass: 'type-pelton' },
-            { id: '011', title: 'Predictive Maint. ROI',
-                type: 'finance',
-                file: 'cs-predictive-maintenance-roi.html',
-                risk: 'Unplanned Outage',
-                outcome: 'Zero Downtime',
-                color: 'text-h-green',
-                borderClass: 'type-finance'
-            },
-            {
-                id: '012',
-                title: 'Shaft Stability',
-                type: 'francis',
-                file: 'cs-shaft-system-stability.html',
-                risk: 'Vibration Trip',
-                outcome: '-85% Amplitude',
-                color: 'text-h-cta',
-                borderClass: 'type-francis'
-            }
+            { id: '011', title: 'Predictive Maint. ROI', type: 'finance', file: 'cs-predictive-maintenance-roi.html', risk: 'Unplanned Outage', outcome: 'Zero Downtime', color: 'text-h-green', borderClass: 'type-finance' },
+            { id: '012', title: 'Shaft Stability', type: 'francis', file: 'cs-shaft-system-stability.html', risk: 'Vibration Trip', outcome: '-85% Amplitude', color: 'text-h-cta', borderClass: 'type-francis' }
         ];
 
         // === RENDER AND FILTER FUNCTIONS ===
@@ -253,10 +228,14 @@
 
             grid.innerHTML = '';
             
-            // Filtering logic (Grouping Finance/Strategy for filter button)
-            const filtered = filterType === 'all' 
-                ? casesData 
-                : casesData.filter(c => c.type === filterType || (filterType === 'finance' && c.type === 'strategy') || c.type === filterType);
+            // Filtering logic
+            let filtered;
+            if (filterType === 'all') {
+                filtered = casesData;
+            } else {
+                // Allows grouping 'strategy' with 'finance' if needed, or strict filtering
+                filtered = casesData.filter(c => c.type === filterType || (filterType === 'finance' && c.type === 'strategy'));
+            }
             
             if(filtered.length === 0) {
                 grid.innerHTML = '<div class="col-span-full text-center py-10 text-slate-500 font-mono border border-dashed border-slate-800 rounded-xl">NO MISSIONS FOUND IN THIS SECTOR.</div>';
@@ -264,14 +243,17 @@
             }
 
             filtered.forEach((item, index) => {
-                const delay = index * 100;
+                const delay = index * 50; // Staggered animation
                 const card = document.createElement('a');
                 
-                // IMPORTANT: Path adjusted for case-studies folder
+                // PATH FIX: Assuming this file is in root, case studies are in subfolder
                 card.href = `case-studies/${item.file}`; 
                 
                 card.className = `dossier-card rounded-xl p-6 group block ${item.borderClass} animate-[fadeInUp_0.5s_ease-out]`;
                 card.style.animationDelay = `${delay}ms`;
+                // Add fade-in animation inline to ensure it triggers
+                card.style.opacity = '0';
+                card.style.animationFillMode = 'forwards';
                 
                 card.innerHTML = `
                     <div class="flex justify-between items-start mb-6">
@@ -306,8 +288,11 @@
         // === EVENT LISTENERS ===
         filterBtns.forEach(btn => {
             btn.addEventListener('click', (e) => {
+                // Update active state
                 filterBtns.forEach(b => b.classList.remove('active'));
                 e.target.classList.add('active');
+                
+                // Get filter value from DATA ATTRIBUTE
                 const filter = e.target.getAttribute('data-filter');
                 renderCases(filter);
             });
@@ -319,8 +304,13 @@
                 const cards = document.querySelectorAll('.dossier-card');
                 
                 cards.forEach(card => {
+                    // Search inside the card's text content
                     const text = card.innerText.toLowerCase();
-                    card.style.display = text.includes(term) ? 'flex' : 'none';
+                    if (text.includes(term)) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
                 });
             });
         }
@@ -330,7 +320,7 @@
             renderCases('all');
         });
         
-        // Mobile Menu
+        // Mobile Menu Logic
         const menuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         if(menuBtn && mobileMenu) {
