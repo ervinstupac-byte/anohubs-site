@@ -29,6 +29,9 @@
                         'h-panel': '#0f172a', 
                         'h-border': '#1e293b',
                         'h-cta': '#f59e0b'
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                     }
                 }
             }
@@ -53,10 +56,24 @@
         .article-body li::before { 
             content: ">>"; position: absolute; left: 0; color: #8b5cf6; font-family: 'JetBrains Mono', monospace; font-size: 0.8em;
         }
+        
+        /* Blockquote with Click-to-Copy */
         .article-body blockquote { 
             border-left: 4px solid #8b5cf6; background: rgba(139, 92, 246, 0.1); 
             padding: 1.5rem; font-style: italic; color: #d8b4fe; margin: 2rem 0; border-radius: 0 0.5rem 0.5rem 0;
+            position: relative; cursor: pointer; transition: all 0.3s ease;
         }
+        .article-body blockquote:hover {
+            background: rgba(139, 92, 246, 0.15);
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.1);
+        }
+        .article-body blockquote::after {
+            content: 'CLICK TO COPY'; position: absolute; top: 10px; right: 10px; 
+            font-size: 9px; font-family: 'JetBrains Mono', monospace; color: #8b5cf6; 
+            opacity: 0; transition: opacity 0.2s; border: 1px solid #8b5cf6; padding: 2px 6px; rounded: 4px;
+        }
+        .article-body blockquote:hover::after { opacity: 1; }
+        .article-body blockquote:active { transform: scale(0.99); }
         
         /* Image Styles */
         .article-img { border-radius: 0.75rem; border: 1px solid #334155; box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin: 2rem 0; width: 100%; }
@@ -69,6 +86,11 @@
 <body class="antialiased selection:bg-h-purple selection:text-black">
     
     <div id="reading-progress"></div>
+
+    <div id="read-time-display" class="fixed top-20 right-4 z-40 bg-black/80 backdrop-blur border border-white/10 px-3 py-1 rounded-full text-[10px] font-mono text-slate-400 hidden lg:flex items-center gap-2 transition-opacity duration-300">
+        <div class="w-2 h-2 bg-h-purple rounded-full animate-pulse"></div>
+        <span id="time-remaining">4</span> MIN REMAINING
+    </div>
 
     <header class="fixed w-full z-50 top-0 border-b border-white/5 bg-h-dark/90 backdrop-blur-md" id="navbar">
         <div class="max-w-7xl mx-auto px-4 h-16 flex justify-between items-center">
@@ -124,7 +146,7 @@
                     <h2>2. The AI Paradox: Digitalization Requires Integrity</h2>
                     <p>We are seeing incredible advancements in software, with platforms like <em>Volue</em> offering smart optimization. But here lies the <strong>AI Paradox</strong>: Software optimizes based on the data it receives.</p>
                     
-                    <blockquote>
+                    <blockquote onclick="copyToClipboard(this)" title="Click to Copy Quote">
                         If a smart sensor is mounted on a poorly aligned bearing, the AI will optimize... a mistake. <strong>Digitalization without physical integrity is just a faster route to a breakdown.</strong>
                     </blockquote>
 
@@ -150,7 +172,7 @@
                             </div>
                             <div class="text-center group">
                                 <div class="flex flex-col justify-end h-full gap-1">
-                                    <div class="w-full bg-h-red/20 border border-h-red h-[85%] relative animate-pulse">
+                                    <div class="w-full bg-h-red/20 border border-h-red h-[85%] relative animate-pulse-slow">
                                         <span class="absolute -top-6 left-1/2 -translate-x-1/2 text-xs text-h-red font-bold">CATASTROPHIC</span>
                                     </div>
                                     <div class="w-full bg-slate-600 h-[15%] relative">
@@ -256,10 +278,10 @@
                 </div>
 
                 <div class="bg-gradient-to-br from-h-cta/20 to-transparent border border-h-cta/40 p-6 rounded-xl text-center">
-                    <h4 class="text-white font-bold mb-2">Flawless Execution</h4>
-                    <p class="text-xs text-slate-300 mb-4">Ensure your PSH project survives the boom.</p>
-                    <a href="../services.html" class="inline-block bg-h-cta hover:bg-yellow-500 text-black font-bold py-2 px-6 rounded text-xs uppercase tracking-wider transition shadow-lg">
-                        View Solutions
+                    <h4 class="text-white font-bold mb-2">Build Your Legacy</h4>
+                    <p class="text-xs text-slate-300 mb-4">Don't let innovation outpace integrity.</p>
+                    <a href="../protocol/anohub_organization_v2.html" class="inline-block bg-h-cta hover:bg-yellow-500 text-black font-bold py-2 px-6 rounded text-xs uppercase tracking-wider transition shadow-lg">
+                        Initialize Protocol
                     </a>
                 </div>
 
@@ -268,20 +290,67 @@
         </div>
     </main>
 
-    <footer class="bg-black border-t border-slate-900 py-8 text-center text-xs font-mono text-slate-600">
+    <div class="lg:hidden fixed bottom-4 left-4 right-4 z-50 animate-[fadeInUp_1s_ease-out_1s_forwards] opacity-0">
+        <a href="../contact.html" class="flex items-center justify-between bg-h-purple/90 backdrop-blur-md text-white px-4 py-3 rounded-lg shadow-2xl border border-white/20">
+            <span class="text-xs font-bold uppercase tracking-wider">Need Execution Discipline?</span>
+            <span class="bg-white text-h-purple text-xs font-black px-2 py-1 rounded">ACT NOW &rarr;</span>
+        </a>
+    </div>
+
+    <footer class="bg-black border-t border-slate-900 py-8 text-center text-xs font-mono text-slate-600 mb-20 lg:mb-0">
         <div class="max-w-7xl mx-auto px-4">
             &copy; 2025 ANOHUBS INC. | INTELLIGENCE DIVISION
         </div>
     </footer>
 
     <script>
-        // Reading Progress Bar
-        window.onscroll = function() {
+        // Reading Progress Bar & Time
+        window.addEventListener('scroll', () => {
+            const article = document.querySelector('.article-body');
+            const totalHeight = article.clientHeight;
+            const visibleHeight = window.innerHeight;
+            const currentPos = window.scrollY;
+            
+            // Progress Bar Width
             let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
             let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
             let scrolled = (winScroll / height) * 100;
             document.getElementById("reading-progress").style.width = scrolled + "%";
-        };
+
+            // Time Remaining Logic
+            if(article) {
+                const percent = Math.min(1, Math.max(0, currentPos / (totalHeight - visibleHeight + 200)));
+                const totalMinutes = 4; // Based on header
+                const remaining = Math.ceil(totalMinutes * (1 - percent));
+                
+                const timeDisplay = document.getElementById('time-remaining');
+                if(timeDisplay) {
+                    timeDisplay.innerText = remaining > 0 ? remaining : 0;
+                    document.getElementById('read-time-display').style.opacity = remaining <= 0 ? '0' : '1';
+                }
+            }
+        });
+
+        // Click-to-Copy Logic
+        function copyToClipboard(element) {
+            const text = element.innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                const originalBorder = element.style.borderColor;
+                const originalBg = element.style.background;
+                
+                // Visual Feedback
+                element.style.borderColor = '#10b981'; // Green
+                element.style.background = 'rgba(16, 185, 129, 0.1)';
+                
+                // Add temporary "COPIED" text
+                const originalAfter = window.getComputedStyle(element, '::after').getPropertyValue('content');
+                
+                setTimeout(() => {
+                    element.style.borderColor = originalBorder;
+                    element.style.background = originalBg;
+                }, 1000);
+            });
+        }
     </script>
 </body>
 </html>
