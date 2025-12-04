@@ -6,12 +6,21 @@
     <title>Operational Capabilities | AnoHUB Services</title>
     <meta name="description" content="Explore the full spectrum of Anohubs services: From digital integrity audits and 24/7 supervision to spare parts manufacturing and procurement.">
     
-    <!-- 1. FONTS -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "AnoHUB Services Hub",
+      "provider": { "@type": "Organization", "name": "AnoHUB" },
+      "serviceType": ["Integrity Audit", "Predictive Maintenance", "Compliance", "Optimization"],
+      "areaServed": "Global"
+    }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     
-    <!-- 2. TAILWIND -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -34,7 +43,6 @@
                     },
                     animation: {
                         'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
-                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                     },
                     keyframes: {
                         fadeInUp: {
@@ -67,7 +75,7 @@
             background-attachment: fixed;
         }
 
-        /* Service Module Card */
+        /* Service Module Card - Dynamic Hover Colors via CSS Variables */
         .service-card {
             background: rgba(15, 23, 42, 0.6);
             backdrop-filter: blur(12px);
@@ -86,21 +94,32 @@
             background: var(--accent-color);
         }
 
-        /* Membership Card */
-        .membership-card {
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            border: 2px solid #4ade80;
-            box-shadow: 0 0 30px rgba(74, 222, 128, 0.1);
-            position: relative;
+        /* --- PRINT OPTIMIZATION --- */
+        @media print {
+            body { background-color: white !important; color: black !important; font-family: serif; }
+            .tech-bg, #navbar, footer, #mobile-sticky-cta, .hero-services { display: none !important; }
+            main { padding-top: 0 !important; }
+            
+            /* Print Layout */
+            h1, h2, h3, p { color: black !important; }
+            .service-card {
+                background: white !important;
+                border: 1px solid #ccc !important;
+                color: black !important;
+                box-shadow: none !important;
+                page-break-inside: avoid;
+                margin-bottom: 20px;
+            }
+            .text-white { color: black !important; }
+            .text-slate-400 { color: #333 !important; }
+            
+            /* Header */
+            body::before {
+                content: "ANOHUBS | SERVICES CATALOG 2025";
+                display: block; font-weight: bold; border-bottom: 2px solid black; margin-bottom: 20px; font-size: 16pt;
+            }
         }
-        .membership-badge {
-            position: absolute; top: 0; right: 0;
-            background: #4ade80; color: #020617;
-            font-weight: 900; font-size: 0.7rem;
-            padding: 0.25rem 1rem;
-            border-bottom-left-radius: 0.5rem;
-        }
-
+        
         /* Scroll Bar */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #020617; }
@@ -112,7 +131,6 @@
 <body class="antialiased">
     <div class="tech-bg"></div>
 
-    <!-- NAV -->
     <header class="fixed w-full z-50 top-0 border-b border-white/5 bg-h-dark/90 backdrop-blur-md transition-all duration-300" id="navbar">
         <div class="max-w-7xl mx-auto px-4 h-20 flex justify-between items-center">
             <a href="index.html" class="flex items-center gap-3 group">
@@ -145,7 +163,6 @@
 
     <main class="pt-20">
 
-        <!-- HERO SECTION -->
         <section class="hero-services min-h-[50vh] flex items-center justify-center relative">
             <div class="max-w-5xl mx-auto px-4 text-center relative z-10">
                 <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-black/50 backdrop-blur-md text-xs font-mono text-slate-300 mb-6 animate-[fadeInUp_1s_ease-out]">
@@ -171,7 +188,6 @@
             </div>
         </section>
 
-        <!-- CORE ANALYTICS GRID -->
         <section id="core-analytics" class="py-24 relative">
             <div class="max-w-7xl mx-auto px-4">
                 <div class="flex items-center gap-4 mb-12">
@@ -182,19 +198,19 @@
 
                 <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                     
-                    <!-- Module 1 -->
                     <a href="services-integrity.html" class="service-card p-8 rounded-xl group block h-full" style="--accent-color: #22d3ee; --glow-color: rgba(34, 211, 238, 0.2)">
+                        <div class="absolute top-0 right-0 bg-h-cyan text-black text-[10px] font-bold px-2 py-1 rounded-bl-lg opacity-0 group-hover:opacity-100 transition">TOP PRIORITY</div>
+                        
                         <div class="bg-h-cyan/10 p-3 rounded-lg w-fit mb-6 text-h-cyan group-hover:scale-110 transition">
-                            <svg data-lucide="layers" class="w-8 h-8"></svg>
+                            <svg data-lucide="shield-check" class="w-8 h-8"></svg>
                         </div>
-                        <h3 class="text-xl font-bold text-white mb-3">Integrity Audits</h3>
-                        <p class="text-sm text-slate-400 mb-6 leading-relaxed">Holistic FEA & NDT protocols. We X-ray your infrastructure to find sub-surface defects.</p>
+                        <h3 class="text-xl font-bold text-white mb-3">Execution Integrity</h3>
+                        <p class="text-sm text-slate-400 mb-6 leading-relaxed">Closing the "Execution Gap". Holistic FEA, NDT, and alignment audits to verify physical quality before digital integration.</p>
                         <div class="text-xs font-mono text-h-cyan flex items-center gap-2">
-                            OPEN MODULE <svg data-lucide="arrow-right" class="w-3 h-3 group-hover:translate-x-1 transition"></svg>
+                            DEPLOY AUDIT <svg data-lucide="arrow-right" class="w-3 h-3 group-hover:translate-x-1 transition"></svg>
                         </div>
                     </a>
 
-                    <!-- Module 2 -->
                     <a href="services-predictive.html" class="service-card p-8 rounded-xl group block h-full" style="--accent-color: #10b981; --glow-color: rgba(16, 185, 129, 0.2)">
                         <div class="bg-h-green/10 p-3 rounded-lg w-fit mb-6 text-h-green group-hover:scale-110 transition">
                             <svg data-lucide="bot" class="w-8 h-8"></svg>
@@ -206,7 +222,6 @@
                         </div>
                     </a>
 
-                    <!-- Module 3 -->
                     <a href="services-compliance.html" class="service-card p-8 rounded-xl group block h-full" style="--accent-color: #8b5cf6; --glow-color: rgba(139, 92, 246, 0.2)">
                         <div class="bg-h-purple/10 p-3 rounded-lg w-fit mb-6 text-h-purple group-hover:scale-110 transition">
                             <svg data-lucide="clipboard-check" class="w-8 h-8"></svg>
@@ -218,7 +233,6 @@
                         </div>
                     </a>
 
-                    <!-- Module 4 -->
                     <a href="services-optimization.html" class="service-card p-8 rounded-xl group block h-full" style="--accent-color: #facc15; --glow-color: rgba(250, 204, 21, 0.2)">
                         <div class="bg-h-yellow/10 p-3 rounded-lg w-fit mb-6 text-h-yellow group-hover:scale-110 transition">
                             <svg data-lucide="bar-chart-2" class="w-8 h-8"></svg>
@@ -234,110 +248,34 @@
             </div>
         </section>
 
-        <!-- SUPERVISION & MEMBERSHIP -->
-        <section id="supervision" class="py-20 bg-h-panel border-y border-h-border">
-            <div class="max-w-7xl mx-auto px-4">
-                <div class="grid lg:grid-cols-2 gap-16 items-center">
-                    
-                    <!-- Left: Text -->
-                    <div>
-                        <h2 class="text-4xl font-black text-white mb-6">
-                            <span class="text-h-green">24/7</span> Active Presence
-                        </h2>
-                        <p class="text-lg text-slate-400 mb-8 leading-relaxed">
-                            We don't just deliver reports and leave. We stand by our clients. Whether it's a critical installation phase or an emergency troubleshooting session, we are present—physically or digitally.
-                        </p>
-                        
-                        <div class="space-y-6">
-                            <div class="flex gap-4">
-                                <div class="bg-h-dark p-3 rounded border border-h-border h-fit"><svg data-lucide="hard-hat" class="w-6 h-6 text-h-cta"></svg></div>
-                                <div>
-                                    <h4 class="text-white font-bold">On-Site Command</h4>
-                                    <p class="text-xs text-slate-500 mt-1">Deployment of expert Supervisors to oversee critical path installations.</p>
-                                </div>
-                            </div>
-                            <div class="flex gap-4">
-                                <div class="bg-h-dark p-3 rounded border border-h-border h-fit"><svg data-lucide="monitor-smartphone" class="w-6 h-6 text-h-cyan"></svg></div>
-                                <div>
-                                    <h4 class="text-white font-bold">Digital Overwatch</h4>
-                                    <p class="text-xs text-slate-500 mt-1">Remote sensor monitoring to reduce travel costs while maintaining vigilance.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Right: Membership Card -->
-                    <div class="membership-card p-8 rounded-2xl transform hover:scale-[1.02] transition duration-500">
-                        <div class="membership-badge">PRIORITY TIER</div>
-                        <div class="flex justify-between items-start mb-8">
-                            <div>
-                                <h3 class="text-2xl font-black text-white">AnoHUB Membership</h3>
-                                <p class="text-h-green font-mono text-xs mt-1">STATUS: OPEN FOR APPLICATION</p>
-                            </div>
-                            <svg data-lucide="shield-check" class="w-10 h-10 text-h-green"></svg>
-                        </div>
-                        
-                        <ul class="space-y-4 mb-8 text-sm text-slate-300">
-                            <li class="flex items-center gap-3"><div class="w-1.5 h-1.5 bg-h-green rounded-full"></div> Priority 24/7 Emergency Response</li>
-                            <li class="flex items-center gap-3"><div class="w-1.5 h-1.5 bg-h-green rounded-full"></div> Monthly Digital Health Reports</li>
-                            <li class="flex items-center gap-3"><div class="w-1.5 h-1.5 bg-h-green rounded-full"></div> Procurement Management Included</li>
-                            <li class="flex items-center gap-3"><div class="w-1.5 h-1.5 bg-h-green rounded-full"></div> Discounted On-Site Audits</li>
-                        </ul>
-
-                        <a href="contact.html" class="block w-full py-4 text-center bg-h-green hover:bg-green-400 text-black font-black rounded uppercase tracking-widest text-sm transition shadow-lg shadow-h-green/20">
-                            Request Access
-                        </a>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
-        <!-- LOGISTICS & PROCUREMENT -->
-        <section id="logistics" class="py-24">
+        <section id="logistics" class="py-24 bg-h-dark border-t border-h-border">
             <div class="max-w-7xl mx-auto px-4 text-center">
-                <h2 class="text-3xl font-black text-white mb-12">The Supply Chain Engine</h2>
-                
-                <div class="grid md:grid-cols-3 gap-8 relative">
-                    <!-- Connecting Line (Desktop) -->
-                    <div class="hidden md:block absolute top-1/2 left-10 right-10 h-0.5 bg-gradient-to-r from-h-border via-h-cyan/50 to-h-border -z-10 transform -translate-y-8"></div>
-
-                    <!-- Step 1 -->
-                    <div class="bg-h-dark p-8 rounded-xl border border-h-border relative group hover:border-h-cyan transition">
-                        <div class="w-16 h-16 bg-h-panel rounded-full border-4 border-h-dark flex items-center justify-center mx-auto mb-6 relative z-10 shadow-xl group-hover:scale-110 transition">
-                            <svg data-lucide="pen-tool" class="w-8 h-8 text-h-cyan"></svg>
-                        </div>
-                        <h3 class="text-lg font-bold text-white mb-2">01. Reverse Engineering</h3>
-                        <p class="text-sm text-slate-400">Creating precise blueprints for obsolete parts using 3D scanning.</p>
+                <h2 class="text-3xl font-black text-white mb-12">Physical Logistics & Supply Chain</h2>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="bg-h-panel p-6 rounded-lg border border-h-border hover:border-h-cyan transition">
+                        <svg data-lucide="pen-tool" class="w-10 h-10 text-h-cyan mx-auto mb-4"></svg>
+                        <h3 class="font-bold text-white">Reverse Engineering</h3>
+                        <p class="text-xs text-slate-400 mt-2">3D scanning obsolete parts to create blueprints.</p>
                     </div>
-
-                    <!-- Step 2 -->
-                    <div class="bg-h-dark p-8 rounded-xl border border-h-border relative group hover:border-h-cyan transition">
-                        <div class="w-16 h-16 bg-h-panel rounded-full border-4 border-h-dark flex items-center justify-center mx-auto mb-6 relative z-10 shadow-xl group-hover:scale-110 transition">
-                            <svg data-lucide="shopping-cart" class="w-8 h-8 text-h-cyan"></svg>
-                        </div>
-                        <h3 class="text-lg font-bold text-white mb-2">02. Global Sourcing</h3>
-                        <p class="text-sm text-slate-400">Negotiating with specialized manufacturers for raw materials.</p>
+                    <div class="bg-h-panel p-6 rounded-lg border border-h-border hover:border-h-cyan transition">
+                        <svg data-lucide="shopping-cart" class="w-10 h-10 text-h-cyan mx-auto mb-4"></svg>
+                        <h3 class="font-bold text-white">Global Sourcing</h3>
+                        <p class="text-xs text-slate-400 mt-2">Procurement of raw materials and OEM parts.</p>
                     </div>
-
-                    <!-- Step 3 -->
-                    <div class="bg-h-dark p-8 rounded-xl border border-h-border relative group hover:border-h-cyan transition">
-                        <div class="w-16 h-16 bg-h-panel rounded-full border-4 border-h-dark flex items-center justify-center mx-auto mb-6 relative z-10 shadow-xl group-hover:scale-110 transition">
-                            <svg data-lucide="truck" class="w-8 h-8 text-h-cyan"></svg>
-                        </div>
-                        <h3 class="text-lg font-bold text-white mb-2">03. Secure Delivery</h3>
-                        <p class="text-sm text-slate-400">Logistics management to ensure on-time arrival at your site.</p>
+                    <div class="bg-h-panel p-6 rounded-lg border border-h-border hover:border-h-cyan transition">
+                        <svg data-lucide="truck" class="w-10 h-10 text-h-cyan mx-auto mb-4"></svg>
+                        <h3 class="font-bold text-white">Secure Logistics</h3>
+                        <p class="text-xs text-slate-400 mt-2">Delivery to site, handled by experts.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- CTA -->
         <section class="py-20 bg-gradient-to-r from-h-dark to-h-panel border-t border-h-border text-center">
             <div class="max-w-3xl mx-auto px-4">
-                <h2 class="text-2xl font-bold text-white mb-4">First Inquiry Costs Nothing</h2>
-                <p class="text-slate-400 mb-8">We believe in proving value first. Contact us for a preliminary assessment.</p>
-                <a href="contact.html" class="inline-flex items-center gap-2 text-white font-bold border border-h-cta text-h-cta px-8 py-3 rounded hover:bg-h-cta hover:text-black transition uppercase tracking-wider text-sm">
+                <h2 class="text-2xl font-bold text-white mb-4">Unsure where to start?</h2>
+                <p class="text-slate-400 mb-8">Let's discuss your plant's specific pain points.</p>
+                <a href="contact.html" class="inline-flex items-center gap-2 text-white font-bold border border-h-cta text-h-cta px-8 py-3 rounded hover:bg-h-cta hover:text-black transition uppercase tracking-wider text-sm shadow-lg">
                     Start Conversation <svg data-lucide="message-square" class="w-4 h-4"></svg>
                 </a>
             </div>
@@ -348,7 +286,7 @@
     <footer class="bg-black border-t border-slate-900 py-12 text-center">
         <div class="max-w-7xl mx-auto px-4">
             <img src="logo.svg" alt="Logo" class="h-8 mx-auto mb-6 opacity-50 grayscale hover:grayscale-0 transition">
-            <p class="text-slate-500 text-xs mb-6 font-mono">© 2025 Anohubs Inc. | Operational Hub</p>
+            <p class="text-slate-500 text-xs font-mono">© 2025 Anohubs Inc. | Operational Hub</p>
         </div>
     </footer>
 

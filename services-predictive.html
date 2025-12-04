@@ -4,49 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI-Powered Predictive Maintenance | AnoHUB Services</title>
-    <meta name="description" content="Leverage our proprietary AI models to forecast potential equipment failures, reduce downtime, and optimize maintenance schedules for cost savings.">
+    <meta name="description" content="Leverage our proprietary AI models to forecast potential equipment failures, reduce downtime, and optimize maintenance schedules.">
     
-    <!-- 1. FONTS -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "Predictive Maintenance AI",
+      "provider": { "@type": "Organization", "name": "AnoHUB" },
+      "description": "AI-driven predictive analysis for turbine health monitoring."
+    }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    
-    <!-- 2. TAILWIND -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: { 
-                        sans: ['Inter', 'sans-serif'], 
-                        mono: ['JetBrains Mono', 'monospace'] 
-                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
                     colors: {
-                        'h-cyan': '#06b6d4', 
-                        'h-green': '#10b981', 
-                        'h-red': '#ef4444', 
-                        'h-yellow': '#facc15', 
-                        'h-purple': '#8b5cf6',
-                        'h-dark': '#020617', 
-                        'h-panel': '#0f172a', 
-                        'h-border': '#1e293b',
-                        'h-cta': '#f59e0b'
+                        'h-cyan': '#06b6d4', 'h-green': '#10b981', 'h-red': '#ef4444', 
+                        'h-yellow': '#facc15', 'h-purple': '#8b5cf6', 'h-dark': '#020617', 
+                        'h-panel': '#0f172a', 'h-border': '#1e293b', 'h-cta': '#f59e0b'
                     },
-                    animation: {
-                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
-                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'data-stream': 'dataStream 2s linear infinite',
-                    },
-                    keyframes: {
-                        fadeInUp: {
-                            '0%': { opacity: '0', transform: 'translateY(20px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
-                        },
-                        dataStream: {
-                            '0%': { backgroundPosition: '0 0' },
-                            '100%': { backgroundPosition: '0 20px' },
-                        }
-                    }
+                    animation: { 'fade-in-up': 'fadeInUp 0.8s ease-out forwards' },
+                    keyframes: { fadeInUp: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } } }
                 }
             }
         }
@@ -57,53 +42,39 @@
         
         /* Tech Grid Background */
         .tech-bg {
-            background-image: 
-                linear-gradient(rgba(16, 185, 129, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(16, 185, 129, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            background-image: linear-gradient(rgba(16, 185, 129, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(16, 185, 129, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
         }
 
         /* Hero Background */
         .hero-predictive {
             background-image: linear-gradient(180deg, rgba(2,6,23,0.8) 0%, rgba(2,6,23,1) 100%), url('proljece_arm.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+            background-size: cover; background-position: center; background-attachment: fixed;
         }
 
         /* Glass Cards */
         .glass-card {
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(16, 185, 129, 0.3); /* Green border */
-            transition: all 0.3s ease;
+            background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(12px);
+            border: 1px solid rgba(16, 185, 129, 0.3); transition: all 0.3s ease;
         }
-        .glass-card:hover {
-            border-color: #10b981;
-            box-shadow: 0 0 30px rgba(16, 185, 129, 0.15);
-            transform: translateY(-5px);
-        }
+        .glass-card:hover { border-color: #10b981; box-shadow: 0 0 30px rgba(16, 185, 129, 0.15); transform: translateY(-5px); }
 
-        /* Data Stream Effect */
-        .stream-line {
-            position: absolute; left: 50%; top: 0; width: 1px; height: 100%;
-            background: linear-gradient(to bottom, transparent, #10b981, transparent);
-            opacity: 0.3;
+        /* --- PRINT OPTIMIZATION --- */
+        @media print {
+            body { background-color: white !important; color: black !important; font-family: serif; }
+            .tech-bg, #navbar, footer, #mobile-sticky-cta { display: none !important; }
+            main { padding-top: 0 !important; }
+            .hero-predictive { height: auto !important; background: none !important; color: black !important; padding: 0 !important; }
+            h1, h2, h3, p { color: black !important; }
+            .glass-card, .bg-h-dark, .bg-h-panel { background: white !important; border: 1px solid #ccc !important; color: black !important; box-shadow: none !important; page-break-inside: avoid; }
+            body::before { content: "ANOHUBS SERVICE DATA SHEET: PREDICTIVE MAINTENANCE"; display: block; border-bottom: 2px solid black; margin-bottom: 20px; font-weight: bold; }
         }
-
-        /* Scroll Bar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #020617; }
-        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #10b981; }
     </style>
 </head>
 
 <body class="antialiased">
     <div class="tech-bg"></div>
 
-    <!-- NAV -->
     <header class="fixed w-full z-50 top-0 border-b border-white/5 bg-h-dark/90 backdrop-blur-md transition-all duration-300" id="navbar">
         <div class="max-w-7xl mx-auto px-4 h-20 flex justify-between items-center">
             <a href="index.html" class="flex items-center gap-3 group">
@@ -122,20 +93,16 @@
                 </a>
                 <a href="contact.html" class="px-5 py-2 bg-h-cta text-black rounded-full hover:bg-yellow-400 transition">Contact</a>
             </nav>
-            <button id="mobile-menu-btn" class="lg:hidden text-white p-2">
-                <svg data-lucide="menu" class="w-8 h-8"></svg>
-            </button>
+            <button id="mobile-menu-btn" class="lg:hidden text-white p-2"><svg data-lucide="menu" class="w-8 h-8"></svg></button>
         </div>
         <div id="mobile-menu" class="hidden lg:hidden absolute top-20 left-0 w-full bg-h-dark border-b border-h-border p-4 flex flex-col gap-4 shadow-2xl">
             <a href="services.html" class="text-slate-300 hover:text-h-green py-2 border-b border-h-border flex items-center gap-2"><svg data-lucide="arrow-left" class="w-4 h-4"></svg> Back to Services</a>
-            <a href="protocol.html" class="text-h-green font-bold py-2 border-b border-h-border flex items-center gap-2"><svg data-lucide="shield" class="w-4 h-4"></svg> PROTOCOL</a>
             <a href="contact.html" class="text-h-cta font-bold py-2">Contact Us</a>
         </div>
     </header>
 
     <main class="pt-20">
 
-        <!-- HERO -->
         <section class="hero-predictive min-h-[60vh] flex items-center justify-center relative">
             <div class="max-w-5xl mx-auto px-4 text-center relative z-10">
                 <a href="services.html" class="inline-flex items-center gap-2 text-h-green hover:text-white mb-6 transition text-sm font-mono uppercase tracking-widest">
@@ -152,19 +119,12 @@
                 </p>
                 
                 <div class="flex justify-center gap-12 animate-[fadeInUp_1s_ease-out_0.4s_forwards] opacity-0 text-center">
-                    <div>
-                        <div class="text-4xl font-black text-h-green mb-1">0%</div>
-                        <div class="text-[10px] font-mono text-slate-400 uppercase">Unplanned Downtime</div>
-                    </div>
-                    <div>
-                        <div class="text-4xl font-black text-white mb-1">24/7</div>
-                        <div class="text-[10px] font-mono text-slate-400 uppercase">Neural Monitoring</div>
-                    </div>
+                    <div><div class="text-4xl font-black text-h-green mb-1">0%</div><div class="text-[10px] font-mono text-slate-400 uppercase">Unplanned Downtime</div></div>
+                    <div><div class="text-4xl font-black text-white mb-1">24/7</div><div class="text-[10px] font-mono text-slate-400 uppercase">Neural Monitoring</div></div>
                 </div>
             </div>
         </section>
 
-        <!-- THE SHIFT (REACTIVE VS PREDICTIVE) -->
         <section class="py-20 bg-h-dark border-b border-h-border">
             <div class="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-16 items-center">
                 <div class="order-2 lg:order-1">
@@ -176,7 +136,7 @@
                             The traditional reactive maintenance model is a financial liability. Waiting for a vibration alarm is waiting too long. 
                         </p>
                         <p class="text-slate-300 leading-relaxed">
-                            We move you to a <strong>Predictive State</strong>. By implementing our **Digital Twin** philosophy across your SCADA system, AI detects minute anomalies—like harmonic shifts or thermal spikes—long before they trigger critical alarms.
+                            We move you to a <strong>Predictive State</strong>. By implementing our **Digital Twin** philosophy, AI detects minute anomalies long before they trigger critical alarms.
                         </p>
                     </div>
                 </div>
@@ -188,9 +148,7 @@
             </div>
         </section>
 
-        <!-- DIGITAL ECOSYSTEM GRID -->
         <section class="py-24 bg-h-panel relative">
-            <div class="absolute inset-0 bg-grid-pattern opacity-5"></div>
             <div class="max-w-7xl mx-auto px-4 relative z-10">
                 <div class="text-center mb-16">
                     <h2 class="text-3xl font-black text-white flex items-center justify-center gap-3">
@@ -199,112 +157,77 @@
                 </div>
 
                 <div class="grid md:grid-cols-3 gap-8 relative">
-                    <!-- Connection Line (Desktop) -->
                     <div class="hidden md:block absolute top-12 left-20 right-20 h-0.5 bg-gradient-to-r from-transparent via-h-green/30 to-transparent -z-10"></div>
 
-                    <!-- Step 1 -->
                     <div class="glass-card p-8 rounded-xl relative group hover:bg-h-green/5 transition text-center">
-                        <div class="w-16 h-16 mx-auto bg-h-dark rounded-full border-2 border-h-green flex items-center justify-center text-h-green mb-6 shadow-[0_0_20px_rgba(16,185,129,0.3)]">
-                            <svg data-lucide="component" class="w-8 h-8"></svg>
-                        </div>
+                        <div class="w-16 h-16 mx-auto bg-h-dark rounded-full border-2 border-h-green flex items-center justify-center text-h-green mb-6 shadow-[0_0_20px_rgba(16,185,129,0.3)]"><svg data-lucide="component" class="w-8 h-8"></svg></div>
                         <h3 class="text-xl font-bold text-white mb-3">Digital Twin Sync</h3>
-                        <p class="text-sm text-slate-400">Real-time synchronization of physical sensors (vibration, pressure, thermal) with a virtual replica of your turbine.</p>
+                        <p class="text-sm text-slate-400">Real-time synchronization of physical sensors with a virtual replica of your turbine.</p>
                     </div>
-
-                    <!-- Step 2 -->
                     <div class="glass-card p-8 rounded-xl relative group hover:bg-h-green/5 transition text-center">
-                        <div class="w-16 h-16 mx-auto bg-h-dark rounded-full border-2 border-h-green flex items-center justify-center text-h-green mb-6 shadow-[0_0_20px_rgba(16,185,129,0.3)]">
-                            <svg data-lucide="brain-circuit" class="w-8 h-8"></svg>
-                        </div>
+                        <div class="w-16 h-16 mx-auto bg-h-dark rounded-full border-2 border-h-green flex items-center justify-center text-h-green mb-6 shadow-[0_0_20px_rgba(16,185,129,0.3)]"><svg data-lucide="brain-circuit" class="w-8 h-8"></svg></div>
                         <h3 class="text-xl font-bold text-white mb-3">AI Processing</h3>
-                        <p class="text-sm text-slate-400">Proprietary algorithms analyze data streams to identify patterns invisible to human operators, predicting component fatigue.</p>
+                        <p class="text-sm text-slate-400">Proprietary algorithms analyze data streams to identify patterns invisible to human operators.</p>
                     </div>
-
-                    <!-- Step 3 -->
                     <div class="glass-card p-8 rounded-xl relative group hover:bg-h-green/5 transition text-center">
-                        <div class="w-16 h-16 mx-auto bg-h-dark rounded-full border-2 border-h-green flex items-center justify-center text-h-green mb-6 shadow-[0_0_20px_rgba(16,185,129,0.3)]">
-                            <svg data-lucide="calendar-check" class="w-8 h-8"></svg>
-                        </div>
+                        <div class="w-16 h-16 mx-auto bg-h-dark rounded-full border-2 border-h-green flex items-center justify-center text-h-green mb-6 shadow-[0_0_20px_rgba(16,185,129,0.3)]"><svg data-lucide="calendar-check" class="w-8 h-8"></svg></div>
                         <h3 class="text-xl font-bold text-white mb-3">Optimized Action</h3>
-                        <p class="text-sm text-slate-400">Maintenance is scheduled only when necessary, maximizing uptime and reducing unscheduled emergency costs.</p>
+                        <p class="text-sm text-slate-400">Maintenance is scheduled only when necessary, maximizing uptime.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- EXECUTION SERVICE (HARDWARE) -->
         <section class="py-20 bg-h-dark border-t border-h-border">
             <div class="max-w-5xl mx-auto px-4">
                 <div class="bg-gradient-to-r from-h-green/10 to-transparent border border-h-green/30 p-8 md:p-12 rounded-2xl relative overflow-hidden">
                     <div class="absolute top-0 right-0 p-6 opacity-10"><svg data-lucide="server" class="w-32 h-32 text-h-green"></svg></div>
-                    
                     <div class="relative z-10">
                         <h2 class="text-3xl font-black text-white mb-8">AnoHUB Hardware Execution</h2>
-                        
                         <div class="grid md:grid-cols-2 gap-8">
                             <div class="flex gap-4">
                                 <div class="bg-h-dark p-3 rounded border border-h-border h-fit"><svg data-lucide="cpu" class="w-6 h-6 text-h-green"></svg></div>
-                                <div>
-                                    <h4 class="text-white font-bold text-lg">Sensor Installation Squad</h4>
-                                    <p class="text-sm text-slate-400 mt-2">We physically install and calibrate high-fidelity IoT sensors on your equipment to ensure input data accuracy.</p>
-                                </div>
+                                <div><h4 class="text-white font-bold text-lg">Sensor Installation Squad</h4><p class="text-sm text-slate-400 mt-2">Physical installation and calibration of high-fidelity IoT sensors.</p></div>
                             </div>
-                            
                             <div class="flex gap-4">
                                 <div class="bg-h-dark p-3 rounded border border-h-border h-fit"><svg data-lucide="monitor-smartphone" class="w-6 h-6 text-h-green"></svg></div>
-                                <div>
-                                    <h4 class="text-white font-bold text-lg">Remote Monitoring Center</h4>
-                                    <p class="text-sm text-slate-400 mt-2">Our team monitors your Digital Twin 24/7, filtering false alarms and alerting you only when a real risk is validated.</p>
-                                </div>
+                                <div><h4 class="text-white font-bold text-lg">Remote Monitoring Center</h4><p class="text-sm text-slate-400 mt-2">24/7 digital overwatch, filtering false alarms for you.</p></div>
                             </div>
-                        </div>
-
-                        <div class="mt-10 pt-8 border-t border-h-border">
-                            <a href="contact.html" class="inline-flex items-center gap-2 text-h-green hover:text-white font-bold uppercase tracking-wider text-sm transition">
-                                Discuss Sensor Deployment <svg data-lucide="arrow-right" class="w-4 h-4"></svg>
-                            </a>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- CTA -->
         <section class="py-20 text-center">
             <div class="max-w-3xl mx-auto px-4">
                 <h2 class="text-2xl font-bold text-white mb-4">Ready to See the Future?</h2>
                 <p class="text-slate-400 mb-8">Deploy our predictive models and stop reacting to failures.</p>
-                <a href="contact.html" class="inline-flex items-center justify-center px-10 py-4 bg-h-green hover:bg-green-400 text-black font-black rounded transition shadow-lg shadow-h-green/20 uppercase tracking-widest">
-                    Deploy AI
-                </a>
+                <a href="contact.html" class="inline-flex items-center justify-center px-10 py-4 bg-h-green hover:bg-green-400 text-black font-black rounded transition shadow-lg shadow-h-green/20 uppercase tracking-widest">Deploy AI</a>
             </div>
         </section>
 
     </main>
 
-    <footer class="bg-black border-t border-slate-900 py-12 text-center">
-        <div class="max-w-7xl mx-auto px-4">
-            <p class="text-slate-600 text-xs font-mono">© 2025 Anohubs Inc. | PREDICTIVE DIVISION</p>
-        </div>
+    <div id="mobile-sticky-cta" class="lg:hidden fixed bottom-4 left-4 right-4 z-50 animate-[fadeInUp_1s_ease-out_1s_forwards] opacity-0">
+        <a href="contact.html" class="flex items-center justify-between bg-h-green/90 backdrop-blur-md text-black px-4 py-3 rounded-lg shadow-2xl border border-white/20">
+            <span class="text-xs font-bold uppercase tracking-wider">Deploy AI?</span>
+            <span class="bg-black text-h-green text-xs font-black px-2 py-1 rounded">CONTACT &rarr;</span>
+        </a>
+    </div>
+
+    <footer class="bg-black border-t border-slate-900 py-12 text-center mb-20 lg:mb-0">
+        <div class="max-w-7xl mx-auto px-4"><p class="text-slate-600 text-xs font-mono">© 2025 Anohubs Inc. | PREDICTIVE DIVISION</p></div>
     </footer>
 
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <script>
         lucide.createIcons();
-        
-        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
-            document.getElementById('mobile-menu').classList.toggle('hidden');
-        });
-
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => { document.getElementById('mobile-menu').classList.toggle('hidden'); });
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                nav.classList.add('shadow-lg', 'bg-h-dark/95');
-                nav.classList.remove('bg-h-dark/90');
-            } else {
-                nav.classList.remove('shadow-lg', 'bg-h-dark/95');
-                nav.classList.add('bg-h-dark/90');
-            }
+            if (window.scrollY > 50) { nav.classList.add('shadow-lg', 'bg-h-dark/95'); nav.classList.remove('bg-h-dark/90'); } 
+            else { nav.classList.remove('shadow-lg', 'bg-h-dark/95'); nav.classList.add('bg-h-dark/90'); }
         });
     </script>
 </body>

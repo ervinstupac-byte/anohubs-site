@@ -4,44 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Regulatory Compliance Firewall | AnoHUB Services</title>
-    <meta name="description" content="Automate and streamline complex compliance reporting. Our platform generates audit-ready documentation verifying adherence to regulations.">
+    <meta name="description" content="Automate complex compliance reporting. Our platform generates audit-ready documentation verifying adherence to regulations.">
     
-    <!-- 1. FONTS -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "Regulatory Compliance Firewall",
+      "provider": { "@type": "Organization", "name": "AnoHUB" },
+      "description": "Automated regulatory reporting and audit defense for hydropower assets."
+    }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     
-    <!-- 2. TAILWIND -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: { 
-                        sans: ['Inter', 'sans-serif'], 
-                        mono: ['JetBrains Mono', 'monospace'] 
-                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
                     colors: {
-                        'h-cyan': '#06b6d4', 
-                        'h-green': '#10b981', 
-                        'h-red': '#ef4444', 
-                        'h-yellow': '#facc15', 
-                        'h-purple': '#8b5cf6',
-                        'h-dark': '#020617', 
-                        'h-panel': '#0f172a', 
-                        'h-border': '#1e293b',
-                        'h-cta': '#f59e0b'
+                        'h-cyan': '#06b6d4', 'h-green': '#10b981', 'h-red': '#ef4444', 
+                        'h-yellow': '#facc15', 'h-purple': '#8b5cf6', 'h-dark': '#020617', 
+                        'h-panel': '#0f172a', 'h-border': '#1e293b', 'h-cta': '#f59e0b'
                     },
-                    animation: {
-                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
-                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                    },
-                    keyframes: {
-                        fadeInUp: {
-                            '0%': { opacity: '0', transform: 'translateY(20px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
-                        }
-                    }
+                    animation: { 'fade-in-up': 'fadeInUp 0.8s ease-out forwards' },
+                    keyframes: { fadeInUp: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } } }
                 }
             }
         }
@@ -52,46 +43,39 @@
         
         /* Tech Grid Background */
         .tech-bg {
-            background-image: 
-                linear-gradient(rgba(139, 92, 246, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(139, 92, 246, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            background-image: linear-gradient(rgba(139, 92, 246, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(139, 92, 246, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
         }
 
         /* Hero Background */
         .hero-compliance {
             background-image: linear-gradient(180deg, rgba(2,6,23,0.8) 0%, rgba(2,6,23,1) 100%), url('bihackanal.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+            background-size: cover; background-position: center; background-attachment: fixed;
         }
 
         /* Glass Cards */
         .glass-card {
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(139, 92, 246, 0.3); /* Purple border */
-            transition: all 0.3s ease;
+            background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(12px);
+            border: 1px solid rgba(139, 92, 246, 0.3); transition: all 0.3s ease;
         }
-        .glass-card:hover {
-            border-color: #8b5cf6;
-            box-shadow: 0 0 30px rgba(139, 92, 246, 0.15);
-            transform: translateY(-5px);
-        }
+        .glass-card:hover { border-color: #8b5cf6; box-shadow: 0 0 30px rgba(139, 92, 246, 0.15); transform: translateY(-5px); }
 
-        /* Scroll Bar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #020617; }
-        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #8b5cf6; }
+        /* --- PRINT OPTIMIZATION --- */
+        @media print {
+            body { background-color: white !important; color: black !important; font-family: serif; }
+            .tech-bg, #navbar, footer, #mobile-sticky-cta { display: none !important; }
+            main { padding-top: 0 !important; }
+            .hero-compliance { height: auto !important; background: none !important; color: black !important; padding: 0 !important; }
+            h1, h2, h3, p { color: black !important; }
+            .glass-card, .bg-h-dark, .bg-h-panel { background: white !important; border: 1px solid #ccc !important; color: black !important; box-shadow: none !important; page-break-inside: avoid; }
+            body::before { content: "ANOHUBS SERVICE DATA SHEET: REGULATORY COMPLIANCE"; display: block; border-bottom: 2px solid black; margin-bottom: 20px; font-weight: bold; }
+        }
     </style>
 </head>
 
 <body class="antialiased">
     <div class="tech-bg"></div>
 
-    <!-- NAV -->
     <header class="fixed w-full z-50 top-0 border-b border-white/5 bg-h-dark/90 backdrop-blur-md transition-all duration-300" id="navbar">
         <div class="max-w-7xl mx-auto px-4 h-20 flex justify-between items-center">
             <a href="index.html" class="flex items-center gap-3 group">
@@ -110,20 +94,16 @@
                 </a>
                 <a href="contact.html" class="px-5 py-2 bg-h-cta text-black rounded-full hover:bg-yellow-400 transition">Contact</a>
             </nav>
-            <button id="mobile-menu-btn" class="lg:hidden text-white p-2">
-                <svg data-lucide="menu" class="w-8 h-8"></svg>
-            </button>
+            <button id="mobile-menu-btn" class="lg:hidden text-white p-2"><svg data-lucide="menu" class="w-8 h-8"></svg></button>
         </div>
         <div id="mobile-menu" class="hidden lg:hidden absolute top-20 left-0 w-full bg-h-dark border-b border-h-border p-4 flex flex-col gap-4 shadow-2xl">
             <a href="services.html" class="text-slate-300 hover:text-h-purple py-2 border-b border-h-border flex items-center gap-2"><svg data-lucide="arrow-left" class="w-4 h-4"></svg> Back to Services</a>
-            <a href="protocol.html" class="text-h-purple font-bold py-2 border-b border-h-border flex items-center gap-2"><svg data-lucide="shield" class="w-4 h-4"></svg> PROTOCOL</a>
             <a href="contact.html" class="text-h-cta font-bold py-2">Contact Us</a>
         </div>
     </header>
 
     <main class="pt-20">
 
-        <!-- HERO -->
         <section class="hero-compliance min-h-[60vh] flex items-center justify-center relative">
             <div class="max-w-5xl mx-auto px-4 text-center relative z-10">
                 <a href="services.html" class="inline-flex items-center gap-2 text-h-purple hover:text-white mb-6 transition text-sm font-mono uppercase tracking-widest">
@@ -132,7 +112,7 @@
                 
                 <h1 class="text-5xl md:text-7xl font-black text-white mb-6 tracking-tight leading-none animate-[fadeInUp_1s_ease-out]">
                     REGULATORY <br>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-h-purple to-blue-500">COMPLIANCE</span>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-h-purple to-blue-500">FIREWALL</span>
                 </h1>
                 
                 <p class="text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed mb-10 animate-[fadeInUp_1s_ease-out_0.2s_forwards] opacity-0">
@@ -140,27 +120,14 @@
                 </p>
                 
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto animate-[fadeInUp_1s_ease-out_0.4s_forwards] opacity-0">
-                    <div class="bg-black/50 border border-slate-700 p-3 rounded text-center">
-                        <div class="text-h-purple font-black text-xl">ISO</div>
-                        <div class="text-[10px] text-slate-400 uppercase">Standard 55000</div>
-                    </div>
-                    <div class="bg-black/50 border border-slate-700 p-3 rounded text-center">
-                        <div class="text-h-purple font-black text-xl">GDPR</div>
-                        <div class="text-[10px] text-slate-400 uppercase">Data Secure</div>
-                    </div>
-                    <div class="bg-black/50 border border-slate-700 p-3 rounded text-center">
-                        <div class="text-h-purple font-black text-xl">IHA</div>
-                        <div class="text-[10px] text-slate-400 uppercase">Sustainability</div>
-                    </div>
-                    <div class="bg-black/50 border border-slate-700 p-3 rounded text-center">
-                        <div class="text-h-purple font-black text-xl">100%</div>
-                        <div class="text-[10px] text-slate-400 uppercase">Audit Pass Rate</div>
-                    </div>
+                    <div class="bg-black/50 border border-slate-700 p-3 rounded text-center"><div class="text-h-purple font-black text-xl">ISO</div><div class="text-[10px] text-slate-400 uppercase">Standard 55000</div></div>
+                    <div class="bg-black/50 border border-slate-700 p-3 rounded text-center"><div class="text-h-purple font-black text-xl">GDPR</div><div class="text-[10px] text-slate-400 uppercase">Data Secure</div></div>
+                    <div class="bg-black/50 border border-slate-700 p-3 rounded text-center"><div class="text-h-purple font-black text-xl">IHA</div><div class="text-[10px] text-slate-400 uppercase">Sustainability</div></div>
+                    <div class="bg-black/50 border border-slate-700 p-3 rounded text-center"><div class="text-h-purple font-black text-xl">100%</div><div class="text-[10px] text-slate-400 uppercase">Audit Pass Rate</div></div>
                 </div>
             </div>
         </section>
 
-        <!-- THE CHALLENGE -->
         <section class="py-20 bg-h-dark border-b border-h-border">
             <div class="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-16 items-center">
                 <div class="order-2 lg:order-1">
@@ -184,9 +151,7 @@
             </div>
         </section>
 
-        <!-- ASSURANCE PROTOCOL (PROCESS) -->
         <section class="py-24 bg-h-panel relative">
-            <div class="absolute inset-0 bg-grid-pattern opacity-5"></div>
             <div class="max-w-7xl mx-auto px-4 relative z-10">
                 <div class="text-center mb-16">
                     <h2 class="text-3xl font-black text-white flex items-center justify-center gap-3">
@@ -195,21 +160,16 @@
                 </div>
 
                 <div class="grid md:grid-cols-3 gap-8">
-                    <!-- Step 1 -->
                     <div class="glass-card p-8 rounded-xl relative group">
                         <div class="absolute -top-6 left-8 bg-h-dark border border-h-purple text-h-purple font-black text-xl w-12 h-12 flex items-center justify-center rounded-full shadow-lg group-hover:scale-110 transition">01</div>
                         <h3 class="text-xl font-bold text-white mt-4 mb-3">Automated Logging</h3>
                         <p class="text-sm text-slate-400">Real-time ingestion of operational data. Every vibration spike, every maintenance action is timestamped and immutably recorded.</p>
                     </div>
-
-                    <!-- Step 2 -->
                     <div class="glass-card p-8 rounded-xl relative group">
                         <div class="absolute -top-6 left-8 bg-h-dark border border-h-purple text-h-purple font-black text-xl w-12 h-12 flex items-center justify-center rounded-full shadow-lg group-hover:scale-110 transition">02</div>
                         <h3 class="text-xl font-bold text-white mt-4 mb-3">Forensic Analysis</h3>
                         <p class="text-sm text-slate-400">Root cause determination. In case of failure, we provide forensic proof (NDT/Metallurgy) to determine liability accurately.</p>
                     </div>
-
-                    <!-- Step 3 -->
                     <div class="glass-card p-8 rounded-xl relative group">
                         <div class="absolute -top-6 left-8 bg-h-dark border border-h-purple text-h-purple font-black text-xl w-12 h-12 flex items-center justify-center rounded-full shadow-lg group-hover:scale-110 transition">03</div>
                         <h3 class="text-xl font-bold text-white mt-4 mb-3">Digital Integration</h3>
@@ -219,79 +179,56 @@
             </div>
         </section>
 
-        <!-- EXECUTION SERVICE (DEFENSE MODE) -->
         <section class="py-20 bg-h-dark border-t border-h-border">
             <div class="max-w-5xl mx-auto px-4">
                 <div class="bg-gradient-to-r from-h-purple/10 to-transparent border border-h-purple/30 p-8 md:p-12 rounded-2xl relative overflow-hidden">
                     <div class="absolute top-0 right-0 p-6 opacity-10"><svg data-lucide="gavel" class="w-32 h-32 text-h-purple"></svg></div>
-                    
                     <div class="relative z-10">
-                        <h2 class="text-3xl font-black text-white mb-8">AnoHUB Execution Service</h2>
-                        
+                        <h2 class="text-3xl font-black text-white mb-8">AnoHUB Defense Service</h2>
                         <div class="grid md:grid-cols-2 gap-8">
                             <div class="flex gap-4">
                                 <div class="bg-h-dark p-3 rounded border border-h-border h-fit"><svg data-lucide="users" class="w-6 h-6 text-h-purple"></svg></div>
-                                <div>
-                                    <h4 class="text-white font-bold text-lg">Audit Defense Team</h4>
-                                    <p class="text-sm text-slate-400 mt-2">We stand physically by your side during inspections. Our experts answer technical queries on the spot, preventing misunderstandings.</p>
-                                </div>
+                                <div><h4 class="text-white font-bold text-lg">Audit Defense Team</h4><p class="text-sm text-slate-400 mt-2">We stand physically by your side during inspections.</p></div>
                             </div>
-                            
                             <div class="flex gap-4">
                                 <div class="bg-h-dark p-3 rounded border border-h-border h-fit"><svg data-lucide="file-check" class="w-6 h-6 text-h-purple"></svg></div>
-                                <div>
-                                    <h4 class="text-white font-bold text-lg">Legal Support Briefs</h4>
-                                    <p class="text-sm text-slate-400 mt-2">We prepare technical briefs for legal teams within 24 hours of an incident, helping you avoid unjustified fines.</p>
-                                </div>
+                                <div><h4 class="text-white font-bold text-lg">Legal Support Briefs</h4><p class="text-sm text-slate-400 mt-2">Technical briefs for legal teams within 24 hours.</p></div>
                             </div>
-                        </div>
-
-                        <div class="mt-10 pt-8 border-t border-h-border">
-                            <a href="contact.html" class="inline-flex items-center gap-2 text-h-purple hover:text-white font-bold uppercase tracking-wider text-sm transition">
-                                Deploy Defense Team <svg data-lucide="arrow-right" class="w-4 h-4"></svg>
-                            </a>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- CTA -->
         <section class="py-20 text-center">
             <div class="max-w-3xl mx-auto px-4">
                 <h2 class="text-2xl font-bold text-white mb-4">Is Your License Secure?</h2>
-                <p class="text-slate-400 mb-8">Don't wait for the inspector to find a gap. Let us verify your compliance status first.</p>
-                <a href="contact.html" class="inline-flex items-center justify-center px-10 py-4 bg-h-purple hover:bg-purple-400 text-black font-black rounded transition shadow-lg shadow-h-purple/20 uppercase tracking-widest">
-                    Secure Compliance
-                </a>
+                <p class="text-slate-400 mb-8">Don't wait for the inspector. Verify your compliance status first.</p>
+                <a href="contact.html" class="inline-flex items-center justify-center px-10 py-4 bg-h-purple hover:bg-purple-400 text-black font-black rounded transition shadow-lg shadow-h-purple/20 uppercase tracking-widest">Secure Compliance</a>
             </div>
         </section>
 
     </main>
 
-    <footer class="bg-black border-t border-slate-900 py-12 text-center">
-        <div class="max-w-7xl mx-auto px-4">
-            <p class="text-slate-600 text-xs font-mono">© 2025 Anohubs Inc. | REGULATORY DIVISION</p>
-        </div>
+    <div id="mobile-sticky-cta" class="lg:hidden fixed bottom-4 left-4 right-4 z-50 animate-[fadeInUp_1s_ease-out_1s_forwards] opacity-0">
+        <a href="contact.html" class="flex items-center justify-between bg-h-purple/90 backdrop-blur-md text-white px-4 py-3 rounded-lg shadow-2xl border border-white/20">
+            <span class="text-xs font-bold uppercase tracking-wider">Secure Audit?</span>
+            <span class="bg-white text-h-purple text-xs font-black px-2 py-1 rounded">CONTACT &rarr;</span>
+        </a>
+    </div>
+
+    <footer class="bg-black border-t border-slate-900 py-12 text-center mb-20 lg:mb-0">
+        <div class="max-w-7xl mx-auto px-4"><p class="text-slate-600 text-xs font-mono">© 2025 Anohubs Inc. | REGULATORY DIVISION</p></div>
     </footer>
 
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <script>
         lucide.createIcons();
-        
-        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
-            document.getElementById('mobile-menu').classList.toggle('hidden');
-        });
-
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => { document.getElementById('mobile-menu').classList.toggle('hidden'); });
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                nav.classList.add('shadow-lg', 'bg-h-dark/95');
-                nav.classList.remove('bg-h-dark/90');
-            } else {
-                nav.classList.remove('shadow-lg', 'bg-h-dark/95');
-                nav.classList.add('bg-h-dark/90');
-            }
+            if (window.scrollY > 50) { nav.classList.add('shadow-lg', 'bg-h-dark/95'); nav.classList.remove('bg-h-dark/90'); } 
+            else { nav.classList.remove('shadow-lg', 'bg-h-dark/95'); nav.classList.add('bg-h-dark/90'); }
         });
     </script>
 </body>

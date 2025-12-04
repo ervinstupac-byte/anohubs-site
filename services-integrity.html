@@ -6,12 +6,24 @@
     <title>Systemic Integrity Audits | AnoHUB Services</title>
     <meta name="description" content="Holistic examination of hydropower systems using FEA, NDT, and 3D Metrology protocols to ensure zero-defect structural integrity.">
     
-    <!-- 1. FONTS -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "Systemic Integrity Audit",
+      "provider": {
+        "@type": "Organization",
+        "name": "AnoHUB"
+      },
+      "description": "Advanced forensic auditing for hydropower assets using 3D Metrology and NDT.",
+      "areaServed": "Global"
+    }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     
-    <!-- 2. TAILWIND -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -34,8 +46,8 @@
                     },
                     animation: {
                         'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
-                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                         'scan-line': 'scanLine 3s linear infinite',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                     },
                     keyframes: {
                         fadeInUp: {
@@ -95,20 +107,49 @@
             box-shadow: 0 0 15px #06b6d4;
             animation: scanLine 4s ease-in-out infinite;
             z-index: 10;
+            pointer-events: none;
         }
 
-        /* Scroll Bar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #020617; }
-        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #06b6d4; }
+        /* --- PRINT OPTIMIZATION (THE C-LEVEL BROCHURE) --- */
+        @media print {
+            body { background-color: white !important; color: black !important; font-family: serif; }
+            .tech-bg, #navbar, footer, .scanner-bar, .mt-10, #mobile-sticky-cta { display: none !important; }
+            main { padding-top: 0 !important; }
+            
+            /* Cover Sheet Style */
+            .hero-integrity { 
+                height: auto !important; min-height: 0 !important; 
+                background: none !important; color: black !important; text-align: left !important;
+                padding: 0 !important; margin-bottom: 2rem !important;
+            }
+            .hero-integrity h1 { color: black !important; font-size: 28pt !important; }
+            .hero-integrity p { color: #333 !important; font-size: 14pt !important; }
+            .text-transparent { color: black !important; -webkit-text-fill-color: black !important; }
+            
+            /* Card Styling for Print */
+            .glass-card, .bg-h-dark, .bg-h-panel, .border-l-4 {
+                background: white !important;
+                border: 1px solid #ccc !important;
+                color: black !important;
+                box-shadow: none !important;
+                page-break-inside: avoid;
+                margin-bottom: 1rem;
+            }
+            .text-slate-300, .text-slate-400 { color: #333 !important; }
+            .text-white { color: black !important; }
+            
+            /* Header/Footer */
+            body::before {
+                content: "ANOHUBS SERVICE DATA SHEET: EXECUTION INTEGRITY";
+                display: block; border-bottom: 2px solid black; margin-bottom: 20px; font-weight: bold;
+            }
+        }
     </style>
 </head>
 
 <body class="antialiased">
     <div class="tech-bg"></div>
 
-    <!-- NAV -->
     <header class="fixed w-full z-50 top-0 border-b border-white/5 bg-h-dark/90 backdrop-blur-md transition-all duration-300" id="navbar">
         <div class="max-w-7xl mx-auto px-4 h-20 flex justify-between items-center">
             <a href="index.html" class="flex items-center gap-3 group">
@@ -120,6 +161,7 @@
             </a>
             <nav class="hidden lg:flex items-center gap-6 text-xs font-bold uppercase tracking-wider">
                 <a href="index.html" class="text-slate-400 hover:text-white transition">Home</a>
+                <a href="about-us-vision.html" class="text-slate-400 hover:text-white transition">About</a>
                 <a href="services.html" class="text-slate-400 hover:text-white transition">Services</a>
                 <a href="protocol.html" class="group relative inline-flex items-center gap-2 px-5 py-2 bg-h-cyan/10 text-h-cyan border border-h-cyan/50 rounded-full hover:bg-h-cyan hover:text-black transition-all duration-300">
                     <span>PROTOCOL</span>
@@ -140,9 +182,7 @@
 
     <main class="pt-20">
 
-        <!-- HERO -->
         <section class="hero-integrity min-h-[60vh] flex items-center justify-center relative scanner-container">
-            <!-- Scanner Animation Line -->
             <div class="scanner-bar"></div>
 
             <div class="max-w-5xl mx-auto px-4 text-center relative z-10">
@@ -167,7 +207,6 @@
             </div>
         </section>
 
-        <!-- THE CHALLENGE (ICEBERG) -->
         <section class="py-20 bg-h-dark border-b border-h-border">
             <div class="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-16 items-center">
                 <div class="order-2 lg:order-1">
@@ -191,7 +230,6 @@
             </div>
         </section>
 
-        <!-- THE TECH STACK (GRID) -->
         <section class="py-24 bg-h-panel relative">
             <div class="absolute inset-0 bg-grid-pattern opacity-5"></div>
             <div class="max-w-7xl mx-auto px-4 relative z-10">
@@ -202,21 +240,18 @@
                 </div>
 
                 <div class="grid md:grid-cols-3 gap-8">
-                    <!-- Tech 1 -->
                     <div class="glass-card p-8 rounded-xl relative group hover:bg-h-cyan/5 transition">
                         <div class="bg-h-dark p-4 rounded-full w-fit mb-6 border border-h-cyan text-h-cyan"><svg data-lucide="box-select" class="w-8 h-8"></svg></div>
                         <h3 class="text-xl font-bold text-white mb-3">3D Laser Metrology</h3>
                         <p class="text-sm text-slate-400">We create a sub-millimeter digital twin of your turbine. This reveals deviations from the OEM design (0.05mm tolerance) that cause flow inefficiency.</p>
                     </div>
 
-                    <!-- Tech 2 -->
                     <div class="glass-card p-8 rounded-xl relative group hover:bg-h-cyan/5 transition">
                         <div class="bg-h-dark p-4 rounded-full w-fit mb-6 border border-h-cyan text-h-cyan"><svg data-lucide="activity" class="w-8 h-8"></svg></div>
                         <h3 class="text-xl font-bold text-white mb-3">Advanced NDT</h3>
                         <p class="text-sm text-slate-400">Phased Array Ultrasonic Testing (PAUT) allows us to "see" inside welds and castings, detecting fatigue cracks before they propagate to failure.</p>
                     </div>
 
-                    <!-- Tech 3 -->
                     <div class="glass-card p-8 rounded-xl relative group hover:bg-h-cyan/5 transition">
                         <div class="bg-h-dark p-4 rounded-full w-fit mb-6 border border-h-cyan text-h-cyan"><svg data-lucide="cpu" class="w-8 h-8"></svg></div>
                         <h3 class="text-xl font-bold text-white mb-3">FEA Simulation</h3>
@@ -226,7 +261,6 @@
             </div>
         </section>
 
-        <!-- BLUEPRINT VISUALIZATION -->
         <section class="py-20 bg-h-dark border-y border-h-border">
             <div class="max-w-5xl mx-auto px-4">
                 <div class="bg-black/50 border border-slate-700 rounded-2xl p-8 relative overflow-hidden">
@@ -244,13 +278,11 @@
                             </div>
                         </div>
                         
-                        <!-- Abstract Turbine Blueprint Graphic -->
                         <div class="relative w-64 h-64 flex items-center justify-center">
                             <div class="absolute inset-0 border-2 border-dashed border-h-cyan/30 rounded-full animate-spin-slow"></div>
                             <div class="absolute inset-4 border border-h-cyan/20 rounded-full"></div>
                             <svg data-lucide="fan" class="w-32 h-32 text-h-cyan opacity-80"></svg>
                             
-                            <!-- Hotspot Marker -->
                             <div class="absolute top-10 right-10 w-4 h-4 bg-h-red rounded-full animate-ping"></div>
                             <div class="absolute top-10 right-10 w-4 h-4 bg-h-red/50 rounded-full border border-h-red"></div>
                         </div>
@@ -259,7 +291,6 @@
             </div>
         </section>
 
-        <!-- EXECUTION SERVICE -->
         <section class="py-20 bg-h-panel">
             <div class="max-w-5xl mx-auto px-4 text-center">
                 <h2 class="text-3xl font-black text-white mb-12">Execution Protocols</h2>
@@ -282,7 +313,6 @@
             </div>
         </section>
 
-        <!-- CTA -->
         <section class="py-20 text-center">
             <div class="max-w-3xl mx-auto px-4">
                 <h2 class="text-2xl font-bold text-white mb-4">Ready to Scan?</h2>
@@ -295,7 +325,14 @@
 
     </main>
 
-    <footer class="bg-black border-t border-slate-900 py-12 text-center">
+    <div id="mobile-sticky-cta" class="lg:hidden fixed bottom-4 left-4 right-4 z-50 animate-[fadeInUp_1s_ease-out_1s_forwards] opacity-0">
+        <a href="contact.html" class="flex items-center justify-between bg-h-cyan/90 backdrop-blur-md text-black px-4 py-3 rounded-lg shadow-2xl border border-white/20">
+            <span class="text-xs font-bold uppercase tracking-wider">Need Audit?</span>
+            <span class="bg-black text-h-cyan text-xs font-black px-2 py-1 rounded">DEPLOY &rarr;</span>
+        </a>
+    </div>
+
+    <footer class="bg-black border-t border-slate-900 py-12 text-center mb-20 lg:mb-0">
         <div class="max-w-7xl mx-auto px-4">
             <p class="text-slate-600 text-xs font-mono">© 2025 Anohubs Inc. | INTEGRITY DIVISION</p>
         </div>

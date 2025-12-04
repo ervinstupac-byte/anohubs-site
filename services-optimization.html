@@ -6,42 +6,32 @@
     <title>Performance Optimization Analysis | AnoHUB Services</title>
     <meta name="description" content="We identify inefficiencies and mitigate risks, translating to improved energy output and profitability.">
     
-    <!-- 1. FONTS -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "Performance Optimization",
+      "provider": { "@type": "Organization", "name": "AnoHUB" },
+      "description": "Hydropower efficiency tuning and reverse engineering services."
+    }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    
-    <!-- 2. TAILWIND -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: { 
-                        sans: ['Inter', 'sans-serif'], 
-                        mono: ['JetBrains Mono', 'monospace'] 
-                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
                     colors: {
-                        'h-cyan': '#06b6d4', 
-                        'h-green': '#10b981', 
-                        'h-red': '#ef4444', 
-                        'h-yellow': '#facc15', 
-                        'h-purple': '#8b5cf6',
-                        'h-dark': '#020617', 
-                        'h-panel': '#0f172a', 
-                        'h-border': '#1e293b',
-                        'h-cta': '#f59e0b'
+                        'h-cyan': '#06b6d4', 'h-green': '#10b981', 'h-red': '#ef4444', 
+                        'h-yellow': '#facc15', 'h-purple': '#8b5cf6', 'h-dark': '#020617', 
+                        'h-panel': '#0f172a', 'h-border': '#1e293b', 'h-cta': '#f59e0b'
                     },
-                    animation: {
-                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
-                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                    },
-                    keyframes: {
-                        fadeInUp: {
-                            '0%': { opacity: '0', transform: 'translateY(20px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
-                        }
-                    }
+                    animation: { 'fade-in-up': 'fadeInUp 0.8s ease-out forwards' },
+                    keyframes: { fadeInUp: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } } }
                 }
             }
         }
@@ -52,46 +42,39 @@
         
         /* Tech Grid Background */
         .tech-bg {
-            background-image: 
-                linear-gradient(rgba(250, 204, 21, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(250, 204, 21, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            background-image: linear-gradient(rgba(250, 204, 21, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(250, 204, 21, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
         }
 
         /* Hero Background */
         .hero-optimization {
             background-image: linear-gradient(180deg, rgba(2,6,23,0.8) 0%, rgba(2,6,23,1) 100%), url('zima_arm.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+            background-size: cover; background-position: center; background-attachment: fixed;
         }
 
         /* Glass Cards */
         .glass-card {
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(250, 204, 21, 0.3); /* Yellow border */
-            transition: all 0.3s ease;
+            background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(12px);
+            border: 1px solid rgba(250, 204, 21, 0.3); transition: all 0.3s ease;
         }
-        .glass-card:hover {
-            border-color: #facc15;
-            box-shadow: 0 0 30px rgba(250, 204, 21, 0.15);
-            transform: translateY(-5px);
-        }
+        .glass-card:hover { border-color: #facc15; box-shadow: 0 0 30px rgba(250, 204, 21, 0.15); transform: translateY(-5px); }
 
-        /* Scroll Bar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #020617; }
-        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #facc15; }
+        /* --- PRINT OPTIMIZATION --- */
+        @media print {
+            body { background-color: white !important; color: black !important; font-family: serif; }
+            .tech-bg, #navbar, footer, #mobile-sticky-cta { display: none !important; }
+            main { padding-top: 0 !important; }
+            .hero-optimization { height: auto !important; background: none !important; color: black !important; padding: 0 !important; }
+            h1, h2, h3, p { color: black !important; }
+            .glass-card, .bg-h-dark, .bg-h-panel { background: white !important; border: 1px solid #ccc !important; color: black !important; box-shadow: none !important; page-break-inside: avoid; }
+            body::before { content: "ANOHUBS SERVICE DATA SHEET: PERFORMANCE OPTIMIZATION"; display: block; border-bottom: 2px solid black; margin-bottom: 20px; font-weight: bold; }
+        }
     </style>
 </head>
 
 <body class="antialiased">
     <div class="tech-bg"></div>
 
-    <!-- NAV -->
     <header class="fixed w-full z-50 top-0 border-b border-white/5 bg-h-dark/90 backdrop-blur-md transition-all duration-300" id="navbar">
         <div class="max-w-7xl mx-auto px-4 h-20 flex justify-between items-center">
             <a href="index.html" class="flex items-center gap-3 group">
@@ -110,20 +93,16 @@
                 </a>
                 <a href="contact.html" class="px-5 py-2 bg-h-cta text-black rounded-full hover:bg-yellow-400 transition">Contact</a>
             </nav>
-            <button id="mobile-menu-btn" class="lg:hidden text-white p-2">
-                <svg data-lucide="menu" class="w-8 h-8"></svg>
-            </button>
+            <button id="mobile-menu-btn" class="lg:hidden text-white p-2"><svg data-lucide="menu" class="w-8 h-8"></svg></button>
         </div>
         <div id="mobile-menu" class="hidden lg:hidden absolute top-20 left-0 w-full bg-h-dark border-b border-h-border p-4 flex flex-col gap-4 shadow-2xl">
             <a href="services.html" class="text-slate-300 hover:text-h-yellow py-2 border-b border-h-border flex items-center gap-2"><svg data-lucide="arrow-left" class="w-4 h-4"></svg> Back to Services</a>
-            <a href="protocol.html" class="text-h-yellow font-bold py-2 border-b border-h-border flex items-center gap-2"><svg data-lucide="shield" class="w-4 h-4"></svg> PROTOCOL</a>
             <a href="contact.html" class="text-h-cta font-bold py-2">Contact Us</a>
         </div>
     </header>
 
     <main class="pt-20">
 
-        <!-- HERO -->
         <section class="hero-optimization min-h-[60vh] flex items-center justify-center relative">
             <div class="max-w-5xl mx-auto px-4 text-center relative z-10">
                 <a href="services.html" class="inline-flex items-center gap-2 text-h-yellow hover:text-white mb-6 transition text-sm font-mono uppercase tracking-widest">
@@ -140,23 +119,13 @@
                 </p>
                 
                 <div class="grid grid-cols-3 gap-4 max-w-2xl mx-auto animate-[fadeInUp_1s_ease-out_0.4s_forwards] opacity-0 font-mono text-xs">
-                    <div class="bg-black/50 border border-slate-700 p-3 rounded text-center">
-                        <div class="text-h-yellow font-bold text-lg">+3.2%</div>
-                        <div class="text-slate-400 uppercase">Efficiency Target</div>
-                    </div>
-                    <div class="bg-black/50 border border-slate-700 p-3 rounded text-center">
-                        <div class="text-h-green font-bold text-lg">99.9%</div>
-                        <div class="text-slate-400 uppercase">Uptime Goal</div>
-                    </div>
-                    <div class="bg-black/50 border border-slate-700 p-3 rounded text-center">
-                        <div class="text-white font-bold text-lg">24/7</div>
-                        <div class="text-slate-400 uppercase">Monitoring</div>
-                    </div>
+                    <div class="bg-black/50 border border-slate-700 p-3 rounded text-center"><div class="text-h-yellow font-bold text-lg">+3.2%</div><div class="text-slate-400 uppercase">Efficiency Target</div></div>
+                    <div class="bg-black/50 border border-slate-700 p-3 rounded text-center"><div class="text-h-green font-bold text-lg">99.9%</div><div class="text-slate-400 uppercase">Uptime Goal</div></div>
+                    <div class="bg-black/50 border border-slate-700 p-3 rounded text-center"><div class="text-white font-bold text-lg">24/7</div><div class="text-slate-400 uppercase">Monitoring</div></div>
                 </div>
             </div>
         </section>
 
-        <!-- THE CHALLENGE -->
         <section class="py-20 bg-h-dark border-b border-h-border">
             <div class="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-16 items-center">
                 <div class="order-2 lg:order-1">
@@ -165,7 +134,7 @@
                             <svg data-lucide="trending-up" class="w-6 h-6 text-h-yellow"></svg> Maximizing Potential
                         </h2>
                         <p class="text-slate-300 leading-relaxed mb-6">
-                            Optimization is not just about producing more power; it's about reducing operational drag. Our analysis targets the **48% dynamic risk factor**—mechanical friction, hydraulic turbulence, and electrical losses that silently bleed profit.
+                            Optimization is not just about producing more power; it's about reducing operational drag. Our analysis targets the **48% dynamic risk factor**—mechanical friction, hydraulic turbulence, and electrical losses.
                         </p>
                         <p class="text-slate-300 leading-relaxed">
                             We don't just find the problem; we calculate the **ROI of fixing it**.
@@ -180,9 +149,7 @@
             </div>
         </section>
 
-        <!-- OPTIMIZATION DRIVERS -->
         <section class="py-24 bg-h-panel relative">
-            <div class="absolute inset-0 bg-grid-pattern opacity-5"></div>
             <div class="max-w-7xl mx-auto px-4 relative z-10">
                 <div class="text-center mb-16">
                     <h2 class="text-3xl font-black text-white flex items-center justify-center gap-3">
@@ -191,112 +158,78 @@
                 </div>
 
                 <div class="grid md:grid-cols-3 gap-8">
-                    <!-- Driver 1 -->
                     <div class="glass-card p-8 rounded-xl relative group">
                         <div class="absolute -top-6 left-8 bg-h-dark border border-h-yellow text-h-yellow font-black text-xl w-12 h-12 flex items-center justify-center rounded-full shadow-lg group-hover:scale-110 transition">01</div>
                         <h3 class="text-xl font-bold text-white mt-4 mb-3">Hydraulic Tuning</h3>
-                        <p class="text-sm text-slate-400">Utilizing CFD to identify flow separation. Adjusting guide vane angles and runner geometry to close the efficiency gap.</p>
-                        <div class="mt-4 pt-4 border-t border-slate-700">
-                            <span class="text-xs font-mono text-h-green">TARGET: +2.5% EFFICIENCY</span>
-                        </div>
+                        <p class="text-sm text-slate-400">Utilizing CFD to identify flow separation. Adjusting guide vane angles and runner geometry.</p>
+                        <div class="mt-4 pt-4 border-t border-slate-700"><span class="text-xs font-mono text-h-green">TARGET: +2.5% EFFICIENCY</span></div>
                     </div>
-
-                    <!-- Driver 2 -->
                     <div class="glass-card p-8 rounded-xl relative group">
                         <div class="absolute -top-6 left-8 bg-h-dark border border-h-yellow text-h-yellow font-black text-xl w-12 h-12 flex items-center justify-center rounded-full shadow-lg group-hover:scale-110 transition">02</div>
                         <h3 class="text-xl font-bold text-white mt-4 mb-3">Mechanical Precision</h3>
-                        <p class="text-sm text-slate-400">Enforcing the 0.05mm alignment standard. Reducing vibration means reducing friction loss and bearing wear.</p>
-                        <div class="mt-4 pt-4 border-t border-slate-700">
-                            <span class="text-xs font-mono text-h-green">TARGET: -80% VIBRATION</span>
-                        </div>
+                        <p class="text-sm text-slate-400">Enforcing the 0.05mm alignment standard. Reducing vibration means reducing friction loss.</p>
+                        <div class="mt-4 pt-4 border-t border-slate-700"><span class="text-xs font-mono text-h-green">TARGET: -80% VIBRATION</span></div>
                     </div>
-
-                    <!-- Driver 3 -->
                     <div class="glass-card p-8 rounded-xl relative group">
                         <div class="absolute -top-6 left-8 bg-h-dark border border-h-yellow text-h-yellow font-black text-xl w-12 h-12 flex items-center justify-center rounded-full shadow-lg group-hover:scale-110 transition">03</div>
                         <h3 class="text-xl font-bold text-white mt-4 mb-3">Strategic Uptime</h3>
-                        <p class="text-sm text-slate-400">Moving from reactive repairs to predictive scheduling. Eliminating unplanned outages maximizes revenue availability.</p>
-                        <div class="mt-4 pt-4 border-t border-slate-700">
-                            <span class="text-xs font-mono text-h-green">TARGET: 99% AVAILABILITY</span>
-                        </div>
+                        <p class="text-sm text-slate-400">Moving from reactive repairs to predictive scheduling. Maximizing revenue availability.</p>
+                        <div class="mt-4 pt-4 border-t border-slate-700"><span class="text-xs font-mono text-h-green">TARGET: 99% AVAILABILITY</span></div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- EXECUTION SERVICE (HARDWARE) -->
         <section class="py-20 bg-h-dark border-t border-h-border">
             <div class="max-w-5xl mx-auto px-4">
                 <div class="bg-gradient-to-r from-h-yellow/10 to-transparent border border-h-yellow/30 p-8 md:p-12 rounded-2xl relative overflow-hidden">
                     <div class="absolute top-0 right-0 p-6 opacity-10"><svg data-lucide="settings" class="w-32 h-32 text-h-yellow"></svg></div>
-                    
                     <div class="relative z-10">
-                        <h2 class="text-3xl font-black text-white mb-8">Hardware Modernization Logistics</h2>
-                        
+                        <h2 class="text-3xl font-black text-white mb-8">Hardware Modernization</h2>
                         <div class="grid md:grid-cols-2 gap-8">
                             <div class="flex gap-4">
                                 <div class="bg-h-dark p-3 rounded border border-h-border h-fit"><svg data-lucide="pen-tool" class="w-6 h-6 text-h-yellow"></svg></div>
-                                <div>
-                                    <h4 class="text-white font-bold text-lg">Reverse Engineering</h4>
-                                    <p class="text-sm text-slate-400 mt-2">We 3D scan obsolete parts to create precise CAD blueprints, allowing for the manufacturing of modern, upgraded replacements.</p>
-                                </div>
+                                <div><h4 class="text-white font-bold text-lg">Reverse Engineering</h4><p class="text-sm text-slate-400 mt-2">3D scanning obsolete parts to create modern replacements.</p></div>
                             </div>
-                            
                             <div class="flex gap-4">
                                 <div class="bg-h-dark p-3 rounded border border-h-border h-fit"><svg data-lucide="truck" class="w-6 h-6 text-h-yellow"></svg></div>
-                                <div>
-                                    <h4 class="text-white font-bold text-lg">Global Sourcing</h4>
-                                    <p class="text-sm text-slate-400 mt-2">We handle the entire procurement chain—from raw material negotiation to logistics—ensuring parts arrive on time and to spec.</p>
-                                </div>
+                                <div><h4 class="text-white font-bold text-lg">Global Sourcing</h4><p class="text-sm text-slate-400 mt-2">Managing the entire procurement chain for quality assurance.</p></div>
                             </div>
-                        </div>
-
-                        <div class="mt-10 pt-8 border-t border-h-border">
-                            <a href="contact.html" class="inline-flex items-center gap-2 text-h-yellow hover:text-white font-bold uppercase tracking-wider text-sm transition">
-                                Discuss Modernization <svg data-lucide="arrow-right" class="w-4 h-4"></svg>
-                            </a>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- CTA -->
         <section class="py-20 text-center">
             <div class="max-w-3xl mx-auto px-4">
                 <h2 class="text-2xl font-bold text-white mb-4">Calculate Your Potential</h2>
                 <p class="text-slate-400 mb-8">Don't leave profit on the table. Let us audit your efficiency gaps.</p>
-                <a href="contact.html" class="inline-flex items-center justify-center px-10 py-4 bg-h-yellow hover:bg-yellow-400 text-black font-black rounded transition shadow-lg shadow-h-yellow/20 uppercase tracking-widest">
-                    Optimize Now
-                </a>
+                <a href="contact.html" class="inline-flex items-center justify-center px-10 py-4 bg-h-yellow hover:bg-yellow-400 text-black font-black rounded transition shadow-lg shadow-h-yellow/20 uppercase tracking-widest">Optimize Now</a>
             </div>
         </section>
 
     </main>
 
-    <footer class="bg-black border-t border-slate-900 py-12 text-center">
-        <div class="max-w-7xl mx-auto px-4">
-            <p class="text-slate-600 text-xs font-mono">© 2025 Anohubs Inc. | OPTIMIZATION DIVISION</p>
-        </div>
+    <div id="mobile-sticky-cta" class="lg:hidden fixed bottom-4 left-4 right-4 z-50 animate-[fadeInUp_1s_ease-out_1s_forwards] opacity-0">
+        <a href="contact.html" class="flex items-center justify-between bg-h-yellow/90 backdrop-blur-md text-black px-4 py-3 rounded-lg shadow-2xl border border-white/20">
+            <span class="text-xs font-bold uppercase tracking-wider">Start Optimization?</span>
+            <span class="bg-black text-h-yellow text-xs font-black px-2 py-1 rounded">CONTACT &rarr;</span>
+        </a>
+    </div>
+
+    <footer class="bg-black border-t border-slate-900 py-12 text-center mb-20 lg:mb-0">
+        <div class="max-w-7xl mx-auto px-4"><p class="text-slate-600 text-xs font-mono">© 2025 Anohubs Inc. | OPTIMIZATION DIVISION</p></div>
     </footer>
 
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <script>
         lucide.createIcons();
-        
-        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
-            document.getElementById('mobile-menu').classList.toggle('hidden');
-        });
-
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => { document.getElementById('mobile-menu').classList.toggle('hidden'); });
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                nav.classList.add('shadow-lg', 'bg-h-dark/95');
-                nav.classList.remove('bg-h-dark/90');
-            } else {
-                nav.classList.remove('shadow-lg', 'bg-h-dark/95');
-                nav.classList.add('bg-h-dark/90');
-            }
+            if (window.scrollY > 50) { nav.classList.add('shadow-lg', 'bg-h-dark/95'); nav.classList.remove('bg-h-dark/90'); } 
+            else { nav.classList.remove('shadow-lg', 'bg-h-dark/95'); nav.classList.add('bg-h-dark/90'); }
         });
     </script>
 </body>
