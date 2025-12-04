@@ -244,8 +244,15 @@
                         TAGS: #HydroBoom #AI #PSH #GlobalEnergy #Leadership
                     </div>
                     <div class="flex gap-4">
-                         <button class="text-slate-400 hover:text-white transition"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" x2="12" y1="2" y2="15"/></svg></button>
-                         <button class="text-slate-400 hover:text-white transition"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/></svg></button>
+                         <button onclick="shareArticle()" class="text-slate-400 hover:text-white transition group relative" title="Share Article">
+                            <div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-h-purple text-black text-[10px] font-bold px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition pointer-events-none">SHARE</div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" x2="12" y1="2" y2="15"/></svg>
+                         </button>
+                         
+                         <button onclick="copyLink(this)" class="text-slate-400 hover:text-white transition group relative" title="Copy Link">
+                            <div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-h-cyan text-black text-[10px] font-bold px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition pointer-events-none" id="copy-tooltip">COPY LINK</div>
+                            <svg id="copy-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                         </button>
                     </div>
                 </div>
 
@@ -312,23 +319,23 @@
     </footer>
 
     <script>
-        // Reading Progress Bar & Time
+        // Reading Progress Bar & Time Logic
         window.addEventListener('scroll', () => {
             const article = document.querySelector('.article-body');
             const totalHeight = article.clientHeight;
             const visibleHeight = window.innerHeight;
             const currentPos = window.scrollY;
             
-            // Progress Bar Width
+            // Progress Bar
             let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
             let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
             let scrolled = (winScroll / height) * 100;
             document.getElementById("reading-progress").style.width = scrolled + "%";
 
-            // Time Remaining Logic
+            // Time Remaining
             if(article) {
                 const percent = Math.min(1, Math.max(0, currentPos / (totalHeight - visibleHeight + 200)));
-                const totalMinutes = 4; // Based on header
+                const totalMinutes = 4; // Based on header metadata
                 const remaining = Math.ceil(totalMinutes * (1 - percent));
                 
                 const timeDisplay = document.getElementById('time-remaining');
@@ -339,24 +346,59 @@
             }
         });
 
-        // Click-to-Copy Logic
+        // Click-to-Copy Quote Logic
         function copyToClipboard(element) {
             const text = element.innerText;
             navigator.clipboard.writeText(text).then(() => {
                 const originalBorder = element.style.borderColor;
                 const originalBg = element.style.background;
                 
-                // Visual Feedback
+                // Visual Feedback (Green flash)
                 element.style.borderColor = '#10b981'; // Green
                 element.style.background = 'rgba(16, 185, 129, 0.1)';
-                
-                // Add temporary "COPIED" text
-                const originalAfter = window.getComputedStyle(element, '::after').getPropertyValue('content');
                 
                 setTimeout(() => {
                     element.style.borderColor = originalBorder;
                     element.style.background = originalBg;
                 }, 1000);
+            });
+        }
+
+        // --- SHARE FUNCTIONALITY ---
+        function shareArticle() {
+            const title = document.title;
+            const text = "Check out this intelligence brief from AnoHUB.";
+            const url = window.location.href;
+
+            if (navigator.share) {
+                navigator.share({
+                    title: title,
+                    text: text,
+                    url: url
+                }).catch((error) => console.log('Error sharing', error));
+            } else {
+                copyLink(document.querySelector('button[title="Copy Link"]'));
+                alert("Link copied to clipboard! (Native share not supported on this device)");
+            }
+        }
+
+        // --- COPY LINK FUNCTIONALITY ---
+        function copyLink(btnElement) {
+            const url = window.location.href;
+            navigator.clipboard.writeText(url).then(() => {
+                const icon = btnElement.querySelector('svg');
+                const tooltip = btnElement.querySelector('#copy-tooltip');
+                
+                btnElement.classList.remove('text-slate-400');
+                btnElement.classList.add('text-h-green');
+                
+                if(tooltip) tooltip.innerText = "COPIED!";
+                
+                setTimeout(() => {
+                    btnElement.classList.remove('text-h-green');
+                    btnElement.classList.add('text-slate-400');
+                    if(tooltip) tooltip.innerText = "COPY LINK";
+                }, 2000);
             });
         }
     </script>
