@@ -64,12 +64,28 @@
     <style>
         body { background-color: #020617; color: #f8fafc; overflow-x: hidden; }
         
-        /* Tech Grid Background */
+        /* --- NOVI SLOJ ZA POZADINSKU SLIKU --- */
+        .bg-image-layer {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            z-index: -2; /* Najdublji sloj */
+            
+            /* OVDJE PROMIJENI PUTANJU AKO JE SLIKA U FOLDERU (npr. 'slike/about_us_bckgrnd.jpg') */
+            background-image: url('about_us_bckgrnd.jpg'); 
+            
+            background-size: cover; background-position: center;
+            
+            /* Postavke za "Premium" tamni izgled: */
+            opacity: 0.25; /* Dovoljno tamno da tekst bude čitljiv */
+            filter: grayscale(100%) contrast(1.1); /* Crno-bijelo za profesionalni dojam */
+        }
+
+        /* Tech Grid Background (Sada je iznad slike) */
         .tech-bg {
             background-image: linear-gradient(rgba(6, 182, 212, 0.03) 1px, transparent 1px),
             linear-gradient(90deg, rgba(6, 182, 212, 0.03) 1px, transparent 1px);
             background-size: 50px 50px;
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            z-index: -1; /* Iznad slike, ispod sadržaja */
         }
 
         /* Glass Cards */
@@ -94,7 +110,8 @@
         /* --- PRINT OPTIMIZATION --- */
         @media print {
             body { background-color: white !important; color: black !important; font-family: serif; }
-            .tech-bg, #navbar, footer, #mobile-sticky-cta, .portrait-scanline, .timeline-line, .absolute { display: none !important; }
+            /* Sakrij pozadine kod printanja da se uštedi tinta */
+            .tech-bg, .bg-image-layer, #navbar, footer, #mobile-sticky-cta, .portrait-scanline, .timeline-line, .absolute { display: none !important; }
             main { padding-top: 0 !important; }
             h1 { color: black !important; font-size: 24pt !important; }
             h2, h3, h4 { color: #333 !important; }
@@ -119,6 +136,9 @@
 </head>
 
 <body class="antialiased">
+    
+    <div class="bg-image-layer"></div>
+    
     <div class="tech-bg"></div>
 
     <header class="fixed w-full z-50 top-0 border-b border-white/5 bg-h-dark/90 backdrop-blur-md transition-all duration-300" id="navbar">

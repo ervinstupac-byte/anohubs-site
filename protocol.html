@@ -6,6 +6,16 @@
     <title>AnoHUB | TITAN PROTOCOL v35.0</title>
     <meta name="description" content="The central index of AnoHUB's 22 engineering protocols. Access the full matrix of hydro integrity modules.">
     
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": "TITAN PROTOCOL v35.0",
+      "description": "Centralized index of 22 engineering and operational protocols.",
+      "provider": { "@type": "Organization", "name": "AnoHUB" }
+    }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=JetBrains+Mono:wght@300;500;800&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
@@ -128,7 +138,7 @@
         ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; border: 1px solid #000; }
         ::-webkit-scrollbar-thumb:hover { background: #FFD700; }
 
-        /* --- PRINT OPTIMIZATION --- */
+        /* --- PRINT OPTIMIZATION (CATALOG MODE) --- */
         @media print {
             body { background-color: white !important; color: black !important; font-family: serif; cursor: default; }
             .matrix-canvas, .holy-grid, .universe-container, #ai-takeover, .top-bar-fixed, .bottom-bounce { display: none !important; }
@@ -139,6 +149,7 @@
             }
             h1, h2, h3 { color: black !important; }
             p { color: #333 !important; }
+            /* Add page header for print */
             body::before {
                 content: "ANOHUBS TITAN PROTOCOL V35.0 | MODULE INDEX";
                 display: block; border-bottom: 2px solid black; margin-bottom: 20px; font-weight: bold; font-size: 14pt;
@@ -183,7 +194,6 @@
     <div class="universe-container">
         <div id="galaxy">
             <div class="sun animate-pulse-glow">A</div>
-
             </div>
 
         <div class="bottom-bounce absolute bottom-8 text-center w-full animate-bounce pointer-events-auto cursor-pointer" onclick="document.getElementById('full-matrix').scrollIntoView({behavior: 'smooth'})">
@@ -220,32 +230,30 @@
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <script>
         const App = {
-            // === THE DEFINITIVE LIST OF 22 MODULES ===
-            // Note: 'link' points to services pages or specific sub-protocols.
-            // Adjusted links to point to relevant service pages where specific pages don't exist yet.
+            // === THE DEFINITIVE LIST OF 22 MODULES (Corrected Paths) ===
             modules: [
-                { id: '01', name: 'LCC Veto', link: 'services-finance.html', color: '#06b6d4', desc: 'Financial firewall logic.' },
-                { id: '02', name: 'NDT Metrology', link: 'services-integrity.html', color: '#8b5cf6', desc: 'Deep-scan verification.' },
-                { id: '03', name: 'Org Intelligence', link: 'services-strategy.html', color: '#f97316', desc: 'Governance models.' },
-                { id: '04', name: 'M-E Synergy', link: 'services-integrity.html', color: '#facc15', desc: 'Electro-mech harmonics.' },
-                { id: '05', name: 'Alignment', link: 'services-integrity.html', color: '#3b82f6', desc: 'Precision centering.' },
-                { id: '06', name: 'Predictive AI', link: 'services-predictive.html', color: '#10b981', desc: 'RUL forecasting.' },
-                { id: '07', name: 'Fluid Dynamics', link: 'services-integrity.html', color: '#06b6d4', desc: 'CFD cavitation analysis.' },
-                { id: '08', name: 'Mag Flux', link: 'services-integrity.html', color: '#ff5722', desc: 'Air gap monitoring.' },
-                { id: '09', name: 'Cost Opt', link: 'services-optimization.html', color: '#10b981', desc: 'Arbitrage & inventory.' },
-                { id: '10', name: 'Flood Gate', link: 'services-integrity.html', color: '#3b82f6', desc: 'Spillway control.' },
-                { id: '11', name: 'Vib Damp', link: 'services-optimization.html', color: '#d946ef', desc: 'Active cancellation.' },
-                { id: '12', name: 'Dam Struct', link: 'services-integrity.html', color: '#78716c', desc: 'Stability & uplift.' },
-                { id: '13', name: 'Sat Uplink', link: 'contact.html', color: '#06b6d4', desc: 'Geospatial data.' },
-                { id: '14', name: 'Black Box', link: 'services-predictive.html', color: '#f97316', desc: 'Forensic logging.' },
-                { id: '15', name: 'SCADA OVR', link: 'services-predictive.html', color: '#ef4444', desc: 'Security override.' }, 
-                { id: '16', name: 'Asset Life', link: 'services-optimization.html', color: '#34d399', desc: 'Lifecycle mgmt.' },
-                { id: '17', name: 'ISO Audit', link: 'services-compliance.html', color: '#FFD700', desc: 'IMS compliance.' },
-                { id: '18', name: 'Global Link', link: 'contact.html', color: '#3b82f6', desc: 'Grid connection.' },
-                { id: '19', name: 'Quantum Load', link: 'services-optimization.html', color: '#a855f7', desc: 'Optimization algo.' },
-                { id: '20', name: 'Thermal AI', link: 'services-predictive.html', color: '#ef4444', desc: 'Hotspot detection.' },
-                { id: '21', name: 'Core Temp', link: 'services-integrity.html', color: '#ff5722', desc: 'Stator integrity.' },
-                { id: '22', name: 'Turbine Sync', link: 'services-optimization.html', color: '#facc15', desc: 'Grid synchronization.' }, 
+                { id: '01', name: 'LCC Veto', link: 'protocol/anohub_protocol_v2.html', color: '#06b6d4', desc: 'Financial firewall logic.' },
+                { id: '02', name: 'NDT Metrology', link: 'protocol/anohub_methodology_v2.html', color: '#8b5cf6', desc: 'Deep-scan verification.' },
+                { id: '03', name: 'Org Intelligence', link: 'protocol/anohub_organization_v2.html', color: '#f97316', desc: 'Governance models.' },
+                { id: '04', name: 'M-E Synergy', link: 'protocol/anohub_synergy_v2.html', color: '#facc15', desc: 'Electro-mech harmonics.' },
+                { id: '05', name: 'Alignment', link: 'protocol/anohub_alignment_v2.html', color: '#3b82f6', desc: 'Precision centering.' },
+                { id: '06', name: 'Predictive AI', link: 'protocol/anohub_predictive_v2.html', color: '#10b981', desc: 'RUL forecasting.' },
+                { id: '07', name: 'Fluid Dynamics', link: 'protocol/anohub_fluid_v2.html', color: '#06b6d4', desc: 'CFD cavitation analysis.' },
+                { id: '08', name: 'Mag Flux', link: 'protocol/anohub_flux_v2.html', color: '#ff5722', desc: 'Air gap monitoring.' },
+                { id: '09', name: 'Cost Opt', link: 'protocol/anohub_cost_v2.html', color: '#10b981', desc: 'Arbitrage & inventory.' },
+                { id: '10', name: 'Flood Gate', link: 'protocol/anohub_flood_v2.html', color: '#3b82f6', desc: 'Spillway control.' },
+                { id: '11', name: 'Vib Damp', link: 'protocol/anohub_vib_v2.html', color: '#d946ef', desc: 'Active cancellation.' },
+                { id: '12', name: 'Dam Struct', link: 'protocol/anohub_dam_v2.html', color: '#78716c', desc: 'Stability & uplift.' },
+                { id: '13', name: 'Sat Uplink', link: 'protocol/anohub_sat_v2.html', color: '#06b6d4', desc: 'Geospatial data.' },
+                { id: '14', name: 'Black Box', link: 'protocol/anohub_blackbox_v2.html', color: '#f97316', desc: 'Forensic logging.' },
+                { id: '15', name: 'SCADA OVR', link: 'protocol/anohub_scada_v2.html', color: '#ef4444', desc: 'Security override.' },
+                { id: '16', name: 'Asset Life', link: 'protocol/anohub_asset_v2.html', color: '#34d399', desc: 'Lifecycle mgmt.' },
+                { id: '17', name: 'ISO Audit', link: 'protocol/anohub_iso_v2.html', color: '#FFD700', desc: 'IMS compliance.' },
+                { id: '18', name: 'Global Link', link: 'protocol/anohub_global_v2.html', color: '#3b82f6', desc: 'Grid connection.' },
+                { id: '19', name: 'Quantum Load', link: 'protocol/anohub_quantum_v2.html', color: '#a855f7', desc: 'Optimization algo.' },
+                { id: '20', name: 'Thermal AI', link: 'protocol/anohub_thermal_v2.html', color: '#ef4444', desc: 'Hotspot detection.' },
+                { id: '21', name: 'Core Temp', link: 'protocol/anohub_core_v2.html', color: '#ff5722', desc: 'Stator integrity.' },
+                { id: '22', name: 'Turbine Sync', link: 'protocol/anohub_sync_v2.html', color: '#facc15', desc: 'Grid synchronization.' }, 
                 { id: '99', name: 'AI Core', link: '#', color: '#FFD700', desc: 'Central Intelligence.', isSpecial: true }
             ],
 
@@ -260,7 +268,6 @@
             buildSolarSystem() {
                 const system = document.getElementById('galaxy');
                 
-                // Rings: Radius, Speed, Module Subset
                 const rings = [
                     { r: 175, speed: 25, items: this.modules.slice(0, 8) },   
                     { r: 275, speed: 40, items: this.modules.slice(8, 16) },  
