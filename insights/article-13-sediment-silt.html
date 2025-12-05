@@ -6,68 +6,47 @@
     <title>The Unseen Threat: Sediment & Silt | AnoHUB Intel</title>
     <meta name="description" content="Intelligence Brief: Detailed analysis of abrasion vs. cavitation and effective sediment management strategies for hydropower.">
     
-    <!-- 1. FONTS -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "The Unseen Threat: Sediment and Silt",
+      "datePublished": "2025-06-28",
+      "author": { "@type": "Person", "name": "Ervin Stupac" },
+      "publisher": { "@type": "Organization", "name": "AnoHUB" }
+    }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-    
-    <!-- 2. TAILWIND -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { 
-                        sans: ['Inter', 'sans-serif'], 
-                        mono: ['JetBrains Mono', 'monospace'] 
-                    },
-                    colors: {
-                        'h-cyan': '#06b6d4', 
-                        'h-green': '#10b981', /* Green for Environment/Sediment */
-                        'h-red': '#ef4444', 
-                        'h-yellow': '#facc15', 
-                        'h-dark': '#020617', 
-                        'h-panel': '#0f172a', 
-                        'h-border': '#1e293b',
-                        'h-cta': '#f59e0b'
-                    }
-                }
-            }
-        }
+        tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] }, colors: { 'h-cyan': '#06b6d4', 'h-green': '#10b981', 'h-red': '#ef4444', 'h-yellow': '#facc15', 'h-dark': '#020617', 'h-panel': '#0f172a', 'h-border': '#1e293b', 'h-cta': '#f59e0b', 'h-purple': '#8b5cf6' } } } }
     </script>
 
     <style>
         body { background-color: #020617; color: #cbd5e1; overflow-x: hidden; }
-        
-        /* Progress Bar */
-        #reading-progress {
-            position: fixed; top: 0; left: 0; height: 3px; background: #10b981; /* Green */
-            width: 0%; z-index: 100; transition: width 0.1s;
-        }
-
-        /* Typography for Article Body */
-        .article-body h2 { font-size: 1.5rem; font-weight: 800; color: white; margin-top: 3rem; margin-bottom: 1rem; letter-spacing: -0.02em; }
+        #reading-progress { position: fixed; top: 0; left: 0; height: 3px; background: #10b981; width: 0%; z-index: 100; transition: width 0.1s; }
+        .article-body h2 { font-size: 1.5rem; font-weight: 800; color: white; margin-top: 3rem; margin-bottom: 1rem; }
         .article-body h3 { font-size: 1.25rem; font-weight: 700; color: #10b981; margin-top: 2rem; margin-bottom: 0.75rem; }
         .article-body p { margin-bottom: 1.5rem; line-height: 1.8; font-size: 1.05rem; }
-        .article-body ul, .article-body ol { margin-bottom: 1.5rem; padding-left: 1rem; }
+        .article-body ul { margin-bottom: 1.5rem; padding-left: 1rem; }
         .article-body li { position: relative; padding-left: 1.5rem; margin-bottom: 0.75rem; }
-        .article-body ul li::before { 
-            content: ">>"; position: absolute; left: 0; color: #10b981; font-family: 'JetBrains Mono', monospace; font-size: 0.8em;
-        }
-        .article-body ol { list-style-type: decimal; color: #10b981; font-family: 'JetBrains Mono', monospace; }
-        .article-body ol li span { color: #cbd5e1; font-family: 'Inter', sans-serif; }
-        
-        .article-body strong { color: white; font-weight: 700; }
-        .article-body blockquote { 
-            border-left: 4px solid #10b981; background: rgba(16, 185, 129, 0.1); 
-            padding: 1.5rem; font-style: italic; color: #86efac; margin: 2rem 0; border-radius: 0 0.5rem 0.5rem 0;
-        }
-        
-        /* Image Styles */
+        .article-body ul li::before { content: ">>"; position: absolute; left: 0; color: #10b981; font-family: 'JetBrains Mono', monospace; font-size: 0.8em; }
+        .article-body blockquote { border-left: 4px solid #10b981; background: rgba(16, 185, 129, 0.1); padding: 1.5rem; font-style: italic; color: #86efac; margin: 2rem 0; cursor: pointer; transition: all 0.3s; }
+        .article-body blockquote:hover { background: rgba(16, 185, 129, 0.15); }
         .article-img { border-radius: 0.75rem; border: 1px solid #334155; box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin: 2rem 0; width: 100%; }
-        
-        /* Sidebar Sticky */
         .sticky-sidebar { position: sticky; top: 100px; }
+        
+        @media print {
+            body { background-color: white !important; color: black !important; font-family: serif; }
+            #navbar, #reading-progress, #mobile-sticky-cta, aside, footer, .mt-16 { display: none !important; }
+            main { padding-top: 0 !important; }
+            .lg\:col-span-8 { width: 100% !important; }
+            h1, h2, h3 { color: black !important; }
+            body::before { content: "ANOHUBS INTELLIGENCE BRIEF 013"; display: block; border-bottom: 2px solid black; margin-bottom: 20px; font-weight: bold; }
+        }
     </style>
 </head>
 
@@ -75,8 +54,15 @@
     
     <div id="reading-progress"></div>
 
-    <!-- NAV -->
     <header class="fixed w-full z-50 top-0 border-b border-white/5 bg-h-dark/90 backdrop-blur-md" id="navbar">
+        <div class="relative bg-h-purple/10 border-b border-h-purple/20 overflow-hidden">
+            <div class="max-w-7xl mx-auto px-6 py-1 flex justify-center">
+                <a href="article-16-ai-paradox.html" class="flex items-center gap-2 text-[10px] font-mono text-h-purple font-bold tracking-widest uppercase hover:text-white transition">
+                    <span class="w-1.5 h-1.5 rounded-full bg-h-purple animate-pulse"></span>
+                    LATEST INTEL: The Hydro-Boom Paradox [READ]
+                </a>
+            </div>
+        </div>
         <div class="max-w-7xl mx-auto px-4 h-16 flex justify-between items-center">
             <a href="../index.html" class="flex items-center gap-3 group">
                 <img src="../logo.svg" alt="AnoHUB" class="h-8 w-auto opacity-80 group-hover:opacity-100 transition">
@@ -92,10 +78,7 @@
     <main class="pt-32 pb-20">
         <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-12 gap-12">
 
-            <!-- MAIN CONTENT (Left) -->
             <article class="lg:col-span-8">
-                
-                <!-- HEADER -->
                 <header class="mb-12 border-b border-h-border pb-8">
                     <div class="flex items-center gap-4 mb-6 text-xs font-mono">
                         <span class="px-3 py-1 rounded bg-h-green/10 text-h-green border border-h-green/20">EROSION</span>
@@ -110,88 +93,67 @@
                     </p>
                 </header>
 
-                <!-- BODY -->
                 <div class="article-body text-slate-300">
-                    
-                    
                     <img src="../slike/sediment_silt_main.png" alt="Sediment abrasion on turbine runner" class="article-img">
                     
                     <p class="article-intro">
-                        Beneath the surface of seemingly pristine water, an unseen threat silently erodes your hydropower plant's performance and lifespan: <strong>sediment and silt</strong>. While both abrasion and cavitation lead to turbine damage, they are entirely different phenomena with distinct solutions. Understanding this distinction is your first line of defense against costly wear and unexpected shutdowns.
+                        Beneath the surface of seemingly pristine water, an unseen threat silently erodes your hydropower plant's performance and lifespan: <strong>sediment and silt</strong>.
                     </p>
 
                     <h2>Defining the Damage: Abrasion vs. Cavitation</h2>
-                    <p>To effectively combat the problem, you first need to understand the enemy. While both lead to turbine damage, abrasion and cavitation are entirely different phenomena:</p>
+                    <p>To effectively combat the problem, you first need to understand the enemy.</p>
                     
                     <h3>Abrasion: The "Sandblasting" Effect</h3>
-                    <p><strong>Abrasion is mechanical wear caused by solid particles in the water.</strong> Sand and silt act like sandpaper, constantly grinding down the metal surfaces of the turbine’s runners and components. The telltale sign of abrasion is a smooth, "sandblasted" appearance on the metal, which can thin out the blades over time. The primary culprits are soil erosion from upstream sources and high sediment loads, especially after heavy rains.</p>
+                    <p><strong>Abrasion is mechanical wear caused by solid particles in the water.</strong> Sand and silt act like sandpaper, constantly grinding down the metal surfaces.</p>
                     
                     <h3>Cavitation: The "Pitting" Effect</h3>
-                    <p><strong>Cavitation, on the other hand, is damage caused by the implosion of vapor bubbles.</strong> These bubbles form in low-pressure zones within the turbine. When they burst, they create tiny, powerful shockwaves that eat away at the metal. This type of damage looks like a rough, pitted surface—like a sponge—and is typically localized. While a vortex can contribute to cavitation, it does not cause abrasion.</p>
+                    <p><strong>Cavitation is damage caused by the implosion of vapor bubbles.</strong> These bubbles form in low-pressure zones within the turbine.</p>
                     
-                    <blockquote>
+                    <blockquote onclick="navigator.clipboard.writeText(this.innerText)">
                         The takeaway: If your turbine blades look worn down and smooth, you're primarily dealing with <strong>abrasion</strong>.
                     </blockquote>
 
-                    <h2>The Right Tool for the Job: Turbine Susceptibility</h2>
-                    <p>Each turbine type has a different vulnerability to these forces. Knowing your specific turbine's weaknesses is the first step toward building a better defense strategy:</p>
+                    <h2>The Right Tool for the Job</h2>
+                    <p>Each turbine type has a different vulnerability to these forces.</p>
                     <ul>
-                        <li><strong>Francis and Kaplan turbines:</strong> Operating in medium- to low-head environments, these are susceptible to both abrasion and cavitation due to their submerged, high-pressure operation.</li>
-                        <li><strong>Pelton turbines:</strong> Designed for extremely high-head applications, Pelton turbines are highly vulnerable to abrasion as high-velocity particles impact the buckets. However, they are generally not affected by cavitation.</li>
+                        <li><strong>Francis/Kaplan:</strong> Susceptible to both abrasion and cavitation.</li>
+                        <li><strong>Pelton:</strong> Highly vulnerable to abrasion, less to cavitation.</li>
                     </ul>
 
-                    <h2>Protecting Your Investment: The Simple, Effective Solution</h2>
-                    <p>The most effective strategy against sediment is <strong>prevention</strong>. The best line of defense is a well-designed and maintained <strong>settling basin or sand trap</strong>.</p>
-                    
-                    <h3>How a Settling Basin Works:</h3>
-                    <ul>
-                        <li>A settling basin is a simple concrete channel or reservoir constructed upstream of the main intake.</li>
-                        <li>It's designed to slow the water’s velocity, allowing heavier particles of sand and gravel to settle to the bottom before the water enters the turbine's intake channel.</li>
-                        <li>This is a remarkably effective and low-cost solution that can be implemented on projects of any scale.</li>
-                    </ul>
-                    
-                    <p>The key to a successful sand trap is a <strong>regular flushing and maintenance schedule</strong>. By periodically opening the flushing gates at the bottom of the basin, you can efficiently remove the built-up sediment. This simple routine protects your turbine, extends its lifespan, and ensures consistent energy production.</p>
+                    <h2>Protecting Your Investment</h2>
+                    <p>The most effective strategy against sediment is prevention. The best line of defense is a well-designed <strong>settling basin</strong>.</p>
 
                     <div class="mt-8 p-6 bg-h-panel border border-h-border rounded-xl border-l-4 border-l-h-green">
                         <h4 class="text-white font-bold mb-2">Check Your Intake</h4>
-                        <p class="text-sm mb-4">If you’re a project owner or operator, take a closer look at your intake. Is sediment building up? A small investment could save a major overhaul.</p>
+                        <p class="text-sm mb-4">If you’re a project owner, take a closer look at your intake. Is sediment building up?</p>
                         <a href="../contact.html" class="inline-block bg-h-green hover:bg-emerald-500 text-black font-bold py-2 px-6 rounded text-xs uppercase tracking-wider transition shadow-lg">
                             SHARE YOUR EXPERIENCE
                         </a>
                     </div>
-
                 </div>
 
-                <!-- SHARE & TAGS -->
                 <div class="mt-16 pt-8 border-t border-h-border flex flex-col md:flex-row justify-between items-center gap-4">
-                    <div class="text-xs font-mono text-slate-500">
-                        TAGS: #Sediment #Abrasion #Cavitation #Maintenance
-                    </div>
+                    <div class="text-xs font-mono text-slate-500">TAGS: #Sediment #Abrasion #Cavitation #Maintenance</div>
                     <div class="flex gap-4">
-                         <button class="text-slate-400 hover:text-white transition"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" x2="12" y1="2" y2="15"/></svg></button>
-                         <button class="text-slate-400 hover:text-white transition"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/></svg></button>
+                         <button onclick="shareArticle()" class="text-slate-400 hover:text-white transition group relative" title="Share Article"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" x2="12" y1="2" y2="15"/></svg></button>
+                         <button onclick="copyLink(this)" class="text-slate-400 hover:text-white transition group relative" title="Copy Link"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg></button>
                     </div>
                 </div>
-
             </article>
 
-            <!-- SIDEBAR (Right) -->
             <aside class="lg:col-span-4 space-y-8">
-                
-                <!-- Author Card -->
                 <div class="scada-panel p-6 rounded-xl border-t-2 border-h-green sticky-sidebar">
                     <div class="flex items-center gap-4 mb-4">
-                        <img src="../ervin_stupac_portrait.jpg" alt="Ervin Stupac" class="w-16 h-16 rounded-full border-2 border-slate-600 object-cover">
+                        <img src="../slike/ervin_stupac_portrait.jpg" alt="Ervin Stupac" class="w-16 h-16 rounded-full border-2 border-slate-600 object-cover">
                         <div>
                             <h4 class="text-white font-bold">Ervin Stupac</h4>
                             <p class="text-xs text-h-green font-mono">LEAD ARCHITECT</p>
                         </div>
                     </div>
-                    <p class="text-sm text-slate-400 mb-4">Specializing in forensic engineering and hydromechanical optimization. Founder of the AnoHUB Protocol.</p>
+                    <p class="text-sm text-slate-400 mb-4">Specializing in forensic engineering and hydromechanical optimization.</p>
                     <a href="../contact.html" class="block w-full text-center py-2 rounded border border-slate-600 hover:border-white text-xs font-bold text-white transition uppercase">Request Consultation</a>
                 </div>
 
-                <!-- Related Intelligence -->
                 <div class="bg-h-panel border border-h-border rounded-xl p-6">
                     <h4 class="text-xs font-mono text-slate-500 uppercase mb-4 tracking-widest">Related Briefs</h4>
                     <div class="space-y-4">
@@ -204,43 +166,48 @@
                             <h5 class="text-white font-bold text-sm group-hover:text-h-green transition">A Holistic View of Hydro Assets</h5>
                             <p class="text-xs text-slate-500 mt-1">Systems Thinking</p>
                         </a>
-                        <div class="h-px bg-slate-800"></div>
-                        <a href="article-5-human-sensor.html" class="block group">
-                            <h5 class="text-white font-bold text-sm group-hover:text-h-green transition">The Human Sensor</h5>
-                            <p class="text-xs text-slate-500 mt-1">Operational Insight</p>
-                        </a>
                     </div>
                 </div>
 
-                <!-- CTA Box -->
                 <div class="bg-gradient-to-br from-h-green/20 to-transparent border border-h-green/40 p-6 rounded-xl text-center">
-                    <h4 class="text-white font-bold mb-2">Extend Asset Life</h4>
-                    <p class="text-xs text-slate-300 mb-4">Learn about our advanced surface protection.</p>
-                    <a href="../protocol/anohub_methodology_v2.html" class="inline-block bg-h-green hover:bg-emerald-500 text-black font-bold py-2 px-6 rounded text-xs uppercase tracking-wider transition shadow-lg">
-                        View HVOF Protocol
+                    <h4 class="text-white font-bold mb-2">Sustainable Profit</h4>
+                    <p class="text-xs text-slate-300 mb-4">Align your operations with the Symbiosis Standard.</p>
+                    <a href="../services.html" class="inline-block bg-h-green hover:bg-emerald-500 text-black font-bold py-2 px-6 rounded text-xs uppercase tracking-wider transition shadow-lg">
+                        Explore Solutions
                     </a>
                 </div>
-
             </aside>
-
         </div>
     </main>
 
-    <!-- FOOTER -->
-    <footer class="bg-black border-t border-slate-900 py-8 text-center text-xs font-mono text-slate-600">
+    <div id="mobile-sticky-cta" class="lg:hidden fixed bottom-4 left-4 right-4 z-50 animate-[fadeInUp_1s_ease-out_1s_forwards]">
+        <a href="../contact.html" class="flex items-center justify-between bg-h-green/90 backdrop-blur-md text-black px-4 py-3 rounded-lg shadow-2xl border border-white/20">
+            <span class="text-xs font-bold uppercase tracking-wider">Erosion Check?</span>
+            <span class="bg-black text-h-green text-xs font-black px-2 py-1 rounded">CONTACT &rarr;</span>
+        </a>
+    </div>
+
+    <footer class="bg-black border-t border-slate-900 py-8 text-center text-xs font-mono text-slate-600 mb-20 lg:mb-0">
         <div class="max-w-7xl mx-auto px-4">
             &copy; 2025 ANOHUBS INC. | INTELLIGENCE DIVISION
         </div>
     </footer>
 
     <script>
-        // Reading Progress Bar
         window.onscroll = function() {
             let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
             let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
             let scrolled = (winScroll / height) * 100;
             document.getElementById("reading-progress").style.width = scrolled + "%";
         };
+        function shareArticle() {
+            if (navigator.share) { navigator.share({ title: document.title, url: window.location.href }); } 
+            else { copyLink(document.querySelector('button[title="Copy Link"]')); }
+        }
+        function copyLink(btn) {
+            navigator.clipboard.writeText(window.location.href);
+            alert("Link copied!");
+        }
     </script>
 </body>
 </html>

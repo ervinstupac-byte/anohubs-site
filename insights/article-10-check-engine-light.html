@@ -6,31 +6,32 @@
     <title>The 'Check Engine Light' of Your Turbine | AnoHUB Intel</title>
     <meta name="description" content="Intelligence Brief: 5 subtle symptoms (noise, vibration, temperature, leaks) that signal impending failure in hydropower turbines.">
     
-    <!-- 1. FONTS -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "The 'Check Engine Light' of Your Turbine",
+      "datePublished": "2025-08-14",
+      "author": { "@type": "Person", "name": "Ervin Stupac" },
+      "publisher": { "@type": "Organization", "name": "AnoHUB" }
+    }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-    
-    <!-- 2. TAILWIND -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: { 
-                        sans: ['Inter', 'sans-serif'], 
-                        mono: ['JetBrains Mono', 'monospace'] 
-                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
                     colors: {
-                        'h-cyan': '#06b6d4', 
-                        'h-green': '#10b981', 
-                        'h-red': '#ef4444', /* Red for Diagnostics/Alert */
-                        'h-yellow': '#facc15', 
-                        'h-dark': '#020617', 
-                        'h-panel': '#0f172a', 
-                        'h-border': '#1e293b',
-                        'h-cta': '#f59e0b'
-                    }
+                        'h-cyan': '#06b6d4', 'h-green': '#10b981', 'h-red': '#ef4444', 
+                        'h-yellow': '#facc15', 'h-dark': '#020617', 'h-panel': '#0f172a', 
+                        'h-border': '#1e293b', 'h-cta': '#f59e0b', 'h-purple': '#8b5cf6'
+                    },
+                    animation: { 'fade-in-up': 'fadeInUp 0.8s ease-out forwards' }
                 }
             }
         }
@@ -38,36 +39,26 @@
 
     <style>
         body { background-color: #020617; color: #cbd5e1; overflow-x: hidden; }
-        
-        /* Progress Bar */
-        #reading-progress {
-            position: fixed; top: 0; left: 0; height: 3px; background: #ef4444; /* Red */
-            width: 0%; z-index: 100; transition: width 0.1s;
-        }
-
-        /* Typography for Article Body */
-        .article-body h2 { font-size: 1.5rem; font-weight: 800; color: white; margin-top: 3rem; margin-bottom: 1rem; letter-spacing: -0.02em; }
+        #reading-progress { position: fixed; top: 0; left: 0; height: 3px; background: #ef4444; width: 0%; z-index: 100; transition: width 0.1s; }
+        .article-body h2 { font-size: 1.5rem; font-weight: 800; color: white; margin-top: 3rem; margin-bottom: 1rem; }
         .article-body h3 { font-size: 1.25rem; font-weight: 700; color: #ef4444; margin-top: 2rem; margin-bottom: 0.75rem; }
         .article-body p { margin-bottom: 1.5rem; line-height: 1.8; font-size: 1.05rem; }
         .article-body ul, .article-body ol { margin-bottom: 1.5rem; padding-left: 1rem; }
         .article-body li { position: relative; padding-left: 1.5rem; margin-bottom: 0.75rem; }
-        .article-body ul li::before { 
-            content: ">>"; position: absolute; left: 0; color: #ef4444; font-family: 'JetBrains Mono', monospace; font-size: 0.8em;
-        }
-        .article-body ol { list-style-type: decimal; color: #ef4444; font-family: 'JetBrains Mono', monospace; }
-        .article-body ol li span { color: #cbd5e1; font-family: 'Inter', sans-serif; }
-        
-        .article-body strong { color: white; font-weight: 700; }
-        .article-body blockquote { 
-            border-left: 4px solid #ef4444; background: rgba(239, 68, 68, 0.1); 
-            padding: 1.5rem; font-style: italic; color: #fca5a5; margin: 2rem 0; border-radius: 0 0.5rem 0.5rem 0;
-        }
-        
-        /* Image Styles */
+        .article-body ul li::before { content: ">>"; position: absolute; left: 0; color: #ef4444; font-family: 'JetBrains Mono', monospace; font-size: 0.8em; }
+        .article-body blockquote { border-left: 4px solid #ef4444; background: rgba(239, 68, 68, 0.1); padding: 1.5rem; font-style: italic; color: #fca5a5; margin: 2rem 0; cursor: pointer; transition: all 0.3s; }
+        .article-body blockquote:hover { background: rgba(239, 68, 68, 0.15); }
         .article-img { border-radius: 0.75rem; border: 1px solid #334155; box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin: 2rem 0; width: 100%; }
-        
-        /* Sidebar Sticky */
         .sticky-sidebar { position: sticky; top: 100px; }
+
+        @media print {
+            body { background-color: white !important; color: black !important; }
+            #navbar, #reading-progress, #mobile-sticky-cta, aside, footer, .mt-16 { display: none !important; }
+            main { padding-top: 0 !important; }
+            .lg\:col-span-8 { width: 100% !important; }
+            h1, h2, h3 { color: black !important; }
+            body::before { content: "ANOHUBS INTELLIGENCE BRIEF 010"; display: block; border-bottom: 2px solid black; margin-bottom: 20px; font-weight: bold; }
+        }
     </style>
 </head>
 
@@ -75,8 +66,15 @@
     
     <div id="reading-progress"></div>
 
-    <!-- NAV -->
     <header class="fixed w-full z-50 top-0 border-b border-white/5 bg-h-dark/90 backdrop-blur-md" id="navbar">
+        <div class="relative bg-h-purple/10 border-b border-h-purple/20 overflow-hidden">
+            <div class="max-w-7xl mx-auto px-6 py-1 flex justify-center">
+                <a href="article-16-ai-paradox.html" class="flex items-center gap-2 text-[10px] font-mono text-h-purple font-bold tracking-widest uppercase hover:text-white transition">
+                    <span class="w-1.5 h-1.5 rounded-full bg-h-purple animate-pulse"></span>
+                    LATEST INTEL: The Hydro-Boom Paradox [READ]
+                </a>
+            </div>
+        </div>
         <div class="max-w-7xl mx-auto px-4 h-16 flex justify-between items-center">
             <a href="../index.html" class="flex items-center gap-3 group">
                 <img src="../logo.svg" alt="AnoHUB" class="h-8 w-auto opacity-80 group-hover:opacity-100 transition">
@@ -92,10 +90,7 @@
     <main class="pt-32 pb-20">
         <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-12 gap-12">
 
-            <!-- MAIN CONTENT (Left) -->
             <article class="lg:col-span-8">
-                
-                <!-- HEADER -->
                 <header class="mb-12 border-b border-h-border pb-8">
                     <div class="flex items-center gap-4 mb-6 text-xs font-mono">
                         <span class="px-3 py-1 rounded bg-h-red/10 text-h-red border border-h-red/20">DIAGNOSTICS</span>
@@ -110,87 +105,62 @@
                     </p>
                 </header>
 
-                <!-- BODY -->
                 <div class="article-body text-slate-300">
-                    
                     <img src="../slike/check_engine_light_main.png" alt="Digital overlay on a turbine highlighting early warning signs" class="article-img">
                     
                     <p class="article-intro">
-                        Imagine this: a perfectly sunny day, everything is running smoothly, and then, without warning, an alarm sounds. Your hydropower plant shuts down unexpectedly. The frustration is immense, and the costs are unpredictable. But what if I told you that turbines, just like cars, often send warning signals before they fail? The problem is, these signals are quiet and easy to ignore. Recognizing these subtle cues early can save you thousands of euros and a significant amount of stress.
+                        Imagine this: a perfectly sunny day, everything is running smoothly, and then, without warning, an alarm sounds. Your hydropower plant shuts down unexpectedly. But turbines, just like cars, often send warning signals before they fail.
                     </p>
 
                     <h2>Understanding the Hidden Symptoms</h2>
-                    <p>Unexpected failures don't happen overnight. They are the result of cumulative stress from issues like abrasion, cavitation, and bearing wear. By the time a problem becomes critical, the damage is already done. Your best defense is a proactive approach, which means learning to read the subtle cues your turbine is giving you.</p>
+                    <p>Unexpected failures don't happen overnight. They are the result of cumulative stress from issues like abrasion, cavitation, and bearing wear.</p>
 
                     <h2>Your Diagnostic Toolkit: 5 Key Indicators</h2>
-                    
                     <ol>
                         <li>
                             <h3>Unusual Noise</h3>
-                            <span>Every machine has a familiar sound. Listen for changes. A change in noise often precedes a physical fault:</span>
-                            <ul>
-                                <li><strong>Thumping:</strong> Often indicates issues with cavitation or damaged blades.</li>
-                                <li><strong>Squealing/Grinding:</strong> Can signal a bearing problem from a lack of lubrication.</li>
-                                <li><strong>Rattling:</strong> A common sign of loose parts or foreign objects inside the machine.</li>
-                            </ul>
+                            <p>Thumping indicates cavitation. Squealing signals bearing issues.</p>
                         </li>
-
                         <li>
                             <h3>Changes in Vibration</h3>
-                            <span>Your hands are your best sensor. By placing a hand on the turbine's casing, you can feel for changes in vibration. Vibrations intensify over time and can signal a variety of problems, from an unbalanced rotor due to abrasion to damaged bearings. Ignoring these vibrations is like driving a car with a shaking wheel—a breakdown is inevitable.</span>
+                            <p>Vibrations intensify over time and can signal an unbalanced rotor.</p>
                         </li>
-
                         <li>
-                            <h3>A Temperature That Doesn't Match the Operating Mode</h3>
-                            <span>All turbines generate heat, but a sudden spike in temperature is a major red flag. Regularly check the temperature of bearings and oil. High temperatures can indicate insufficient lubrication, excessive friction, or a machine that's being overloaded. This simple visual check or using a thermometer can prevent you from overheating vital components.</span>
+                            <h3>Temperature Spikes</h3>
+                            <p>High temperatures can indicate insufficient lubrication or excessive friction.</p>
                         </li>
-
                         <li>
-                            <h3>The Appearance of Water and Leaks</h3>
-                            <span>Pay close attention to the water leaving your turbine. Faults in sealing systems are primary causes of contamination:</span>
-                            <ul>
-                                <li><strong>Foamy Water:</strong> This can be a sign that air is entering the system, which can lead to cavitation.</li>
-                                <li><strong>Oily Streaks:</strong> If you notice oily residue, there is likely a problem with the oil seals.</li>
-                                <li><strong>Dripping Water:</strong> Leaks at joints and seals are a common issue. If ignored, they lead to a loss of pressure and efficiency.</li>
-                            </ul>
+                            <h3>Water Leaks</h3>
+                            <p>Foamy water or oily streaks are signs of seal failure.</p>
                         </li>
-
                         <li>
-                            <h3>Changes in Power Output</h3>
-                            <span>Monitor your plant’s energy production. If you notice an unexplained drop in output, it’s a clear sign that something is wrong. Increased wear from abrasion, a blocked intake, or an unbalanced rotor can all lead to reduced efficiency and revenue loss.</span>
+                            <h3>Power Output Drops</h3>
+                            <p>Unexplained drops in output signal wear or blockage.</p>
                         </li>
                     </ol>
 
-                    <div class="mt-8 p-6 bg-h-panel border border-h-border rounded-xl">
+                    <div class="mt-8 p-6 bg-h-panel border border-h-border rounded-xl border-l-4 border-l-h-red">
                         <h4 class="text-white font-bold mb-2">Don't Ignore the Signs</h4>
-                        <p class="text-sm mb-4">Field experience has taught me that simple, low-cost inspections are far more effective than expensive, last-minute repairs. Have you noticed any unusual signals?</p>
+                        <p class="text-sm mb-4">Field experience has taught me that simple, low-cost inspections are far more effective than expensive, last-minute repairs.</p>
                         <a href="../contact.html" class="inline-block bg-h-cta hover:bg-yellow-500 text-black font-bold py-2 px-6 rounded text-xs uppercase tracking-wider transition shadow-lg">
                             REPORT SYMPTOMS
                         </a>
                     </div>
-
                 </div>
 
-                <!-- SHARE & TAGS -->
                 <div class="mt-16 pt-8 border-t border-h-border flex flex-col md:flex-row justify-between items-center gap-4">
-                    <div class="text-xs font-mono text-slate-500">
-                        TAGS: #Diagnostics #Maintenance #WarningSigns #TurbineHealth
-                    </div>
+                    <div class="text-xs font-mono text-slate-500">TAGS: #Diagnostics #Maintenance #WarningSigns #TurbineHealth</div>
                     <div class="flex gap-4">
-                         <button class="text-slate-400 hover:text-white transition"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" x2="12" y1="2" y2="15"/></svg></button>
-                         <button class="text-slate-400 hover:text-white transition"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/></svg></button>
+                         <button onclick="shareArticle()" class="text-slate-400 hover:text-white transition group relative" title="Share Article"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" x2="12" y1="2" y2="15"/></svg></button>
+                         <button onclick="copyLink(this)" class="text-slate-400 hover:text-white transition group relative" title="Copy Link"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg></button>
                     </div>
                 </div>
-
             </article>
 
-            <!-- SIDEBAR (Right) -->
             <aside class="lg:col-span-4 space-y-8">
-                
-                <!-- Author Card -->
                 <div class="scada-panel p-6 rounded-xl border-t-2 border-h-red sticky-sidebar">
                     <div class="flex items-center gap-4 mb-4">
-                        <img src="../ervin_stupac_portrait.jpg" alt="Ervin Stupac" class="w-16 h-16 rounded-full border-2 border-slate-600 object-cover">
+                        <img src="../slike/ervin_stupac_portrait.jpg" alt="Ervin Stupac" class="w-16 h-16 rounded-full border-2 border-slate-600 object-cover">
                         <div>
                             <h4 class="text-white font-bold">Ervin Stupac</h4>
                             <p class="text-xs text-h-red font-mono">LEAD ARCHITECT</p>
@@ -200,7 +170,6 @@
                     <a href="../contact.html" class="block w-full text-center py-2 rounded border border-slate-600 hover:border-white text-xs font-bold text-white transition uppercase">Request Consultation</a>
                 </div>
 
-                <!-- Related Intelligence -->
                 <div class="bg-h-panel border border-h-border rounded-xl p-6">
                     <h4 class="text-xs font-mono text-slate-500 uppercase mb-4 tracking-widest">Related Briefs</h4>
                     <div class="space-y-4">
@@ -221,7 +190,6 @@
                     </div>
                 </div>
 
-                <!-- CTA Box -->
                 <div class="bg-gradient-to-br from-h-cta/20 to-transparent border border-h-cta/40 p-6 rounded-xl text-center">
                     <h4 class="text-white font-bold mb-2">Need Diagnostics?</h4>
                     <p class="text-xs text-slate-300 mb-4">Our sensors catch what you miss.</p>
@@ -229,27 +197,42 @@
                         View Services
                     </a>
                 </div>
-
             </aside>
-
         </div>
     </main>
 
-    <!-- FOOTER -->
-    <footer class="bg-black border-t border-slate-900 py-8 text-center text-xs font-mono text-slate-600">
+    <div id="mobile-sticky-cta" class="lg:hidden fixed bottom-4 left-4 right-4 z-50 animate-[fadeInUp_1s_ease-out_1s_forwards]">
+        <a href="../contact.html" class="flex items-center justify-between bg-h-red/90 backdrop-blur-md text-white px-4 py-3 rounded-lg shadow-2xl border border-white/20">
+            <span class="text-xs font-bold uppercase tracking-wider">Check Symptoms?</span>
+            <span class="bg-white text-h-red text-xs font-black px-2 py-1 rounded">CONTACT &rarr;</span>
+        </a>
+    </div>
+
+    <footer class="bg-black border-t border-slate-900 py-8 text-center text-xs font-mono text-slate-600 mb-20 lg:mb-0">
         <div class="max-w-7xl mx-auto px-4">
             &copy; 2025 ANOHUBS INC. | INTELLIGENCE DIVISION
         </div>
     </footer>
 
     <script>
-        // Reading Progress Bar
         window.onscroll = function() {
             let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
             let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
             let scrolled = (winScroll / height) * 100;
             document.getElementById("reading-progress").style.width = scrolled + "%";
         };
+
+        function shareArticle() {
+            if (navigator.share) {
+                navigator.share({ title: document.title, url: window.location.href });
+            } else {
+                copyLink(document.querySelector('button[title="Copy Link"]'));
+            }
+        }
+        function copyLink(btn) {
+            navigator.clipboard.writeText(window.location.href);
+            alert("Link copied!");
+        }
     </script>
 </body>
 </html>

@@ -6,69 +6,47 @@
     <title>The SCADA-to-CEO Gap: Translating Turbine Health into Financial Strategy | AnoHUB Intel</title>
     <meta name="description" content="Intelligence Brief: Bridging the critical disconnect between technical SCADA data and executive financial strategy using the Hydro Health Index (HHI).">
     
-    <!-- 1. FONTS -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Bridging the SCADA-to-CEO Gap",
+      "datePublished": "2025-05-25",
+      "author": { "@type": "Person", "name": "Ervin Stupac" },
+      "publisher": { "@type": "Organization", "name": "AnoHUB" }
+    }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-    
-    <!-- 2. TAILWIND -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { 
-                        sans: ['Inter', 'sans-serif'], 
-                        mono: ['JetBrains Mono', 'monospace'] 
-                    },
-                    colors: {
-                        'h-cyan': '#06b6d4', 
-                        'h-green': '#10b981', 
-                        'h-red': '#ef4444', 
-                        'h-yellow': '#facc15', 
-                        'h-purple': '#8b5cf6', /* Purple for Governance/Strategy */
-                        'h-dark': '#020617', 
-                        'h-panel': '#0f172a', 
-                        'h-border': '#1e293b',
-                        'h-cta': '#f59e0b'
-                    }
-                }
-            }
-        }
+        tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] }, colors: { 'h-cyan': '#06b6d4', 'h-green': '#10b981', 'h-red': '#ef4444', 'h-yellow': '#facc15', 'h-purple': '#8b5cf6', 'h-dark': '#020617', 'h-panel': '#0f172a', 'h-border': '#1e293b', 'h-cta': '#f59e0b' } } } }
     </script>
 
     <style>
         body { background-color: #020617; color: #cbd5e1; overflow-x: hidden; }
-        
-        /* Progress Bar */
-        #reading-progress {
-            position: fixed; top: 0; left: 0; height: 3px; background: #8b5cf6; /* Purple */
-            width: 0%; z-index: 100; transition: width 0.1s;
-        }
-
-        /* Typography for Article Body */
-        .article-body h2 { font-size: 1.5rem; font-weight: 800; color: white; margin-top: 3rem; margin-bottom: 1rem; letter-spacing: -0.02em; }
+        #reading-progress { position: fixed; top: 0; left: 0; height: 3px; background: #8b5cf6; width: 0%; z-index: 100; transition: width 0.1s; }
+        .article-body h2 { font-size: 1.5rem; font-weight: 800; color: white; margin-top: 3rem; margin-bottom: 1rem; }
         .article-body h3 { font-size: 1.25rem; font-weight: 700; color: #8b5cf6; margin-top: 2rem; margin-bottom: 0.75rem; }
         .article-body p { margin-bottom: 1.5rem; line-height: 1.8; font-size: 1.05rem; }
         .article-body ul, .article-body ol { margin-bottom: 1.5rem; padding-left: 1rem; }
         .article-body li { position: relative; padding-left: 1.5rem; margin-bottom: 0.75rem; }
-        .article-body ul li::before { 
-            content: ">>"; position: absolute; left: 0; color: #8b5cf6; font-family: 'JetBrains Mono', monospace; font-size: 0.8em;
-        }
-        .article-body ol { list-style-type: decimal; color: #8b5cf6; font-family: 'JetBrains Mono', monospace; }
-        .article-body ol li span { color: #cbd5e1; font-family: 'Inter', sans-serif; }
-        
-        .article-body strong { color: white; font-weight: 700; }
-        .article-body blockquote { 
-            border-left: 4px solid #8b5cf6; background: rgba(139, 92, 246, 0.1); 
-            padding: 1.5rem; font-style: italic; color: #d8b4fe; margin: 2rem 0; border-radius: 0 0.5rem 0.5rem 0;
-        }
-        
-        /* Image Styles */
+        .article-body ol li::before { content: ">>"; position: absolute; left: 0; color: #8b5cf6; font-family: 'JetBrains Mono', monospace; font-size: 0.8em; }
+        .article-body blockquote { border-left: 4px solid #8b5cf6; background: rgba(139, 92, 246, 0.1); padding: 1.5rem; font-style: italic; color: #d8b4fe; margin: 2rem 0; cursor: pointer; transition: all 0.3s; }
+        .article-body blockquote:hover { background: rgba(139, 92, 246, 0.15); }
         .article-img { border-radius: 0.75rem; border: 1px solid #334155; box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin: 2rem 0; width: 100%; }
-        
-        /* Sidebar Sticky */
         .sticky-sidebar { position: sticky; top: 100px; }
+        
+        @media print {
+            body { background-color: white !important; color: black !important; font-family: serif; }
+            #navbar, #reading-progress, #mobile-sticky-cta, aside, footer, .mt-16 { display: none !important; }
+            main { padding-top: 0 !important; }
+            .lg\:col-span-8 { width: 100% !important; }
+            h1, h2, h3 { color: black !important; }
+            body::before { content: "ANOHUBS INTELLIGENCE BRIEF 015"; display: block; border-bottom: 2px solid black; margin-bottom: 20px; font-weight: bold; }
+        }
     </style>
 </head>
 
@@ -76,8 +54,15 @@
     
     <div id="reading-progress"></div>
 
-    <!-- NAV -->
     <header class="fixed w-full z-50 top-0 border-b border-white/5 bg-h-dark/90 backdrop-blur-md" id="navbar">
+        <div class="relative bg-h-purple/10 border-b border-h-purple/20 overflow-hidden">
+            <div class="max-w-7xl mx-auto px-6 py-1 flex justify-center">
+                <a href="article-16-ai-paradox.html" class="flex items-center gap-2 text-[10px] font-mono text-h-purple font-bold tracking-widest uppercase hover:text-white transition">
+                    <span class="w-1.5 h-1.5 rounded-full bg-h-purple animate-pulse"></span>
+                    LATEST INTEL: The Hydro-Boom Paradox [READ]
+                </a>
+            </div>
+        </div>
         <div class="max-w-7xl mx-auto px-4 h-16 flex justify-between items-center">
             <a href="../index.html" class="flex items-center gap-3 group">
                 <img src="../logo.svg" alt="AnoHUB" class="h-8 w-auto opacity-80 group-hover:opacity-100 transition">
@@ -93,10 +78,7 @@
     <main class="pt-32 pb-20">
         <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-12 gap-12">
 
-            <!-- MAIN CONTENT (Left) -->
             <article class="lg:col-span-8">
-                
-                <!-- HEADER -->
                 <header class="mb-12 border-b border-h-border pb-8">
                     <div class="flex items-center gap-4 mb-6 text-xs font-mono">
                         <span class="px-3 py-1 rounded bg-h-purple/10 text-h-purple border border-h-purple/20">GOVERNANCE</span>
@@ -111,41 +93,28 @@
                     </p>
                 </header>
 
-                <!-- BODY -->
                 <div class="article-body text-slate-300">
-                    
-                    <img src="../slike/scada_ceo_gap_main.png" alt="Bridging the gap between real-time data and financial reporting" class="article-img">
+                    <img src="../slike/scada_ceo_gap_main.png" alt="Bridging the gap" class="article-img">
                     
                     <p class="article-intro">
-                        Traditional monitoring systems generate massive amounts of technical data—vibration, temperature, flow—but fundamentally fail to answer the strategic questions asked by leadership: <strong>"How does this affect my CAPEX budget and the long-term asset value?"</strong> This is the crucial <strong>SCADA-to-CEO Gap</strong>. Technical complexity must be translated into the language of finance.
+                        Traditional monitoring systems generate massive amounts of technical data but fail to answer the strategic questions asked by leadership. This is the crucial <strong>SCADA-to-CEO Gap</strong>.
                     </p>
 
-                    <h2>1. The Problem: Data Overload, Information Poverty</h2>
-                    <p>Plant operators receive thousands of data points daily, yet executives receive only simple efficiency reports. This disconnect means strategic decisions about maintenance, rehabilitation, and long-term investment are often made with incomplete risk assessments. The true value of the technical data is lost in translation.</p>
-                    
-                    <ul>
-                        <li><strong>Reactive CAPEX:</strong> Budgets are spent reacting to failures (e.g., "The bearing failed, buy a new one"), rather than proactively maximizing Remaining Useful Life (RUL).</li>
-                        <li><strong>Risk Miscalculation:</strong> The true dynamic risk (e.g., the 48% instability factor) is known to engineers, but remains invisible on the financial balance sheet.</li>
-                    </ul>
+                    <h2>1. The Problem: Data Overload</h2>
+                    <p>Plant operators receive thousands of data points daily, yet executives receive only simple efficiency reports. This disconnect means strategic decisions are made with incomplete risk assessments.</p>
 
                     <h2>2. The Solution: The Hydro Health Index (HHI)</h2>
-                    <p>We solve the SCADA-to-CEO Gap by introducing the <strong>Hydro Health Index (HHI)</strong>. HHI is a single, composite score (0–100%) created using AI and advanced analytics to aggregate complex operational metrics into a measurable assessment of asset risk and performance.</p>
+                    <p>We solve the SCADA-to-CEO Gap by introducing the <strong>Hydro Health Index (HHI)</strong>.</p>
 
-                    <blockquote>
-                        The HHI transforms raw SCADA data into an actionable financial metric, providing a clear, predictive measure of the asset's health and its ultimate cost of ownership (LCC).
+                    <blockquote onclick="navigator.clipboard.writeText(this.innerText)">
+                        The HHI transforms raw SCADA data into an actionable financial metric, providing a clear, predictive measure of the asset's health.
                     </blockquote>
 
                     <h3>HHI’s Impact on Strategic Leadership:</h3>
                     <ol>
-                        <li><span><strong>Quantifiable Risk Mitigation:</strong> Leaders gain immediate insight into the true risk of the entire portfolio, avoiding catastrophic failures.</span></li>
-                        <li><span><strong>Proactive Budgeting:</strong> The HHI predicts when wear and tear will occur, allowing the replacement of reactive failure costs with scheduled, optimized investments based on Remaining Useful Life (RUL).</span></li>
-                        <li><span><strong>ROI-Focused Maintenance:</strong> Maintenance decisions are easily justifiable; repairing a component is validated by directly quantifying the resulting increase in HHI score and the projected delay of future costs.</span></li>
+                        <li><span><strong>Quantifiable Risk Mitigation:</strong> Leaders gain immediate insight into the true risk of the entire portfolio.</span></li>
+                        <li><span><strong>Proactive Budgeting:</strong> The HHI predicts when wear and tear will occur.</span></li>
                     </ol>
-
-                    <h2>3. The Strategic Pivot to Data-Driven Decisions</h2>
-                    <p>Implementing an HHI system marks the definitive transition from traditional, experience-based maintenance to a data-driven, predictive strategy. It empowers both the engineer and the executive to speak the same language of risk, reliability, and return on investment.</p>
-                    
-                    <p><strong>Final Outcome:</strong> AnoHUB translates engineering complexity into the language of finance, making your digital transformation not just a technical upgrade, but a demonstrable <strong>profit center</strong>.</p>
 
                     <div class="mt-8 p-6 bg-h-panel border border-h-border rounded-xl">
                         <h4 class="text-white font-bold mb-2">Bridge the Gap</h4>
@@ -154,29 +123,21 @@
                             REQUEST EXECUTIVE BRIEFING
                         </a>
                     </div>
-
                 </div>
 
-                <!-- SHARE & TAGS -->
                 <div class="mt-16 pt-8 border-t border-h-border flex flex-col md:flex-row justify-between items-center gap-4">
-                    <div class="text-xs font-mono text-slate-500">
-                        TAGS: #Governance #Finance #SCADA #Leadership
-                    </div>
+                    <div class="text-xs font-mono text-slate-500">TAGS: #Governance #Finance #SCADA #Leadership</div>
                     <div class="flex gap-4">
-                         <button class="text-slate-400 hover:text-white transition"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" x2="12" y1="2" y2="15"/></svg></button>
-                         <button class="text-slate-400 hover:text-white transition"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/></svg></button>
+                         <button onclick="shareArticle()" class="text-slate-400 hover:text-white transition group relative" title="Share Article"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" x2="12" y1="2" y2="15"/></svg></button>
+                         <button onclick="copyLink(this)" class="text-slate-400 hover:text-white transition group relative" title="Copy Link"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg></button>
                     </div>
                 </div>
-
             </article>
 
-            <!-- SIDEBAR (Right) -->
             <aside class="lg:col-span-4 space-y-8">
-                
-                <!-- Author Card -->
                 <div class="scada-panel p-6 rounded-xl border-t-2 border-h-purple sticky-sidebar">
                     <div class="flex items-center gap-4 mb-4">
-                        <img src="../ervin_stupac_portrait.jpg" alt="Ervin Stupac" class="w-16 h-16 rounded-full border-2 border-slate-600 object-cover">
+                        <img src="../slike/ervin_stupac_portrait.jpg" alt="Ervin Stupac" class="w-16 h-16 rounded-full border-2 border-slate-600 object-cover">
                         <div>
                             <h4 class="text-white font-bold">Ervin Stupac</h4>
                             <p class="text-xs text-h-purple font-mono">LEAD ARCHITECT</p>
@@ -186,7 +147,6 @@
                     <a href="../contact.html" class="block w-full text-center py-2 rounded border border-slate-600 hover:border-white text-xs font-bold text-white transition uppercase">Request Consultation</a>
                 </div>
 
-                <!-- Related Intelligence -->
                 <div class="bg-h-panel border border-h-border rounded-xl p-6">
                     <h4 class="text-xs font-mono text-slate-500 uppercase mb-4 tracking-widest">Related Briefs</h4>
                     <div class="space-y-4">
@@ -207,7 +167,6 @@
                     </div>
                 </div>
 
-                <!-- CTA Box -->
                 <div class="bg-gradient-to-br from-h-purple/20 to-transparent border border-h-purple/40 p-6 rounded-xl text-center">
                     <h4 class="text-white font-bold mb-2">Align Your Organization</h4>
                     <p class="text-xs text-slate-300 mb-4">Explore our Organizational Intelligence tools.</p>
@@ -215,27 +174,38 @@
                         Launch Org. Module
                     </a>
                 </div>
-
             </aside>
-
         </div>
     </main>
 
-    <!-- FOOTER -->
-    <footer class="bg-black border-t border-slate-900 py-8 text-center text-xs font-mono text-slate-600">
+    <div id="mobile-sticky-cta" class="lg:hidden fixed bottom-4 left-4 right-4 z-50 animate-[fadeInUp_1s_ease-out_1s_forwards]">
+        <a href="../contact.html" class="flex items-center justify-between bg-h-purple/90 backdrop-blur-md text-white px-4 py-3 rounded-lg shadow-2xl border border-white/20">
+            <span class="text-xs font-bold uppercase tracking-wider">Bridge Gap?</span>
+            <span class="bg-white text-h-purple text-xs font-black px-2 py-1 rounded">CONTACT &rarr;</span>
+        </a>
+    </div>
+
+    <footer class="bg-black border-t border-slate-900 py-8 text-center text-xs font-mono text-slate-600 mb-20 lg:mb-0">
         <div class="max-w-7xl mx-auto px-4">
             &copy; 2025 ANOHUBS INC. | INTELLIGENCE DIVISION
         </div>
     </footer>
 
     <script>
-        // Reading Progress Bar
         window.onscroll = function() {
             let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
             let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
             let scrolled = (winScroll / height) * 100;
             document.getElementById("reading-progress").style.width = scrolled + "%";
         };
+        function shareArticle() {
+            if (navigator.share) { navigator.share({ title: document.title, url: window.location.href }); } 
+            else { copyLink(document.querySelector('button[title="Copy Link"]')); }
+        }
+        function copyLink(btn) {
+            navigator.clipboard.writeText(window.location.href);
+            alert("Link copied!");
+        }
     </script>
 </body>
 </html>

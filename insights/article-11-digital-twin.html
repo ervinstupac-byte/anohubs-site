@@ -6,31 +6,32 @@
     <title>From Reactive to Predictive: The Digital Twin Strategy | AnoHUB Intel</title>
     <meta name="description" content="Intelligence Brief: How Digital Twin technology transforms hydropower maintenance from reactive chaos to predictive precision.">
     
-    <!-- 1. FONTS -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "headline": "From Reactive to Predictive: The Digital Twin Strategy",
+      "datePublished": "2025-07-30",
+      "author": { "@type": "Person", "name": "Ervin Stupac" },
+      "publisher": { "@type": "Organization", "name": "AnoHUB" }
+    }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-    
-    <!-- 2. TAILWIND -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: { 
-                        sans: ['Inter', 'sans-serif'], 
-                        mono: ['JetBrains Mono', 'monospace'] 
-                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
                     colors: {
-                        'h-cyan': '#06b6d4', /* Cyan for Digital/Tech */
-                        'h-green': '#10b981', 
-                        'h-red': '#ef4444', 
-                        'h-yellow': '#facc15', 
-                        'h-dark': '#020617', 
-                        'h-panel': '#0f172a', 
-                        'h-border': '#1e293b',
-                        'h-cta': '#f59e0b'
-                    }
+                        'h-cyan': '#06b6d4', 'h-green': '#10b981', 'h-red': '#ef4444', 
+                        'h-yellow': '#facc15', 'h-dark': '#020617', 'h-panel': '#0f172a', 
+                        'h-border': '#1e293b', 'h-cta': '#f59e0b', 'h-purple': '#8b5cf6'
+                    },
+                    animation: { 'fade-in-up': 'fadeInUp 0.8s ease-out forwards' }
                 }
             }
         }
@@ -38,36 +39,26 @@
 
     <style>
         body { background-color: #020617; color: #cbd5e1; overflow-x: hidden; }
-        
-        /* Progress Bar */
-        #reading-progress {
-            position: fixed; top: 0; left: 0; height: 3px; background: #06b6d4; /* Cyan */
-            width: 0%; z-index: 100; transition: width 0.1s;
-        }
-
-        /* Typography for Article Body */
-        .article-body h2 { font-size: 1.5rem; font-weight: 800; color: white; margin-top: 3rem; margin-bottom: 1rem; letter-spacing: -0.02em; }
+        #reading-progress { position: fixed; top: 0; left: 0; height: 3px; background: #06b6d4; width: 0%; z-index: 100; transition: width 0.1s; }
+        .article-body h2 { font-size: 1.5rem; font-weight: 800; color: white; margin-top: 3rem; margin-bottom: 1rem; }
         .article-body h3 { font-size: 1.25rem; font-weight: 700; color: #06b6d4; margin-top: 2rem; margin-bottom: 0.75rem; }
         .article-body p { margin-bottom: 1.5rem; line-height: 1.8; font-size: 1.05rem; }
-        .article-body ul, .article-body ol { margin-bottom: 1.5rem; padding-left: 1rem; }
+        .article-body ul { margin-bottom: 1.5rem; padding-left: 1rem; }
         .article-body li { position: relative; padding-left: 1.5rem; margin-bottom: 0.75rem; }
-        .article-body ul li::before { 
-            content: ">>"; position: absolute; left: 0; color: #06b6d4; font-family: 'JetBrains Mono', monospace; font-size: 0.8em;
-        }
-        .article-body ol { list-style-type: decimal; color: #06b6d4; font-family: 'JetBrains Mono', monospace; }
-        .article-body ol li span { color: #cbd5e1; font-family: 'Inter', sans-serif; }
-        
-        .article-body strong { color: white; font-weight: 700; }
-        .article-body blockquote { 
-            border-left: 4px solid #06b6d4; background: rgba(6, 182, 212, 0.1); 
-            padding: 1.5rem; font-style: italic; color: #67e8f9; margin: 2rem 0; border-radius: 0 0.5rem 0.5rem 0;
-        }
-        
-        /* Image Styles */
+        .article-body ul li::before { content: ">>"; position: absolute; left: 0; color: #06b6d4; font-family: 'JetBrains Mono', monospace; font-size: 0.8em; }
+        .article-body blockquote { border-left: 4px solid #06b6d4; background: rgba(6, 182, 212, 0.1); padding: 1.5rem; font-style: italic; color: #67e8f9; margin: 2rem 0; cursor: pointer; transition: all 0.3s; }
+        .article-body blockquote:hover { background: rgba(6, 182, 212, 0.15); }
         .article-img { border-radius: 0.75rem; border: 1px solid #334155; box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin: 2rem 0; width: 100%; }
-        
-        /* Sidebar Sticky */
         .sticky-sidebar { position: sticky; top: 100px; }
+
+        @media print {
+            body { background-color: white !important; color: black !important; }
+            #navbar, #reading-progress, #mobile-sticky-cta, aside, footer, .mt-16 { display: none !important; }
+            main { padding-top: 0 !important; }
+            .lg\:col-span-8 { width: 100% !important; }
+            h1, h2, h3 { color: black !important; }
+            body::before { content: "ANOHUBS INTELLIGENCE BRIEF 011"; display: block; border-bottom: 2px solid black; margin-bottom: 20px; font-weight: bold; }
+        }
     </style>
 </head>
 
@@ -75,8 +66,15 @@
     
     <div id="reading-progress"></div>
 
-    <!-- NAV -->
     <header class="fixed w-full z-50 top-0 border-b border-white/5 bg-h-dark/90 backdrop-blur-md" id="navbar">
+        <div class="relative bg-h-purple/10 border-b border-h-purple/20 overflow-hidden">
+            <div class="max-w-7xl mx-auto px-6 py-1 flex justify-center">
+                <a href="article-16-ai-paradox.html" class="flex items-center gap-2 text-[10px] font-mono text-h-purple font-bold tracking-widest uppercase hover:text-white transition">
+                    <span class="w-1.5 h-1.5 rounded-full bg-h-purple animate-pulse"></span>
+                    LATEST INTEL: The Hydro-Boom Paradox [READ]
+                </a>
+            </div>
+        </div>
         <div class="max-w-7xl mx-auto px-4 h-16 flex justify-between items-center">
             <a href="../index.html" class="flex items-center gap-3 group">
                 <img src="../logo.svg" alt="AnoHUB" class="h-8 w-auto opacity-80 group-hover:opacity-100 transition">
@@ -92,10 +90,7 @@
     <main class="pt-32 pb-20">
         <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-12 gap-12">
 
-            <!-- MAIN CONTENT (Left) -->
             <article class="lg:col-span-8">
-                
-                <!-- HEADER -->
                 <header class="mb-12 border-b border-h-border pb-8">
                     <div class="flex items-center gap-4 mb-6 text-xs font-mono">
                         <span class="px-3 py-1 rounded bg-h-cyan/10 text-h-cyan border border-h-cyan/20">DIGITAL TWIN</span>
@@ -110,48 +105,31 @@
                     </p>
                 </header>
 
-                <!-- BODY -->
                 <div class="article-body text-slate-300">
-                    
-                    
                     <img src="../slike/digital_twin_main.png" alt="Digital Twin Interface" class="article-img">
                     
                     <p class="article-intro">
-                        Imagine shifting from constantly reacting to costly breakdowns to <strong>predicting failures before they occur</strong>. This is the promise of the Digital Twin in hydropower. By creating a virtual replica of your turbine, we can leverage real-time data to identify anomalies, optimize performance, and transform your maintenance strategy from reactive to truly predictive.
+                        Imagine shifting from constantly reacting to costly breakdowns to <strong>predicting failures before they occur</strong>. This is the promise of the Digital Twin in hydropower.
                     </p>
 
                     <h2>What is a Digital Twin?</h2>
-                    <p>A digital twin is a virtual replica of a physical object, system, or process. It's created using data collected from sensors, allowing it to behave and react in the same way as its physical counterpart. For hydropower turbines, this means:</p>
-                    
+                    <p>A digital twin is a virtual replica of a physical object, system, or process. It's created using data collected from sensors.</p>
                     <ul>
-                        <li>A <strong>virtual model</strong> that perfectly simulates the turbine's behavior, including complex fluid dynamics and mechanical responses.</li>
-                        <li><strong>Real-time sensors</strong> (for vibration, temperature, pressure, flow) that feed the twin with continuous, granular data.</li>
-                        <li><strong>Analytical software</strong> (AI/ML) that continuously compares data from the virtual and real worlds to spot minute anomalies and predict future behavior.</li>
+                        <li><strong>Virtual Model:</strong> Perfectly simulates turbine behavior.</li>
+                        <li><strong>Real-time Sensors:</strong> Feed continuous data.</li>
+                        <li><strong>AI Analysis:</strong> Detects anomalies instantly.</li>
                     </ul>
 
-                    <h2>How a Digital Twin Helps in Practice</h2>
-                    <p>This technology fundamentally transforms maintenance from a reactive to a predictive process. Instead of waiting for a costly breakdown, you predict and prevent the problem:</p>
-                    
-                    <h3>1. Early Detection of Abrasion and Cavitation</h3>
-                    <p>When sediment starts damaging rotor blades, initial vibrations and pressure changes are minimal and barely noticeable to a human. A digital twin, however, can detect these minute changes instantly. It warns you of an issue, allowing for timely inspection before a minor problem escalates to a major, expensive repair.</p>
+                    <h2>How a Digital Twin Helps</h2>
+                    <h3>1. Early Detection</h3>
+                    <p>A digital twin detects minute changes in vibration or pressure instantly, warning you before a minor problem becomes a major repair.</p>
 
                     <h3>2. Performance Optimization</h3>
-                    <p>The digital twin allows you to simulate different operational scenarios in a safe virtual environment. You can test how a change in water flow, gate opening, or load affects efficiency, all without risking damage to the actual turbine or disrupting energy production.</p>
-
-                    <h3>3. Predictive Maintenance Scheduling</h3>
-                    <p>Based on continuous data analysis, the system predicts when specific wear and tear will occur and determines the optimal time for maintenance interventions. This eliminates expensive, unplanned emergency repairs in favor of scheduled, cost-effective servicing.</p>
+                    <p>Simulate operational scenarios in a safe virtual environment to test efficiency.</p>
                     
-                    <h3>4. Training and Education</h3>
-                    <p>Technicians can practice complex maintenance procedures and troubleshoot scenarios on the virtual model, significantly reducing the risk of errors in the field and enhancing their expertise.</p>
-
-                    <h2>From Sensors to Solutions</h2>
-                    <p>Implementation begins with a robust sensor network. By placing precise sensors in key locations on the turbine (bearings, shaft, guide vanes, etc.), you gain unparalleled insight into its "health." This data is then securely transmitted to the cloud, where it's processed with advanced AI and specialized software to provide a detailed, actionable diagnosis.</p>
-                    
-                    <blockquote class="mb-8">
+                    <blockquote onclick="navigator.clipboard.writeText(this.innerText)">
                         "Abrasion, cavitation, loss of efficiency—every hydropower plant owner has faced these issues. The Digital Twin is the first line of defense."
                     </blockquote>
-
-                    <p class="mb-8">This is the most efficient way to minimize operational problems, maximize uptime, and extend the lifespan of your critical assets. Let's have an open conversation about how this technology can safeguard your investment.</p>
 
                     <div class="mt-8 p-6 bg-h-panel border border-h-border rounded-xl border-l-4 border-l-h-cyan">
                         <h4 class="text-white font-bold mb-2">Discuss Your Challenges</h4>
@@ -160,29 +138,21 @@
                             CONNECT WITH EXPERTS
                         </a>
                     </div>
-
                 </div>
 
-                <!-- SHARE & TAGS -->
                 <div class="mt-16 pt-8 border-t border-h-border flex flex-col md:flex-row justify-between items-center gap-4">
-                    <div class="text-xs font-mono text-slate-500">
-                        TAGS: #DigitalTwin #AI #PredictiveMaintenance #Innovation
-                    </div>
+                    <div class="text-xs font-mono text-slate-500">TAGS: #DigitalTwin #AI #PredictiveMaintenance #Innovation</div>
                     <div class="flex gap-4">
-                         <button class="text-slate-400 hover:text-white transition"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" x2="12" y1="2" y2="15"/></svg></button>
-                         <button class="text-slate-400 hover:text-white transition"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/></svg></button>
+                         <button onclick="shareArticle()" class="text-slate-400 hover:text-white transition group relative" title="Share Article"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" x2="12" y1="2" y2="15"/></svg></button>
+                         <button onclick="copyLink(this)" class="text-slate-400 hover:text-white transition group relative" title="Copy Link"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg></button>
                     </div>
                 </div>
-
             </article>
 
-            <!-- SIDEBAR (Right) -->
             <aside class="lg:col-span-4 space-y-8">
-                
-                <!-- Author Card -->
                 <div class="scada-panel p-6 rounded-xl border-t-2 border-h-cyan sticky-sidebar">
                     <div class="flex items-center gap-4 mb-4">
-                        <img src="../ervin_stupac_portrait.jpg" alt="Ervin Stupac" class="w-16 h-16 rounded-full border-2 border-slate-600 object-cover">
+                        <img src="../slike/ervin_stupac_portrait.jpg" alt="Ervin Stupac" class="w-16 h-16 rounded-full border-2 border-slate-600 object-cover">
                         <div>
                             <h4 class="text-white font-bold">Ervin Stupac</h4>
                             <p class="text-xs text-h-cyan font-mono">LEAD ARCHITECT</p>
@@ -192,7 +162,6 @@
                     <a href="../contact.html" class="block w-full text-center py-2 rounded border border-slate-600 hover:border-white text-xs font-bold text-white transition uppercase">Request Consultation</a>
                 </div>
 
-                <!-- Related Intelligence -->
                 <div class="bg-h-panel border border-h-border rounded-xl p-6">
                     <h4 class="text-xs font-mono text-slate-500 uppercase mb-4 tracking-widest">Related Briefs</h4>
                     <div class="space-y-4">
@@ -213,7 +182,6 @@
                     </div>
                 </div>
 
-                <!-- CTA Box -->
                 <div class="bg-gradient-to-br from-h-cyan/20 to-transparent border border-h-cyan/40 p-6 rounded-xl text-center">
                     <h4 class="text-white font-bold mb-2">See It In Action</h4>
                     <p class="text-xs text-slate-300 mb-4">Explore our Predictive AI capabilities.</p>
@@ -221,27 +189,38 @@
                         View Predictive Module
                     </a>
                 </div>
-
             </aside>
-
         </div>
     </main>
 
-    <!-- FOOTER -->
-    <footer class="bg-black border-t border-slate-900 py-8 text-center text-xs font-mono text-slate-600">
+    <div id="mobile-sticky-cta" class="lg:hidden fixed bottom-4 left-4 right-4 z-50 animate-[fadeInUp_1s_ease-out_1s_forwards]">
+        <a href="../contact.html" class="flex items-center justify-between bg-h-cyan/90 backdrop-blur-md text-black px-4 py-3 rounded-lg shadow-2xl border border-white/20">
+            <span class="text-xs font-bold uppercase tracking-wider">Deploy Twin?</span>
+            <span class="bg-black text-h-cyan text-xs font-black px-2 py-1 rounded">CONTACT &rarr;</span>
+        </a>
+    </div>
+
+    <footer class="bg-black border-t border-slate-900 py-8 text-center text-xs font-mono text-slate-600 mb-20 lg:mb-0">
         <div class="max-w-7xl mx-auto px-4">
             &copy; 2025 ANOHUBS INC. | INTELLIGENCE DIVISION
         </div>
     </footer>
 
     <script>
-        // Reading Progress Bar
         window.onscroll = function() {
             let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
             let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
             let scrolled = (winScroll / height) * 100;
             document.getElementById("reading-progress").style.width = scrolled + "%";
         };
+        function shareArticle() {
+            if (navigator.share) { navigator.share({ title: document.title, url: window.location.href }); } 
+            else { copyLink(document.querySelector('button[title="Copy Link"]')); }
+        }
+        function copyLink(btn) {
+            navigator.clipboard.writeText(window.location.href);
+            alert("Link copied!");
+        }
     </script>
 </body>
 </html>
