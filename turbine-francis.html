@@ -6,12 +6,10 @@
     <title>Francis Turbine Protocol | AnoHUB</title>
     <meta name="description" content="Advanced integrity analysis for Francis turbines. Hill chart optimization, cavitation mapping, and vibration analysis.">
     
-    <!-- 1. FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     
-    <!-- 2. TAILWIND -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -110,7 +108,6 @@
 
 <body class="antialiased">
 
-    <!-- NAV -->
     <header class="fixed w-full z-50 top-0 border-b border-white/5 bg-h-dark/90 backdrop-blur-md transition-all duration-300" id="navbar">
         <div class="max-w-7xl mx-auto px-4 h-20 flex justify-between items-center">
             <a href="index.html" class="flex items-center gap-3 group">
@@ -133,7 +130,6 @@
                 <svg data-lucide="menu" class="w-8 h-8"></svg>
             </button>
         </div>
-        <!-- Mobile Menu Overlay -->
         <div id="mobile-menu" class="hidden lg:hidden absolute top-20 left-0 w-full bg-h-dark border-b border-h-border p-4 flex flex-col gap-4 shadow-2xl">
             <a href="services.html" class="text-slate-300 hover:text-h-cyan py-2 border-b border-h-border flex items-center gap-2"><svg data-lucide="arrow-left" class="w-4 h-4"></svg> Back to Services</a>
             <a href="protocol.html" class="text-h-cyan font-bold py-2 border-b border-h-border flex items-center gap-2"><svg data-lucide="shield" class="w-4 h-4"></svg> PROTOCOL</a>
@@ -143,7 +139,6 @@
 
     <main class="pt-20">
 
-        <!-- HERO -->
         <section class="hero-francis min-h-[60vh] flex items-center justify-center relative">
             <div class="max-w-5xl mx-auto px-4 text-center relative z-10">
                 <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-black/50 backdrop-blur-md text-xs font-mono text-slate-300 mb-6 animate-[fadeInUp_1s_ease-out]">
@@ -162,7 +157,6 @@
             </div>
         </section>
 
-        <!-- INTERACTIVE HILL CHART SIMULATOR -->
         <section class="py-20 bg-h-dark border-b border-h-border">
             <div class="max-w-7xl mx-auto px-4">
                 
@@ -182,7 +176,6 @@
 
                 <div class="grid lg:grid-cols-3 gap-8">
                     
-                    <!-- Controls -->
                     <div class="space-y-8 bg-h-panel p-6 rounded-xl border border-h-border">
                         <div>
                             <div class="flex justify-between mb-2">
@@ -215,7 +208,6 @@
                             </div>
                         </div>
 
-                        <!-- 3D Model Wrapper (Added here to fit layout) -->
                         <div class="mt-6 pt-6 border-t border-slate-700">
                              <div class="flex justify-between items-center mb-2">
                                 <span class="text-xs font-bold text-white uppercase">3D Component View</span>
@@ -231,34 +223,25 @@
                         </div>
                     </div>
 
-                    <!-- The Chart (Visual) -->
                     <div class="lg:col-span-2 hill-chart-container relative flex items-center justify-center">
-                        <!-- Grid Lines -->
                         <div class="absolute inset-0" style="background-image: radial-gradient(#334155 1px, transparent 1px); background-size: 20px 20px; opacity: 0.3;"></div>
                         
-                        <!-- Efficiency Contours (SVG) -->
                         <svg width="100%" height="100%" viewBox="0 0 400 300" class="absolute inset-0">
-                            <!-- Best Efficiency Point (BEP) -->
                             <ellipse cx="200" cy="150" rx="30" ry="20" fill="none" stroke="#10b981" stroke-width="2" />
                             <text x="185" y="155" fill="#10b981" font-size="10" font-family="monospace">95%</text>
                             
-                            <!-- 90% Contour -->
                             <ellipse cx="200" cy="150" rx="80" ry="50" fill="none" stroke="#06b6d4" stroke-width="1" stroke-dasharray="4 4" />
                             <text x="260" y="190" fill="#06b6d4" font-size="10" font-family="monospace">90%</text>
 
-                            <!-- 80% Contour (Cavitation Risk) -->
                             <ellipse cx="200" cy="150" rx="140" ry="90" fill="none" stroke="#facc15" stroke-width="1" stroke-dasharray="2 2" />
                             <text x="310" y="220" fill="#facc15" font-size="10" font-family="monospace">80%</text>
                         </svg>
 
-                        <!-- X/Y Labels -->
                         <div class="absolute bottom-2 left-1/2 -translate-x-1/2 text-[10px] font-mono text-slate-500">DISCHARGE (Q) &rarr;</div>
                         <div class="absolute left-2 top-1/2 -translate-y-1/2 text-[10px] font-mono text-slate-500 -rotate-90">HEAD (H) &rarr;</div>
 
-                        <!-- The Moving Dot -->
                         <div id="op-point" class="op-point"></div>
                         
-                        <!-- Cavitation Warning Overlay -->
                         <div id="cavitation-warning" class="absolute inset-0 bg-h-red/10 flex items-center justify-center opacity-0 transition-opacity duration-300 pointer-events-none">
                             <div class="bg-black/80 border border-h-red text-h-red px-6 py-3 rounded font-bold text-xl animate-bounce">
                                 CAVITATION WARNING
@@ -270,14 +253,12 @@
             </div>
         </section>
 
-        <!-- ANATOMY & VULNERABILITIES -->
         <section class="py-24 bg-h-panel relative">
             <div class="max-w-7xl mx-auto px-4">
                 <h2 class="text-3xl font-black text-white mb-12 text-center">Critical Inspection Zones</h2>
                 
                 <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                     
-                    <!-- Component 1 -->
                     <div class="glass-card p-6 rounded-xl relative group">
                         <div class="text-4xl font-black text-slate-800 absolute top-4 right-4 group-hover:text-h-cyan/20 transition">01</div>
                         <h3 class="text-lg font-bold text-h-cyan mb-2">Spiral Case</h3>
@@ -288,7 +269,6 @@
                         </ul>
                     </div>
 
-                    <!-- Component 2 -->
                     <div class="glass-card p-6 rounded-xl relative group">
                         <div class="text-4xl font-black text-slate-800 absolute top-4 right-4 group-hover:text-h-cyan/20 transition">02</div>
                         <h3 class="text-lg font-bold text-h-cyan mb-2">Wicket Gates</h3>
@@ -299,7 +279,6 @@
                         </ul>
                     </div>
 
-                    <!-- Component 3 -->
                     <div class="glass-card p-6 rounded-xl relative group border-h-red/30 hover:border-h-red">
                         <div class="text-4xl font-black text-slate-800 absolute top-4 right-4 group-hover:text-h-red/20 transition">03</div>
                         <h3 class="text-lg font-bold text-h-red mb-2">Runner Blades</h3>
@@ -310,7 +289,6 @@
                         </ul>
                     </div>
 
-                    <!-- Component 4 -->
                     <div class="glass-card p-6 rounded-xl relative group">
                         <div class="text-4xl font-black text-slate-800 absolute top-4 right-4 group-hover:text-h-cyan/20 transition">04</div>
                         <h3 class="text-lg font-bold text-h-cyan mb-2">Draft Tube</h3>
@@ -325,7 +303,6 @@
             </div>
         </section>
 
-        <!-- CTA -->
         <section class="py-20 text-center bg-h-dark border-t border-h-border">
             <div class="max-w-3xl mx-auto px-4">
                 <h2 class="text-2xl font-bold text-white mb-4">Schedule a Francis Audit</h2>
