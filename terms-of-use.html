@@ -6,40 +6,33 @@
     <title>Terms of Use | AnoHUB Operational Framework</title>
     <meta name="description" content="Anohubs' terms and conditions governing the use of our website, intellectual property, and consultation services.">
 
-    <!-- 1. FONTS -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Terms of Use",
+      "description": "Operational Framework and Legal Conditions for AnoHUB.",
+      "publisher": { "@type": "Organization", "name": "AnoHUB" }
+    }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     
-    <!-- 2. TAILWIND -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: { 
-                        sans: ['Inter', 'sans-serif'], 
-                        mono: ['JetBrains Mono', 'monospace'] 
-                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
                     colors: {
-                        'h-cyan': '#06b6d4', 
-                        'h-green': '#10b981', 
-                        'h-red': '#ef4444', 
-                        'h-yellow': '#facc15', 
-                        'h-dark': '#020617', 
-                        'h-panel': '#0f172a', 
-                        'h-border': '#1e293b',
-                        'h-cta': '#f59e0b'
+                        'h-cyan': '#06b6d4', 'h-green': '#10b981', 'h-red': '#ef4444', 
+                        'h-yellow': '#facc15', 'h-purple': '#8b5cf6', 'h-dark': '#020617', 
+                        'h-panel': '#0f172a', 'h-border': '#1e293b', 'h-cta': '#f59e0b'
                     },
-                    animation: {
-                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
-                    },
-                    keyframes: {
-                        fadeInUp: {
-                            '0%': { opacity: '0', transform: 'translateY(20px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
-                        }
-                    }
+                    animation: { 'fade-in-up': 'fadeInUp 0.8s ease-out forwards' },
+                    keyframes: { fadeInUp: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } } }
                 }
             }
         }
@@ -50,43 +43,38 @@
         
         /* Tech Grid Background */
         .tech-bg {
-            background-image: 
-                linear-gradient(rgba(6, 182, 212, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(6, 182, 212, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            background-image: linear-gradient(rgba(6, 182, 212, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(6, 182, 212, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
         }
 
         /* Glass Panels */
         .glass-panel {
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(51, 65, 85, 0.5);
-            transition: all 0.3s ease;
+            background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(12px);
+            border: 1px solid rgba(51, 65, 85, 0.5); transition: all 0.3s ease;
         }
-        .glass-panel:hover {
-            border-color: #06b6d4;
-            background: rgba(15, 23, 42, 0.8);
-        }
+        .glass-panel:hover { border-color: #06b6d4; background: rgba(15, 23, 42, 0.8); }
 
         /* Section Highlight Line */
-        .section-line {
-            height: 100%; width: 2px; background: #334155; position: absolute; left: 0; top: 0;
-        }
+        .section-line { height: 100%; width: 2px; background: #334155; position: absolute; left: 0; top: 0; }
         .glass-panel:hover .section-line { background: #06b6d4; box-shadow: 0 0 10px #06b6d4; }
 
-        /* Scroll Bar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #020617; }
-        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #06b6d4; }
+        /* --- PRINT OPTIMIZATION (CONTRACT MODE) --- */
+        @media print {
+            body { background-color: white !important; color: black !important; font-family: serif; }
+            .tech-bg, #navbar, footer, #mobile-sticky-cta { display: none !important; }
+            main { padding-top: 0 !important; }
+            .glass-panel { background: white !important; border: none !important; border-bottom: 1px solid #ccc !important; color: black !important; box-shadow: none !important; page-break-inside: avoid; padding: 10px 0 !important; }
+            h1, h2, h3 { color: black !important; }
+            p, li { color: #333 !important; font-size: 11pt !important; }
+            .text-transparent { color: black !important; -webkit-text-fill-color: black !important; }
+            body::before { content: "ANOHUBS OPERATIONAL FRAMEWORK | TERMS OF USE"; display: block; border-bottom: 2px solid black; margin-bottom: 20px; font-weight: bold; }
+        }
     </style>
 </head>
 
 <body class="antialiased">
     <div class="tech-bg"></div>
 
-    <!-- NAV -->
     <header class="fixed w-full z-50 top-0 border-b border-white/5 bg-h-dark/90 backdrop-blur-md transition-all duration-300" id="navbar">
         <div class="max-w-7xl mx-auto px-4 h-20 flex justify-between items-center">
             <a href="index.html" class="flex items-center gap-3 group">
@@ -98,15 +86,14 @@
             </a>
             <nav class="hidden lg:flex items-center gap-6 text-xs font-bold uppercase tracking-wider">
                 <a href="index.html" class="text-slate-400 hover:text-white transition">Home</a>
+                <a href="services.html" class="text-slate-400 hover:text-white transition">Services</a>
                 <a href="protocol.html" class="group relative inline-flex items-center gap-2 px-5 py-2 bg-h-cyan/10 text-h-cyan border border-h-cyan/50 rounded-full hover:bg-h-cyan hover:text-black transition-all duration-300">
                     <span>PROTOCOL</span>
-                    <div class="w-1.5 h-1.5 bg-h-cyan rounded-full animate-pulse-fast group-hover:bg-black"></div>
+                    <div class="w-1.5 h-1.5 bg-h-cyan rounded-full animate-pulse"></div>
                 </a>
                 <a href="contact.html" class="px-5 py-2 bg-h-cta text-black rounded-full hover:bg-yellow-400 transition">Contact</a>
             </nav>
-            <button id="mobile-menu-btn" class="lg:hidden text-white p-2">
-                <svg data-lucide="menu" class="w-8 h-8"></svg>
-            </button>
+            <button id="mobile-menu-btn" class="lg:hidden text-white p-2"><svg data-lucide="menu" class="w-8 h-8"></svg></button>
         </div>
         <div id="mobile-menu" class="hidden lg:hidden absolute top-20 left-0 w-full bg-h-dark border-b border-h-border p-4 flex flex-col gap-4 shadow-2xl">
             <a href="index.html" class="text-slate-300 hover:text-h-cyan py-2 border-b border-h-border">Home</a>
@@ -117,17 +104,11 @@
 
     <main class="pt-32 pb-20">
 
-        <!-- HERO -->
         <section class="max-w-4xl mx-auto px-4 mb-16 text-center">
             <div class="inline-flex items-center gap-4 mb-8">
-                <div class="flex items-center gap-2 px-3 py-1 rounded border border-slate-700 bg-slate-800 text-xs font-mono text-slate-400">
-                    AGREEMENT VER: 3.0
-                </div>
-                <div class="flex items-center gap-2 px-3 py-1 rounded border border-slate-700 bg-slate-800 text-xs font-mono text-slate-400">
-                    STATUS: ACTIVE
-                </div>
+                <div class="flex items-center gap-2 px-3 py-1 rounded border border-slate-700 bg-slate-800 text-xs font-mono text-slate-400">AGREEMENT VER: 3.0</div>
+                <div class="flex items-center gap-2 px-3 py-1 rounded border border-slate-700 bg-slate-800 text-xs font-mono text-slate-400">STATUS: ACTIVE</div>
             </div>
-            
             <h1 class="text-4xl md:text-6xl font-black text-white mb-6 tracking-tight leading-none animate-[fadeInUp_1s_ease-out]">
                 OPERATIONAL <br>
                 <span class="text-transparent bg-clip-text bg-gradient-to-r from-h-cyan to-blue-500">FRAMEWORK</span>
@@ -137,17 +118,14 @@
             </p>
         </section>
 
-        <!-- CONTENT CONTAINER -->
         <div class="max-w-4xl mx-auto px-4 space-y-8">
 
-            <!-- INTRO CARD -->
             <div class="glass-panel p-8 rounded-xl border-l-4 border-l-h-cyan animate-[fadeInUp_1s_ease-out_0.4s_forwards] opacity-0">
                 <p class="text-lg text-slate-300 leading-relaxed">
                     By accessing the Anohubs platform ("The Site"), you engage with our proprietary methodologies. These Terms of Use constitute a binding agreement between you and Anohubs Inc.
                 </p>
             </div>
 
-            <!-- SECTION 1: INTELLECTUAL PROPERTY -->
             <div class="glass-panel p-8 rounded-xl relative overflow-hidden pl-10 group animate-[fadeInUp_1s_ease-out_0.5s_forwards] opacity-0">
                 <div class="section-line"></div>
                 <div class="flex items-start gap-6">
@@ -165,7 +143,6 @@
                 </div>
             </div>
 
-            <!-- SECTION 2: LIABILITY DISCLAIMER -->
             <div class="glass-panel p-8 rounded-xl relative overflow-hidden pl-10 group animate-[fadeInUp_1s_ease-out_0.6s_forwards] opacity-0">
                 <div class="section-line" style="background: #facc15;"></div>
                 <div class="flex items-start gap-6">
@@ -182,7 +159,6 @@
                 </div>
             </div>
 
-            <!-- SECTION 3: ACCESS & SECURITY -->
             <div class="glass-panel p-8 rounded-xl relative overflow-hidden pl-10 group animate-[fadeInUp_1s_ease-out_0.7s_forwards] opacity-0">
                 <div class="section-line"></div>
                 <div class="flex items-start gap-6">
@@ -196,7 +172,6 @@
                 </div>
             </div>
 
-            <!-- SECTION 4: LEGAL CONTACT -->
             <div class="glass-panel p-8 rounded-xl relative overflow-hidden pl-10 group animate-[fadeInUp_1s_ease-out_0.8s_forwards] opacity-0">
                 <div class="section-line"></div>
                 <div class="flex items-start gap-6">
@@ -216,34 +191,27 @@
         </div>
     </main>
 
-    <footer class="bg-black border-t border-slate-900 py-8 text-center mt-20">
+    <div id="mobile-sticky-cta" class="lg:hidden fixed bottom-4 left-4 right-4 z-50 animate-[fadeInUp_1s_ease-out_1s_forwards] opacity-0">
+        <a href="contact.html" class="flex items-center justify-between bg-h-cyan/90 backdrop-blur-md text-black px-4 py-3 rounded-lg shadow-2xl border border-white/20">
+            <span class="text-xs font-bold uppercase tracking-wider">Legal Question?</span>
+            <span class="bg-black text-h-cyan text-xs font-black px-2 py-1 rounded">CONTACT &rarr;</span>
+        </a>
+    </div>
+
+    <footer class="bg-black border-t border-slate-900 py-8 text-center mt-20 mb-20 lg:mb-0">
         <div class="max-w-7xl mx-auto px-4">
             <p class="text-slate-600 text-xs font-mono">© 2025 Anohubs Inc. | LEGAL DIVISION</p>
         </div>
     </footer>
 
-    <!-- SCRIPTS -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <script>
         lucide.createIcons();
-        
-        // Mobile Menu
-        const menuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        menuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-
-        // Navbar Scroll
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => { document.getElementById('mobile-menu').classList.toggle('hidden'); });
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                nav.classList.add('shadow-lg', 'bg-h-dark/95');
-                nav.classList.remove('bg-h-dark/90');
-            } else {
-                nav.classList.remove('shadow-lg', 'bg-h-dark/95');
-                nav.classList.add('bg-h-dark/90');
-            }
+            if (window.scrollY > 50) { nav.classList.add('shadow-lg', 'bg-h-dark/95'); nav.classList.remove('bg-h-dark/90'); } 
+            else { nav.classList.remove('shadow-lg', 'bg-h-dark/95'); nav.classList.add('bg-h-dark/90'); }
         });
     </script>
 </body>

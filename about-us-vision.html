@@ -6,12 +6,27 @@
     <title>Our Vision & The Architect | AnoHUB</title>
     <meta name="description" content="The origin story of Anohubs. Meeting the architects behind the Engineering Immunity Protocol.">
 
-    <!-- 1. FONTS -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfilePage",
+      "mainEntity": {
+        "@type": "Person",
+        "name": "Ervin Stupac",
+        "jobTitle": "Lead Architect & Founder",
+        "worksFor": {
+          "@type": "Organization",
+          "name": "AnoHUB"
+        },
+        "description": "Forensic engineering specialist focusing on hydropower integrity and dynamic risk mitigation."
+      }
+    }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     
-    <!-- 2. TAILWIND -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -22,18 +37,14 @@
                         mono: ['JetBrains Mono', 'monospace'] 
                     },
                     colors: {
-                        'h-cyan': '#06b6d4', 
-                        'h-green': '#10b981', 
-                        'h-red': '#ef4444', 
-                        'h-yellow': '#facc15', 
-                        'h-dark': '#020617', 
-                        'h-panel': '#0f172a', 
-                        'h-border': '#1e293b',
-                        'h-cta': '#f59e0b'
+                        'h-cyan': '#06b6d4', 'h-green': '#10b981', 'h-red': '#ef4444', 
+                        'h-yellow': '#facc15', 'h-dark': '#020617', 'h-panel': '#0f172a', 
+                        'h-border': '#1e293b', 'h-cta': '#f59e0b', 'h-purple': '#8b5cf6'
                     },
                     animation: {
                         'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
                         'scan': 'scan 4s linear infinite',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                     },
                     keyframes: {
                         fadeInUp: {
@@ -58,6 +69,7 @@
             background-image: linear-gradient(rgba(6, 182, 212, 0.03) 1px, transparent 1px),
             linear-gradient(90deg, rgba(6, 182, 212, 0.03) 1px, transparent 1px);
             background-size: 50px 50px;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
         }
 
         /* Glass Cards */
@@ -78,13 +90,59 @@
         .timeline-line {
             position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: #1e293b; transform: translateX(-50%);
         }
+
+        /* --- PRINT OPTIMIZATION --- */
+        @media print {
+            body { background-color: white !important; color: black !important; font-family: serif; }
+            .tech-bg, #navbar, footer, #mobile-sticky-cta, .portrait-scanline, .timeline-line, .absolute { display: none !important; }
+            main { padding-top: 0 !important; }
+            h1 { color: black !important; font-size: 24pt !important; }
+            h2, h3, h4 { color: #333 !important; }
+            p, li { color: black !important; }
+            .glass-panel { 
+                background: white !important; border: none !important; 
+                box-shadow: none !important; padding: 0 !important; margin-bottom: 20px; 
+            }
+            .text-transparent { color: black !important; -webkit-text-fill-color: black !important; }
+            img { filter: none !important; border: 1px solid #ccc !important; max-width: 200px !important; }
+            
+            /* Layout fixes for print */
+            .grid { display: block !important; }
+            .md\:col-span-5, .md\:col-span-7 { width: 100% !important; display: block !important; margin-bottom: 20px; }
+            
+            body::before {
+                content: "ANOHUBS FOUNDER PROFILE & VISION";
+                display: block; border-bottom: 2px solid black; margin-bottom: 20px; font-weight: bold;
+            }
+        }
     </style>
 </head>
 
-<body class="antialiased tech-bg">
+<body class="antialiased">
+    <div class="tech-bg"></div>
 
-    <!-- NAV (Identical to Index) -->
     <header class="fixed w-full z-50 top-0 border-b border-white/5 bg-h-dark/90 backdrop-blur-md transition-all duration-300" id="navbar">
+        
+        <div class="relative bg-h-purple/10 border-b border-h-purple/20 overflow-hidden">
+            <div class="max-w-7xl mx-auto px-4 py-2 flex flex-col md:flex-row items-center justify-between gap-2 md:gap-4">
+                <div class="flex items-center gap-3">
+                    <span class="flex h-2 w-2 relative">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-h-purple opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-h-purple"></span>
+                    </span>
+                    <span class="text-[10px] font-mono text-h-purple font-bold tracking-widest uppercase">NEW INTEL:</span>
+                    <span class="text-xs text-white font-semibold truncate">The Hydro-Boom Paradox: AI vs. Physics</span>
+                </div>
+                <div class="flex items-center gap-4">
+                    <span class="hidden md:block text-[10px] text-slate-500 font-mono">DOC ID: INS-016</span>
+                    <a href="insights/article-16-ai-paradox.html" class="group flex items-center gap-2 text-[10px] font-bold text-white hover:text-h-purple transition uppercase tracking-wider">
+                        READ BRIEF 
+                        <svg class="w-3 h-3 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+
         <div class="max-w-7xl mx-auto px-4 h-20 flex justify-between items-center">
             <a href="index.html" class="flex items-center gap-3 group">
                 <img src="logo.svg" alt="AnoHUB" class="h-10 w-auto transition group-hover:brightness-125">
@@ -96,19 +154,18 @@
             <nav class="hidden lg:flex items-center gap-6 text-xs font-bold uppercase tracking-wider">
                 <a href="index.html" class="text-slate-400 hover:text-white transition">Home</a>
                 <a href="services.html" class="text-slate-400 hover:text-white transition">Services</a>
+                <a href="insights/expert-insights.html" class="text-slate-400 hover:text-white transition">Insights</a>
                 <a href="protocol.html" class="group relative inline-flex items-center gap-2 px-5 py-2 bg-h-cyan/10 text-h-cyan border border-h-cyan/50 rounded-full hover:bg-h-cyan hover:text-black transition-all duration-300">
                     <span>PROTOCOL</span>
                     <div class="w-1.5 h-1.5 bg-h-cyan rounded-full animate-pulse"></div>
                 </a>
                 <a href="contact.html" class="px-5 py-2 bg-h-cta text-black rounded-full hover:bg-yellow-400 transition">Contact</a>
             </nav>
-            <!-- Mobile Menu Button -->
             <button id="mobile-menu-btn" class="lg:hidden text-white p-2">
                 <svg data-lucide="menu" class="w-8 h-8"></svg>
             </button>
         </div>
-        <!-- Mobile Menu Overlay -->
-        <div id="mobile-menu" class="hidden lg:hidden absolute top-20 left-0 w-full bg-h-dark border-b border-h-border p-4 flex flex-col gap-4 shadow-2xl">
+        <div id="mobile-menu" class="hidden lg:hidden absolute top-28 left-0 w-full bg-h-dark border-b border-h-border p-4 flex flex-col gap-4 shadow-2xl">
             <a href="index.html" class="text-slate-300 hover:text-h-cyan py-2 border-b border-h-border">Home</a>
             <a href="services.html" class="text-slate-300 hover:text-h-cyan py-2 border-b border-h-border">Services</a>
             <a href="protocol.html" class="text-h-cyan font-bold py-2 border-b border-h-border flex items-center gap-2"><svg data-lucide="shield" class="w-4 h-4"></svg> PROTOCOL</a>
@@ -118,7 +175,6 @@
 
     <main class="pt-32 pb-20">
 
-        <!-- HERO: VISION -->
         <section class="max-w-7xl mx-auto px-4 mb-24">
             <div class="text-center max-w-4xl mx-auto">
                 <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-xs font-mono text-h-cyan mb-6 animate-[fadeInUp_1s_ease-out]">
@@ -135,21 +191,17 @@
             </div>
         </section>
 
-        <!-- FOUNDER PROFILE -->
         <section class="max-w-6xl mx-auto px-4 mb-32 relative z-10">
-            <div class="glass-panel rounded-2xl p-8 md:p-12 border-l-4 border-l-h-cyan relative overflow-hidden">
-                <!-- Background Decoration -->
+            <div class="glass-panel rounded-2xl p-8 md:p-12 border-l-4 border-l-h-cyan relative overflow-hidden animate-[fadeInUp_1s_ease-out_0.6s_forwards] opacity-0">
                 <div class="absolute top-0 right-0 p-12 opacity-5"><svg data-lucide="fingerprint" class="w-64 h-64 text-white"></svg></div>
 
                 <div class="grid md:grid-cols-12 gap-12 items-center">
                     
-                    <!-- Left: Portrait -->
                     <div class="md:col-span-5 relative">
                         <div class="portrait-container rounded-xl border-2 border-slate-700 shadow-2xl">
-                            <img  src="ervin_stupac_portrait.jpg" alt="Ervin Stupac" class="w-full h-auto object-cover filter grayscale hover:grayscale-0 transition duration-700">
+                            <img src="slike/ervin_stupac_portrait.jpg" alt="Ervin Stupac" class="w-full h-auto object-cover filter grayscale hover:grayscale-0 transition duration-700">
                             <div class="portrait-scanline"></div>
                             
-                            <!-- Overlay Data -->
                             <div class="absolute bottom-0 left-0 w-full bg-black/80 backdrop-blur-sm p-4 border-t border-h-cyan/30">
                                 <h3 class="text-white font-bold text-lg">ERVIN STUPAC</h3>
                                 <div class="flex justify-between items-end mt-1">
@@ -160,7 +212,6 @@
                         </div>
                     </div>
 
-                    <!-- Right: The Manifesto -->
                     <div class="md:col-span-7 space-y-6">
                         <h2 class="text-3xl font-bold text-white">The Origin Signal</h2>
                         <p class="text-slate-300 leading-relaxed">
@@ -182,31 +233,27 @@
             </div>
         </section>
 
-        <!-- THE 3 PILLARS (Evolution) -->
         <section class="max-w-7xl mx-auto px-4 mb-24">
             <div class="grid md:grid-cols-3 gap-6">
                 
-                <!-- Card 1 -->
                 <div class="glass-panel p-8 rounded-xl hover:border-h-cyan transition group">
-                    <div class="w-12 h-12 bg-h-cyan/10 rounded-lg flex items-center justify-center text-h-cyan mb-6 border border-h-cyan/20 group-hover:bg-h-cyan group-hover:text-black">
+                    <div class="w-12 h-12 bg-h-cyan/10 rounded-lg flex items-center justify-center text-h-cyan mb-6 border border-h-cyan/20 group-hover:bg-h-cyan group-hover:text-black transition">
                         <svg data-lucide="microscope" class="w-6 h-6"></svg>
                     </div>
                     <h3 class="text-xl font-bold text-white mb-3">Forensic Truth</h3>
                     <p class="text-sm text-slate-400">We don't guess. We measure. Using sub-surface NDT and 3D metrology, we provide data that holds up in a court of law.</p>
                 </div>
 
-                <!-- Card 2 -->
                 <div class="glass-panel p-8 rounded-xl hover:border-h-green transition group">
-                    <div class="w-12 h-12 bg-h-green/10 rounded-lg flex items-center justify-center text-h-green mb-6 border border-h-green/20 group-hover:bg-h-green group-hover:text-black">
+                    <div class="w-12 h-12 bg-h-green/10 rounded-lg flex items-center justify-center text-h-green mb-6 border border-h-green/20 group-hover:bg-h-green group-hover:text-black transition">
                         <svg data-lucide="brain-circuit" class="w-6 h-6"></svg>
                     </div>
                     <h3 class="text-xl font-bold text-white mb-3">Algorithmic Governance</h3>
                     <p class="text-sm text-slate-400">Technology fails if people don't talk. Our protocols bridge the "Execution Gap" between engineering and management.</p>
                 </div>
 
-                <!-- Card 3 -->
                 <div class="glass-panel p-8 rounded-xl hover:border-h-yellow transition group">
-                    <div class="w-12 h-12 bg-h-yellow/10 rounded-lg flex items-center justify-center text-h-yellow mb-6 border border-h-yellow/20 group-hover:bg-h-yellow group-hover:text-black">
+                    <div class="w-12 h-12 bg-h-yellow/10 rounded-lg flex items-center justify-center text-h-yellow mb-6 border border-h-yellow/20 group-hover:bg-h-yellow group-hover:text-black transition">
                         <svg data-lucide="infinity" class="w-6 h-6"></svg>
                     </div>
                     <h3 class="text-xl font-bold text-white mb-3">Infinite Lifecycle</h3>
@@ -216,12 +263,10 @@
             </div>
         </section>
 
-        <!-- TIMELINE / LOG -->
         <section class="max-w-4xl mx-auto px-4 relative">
             <div class="timeline-line"></div>
             
             <div class="space-y-12">
-                <!-- Event 1 -->
                 <div class="relative flex items-center justify-between group">
                     <div class="w-5/12 text-right pr-8">
                         <h4 class="text-h-cyan font-bold text-xl">Inception</h4>
@@ -231,7 +276,6 @@
                     <div class="w-5/12 pl-8 text-xs font-mono text-slate-500">PHASE 01</div>
                 </div>
 
-                <!-- Event 2 -->
                 <div class="relative flex items-center justify-between group">
                     <div class="w-5/12 text-right pr-8 text-xs font-mono text-slate-500">PHASE 02</div>
                     <div class="absolute left-1/2 -translate-x-1/2 w-4 h-4 bg-h-dark border-2 border-h-green rounded-full z-10 group-hover:scale-150 transition"></div>
@@ -241,7 +285,6 @@
                     </div>
                 </div>
 
-                <!-- Event 3 -->
                 <div class="relative flex items-center justify-between group">
                     <div class="w-5/12 text-right pr-8">
                         <h4 class="text-white font-bold text-xl">Global Standard</h4>
@@ -253,7 +296,6 @@
             </div>
         </section>
 
-        <!-- CTA: BRIDGE TO PROTOCOL -->
         <section class="mt-32 text-center px-4">
             <div class="max-w-3xl mx-auto glass-panel p-10 rounded-2xl relative overflow-hidden group">
                 <div class="absolute inset-0 bg-gradient-to-r from-transparent via-h-cyan/5 to-transparent opacity-0 group-hover:opacity-100 transition duration-700"></div>
@@ -268,15 +310,21 @@
         </section>
 
     </main>
+    
+    <div id="mobile-sticky-cta" class="lg:hidden fixed bottom-4 left-4 right-4 z-50 animate-[fadeInUp_1s_ease-out_1s_forwards] opacity-0">
+        <a href="contact.html" class="flex items-center justify-between bg-h-cyan/90 backdrop-blur-md text-black px-4 py-3 rounded-lg shadow-2xl border border-white/20">
+            <span class="text-xs font-bold uppercase tracking-wider">Partner With Us</span>
+            <span class="bg-black text-h-cyan text-xs font-black px-2 py-1 rounded">CONTACT &rarr;</span>
+        </a>
+    </div>
 
-    <!-- FOOTER -->
-    <footer class="bg-black border-t border-slate-900 py-12 text-center mt-12">
+    <footer class="bg-black border-t border-slate-900 py-12 text-center mt-12 mb-20 lg:mb-0">
         <div class="max-w-7xl mx-auto px-4">
             <img src="logo.svg" alt="Logo" class="h-8 mx-auto mb-6 opacity-50 grayscale hover:grayscale-0 transition">
             <p class="text-slate-500 text-sm mb-6">© 2025 Anohubs Inc.</p>
             <div class="flex justify-center gap-6 text-xs font-mono text-slate-600">
-                <a href="#" class="hover:text-white transition">PRIVACY</a>
-                <a href="#" class="hover:text-white transition">TERMS</a>
+                <a href="privacy-policy.html" class="hover:text-white transition">PRIVACY</a>
+                <a href="terms-of-use.html" class="hover:text-white transition">TERMS</a>
             </div>
         </div>
     </footer>

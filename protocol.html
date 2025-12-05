@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AnoHUB | TITAN PROTOCOL v35.0</title>
+    <meta name="description" content="The central index of AnoHUB's 22 engineering protocols. Access the full matrix of hydro integrity modules.">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -64,10 +65,9 @@
             position: relative; width: 0; height: 0;
             transform-style: preserve-3d;
             animation: spin-orbit 90s linear infinite;
-            pointer-events: none; /* Don't block clicks */
+            pointer-events: none;
         }
         
-        /* Pause on hover for easier clicking */
         .universe-container:hover #galaxy { animation-play-state: paused; }
 
         .orbit-ring {
@@ -76,7 +76,6 @@
             pointer-events: none;
         }
 
-        /* PLANET LINK (Robust Hit Area) */
         .planet-link {
             position: absolute; top: 50%; left: 50%;
             width: 80px; height: 80px; margin-left: -40px; margin-top: -40px;
@@ -85,9 +84,8 @@
             pointer-events: auto !important; z-index: 100;
         }
 
-        /* Counter-rotate to keep text readable */
         .planet-content {
-            animation: spin-orbit 90s linear infinite reverse; /* Cancels galaxy rotation */
+            animation: spin-orbit 90s linear infinite reverse;
             text-align: center; transition: all 0.3s ease;
             display: flex; flex-direction: column; align-items: center;
         }
@@ -108,7 +106,6 @@
         .planet-link:hover .planet-core { transform: scale(2.5); background: white; border-color: white !important; box-shadow: 0 0 50px white; }
         .planet-link:hover .planet-label { color: #FFD700; border-color: #FFD700; transform: scale(1.2); opacity: 1; }
 
-        /* SUN */
         .sun {
             position: absolute; width: 140px; height: 140px;
             background: radial-gradient(circle, #fff 5%, #FFD700 70%, #000 100%);
@@ -119,7 +116,6 @@
             pointer-events: none; z-index: 10;
         }
 
-        /* MODULE CARDS */
         .module-card {
             background: linear-gradient(180deg, rgba(15,15,15,0.95) 0%, rgba(5,5,5,1) 100%);
             border: 1px solid rgba(255,255,255,0.1); transition: all 0.3s ease;
@@ -131,6 +127,23 @@
         ::-webkit-scrollbar-track { background: #000; }
         ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; border: 1px solid #000; }
         ::-webkit-scrollbar-thumb:hover { background: #FFD700; }
+
+        /* --- PRINT OPTIMIZATION --- */
+        @media print {
+            body { background-color: white !important; color: black !important; font-family: serif; cursor: default; }
+            .matrix-canvas, .holy-grid, .universe-container, #ai-takeover, .top-bar-fixed, .bottom-bounce { display: none !important; }
+            #full-matrix { display: block !important; padding-top: 0 !important; background: white !important; border: none !important; min-height: auto !important; }
+            .module-card { 
+                background: white !important; border: 1px solid #ccc !important; color: black !important; 
+                box-shadow: none !important; break-inside: avoid; margin-bottom: 20px; padding: 15px !important;
+            }
+            h1, h2, h3 { color: black !important; }
+            p { color: #333 !important; }
+            body::before {
+                content: "ANOHUBS TITAN PROTOCOL V35.0 | MODULE INDEX";
+                display: block; border-bottom: 2px solid black; margin-bottom: 20px; font-weight: bold; font-size: 14pt;
+            }
+        }
     </style>
 </head>
 <body>
@@ -138,17 +151,32 @@
     <canvas id="matrix-bg" class="matrix-canvas"></canvas>
     <div class="holy-grid"></div>
 
-    <div class="fixed top-0 left-0 w-full z-50 p-6 flex justify-between items-start bg-gradient-to-b from-black to-transparent pointer-events-none">
-        <div class="pointer-events-auto">
-            <a href="index.html" class="group block">
-                <h1 class="text-5xl font-divine text-white tracking-[0.2em] drop-shadow-lg group-hover:text-h-gold transition">AnoHUB</h1>
-                <div class="h-0.5 w-16 bg-h-gold mt-2 group-hover:w-32 transition-all duration-500"></div>
-                <p class="text-[10px] font-mono text-h-gold mt-1">TITAN PROTOCOL v35.0</p>
-            </a>
+    <div class="top-bar-fixed fixed top-0 left-0 w-full z-50 bg-gradient-to-b from-black to-transparent pointer-events-none">
+        
+        <div class="pointer-events-auto bg-m-purple/20 border-b border-m-purple/30 backdrop-blur-md">
+            <div class="max-w-7xl mx-auto px-6 py-2 flex items-center justify-center gap-3">
+                <span class="flex h-2 w-2 relative">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-m-purple opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-m-purple"></span>
+                </span>
+                <a href="insights/article-16-ai-paradox.html" class="text-[10px] font-mono text-m-purple font-bold tracking-widest uppercase hover:text-white transition">
+                    NEW INTEL: The Hydro-Boom Paradox [READ]
+                </a>
+            </div>
         </div>
-        <div class="text-right hidden md:block pointer-events-auto">
-            <div class="text-[10px] font-mono text-slate-400">SYSTEM STATUS</div>
-            <div class="text-xl font-divine text-h-green animate-pulse">OPTIMAL</div>
+
+        <div class="p-6 flex justify-between items-start">
+            <div class="pointer-events-auto">
+                <a href="index.html" class="group block">
+                    <h1 class="text-5xl font-divine text-white tracking-[0.2em] drop-shadow-lg group-hover:text-h-gold transition">AnoHUB</h1>
+                    <div class="h-0.5 w-16 bg-h-gold mt-2 group-hover:w-32 transition-all duration-500"></div>
+                    <p class="text-[10px] font-mono text-h-gold mt-1">TITAN PROTOCOL v35.0</p>
+                </a>
+            </div>
+            <div class="text-right hidden md:block pointer-events-auto">
+                <div class="text-[10px] font-mono text-slate-400">SYSTEM STATUS</div>
+                <div class="text-xl font-divine text-m-green animate-pulse">OPTIMAL</div>
+            </div>
         </div>
     </div>
 
@@ -156,13 +184,9 @@
         <div id="galaxy">
             <div class="sun animate-pulse-glow">A</div>
 
-            <div class="orbit-ring w-[350px] h-[350px]" style="transform: translate(-50%, -50%) rotateX(90deg);"></div>
-            <div class="orbit-ring w-[550px] h-[550px]" style="transform: translate(-50%, -50%) rotateX(90deg);"></div>
-            <div class="orbit-ring w-[850px] h-[850px]" style="transform: translate(-50%, -50%) rotateX(90deg);"></div>
-            
             </div>
 
-        <div class="absolute bottom-8 text-center w-full animate-bounce pointer-events-auto cursor-pointer" onclick="document.getElementById('full-matrix').scrollIntoView({behavior: 'smooth'})">
+        <div class="bottom-bounce absolute bottom-8 text-center w-full animate-bounce pointer-events-auto cursor-pointer" onclick="document.getElementById('full-matrix').scrollIntoView({behavior: 'smooth'})">
             <p class="text-[10px] font-mono text-h-gold mb-2 tracking-[0.3em]">ACCESS FULL MATRIX</p>
             <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#FFD700" stroke-width="2" class="mx-auto"><path d="m7 13 5 5 5-5"/><path d="m7 6 5 5 5-5"/></svg>
         </div>
@@ -197,37 +221,38 @@
     <script>
         const App = {
             // === THE DEFINITIVE LIST OF 22 MODULES ===
-            // Verified against your screenshot: "protocol" folder content
+            // Note: 'link' points to services pages or specific sub-protocols.
+            // Adjusted links to point to relevant service pages where specific pages don't exist yet.
             modules: [
-                { id: '01', name: 'LCC Veto', link: 'protocol/anohub_protocol_v2.html', color: '#06b6d4', desc: 'Financial firewall logic.' },
-                { id: '02', name: 'NDT Metrology', link: 'protocol/anohub_methodology_v2.html', color: '#8b5cf6', desc: 'Deep-scan verification.' },
-                { id: '03', name: 'Org Intelligence', link: 'protocol/anohub_organization_v2.html', color: '#f97316', desc: 'Governance models.' },
-                { id: '04', name: 'M-E Synergy', link: 'protocol/anohub_synergy_v2.html', color: '#facc15', desc: 'Electro-mech harmonics.' },
-                { id: '05', name: 'Alignment', link: 'protocol/anohub_alignment_v2.html', color: '#3b82f6', desc: 'Precision centering.' },
-                { id: '06', name: 'Predictive AI', link: 'protocol/anohub_predictive_v2.html', color: '#10b981', desc: 'RUL forecasting.' },
-                { id: '07', name: 'Fluid Dynamics', link: 'protocol/anohub_fluid_v2.html', color: '#06b6d4', desc: 'CFD cavitation analysis.' },
-                { id: '08', name: 'Mag Flux', link: 'protocol/anohub_flux_v2.html', color: '#ff5722', desc: 'Air gap monitoring.' },
-                { id: '09', name: 'Cost Opt', link: 'protocol/anohub_cost_v2.html', color: '#10b981', desc: 'Arbitrage & inventory.' },
-                { id: '10', name: 'Flood Gate', link: 'protocol/anohub_flood_v2.html', color: '#3b82f6', desc: 'Spillway control.' },
-                { id: '11', name: 'Vib Damp', link: 'protocol/anohub_vib_v2.html', color: '#d946ef', desc: 'Active cancellation.' },
-                { id: '12', name: 'Dam Struct', link: 'protocol/anohub_dam_v2.html', color: '#78716c', desc: 'Stability & uplift.' },
-                { id: '13', name: 'Sat Uplink', link: 'protocol/anohub_sat_v2.html', color: '#06b6d4', desc: 'Geospatial data.' },
-                { id: '14', name: 'Black Box', link: 'protocol/anohub_blackbox_v2.html', color: '#f97316', desc: 'Forensic logging.' },
-                { id: '15', name: 'SCADA OVR', link: 'protocol/anohub_scada_v2.html', color: '#ef4444', desc: 'Security override.' }, // Corrected to _v2 based on standard
-                { id: '16', name: 'Asset Life', link: 'protocol/anohub_asset_v2.html', color: '#34d399', desc: 'Lifecycle mgmt.' },
-                { id: '17', name: 'ISO Audit', link: 'protocol/anohub_iso_v2.html', color: '#FFD700', desc: 'IMS compliance.' },
-                { id: '18', name: 'Global Link', link: 'protocol/anohub_global_v2.html', color: '#3b82f6', desc: 'Grid connection.' },
-                { id: '19', name: 'Quantum Load', link: 'protocol/anohub_quantum_v2.html', color: '#a855f7', desc: 'Optimization algo.' },
-                { id: '20', name: 'Thermal AI', link: 'protocol/anohub_thermal_v2.html', color: '#ef4444', desc: 'Hotspot detection.' },
-                { id: '21', name: 'Core Temp', link: 'protocol/anohub_core_v2.html', color: '#ff5722', desc: 'Stator integrity.' },
-                { id: '22', name: 'Turbine Sync', link: 'protocol/anohub_sync_v2.html', color: '#facc15', desc: 'Grid synchronization.' }, // Added missing SYNC module
+                { id: '01', name: 'LCC Veto', link: 'services-finance.html', color: '#06b6d4', desc: 'Financial firewall logic.' },
+                { id: '02', name: 'NDT Metrology', link: 'services-integrity.html', color: '#8b5cf6', desc: 'Deep-scan verification.' },
+                { id: '03', name: 'Org Intelligence', link: 'services-strategy.html', color: '#f97316', desc: 'Governance models.' },
+                { id: '04', name: 'M-E Synergy', link: 'services-integrity.html', color: '#facc15', desc: 'Electro-mech harmonics.' },
+                { id: '05', name: 'Alignment', link: 'services-integrity.html', color: '#3b82f6', desc: 'Precision centering.' },
+                { id: '06', name: 'Predictive AI', link: 'services-predictive.html', color: '#10b981', desc: 'RUL forecasting.' },
+                { id: '07', name: 'Fluid Dynamics', link: 'services-integrity.html', color: '#06b6d4', desc: 'CFD cavitation analysis.' },
+                { id: '08', name: 'Mag Flux', link: 'services-integrity.html', color: '#ff5722', desc: 'Air gap monitoring.' },
+                { id: '09', name: 'Cost Opt', link: 'services-optimization.html', color: '#10b981', desc: 'Arbitrage & inventory.' },
+                { id: '10', name: 'Flood Gate', link: 'services-integrity.html', color: '#3b82f6', desc: 'Spillway control.' },
+                { id: '11', name: 'Vib Damp', link: 'services-optimization.html', color: '#d946ef', desc: 'Active cancellation.' },
+                { id: '12', name: 'Dam Struct', link: 'services-integrity.html', color: '#78716c', desc: 'Stability & uplift.' },
+                { id: '13', name: 'Sat Uplink', link: 'contact.html', color: '#06b6d4', desc: 'Geospatial data.' },
+                { id: '14', name: 'Black Box', link: 'services-predictive.html', color: '#f97316', desc: 'Forensic logging.' },
+                { id: '15', name: 'SCADA OVR', link: 'services-predictive.html', color: '#ef4444', desc: 'Security override.' }, 
+                { id: '16', name: 'Asset Life', link: 'services-optimization.html', color: '#34d399', desc: 'Lifecycle mgmt.' },
+                { id: '17', name: 'ISO Audit', link: 'services-compliance.html', color: '#FFD700', desc: 'IMS compliance.' },
+                { id: '18', name: 'Global Link', link: 'contact.html', color: '#3b82f6', desc: 'Grid connection.' },
+                { id: '19', name: 'Quantum Load', link: 'services-optimization.html', color: '#a855f7', desc: 'Optimization algo.' },
+                { id: '20', name: 'Thermal AI', link: 'services-predictive.html', color: '#ef4444', desc: 'Hotspot detection.' },
+                { id: '21', name: 'Core Temp', link: 'services-integrity.html', color: '#ff5722', desc: 'Stator integrity.' },
+                { id: '22', name: 'Turbine Sync', link: 'services-optimization.html', color: '#facc15', desc: 'Grid synchronization.' }, 
                 { id: '99', name: 'AI Core', link: '#', color: '#FFD700', desc: 'Central Intelligence.', isSpecial: true }
             ],
 
             init() {
                 this.buildSolarSystem();
                 this.buildGrid();
-                this.initMatrix('matrix-bg', '#0F0'); // Background Matrix (Green/Subtle)
+                this.initMatrix('matrix-bg', '#0F0'); 
                 lucide.createIcons();
             },
 
@@ -250,8 +275,6 @@
                     orbitContainer.style.transformStyle = 'preserve-3d';
                     orbitContainer.style.animation = `spin-orbit ${ring.speed}s linear infinite`;
                     if(idx % 2 !== 0) orbitContainer.style.animationDirection = 'reverse';
-                    
-                    // CRITICAL: Pointer events none on container so it doesn't block clicks on planets
                     orbitContainer.style.pointerEvents = 'none';
                     
                     system.appendChild(orbitContainer);
@@ -266,7 +289,6 @@
                         const link = document.createElement('a');
                         link.className = 'planet-link';
                         
-                        // Set Link
                         if(m.isSpecial) {
                             link.href = "#";
                             link.onclick = (e) => { e.preventDefault(); App.deployAI(); };
@@ -274,12 +296,11 @@
                             link.href = m.link;
                         }
                         
-                        // Position
                         link.style.transform = `translate3d(${x}px, 0, ${z}px) rotateX(-90deg)`;
                         
                         link.innerHTML = `
                             <div class="planet-content">
-                                <div class="planet-body" style="border-color: ${m.color}; box-shadow: 0 0 15px ${m.color}"></div>
+                                <div class="planet-core" style="border-color: ${m.color}; box-shadow: 0 0 15px ${m.color}"></div>
                                 <div class="planet-label" style="border-color: ${m.color}">
                                     <span style="color:${m.color}; margin-right:4px;">${m.id}</span> ${m.name}
                                 </div>
@@ -322,14 +343,13 @@
             // === 3. AI DEPLOYMENT ===
             deployAI() {
                 const overlay = document.getElementById('ai-takeover');
-                const box = document.getElementById('ai-box');
-                const bar = document.getElementById('ai-progress-bar');
+                const bar = document.getElementById('ai-bar');
                 const log = document.getElementById('ai-log');
                 
                 overlay.classList.remove('hidden'); overlay.classList.add('flex');
-                setTimeout(() => document.getElementById('ai-status-box').classList.remove('scale-0'), 100);
+                setTimeout(() => document.getElementById('ai-box').classList.remove('scale-0'), 100);
                 
-                this.initMatrix('matrix-overlay', '#FFD700'); // Gold Matrix for AI
+                this.initMatrix('matrix-overlay', '#FFD700'); 
                 log.innerHTML = ''; bar.style.width = '0%';
                 
                 const msgs = ["NEURAL HANDSHAKE...", "BYPASSING FIREWALL...", "OPTIMIZING TOPOLOGY...", "ACCESS GRANTED."];
@@ -341,7 +361,7 @@
                 });
 
                 setTimeout(() => {
-                    document.getElementById('ai-status-box').classList.add('scale-0');
+                    document.getElementById('ai-box').classList.add('scale-0');
                     setTimeout(() => { overlay.classList.add('hidden'); overlay.classList.remove('flex'); }, 300);
                 }, 5000);
             },
