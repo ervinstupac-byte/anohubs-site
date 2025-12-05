@@ -6,40 +6,32 @@
     <title>Turbine Asset Library | AnoHUB</title>
     <meta name="description" content="Technical integrity protocols for Francis, Kaplan, and Pelton turbines. Select your asset class for specific diagnostic procedures.">
     
-    <!-- 1. FONTS -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": "Turbine Asset Library",
+      "description": "Technical protocols for Francis, Kaplan, and Pelton hydro turbines.",
+      "provider": { "@type": "Organization", "name": "AnoHUB" }
+    }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    
-    <!-- 2. TAILWIND -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: { 
-                        sans: ['Inter', 'sans-serif'], 
-                        mono: ['JetBrains Mono', 'monospace'] 
-                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
                     colors: {
-                        'h-cyan': '#06b6d4', 
-                        'h-green': '#10b981', 
-                        'h-red': '#ef4444', 
-                        'h-yellow': '#facc15', 
-                        'h-dark': '#020617', 
-                        'h-panel': '#0f172a', 
-                        'h-border': '#1e293b',
-                        'h-cta': '#f59e0b'
+                        'h-cyan': '#06b6d4', 'h-green': '#10b981', 'h-red': '#ef4444', 
+                        'h-yellow': '#facc15', 'h-dark': '#020617', 'h-panel': '#0f172a', 
+                        'h-border': '#1e293b', 'h-cta': '#f59e0b'
                     },
-                    animation: {
-                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
-                    },
-                    keyframes: {
-                        fadeInUp: {
-                            '0%': { opacity: '0', transform: 'translateY(20px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
-                        }
-                    }
+                    animation: { 'fade-in-up': 'fadeInUp 0.8s ease-out forwards' },
+                    keyframes: { fadeInUp: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } } }
                 }
             }
         }
@@ -50,30 +42,30 @@
         
         /* Tech Grid Background */
         .tech-bg {
-            background-image: 
-                linear-gradient(rgba(6, 182, 212, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(6, 182, 212, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            background-image: linear-gradient(rgba(6, 182, 212, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(6, 182, 212, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
         }
 
         /* Glass Cards */
         .glass-card {
-            background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(51, 65, 85, 0.5);
-            transition: all 0.3s ease;
+            background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(12px);
+            border: 1px solid rgba(51, 65, 85, 0.5); transition: all 0.3s ease;
         }
-        .glass-card:hover {
-            transform: translateY(-5px);
-            background: rgba(15, 23, 42, 0.95);
-        }
+        .glass-card:hover { transform: translateY(-5px); background: rgba(15, 23, 42, 0.95); }
         
-        /* Hover Colors per type */
         .card-francis:hover { border-color: #06b6d4; box-shadow: 0 10px 30px -10px rgba(6, 182, 212, 0.2); }
         .card-kaplan:hover { border-color: #10b981; box-shadow: 0 10px 30px -10px rgba(16, 185, 129, 0.2); }
         .card-pelton:hover { border-color: #f59e0b; box-shadow: 0 10px 30px -10px rgba(245, 158, 11, 0.2); }
 
+        /* PRINT OPTIMIZATION */
+        @media print {
+            body { background-color: white !important; color: black !important; }
+            .tech-bg, #navbar, footer, #mobile-sticky-cta { display: none !important; }
+            main { padding-top: 0 !important; }
+            .glass-card { background: white !important; border: 1px solid #ccc !important; color: black !important; box-shadow: none !important; page-break-inside: avoid; }
+            h1, h2, h3, p { color: black !important; }
+        }
+        
         /* Scroll Bar */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #020617; }
@@ -85,7 +77,6 @@
 <body class="antialiased">
     <div class="tech-bg"></div>
 
-    <!-- NAV -->
     <header class="fixed w-full z-50 top-0 border-b border-white/5 bg-h-dark/90 backdrop-blur-md transition-all duration-300" id="navbar">
         <div class="max-w-7xl mx-auto px-4 h-20 flex justify-between items-center">
             <a href="index.html" class="flex items-center gap-3 group">
@@ -104,20 +95,17 @@
                 </a>
                 <a href="contact.html" class="px-5 py-2 bg-h-cta text-black rounded-full hover:bg-yellow-400 transition">Contact</a>
             </nav>
-            <button id="mobile-menu-btn" class="lg:hidden text-white p-2">
-                <svg data-lucide="menu" class="w-8 h-8"></svg>
-            </button>
+            <button id="mobile-menu-btn" class="lg:hidden text-white p-2"><svg data-lucide="menu" class="w-8 h-8"></svg></button>
         </div>
         <div id="mobile-menu" class="hidden lg:hidden absolute top-20 left-0 w-full bg-h-dark border-b border-h-border p-4 flex flex-col gap-4 shadow-2xl">
-            <a href="index.html" class="text-slate-300 hover:text-h-cyan py-2 border-b border-h-border">Home</a>
             <a href="services.html" class="text-slate-300 hover:text-h-cyan py-2 border-b border-h-border">Services</a>
             <a href="protocol.html" class="text-h-cyan font-bold py-2 border-b border-h-border flex items-center gap-2"><svg data-lucide="shield" class="w-4 h-4"></svg> PROTOCOL</a>
+            <a href="contact.html" class="text-h-cta font-bold py-2">Contact Us</a>
         </div>
     </header>
 
     <main class="pt-32 pb-20">
 
-        <!-- HERO -->
         <section class="max-w-7xl mx-auto px-4 mb-16 text-center">
             <h1 class="text-4xl md:text-6xl font-black text-white mb-6 tracking-tight leading-none animate-[fadeInUp_1s_ease-out]">
                 TURBINE <br>
@@ -128,15 +116,13 @@
             </p>
         </section>
 
-        <!-- CARDS GRID -->
         <section class="max-w-7xl mx-auto px-4 mb-24">
             <div class="grid md:grid-cols-3 gap-8">
 
-                <!-- FRANCIS -->
                 <a href="turbine-francis.html" class="glass-card card-francis rounded-2xl overflow-hidden group block animate-[fadeInUp_1s_ease-out_0.4s_forwards] opacity-0">
                     <div class="h-48 relative overflow-hidden">
                         <div class="absolute inset-0 bg-h-cyan/10 z-10 mix-blend-overlay group-hover:bg-h-cyan/0 transition"></div>
-                        <img src="francis-diagram.jpg" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-110 transition duration-700 grayscale group-hover:grayscale-0">
+                        <img src="slike/francis-diagram.jpg" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-110 transition duration-700 grayscale group-hover:grayscale-0">
                         <div class="absolute bottom-4 left-4 z-20 bg-black/80 px-3 py-1 rounded border border-h-cyan/50 text-h-cyan text-xs font-mono">MIXED FLOW</div>
                     </div>
                     <div class="p-8">
@@ -153,11 +139,10 @@
                     </div>
                 </a>
 
-                <!-- KAPLAN -->
                 <a href="turbine-kaplan.html" class="glass-card card-kaplan rounded-2xl overflow-hidden group block animate-[fadeInUp_1s_ease-out_0.5s_forwards] opacity-0">
                     <div class="h-48 relative overflow-hidden">
                         <div class="absolute inset-0 bg-h-green/10 z-10 mix-blend-overlay group-hover:bg-h-green/0 transition"></div>
-                        <img src="kaplan-diagram.jpg" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-110 transition duration-700 grayscale group-hover:grayscale-0">
+                        <img src="slike/kaplan-diagram.jpg" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-110 transition duration-700 grayscale group-hover:grayscale-0">
                         <div class="absolute bottom-4 left-4 z-20 bg-black/80 px-3 py-1 rounded border border-h-green/50 text-h-green text-xs font-mono">AXIAL FLOW</div>
                     </div>
                     <div class="p-8">
@@ -174,11 +159,10 @@
                     </div>
                 </a>
 
-                <!-- PELTON -->
                 <a href="turbine-pelton.html" class="glass-card card-pelton rounded-2xl overflow-hidden group block animate-[fadeInUp_1s_ease-out_0.6s_forwards] opacity-0">
                     <div class="h-48 relative overflow-hidden">
                         <div class="absolute inset-0 bg-h-cta/10 z-10 mix-blend-overlay group-hover:bg-h-cta/0 transition"></div>
-                        <img src="pelton-diagram.jpg" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-110 transition duration-700 grayscale group-hover:grayscale-0">
+                        <img src="slike/pelton-diagram.jpg" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-110 transition duration-700 grayscale group-hover:grayscale-0">
                         <div class="absolute bottom-4 left-4 z-20 bg-black/80 px-3 py-1 rounded border border-h-cta/50 text-h-cta text-xs font-mono">IMPULSE</div>
                     </div>
                     <div class="p-8">
@@ -198,7 +182,6 @@
             </div>
         </section>
 
-        <!-- COMPARISON MATRIX -->
         <section class="max-w-5xl mx-auto px-4 animate-[fadeInUp_1s_ease-out_0.8s_forwards] opacity-0">
             <h3 class="text-sm font-mono text-slate-500 uppercase tracking-widest mb-6 text-center">Operational Range Matrix</h3>
             
@@ -227,15 +210,9 @@
                         </tr>
                         <tr class="hover:bg-white/5">
                             <td class="p-4 font-mono text-slate-500">Primary Risk</td>
-                            <td class="p-4">Blade Mechanism Failure</td>
+                            <td class="p-4">Blade Mechanism</td>
                             <td class="p-4">Cavitation / Cracking</td>
                             <td class="p-4">Sand Abrasion</td>
-                        </tr>
-                        <tr class="hover:bg-white/5">
-                            <td class="p-4 font-mono text-slate-500">AnoHUB Sensor</td>
-                            <td class="p-4">Hub Oil Pressure</td>
-                            <td class="p-4">Acoustic Emission</td>
-                            <td class="p-4">Vibration (Nozzle)</td>
                         </tr>
                     </tbody>
                 </table>
@@ -253,20 +230,11 @@
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <script>
         lucide.createIcons();
-        
-        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
-            document.getElementById('mobile-menu').classList.toggle('hidden');
-        });
-
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => { document.getElementById('mobile-menu').classList.toggle('hidden'); });
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                nav.classList.add('shadow-lg', 'bg-h-dark/95');
-                nav.classList.remove('bg-h-dark/90');
-            } else {
-                nav.classList.remove('shadow-lg', 'bg-h-dark/95');
-                nav.classList.add('bg-h-dark/90');
-            }
+            if (window.scrollY > 50) { nav.classList.add('shadow-lg', 'bg-h-dark/95'); nav.classList.remove('bg-h-dark/90'); } 
+            else { nav.classList.remove('shadow-lg', 'bg-h-dark/95'); nav.classList.add('bg-h-dark/90'); }
         });
     </script>
 </body>
