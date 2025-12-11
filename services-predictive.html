@@ -2,7 +2,7 @@
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>AI-Powered Predictive Maintenance | AnoHUB Services</title>
     <meta name="description" content="Leverage our proprietary AI models to forecast potential equipment failures, reduce downtime, and optimize maintenance schedules.">
     
@@ -16,9 +16,8 @@
     }
     </script>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -27,11 +26,15 @@
                     fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
                     colors: {
                         'h-cyan': '#06b6d4', 'h-green': '#10b981', 'h-red': '#ef4444', 
-                        'h-yellow': '#facc15', 'h-purple': '#8b5cf6', 'h-dark': '#020617', 
-                        'h-panel': '#0f172a', 'h-border': '#1e293b', 'h-cta': '#f59e0b'
+                        'h-yellow': '#facc15', 'h-dark': '#020617', 'h-panel': '#0f172a', 'h-border': '#1e293b', 'h-cta': '#f59e0b'
                     },
-                    animation: { 'fade-in-up': 'fadeInUp 0.8s ease-out forwards' },
-                    keyframes: { fadeInUp: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } } }
+                    animation: { 
+                        'pulse-fast': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'data-stream': 'dash 20s linear infinite'
+                    },
+                    keyframes: {
+                        dash: { '0%': { backgroundPosition: '0 0' }, '100%': { backgroundPosition: '0 100%' } }
+                    }
                 }
             }
         }
@@ -40,195 +43,301 @@
     <style>
         body { background-color: #020617; color: #f8fafc; overflow-x: hidden; }
         
-        /* Tech Grid Background */
-        .tech-bg {
-            background-image: linear-gradient(rgba(16, 185, 129, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(16, 185, 129, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+        /* NOISE TEXTURE */
+        .noise-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+            pointer-events: none; z-index: 50; opacity: 0.4;
         }
 
-        /* Hero Background */
+        /* HERO - MATRIX STYLE */
         .hero-predictive {
-            background-image: linear-gradient(180deg, rgba(2,6,23,0.8) 0%, rgba(2,6,23,1) 100%), url('proljece_arm.jpg');
+            background-image: linear-gradient(180deg, rgba(2,6,23,0.7) 0%, rgba(2,6,23,1) 100%), url('slike/proljece_arm.jpg');
             background-size: cover; background-position: center; background-attachment: fixed;
         }
-
-        /* Glass Cards */
+        
+        /* GLASS PANELS (GREEN THEME) */
         .glass-card {
-            background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(12px);
-            border: 1px solid rgba(16, 185, 129, 0.3); transition: all 0.3s ease;
+            background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(16px);
+            border: 1px solid rgba(16, 185, 129, 0.2); transition: all 0.3s ease;
         }
         .glass-card:hover { border-color: #10b981; box-shadow: 0 0 30px rgba(16, 185, 129, 0.15); transform: translateY(-5px); }
 
-        /* --- PRINT OPTIMIZATION --- */
-        @media print {
-            body { background-color: white !important; color: black !important; font-family: serif; }
-            .tech-bg, #navbar, footer, #mobile-sticky-cta { display: none !important; }
-            main { padding-top: 0 !important; }
-            .hero-predictive { height: auto !important; background: none !important; color: black !important; padding: 0 !important; }
-            h1, h2, h3, p { color: black !important; }
-            .glass-card, .bg-h-dark, .bg-h-panel { background: white !important; border: 1px solid #ccc !important; color: black !important; box-shadow: none !important; page-break-inside: avoid; }
-            body::before { content: "ANOHUBS SERVICE DATA SHEET: PREDICTIVE MAINTENANCE"; display: block; border-bottom: 2px solid black; margin-bottom: 20px; font-weight: bold; }
+        /* P-F CURVE SIMULATOR */
+        .chart-container {
+            position: relative; width: 100%; height: 400px;
+            background: radial-gradient(circle at 10% 90%, rgba(16,185,129,0.1), transparent 70%);
+            border: 1px solid #334155; border-radius: 1rem; overflow: hidden;
         }
+        
+        .pf-curve {
+            fill: none; stroke: #334155; stroke-width: 2; stroke-dasharray: 5 5;
+        }
+        .pf-curve-active {
+            fill: none; stroke: #10b981; stroke-width: 4; stroke-linecap: round;
+        }
+        
+        /* SLIDERS */
+        input[type=range] { -webkit-appearance: none; background: transparent; cursor: pointer; }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none; height: 20px; width: 10px; 
+            background: #10b981; margin-top: -8px; border: 1px solid white; box-shadow: 0 0 10px #10b981;
+        }
+        input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 4px; background: #1e293b; border-radius: 2px; }
     </style>
 </head>
 
 <body class="antialiased">
-    <div class="tech-bg"></div>
+    
+    <div class="noise-overlay"></div>
 
     <header class="fixed w-full z-50 top-0 border-b border-white/5 bg-h-dark/90 backdrop-blur-md transition-all duration-300" id="navbar">
+        <div class="relative bg-h-red/10 border-b border-h-red/20 overflow-hidden">
+            <div class="max-w-7xl mx-auto px-4 py-2 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <span class="flex h-2 w-2 relative flex-shrink-0">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-h-red opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-h-red"></span>
+                    </span>
+                    <span class="text-[10px] font-mono text-h-red font-bold tracking-widest uppercase">READ MANIFESTO:</span>
+                    <a href="insights/article-17-cultural-betrayal.html" class="text-xs text-white font-bold hover:underline">The Cultural Betrayal &rarr;</a>
+                </div>
+            </div>
+        </div>
+
         <div class="max-w-7xl mx-auto px-4 h-20 flex justify-between items-center">
             <a href="index.html" class="flex items-center gap-3 group">
-                <img src="logo.svg" alt="AnoHUB" class="h-10 w-auto transition group-hover:brightness-125">
+                <img src="logo.svg" alt="AnoHUB" class="h-10 transition group-hover:brightness-125">
                 <div class="hidden md:block">
                     <span class="block text-lg font-black tracking-tighter text-white leading-none">ANOHUBS</span>
                     <span class="block text-[10px] font-mono text-h-green tracking-widest uppercase">Predictive AI</span>
                 </div>
             </a>
-            <nav class="hidden lg:flex items-center gap-6 text-xs font-bold uppercase tracking-wider">
-                <a href="index.html" class="text-slate-400 hover:text-white transition">Home</a>
-                <a href="services.html" class="text-slate-400 hover:text-white transition">Services</a>
-                <a href="protocol.html" class="group relative inline-flex items-center gap-2 px-5 py-2 bg-h-green/10 text-h-green border border-h-green/50 rounded-full hover:bg-h-green hover:text-black transition-all duration-300">
+            <nav class="hidden lg:flex items-center gap-6 text-xs font-bold uppercase tracking-wider text-slate-400">
+                <a href="index.html" class="hover:text-white transition">Home</a>
+                <a href="services.html" class="hover:text-white transition flex items-center gap-2"><i data-lucide="arrow-left" class="w-3 h-3"></i> Services</a>
+                <a href="protocol.html" class="group relative inline-flex items-center gap-2 px-5 py-2 bg-h-green/10 text-h-green border border-h-green/50 rounded-full hover:bg-h-green hover:text-black transition-all">
                     <span>PROTOCOL</span>
                     <div class="w-1.5 h-1.5 bg-h-green rounded-full animate-pulse"></div>
                 </a>
-                <a href="contact.html" class="px-5 py-2 bg-h-cta text-black rounded-full hover:bg-yellow-400 transition">Contact</a>
+                <a href="contact.html" class="px-5 py-2 bg-white text-black rounded-full hover:bg-gray-200 transition">Contact</a>
             </nav>
-            <button id="mobile-menu-btn" class="lg:hidden text-white p-2"><svg data-lucide="menu" class="w-8 h-8"></svg></button>
+            <button id="mobile-menu-btn" class="lg:hidden text-white p-2"><i data-lucide="menu" class="w-8 h-8"></i></button>
         </div>
-        <div id="mobile-menu" class="hidden lg:hidden absolute top-20 left-0 w-full bg-h-dark border-b border-h-border p-4 flex flex-col gap-4 shadow-2xl">
-            <a href="services.html" class="text-slate-300 hover:text-h-green py-2 border-b border-h-border flex items-center gap-2"><svg data-lucide="arrow-left" class="w-4 h-4"></svg> Back to Services</a>
-            <a href="contact.html" class="text-h-cta font-bold py-2">Contact Us</a>
+        
+        <div id="mobile-menu" class="fixed inset-0 bg-h-dark/95 backdrop-blur-xl z-40 transform translate-x-full transition-transform duration-300 flex flex-col justify-center items-center gap-8 lg:hidden">
+            <a href="services.html" class="text-xl font-bold text-slate-300 hover:text-h-green uppercase flex items-center gap-2 mobile-link"><i data-lucide="arrow-left" class="w-5 h-5"></i> Back to Services</a>
+            <a href="contact.html" class="text-xl font-bold text-black bg-h-green px-8 py-3 rounded mobile-link">CONTACT US</a>
         </div>
     </header>
 
     <main class="pt-20">
 
-        <section class="hero-predictive min-h-[60vh] flex items-center justify-center relative">
-            <div class="max-w-5xl mx-auto px-4 text-center relative z-10">
-                <a href="services.html" class="inline-flex items-center gap-2 text-h-green hover:text-white mb-6 transition text-sm font-mono uppercase tracking-widest">
-                    <svg data-lucide="arrow-left" class="w-4 h-4"></svg> Operational Capabilities
-                </a>
+        <section class="hero-predictive min-h-[70vh] flex items-center justify-center relative">
+            <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAwIDQwIDQwIj48cGF0aCBkPSJNMCAwaDQwdjQwSDB6IiBmaWxsPSJub25lIi8+PHBhdGggZD0iTTAgNDBoNDBNNDAgMHY0MCIgc3Ryb2tlPSJyZ2JhKDE2LCAxODUsIDEyOSwgMC4xKSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9zdmc+')] opacity-20"></div>
+
+            <div class="max-w-6xl mx-auto px-4 text-center relative z-10">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-h-green/30 bg-black/60 backdrop-blur-md text-xs font-mono text-h-green mb-8 shadow-[0_0_20px_rgba(16,185,129,0.2)]">
+                    <span class="w-2 h-2 bg-h-green rounded-full animate-pulse"></span>
+                    STATUS: LIVE MONITORING
+                </div>
                 
-                <h1 class="text-5xl md:text-7xl font-black text-white mb-6 tracking-tight leading-none animate-[fadeInUp_1s_ease-out]">
+                <h1 class="text-6xl md:text-9xl font-black text-white mb-6 tracking-tighter leading-none drop-shadow-2xl">
                     PREDICTIVE <br>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-h-green to-emerald-500">INTELLIGENCE</span>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-h-green to-emerald-400">INTELLIGENCE</span>
                 </h1>
                 
-                <p class="text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed mb-10 animate-[fadeInUp_1s_ease-out_0.2s_forwards] opacity-0">
-                    Transforming machine data into actionable foresight. We eliminate surprise failures by predicting breakdown vectors weeks before they manifest.
+                <p class="text-xl md:text-2xl text-slate-300 max-w-3xl mx-auto mb-10 font-light">
+                    Transforming machine data into actionable foresight. We eliminate surprise failures by predicting breakdown vectors <span class="text-h-green font-bold">months</span> before they manifest.
                 </p>
-                
-                <div class="flex justify-center gap-12 animate-[fadeInUp_1s_ease-out_0.4s_forwards] opacity-0 text-center">
-                    <div><div class="text-4xl font-black text-h-green mb-1">0%</div><div class="text-[10px] font-mono text-slate-400 uppercase">Unplanned Downtime</div></div>
-                    <div><div class="text-4xl font-black text-white mb-1">24/7</div><div class="text-[10px] font-mono text-slate-400 uppercase">Neural Monitoring</div></div>
+
+                <div class="flex justify-center gap-12 text-center border-t border-white/10 pt-8 max-w-xl mx-auto">
+                    <div>
+                        <div class="text-4xl font-black text-h-green mb-1">0%</div>
+                        <div class="text-[10px] font-mono text-slate-400 uppercase tracking-widest">Unplanned Downtime</div>
+                    </div>
+                    <div>
+                        <div class="text-4xl font-black text-white mb-1">24/7</div>
+                        <div class="text-[10px] font-mono text-slate-400 uppercase tracking-widest">Neural Monitoring</div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section class="py-20 bg-h-dark border-b border-h-border">
-            <div class="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-16 items-center">
-                <div class="order-2 lg:order-1">
-                    <div class="glass-card p-8 rounded-xl border-l-4 border-l-h-green">
-                        <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-3">
-                            <svg data-lucide="history" class="w-6 h-6 text-h-green"></svg> The Paradigm Shift
+        <section class="py-24 bg-h-dark border-y border-h-border relative">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="flex flex-col md:flex-row justify-between items-end mb-10 pb-6 border-b border-white/5">
+                    <div>
+                        <h2 class="text-3xl font-black text-white flex items-center gap-3">
+                            <i data-lucide="activity" class="w-8 h-8 text-h-green"></i>
+                            The P-F Curve <span class="text-h-green">Simulator</span>
                         </h2>
-                        <p class="text-slate-300 leading-relaxed mb-6">
-                            The traditional reactive maintenance model is a financial liability. Waiting for a vibration alarm is waiting too long. 
-                        </p>
-                        <p class="text-slate-300 leading-relaxed">
-                            We move you to a <strong>Predictive State</strong>. By implementing our **Digital Twin** philosophy, AI detects minute anomalies long before they trigger critical alarms.
-                        </p>
+                        <p class="text-slate-400 mt-2 font-mono text-sm">Visualize the "Failure Horizon" and where AnoHUB intervenes.</p>
                     </div>
                 </div>
-                <div class="order-1 lg:order-2 text-center lg:text-left">
-                    <h3 class="text-sm font-mono text-h-green uppercase tracking-widest mb-2">Future Proofing</h3>
-                    <h2 class="text-4xl font-black text-white mb-6">Stop Fixing. <br>Start Preventing.</h2>
-                    <p class="text-slate-400">A broken bearing costs $50k. Preventing it costs a fraction.</p>
-                </div>
-            </div>
-        </section>
 
-        <section class="py-24 bg-h-panel relative">
-            <div class="max-w-7xl mx-auto px-4 relative z-10">
-                <div class="text-center mb-16">
-                    <h2 class="text-3xl font-black text-white flex items-center justify-center gap-3">
-                        <svg data-lucide="network" class="w-8 h-8 text-h-green"></svg> The Neural Ecosystem
-                    </h2>
-                </div>
-
-                <div class="grid md:grid-cols-3 gap-8 relative">
-                    <div class="hidden md:block absolute top-12 left-20 right-20 h-0.5 bg-gradient-to-r from-transparent via-h-green/30 to-transparent -z-10"></div>
-
-                    <div class="glass-card p-8 rounded-xl relative group hover:bg-h-green/5 transition text-center">
-                        <div class="w-16 h-16 mx-auto bg-h-dark rounded-full border-2 border-h-green flex items-center justify-center text-h-green mb-6 shadow-[0_0_20px_rgba(16,185,129,0.3)]"><svg data-lucide="component" class="w-8 h-8"></svg></div>
-                        <h3 class="text-xl font-bold text-white mb-3">Digital Twin Sync</h3>
-                        <p class="text-sm text-slate-400">Real-time synchronization of physical sensors with a virtual replica of your turbine.</p>
-                    </div>
-                    <div class="glass-card p-8 rounded-xl relative group hover:bg-h-green/5 transition text-center">
-                        <div class="w-16 h-16 mx-auto bg-h-dark rounded-full border-2 border-h-green flex items-center justify-center text-h-green mb-6 shadow-[0_0_20px_rgba(16,185,129,0.3)]"><svg data-lucide="brain-circuit" class="w-8 h-8"></svg></div>
-                        <h3 class="text-xl font-bold text-white mb-3">AI Processing</h3>
-                        <p class="text-sm text-slate-400">Proprietary algorithms analyze data streams to identify patterns invisible to human operators.</p>
-                    </div>
-                    <div class="glass-card p-8 rounded-xl relative group hover:bg-h-green/5 transition text-center">
-                        <div class="w-16 h-16 mx-auto bg-h-dark rounded-full border-2 border-h-green flex items-center justify-center text-h-green mb-6 shadow-[0_0_20px_rgba(16,185,129,0.3)]"><svg data-lucide="calendar-check" class="w-8 h-8"></svg></div>
-                        <h3 class="text-xl font-bold text-white mb-3">Optimized Action</h3>
-                        <p class="text-sm text-slate-400">Maintenance is scheduled only when necessary, maximizing uptime.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="py-20 bg-h-dark border-t border-h-border">
-            <div class="max-w-5xl mx-auto px-4">
-                <div class="bg-gradient-to-r from-h-green/10 to-transparent border border-h-green/30 p-8 md:p-12 rounded-2xl relative overflow-hidden">
-                    <div class="absolute top-0 right-0 p-6 opacity-10"><svg data-lucide="server" class="w-32 h-32 text-h-green"></svg></div>
-                    <div class="relative z-10">
-                        <h2 class="text-3xl font-black text-white mb-8">AnoHUB Hardware Execution</h2>
-                        <div class="grid md:grid-cols-2 gap-8">
-                            <div class="flex gap-4">
-                                <div class="bg-h-dark p-3 rounded border border-h-border h-fit"><svg data-lucide="cpu" class="w-6 h-6 text-h-green"></svg></div>
-                                <div><h4 class="text-white font-bold text-lg">Sensor Installation Squad</h4><p class="text-sm text-slate-400 mt-2">Physical installation and calibration of high-fidelity IoT sensors.</p></div>
+                <div class="grid lg:grid-cols-12 gap-8">
+                    <div class="lg:col-span-4 space-y-6">
+                        <div class="glass-card p-6 rounded-xl border-l-4 border-l-h-green">
+                            <h3 class="text-white font-bold mb-6 flex items-center gap-2"><i data-lucide="clock" class="w-4 h-4"></i> TIME MACHINE</h3>
+                            
+                            <div class="mb-8">
+                                <label class="text-xs font-bold text-slate-400 uppercase block mb-2">Asset Health Timeline</label>
+                                <input type="range" id="time-slider" min="0" max="100" value="10" class="w-full">
+                                <div class="flex justify-between text-[10px] font-mono text-slate-600 mt-2"><span>NEW ASSET</span><span>FAILURE</span></div>
                             </div>
-                            <div class="flex gap-4">
-                                <div class="bg-h-dark p-3 rounded border border-h-border h-fit"><svg data-lucide="monitor-smartphone" class="w-6 h-6 text-h-green"></svg></div>
-                                <div><h4 class="text-white font-bold text-lg">Remote Monitoring Center</h4><p class="text-sm text-slate-400 mt-2">24/7 digital overwatch, filtering false alarms for you.</p></div>
+
+                            <div class="p-4 bg-black/40 rounded border border-white/5">
+                                <div class="text-[10px] font-mono text-slate-500 uppercase mb-2">Current Status</div>
+                                <div id="ai-status" class="text-sm font-bold text-h-green flex items-center gap-2">
+                                    <div class="w-2 h-2 bg-h-green rounded-full animate-pulse"></div> HEALTHY
+                                </div>
                             </div>
                         </div>
+                        
+                        <div class="p-6 rounded-xl border border-white/5 bg-white/5">
+                            <h4 class="text-white font-bold text-sm mb-4">Detection Benchmark</h4>
+                            <ul class="space-y-4 text-xs font-mono text-slate-400">
+                                <li class="flex justify-between"><span>AnoHUB AI</span> <span class="text-h-green">6 Months Early</span></li>
+                                <li class="flex justify-between"><span>Vibration Analysis</span> <span class="text-yellow-500">1 Month Early</span></li>
+                                <li class="flex justify-between"><span>SCADA Alarm</span> <span class="text-h-red">Too Late (Damage Done)</span></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-8 chart-container relative flex items-center justify-center group">
+                        <div class="absolute inset-0 bg-[linear-gradient(rgba(16,185,129,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(16,185,129,0.05)_1px,transparent_1px)] bg-[size:40px_40px]"></div>
+                        
+                        <svg width="100%" height="100%" viewBox="0 0 600 400" class="absolute inset-0 z-0">
+                            <line x1="50" y1="350" x2="550" y2="350" stroke="#334155" stroke-width="2" />
+                            <line x1="50" y1="50" x2="50" y2="350" stroke="#334155" stroke-width="2" />
+                            <text x="300" y="380" fill="#64748b" font-size="10" font-family="monospace">TIME &rarr;</text>
+                            <text x="20" y="200" fill="#64748b" font-size="10" font-family="monospace" transform="rotate(-90 20 200)">FAILURE PROBABILITY &rarr;</text>
+
+                            <path d="M 50 340 Q 300 340, 500 50" class="pf-curve" />
+                            
+                            <path id="dynamic-curve" d="M 50 340" class="pf-curve-active" />
+                            
+                            <circle cx="150" cy="340" r="4" fill="#10b981" />
+                            <text x="150" y="320" fill="#10b981" font-size="10" font-family="monospace" text-anchor="middle">AnoHUB DETECTS</text>
+                            
+                            <circle cx="350" cy="280" r="4" fill="#facc15" />
+                            <text x="350" y="260" fill="#facc15" font-size="10" font-family="monospace" text-anchor="middle">AUDIBLE NOISE</text>
+                            
+                            <circle cx="480" cy="80" r="4" fill="#ef4444" />
+                            <text x="450" y="80" fill="#ef4444" font-size="10" font-family="monospace" text-anchor="end">FAILURE</text>
+                        </svg>
+
+                        <div id="tracker-dot" class="w-4 h-4 bg-white rounded-full absolute shadow-[0_0_15px_white]" style="top: 85%; left: 8%;"></div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="py-20 text-center">
+        <section class="py-24 bg-h-panel">
+            <div class="max-w-6xl mx-auto px-4">
+                <h2 class="text-h-green font-mono text-sm mb-2 text-center">THE ECOSYSTEM</h2>
+                <h3 class="text-3xl font-bold text-white mb-16 text-center">From Sensor to Strategy</h3>
+                
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="glass-card p-8 rounded-xl text-center">
+                        <div class="w-16 h-16 mx-auto bg-h-green/10 rounded-full flex items-center justify-center text-h-green mb-6 border border-h-green/20">
+                            <i data-lucide="radio" class="w-8 h-8"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-white mb-3">1. IoT Ingestion</h4>
+                        <p class="text-slate-400 text-sm">High-fidelity vibration, temperature, and pressure sensors stream raw data to our secure cloud.</p>
+                    </div>
+                    
+                    <div class="glass-card p-8 rounded-xl text-center border-h-green/50 shadow-[0_0_30px_rgba(16,185,129,0.1)]">
+                        <div class="w-16 h-16 mx-auto bg-h-green rounded-full flex items-center justify-center text-black mb-6 shadow-lg">
+                            <i data-lucide="brain-circuit" class="w-8 h-8"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-white mb-3">2. Neural Analysis</h4>
+                        <p class="text-slate-300 text-sm">Our AI models compare your asset against a global database of failure signatures (Digital Twin).</p>
+                    </div>
+                    
+                    <div class="glass-card p-8 rounded-xl text-center">
+                        <div class="w-16 h-16 mx-auto bg-h-green/10 rounded-full flex items-center justify-center text-h-green mb-6 border border-h-green/20">
+                            <i data-lucide="file-check" class="w-8 h-8"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-white mb-3">3. Human Validation</h4>
+                        <p class="text-slate-400 text-sm">Before alerting you, a Senior Engineer validates the AI finding to ensure 0% false alarms.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-20 text-center bg-h-dark border-t border-h-border">
             <div class="max-w-3xl mx-auto px-4">
-                <h2 class="text-2xl font-bold text-white mb-4">Ready to See the Future?</h2>
-                <p class="text-slate-400 mb-8">Deploy our predictive models and stop reacting to failures.</p>
-                <a href="contact.html" class="inline-flex items-center justify-center px-10 py-4 bg-h-green hover:bg-green-400 text-black font-black rounded transition shadow-lg shadow-h-green/20 uppercase tracking-widest">Deploy AI</a>
+                <h2 class="text-2xl font-bold text-white mb-4">Stop Reacting. Start Predicting.</h2>
+                <p class="text-slate-400 mb-8">Install our monitoring node today and see the future of your asset.</p>
+                <a href="contact.html" class="inline-flex items-center justify-center px-10 py-4 bg-h-green hover:bg-emerald-400 text-black font-black rounded transition shadow-lg shadow-h-green/20 uppercase tracking-widest">
+                    Deploy AI
+                </a>
             </div>
         </section>
 
     </main>
 
-    <div id="mobile-sticky-cta" class="lg:hidden fixed bottom-4 left-4 right-4 z-50 animate-[fadeInUp_1s_ease-out_1s_forwards] opacity-0">
-        <a href="contact.html" class="flex items-center justify-between bg-h-green/90 backdrop-blur-md text-black px-4 py-3 rounded-lg shadow-2xl border border-white/20">
-            <span class="text-xs font-bold uppercase tracking-wider">Deploy AI?</span>
-            <span class="bg-black text-h-green text-xs font-black px-2 py-1 rounded">CONTACT &rarr;</span>
-        </a>
-    </div>
-
-    <footer class="bg-black border-t border-slate-900 py-12 text-center mb-20 lg:mb-0">
-        <div class="max-w-7xl mx-auto px-4"><p class="text-slate-600 text-xs font-mono">© 2025 Anohubs Inc. | PREDICTIVE DIVISION</p></div>
+    <footer class="bg-black border-t border-slate-900 py-12 text-center text-xs font-mono text-slate-600">
+        © 2025 Anohubs Inc. | PREDICTIVE DIVISION
     </footer>
 
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <script>
         lucide.createIcons();
         document.getElementById('mobile-menu-btn').addEventListener('click', () => { document.getElementById('mobile-menu').classList.toggle('hidden'); });
-        window.addEventListener('scroll', () => {
-            const nav = document.getElementById('navbar');
-            if (window.scrollY > 50) { nav.classList.add('shadow-lg', 'bg-h-dark/95'); nav.classList.remove('bg-h-dark/90'); } 
-            else { nav.classList.remove('shadow-lg', 'bg-h-dark/95'); nav.classList.add('bg-h-dark/90'); }
-        });
+
+        // === P-F CURVE SIMULATOR ===
+        const slider = document.getElementById('time-slider');
+        const dot = document.getElementById('tracker-dot');
+        const curve = document.getElementById('dynamic-curve');
+        const status = document.getElementById('ai-status');
+
+        function updateGraph() {
+            const t = slider.value; // 0 to 100
+            
+            // Curve Math (Quadratic Bezier approx)
+            // Start: 50, 340. Control: 300, 340. End: 500, 50.
+            // Simplified linear mapping for demo visual
+            
+            // X position (Time)
+            const x = 50 + (t / 100 * 450);
+            
+            // Y position (Probability - Exponential growth)
+            // Base Y is 340. Top Y is 50. Range is 290.
+            // Using a power function to simulate the "knee" of the P-F curve
+            const normalizedT = t / 100;
+            const yDrop = Math.pow(normalizedT, 4) * 290;
+            const y = 340 - yDrop;
+
+            dot.style.left = (x / 600 * 100) + "%";
+            dot.style.top = (y / 400 * 100) + "%";
+
+            // Update Path
+            curve.setAttribute("d", `M 50 340 Q ${50 + (t*2)} 340, ${x} ${y}`);
+
+            // Logic
+            if (t < 20) {
+                status.innerHTML = '<div class="w-2 h-2 bg-h-green rounded-full animate-pulse"></div> HEALTHY';
+                status.className = "text-sm font-bold text-h-green flex items-center gap-2";
+                dot.style.boxShadow = "0 0 15px #10b981";
+            } else if (t < 50) {
+                status.innerHTML = '<div class="w-2 h-2 bg-h-green rounded-full animate-pulse"></div> ANOMALY DETECTED (AI)';
+                status.className = "text-sm font-bold text-h-green flex items-center gap-2";
+                dot.style.boxShadow = "0 0 15px #10b981";
+            } else if (t < 80) {
+                status.innerHTML = '<div class="w-2 h-2 bg-yellow-500 rounded-full animate-pulse"></div> AUDIBLE NOISE / VIBRATION';
+                status.className = "text-sm font-bold text-yellow-500 flex items-center gap-2";
+                dot.style.boxShadow = "0 0 15px #facc15";
+            } else {
+                status.innerHTML = '<div class="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div> CRITICAL FAILURE IMMINENT';
+                status.className = "text-sm font-bold text-red-500 flex items-center gap-2";
+                dot.style.boxShadow = "0 0 20px #ef4444";
+            }
+        }
+        
+        slider.addEventListener('input', updateGraph);
+        updateGraph();
     </script>
 </body>
 </html>

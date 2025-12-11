@@ -25,6 +25,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -38,7 +39,8 @@
                     },
                     animation: {
                         'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
-                        'scan': 'scan 4s linear infinite',
+                        'scan': 'scan 3s linear infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                     },
                     keyframes: {
                         fadeInUp: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
@@ -50,80 +52,105 @@
     </script>
 
     <style>
+        /* GLOBAL SETTINGS */
         body { background-color: #020617; color: #f8fafc; overflow-x: hidden; }
         
-        /* NOISE & GRID */
+        /* === BACKGROUND LAYERS === */
+        /* 1. Tvoja slika (Fixed) */
+        .bg-image-layer {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            z-index: -3;
+            background-image: url('slike/about_us_bckgrnd.jpg'); 
+            background-size: cover; background-position: center;
+            opacity: 0.3; /* Zatamnjeno za čitljivost */
+            filter: grayscale(100%) contrast(1.2); /* Cinematic B&W */
+        }
+        
+        /* 2. Tech Grid (Overlay) */
+        .tech-bg {
+            background-image: linear-gradient(rgba(6, 182, 212, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(6, 182, 212, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
+            pointer-events: none;
+        }
+
+        /* 3. Noise Texture (Grain) */
         .noise-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
             pointer-events: none; z-index: 50; opacity: 0.4;
         }
-        .tech-bg {
-            background-image: linear-gradient(rgba(6, 182, 212, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(6, 182, 212, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
-        }
 
-        /* GLASS PANELS */
+        /* === COMPONENT STYLES === */
+        
+        /* Glass Panels */
         .glass-panel {
-            background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(12px);
+            background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(16px);
             border: 1px solid rgba(51, 65, 85, 0.5); transition: all 0.3s ease;
         }
-        .glass-panel:hover { border-color: #06b6d4; box-shadow: 0 0 30px rgba(6, 182, 212, 0.1); }
+        .glass-panel:hover { border-color: #06b6d4; box-shadow: 0 0 40px rgba(6, 182, 212, 0.15); transform: translateY(-2px); }
 
-        /* FOUNDER PORTRAIT FX */
+        /* Portrait Scanner Effect */
         .portrait-container { position: relative; overflow: hidden; border-radius: 1rem; border: 1px solid rgba(6,182,212,0.3); }
         .portrait-scanline {
             position: absolute; width: 100%; height: 2px; background: #06b6d4;
-            box-shadow: 0 0 10px #06b6d4; opacity: 0.5; animation: scan 3s linear infinite; z-index: 10;
+            box-shadow: 0 0 15px #06b6d4; opacity: 0.8; animation: scan 3s linear infinite; z-index: 10;
         }
 
-        /* TURBINE CARDS (MASTERY) */
+        /* Turbine Mastery Cards */
         .mastery-card {
-            height: 400px; position: relative; overflow: hidden; border-radius: 1rem;
+            height: 450px; position: relative; overflow: hidden; border-radius: 1rem;
             border: 1px solid rgba(255,255,255,0.1); transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
-        .mastery-card:hover { transform: scale(1.02); box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5); }
+        .mastery-card:hover { transform: scale(1.02); box-shadow: 0 30px 60px -20px rgba(0,0,0,0.8); }
+        
         .mastery-bg {
             position: absolute; inset: 0; background-size: cover; background-position: center;
-            transition: transform 0.7s ease; filter: grayscale(100%) contrast(1.2);
+            transition: transform 0.7s ease; filter: grayscale(100%) contrast(1.2) brightness(0.6);
         }
-        .mastery-card:hover .mastery-bg { transform: scale(1.1); filter: grayscale(0%); }
+        .mastery-card:hover .mastery-bg { transform: scale(1.1); filter: grayscale(0%) brightness(1); }
+        
         .mastery-content {
-            position: absolute; inset: 0; background: linear-gradient(to top, #020617 10%, transparent 80%);
+            position: absolute; inset: 0; background: linear-gradient(to top, #020617 10%, transparent 90%);
             display: flex; flex-direction: column; justify-content: flex-end; padding: 2rem;
         }
 
-        /* TIMELINE LINE */
-        .timeline-line { position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: linear-gradient(to bottom, transparent, #334155, transparent); transform: translateX(-50%); }
+        /* Timeline Line */
+        .timeline-line { 
+            position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; 
+            background: linear-gradient(to bottom, transparent, #334155, #334155, transparent); 
+            transform: translateX(-50%); 
+        }
     </style>
 </head>
 
 <body class="antialiased">
     
-    <div class="noise-overlay"></div>
+    <div class="bg-image-layer"></div>
     <div class="tech-bg"></div>
+    <div class="noise-overlay"></div>
 
     <header class="fixed w-full z-50 top-0 border-b border-white/5 bg-h-dark/90 backdrop-blur-md transition-all duration-300" id="navbar">
         <div class="max-w-7xl mx-auto px-4 h-20 flex justify-between items-center">
             <a href="index.html" class="flex items-center gap-3 group">
-                <img src="logo.svg" alt="AnoHUB" class="h-10 w-auto transition group-hover:brightness-125">
+                <img src="logo.svg" alt="AnoHUB" class="h-10 transition group-hover:brightness-125">
                 <div class="hidden md:block">
                     <span class="block text-lg font-black tracking-tighter text-white leading-none">ANOHUBS</span>
                     <span class="block text-[10px] font-mono text-slate-500 tracking-widest uppercase group-hover:text-white transition">The Vision</span>
                 </div>
             </a>
-            <nav class="hidden lg:flex items-center gap-6 text-xs font-bold uppercase tracking-wider text-slate-400">
+            <nav class="hidden lg:flex gap-6 text-xs font-bold uppercase tracking-wider text-slate-400">
                 <a href="index.html" class="hover:text-white transition">Home</a>
                 <a href="services.html" class="hover:text-white transition">Services</a>
                 <a href="insights/expert-insights.html" class="hover:text-white transition">Insights</a>
-                <a href="contact.html" class="px-5 py-2 bg-white text-black rounded-full hover:bg-gray-200 transition">Contact</a>
+                <a href="contact.html" class="px-5 py-2 bg-white text-black rounded-full hover:bg-gray-200 transition shadow-lg">Contact</a>
             </nav>
-            <button id="mobile-menu-btn" class="lg:hidden text-white p-2"><i data-lucide="menu" class="w-8 h-8"></i></button>
+            <button id="mobile-menu-btn" class="lg:hidden text-white p-2"><i data-lucide="menu"></i></button>
         </div>
         
         <div id="mobile-menu" class="fixed inset-0 bg-h-dark/95 backdrop-blur-xl z-40 transform translate-x-full transition-transform duration-300 flex flex-col justify-center items-center gap-8 lg:hidden">
             <a href="index.html" class="text-2xl font-black text-white uppercase mobile-link">Home</a>
             <a href="services.html" class="text-2xl font-black text-white uppercase mobile-link">Services</a>
+            <a href="insights/expert-insights.html" class="text-2xl font-black text-white uppercase mobile-link">Insights</a>
             <a href="contact.html" class="text-xl font-bold text-black bg-white px-8 py-3 rounded mobile-link">CONTACT US</a>
         </div>
     </header>
@@ -132,50 +159,57 @@
 
         <section class="max-w-7xl mx-auto px-4 mb-24">
             <div class="text-center max-w-4xl mx-auto">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-xs font-mono text-h-cyan mb-6 animate-[fadeInUp_1s_ease-out]">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-xs font-mono text-h-cyan mb-8 animate-fade-in-up backdrop-blur-md">
                     <span class="w-2 h-2 bg-h-cyan rounded-full animate-pulse"></span> VISION LOG v1.0
                 </div>
-                <h1 class="text-5xl md:text-7xl font-black text-white mb-8 tracking-tight leading-none animate-[fadeInUp_1s_ease-out_0.2s_forwards] opacity-0">
+                <h1 class="text-5xl md:text-8xl font-black text-white mb-8 tracking-tight leading-none animate-fade-in-up opacity-0" style="animation-delay: 0.2s;">
                     THE ARCHITECTS OF <br>
                     <span class="text-transparent bg-clip-text bg-gradient-to-r from-h-cyan to-blue-500">IMMUNITY</span>
                 </h1>
-                <p class="text-xl text-slate-400 leading-relaxed animate-[fadeInUp_1s_ease-out_0.4s_forwards] opacity-0">
-                    We didn't just want to inspect power plants. We wanted to solve the fundamental equation of <strong class="text-white">Dynamic Risk</strong> versus <strong class="text-white">Operational Certainty</strong>.
+                <p class="text-xl md:text-2xl text-slate-300 leading-relaxed font-light animate-fade-in-up opacity-0 drop-shadow-md" style="animation-delay: 0.4s;">
+                    We don't just inspect power plants. We solve the fundamental equation of <strong class="text-white font-bold">Dynamic Risk</strong> versus <strong class="text-white font-bold">Operational Certainty</strong>.
                 </p>
             </div>
         </section>
 
         <section class="max-w-6xl mx-auto px-4 mb-32 relative z-10">
-            <div class="glass-panel rounded-3xl p-8 md:p-12 border-l-4 border-l-h-cyan relative overflow-hidden animate-[fadeInUp_1s_ease-out_0.6s_forwards] opacity-0">
+            <div class="glass-panel rounded-3xl p-8 md:p-12 border-l-4 border-l-h-cyan relative overflow-hidden animate-fade-in-up opacity-0" style="animation-delay: 0.6s;">
                 <div class="absolute top-0 right-0 p-12 opacity-5"><i data-lucide="fingerprint" class="w-64 h-64 text-white"></i></div>
 
                 <div class="grid md:grid-cols-12 gap-12 items-center">
+                    
                     <div class="md:col-span-5 relative">
-                        <div class="portrait-container">
-                            <img src="slike/ervin_stupac_portrait.jpg" alt="Ervin Stupac" class="w-full h-auto object-cover filter grayscale hover:grayscale-0 transition duration-700">
+                        <div class="portrait-container shadow-2xl">
+                            <img src="slike/about_intro.jpg.jpg" alt="Ervin Stupac" class="w-full h-auto object-cover filter grayscale hover:grayscale-0 transition duration-1000 scale-105 hover:scale-100">
                             <div class="portrait-scanline"></div>
                             
                             <div class="absolute bottom-0 left-0 w-full bg-black/80 backdrop-blur-sm p-4 border-t border-h-cyan/30">
-                                <h3 class="text-white font-bold text-lg">ERVIN STUPAC</h3>
+                                <h3 class="text-white font-bold text-xl tracking-wide">ERVIN STUPAC</h3>
                                 <div class="flex justify-between items-end mt-1">
-                                    <p class="text-xs font-mono text-h-cyan">LEAD ARCHITECT // FOUNDER</p>
+                                    <p class="text-xs font-mono text-h-cyan font-bold">LEAD ARCHITECT // FOUNDER</p>
                                     <p class="text-[10px] font-mono text-slate-500">ID: ES-001</p>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="md:col-span-7 space-y-6">
-                        <h2 class="text-3xl font-bold text-white">The Origin Signal</h2>
-                        <p class="text-slate-300 leading-relaxed">
-                            "For years, I watched the industry accept a 48% failure rate as 'unavoidable wear and tear'. I saw millions of dollars lost to vibration, erosion, and organizational silence. 
-                            <br><br>
-                            I realized that standard maintenance wasn't enough. We needed a forensic approach. We needed to treat a hydropower plant not like a static building, but like a living organism with an immune system.
-                            <br><br>
-                            AnoHUB was born from that necessity. To build a protocol that doesn't just find problems, but predicts and neutralizes them before they exist."
-                        </p>
+                    <div class="md:col-span-7 space-y-8">
+                        <h2 class="text-3xl font-bold text-white flex items-center gap-3">
+                            <i data-lucide="radio" class="text-h-cyan"></i> The Origin Signal
+                        </h2>
+                        <div class="text-slate-300 leading-relaxed text-lg space-y-6">
+                            <p>
+                                "For years, I watched the industry accept a <strong>48% failure rate</strong> as 'unavoidable wear and tear'. I saw millions of dollars lost to vibration, erosion, and organizational silence.
+                            </p>
+                            <p>
+                                I realized that standard maintenance wasn't enough. We needed a forensic approach. We needed to treat a hydropower plant not like a static building, but like a <strong>living organism with an immune system</strong>.
+                            </p>
+                            <p class="border-l-4 border-h-cyan pl-6 italic text-slate-400">
+                                AnoHUB was born from that necessity. To build a protocol that doesn't just find problems, but predicts and neutralizes them before they exist."
+                            </p>
+                        </div>
                         
-                        <div class="pt-4 border-t border-slate-800 flex items-center gap-4">
+                        <div class="pt-6 border-t border-slate-700/50 flex items-center gap-4">
                             <div class="font-serif italic text-2xl text-h-cyan opacity-80">Ervin Stupac</div>
                             <div class="h-px bg-slate-700 flex-grow"></div>
                             <div class="text-xs font-mono text-slate-500">EST. 2024</div>
@@ -185,7 +219,7 @@
             </div>
         </section>
 
-        <section class="py-24 bg-h-dark border-y border-white/5 relative">
+        <section class="py-24 bg-black/40 border-y border-white/5 relative backdrop-blur-sm">
             <div class="max-w-7xl mx-auto px-4">
                 <div class="text-center mb-16">
                     <h2 class="text-sm font-mono text-slate-500 uppercase tracking-widest mb-4">Domain Expertise</h2>
@@ -199,13 +233,13 @@
                         <div class="mastery-bg" style="background-image: url('slike/francis_srvcs.jpg');"></div>
                         <div class="mastery-content">
                             <div class="flex justify-between items-end border-b border-white/20 pb-4 mb-4">
-                                <h4 class="text-3xl font-black text-white group-hover:text-h-cyan transition">FRANCIS</h4>
-                                <span class="text-xs font-mono text-h-cyan bg-h-cyan/10 px-2 py-1 rounded">MIXED FLOW</span>
+                                <h4 class="text-4xl font-black text-white group-hover:text-h-cyan transition">FRANCIS</h4>
+                                <span class="text-[10px] font-mono font-bold text-h-cyan bg-h-cyan/10 px-2 py-1 rounded">MIXED FLOW</span>
                             </div>
-                            <p class="text-slate-300 text-sm mb-4 line-clamp-2">
+                            <p class="text-slate-300 text-sm mb-6 line-clamp-2 font-medium">
                                 The pressure beast. We solve RSI (Rotor-Stator Interaction) and Vortex Rope instability.
                             </p>
-                            <div class="text-xs font-bold text-white flex items-center gap-2 group-hover:gap-4 transition-all">
+                            <div class="text-xs font-bold text-white flex items-center gap-2 group-hover:gap-4 transition-all uppercase tracking-widest">
                                 VIEW PROTOCOL <i data-lucide="arrow-right" class="w-4 h-4 text-h-cyan"></i>
                             </div>
                         </div>
@@ -215,13 +249,13 @@
                         <div class="mastery-bg" style="background-image: url('slike/kaplan_srvcs.jpg');"></div>
                         <div class="mastery-content">
                             <div class="flex justify-between items-end border-b border-white/20 pb-4 mb-4">
-                                <h4 class="text-3xl font-black text-white group-hover:text-h-green transition">KAPLAN</h4>
-                                <span class="text-xs font-mono text-h-green bg-h-green/10 px-2 py-1 rounded">AXIAL FLOW</span>
+                                <h4 class="text-4xl font-black text-white group-hover:text-h-green transition">KAPLAN</h4>
+                                <span class="text-[10px] font-mono font-bold text-h-green bg-h-green/10 px-2 py-1 rounded">AXIAL FLOW</span>
                             </div>
-                            <p class="text-slate-300 text-sm mb-4 line-clamp-2">
+                            <p class="text-slate-300 text-sm mb-6 line-clamp-2 font-medium">
                                 The flow master. We optimize the Cam Curve relation between wicket gates and blade angle.
                             </p>
-                            <div class="text-xs font-bold text-white flex items-center gap-2 group-hover:gap-4 transition-all">
+                            <div class="text-xs font-bold text-white flex items-center gap-2 group-hover:gap-4 transition-all uppercase tracking-widest">
                                 VIEW PROTOCOL <i data-lucide="arrow-right" class="w-4 h-4 text-h-green"></i>
                             </div>
                         </div>
@@ -231,13 +265,13 @@
                         <div class="mastery-bg" style="background-image: url('slike/pelton_srvcs.jpg');"></div>
                         <div class="mastery-content">
                             <div class="flex justify-between items-end border-b border-white/20 pb-4 mb-4">
-                                <h4 class="text-3xl font-black text-white group-hover:text-h-cta transition">PELTON</h4>
-                                <span class="text-xs font-mono text-h-cta bg-h-cta/10 px-2 py-1 rounded">IMPULSE</span>
+                                <h4 class="text-4xl font-black text-white group-hover:text-h-cta transition">PELTON</h4>
+                                <span class="text-[10px] font-mono font-bold text-h-cta bg-h-cta/10 px-2 py-1 rounded">IMPULSE</span>
                             </div>
-                            <p class="text-slate-300 text-sm mb-4 line-clamp-2">
+                            <p class="text-slate-300 text-sm mb-6 line-clamp-2 font-medium">
                                 The kinetic king. We align injector nozzles to < 0.05mm precision to prevent bucket erosion.
                             </p>
-                            <div class="text-xs font-bold text-white flex items-center gap-2 group-hover:gap-4 transition-all">
+                            <div class="text-xs font-bold text-white flex items-center gap-2 group-hover:gap-4 transition-all uppercase tracking-widest">
                                 VIEW PROTOCOL <i data-lucide="arrow-right" class="w-4 h-4 text-h-cta"></i>
                             </div>
                         </div>
@@ -275,40 +309,40 @@
 
         <section class="max-w-4xl mx-auto px-4 relative mb-32">
             <div class="timeline-line"></div>
-            <div class="space-y-12">
+            <div class="space-y-16">
                 <div class="relative flex items-center justify-between group">
                     <div class="w-5/12 text-right pr-8">
-                        <h4 class="text-h-cyan font-bold text-xl">Inception</h4>
+                        <h4 class="text-h-cyan font-bold text-2xl">Inception</h4>
                         <p class="text-slate-400 text-sm mt-2">Identification of the 48% dynamic failure gap in standard audits.</p>
                     </div>
-                    <div class="absolute left-1/2 -translate-x-1/2 w-4 h-4 bg-h-dark border-2 border-h-cyan rounded-full z-10 group-hover:scale-150 transition"></div>
+                    <div class="absolute left-1/2 -translate-x-1/2 w-4 h-4 bg-h-dark border-2 border-h-cyan rounded-full z-10 group-hover:scale-150 transition duration-300 shadow-[0_0_10px_#06b6d4]"></div>
                     <div class="w-5/12 pl-8 text-xs font-mono text-slate-500">PHASE 01</div>
                 </div>
                 <div class="relative flex items-center justify-between group">
                     <div class="w-5/12 text-right pr-8 text-xs font-mono text-slate-500">PHASE 02</div>
-                    <div class="absolute left-1/2 -translate-x-1/2 w-4 h-4 bg-h-dark border-2 border-h-green rounded-full z-10 group-hover:scale-150 transition"></div>
+                    <div class="absolute left-1/2 -translate-x-1/2 w-4 h-4 bg-h-dark border-2 border-h-green rounded-full z-10 group-hover:scale-150 transition duration-300 shadow-[0_0_10px_#10b981]"></div>
                     <div class="w-5/12 pl-8">
-                        <h4 class="text-h-green font-bold text-xl">The Protocol</h4>
+                        <h4 class="text-h-green font-bold text-2xl">The Protocol</h4>
                         <p class="text-slate-400 text-sm mt-2">Development of the proprietary LCC Veto and NDT Matrix.</p>
                     </div>
                 </div>
                 <div class="relative flex items-center justify-between group">
                     <div class="w-5/12 text-right pr-8">
-                        <h4 class="text-white font-bold text-xl">Global Standard</h4>
+                        <h4 class="text-white font-bold text-2xl">Global Standard</h4>
                         <p class="text-slate-400 text-sm mt-2">Establishing AnoHUB as the mandatory integrity benchmark.</p>
                     </div>
-                    <div class="absolute left-1/2 -translate-x-1/2 w-6 h-6 bg-h-cta rounded-full z-10 shadow-[0_0_15px_#f59e0b] animate-pulse"></div>
+                    <div class="absolute left-1/2 -translate-x-1/2 w-6 h-6 bg-h-cta rounded-full z-10 shadow-[0_0_20px_#f59e0b] animate-pulse-slow"></div>
                     <div class="w-5/12 pl-8 text-xs font-mono text-h-cta font-bold">CURRENT STATE</div>
                 </div>
             </div>
         </section>
 
-        <section class="text-center px-4">
-            <div class="max-w-3xl mx-auto glass-panel p-10 rounded-2xl relative overflow-hidden group border border-white/10">
+        <section class="text-center px-4 mb-24">
+            <div class="max-w-3xl mx-auto glass-panel p-12 rounded-3xl relative overflow-hidden group border border-white/10">
                 <div class="absolute inset-0 bg-gradient-to-r from-transparent via-h-cyan/5 to-transparent opacity-0 group-hover:opacity-100 transition duration-700"></div>
-                <h2 class="text-3xl font-black text-white mb-4 relative z-10">You've Seen The Vision. Now See The Logic.</h2>
-                <p class="text-slate-400 mb-8 relative z-10">Access the Engineering Immunity Protocol to see exactly how we execute this vision.</p>
-                <a href="protocol.html" class="relative z-10 inline-flex items-center gap-3 bg-h-cyan hover:bg-cyan-400 text-black font-black px-8 py-4 rounded transition shadow-lg">
+                <h2 class="text-3xl md:text-4xl font-black text-white mb-6 relative z-10">You've Seen The Vision. Now See The Logic.</h2>
+                <p class="text-slate-400 mb-10 relative z-10 text-lg">Access the Engineering Immunity Protocol to see exactly how we execute this vision.</p>
+                <a href="protocol.html" class="relative z-10 inline-flex items-center gap-3 bg-h-cyan hover:bg-cyan-400 text-black font-black px-10 py-5 rounded-lg transition shadow-lg hover:shadow-cyan-500/50 uppercase tracking-widest text-sm">
                     ENTER COMMAND CENTER <i data-lucide="arrow-right" class="w-5 h-5"></i>
                 </a>
             </div>
