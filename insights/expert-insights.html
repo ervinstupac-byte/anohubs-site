@@ -10,25 +10,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: { 
-                        sans: ['Inter', 'sans-serif'], 
-                        mono: ['JetBrains Mono', 'monospace'] 
-                    },
+                    fontFamily: { sans: ['Inter'], mono: ['JetBrains Mono'] },
                     colors: {
                         'h-blue': '#2563EB',
                         'h-cyan': '#06b6d4', 
                         'h-dark': '#0B1120', 
                         'h-cta': '#FFAA00',
                     },
-                    animation: {
-                        'fade-up': 'fadeUp 0.8s ease-out forwards',
-                    },
+                    animation: { 'fade-up': 'fadeUp 0.8s ease-out forwards' },
                     keyframes: {
                         fadeUp: {
                             '0%': { opacity: '0', transform: 'translateY(20px)' },
@@ -41,70 +35,85 @@
     </script>
 
     <style>
-        body { background-color: #f8fafc; color: #1e293b; overflow-x: hidden; }
+        body { background-color: #0B1120; color: #f8fafc; overflow-x: hidden; }
         
-        /* INŽENJERSKA MREŽA U POZADINI */
-        .bg-tech-grid {
-            background-size: 40px 40px;
-            background-image: radial-gradient(circle, #cbd5e1 1px, transparent 1px);
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.4;
+        /* === FIXED BACKGROUND SYSTEM === */
+        .fixed-bg {
+            /* OVDJE JE TVOJA SLIKA */
+            background-image: url('../slike/AnoHubs_VNM.jpg'); 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
+            background-size: cover; background-position: center;
+            filter: grayscale(30%); /* Malo desaturacije za ozbiljnost */
+        }
+        
+        /* Tamni sloj da tekst bude čitljiv */
+        .bg-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            background: rgba(11, 17, 32, 0.85); 
+            backdrop-filter: blur(5px);
         }
 
-        header { background-color: #0B1120; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        /* HEADER */
+        header { background-color: rgba(11, 17, 32, 0.9); border-bottom: 1px solid rgba(255,255,255,0.05); }
 
+        /* TITLE */
         .intelligence-title {
-            background: linear-gradient(to right, #0ea5e9, #2563eb);
+            background: linear-gradient(to right, #38bdf8, #818cf8);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             font-size: clamp(3rem, 10vw, 6rem);
             font-weight: 900;
             letter-spacing: -0.05em;
             line-height: 1;
+            text-shadow: 0 10px 30px rgba(56, 189, 248, 0.2);
         }
 
+        /* FILTER BAR */
         .filter-bar {
-            background-color: #0B1120;
-            box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.4);
-            border: 1px solid rgba(255,255,255,0.05);
+            background-color: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 40px -5px rgba(0,0,0,0.5);
         }
 
-        /* STANDARD CARD */
+        /* === KARTICE SA OSOBNOŠĆU === */
         .insight-card {
-            background: white;
-            border: 1px solid #e2e8f0;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255,255,255,0.05);
             border-radius: 1rem;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex; flex-direction: column; height: 100%;
+            position: relative; overflow: hidden;
         }
+        
         .insight-card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 20px 30px -5px rgba(37, 99, 235, 0.15); /* Plavi sjaj */
-            border-color: #3b82f6;
+            background: rgba(255, 255, 255, 0.07);
         }
 
-        /* FEATURED CARD (The Beast) */
-        .featured-card {
-            background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
-            border: 2px solid #3b82f6;
-            border-left: 8px solid #ef4444; /* Crveni rub za Manifest */
-            box-shadow: 0 25px 50px -12px rgba(37, 99, 235, 0.25);
-            transition: transform 0.3s ease;
-        }
-        .featured-card:hover { transform: scale-[1.01]; }
+        /* KATEGORIJE - BOJE */
+        .border-manifesto { border-left: 6px solid #ef4444; }
+        .border-strategy { border-left: 4px solid #3b82f6; }
+        .border-finance { border-left: 4px solid #eab308; }
+        .border-tech { border-left: 4px solid #06b6d4; }
 
-        .filter-btn { color: #64748b; transition: color 0.3s; }
-        .filter-btn:hover { color: white; }
-        .filter-btn.active { color: #38bdf8; font-weight: 700; border-bottom: 2px solid #38bdf8; }
+        .search-input {
+            background-color: rgba(0,0,0,0.3);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .search-input:focus { border-color: #38bdf8; outline: none; background-color: rgba(0,0,0,0.5); }
         
-        .search-input { background-color: #1e293b; color: white; border: 1px solid #334155; }
-        .search-input:focus { border-color: #38bdf8; outline: none; }
+        .filter-btn { color: #94a3b8; transition: color 0.3s; }
+        .filter-btn:hover { color: white; }
+        .filter-btn.active { color: #38bdf8; font-weight: 700; text-shadow: 0 0 10px rgba(56,189,248,0.5); }
     </style>
 </head>
 
 <body class="antialiased">
 
-    <div class="bg-tech-grid"></div>
+    <div class="fixed-bg"></div>
+    <div class="bg-overlay"></div>
 
     <header class="fixed w-full z-50 top-0 transition-all duration-300" id="navbar">
         <div class="max-w-7xl mx-auto px-6 h-24 flex justify-between items-center">
@@ -112,16 +121,14 @@
                 <span class="text-2xl font-black text-white tracking-tighter">ANOHUBS</span>
                 <span class="text-[10px] font-mono text-h-cyan tracking-[0.2em] uppercase group-hover:text-white transition">Intelligence</span>
             </a>
-
             <nav class="hidden lg:flex items-center gap-10 text-xs font-bold uppercase tracking-widest text-slate-400">
                 <a href="../index.html" class="hover:text-white transition">Home</a>
                 <a href="../about-us-vision.html" class="hover:text-white transition">About</a>
                 <a href="../services.html" class="hover:text-white transition">Services</a>
                 <a href="#" class="text-h-cyan">Insights</a>
             </nav>
-
             <div class="hidden lg:flex items-center gap-6">
-                <a href="../protocol.html" class="text-h-cyan font-bold text-xs tracking-widest uppercase border border-h-cyan/30 px-6 py-3 rounded-full hover:bg-h-cyan hover:text-black transition shadow-[0_0_15px_rgba(6,182,212,0.1)]">Protocol</a>
+                <a href="../protocol.html" class="text-h-cyan font-bold text-xs tracking-widest uppercase border border-h-cyan/30 px-6 py-3 rounded-full hover:bg-h-cyan hover:text-black transition">Protocol</a>
                 <a href="../contact.html" class="bg-h-cta hover:bg-yellow-400 text-black font-black text-xs uppercase tracking-widest px-8 py-3 rounded-full shadow-lg transition transform hover:scale-105">Contact</a>
             </div>
             <button class="lg:hidden text-white p-2"><i data-lucide="menu"></i></button>
@@ -131,13 +138,13 @@
     <main class="pt-32 pb-24">
 
         <section class="text-center px-4 py-16">
-            <div class="inline-flex items-center gap-2 bg-white border border-gray-200 px-6 py-2 rounded-full mb-8 animate-fade-up shadow-sm">
+            <div class="inline-flex items-center gap-2 bg-white/5 border border-white/10 px-6 py-2 rounded-full mb-8 animate-fade-up backdrop-blur-md">
                 <div class="w-2 h-2 bg-h-cyan rounded-full animate-pulse"></div>
-                <span class="text-[10px] font-mono font-bold text-slate-600 uppercase tracking-widest">Knowledge Base: Online</span>
+                <span class="text-[10px] font-mono font-bold text-slate-300 uppercase tracking-widest">Knowledge Base: Online</span>
             </div>
             <h1 class="intelligence-title mb-6 animate-fade-up" style="animation-delay: 0.1s;">INTELLIGENCE</h1>
-            <p class="text-slate-500 text-lg md:text-xl max-w-2xl mx-auto font-medium animate-fade-up" style="animation-delay: 0.2s;">
-                Decoding the complexity of hydro integrity. Technical briefs, case studies, and strategic forecasts.
+            <p class="text-slate-400 text-lg md:text-xl max-w-2xl mx-auto font-light animate-fade-up" style="animation-delay: 0.2s;">
+                Forensic engineering insights, strategic forecasts, and the unvarnished truth about asset integrity.
             </p>
         </section>
 
@@ -165,9 +172,9 @@
 
     </main>
 
-    <footer class="bg-[#020617] text-white py-16 border-t border-gray-900">
+    <footer class="bg-black/50 text-white py-16 border-t border-white/10 backdrop-blur-lg">
         <div class="max-w-7xl mx-auto px-6 text-center">
-            <p class="text-xs font-mono text-gray-600">© 2025 Anohubs Inc. | INTELLIGENCE DIVISION</p>
+            <p class="text-xs font-mono text-gray-500">© 2025 Anohubs Inc. | INTELLIGENCE DIVISION</p>
         </div>
     </footer>
 
@@ -353,27 +360,28 @@
         const searchInput = document.getElementById('search-input');
         const filterBtns = document.querySelectorAll('.filter-btn');
 
-        // 1. RENDER FEATURED (MANIFESTO)
+        // 1. RENDER FEATURED (MANIFESTO) - Aggressive Red Style
         function renderFeatured() {
             const manifesto = insightsData.find(item => item.id === 17);
             if(manifesto) {
                 featuredContainer.innerHTML = `
-                    <a href="${manifesto.link}" class="block featured-card rounded-2xl p-8 md:p-12 relative overflow-hidden group">
-                        <div class="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition transform group-hover:scale-110">
-                            <i data-lucide="flame" class="w-48 h-48 text-red-600"></i>
+                    <a href="${manifesto.link}" class="block bg-gradient-to-br from-red-900/40 to-black/80 border border-red-500/50 rounded-2xl p-8 md:p-12 relative overflow-hidden group hover:border-red-500 transition-all duration-500 shadow-[0_0_50px_rgba(220,38,38,0.15)]">
+                        <div class="absolute inset-0 bg-[url('../slike/Article 17/A17-pozadina1.jpg')] opacity-20 bg-cover mix-blend-overlay transition group-hover:opacity-30"></div>
+                        <div class="absolute top-0 right-0 p-8 opacity-20 group-hover:opacity-100 transition transform group-hover:scale-110">
+                            <i data-lucide="flame" class="w-40 h-40 text-red-500"></i>
                         </div>
                         <div class="relative z-10 max-w-3xl">
                             <div class="flex items-center gap-4 mb-6">
-                                <span class="bg-red-600 text-white px-3 py-1 rounded text-[10px] font-black uppercase tracking-widest shadow-md">EDITOR'S CHOICE</span>
-                                <span class="text-xs font-mono text-slate-500 font-bold">MUST READ // ${manifesto.read}</span>
+                                <span class="bg-red-600 text-white px-3 py-1 rounded text-[10px] font-black uppercase tracking-widest shadow-md animate-pulse">EDITOR'S CHOICE</span>
+                                <span class="text-xs font-mono text-red-300 font-bold">MUST READ // ${manifesto.read}</span>
                             </div>
-                            <h2 class="text-3xl md:text-5xl font-black text-slate-900 mb-6 leading-tight group-hover:text-h-blue transition">
+                            <h2 class="text-3xl md:text-5xl font-black text-white mb-6 leading-tight group-hover:text-red-400 transition">
                                 ${manifesto.title}
                             </h2>
-                            <p class="text-lg text-slate-600 mb-8 leading-relaxed font-medium">
+                            <p class="text-lg text-slate-300 mb-8 leading-relaxed font-medium">
                                 ${manifesto.desc}
                             </p>
-                            <div class="inline-flex items-center gap-3 text-sm font-bold text-red-600 uppercase tracking-widest group-hover:gap-6 transition-all border-b-2 border-red-600 pb-1">
+                            <div class="inline-flex items-center gap-3 text-sm font-bold text-red-500 uppercase tracking-widest group-hover:text-white transition-all border-b-2 border-red-600 pb-1">
                                 Read The Manifesto <i data-lucide="arrow-right" class="w-5 h-5"></i>
                             </div>
                         </div>
@@ -382,42 +390,54 @@
             }
         }
 
-        // 2. RENDER GRID (Sve osim ID 17)
+        // 2. RENDER GRID (WITH PERSONALITY)
         function renderInsights(data) {
             grid.innerHTML = '';
-            
-            // Filter out the featured article from the grid so it's not duplicated
             const gridData = data.filter(item => item.id !== 17);
 
             if (gridData.length === 0) {
-                grid.innerHTML = '<div class="col-span-full text-center text-gray-400 py-10 font-mono">No other briefs found.</div>';
+                grid.innerHTML = '<div class="col-span-full text-center text-slate-500 py-10 font-mono">No briefs found.</div>';
                 return;
             }
 
             gridData.forEach(item => {
-                let tagColor = 'text-h-cyan border-h-cyan/30 bg-h-cyan/5';
-                if(item.cat === 'finance') tagColor = 'text-yellow-600 border-yellow-500/30 bg-yellow-50';
-                if(item.tag === 'LEADERSHIP') tagColor = 'text-purple-600 border-purple-500/30 bg-purple-50';
+                // == PERSONALITY LOGIC ==
+                let borderClass = 'border-l-4 border-l-h-cyan'; // Default Tech
+                let icon = 'cpu'; // Default icon
+                let badgeColor = 'text-h-cyan border-h-cyan/30 bg-h-cyan/10';
+
+                if(item.cat === 'finance') {
+                    borderClass = 'border-l-4 border-l-yellow-500';
+                    icon = 'trending-up';
+                    badgeColor = 'text-yellow-500 border-yellow-500/30 bg-yellow-500/10';
+                } else if(item.cat === 'strategy') {
+                    borderClass = 'border-l-4 border-l-blue-500';
+                    icon = 'target';
+                    badgeColor = 'text-blue-500 border-blue-500/30 bg-blue-500/10';
+                }
 
                 const card = document.createElement('a');
                 card.href = item.link;
-                card.className = `insight-card p-8 group`;
+                card.className = `insight-card p-8 group ${borderClass}`;
                 
                 card.innerHTML = `
                     <div class="flex justify-between items-start mb-6">
-                        <span class="px-3 py-1 rounded text-[10px] font-bold uppercase border ${tagColor}">
+                        <span class="px-3 py-1 rounded text-[10px] font-bold uppercase border ${badgeColor}">
                             ${item.tag}
                         </span>
-                        <span class="text-[10px] font-mono text-gray-400">${item.read}</span>
+                        <i data-lucide="${icon}" class="w-5 h-5 text-slate-500 group-hover:text-white transition"></i>
                     </div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-4 leading-tight group-hover:text-h-blue transition">
+                    <h3 class="text-xl font-bold text-white mb-4 leading-tight group-hover:text-h-cyan transition">
                         ${item.title}
                     </h3>
-                    <p class="text-sm text-gray-500 leading-relaxed mb-8 flex-grow">
+                    <p class="text-sm text-slate-400 leading-relaxed mb-8 flex-grow">
                         ${item.desc}
                     </p>
-                    <div class="pt-6 border-t border-gray-100 flex items-center gap-2 text-xs font-bold text-gray-900 uppercase tracking-widest group-hover:gap-4 transition-all">
-                        Read Brief <i data-lucide="arrow-right" class="w-4 h-4 text-h-cyan"></i>
+                    <div class="pt-6 border-t border-white/5 flex items-center justify-between">
+                        <span class="text-[10px] font-mono text-slate-500">${item.date}</span>
+                        <div class="flex items-center gap-2 text-xs font-bold text-slate-300 uppercase tracking-widest group-hover:gap-4 transition-all">
+                            Read <i data-lucide="arrow-right" class="w-4 h-4 text-h-cyan"></i>
+                        </div>
                     </div>
                 `;
                 grid.appendChild(card);
