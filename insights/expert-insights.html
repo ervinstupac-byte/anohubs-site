@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Expert Insights & Intelligence Hub | Anohubs</title>
+    <meta name="description" content="The AnoHUB Intelligence Center: Access thought leadership on hydro integrity.">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,10 +22,10 @@
                         mono: ['JetBrains Mono', 'monospace'] 
                     },
                     colors: {
-                        'h-blue': '#2563EB',
+                        'h-blue': '#2563EB', /* AnoHub Blue */
                         'h-cyan': '#06b6d4', 
-                        'h-dark': '#0B1120',
-                        'h-cta': '#FFAA00',
+                        'h-dark': '#0B1120', /* Dark Header/Filter */
+                        'h-cta': '#FFAA00',  /* Contact Yellow */
                     },
                     animation: {
                         'fade-up': 'fadeUp 0.8s ease-out forwards',
@@ -41,54 +42,69 @@
     </script>
 
     <style>
-        /* VISUAL STYLE: WHITE & CLEAN (From Screenshot) */
+        /* == DIZAJN PREMA SLICI SS.JPG == */
+        
+        /* 1. Bijela pozadina */
         body { background-color: #ffffff; color: #1e293b; overflow-x: hidden; }
         
-        /* DARK HEADER */
-        header { background-color: #0B1120; }
+        /* 2. Tamni Header */
+        header { background-color: #020617; border-bottom: 1px solid rgba(255,255,255,0.05); }
 
-        /* HERO TITLE - BLUE GRADIENT */
+        /* 3. "INTELLIGENCE" Naslov (Plavi Gradient) */
         .intelligence-title {
             background: linear-gradient(to right, #0ea5e9, #2563eb);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            font-size: clamp(3rem, 10vw, 6rem);
+            font-size: clamp(3rem, 10vw, 6rem); /* Ogroman responsivni tekst */
             font-weight: 900;
             letter-spacing: -0.05em;
             line-height: 1;
         }
 
-        /* FLOATING FILTER BAR */
+        /* 4. Filter Bar (Tamni lebdeći otok) */
         .filter-bar {
             background-color: #0B1120;
-            box-shadow: 0 20px 40px -5px rgba(0,0,0,0.3);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255,255,255,0.05);
         }
 
-        /* CARDS */
+        /* 5. Kartice (Clean White Look) */
         .insight-card {
             background: white;
             border: 1px solid #e2e8f0;
-            transition: all 0.3s ease;
+            border-radius: 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            display: flex; flex-direction: column;
+            display: flex; flex-direction: column; height: 100%;
         }
         .insight-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px);
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
             border-color: #3b82f6;
         }
         
-        /* MANIFESTO CARD HIGHLIGHT */
+        /* Manifesto Card (Article 17 Highlight) */
         .manifesto-card {
             border-left: 6px solid #ef4444;
             background: #fffafa;
         }
         .manifesto-card:hover {
             border-color: #ef4444;
-            box-shadow: 0 20px 40px -10px rgba(239, 68, 68, 0.2);
+            box-shadow: 0 20px 40px -10px rgba(239, 68, 68, 0.15);
         }
 
-        .filter-btn.active { color: #38bdf8; }
+        /* Active Filter Button */
+        .filter-btn { color: #64748b; transition: color 0.3s; }
+        .filter-btn:hover { color: white; }
+        .filter-btn.active { color: #38bdf8; font-weight: 700; }
+        
+        /* Search Input */
+        .search-input {
+            background-color: #1e293b;
+            color: white;
+            border: 1px solid #334155;
+        }
+        .search-input:focus { border-color: #38bdf8; outline: none; }
     </style>
 </head>
 
@@ -97,12 +113,12 @@
     <header class="fixed w-full z-50 top-0 transition-all duration-300" id="navbar">
         <div class="max-w-7xl mx-auto px-6 h-24 flex justify-between items-center">
             
-            <a href="../index.html" class="flex flex-col">
+            <a href="../index.html" class="flex flex-col group">
                 <span class="text-2xl font-black text-white tracking-tighter">ANOHUBS</span>
-                <span class="text-[10px] font-mono text-h-cyan tracking-[0.2em] uppercase">Intelligence</span>
+                <span class="text-[10px] font-mono text-h-cyan tracking-[0.2em] uppercase group-hover:text-white transition">Intelligence</span>
             </a>
 
-            <nav class="hidden lg:flex items-center gap-8 text-xs font-bold uppercase tracking-widest text-slate-400">
+            <nav class="hidden lg:flex items-center gap-10 text-xs font-bold uppercase tracking-widest text-slate-400">
                 <a href="../index.html" class="hover:text-white transition">Home</a>
                 <a href="../about-us-vision.html" class="hover:text-white transition">About</a>
                 <a href="../services.html" class="hover:text-white transition">Services</a>
@@ -110,18 +126,24 @@
             </nav>
 
             <div class="hidden lg:flex items-center gap-6">
-                <a href="../protocol.html" class="text-h-cyan font-bold text-xs tracking-widest uppercase border border-h-cyan/30 px-6 py-3 rounded-full hover:bg-h-cyan hover:text-black transition">Protocol</a>
-                <a href="../contact.html" class="bg-h-cta hover:bg-yellow-400 text-black font-black text-xs uppercase tracking-widest px-8 py-3 rounded-full shadow-lg transition">Contact</a>
+                <a href="../protocol.html" class="text-h-cyan font-bold text-xs tracking-widest uppercase border border-h-cyan/30 px-6 py-3 rounded-full hover:bg-h-cyan hover:text-black transition shadow-[0_0_15px_rgba(6,182,212,0.1)]">
+                    Protocol
+                </a>
+                
+                <a href="../contact.html" class="bg-h-cta hover:bg-yellow-400 text-black font-black text-xs uppercase tracking-widest px-8 py-3 rounded-full shadow-lg transition transform hover:scale-105">
+                    Contact
+                </a>
             </div>
 
-            <button class="lg:hidden text-white"><i data-lucide="menu"></i></button>
+            <button class="lg:hidden text-white p-2"><i data-lucide="menu"></i></button>
         </div>
     </header>
 
     <main class="pt-32 pb-24">
 
         <section class="text-center px-4 py-20">
-            <div class="inline-flex items-center gap-2 bg-gray-500/10 border border-gray-200 px-6 py-2 rounded-full mb-10 animate-fade-up">
+            
+            <div class="inline-flex items-center gap-2 bg-gray-100 border border-gray-200 px-6 py-2 rounded-full mb-10 animate-fade-up">
                 <div class="w-2 h-2 bg-h-cyan rounded-full animate-pulse"></div>
                 <span class="text-[10px] font-mono font-bold text-gray-500 uppercase tracking-widest">Knowledge Base: Online</span>
             </div>
@@ -133,34 +155,36 @@
             <p class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto font-light animate-fade-up" style="animation-delay: 0.2s;">
                 Decoding the complexity of hydro integrity. Access our library of technical briefs, case study breakdowns, and strategic forecasts.
             </p>
+
         </section>
 
         <section class="max-w-6xl mx-auto px-4 -mt-4 mb-24 relative z-20 animate-fade-up" style="animation-delay: 0.3s;">
-            <div class="filter-bar rounded-2xl p-6 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="filter-bar rounded-2xl p-4 md:p-6 flex flex-col md:flex-row justify-between items-center gap-6">
                 
-                <div class="flex flex-wrap justify-center gap-4 md:gap-8 text-[10px] md:text-xs font-bold font-mono uppercase tracking-widest text-gray-500">
-                    <button class="filter-btn active hover:text-white transition" onclick="filterInsights('all')">All Briefs</button>
-                    <button class="filter-btn hover:text-white transition" onclick="filterInsights('tech')">Technical</button>
-                    <button class="filter-btn hover:text-white transition" onclick="filterInsights('finance')">Financial</button>
-                    <button class="filter-btn hover:text-white transition" onclick="filterInsights('strategy')">Strategic</button>
+                <div class="flex flex-wrap justify-center gap-6 md:gap-8 text-[10px] md:text-xs font-bold font-mono uppercase tracking-widest">
+                    <button class="filter-btn active" onclick="filterInsights('all')">All Briefs</button>
+                    <button class="filter-btn" onclick="filterInsights('tech')">Technical</button>
+                    <button class="filter-btn" onclick="filterInsights('finance')">Financial</button>
+                    <button class="filter-btn" onclick="filterInsights('strategy')">Strategic</button>
                 </div>
 
-                <div class="relative w-full md:w-64">
-                    <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500"></i>
+                <div class="relative w-full md:w-72">
+                    <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
                     <input type="text" id="search-input" placeholder="Search keywords..." 
-                           class="w-full bg-[#162032] text-white text-xs rounded-full py-3 pl-10 pr-4 border border-gray-800 focus:border-h-cyan focus:outline-none transition">
+                           class="search-input w-full text-xs rounded-full py-3 pl-10 pr-4 transition">
                 </div>
             </div>
         </section>
 
         <section class="max-w-7xl mx-auto px-6">
             <div id="insights-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                </div>
+                <div class="col-span-full text-center py-20 text-gray-300 font-mono animate-pulse">LOADING INTELLIGENCE FEED...</div>
+            </div>
         </section>
 
     </main>
 
-    <footer class="bg-h-dark text-white py-16 border-t border-gray-900">
+    <footer class="bg-[#020617] text-white py-16 border-t border-gray-900">
         <div class="max-w-7xl mx-auto px-6 text-center">
             <p class="text-xs font-mono text-gray-600">© 2025 Anohubs Inc. | INTELLIGENCE DIVISION</p>
         </div>
@@ -169,7 +193,7 @@
     <script>
         lucide.createIcons();
 
-        // === FULL ARTICLE DATABASE (17 ITEMS) ===
+        // === KOMPLETNA BAZA PODATAKA (SVIH 17 ČLANAKA) ===
         const insightsData = [
             {
                 id: 17,
@@ -178,7 +202,7 @@
                 title: 'THE CULTURAL BETRAYAL: Corporate Violence Against Assets',
                 desc: 'Why the Low-Bid Policy is an act of corporate violence. The 48% Risk and Zero-Tolerance Protocol.',
                 date: 'DEC 11, 2025',
-                link: 'article-17-cultural-betrayal.html',
+                link: 'article-17-cultural-betrayal.html', // Provjeri da je ovaj fajl u istom folderu
                 read: '12 MIN'
             },
             {
@@ -356,6 +380,7 @@
             }
 
             data.forEach(item => {
+                // Style logic
                 let tagColor = 'text-h-cyan border-h-cyan/30 bg-h-cyan/10';
                 if(item.cat === 'finance') tagColor = 'text-yellow-600 border-yellow-500/30 bg-yellow-100';
                 if(item.tag === 'MANIFESTO') tagColor = 'text-red-600 border-red-500/30 bg-red-100 font-black';
@@ -364,7 +389,7 @@
 
                 const card = document.createElement('a');
                 card.href = item.link;
-                card.className = `block rounded-xl p-8 flex flex-col h-full ${cardClass}`;
+                card.className = `p-8 ${cardClass}`;
                 
                 card.innerHTML = `
                     <div class="flex justify-between items-start mb-6">
@@ -391,7 +416,7 @@
             lucide.createIcons();
         }
 
-        // Filter Logic
+        // FILTER LOGIC
         function filterInsights(category) {
             filterBtns.forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
@@ -404,7 +429,7 @@
             }
         }
 
-        // Search Logic
+        // SEARCH LOGIC
         searchInput.addEventListener('input', (e) => {
             const term = e.target.value.toLowerCase();
             const filtered = insightsData.filter(item => 
@@ -415,7 +440,7 @@
             renderInsights(filtered);
         });
 
-        // Init
+        // INIT
         renderInsights(insightsData);
     </script>
 </body>
