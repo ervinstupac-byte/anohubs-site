@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Article 17: THE CULTURAL BETRAYAL | AnoHUB Intel</title>
     
-    <link rel="preload" as="image" href="../slike/Article 17/A17_pozadina_1.jpg">
-    <link rel="preload" as="image" href="../slike/Article 17/A17_pozadina_2.jpg">
-    <link rel="preload" as="image" href="../slike/Article 17/A17_pozadina_3.jpg">
-    <link rel="preload" as="image" href="../slike/Article 17/A17_pozadina_4.jpg">
-    <link rel="preload" as="image" href="../slike/Article 17/A17_pozadina_5.jpg">
-    <link rel="preload" as="image" href="../slike/Article 17/A17_pozadina_6.jpg">
-    <link rel="preload" as="image" href="../slike/Article 17/A17_pozadina_7.jpg">
+    <link rel="preload" as="image" href="../slike/Article 17/A17-pozadina1.jpg">
+    <link rel="preload" as="image" href="../slike/Article 17/A17-pozadina2.jpg">
+    <link rel="preload" as="image" href="../slike/Article 17/A17-pozadina3.jpg">
+    <link rel="preload" as="image" href="../slike/Article 17/A17-pozadina4.jpg">
+    <link rel="preload" as="image" href="../slike/Article 17/A17-pozadina5.jpg">
+    <link rel="preload" as="image" href="../slike/Article 17/A17-pozadina6.jpg">
+    <link rel="preload" as="image" href="../slike/Article 17/A17-pozadina7.jpg">
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
@@ -31,64 +31,71 @@
     <style>
         body { background-color: #020617; color: #cbd5e1; }
         
-        /* === BULLETPROOF BACKGROUND SYSTEM === */
+        /* === POZADINSKI SISTEM === */
         .bg-layer {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
             background-size: cover; background-position: center;
             opacity: 0;
-            /* GPU Akceleracija za glatkoću */
+            transition: opacity 1.5s ease-in-out; /* Sporiji, filmski prijelaz */
             will-change: opacity;
-            transform: translateZ(0); 
-            transition: opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1); /* Finiji easing */
         }
-        .bg-layer.active { opacity: 1; }
+        .bg-layer.active { opacity: 1; } 
 
-        /* Overlay */
+        /* Lagani overlay da tekst bude čitljiv, ali da se slika vidi */
         #bg-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
-            background: linear-gradient(to bottom, rgba(2,6,23,0.85) 0%, rgba(2,6,23,0.4) 50%, rgba(2,6,23,0.9) 100%);
+            background: linear-gradient(to bottom, rgba(2,6,23,0.8) 0%, rgba(2,6,23,0.3) 50%, rgba(2,6,23,0.9) 100%);
             pointer-events: none;
         }
 
         #reading-progress { position: fixed; top: 0; left: 0; height: 4px; background: #ef4444; width: 0%; z-index: 100; box-shadow: 0 0 15px #ef4444; }
 
-        /* Typography */
+        /* TIPOGRAFIJA - Sjene za čitljivost na prozirnoj pozadini */
         h2 { color: white; font-weight: 900; font-size: 2.5rem; margin: 5rem 0 2rem; border-left: 8px solid #ef4444; padding-left: 2rem; text-shadow: 3px 3px 15px black; letter-spacing: -0.03em; }
         h3 { color: #facc15; font-weight: 700; font-size: 1.6rem; margin-top: 2rem; margin-bottom: 1rem; text-shadow: 2px 2px 8px black; }
-        p { margin-bottom: 1.5rem; line-height: 1.8; font-size: 1.2rem; text-shadow: 1px 1px 3px rgba(0,0,0,1); font-weight: 500; color: #f1f5f9; }
+        p { margin-bottom: 1.5rem; line-height: 1.8; font-size: 1.2rem; text-shadow: 1px 1px 4px rgba(0,0,0,1); font-weight: 500; color: #f1f5f9; }
         
-        /* Transparent Glass Blocks */
+        /* === PROZIRNI BLOKOVI (GLASSMORPHISM) === */
+        /* Ovo omogućava da se pozadina vidi kroz sadržaj */
+        
         blockquote { 
-            background: rgba(0, 0, 0, 0.5); 
+            background: rgba(0, 0, 0, 0.4); /* Prozirnije */
             border-left: 4px solid #ef4444; 
             padding: 2.5rem; font-style: italic; color: #fca5a5; margin: 3rem 0; cursor: pointer; 
-            backdrop-filter: blur(5px); 
+            backdrop-filter: blur(5px); /* Manji blur da se vidi slika */
             border: 1px solid rgba(239, 68, 68, 0.3);
-            font-size: 1.3rem; font-weight: 600; box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            font-size: 1.3rem; font-weight: 600; box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.6); /* Jako prozirno */
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
         }
         
-        .article-img { border-radius: 0.5rem; border: 1px solid #334155; box-shadow: 0 30px 60px -15px rgba(0,0,0,0.8); transition: transform 0.5s ease; }
+        .article-img { border-radius: 0.5rem; border: 1px solid #334155; box-shadow: 0 30px 60px -15px rgba(0,0,0,0.9); transition: transform 0.5s ease; }
         .article-img:hover { transform: scale(1.01); }
         
-        .caption { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: #94a3b8; text-align: center; margin-top: 0.5rem; background: rgba(0,0,0,0.7); padding: 8px; border-radius: 4px; border: 1px solid #334155; }
+        .caption { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: #94a3b8; text-align: center; margin-top: 0.5rem; background: rgba(0,0,0,0.8); padding: 8px; border-radius: 4px; border: 1px solid #334155; }
         .improv-circle { width: 350px; height: 350px; object-fit: cover; border-radius: 50%; border: 8px solid #facc15; box-shadow: 0 0 60px rgba(250, 204, 21, 0.3); margin: 0 auto; display: block; }
     </style>
 </head>
 
 <body class="antialiased selection:bg-h-red selection:text-white">
 
-    <div id="bg-1" class="bg-layer active" style="background-image: url('../slike/Article 17/A17_pozadina_1.jpg');"></div>
-    <div id="bg-2" class="bg-layer" style="background-image: url('../slike/Article 17/A17_pozadina_2.jpg');"></div> 
-    <div id="bg-3" class="bg-layer" style="background-image: url('../slike/Article 17/A17_pozadina_3.jpg');"></div>
-    <div id="bg-4" class="bg-layer" style="background-image: url('../slike/Article 17/A17_pozadina_4.jpg');"></div>
-    <div id="bg-5" class="bg-layer" style="background-image: url('../slike/Article 17/A17_pozadina_5.jpg');"></div>
-    <div id="bg-6" class="bg-layer" style="background-image: url('../slike/Article 17/A17_pozadina_6.jpg');"></div>
-    <div id="bg-7" class="bg-layer" style="background-image: url('../slike/Article 17/A17_pozadina_7.jpg');"></div>
+    <div id="bg-1" class="bg-layer active" style="background-image: url('../slike/Article 17/A17-pozadina1.jpg');"></div>
+    <div id="bg-2" class="bg-layer" style="background-image: url('../slike/Article 17/A17-pozadina2.jpg');"></div> 
+    <div id="bg-3" class="bg-layer" style="background-image: url('../slike/Article 17/A17-pozadina3.jpg');"></div>
+    <div id="bg-4" class="bg-layer" style="background-image: url('../slike/Article 17/A17-pozadina4.jpg');"></div>
+    <div id="bg-5" class="bg-layer" style="background-image: url('../slike/Article 17/A17-pozadina5.jpg');"></div>
+    <div id="bg-6" class="bg-layer" style="background-image: url('../slike/Article 17/A17-pozadina6.jpg');"></div>
+    <div id="bg-7" class="bg-layer" style="background-image: url('../slike/Article 17/A17-pozadina7.jpg');"></div>
     
     <div id="bg-overlay"></div>
     <div id="reading-progress"></div>
 
-    <header class="fixed w-full z-50 top-0 border-b border-white/5 bg-h-dark/90 backdrop-blur-sm shadow-2xl">
+    <header class="fixed w-full z-50 top-0 border-b border-white/5 bg-h-dark/80 backdrop-blur-md shadow-2xl">
         <div class="max-w-7xl mx-auto px-4 h-20 flex justify-between items-center">
             <a href="../index.html" class="flex items-center gap-3 group">
                 <img src="../logo.svg" alt="AnoHUB" class="h-8 w-auto opacity-80 group-hover:opacity-100 transition">
@@ -114,7 +121,7 @@
                     <h1 class="text-5xl md:text-7xl font-black text-white mb-8 leading-tight drop-shadow-2xl">
                         THE CULTURAL <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-h-red to-orange-600">BETRAYAL</span>
                     </h1>
-                    <p class="text-2xl text-slate-200 font-light border-l-4 border-h-red pl-6 bg-black/20 py-4 pr-4 rounded-r-lg backdrop-blur-sm">
+                    <p class="text-2xl text-slate-100 font-light border-l-4 border-h-red pl-6 bg-black/30 py-4 pr-4 rounded-r-lg backdrop-blur-sm">
                         Why the 'Low-Bid' Policy is an Act of <strong>Corporate Violence</strong> Against Your Assets.
                     </p>
                 </section>
@@ -142,7 +149,7 @@
                             <div class="caption text-h-red font-bold text-lg py-3">THE CUMULATIVE COST: Don't let your project become another anonymous victim.</div>
                         </div>
 
-                        <div class="my-16 bg-h-panel/70 backdrop-blur-md p-8 rounded-2xl border-2 border-h-red/50 flex flex-col items-center gap-8 shadow-[0_0_50px_rgba(239,68,68,0.2)]">
+                        <div class="my-16 glass-panel p-8 flex flex-col items-center gap-8 shadow-[0_0_50px_rgba(239,68,68,0.2)]">
                             <div class="w-full relative">
                                 <img src="../slike/Article 17/A17-ne dopustite im da vascijede.jpg" alt="Resource Draining" class="rounded-xl shadow-2xl w-full h-auto max-h-[800px] object-contain bg-black/30">
                                 <div class="absolute top-4 left-4 bg-h-red text-white font-black px-4 py-2 rounded shadow-lg uppercase tracking-widest">The Metaphor</div>
@@ -161,7 +168,7 @@
                             </div>
                         </div>
 
-                        <ul class="space-y-4 my-8 bg-black/40 p-6 rounded-xl border border-white/10 backdrop-blur-sm">
+                        <ul class="space-y-4 my-8 glass-panel p-6">
                             <li class="p-4 rounded border-l-4 border-h-cyan bg-white/5">
                                 <span class="block text-h-cyan font-bold text-lg mb-1">AEP EROSION</span>
                                 Up to <strong>$100,000 per day</strong> in Unrealized Value due to early wear and unplanned outages.
@@ -184,7 +191,7 @@
 
                         <p>After a "successful" cheap installation, the turbine starts running. But inside, an invisible process is happening. I call it <strong>"The Frequency Trap"</strong>.</p>
 
-                        <div class="space-y-6 mt-8 bg-black/50 p-8 rounded-xl backdrop-blur-sm border border-slate-700/50">
+                        <div class="space-y-6 mt-8 glass-panel p-8">
                             <div class="border-l-4 border-h-yellow pl-6">
                                 <h3 class="mt-0 text-white">How does it work?</h3>
                                 <p class="text-slate-200"><strong>1. Cavitation Creates Mass:</strong> Cavitation fundamentally changes the <strong>Rotor Mass (Added Mass Effect)</strong>. This alters the natural frequency of your rotor.</p>
@@ -214,7 +221,7 @@
                             </div>
                         </div>
 
-                        <div class="my-16 flex flex-col gap-6 items-center bg-black/40 backdrop-blur-md p-8 rounded-2xl border-2 border-h-cyan/50 shadow-[0_0_30px_rgba(6,182,212,0.15)] max-w-lg ml-auto transform rotate-1 hover:rotate-0 transition duration-500">
+                        <div class="my-16 flex flex-col gap-6 items-center glass-panel p-8 shadow-[0_0_30px_rgba(6,182,212,0.15)] max-w-lg ml-auto transform rotate-1 hover:rotate-0 transition duration-500">
                             <img src="../slike/Article 17/A17_call_for_dialog.jpg" alt="Two Chairs" class="w-full rounded-xl shadow-lg h-auto object-cover border border-white/20 opacity-90">
                             <div class="text-center">
                                 <h3 class="text-h-cyan mt-0 text-2xl font-black uppercase tracking-tighter">The Ivory Tower</h3>
@@ -227,25 +234,23 @@
                     </section>
 
                     <section class="scroll-section" data-bg-id="bg-6">
-                        <div class="bg-black/60 backdrop-blur-sm border border-white/10 p-8 rounded-3xl my-16 shadow-2xl">
+                        <div class="glass-panel p-8 my-16 shadow-2xl">
                             <h3 class="text-center text-white font-black mb-10 text-3xl tracking-tighter uppercase border-b border-white/10 pb-6">The Disconnect</h3>
                             
                             <div class="grid grid-cols-2 gap-2 mb-10">
                                 <div class="relative group">
-                                    <img src="../slike/Article 17/A17-hit_it.jpg" alt="Input" class="rounded w-full h-auto min-h-[400px] object-cover object-center border border-white/20 opacity-90">
-                                    <div class="absolute bottom-0 w-full bg-h-red/80 text-black text-center font-bold py-2 uppercase tracking-widest text-xs">INDUSTRY "INPUT"</div>
+                                    <img src="../slike/Article 17/A17_tech.jpg" alt="Digital Dream" class="rounded w-full h-auto min-h-[400px] object-cover object-center border border-white/20 opacity-90">
+                                    <div class="absolute bottom-0 w-full bg-h-cyan/80 text-black text-center font-bold py-2 uppercase tracking-widest text-xs">EXPECTATION (DIGITAL)</div>
                                 </div>
                                 <div class="relative group">
-                                    <img src="../slike/Article 17/A17_hitit2.jpg" alt="Output" class="rounded w-full h-auto min-h-[400px] object-cover object-center border border-white/20 opacity-90">
-                                    <div class="absolute bottom-0 w-full bg-h-red/80 text-black text-center font-bold py-2 uppercase tracking-widest text-xs">REALITY "OUTPUT"</div>
+                                    <img src="../slike/Article 17/A17_kako_to.jpg" alt="Physical Reality" class="rounded w-full h-auto min-h-[400px] object-cover object-center border border-white/20 opacity-90">
+                                    <div class="absolute bottom-0 w-full bg-h-red/80 text-black text-center font-bold py-2 uppercase tracking-widest text-xs">REALITY (EROSION)</div>
                                 </div>
                             </div>
                             
                             <p class="text-center font-mono text-lg text-slate-200 mb-8 font-bold italic">
-                                "While the boardroom talks about Digital Twins, the field crew is applying percussive maintenance. <span class="text-h-red">This is the reality we are here to stop.</span>"
+                                "Sensors report vibration. They don't report that your turbine is turning into <span class="text-h-yellow">Swiss Cheese</span>."
                             </p>
-
-                            <img src="../slike/Article 17/A17_metal_dont_cares.jpg" alt="Metal Detail" class="w-full h-auto min-h-[600px] object-cover object-center rounded-xl border-2 border-white/20 opacity-85 transition">
                         </div>
                         
                         <div class="py-20 text-center">
@@ -264,11 +269,11 @@
                         <p>We must reject the transactional view. Partner with forensic authority. Enforce <strong>Absolute Precision (QC < 0.05 mm)</strong>.</p>
                         
                         <div class="my-16 flex justify-center">
-                            <div class="bg-black/40 p-4 rounded-2xl border-2 border-h-cyan/50 shadow-[0_0_50px_rgba(6,182,212,0.3)] backdrop-blur-md w-full max-w-2xl">
-                                <img src="../slike/Article 17/A17_tech.jpg" alt="Precision Engineering" class="rounded-lg w-full h-auto object-cover opacity-95">
+                            <div class="glass-panel p-4 w-full max-w-2xl">
+                                <img src="../slike/Article 17/A17_metal_dont_cares.jpg" alt="Precision Engineering" class="rounded-lg w-full h-[500px] object-cover object-center opacity-95">
                                 <div class="mt-4 flex items-center justify-between border-t border-white/10 pt-4">
-                                    <span class="text-h-cyan font-mono text-sm font-bold uppercase">PRECISION ENGINEERING</span>
-                                    <span class="text-white font-mono text-xs">TOLERANCE: 0.00mm</span>
+                                    <span class="text-h-cyan font-mono text-sm font-bold uppercase">ZERO TOLERANCE INTEGRITY</span>
+                                    <span class="text-white font-mono text-xs">METAL DOESN'T COMPROMISE</span>
                                 </div>
                             </div>
                         </div>
@@ -328,14 +333,10 @@
                         <div class="absolute -inset-1 bg-gradient-to-r from-h-cyan via-purple-500 to-h-yellow rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-1000"></div>
                         <div class="relative bg-black/40 rounded-2xl overflow-hidden border border-white/10 backdrop-blur-sm">
                             <img src="../slike/Article 17/20221203_174933.jpg" alt="Culture of Difference" class="w-full h-[600px] object-cover opacity-70 group-hover:opacity-90 transition duration-700">
-                            
                             <div class="absolute inset-0 flex flex-col justify-center items-center bg-black/30 hover:bg-black/10 transition duration-500 p-8 text-center">
                                 <h4 class="text-3xl md:text-5xl font-black text-white uppercase tracking-tight mb-4 drop-shadow-xl leading-tight text-shadow-lg">
                                     "WE ACHIEVE PERFECTION <br> THROUGH <span class="text-h-yellow">DIFFERENCE</span>."
                                 </h4>
-                                <p class="text-2xl text-slate-100 font-light mb-8 max-w-2xl drop-shadow-md text-shadow">
-                                    We are not just another engineering firm. We are the guardians of integrity.
-                                </p>
                                 <div class="inline-block border-4 border-white px-8 py-3 text-3xl font-black text-white tracking-[0.3em] uppercase bg-black/20 backdrop-blur-md shadow-xl">
                                     WE ARE ANOHUBS
                                 </div>
@@ -396,7 +397,6 @@
     <script>
         lucide.createIcons();
 
-        // LOGIKA ZA PROMJENU POZADINE
         const bgLayers = document.querySelectorAll('.bg-layer');
         const sections = document.querySelectorAll('.scroll-section');
 
