@@ -46,6 +46,8 @@
             background-size: cover; background-position: center;
             opacity: 0; transition: opacity 1.2s ease-in-out; will-change: opacity;
             filter: grayscale(100%) contrast(1.1) brightness(0.4);
+            /* Dodano: Osigurava pravi Parallax osjećaj */
+            background-attachment: fixed; 
         }
         .bg-layer.active { opacity: 1; }
 
@@ -142,7 +144,7 @@
 
     <main class="pt-20">
 
-        <section class="scroll-section min-h-[60vh] flex items-center justify-center relative text-center px-4" data-bg-id="bg-hero">
+        <section class="scroll-section **min-h-screen** flex items-center justify-center relative text-center px-4" data-bg-id="bg-hero">
             <div class="max-w-5xl relative z-10">
                 <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-black/60 backdrop-blur-md text-xs font-mono text-h-cta mb-8 animate-fade-in-up">
                     <span class="w-2 h-2 bg-h-cta rounded-full animate-pulse"></span>
@@ -167,7 +169,7 @@
             </div>
         </section>
 
-        <section id="assets" class="scroll-section py-24 relative border-b border-h-border" data-bg-id="bg-assets">
+        <section id="assets" class="scroll-section **min-h-screen** py-24 relative border-b border-h-border" data-bg-id="bg-assets">
             <div class="max-w-7xl mx-auto px-4">
                 <div class="text-center mb-16">
                     <h2 class="text-sm font-mono text-slate-500 uppercase tracking-widest mb-4">Core Competency</h2>
@@ -214,7 +216,7 @@
             </div>
         </section>
 
-        <section id="field-ops" class="scroll-section py-24 border-b border-h-border" data-bg-id="bg-field">
+        <section id="field-ops" class="scroll-section **min-h-screen** py-24 border-b border-h-border" data-bg-id="bg-field">
             <div class="max-w-7xl mx-auto px-4">
                 <div class="flex items-center gap-4 mb-16">
                     <div class="w-12 h-1 bg-h-orange"></div>
@@ -299,7 +301,7 @@
             </div>
         </section>
 
-        <section id="digital-ops" class="scroll-section py-24" data-bg-id="bg-digital">
+        <section id="digital-ops" class="scroll-section **min-h-screen** py-24" data-bg-id="bg-digital">
             <div class="max-w-7xl mx-auto px-4">
                 <div class="flex items-center gap-4 mb-16 justify-end text-right">
                     <h2 class="text-3xl font-black text-white uppercase tracking-tight">Advanced Diagnostics <span class="text-h-cyan text-lg block font-normal normal-case">The "Brain" behind the Muscle.</span></h2>
@@ -326,7 +328,7 @@
                         <i data-lucide="zap" class="w-8 h-8 text-h-yellow mb-4"></i>
                         <h4 class="font-bold text-white mb-2">Efficiency Opt.</h4>
                         <p class="text-xs text-slate-400">Cam curve tuning and loss minimization.</p>
-                    </a
+                    </a>
                 </div>
             </div>
         </section>
@@ -384,6 +386,7 @@
         const bgLayers = document.querySelectorAll('.bg-layer');
         const sections = document.querySelectorAll('.scroll-section');
 
+        /* Povećan threshold na 0.5 da se pozadine mijenjaju tek kada je barem pola sekcije vidljivo */
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -394,7 +397,7 @@
                     });
                 }
             });
-        }, { threshold: 0.1 });
+        }, { threshold: 0.5 }); // Promijenjen threshold sa 0.1 na 0.5
 
         sections.forEach(section => observer.observe(section));
     </script>
