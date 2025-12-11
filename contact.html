@@ -2,7 +2,7 @@
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Secure Uplink | AnoHUB Command</title>
     <meta name="description" content="Initiate a secure transmission to AnoHUB engineering command. Request audits, consultations, or emergency intervention.">
 
@@ -14,14 +14,14 @@
         "@type": "Organization",
         "name": "AnoHUB",
         "email": "ino@anohubs.com",
+        "telephone": "+43-676-4157846",
         "contactPoint": { "@type": "ContactPoint", "contactType": "customer support", "email": "ino@anohubs.com" }
       }
     }
     </script>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -37,7 +37,6 @@
                         'pulse-fast': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                         'scan': 'scan 4s linear infinite',
                         'ping-slow': 'ping 3s cubic-bezier(0, 0, 0.2, 1) infinite',
-                        'spin-slow': 'spin 10s linear infinite'
                     },
                     keyframes: { scan: { '0%': { top: '0%' }, '100%': { top: '100%' } } }
                 }
@@ -59,14 +58,8 @@
         #network-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; opacity: 0.4; }
         .bg-image-layer {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
-            background-image: url('orljani_Una.jpg'); background-size: cover; background-position: center;
+            background-image: url('slike/orljani_Una.jpg'); background-size: cover; background-position: center;
             opacity: 0.15; filter: grayscale(100%) contrast(1.2);
-        }
-
-        /* Glass Panel */
-        .glass-panel {
-            background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(16px);
-            border: 1px solid rgba(51, 65, 85, 0.5); box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
         }
 
         /* Input Styling */
@@ -88,18 +81,6 @@
             border-radius: 50%; position: absolute; top: 0; left: 0; animation: radarSpin 4s linear infinite;
         }
         @keyframes radarSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
-        /* PRINT OPTIMIZATION */
-        @media print {
-            body { background-color: white !important; color: black !important; }
-            #navbar, footer, #network-canvas, .crt::before, .bg-image-layer, .radar-container, button { display: none !important; }
-            main { padding-top: 0 !important; }
-            .glass-panel { background: white !important; border: 1px solid #ccc !important; color: black !important; box-shadow: none !important; }
-            h1, h2, h3, h4 { color: black !important; }
-            .text-transparent { color: black !important; -webkit-text-fill-color: black !important; }
-            input, textarea { border: 1px solid #000 !important; background: white !important; color: black !important; }
-            body::before { content: "ANOHUBS SECURE UPLINK | CONTACT SHEET"; display: block; border-bottom: 2px solid black; margin-bottom: 20px; font-weight: bold; }
-        }
     </style>
 </head>
 
@@ -109,19 +90,18 @@
     <canvas id="network-canvas"></canvas>
 
     <header class="fixed w-full z-50 top-0 border-b border-white/5 bg-h-dark/90 backdrop-blur-md transition-all duration-300" id="navbar">
-        
         <div class="relative bg-h-purple/10 border-b border-h-purple/20 overflow-hidden">
             <div class="max-w-7xl mx-auto px-6 py-1 flex justify-center">
-                <a href="insights/article-16-ai-paradox.html" class="flex items-center gap-2 text-[10px] font-mono text-h-purple font-bold tracking-widest uppercase hover:text-white transition">
+                <a href="insights/article-17-cultural-betrayal.html" class="flex items-center gap-2 text-[10px] font-mono text-h-purple font-bold tracking-widest uppercase hover:text-white transition">
                     <span class="w-1.5 h-1.5 rounded-full bg-h-purple animate-pulse"></span>
-                    NEW INTEL: The Hydro-Boom Paradox [READ]
+                    READ MANIFESTO: The Cultural Betrayal
                 </a>
             </div>
         </div>
 
         <div class="max-w-7xl mx-auto px-4 h-20 flex justify-between items-center">
             <a href="index.html" class="flex items-center gap-3 group">
-                <img src="logo.svg" alt="AnoHUB" class="h-10 w-auto transition group-hover:brightness-125">
+                <img src="logo.svg" alt="AnoHUB" class="h-10 transition group-hover:brightness-125">
                 <div class="hidden md:block">
                     <span class="block text-lg font-black tracking-tighter text-white leading-none">ANOHUBS</span>
                     <span class="block text-[10px] font-mono text-h-cta tracking-widest uppercase">Secure Uplink</span>
@@ -134,87 +114,94 @@
                     <span>PROTOCOL</span>
                     <div class="w-1.5 h-1.5 bg-h-cta rounded-full animate-pulse"></div>
                 </a>
+                <a href="contact.html" class="px-5 py-2 bg-h-cta text-black rounded-full hover:bg-yellow-400 transition shadow-lg">Contact</a>
             </nav>
-            <button id="mobile-menu-btn" class="lg:hidden text-white p-2"><svg data-lucide="menu" class="w-8 h-8"></svg></button>
+            <button id="mobile-menu-btn" class="lg:hidden text-white p-2"><i data-lucide="menu" class="w-8 h-8"></i></button>
         </div>
         
-        <div id="mobile-menu" class="hidden lg:hidden absolute top-28 left-0 w-full bg-h-dark border-b border-h-border p-4 flex flex-col gap-4 shadow-2xl">
-            <a href="index.html" class="text-slate-300 hover:text-h-cta py-2 border-b border-h-border">Home</a>
-            <a href="services.html" class="text-slate-300 hover:text-h-cta py-2 border-b border-h-border">Services</a>
-            <a href="protocol.html" class="text-h-cta font-bold py-2 border-b border-h-border flex items-center gap-2"><svg data-lucide="shield" class="w-4 h-4"></svg> PROTOCOL</a>
+        <div id="mobile-menu" class="fixed inset-0 bg-h-dark/95 backdrop-blur-xl z-40 transform translate-x-full transition-transform duration-300 flex flex-col justify-center items-center gap-8 lg:hidden">
+            <a href="index.html" class="text-2xl font-black text-slate-300 hover:text-h-cta uppercase flex items-center gap-2 mobile-link">Home</a>
+            <a href="services.html" class="text-2xl font-black text-slate-300 hover:text-h-cta uppercase flex items-center gap-2 mobile-link">Services</a>
+            <a href="protocol.html" class="text-xl font-bold text-h-cta border border-h-cta px-6 py-2 rounded flex items-center gap-2 mobile-link"><i data-lucide="shield" class="w-5 h-5"></i> PROTOCOL</a>
         </div>
     </header>
 
-    <main class="pt-32 pb-20 relative z-10">
-        <div class="max-w-6xl mx-auto px-4 grid lg:grid-cols-2 gap-16 items-center">
+    <main class="pt-32 pb-20 min-h-screen flex items-center relative z-10">
+        <div class="max-w-6xl mx-auto px-4 w-full grid lg:grid-cols-2 gap-16 items-center">
             
             <div>
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-xs font-mono text-h-cta mb-8 animate-pulse-slow">
-                    <span class="w-2 h-2 bg-h-cta rounded-full"></span>
-                    CHANNEL STATUS: ENCRYPTED
+                <div class="flex items-center gap-3 mb-8">
+                    <span class="w-2 h-2 bg-h-green rounded-full animate-pulse"></span>
+                    <span class="text-xs font-mono text-h-green tracking-widest">CHANNEL STATUS: ENCRYPTED</span>
                 </div>
-                <h1 class="text-5xl md:text-7xl font-black text-white mb-6 tracking-tight leading-none">
+                
+                <h1 class="text-6xl md:text-8xl font-black text-white mb-6 tracking-tighter leading-none">
                     INITIATE <br>
                     <span class="text-transparent bg-clip-text bg-gradient-to-r from-h-cta to-orange-500">CONTACT</span>
                 </h1>
+                
                 <p class="text-lg text-slate-400 mb-10 leading-relaxed">
-                    Whether you are facing a critical failure or planning a strategic upgrade, our team is ready to deploy.
+                    Whether you are facing a critical failure or planning a strategic upgrade, our team is ready to deploy. 
+                    <br><br>
+                    <strong>Response Time:</strong> T-Minus 4 Hours for Emergency Signals.
                 </p>
 
-                <div class="space-y-8">
-                    <div class="flex items-center gap-6 p-4 rounded-xl border border-white/5 hover:bg-white/5 transition group">
-                        <div class="radar-container">
-                            <div class="radar-sweep"></div>
-                            <div class="absolute w-2 h-2 bg-h-cta rounded-full shadow-[0_0_15px_#f59e0b] z-10"></div>
-                            <div class="absolute inset-0 border border-h-cta/40 rounded-full animate-ping-slow"></div>
-                        </div>
-                        <div>
-                            <h4 class="text-white font-bold text-lg">Global HQ</h4>
-                            <p class="text-sm text-slate-400 font-mono mt-1 text-h-cta">BIHAĆ, BOSNIA & HERZEGOVINA</p>
-                            <p class="text-[10px] text-slate-500 mt-1 font-mono">STRATEGIC COMMAND CENTER</p>
-                        </div>
+                <div class="space-y-8 border-l-2 border-white/10 pl-8">
+                    <div>
+                        <h4 class="text-white font-bold text-lg mb-1 flex items-center gap-2">
+                            <i data-lucide="map-pin" class="text-h-cta w-5 h-5"></i> Global HQ
+                        </h4>
+                        <p class="text-slate-400 text-sm font-mono uppercase">Bihać, Bosnia & Herzegovina</p>
+                        <p class="text-xs text-slate-600 mt-1">STRATEGIC COMMAND CENTER</p>
                     </div>
                     
-                    <div class="flex items-center gap-6 p-4 rounded-xl border border-white/5 hover:bg-white/5 transition">
-                        <div class="w-16 h-16 bg-h-panel border border-h-border flex items-center justify-center rounded-full text-h-cta flex-shrink-0">
-                            <svg data-lucide="mail" class="w-8 h-8"></svg>
-                        </div>
-                        <div>
-                            <h4 class="text-white font-bold text-lg">Digital Comms</h4>
-                            <a href="mailto:ino@anohubs.com" class="text-sm text-h-cta hover:text-white transition font-mono mt-1 block">ino@anohubs.com</a>
-                            <p class="text-[10px] text-slate-500 mt-1 font-mono">RESPONSE TIME: T-MINUS 4 HOURS</p>
-                        </div>
+                    <div>
+                        <h4 class="text-white font-bold text-lg mb-1 flex items-center gap-2">
+                            <i data-lucide="mail" class="text-h-cta w-5 h-5"></i> Digital Comms
+                        </h4>
+                        <a href="mailto:ino@anohubs.com" class="text-slate-400 text-sm font-mono hover:text-white transition">ino@anohubs.com</a>
+                    </div>
+
+                    <div>
+                        <h4 class="text-white font-bold text-lg mb-1 flex items-center gap-2">
+                            <i data-lucide="message-circle" class="text-h-green w-5 h-5"></i> Secure Signal (WA)
+                        </h4>
+                        <a href="https://wa.me/436764157846" target="_blank" class="text-slate-400 text-sm font-mono hover:text-white transition flex items-center gap-2 group">
+                            +43 676 4157846 
+                            <span class="text-[10px] text-h-dark bg-h-green font-bold px-2 py-0.5 rounded group-hover:animate-pulse">ONLINE</span>
+                        </a>
+                        <p class="text-[10px] text-slate-600 mt-1 font-mono">DIRECT LINE TO ARCHITECT</p>
                     </div>
                 </div>
             </div>
 
-            <div class="bg-h-panel/50 backdrop-blur-xl p-8 md:p-10 rounded-2xl border border-h-border shadow-2xl relative">
-                <div class="absolute top-0 right-0 p-4 opacity-20"><svg data-lucide="radio" class="w-24 h-24 text-h-cta"></svg></div>
+            <div class="bg-h-panel/50 backdrop-blur-xl p-8 md:p-10 rounded-2xl border border-h-border shadow-2xl relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-4 opacity-20"><i data-lucide="radio" class="w-24 h-24 text-h-cta"></i></div>
                 
                 <form id="contactForm" action="https://formspree.io/f/xqaywlaq" method="POST" class="space-y-6 relative z-10">
                     <div class="grid md:grid-cols-2 gap-6">
                         <div class="space-y-2">
                             <label class="text-[10px] font-mono text-slate-500 uppercase ml-1">Identity</label>
-                            <input type="text" name="Full Name" placeholder="Full Name" required class="input-field w-full rounded p-4 tech-input">
+                            <input type="text" name="Full Name" placeholder="Full Name" required class="tech-input input-field w-full rounded p-4">
                         </div>
                         <div class="space-y-2">
                             <label class="text-[10px] font-mono text-slate-500 uppercase ml-1">Signal Back</label>
-                            <input type="email" name="Email" placeholder="Official Email" required class="input-field w-full rounded p-4 tech-input">
+                            <input type="email" name="Email" placeholder="Official Email" required class="tech-input input-field w-full rounded p-4">
                         </div>
                     </div>
                     
                     <div class="space-y-2">
                         <label class="text-[10px] font-mono text-slate-500 uppercase ml-1">Asset / Organization</label>
-                        <input type="text" name="Company" placeholder="Company Name" required class="input-field w-full rounded p-4 tech-input">
+                        <input type="text" name="Company" placeholder="Company Name" required class="tech-input input-field w-full rounded p-4">
                     </div>
                     
                     <div class="space-y-2">
                         <label class="text-[10px] font-mono text-slate-500 uppercase ml-1">Intelligence Brief</label>
-                        <textarea name="Message" rows="5" placeholder="Describe your operational challenge..." class="input-field w-full rounded p-4 tech-input"></textarea>
+                        <textarea name="Message" rows="5" placeholder="Describe your operational challenge..." class="tech-input input-field w-full rounded p-4"></textarea>
                     </div>
 
                     <button type="submit" class="w-full bg-h-cta hover:bg-yellow-500 text-black font-black py-5 rounded-lg shadow-lg transition uppercase tracking-widest text-lg flex items-center justify-center gap-2 group">
-                        <svg data-lucide="send" class="w-5 h-5 group-hover:translate-x-1 transition"></svg> 
+                        <i data-lucide="send" class="w-5 h-5 group-hover:translate-x-1 transition"></i> 
                         ESTABLISH UPLINK
                     </button>
                     
@@ -231,14 +218,29 @@
         </div>
     </footer>
 
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <script>
         lucide.createIcons();
         
         const menuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        
         menuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
+            const isClosed = mobileMenu.classList.contains('translate-x-full');
+            if (isClosed) {
+                mobileMenu.classList.remove('translate-x-full');
+                document.body.style.overflow = 'hidden';
+            } else {
+                mobileMenu.classList.add('translate-x-full');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('translate-x-full');
+                document.body.style.overflow = 'auto';
+            });
         });
 
         // Background Network Logic
@@ -293,6 +295,7 @@
             const btn = form.querySelector('button');
             const originalText = btn.innerHTML;
             btn.innerHTML = '<span class="animate-pulse">ENCRYPTING & SENDING...</span>';
+            btn.disabled = true;
             const formData = new FormData(form);
             try {
                 const response = await fetch(form.action, { method: 'POST', body: formData, headers: { 'Accept': 'application/json' } });
@@ -303,7 +306,7 @@
             } catch (error) {
                 msg.innerHTML = "<span class='text-h-red'>// UPLINK FAILED. RETRY.</span>";
                 msg.classList.remove('hidden');
-            } finally { btn.innerHTML = originalText; }
+            } finally { btn.innerHTML = originalText; btn.disabled = false; }
         });
     </script>
 </body>
