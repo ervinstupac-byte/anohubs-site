@@ -23,42 +23,62 @@
     <style>
         body { background-color: #020617; color: #cbd5e1; }
         
-        /* PARALLAX SYSTEM - DRASTIČNO POJAČANA VIDLJIVOST */
-        #dynamic-bg {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+        /* === MULTI-LAYER BACKGROUND SYSTEM === */
+        /* Svaka pozadina je fiksna, ali skrivena (opacity: 0) dok se ne aktivira */
+        .bg-layer {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
             background-size: cover; background-position: center;
-            transition: background-image 0.7s ease-in-out, opacity 0.5s ease;
-            opacity: 0.75; /* Značajno povećan opacity da slike budu dio članka */
+            opacity: 0;
+            transition: opacity 1.2s ease-in-out; /* Smooth transition */
+            filter: brightness(0.4) contrast(1.1); /* Darken for readability */
         }
-        /* Overlay prilagođen da tekst ostane čitljiv na jačoj pozadini */
+        .bg-layer.active { opacity: 1; }
+
+        /* Overlay gradient for extra readability */
         #bg-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
-            background: linear-gradient(to bottom, #020617 20%, rgba(2,6,23,0.7) 50%, #020617 100%);
+            background: linear-gradient(to bottom, rgba(2,6,23,0.9) 0%, rgba(2,6,23,0.5) 50%, rgba(2,6,23,0.95) 100%);
+            pointer-events: none;
         }
-        #reading-progress { position: fixed; top: 0; left: 0; height: 3px; background: #ef4444; width: 0%; z-index: 100; }
 
-        h2 { color: white; font-weight: 800; font-size: 1.8rem; margin: 3rem 0 1.5rem; border-left: 4px solid #ef4444; padding-left: 1rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
-        h3 { color: #facc15; font-weight: 700; font-size: 1.3rem; margin-top: 2rem; margin-bottom: 1rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); }
-        p { margin-bottom: 1.5rem; line-height: 1.8; font-size: 1.1rem; }
-        blockquote { background: rgba(239, 68, 68, 0.15); border-left: 4px solid #ef4444; padding: 2rem; font-style: italic; color: #fca5a5; margin: 2rem 0; cursor: pointer; backdrop-filter: blur(5px); }
+        #reading-progress { position: fixed; top: 0; left: 0; height: 4px; background: #ef4444; width: 0%; z-index: 100; box-shadow: 0 0 15px #ef4444; }
+
+        /* Typography */
+        h2 { color: white; font-weight: 900; font-size: 2.5rem; margin: 4rem 0 2rem; border-left: 6px solid #ef4444; padding-left: 1.5rem; text-shadow: 2px 2px 10px black; letter-spacing: -0.02em; }
+        h3 { color: #facc15; font-weight: 700; font-size: 1.5rem; margin-top: 2rem; margin-bottom: 1rem; text-shadow: 2px 2px 4px black; }
+        p { margin-bottom: 1.5rem; line-height: 1.8; font-size: 1.2rem; text-shadow: 0 1px 2px rgba(0,0,0,0.9); font-weight: 500; color: #e2e8f0; }
         
-        .article-img { border-radius: 0.5rem; border: 1px solid #334155; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.7); }
-        .caption { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #94a3b8; text-align: center; margin-top: 0.5rem; border-top: 1px solid #334155; padding-top: 0.5rem; background: rgba(2, 6, 23, 0.8); }
-        .improv-circle { width: 250px; height: 250px; object-fit: cover; border-radius: 50%; border: 4px solid #facc15; box-shadow: 0 0 30px rgba(250, 204, 21, 0.2); margin: 0 auto; display: block; }
+        /* Glass Quote */
+        blockquote { 
+            background: rgba(0, 0, 0, 0.6); border-left: 4px solid #ef4444; 
+            padding: 2.5rem; font-style: italic; color: #fca5a5; margin: 3rem 0; cursor: pointer; 
+            backdrop-filter: blur(10px); border: 1px solid rgba(239, 68, 68, 0.3);
+            font-size: 1.25rem; font-weight: 600; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
         
-        /* Dodatni stil za bolju čitljivost teksta na jačim pozadinama */
-        .text-shadow-readable { text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
+        .article-img { border-radius: 0.5rem; border: 1px solid #334155; box-shadow: 0 25px 50px -12px rgba(0,0,0,1); transition: transform 0.5s ease; }
+        .article-img:hover { transform: scale(1.01); }
+        
+        .caption { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: #94a3b8; text-align: center; margin-top: 0.5rem; background: rgba(0,0,0,0.8); padding: 8px; border-radius: 4px; border: 1px solid #334155; }
+        .improv-circle { width: 320px; height: 320px; object-fit: cover; border-radius: 50%; border: 8px solid #facc15; box-shadow: 0 0 50px rgba(250, 204, 21, 0.4); margin: 0 auto; display: block; }
     </style>
 </head>
 
 <body class="antialiased selection:bg-h-red selection:text-white">
 
-    <div id="dynamic-bg" style="background-image: url('../slike/Article 17/A17-pozadina1.jpg');"></div>
+    <div id="bg-1" class="bg-layer active" style="background-image: url('../slike/Article 17/A17-pozadina1.jpg');"></div>
+    <div id="bg-2" class="bg-layer" style="background-image: url('../slike/Article 17/A17-pozadina2.jpg');"></div>
+    <div id="bg-3" class="bg-layer" style="background-image: url('../slike/Article 17/A17-pozadina3.jpg');"></div>
+    <div id="bg-4" class="bg-layer" style="background-image: url('../slike/Article 17/A17-pozadina4.jpg');"></div>
+    <div id="bg-5" class="bg-layer" style="background-image: url('../slike/Article 17/A17-pozadina5.jpg');"></div>
+    <div id="bg-6" class="bg-layer" style="background-image: url('../slike/Article 17/A17-pozadina6.jpg');"></div>
+    <div id="bg-7" class="bg-layer" style="background-image: url('../slike/Article 17/A17-pozadina7.jpg');"></div>
+    
     <div id="bg-overlay"></div>
     <div id="reading-progress"></div>
 
-    <header class="fixed w-full z-50 top-0 border-b border-white/5 bg-h-dark/90 backdrop-blur-md">
-        <div class="max-w-7xl mx-auto px-4 h-16 flex justify-between items-center">
+    <header class="fixed w-full z-50 top-0 border-b border-white/5 bg-h-dark/95 backdrop-blur-md shadow-2xl">
+        <div class="max-w-7xl mx-auto px-4 h-20 flex justify-between items-center">
             <a href="../index.html" class="flex items-center gap-3 group">
                 <img src="../logo.svg" alt="AnoHUB" class="h-8 w-auto opacity-80 group-hover:opacity-100 transition">
                 <span class="font-mono text-xs text-slate-500 group-hover:text-h-red transition">INTELLIGENCE // ARTICLE 17</span>
@@ -74,222 +94,262 @@
 
             <article class="lg:col-span-8">
 
-                <section class="scroll-section mb-12 border-b border-h-border pb-8" data-bg="../slike/Article 17/A17-pozadina1.jpg">
+                <section class="scroll-section mb-16 border-b border-h-border pb-8" data-bg-id="bg-1">
                     <div class="flex items-center gap-4 mb-6 text-xs font-mono">
-                        <span class="px-3 py-1 rounded bg-h-red/10 text-h-red border border-h-red/20 shadow-sm">MANIFESTO</span>
-                        <span class="text-slate-400 text-shadow-readable">ID: A17-CULT-BETRAYAL</span>
-                        <span class="text-h-yellow flex items-center gap-2 text-shadow-readable"><div class="w-2 h-2 bg-h-yellow rounded-full animate-pulse"></div> CRITICAL ALERT</span>
+                        <span class="px-3 py-1 rounded bg-h-red text-black font-black border border-h-red shadow-[0_0_15px_rgba(239,68,68,0.5)]">MANIFESTO</span>
+                        <span class="text-slate-300 font-bold bg-black/50 px-2 py-1 rounded">ID: A17-CULT-BETRAYAL</span>
                     </div>
                     
-                    <h1 class="text-4xl md:text-6xl font-black text-white mb-6 leading-tight text-shadow-readable">
-                        THE CULTURAL <span class="text-transparent bg-clip-text bg-gradient-to-r from-h-red to-orange-600">BETRAYAL</span>
+                    <h1 class="text-5xl md:text-7xl font-black text-white mb-8 leading-tight drop-shadow-2xl">
+                        THE CULTURAL <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-h-red to-orange-600">BETRAYAL</span>
                     </h1>
-                    <p class="text-xl text-slate-300 font-light border-l-2 border-slate-500 pl-4 text-shadow-readable">
+                    <p class="text-2xl text-slate-200 font-light border-l-4 border-h-red pl-6 bg-black/30 py-4 pr-4 rounded-r-lg backdrop-blur-sm">
                         Why the 'Low-Bid' Policy is an Act of <strong>Corporate Violence</strong> Against Your Assets.
                     </p>
                 </section>
 
                 <div class="article-body">
 
-                    <div class="mb-12 relative group">
-                        <img src="../slike/Article 17/A17-Korporativno-Nasilje-Korozija2.jpg" alt="Rusty Container" class="article-img w-full h-96 object-cover">
-                        <div class="absolute bottom-4 left-4 bg-black/80 backdrop-blur px-4 py-2 rounded border-l-4 border-h-red">
-                            <p class="text-xs font-mono text-white m-0">FIG 1.0: THE GRAVEYARD OF "VALUE"</p>
+                    <div class="mb-16 relative group">
+                        <img src="../slike/Article 17/A17-Korporativno-Nasilje-Korozija2.jpg" alt="Rusty Container" class="article-img w-full h-auto min-h-[500px] object-cover shadow-2xl">
+                        <div class="absolute bottom-6 left-6 bg-black/90 px-6 py-3 rounded border-l-8 border-h-red shadow-xl">
+                            <p class="text-sm font-mono text-white m-0 font-bold tracking-wider">FIG 1.0: THE GRAVEYARD OF "VALUE"</p>
                         </div>
                     </div>
 
-                    <section class="scroll-section" data-bg="../slike/Article 17/A17-pozadina2.jpg">
-                        <p class="text-shadow-readable">Let's be unequivocally clear: The pursuit of the <strong>lowest initial price (CapEx)</strong> in hydropower is not merely a poor economic choice; it is a systemic act of <strong>corporate violence</strong> against your long-term projected lifespan and a deep betrayal of investor trust.</p>
+                    <section class="scroll-section" data-bg-id="bg-2">
+                        <p>Let's be unequivocally clear: The pursuit of the <strong>lowest initial price (CapEx)</strong> in hydropower is not merely a poor economic choice; it is a systemic act of <strong>corporate violence</strong> against your long-term projected lifespan and a deep betrayal of investor trust.</p>
                         <blockquote onclick="copyToClipboard(this)">"This 'Lust for Cheap' is the single factor that guarantees engineered failure."</blockquote>
                     </section>
 
-                    <section class="scroll-section" data-bg="../slike/Article 17/A17-pozadina3.jpg">
+                    <section class="scroll-section" data-bg-id="bg-3">
                         <h2>1. The Execution Gap: Quantifying Financial Fraud</h2>
-                        <p class="text-shadow-readable">Investors are sold a financial illusion—the belief that CapEx is relevant compared to the true <strong>Life Cycle Cost (LCC)</strong>. This creates a vacuum for ethical contamination.</p>
+                        <p>Investors are sold a financial illusion—the belief that CapEx is relevant compared to the true <strong>Life Cycle Cost (LCC)</strong>. This creates a vacuum for ethical contamination.</p>
 
-                        <div class="my-10">
-                            <img src="../slike/Article 17/A17_are_you_sure.jpg" alt="Wall of Skulls" class="article-img w-full h-80 object-cover filter contrast-125">
-                            <div class="caption text-h-red font-bold">THE CUMULATIVE COST: Don't let your project become another anonymous victim.</div>
+                        <div class="my-12">
+                            <img src="../slike/Article 17/A17_are_you_sure.jpg" alt="Wall of Skulls" class="article-img w-full h-[600px] object-cover object-center filter contrast-125 hover:contrast-150 transition duration-500">
+                            <div class="caption text-h-red font-bold text-lg py-3">THE CUMULATIVE COST: Don't let your project become another anonymous victim.</div>
                         </div>
 
-                        <div class="my-12 bg-h-panel/80 backdrop-blur p-6 rounded-xl border-l-4 border-h-red flex flex-col md:flex-row items-center gap-8 shadow-2xl group hover:border-h-cyan transition-all">
-                            <div class="md:w-1/2 relative">
-                                <img src="../slike/Article 17/A17-ne dopustite im da vascijede.jpg" alt="Resource Draining" class="rounded-lg shadow-lg object-cover object-center h-[500px] w-full opacity-90 group-hover:opacity-100 transition">
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent rounded-lg"></div>
-                                <p class="absolute bottom-2 left-0 w-full text-xs font-mono text-center text-h-red font-bold">THE METAPHOR // AEP EROSION</p>
+                        <div class="my-16 bg-h-panel/90 backdrop-blur-xl p-8 rounded-2xl border-2 border-h-red/50 flex flex-col items-center gap-8 shadow-[0_0_50px_rgba(239,68,68,0.2)]">
+                            <div class="w-full relative">
+                                <img src="../slike/Article 17/A17-ne dopustite im da vascijede.jpg" alt="Resource Draining" class="rounded-xl shadow-2xl w-full h-auto max-h-[800px] object-contain bg-black/50">
+                                <div class="absolute top-4 left-4 bg-h-red text-white font-black px-4 py-2 rounded shadow-lg uppercase tracking-widest">The Metaphor</div>
                             </div>
-                            <div class="md:w-1/2 text-center md:text-left">
-                                <h3 class="text-3xl md:text-4xl font-black text-white uppercase leading-none mb-4 tracking-tight text-shadow-readable">
+                            <div class="text-center w-full max-w-2xl">
+                                <h3 class="text-4xl md:text-5xl font-black text-white uppercase leading-none mb-6 tracking-tight drop-shadow-lg">
                                     "DON'T LET THEM <br>
                                     <span class="text-transparent bg-clip-text bg-gradient-to-r from-h-red to-orange-500">SUCK YOU DRY.</span>"
                                 </h3>
-                                <p class="text-xl text-h-cyan font-bold uppercase tracking-wider mb-6 flex items-center justify-center md:justify-start gap-2 text-shadow-readable">
-                                    <i data-lucide="droplet" class="w-5 h-5 animate-bounce"></i> Use your "water" smarter.
+                                <p class="text-2xl text-h-cyan font-bold uppercase tracking-wider mb-6 flex items-center justify-center gap-3">
+                                    <i data-lucide="droplet" class="w-8 h-8 text-h-cyan animate-bounce"></i> Use your "water" smarter.
                                 </p>
-                                <p class="text-sm text-slate-300 italic border-t border-slate-700 pt-4 text-shadow-readable">
+                                <p class="text-lg text-slate-300 italic border-t border-slate-600 pt-6">
                                     Every day your turbine runs sub-optimally due to cheap "low-bid" parts, you are bleeding critical resources—just like this tree. Stop the drain.
                                 </p>
                             </div>
                         </div>
-                        <ul class="space-y-4 my-8 bg-black/30 p-4 rounded-xl">
-                            <li class="bg-white/5 p-4 rounded border-l-2 border-h-cyan backdrop-blur-sm">
-                                <span class="block text-h-cyan font-bold text-sm mb-1">AEP EROSION</span>
+
+                        <ul class="space-y-4 my-8 bg-black/60 p-6 rounded-xl border border-white/10 backdrop-blur-md">
+                            <li class="p-4 rounded border-l-4 border-h-cyan bg-white/5">
+                                <span class="block text-h-cyan font-bold text-lg mb-1">AEP EROSION</span>
                                 Up to <strong>$100,000 per day</strong> in Unrealized Value due to early wear and unplanned outages.
                             </li>
-                            <li class="bg-white/5 p-4 rounded border-l-2 border-h-yellow backdrop-blur-sm">
-                                <span class="block text-h-yellow font-bold text-sm mb-1">PROCUREMENT POISON</span>
+                            <li class="p-4 rounded border-l-4 border-h-yellow bg-white/5">
+                                <span class="block text-h-yellow font-bold text-lg mb-1">PROCUREMENT POISON</span>
                                 Galvanic Corrosion from incompatible metals cuts bearing life by <strong>50%</strong>.
                             </li>
                         </ul>
                     </section>
 
-                    <section class="scroll-section" data-bg="../slike/Article 17/A17-pozadina4.jpg">
+                    <section class="scroll-section" data-bg-id="bg-4">
                         <h2>2. The Frequency Trap: The Invisible Killer (AEP Killer #2)</h2>
-                        <p class="font-bold text-h-red text-lg text-shadow-readable">If you aren't a Forensic Vibration Expert, you won't see this trap until it destroys you.</p>
+                        <p class="font-bold text-h-red text-lg drop-shadow-md">If you aren't a Forensic Vibration Expert, you won't see this trap until it destroys you.</p>
                         
-                        <div class="my-10 relative">
-                            <img src="../slike/Article 17/A17_techh2.jpg" alt="Rotor Detail" class="article-img w-full h-[600px] object-cover object-center opacity-95 border-2 border-h-yellow">
-                            <div class="absolute bottom-2 right-2 bg-black/80 px-3 py-1 text-xs font-mono text-h-yellow rounded">ROTOR MASS INTEGRITY</div>
+                        <div class="my-12 relative group">
+                            <img src="../slike/Article 17/A17_techh2.jpg" alt="Rotor Detail" class="article-img w-full h-auto min-h-[600px] object-cover object-center opacity-100 border-4 border-h-yellow">
+                            <div class="absolute top-4 right-4 bg-h-yellow text-black font-black px-4 py-2 text-sm uppercase tracking-widest shadow-lg">ROTOR MASS INTEGRITY</div>
                         </div>
 
-                        <p class="text-shadow-readable">After a "successful" cheap installation, the turbine starts running. But inside, an invisible process is happening. I call it <strong>"The Frequency Trap"</strong>.</p>
+                        <p>After a "successful" cheap installation, the turbine starts running. But inside, an invisible process is happening. I call it <strong>"The Frequency Trap"</strong>.</p>
 
-                        <div class="my-10">
-                            <img src="../slike/Article 17/A17_kako_to.jpg" alt="Cavitation Damage" class="article-img w-full h-72 object-cover">
+                        <div class="my-12">
+                            <img src="../slike/Article 17/A17_kako_to.jpg" alt="Cavitation Damage" class="article-img w-full h-auto object-cover border-2 border-h-red">
                             <div class="caption text-h-yellow">FIG 2.0: CAVITATION & EROSION - The physical cause of the frequency shift.</div>
                         </div>
 
-                        <div class="space-y-6 mt-8 bg-black/40 p-6 rounded-xl backdrop-blur-sm">
+                        <div class="space-y-6 mt-8 bg-black/70 p-8 rounded-xl backdrop-blur-md border border-slate-700">
                             <div class="border-l-4 border-h-yellow pl-6">
                                 <h3 class="mt-0 text-white">How does it work?</h3>
-                                <p class="text-sm text-slate-300"><strong>1. Cavitation Creates Mass:</strong> Cavitation fundamentally changes the <strong>Rotor Mass (Added Mass Effect)</strong>. This alters the natural frequency of your rotor.</p>
-                                <p class="text-sm text-slate-300"><strong>2. Rotor Seeks Resonance:</strong> The rotor enters a dangerous relationship with the excitation frequency generated by the grid.</p>
-                                <p class="text-sm text-slate-300"><strong>3. Stability Implosion:</strong> When these align, your turbine experiences <strong>Resonance</strong>. This destroys bearings and foundations already stressed by the hidden 48% dynamic risk.</p>
+                                <p class="text-slate-300"><strong>1. Cavitation Creates Mass:</strong> Cavitation fundamentally changes the <strong>Rotor Mass (Added Mass Effect)</strong>. This alters the natural frequency of your rotor.</p>
+                                <p class="text-slate-300"><strong>2. Rotor Seeks Resonance:</strong> The rotor enters a dangerous relationship with the excitation frequency generated by the grid.</p>
+                                <p class="text-slate-300"><strong>3. Stability Implosion:</strong> When these align, your turbine experiences <strong>Resonance</strong>. This destroys bearings and foundations already stressed by the hidden 48% dynamic risk.</p>
                             </div>
                         </div>
                     </section>
 
-                    <section class="scroll-section" data-bg="../slike/Article 17/A17-pozadina5.jpg">
+                    <section class="scroll-section" data-bg-id="bg-5">
                         <h2>3. The Curse of Compartmentalization</h2>
-                        <p class="text-shadow-readable">The industry is paralyzed. Legal audits clauses but ignores Material Certificates. Inspectors focus on visible parts but ignore the organizational chaos.</p>
+                        <p>The industry is paralyzed. Legal audits clauses but ignores Material Certificates. Inspectors focus on visible parts but ignore the organizational chaos.</p>
 
-                        <div class="my-12 relative">
-                            <div class="grid grid-cols-2 gap-1">
-                                <div class="relative group">
-                                    <img src="../slike/Article 17/A17-Korporativno-Nasilje-Korozija.jpg" alt="Worker on Raft" class="article-img w-full h-80 object-cover grayscale group-hover:grayscale-0 transition duration-700 rounded-r-none border-r-0">
-                                    <div class="absolute top-2 left-2 bg-black/70 text-white text-[10px] font-bold font-mono px-2 py-1">THE REALITY</div>
+                        <div class="my-16 relative shadow-2xl">
+                            <div class="grid grid-cols-2 gap-1 bg-black p-1 rounded-t-xl">
+                                <div class="relative group h-full">
+                                    <img src="../slike/Article 17/A17-Korporativno-Nasilje-Korozija.jpg" alt="The Problem" class="w-full h-full min-h-[400px] object-cover grayscale group-hover:grayscale-0 transition duration-700">
+                                    <div class="absolute top-0 left-0 w-full bg-black/60 p-2 text-center text-white text-xs font-bold font-mono border-b border-h-red">THE PROBLEM</div>
                                 </div>
-                                <div class="relative group">
-                                    <img src="../slike/Article 17/A17_improvisation2.jpg" alt="Improvisation" class="article-img w-full h-80 object-cover grayscale group-hover:grayscale-0 transition duration-700 rounded-l-none">
-                                    <div class="absolute top-2 right-2 bg-h-red text-black text-[10px] font-bold font-mono px-2 py-1">THE "FIX"</div>
+                                <div class="relative group h-full">
+                                    <img src="../slike/Article 17/A17_improvisation2.jpg" alt="The Bad Fix" class="w-full h-full min-h-[400px] object-cover grayscale group-hover:grayscale-0 transition duration-700">
+                                    <div class="absolute top-0 left-0 w-full bg-black/60 p-2 text-center text-h-red text-xs font-bold font-mono border-b border-h-red">THE "FIX"</div>
                                 </div>
                             </div>
-                            <div class="p-3 bg-h-panel/90 border-t border-h-red text-center rounded-b-lg mx-1">
-                                <p class="text-white text-xs font-mono m-0">SITE SYNERGY: When there are no tools, demands create dangerous improvisation.</p>
+                            <div class="p-4 bg-gradient-to-r from-h-panel to-black border-t-4 border-h-red text-center rounded-b-xl">
+                                <p class="text-white text-sm font-bold font-mono m-0 uppercase tracking-wider">SITE SYNERGY: When there are no tools, demands create dangerous improvisation.</p>
                             </div>
                         </div>
-                        <div class="my-12 flex flex-col md:flex-row gap-6 items-center bg-h-panel/80 backdrop-blur p-6 rounded-xl border border-h-border shadow-xl">
-                            <img src="../slike/Article 17/A17_call_for_dialog.jpg" alt="Two Chairs" class="w-full md:w-1/2 rounded-lg shadow-lg h-64 object-cover">
-                            <div class="md:w-1/2">
-                                <h3 class="text-h-cyan mt-0 text-xl font-black uppercase">The Ivory Tower</h3>
-                                <p class="text-sm text-slate-300 italic">"Decisions made in these comfortable chairs often have no connection to the reality on the raft."</p>
-                                <p class="text-xs text-white font-bold mt-2 uppercase tracking-widest border-t border-slate-700 pt-2">We need a Dialogue.</p>
+
+                        <div class="my-16 flex flex-col gap-6 items-center bg-white/10 backdrop-blur-lg p-8 rounded-2xl border-2 border-h-cyan shadow-[0_0_30px_rgba(6,182,212,0.15)] max-w-lg ml-auto transform rotate-1 hover:rotate-0 transition duration-500">
+                            <img src="../slike/Article 17/A17_call_for_dialog.jpg" alt="Two Chairs" class="w-full rounded-xl shadow-lg h-auto object-cover border border-white/20">
+                            <div class="text-center">
+                                <h3 class="text-h-cyan mt-0 text-2xl font-black uppercase tracking-tighter">The Ivory Tower</h3>
+                                <p class="text-base text-white italic font-serif leading-relaxed">"Decisions made in these comfortable chairs often have no connection to the reality on the raft."</p>
+                                <button class="mt-6 bg-h-cyan text-black font-bold px-6 py-2 rounded-full uppercase text-xs tracking-widest hover:bg-white transition">We need a Dialogue</button>
                             </div>
                         </div>
                     </section>
 
-                    <section class="scroll-section" data-bg="../slike/Article 17/A17-pozadina6.jpg">
-                        <div class="bg-h-panel/80 backdrop-blur border border-h-border p-6 rounded-xl my-12">
-                            <h3 class="text-center text-white font-bold mb-6 text-xl tracking-widest uppercase">The Reality of "Digitalization"</h3>
+                    <section class="scroll-section" data-bg-id="bg-6">
+                        <div class="bg-black/80 backdrop-blur-md border border-white/10 p-8 rounded-3xl my-16 shadow-2xl">
+                            <h3 class="text-center text-white font-black mb-10 text-3xl tracking-tighter uppercase border-b border-white/10 pb-6">The Reality of "Digitalization"</h3>
                             
-                            <div class="grid grid-cols-2 gap-4 mb-6">
+                            <div class="grid grid-cols-2 gap-2 mb-10">
                                 <div class="relative group">
-                                    <img src="../slike/Article 17/A17-hit_it.jpg" alt="Preparing to hit" class="rounded border border-slate-600 w-full h-72 object-cover object-center">
-                                    <div class="absolute top-2 left-2 bg-h-red text-black text-[10px] font-bold px-2 py-1">INPUT</div>
+                                    <img src="../slike/Article 17/A17-hit_it.jpg" alt="Input" class="rounded w-full h-auto min-h-[300px] object-cover object-center border border-white/20">
+                                    <div class="absolute bottom-0 w-full bg-h-red text-black text-center font-bold py-2 uppercase tracking-widest text-xs">INPUT</div>
                                 </div>
                                 <div class="relative group">
-                                    <img src="../slike/Article 17/A17_hitit2.jpg" alt="Hitting the machine" class="rounded border border-slate-600 w-full h-72 object-cover object-center">
-                                    <div class="absolute top-2 left-2 bg-h-red text-black text-[10px] font-bold px-2 py-1">OUTPUT</div>
+                                    <img src="../slike/Article 17/A17_hitit2.jpg" alt="Output" class="rounded w-full h-auto min-h-[300px] object-cover object-center border border-white/20">
+                                    <div class="absolute bottom-0 w-full bg-h-red text-black text-center font-bold py-2 uppercase tracking-widest text-xs">OUTPUT</div>
                                 </div>
                             </div>
                             
-                            <p class="text-center font-mono text-sm text-h-red mb-4">
+                            <p class="text-center font-mono text-lg text-h-red mb-8 font-bold">
                                 "Metal doesn't care about your Digital Twin while we still fix it with a sledgehammer."
                             </p>
 
-                            <img src="../slike/Article 17/A17_metal_dont_cares.jpg" alt="Metal Detail" class="w-full h-[700px] object-cover object-center rounded border border-slate-600 opacity-90">
+                            <img src="../slike/Article 17/A17_metal_dont_cares.jpg" alt="Metal Detail" class="w-full h-auto min-h-[600px] object-cover object-center rounded-xl border-2 border-white/20 opacity-100 hover:opacity-90 transition">
                         </div>
-                    </section>
-
-                    <section class="scroll-section" data-bg="../slike/Article 17/A17-pozadina6.jpg">
-                        <div class="py-12 text-center">
-                            <div class="relative inline-block">
-                                <img src="../slike/Article 17/A17-Improvise.jpg" alt="Improvised Tool" class="improv-circle mb-6">
-                                <div class="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-h-yellow text-black font-bold px-4 py-1 rounded-full text-xs shadow-lg whitespace-nowrap">
+                        
+                        <div class="py-20 text-center">
+                            <div class="relative inline-block hover:scale-105 transition duration-500">
+                                <img src="../slike/Article 17/A17-Improvise.jpg" alt="Improvised Tool" class="improv-circle mb-8">
+                                <div class="absolute -bottom-6 left-1/2 -translate-x-1/2 bg-h-yellow text-black font-black px-8 py-3 rounded-full text-sm shadow-[0_0_30px_rgba(250,204,21,0.6)] whitespace-nowrap uppercase tracking-wider border-2 border-white">
                                     ADAPT OR DIE?
                                 </div>
                             </div>
-                            <h3 class="text-3xl font-black text-white mt-4 uppercase text-shadow-readable">How much improvisation<br>is too much?</h3>
+                            <h3 class="text-5xl font-black text-white mt-10 uppercase drop-shadow-xl">How much improvisation<br>is too much?</h3>
                         </div>
                     </section>
 
-                    <section class="scroll-section" data-bg="../slike/Article 17/A17-pozadina7.jpg">
+                    <section class="scroll-section" data-bg-id="bg-7">
                         <h2>4. The Zero-Tolerance Mandate</h2>
-                        <p class="text-shadow-readable">We must reject the transactional view. Partner with forensic authority. Enforce <strong>Absolute Precision (QC < 0.05 mm)</strong>.</p>
+                        <p>We must reject the transactional view. Partner with forensic authority. Enforce <strong>Absolute Precision (QC < 0.05 mm)</strong>.</p>
                         
-                        <div class="my-10 flex justify-center">
-                            <div class="bg-h-panel/80 p-2 rounded-xl border border-h-cyan shadow-[0_0_30px_rgba(6,182,212,0.3)] backdrop-blur">
-                                <img src="../slike/Article 17/A17_tech.jpg" alt="Precision Engineering" class="article-img w-full h-[500px] object-cover object-center">
-                                <p class="text-center text-h-cyan font-mono text-xs mt-2 font-bold uppercase">PRECISION ENGINEERING REQUIRES ZERO TOLERANCE</p>
+                        <div class="my-16 flex justify-center">
+                            <div class="bg-black/60 p-4 rounded-2xl border-2 border-h-cyan shadow-[0_0_50px_rgba(6,182,212,0.4)] backdrop-blur-lg w-full max-w-2xl">
+                                <img src="../slike/Article 17/A17_tech.jpg" alt="Precision Engineering" class="rounded-lg w-full h-auto object-cover">
+                                <div class="mt-4 flex items-center justify-between border-t border-white/10 pt-4">
+                                    <span class="text-h-cyan font-mono text-sm font-bold uppercase">PRECISION ENGINEERING</span>
+                                    <span class="text-white font-mono text-xs">TOLERANCE: 0.00mm</span>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="my-12">
-                             <div class="grid grid-cols-2 gap-1">
-                                <div class="relative group">
-                                    <img src="../slike/Article 17/A17-Korporativno-Nasilje-Korozija2.jpg" alt="Corrosion Source" class="article-img w-full h-[500px] object-cover rounded-r-none border-r-0 border-h-red">
-                                    <div class="absolute bottom-2 left-2 bg-black/70 text-h-red text-[10px] font-bold font-mono px-2 py-1">THE CAUSE (NEGLECT)</div>
+                        <div class="my-16 shadow-2xl rounded-2xl overflow-hidden border-4 border-white/10">
+                             <div class="grid grid-cols-2 gap-0">
+                                <div class="relative group h-[500px]">
+                                    <img src="../slike/Article 17/A17-Korporativno-Nasilje-Korozija2.jpg" alt="Corrosion Source" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-700">
+                                    <div class="absolute bottom-0 w-full bg-black/80 text-h-red text-xs font-black font-mono py-3 text-center uppercase tracking-widest border-t border-h-red">The Cause</div>
                                 </div>
-                                <div class="relative group">
-                                    <img src="../slike/Article 17/A17-WCB-after_n_symptoms - Copy.jpg" alt="Bearing Failure" class="article-img w-full h-[500px] object-cover rounded-l-none border-l-0 border-h-red">
-                                    <div class="absolute bottom-2 right-2 bg-black/70 text-h-red text-[10px] font-bold font-mono px-2 py-1">THE EFFECT (FAILURE)</div>
+                                <div class="relative group h-[500px]">
+                                    <img src="../slike/Article 17/A17-WCB-after_n_symptoms - Copy.jpg" alt="Bearing Failure" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-700">
+                                    <div class="absolute bottom-0 w-full bg-black/80 text-h-red text-xs font-black font-mono py-3 text-center uppercase tracking-widest border-t border-h-red">The Effect</div>
                                 </div>
                             </div>
-                            <div class="p-4 bg-h-red/20 border-t-2 border-h-red text-center rounded-b-lg mx-1 backdrop-blur">
-                                <p class="text-white text-sm font-bold uppercase m-0 tracking-wider">FROM OXIDATION TO OBLITERATION: The inevitable lifecycle of low-bid compliance.</p>
+                            <div class="p-8 bg-gradient-to-r from-h-red to-black text-center">
+                                <p class="text-white text-xl font-black uppercase m-0 tracking-tight leading-tight">
+                                    "FROM OXIDATION TO OBLITERATION" <br>
+                                    <span class="text-sm font-normal opacity-80 normal-case font-mono mt-2 block">The inevitable lifecycle of low-bid compliance.</span>
+                                </p>
                             </div>
                         </div>
-                        <p class="text-xl font-bold text-white text-center mt-12 text-shadow-readable">
-                            The choice is binary: <span class="text-h-cyan">Absolute Integrity</span> or <span class="text-h-red">Guaranteed Erosion</span>.
+
+                        <p class="text-2xl font-black text-white text-center mt-12 mb-12">
+                            The choice is binary: <span class="text-h-cyan underline decoration-4 decoration-h-cyan underline-offset-4">Absolute Integrity</span> or <span class="text-h-red underline decoration-4 decoration-h-red underline-offset-4">Guaranteed Erosion</span>.
                         </p>
                     </section>
 
-                    <div class="mt-20 mb-12 relative">
-                        <div class="bg-gradient-to-b from-h-red/20 to-black border-y-4 border-h-red p-8 md:p-12 text-center relative overflow-hidden group backdrop-blur-md">
-                            <div class="absolute inset-0 bg-h-red/5 animate-pulse pointer-events-none"></div>
-                            <h3 class="relative z-10 text-3xl md:text-5xl font-black text-white mb-2 uppercase italic tracking-tighter text-shadow-readable">"HYDRO SPECIALISTS..."</h3>
-                            <p class="relative z-10 text-h-red font-mono text-sm md:text-base tracking-widest mb-8 uppercase font-bold">// RAZUVJERITE ME. (PROVE ME WRONG.)</p>
-                            <p class="relative z-10 text-lg md:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed mb-10 text-shadow-readable">I see you clapping on LinkedIn for "Digital Twins" while your shafts are misaligned by 0.15mm. You say I'm too harsh? <br><br> <span class="text-white font-bold bg-h-red/20 px-2 py-1">COME TO THE COMMENTS.</span> Tell me I'm wrong. Tell me that physics doesn't apply to your budget.</p>
-                            <div class="relative z-10 flex flex-col sm:flex-row justify-center items-center gap-6">
-                                <button onclick="shareArticle()" class="w-full sm:w-auto px-8 py-4 bg-h-red hover:bg-red-600 text-white font-black text-lg uppercase tracking-widest rounded shadow-[0_0_30px_rgba(239,68,68,0.4)] flex items-center justify-center gap-3"><i data-lucide="megaphone" class="w-6 h-6"></i> Share The Truth</button>
-                                <a href="https://www.linkedin.com/in/ervin-stupac-b34914183/" target="_blank" class="w-full sm:w-auto px-8 py-4 border-2 border-white hover:border-h-cyan text-white hover:text-h-cyan font-bold text-lg uppercase tracking-widest rounded transition flex items-center justify-center gap-3"><i data-lucide="message-square" class="w-6 h-6"></i> Debate Me</a>
+                    <div class="mt-24 mb-16 relative transform -rotate-1 hover:rotate-0 transition duration-500">
+                        <div class="bg-gradient-to-br from-black via-h-dark to-black border-4 border-h-red p-10 md:p-16 text-center relative overflow-hidden shadow-[0_0_60px_rgba(239,68,68,0.4)]">
+                            <div class="absolute inset-0 bg-[url('../slike/Article 17/A17-pozadina3.jpg')] opacity-20 bg-cover mix-blend-overlay"></div>
+                            
+                            <h3 class="relative z-10 text-4xl md:text-6xl font-black text-white mb-4 uppercase italic tracking-tighter drop-shadow-lg">
+                                "HYDRO SPECIALISTS..."
+                            </h3>
+                            <p class="relative z-10 text-h-red font-mono text-base md:text-lg tracking-[0.2em] mb-10 uppercase font-bold bg-black/50 inline-block px-4 py-1">
+                                // RAZUVJERITE ME. (PROVE ME WRONG.)
+                            </p>
+                            <p class="relative z-10 text-xl md:text-2xl text-slate-200 max-w-4xl mx-auto leading-relaxed mb-12 font-medium">
+                                I see you clapping on LinkedIn for "Digital Twins" while your shafts are misaligned by 0.15mm. 
+                                You say I'm too harsh? <br><br> 
+                                <span class="bg-h-red text-white px-3 py-1 font-black transform skew-x-[-10deg] inline-block">COME TO THE COMMENTS.</span> <br>
+                                Tell me I'm wrong. Tell me that physics doesn't apply to your budget.
+                            </p>
+                            <div class="relative z-10 flex flex-col sm:flex-row justify-center items-center gap-8">
+                                <button onclick="shareArticle()" class="w-full sm:w-auto px-10 py-5 bg-h-red hover:bg-red-600 text-white font-black text-xl uppercase tracking-widest rounded-lg shadow-2xl hover:scale-105 transition flex items-center justify-center gap-3">
+                                    <i data-lucide="megaphone" class="w-6 h-6"></i> Share The Truth
+                                </button>
+                                <a href="https://www.linkedin.com/in/ervin-stupac-b34914183/" target="_blank" class="w-full sm:w-auto px-10 py-5 border-2 border-white hover:border-h-cyan text-white hover:text-h-cyan hover:bg-white/5 font-black text-xl uppercase tracking-widest rounded-lg transition hover:scale-105 flex items-center justify-center gap-3">
+                                    <i data-lucide="message-square" class="w-6 h-6"></i> Debate Me
+                                </a>
                             </div>
                         </div>
                     </div>
 
-                    <div class="pt-10 border-t border-slate-800">
-                        <p class="text-center text-xs font-mono text-slate-500 mb-6">BEHIND THE PROTOCOL</p>
-                        <div class="grid grid-cols-3 gap-2 md:gap-4 opacity-70 hover:opacity-100 transition duration-500">
-                            <img src="../slike/Article 17/A17-ja.jpg" class="h-64 w-full object-cover object-top rounded bg-slate-800">
-                            <img src="../slike/Article 17/A17-ja_ja.jpg" class="h-64 w-full object-cover object-top rounded bg-slate-800">
-                            <img src="../slike/Article 17/A17-ja_ja_samo_ja.jpg" class="h-64 w-full object-cover object-top rounded bg-slate-800">
+                    <div class="my-20 relative group">
+                        <div class="absolute -inset-1 bg-gradient-to-r from-h-cyan via-purple-500 to-h-yellow rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-1000"></div>
+                        <div class="relative bg-black rounded-2xl overflow-hidden border border-white/10">
+                            <img src="../slike/Article 17/20221203_174933.jpg" alt="Culture of Difference" class="w-full h-[600px] object-cover opacity-80 group-hover:opacity-100 transition duration-700">
+                            
+                            <div class="absolute inset-0 flex flex-col justify-center items-center bg-black/40 hover:bg-black/20 transition duration-500 p-8 text-center">
+                                <h4 class="text-3xl md:text-5xl font-black text-white uppercase tracking-tight mb-4 drop-shadow-xl leading-tight">
+                                    "WE ACHIEVE PERFECTION <br> THROUGH <span class="text-h-yellow">DIFFERENCE</span>."
+                                </h4>
+                                <p class="text-2xl text-slate-200 font-light mb-8 max-w-2xl drop-shadow-md">
+                                    We are not just another engineering firm. We are the guardians of integrity.
+                                </p>
+                                <div class="inline-block border-4 border-white px-8 py-3 text-3xl font-black text-white tracking-[0.3em] uppercase bg-black/30 backdrop-blur-sm">
+                                    WE ARE ANOHUBS
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-12 border-t border-slate-800">
+                        <p class="text-center text-xs font-mono text-slate-500 mb-8 tracking-widest uppercase">BEHIND THE PROTOCOL</p>
+                        <div class="grid grid-cols-3 gap-4 opacity-80 hover:opacity-100 transition duration-500">
+                            <img src="../slike/Article 17/A17-ja.jpg" class="h-72 w-full object-cover object-top rounded-lg bg-slate-800 border border-white/10">
+                            <img src="../slike/Article 17/A17-ja_ja.jpg" class="h-72 w-full object-cover object-top rounded-lg bg-slate-800 border border-white/10">
+                            <img src="../slike/Article 17/A17-ja_ja_samo_ja.jpg" class="h-72 w-full object-cover object-top rounded-lg bg-slate-800 border border-white/10">
                         </div>
                     </div>
 
                 </div>
 
-                <div class="mt-8 pt-8 border-t border-h-border flex justify-between items-center bg-h-dark/50 p-4 rounded backdrop-blur-sm">
-                    <div class="text-xs font-mono text-slate-500">TAGS: #ExecutionGap #AssetIntegrity</div>
+                <div class="mt-12 pt-8 border-t border-h-border flex flex-col md:flex-row justify-between items-center gap-4 bg-h-dark/80 p-6 rounded-xl backdrop-blur">
+                    <div class="text-xs font-mono text-slate-400">
+                        TAGS: #ExecutionGap #AssetIntegrity #LowBidCatastrophe
+                    </div>
                     <div class="flex gap-4">
                         <button onclick="shareArticle()" class="flex items-center gap-2 text-sm font-bold text-h-cyan hover:text-white transition"><i data-lucide="share-2" class="w-4 h-4"></i> SHARE</button>
                         <button onclick="copyLink()" class="flex items-center gap-2 text-sm font-bold text-slate-400 hover:text-white transition"><i data-lucide="link" class="w-4 h-4"></i> COPY LINK</button>
@@ -300,16 +360,20 @@
 
             <aside class="lg:col-span-4 space-y-8">
                 <div class="sticky top-24">
-                    <div class="bg-h-panel/80 backdrop-blur p-6 rounded-xl border-t-2 border-h-red shadow-2xl">
-                        <div class="flex items-center gap-4 mb-4">
-                            <img src="../slike/ervin_stupac_portrait.jpg" alt="Ervin Stupac" class="w-16 h-16 rounded-full border-2 border-slate-600 object-cover">
+                    <div class="bg-h-panel/90 backdrop-blur-md p-8 rounded-2xl border-t-4 border-h-red shadow-2xl">
+                        <div class="flex items-center gap-4 mb-6">
+                            <img src="../slike/ervin_stupac_portrait.jpg" alt="Ervin Stupac" class="w-20 h-20 rounded-full border-4 border-slate-700 object-cover shadow-lg">
                             <div>
-                                <h4 class="text-white font-bold">Ervin Stupac</h4>
-                                <p class="text-xs text-h-red font-mono">ASSET INTEGRITY CONSULTANT</p>
+                                <h4 class="text-white font-bold text-lg">Ervin Stupac</h4>
+                                <p class="text-xs text-h-red font-mono tracking-wider">ASSET INTEGRITY CONSULTANT</p>
                             </div>
                         </div>
-                        <p class="text-sm text-slate-400 mb-6">Specializing in neutralizing the 48% Dynamic Risk.</p>
-                        <a href="../contact.html" class="block w-full text-center py-3 bg-h-red hover:bg-red-600 text-white font-bold rounded uppercase tracking-wider text-xs transition">Audit Your Project</a>
+                        <p class="text-sm text-slate-300 mb-8 leading-relaxed">
+                            Specializing in neutralizing the 48% Dynamic Risk through forensic execution protocols. I don't just inspect; I enforce integrity.
+                        </p>
+                        <a href="../contact.html" class="block w-full text-center py-4 bg-h-red hover:bg-red-600 text-white font-bold rounded-lg uppercase tracking-wider text-xs transition shadow-lg hover:shadow-red-500/50">
+                            Audit Your Project
+                        </a>
                     </div>
                 </div>
             </aside>
@@ -317,25 +381,49 @@
         </div>
     </main>
 
-    <footer class="bg-black border-t border-slate-900 py-12 text-center text-xs font-mono text-slate-600">
-        <div class="max-w-7xl mx-auto px-4"><p>&copy; 2025 ANOHUBS INC. | INTELLIGENCE DIVISION</p></div>
+    <footer class="bg-black border-t border-slate-900 py-16 text-center text-xs font-mono text-slate-600">
+        <div class="max-w-7xl mx-auto px-4">
+            <p class="mb-4">&copy; 2025 ANOHUBS INC. | INTELLIGENCE DIVISION</p>
+            <p class="text-h-red/50">Zero-Tolerance for Execution Errors.</p>
+        </div>
     </footer>
 
     <script>
         lucide.createIcons();
 
-        const bgLayer = document.getElementById('dynamic-bg');
+        // LOGIKA ZA PROMJENU POZADINE (SMOOTH TRANSITION)
         const sections = document.querySelectorAll('.scroll-section');
+        const bgLayers = document.querySelectorAll('.bg-layer');
+
+        const observerOptions = {
+            root: null,
+            rootMargin: '-20% 0px -20% 0px', // Aktiviraj kad je element u sredini ekrana
+            threshold: 0.2
+        };
+
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    const newBg = entry.target.getAttribute('data-bg');
-                    if (newBg) bgLayer.style.backgroundImage = `url('${newBg}')`;
+                    // Nađi koji background ID ova sekcija traži
+                    const targetBgId = entry.target.getAttribute('data-bg-id');
+                    
+                    // Ugasi sve, upali samo taj
+                    bgLayers.forEach(layer => {
+                        if (layer.id === targetBgId) {
+                            layer.classList.add('active');
+                        } else {
+                            layer.classList.remove('active');
+                        }
+                    });
                 }
             });
-        }, { threshold: 0.5 });
-        sections.forEach(section => observer.observe(section));
+        }, observerOptions);
 
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+        // READING PROGRESS
         window.addEventListener('scroll', () => {
             let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
             let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
