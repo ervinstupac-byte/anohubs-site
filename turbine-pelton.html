@@ -2,23 +2,18 @@
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Pelton Turbine Protocol | AnoHUB</title>
     <meta name="description" content="Advanced integrity analysis for Pelton turbines. Nozzle jet alignment, bucket abrasion mapping, and impulse efficiency protocols.">
     
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "TechArticle",
-      "headline": "Pelton Turbine Integrity Protocol",
-      "description": "Operational parameters and abrasion control for Pelton impulse turbines.",
-      "provider": { "@type": "Organization", "name": "AnoHUB" }
-    }
-    </script>
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/1.13.0/model-viewer.min.js"></script>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -30,52 +25,81 @@
                         'h-yellow': '#facc15', 'h-dark': '#020617', 'h-panel': '#0f172a', 
                         'h-border': '#1e293b', 'h-cta': '#f59e0b'
                     },
-                    animation: { 'jet-flow': 'dash 0.5s linear infinite', 'pulse-fast': 'pulse 0.5s cubic-bezier(0.4, 0, 0.6, 1) infinite' },
-                    keyframes: { dash: { to: { 'stroke-dashoffset': '-20' } } }
+                    animation: { 
+                        'pulse-fast': 'pulse 0.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'jet-flow': 'dash 0.3s linear infinite'
+                    },
+                    keyframes: {
+                        dash: {
+                            '0%': { strokeDashoffset: '20' },
+                            '100%': { strokeDashoffset: '0' }
+                        }
+                    }
                 }
             }
         }
     </script>
 
     <style>
-        body { background-color: #020617; color: #f8fafc; overflow-x: hidden; }
+        /* GLOBAL & MOBILE FIX */
+        html, body { background-color: #020617; color: #f8fafc; overflow-x: hidden; width: 100%; }
         
-        /* Hero Background */
+        /* NOISE TEXTURE */
+        .noise-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+            pointer-events: none; z-index: 50; opacity: 0.4;
+        }
+
+        /* HERO */
         .hero-pelton {
-            background-image: linear-gradient(180deg, rgba(2,6,23,0.6) 0%, rgba(2,6,23,0.95) 100%), url('slike/pelton-diagram.jpg');
+            background-image: linear-gradient(180deg, rgba(2,6,23,0.5) 0%, rgba(2,6,23,1) 100%), url('slike/pelton-diagram.jpg');
             background-size: cover; background-position: center; background-attachment: fixed;
         }
 
-        /* Glass Panels */
+        /* GLASS PANELS (SCADA STYLE - AMBER) */
         .glass-card {
-            background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(12px);
-            border: 1px solid rgba(245, 158, 11, 0.3); transition: all 0.3s ease;
+            background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.3s ease;
+            position: relative; overflow: hidden;
+        }
+        .glass-card::after {
+            content: ''; position: absolute; top: 0; right: 0; width: 20px; height: 20px;
+            border-top: 2px solid var(--border-color, #f59e0b); border-right: 2px solid var(--border-color, #f59e0b);
+            opacity: 0.5;
         }
 
-        /* Simulator */
-        .sim-container { position: relative; width: 100%; height: 400px; background: #0f172a; border: 1px solid #334155; border-radius: 1rem; overflow: hidden; }
+        /* SIMULATOR UI */
+        .sim-container {
+            position: relative; width: 100%; height: 450px;
+            background: radial-gradient(circle at 75% 50%, rgba(245,158,11,0.05) 0%, rgba(2,6,23,1) 70%);
+            border: 1px solid #334155; border-radius: 1rem; overflow: hidden;
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.8);
+        }
         
-        /* Range Slider */
-        input[type=range] { -webkit-appearance: none; background: transparent; }
-        input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none; height: 16px; width: 16px; border-radius: 50%;
-            background: #f59e0b; cursor: pointer; margin-top: -6px; border: 2px solid white;
+        .sim-grid {
+            background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 40px 40px; position: absolute; inset: 0;
         }
-        input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 4px; background: #334155; border-radius: 2px; }
 
-        /* PRINT MODE */
-        @media print {
-            body { background-color: white !important; color: black !important; }
-            #navbar, footer, #mobile-sticky-cta, model-viewer { display: none !important; }
-            .hero-pelton { height: auto !important; background: none !important; color: black !important; padding: 0 !important; }
-            .glass-card, .bg-h-panel, .bg-black\/50 { background: white !important; border: 1px solid #ccc !important; color: black !important; box-shadow: none !important; page-break-inside: avoid; }
-            h1, h2, h3, p { color: black !important; }
-            body::before { content: "ANOHUBS DATA SHEET: PELTON TURBINE"; display: block; border-bottom: 2px solid black; margin-bottom: 20px; font-weight: bold; }
+        /* SLIDERS */
+        input[type=range] { -webkit-appearance: none; background: transparent; cursor: pointer; }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none; height: 20px; width: 10px; 
+            background: #f59e0b; margin-top: -8px; border: 1px solid white;
+            box-shadow: 0 0 10px #f59e0b;
         }
+        input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 4px; background: #1e293b; border-radius: 2px; }
+        
+        /* 3D VIEWER */
+        model-viewer { width: 100%; height: 250px; background: radial-gradient(circle, #1e293b 0%, #020617 100%); border-radius: 0.5rem; }
     </style>
 </head>
 
 <body class="antialiased">
+    
+    <div class="noise-overlay"></div>
 
     <header class="fixed w-full z-50 top-0 border-b border-white/5 bg-h-dark/90 backdrop-blur-md transition-all duration-300" id="navbar">
         <div class="max-w-7xl mx-auto px-4 h-20 flex justify-between items-center">
@@ -86,170 +110,240 @@
                     <span class="block text-[10px] font-mono text-h-cta tracking-widest uppercase">Turbine: Pelton</span>
                 </div>
             </a>
-            <nav class="hidden lg:flex items-center gap-6 text-xs font-bold uppercase tracking-wider">
-                <a href="index.html" class="text-slate-400 hover:text-white transition">Home</a>
-                <a href="services.html" class="text-h-cta transition flex items-center gap-2"><svg data-lucide="arrow-left" class="w-3 h-3"></svg> Capabilities</a>
-                <a href="protocol.html" class="group relative inline-flex items-center gap-2 px-5 py-2 bg-h-cta/10 text-h-cta border border-h-cta/50 rounded-full hover:bg-h-cta hover:text-black transition-all duration-300">
+            <nav class="hidden lg:flex items-center gap-6 text-xs font-bold uppercase tracking-wider text-slate-400">
+                <a href="index.html" class="hover:text-white transition">Home</a>
+                <a href="services.html" class="text-white transition flex items-center gap-2 hover:text-h-cta"><i data-lucide="arrow-left" class="w-3 h-3"></i> Capabilities</a>
+                <a href="protocol.html" class="group relative inline-flex items-center gap-2 px-5 py-2 bg-h-cta/5 text-h-cta border border-h-cta/30 rounded-full hover:bg-h-cta hover:text-black transition-all duration-300">
                     <span>PROTOCOL</span>
                     <div class="w-1.5 h-1.5 bg-h-cta rounded-full animate-pulse"></div>
                 </a>
-                <a href="contact.html" class="px-5 py-2 bg-white text-black rounded-full hover:bg-gray-200 transition">Contact</a>
+                <a href="contact.html" class="px-5 py-2 bg-white text-black rounded-full hover:bg-gray-200 transition shadow-lg">Contact</a>
             </nav>
-            <button id="mobile-menu-btn" class="lg:hidden text-white p-2"><svg data-lucide="menu" class="w-8 h-8"></svg></button>
+            <button id="mobile-menu-btn" class="lg:hidden text-white p-2"><i data-lucide="menu" class="w-8 h-8"></i></button>
         </div>
-        <div id="mobile-menu" class="hidden lg:hidden absolute top-20 left-0 w-full bg-h-dark border-b border-h-border p-4 flex flex-col gap-4 shadow-2xl">
-            <a href="services.html" class="text-slate-300 hover:text-h-cta py-2 border-b border-h-border flex items-center gap-2"><svg data-lucide="arrow-left" class="w-4 h-4"></svg> Back to Services</a>
-            <a href="contact.html" class="text-white font-bold py-2">Contact Us</a>
+        
+        <div id="mobile-menu" class="fixed inset-0 bg-h-dark/95 backdrop-blur-xl z-40 transform translate-x-full transition-transform duration-300 flex flex-col justify-center items-center gap-8 lg:hidden">
+            <a href="services.html" class="text-xl font-bold text-slate-300 hover:text-h-cta uppercase flex items-center gap-2 mobile-link"><i data-lucide="arrow-left" class="w-5 h-5"></i> Back to Services</a>
+            <a href="protocol.html" class="text-xl font-bold text-h-cta border border-h-cta px-6 py-2 rounded flex items-center gap-2 mobile-link">PROTOCOL</a>
+            <a href="contact.html" class="text-xl font-bold text-black bg-white px-8 py-3 rounded mobile-link">CONTACT US</a>
         </div>
     </header>
 
     <main class="pt-20">
 
-        <section class="hero-pelton min-h-[60vh] flex items-center justify-center relative">
-            <div class="max-w-5xl mx-auto px-4 text-center relative z-10">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-black/50 backdrop-blur-md text-xs font-mono text-slate-300 mb-6 animate-[fadeInUp_1s_ease-out]">
-                    <span class="w-2 h-2 bg-h-cta rounded-full animate-pulse"></span>
-                    ASSET CLASS: IMPULSE
+        <section class="hero-pelton min-h-[70vh] flex items-center justify-center relative">
+            <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAwIDQwIDQwIj48cGF0aCBkPSJNMCAyMGg0ME0yMCAwdjQwIiBzdHJva2U9InJnYmEoMjQ1LCAxNTgsIDExLCAwLjA1KSIgc3Ryb2tlLXdpZHRoPSIwLjUiLz48L3N2Zz4=')] opacity-30"></div>
+
+            <div class="max-w-6xl mx-auto px-4 text-center relative z-10">
+                <div class="flex justify-between items-start absolute top-0 w-full px-4 md:px-0 opacity-50">
+                    <span class="font-mono text-[10px] text-h-cta">REF: PELTON-K9</span>
+                    <span class="font-mono text-[10px] text-h-cta">IMPULSE TYPE</span>
                 </div>
-                <h1 class="text-6xl md:text-8xl font-black text-white mb-6 tracking-tight leading-none animate-[fadeInUp_1s_ease-out]">
+
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-h-cta/30 bg-black/60 backdrop-blur-md text-xs font-mono text-h-cta mb-8 animate-[fadeInUp_1s_ease-out] shadow-[0_0_20px_rgba(245,158,11,0.2)]">
+                    <span class="w-2 h-2 bg-h-cta rounded-full animate-pulse"></span>
+                    ASSET CLASS: IMPULSE TURBINE
+                </div>
+                
+                <h1 class="text-7xl md:text-9xl font-black text-white mb-6 tracking-tighter leading-none animate-[fadeInUp_1s_ease-out] drop-shadow-2xl">
                     PELTON
                 </h1>
-                <p class="text-xl text-h-cta font-mono max-w-3xl mx-auto mb-10 animate-[fadeInUp_1s_ease-out_0.2s_forwards] opacity-0">
+                
+                <p class="text-xl md:text-2xl text-h-cta font-mono max-w-3xl mx-auto mb-8 animate-[fadeInUp_1s_ease-out_0.2s_forwards] opacity-0 tracking-widest">
                     // HIGH HEAD KINETIC MASTERY
                 </p>
-                <p class="text-lg text-slate-300 max-w-2xl mx-auto mb-10 animate-[fadeInUp_1s_ease-out_0.4s_forwards] opacity-0">
-                    Harnessing extreme pressure. Our protocol focuses on jet trajectory precision, nozzle integrity, and bucket surface hardening against abrasion.
+                
+                <p class="text-lg text-slate-300 max-w-2xl mx-auto mb-12 animate-[fadeInUp_1s_ease-out_0.4s_forwards] opacity-0 leading-relaxed">
+                    Harnessing extreme pressure. Our protocol focuses on jet trajectory precision, nozzle integrity, and bucket surface hardening against sand abrasion.
                 </p>
+
+                <div class="animate-[fadeInUp_1s_ease-out_0.6s_forwards] opacity-0">
+                    <a href="#simulator" class="inline-flex items-center gap-2 border-b-2 border-h-cta text-white pb-1 hover:text-h-cta hover:border-white transition uppercase text-xs font-bold tracking-widest">
+                        Calibrate Jet Impact <i data-lucide="arrow-down" class="w-4 h-4 animate-bounce"></i>
+                    </a>
+                </div>
             </div>
         </section>
 
-        <section class="py-20 bg-h-dark border-b border-h-border">
+        <section id="simulator" class="py-24 bg-h-dark border-b border-h-border relative">
             <div class="max-w-7xl mx-auto px-4">
                 
-                <div class="flex flex-col md:flex-row justify-between items-end mb-10">
+                <div class="flex flex-col md:flex-row justify-between items-end mb-10 border-b border-white/5 pb-6">
                     <div>
                         <h2 class="text-3xl font-black text-white flex items-center gap-3">
-                            <svg data-lucide="crosshair" class="w-8 h-8 text-h-cta"></svg>
-                            Jet Injection Simulator
+                            <i data-lucide="crosshair" class="w-8 h-8 text-h-cta"></i>
+                            Jet Injection <span class="text-h-cta">Simulator</span>
                         </h2>
-                        <p class="text-slate-400 mt-2">Optimize Needle Stroke & Nozzle Alignment for maximum impulse.</p>
+                        <p class="text-slate-400 mt-2 font-mono text-sm">Targeting Bucket Splitter with Zero Deviation.</p>
                     </div>
-                    <div class="text-right">
-                        <div class="text-xs font-mono text-slate-500">JET VELOCITY</div>
-                        <div class="text-4xl font-black text-h-cta" id="velocity-display">120 m/s</div>
+                    <div class="text-right mt-6 md:mt-0">
+                        <div class="text-xs font-mono text-slate-500 uppercase tracking-wider">Jet Velocity</div>
+                        <div class="text-5xl font-black text-h-cta tracking-tighter" id="velocity-display">120 m/s</div>
                     </div>
                 </div>
 
-                <div class="grid lg:grid-cols-3 gap-8">
+                <div class="grid lg:grid-cols-12 gap-8">
                     
-                    <div class="space-y-8 bg-h-panel p-6 rounded-xl border border-h-border">
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <label class="text-xs font-bold text-white uppercase">Needle Stroke (%)</label>
-                                <span class="text-xs font-mono text-h-cta" id="val-stroke">80%</span>
+                    <div class="lg:col-span-4 space-y-6">
+                        <div class="glass-card p-6 rounded-xl border-l-4 border-l-h-cta">
+                            <h3 class="text-white font-bold mb-6 flex items-center gap-2"><i data-lucide="settings" class="w-4 h-4"></i> INJECTOR CONTROL</h3>
+                            
+                            <div class="mb-8">
+                                <div class="flex justify-between mb-2">
+                                    <label class="text-xs font-bold text-slate-400 uppercase">Needle Stroke (%)</label>
+                                    <span class="text-xs font-mono text-h-cta bg-h-cta/10 px-2 rounded" id="val-stroke">80%</span>
+                                </div>
+                                <input type="range" id="slider-stroke" min="0" max="100" value="80" class="w-full">
                             </div>
-                            <input type="range" id="slider-stroke" min="0" max="100" value="80" class="w-full">
-                        </div>
 
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <label class="text-xs font-bold text-white uppercase">Nozzle Alignment (mm)</label>
-                                <span class="text-xs font-mono text-h-cta" id="val-align">0.0 mm</span>
-                            </div>
-                            <input type="range" id="slider-align" min="-5" max="5" step="0.1" value="0" class="w-full">
-                            <div class="flex justify-between text-[10px] text-slate-600 mt-1"><span>Low (-5)</span><span>Center (0)</span><span>High (+5)</span></div>
-                        </div>
-
-                        <div class="p-4 bg-black/50 rounded border border-slate-700 mt-4">
-                            <div class="text-[10px] font-mono text-slate-500 uppercase mb-2">Impulse Efficiency</div>
-                            <div id="status-log" class="text-sm font-bold text-h-green flex items-center gap-2">
-                                <div class="w-2 h-2 bg-h-green rounded-full animate-pulse"></div> 100% - PERFECT STRIKE
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <label class="text-xs font-bold text-slate-400 uppercase">Nozzle Alignment (mm)</label>
+                                    <span class="text-xs font-mono text-h-cta bg-h-cta/10 px-2 rounded" id="val-align">0.0 mm</span>
+                                </div>
+                                <input type="range" id="slider-align" min="-5" max="5" step="0.1" value="0" class="w-full">
+                                <div class="flex justify-between text-[10px] font-mono text-slate-600 mt-2"><span>Low (-5)</span><span>Center</span><span>High (+5)</span></div>
                             </div>
                         </div>
 
-                         <div class="mt-6 pt-6 border-t border-slate-700">
-                             <div class="flex justify-between items-center mb-2">
-                                <span class="text-xs font-bold text-white uppercase">3D Component View</span>
+                        <div class="glass-card p-4 rounded-xl">
+                            <div class="text-[10px] font-mono text-slate-500 uppercase mb-2">Impact Analysis</div>
+                            <div id="status-log" class="text-sm font-bold text-h-green flex items-center gap-2 p-2 bg-black/40 rounded border border-white/5">
+                                <div class="w-2 h-2 bg-h-green rounded-full animate-pulse"></div> PERFECT STRIKE
                             </div>
-                            <model-viewer src="models/pelton_wheel.glb" alt="3D Pelton" auto-rotate camera-controls style="width: 100%; height: 200px; background: #000; border-radius: 0.5rem;"></model-viewer>
+                        </div>
+
+                        <div class="glass-card p-1 rounded-xl">
+                            <div class="bg-black/80 rounded-lg overflow-hidden relative">
+                                <div class="absolute top-2 left-2 z-10 text-[10px] font-mono text-white bg-black/50 px-2 rounded">PELTON RUNNER</div>
+                                <model-viewer src="models/pelton_wheel.glb" alt="3D Pelton" auto-rotate camera-controls interaction-prompt="none" disable-zoom></model-viewer>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="lg:col-span-2 sim-container relative flex items-center justify-center">
-                        <div class="absolute inset-0" style="background-image: linear-gradient(rgba(245, 158, 11, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(245, 158, 11, 0.05) 1px, transparent 1px); background-size: 40px 40px;"></div>
+                    <div class="lg:col-span-8 sim-container relative flex items-center justify-center group">
+                        <div class="sim-grid"></div>
                         
-                        <svg width="100%" height="100%" viewBox="0 0 600 400" class="absolute inset-0">
-                            <path d="M50 180 L150 190 L150 210 L50 220 Z" fill="#334155" stroke="#475569" stroke-width="2" />
-                            <path id="visual-needle" d="M60 200 L140 200 L120 195 L60 195 Z" fill="#94a3b8" transform="translate(0,0)" />
-                            <g transform="translate(450, 200)">
-                                <path d="M0 -40 Q 20 -40, 40 -20 Q 20 0, 0 0 Q 20 0, 40 20 Q 20 40, 0 40" fill="none" stroke="#64748b" stroke-width="4" />
-                                <path d="M-10 0 L10 0" stroke="#ef4444" stroke-width="2" stroke-dasharray="2 2" />
-                            </g>
-                            <line id="water-jet" x1="150" y1="200" x2="450" y2="200" stroke="#22d3ee" stroke-width="0" stroke-dasharray="20" class="animate-jet-flow" opacity="0.8" />
-                            <circle id="splash-effect" cx="450" cy="200" r="0" fill="rgba(34, 211, 238, 0.5)" />
-                        </svg>
+                        <svg width="100%" height="100%" viewBox="0 0 600 400" class="absolute inset-0 z-0">
+                            <defs>
+                                <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                                    <feGaussianBlur stdDeviation="4" result="blur" />
+                                    <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                                </filter>
+                            </defs>
 
-                        <div id="misalign-warning" class="absolute top-4 right-4 bg-black/80 border border-h-red text-h-red px-4 py-2 rounded font-mono text-xs hidden">⚠ JET MISALIGNMENT DETECTED</div>
+                            <path d="M50 180 L150 190 L150 210 L50 220 Z" fill="#1e293b" stroke="#475569" stroke-width="2" />
+                            
+                            <path id="visual-needle" d="M60 200 L140 200 L120 195 L60 195 Z" fill="#94a3b8" transform="translate(0,0)" />
+                            
+                            <g transform="translate(450, 200)">
+                                <path d="M0 -40 Q 25 -40, 40 -20 Q 20 0, 0 0 Q 20 0, 40 20 Q 25 40, 0 40" fill="none" stroke="#64748b" stroke-width="4" />
+                                <path d="M-10 0 L10 0" stroke="#facc15" stroke-width="2" stroke-dasharray="2 2" />
+                                <text x="15" y="4" fill="#64748b" font-size="10" font-family="monospace">SPLITTER</text>
+                            </g>
+
+                            <line id="water-jet" x1="150" y1="200" x2="450" y2="200" stroke="#22d3ee" stroke-width="6" stroke-dasharray="20 10" class="animate-jet-flow" opacity="0.8" filter="url(#glow)" />
+                            
+                            <circle id="splash-effect" cx="450" cy="200" r="0" fill="rgba(34, 211, 238, 0.6)" filter="url(#glow)" />
+                        </svg>
+                        
+                        <div id="misalign-warning" class="absolute top-6 right-6 bg-h-red/10 border border-h-red text-h-red px-4 py-2 rounded font-mono text-xs hidden animate-pulse">
+                            ⚠ JET MISALIGNMENT DETECTED
+                        </div>
                     </div>
+
                 </div>
             </div>
         </section>
 
         <section class="py-24 bg-h-panel relative">
-            <div class="max-w-7xl mx-auto px-4">
-                <h2 class="text-3xl font-black text-white mb-12 text-center">Critical Inspection Zones</h2>
+            <div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:40px_40px]"></div>
+            
+            <div class="max-w-7xl mx-auto px-4 relative z-10">
+                <h2 class="text-3xl font-black text-white mb-12 text-center flex items-center justify-center gap-3">
+                    <i data-lucide="crosshair" class="text-h-cta"></i> Critical Inspection Zones
+                </h2>
+                
                 <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div class="glass-card p-6 rounded-xl relative group">
-                        <div class="text-4xl font-black text-slate-800 absolute top-4 right-4 group-hover:text-h-cta/20 transition">01</div>
-                        <h3 class="text-lg font-bold text-h-cta mb-2">Injector Nozzle</h3>
-                        <p class="text-sm text-slate-400 mb-4">Primary flow control.</p>
-                        <ul class="text-xs text-slate-500 space-y-1 font-mono"><li>> Needle/Seat Erosion</li><li>> Servo Response</li></ul>
+                    
+                    <div class="glass-card p-8 rounded-xl hover:bg-h-cta/5 group" style="--border-color: #f59e0b">
+                        <div class="text-6xl font-black text-white/5 absolute -top-4 right-2 group-hover:text-h-cta/10 transition">01</div>
+                        <h3 class="text-lg font-bold text-white mb-2 group-hover:text-h-cta transition">Injector Nozzle</h3>
+                        <p class="text-sm text-slate-400 mb-6 h-10">Primary flow control.</p>
+                        <div class="border-t border-white/10 pt-4">
+                            <ul class="text-xs text-slate-300 space-y-2 font-mono">
+                                <li class="flex gap-2"><span class="text-h-cta">></span> Needle Erosion</li>
+                                <li class="flex gap-2"><span class="text-h-cta">></span> Servo Response</li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="glass-card p-6 rounded-xl relative group">
-                        <div class="text-4xl font-black text-slate-800 absolute top-4 right-4 group-hover:text-h-cta/20 transition">02</div>
-                        <h3 class="text-lg font-bold text-h-cta mb-2">Runner Buckets</h3>
-                        <p class="text-sm text-slate-400 mb-4">Impulse conversion.</p>
-                        <ul class="text-xs text-slate-500 space-y-1 font-mono"><li>> Splitter Cracks (MPI)</li><li>> Sand Abrasion Mapping</li></ul>
+
+                    <div class="glass-card p-8 rounded-xl hover:bg-h-cta/5 group" style="--border-color: #f59e0b">
+                        <div class="text-6xl font-black text-white/5 absolute -top-4 right-2 group-hover:text-h-cta/10 transition">02</div>
+                        <h3 class="text-lg font-bold text-white mb-2 group-hover:text-h-cta transition">Runner Buckets</h3>
+                        <p class="text-sm text-slate-400 mb-6 h-10">Impulse conversion.</p>
+                        <div class="border-t border-white/10 pt-4">
+                            <ul class="text-xs text-slate-300 space-y-2 font-mono">
+                                <li class="flex gap-2"><span class="text-h-cta">></span> Splitter Crack</li>
+                                <li class="flex gap-2"><span class="text-h-cta">></span> Sand Abrasion</li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="glass-card p-6 rounded-xl relative group border-h-red/30 hover:border-h-red">
-                        <div class="text-4xl font-black text-slate-800 absolute top-4 right-4 group-hover:text-h-red/20 transition">03</div>
-                        <h3 class="text-lg font-bold text-h-red mb-2">Deflector</h3>
-                        <p class="text-sm text-slate-400 mb-4">Emergency shut-off.</p>
-                        <ul class="text-xs text-slate-500 space-y-1 font-mono"><li>> Actuation Speed Test</li><li>> Jet Interception Check</li></ul>
+
+                    <div class="glass-card p-8 rounded-xl bg-h-red/5 border-h-red/30 hover:border-h-red group" style="--border-color: #ef4444">
+                        <div class="text-6xl font-black text-white/5 absolute -top-4 right-2 group-hover:text-h-red/10 transition">03</div>
+                        <h3 class="text-lg font-bold text-white mb-2 group-hover:text-h-red transition">Deflector</h3>
+                        <p class="text-sm text-slate-400 mb-6 h-10">Emergency shut-off.</p>
+                        <div class="border-t border-h-red/20 pt-4">
+                            <ul class="text-xs text-slate-300 space-y-2 font-mono">
+                                <li class="flex gap-2"><span class="text-h-red">!</span> Actuation Speed</li>
+                                <li class="flex gap-2"><span class="text-h-red">!</span> Jet Cut Check</li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="glass-card p-6 rounded-xl relative group">
-                        <div class="text-4xl font-black text-slate-800 absolute top-4 right-4 group-hover:text-h-cta/20 transition">04</div>
-                        <h3 class="text-lg font-bold text-h-cta mb-2">Casing</h3>
-                        <p class="text-sm text-slate-400 mb-4">Water containment.</p>
-                        <ul class="text-xs text-slate-500 space-y-1 font-mono"><li>> Splash Erosion</li><li>> Ventilation Analysis</li></ul>
+
+                    <div class="glass-card p-8 rounded-xl hover:bg-h-cta/5 group" style="--border-color: #f59e0b">
+                        <div class="text-6xl font-black text-white/5 absolute -top-4 right-2 group-hover:text-h-cta/10 transition">04</div>
+                        <h3 class="text-lg font-bold text-white mb-2 group-hover:text-h-cta transition">Housing</h3>
+                        <p class="text-sm text-slate-400 mb-6 h-10">Water containment.</p>
+                        <div class="border-t border-white/10 pt-4">
+                            <ul class="text-xs text-slate-300 space-y-2 font-mono">
+                                <li class="flex gap-2"><span class="text-h-cta">></span> Splash Erosion</li>
+                                <li class="flex gap-2"><span class="text-h-cta">></span> Ventilation</li>
+                            </ul>
+                        </div>
                     </div>
+
                 </div>
             </div>
         </section>
 
-        <section class="py-20 text-center bg-h-dark border-t border-h-border">
+        <section class="py-24 text-center bg-h-dark border-t border-h-border">
             <div class="max-w-3xl mx-auto px-4">
                 <h2 class="text-2xl font-bold text-white mb-4">Align Your Impulse</h2>
-                <p class="text-slate-400 mb-8">A 1mm jet misalignment causes massive bucket wear. Let us calibrate your nozzles.</p>
-                <a href="contact.html" class="inline-flex items-center justify-center px-10 py-4 bg-h-cta hover:bg-yellow-500 text-black font-black rounded transition shadow-lg shadow-h-cta/20 uppercase tracking-widest">Initialize Protocol</a>
+                <p class="text-slate-400 mb-10 text-lg">A 1mm jet misalignment causes massive bucket wear. Let us calibrate your nozzles.</p>
+                <a href="contact.html" class="inline-flex items-center justify-center px-12 py-5 bg-h-cta hover:bg-yellow-500 text-black font-black rounded-lg transition shadow-[0_0_30px_rgba(245,158,11,0.3)] hover:shadow-[0_0_50px_rgba(245,158,11,0.6)] uppercase tracking-widest transform hover:-translate-y-1">
+                    Initialize Protocol
+                </a>
             </div>
         </section>
 
     </main>
-
+    
     <div id="mobile-sticky-cta" class="lg:hidden fixed bottom-4 left-4 right-4 z-50 animate-[fadeInUp_1s_ease-out_1s_forwards] opacity-0">
-        <a href="contact.html" class="flex items-center justify-between bg-h-cta/90 backdrop-blur-md text-black px-4 py-3 rounded-lg shadow-2xl border border-white/20">
-            <span class="text-xs font-bold uppercase tracking-wider">Align Impulse?</span>
-            <span class="bg-black text-h-cta text-xs font-black px-2 py-1 rounded">CONTACT &rarr;</span>
+        <a href="contact.html" class="flex items-center justify-between bg-h-cta/90 backdrop-blur-md text-black px-6 py-4 rounded-xl shadow-2xl border border-white/20">
+            <div class="flex flex-col text-left">
+                <span class="text-[10px] font-bold uppercase tracking-wider opacity-70">NEED ALIGNMENT?</span>
+                <span class="text-sm font-black">FIX PELTON JET</span>
+            </div>
+            <div class="bg-black text-h-cta p-2 rounded-lg"><i data-lucide="arrow-right" class="w-5 h-5"></i></div>
         </a>
     </div>
 
-    <footer class="bg-black border-t border-slate-900 py-12 text-center mb-20 lg:mb-0">
+    <footer class="bg-black border-t border-slate-900 py-12 text-center mb-24 lg:mb-0">
         <div class="max-w-7xl mx-auto px-4"><p class="text-slate-600 text-xs font-mono">© 2025 Anohubs Inc. | PELTON DIVISION</p></div>
     </footer>
 
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/1.13.0/model-viewer.min.js"></script>
     <script>
         lucide.createIcons();
         document.getElementById('mobile-menu-btn').addEventListener('click', () => { document.getElementById('mobile-menu').classList.toggle('hidden'); });
@@ -267,45 +361,64 @@
         const splash = document.getElementById('splash-effect');
 
         function updateSim() {
-            const stroke = parseInt(sliderStroke.value);
-            const align = parseFloat(sliderAlign.value);
+            const stroke = parseInt(sliderStroke.value); // 0-100
+            const align = parseFloat(sliderAlign.value); // -5 to 5
 
-            valStroke.innerText = stroke + "%"; valAlign.innerText = align.toFixed(1) + " mm";
+            valStroke.innerText = stroke + "%"; 
+            valAlign.innerText = align.toFixed(1) + " mm";
 
-            const needleMove = - (stroke / 100 * 40);
+            // Move Needle
+            const needleMove = - (stroke / 100 * 40); // Max move 40px left
             needle.setAttribute('transform', `translate(${needleMove}, 0)`);
 
-            const jetWidth = Math.max(0, stroke / 5);
+            // Jet Thickness & Velocity
+            const jetWidth = Math.max(0, stroke / 5); // Max width 20
             waterJet.setAttribute('stroke-width', jetWidth);
             
             const velocity = stroke > 0 ? 100 + (stroke * 0.4) : 0;
             velocityDisplay.innerText = velocity.toFixed(0) + " m/s";
 
-            const yOffset = align * 10;
-            waterJet.setAttribute('y1', 200 + yOffset); waterJet.setAttribute('y2', 200 + yOffset);
+            // Jet Position (Alignment)
+            const yOffset = align * 10; // Scale movement for visual effect
+            waterJet.setAttribute('y1', 200 + yOffset); 
+            waterJet.setAttribute('y2', 200 + yOffset);
 
+            // Splash & Logic
             if (stroke > 0) {
-                splash.setAttribute('cy', 200 + yOffset); splash.setAttribute('r', stroke / 3);
+                // Splash on bucket
+                splash.setAttribute('cy', 200 + yOffset); 
+                splash.setAttribute('r', stroke / 3);
+                
+                // Detection Logic
                 if (Math.abs(align) <= 1.0) {
                     statusLog.innerHTML = '<div class="w-2 h-2 bg-h-green rounded-full animate-pulse"></div> 100% - PERFECT STRIKE';
-                    statusLog.className = "text-sm font-bold text-h-green flex items-center gap-2";
-                    warning.classList.add('hidden'); waterJet.setAttribute('stroke', '#22d3ee');
+                    statusLog.className = "text-sm font-bold text-h-green flex items-center gap-2 p-2 bg-h-green/10 rounded border border-h-green/20";
+                    warning.classList.add('hidden'); 
+                    waterJet.setAttribute('stroke', '#22d3ee'); // Blue jet
                 } else if (Math.abs(align) <= 3.0) {
                     const eff = 100 - (Math.abs(align) * 5);
                     statusLog.innerHTML = `<div class="w-2 h-2 bg-h-yellow rounded-full animate-pulse"></div> ${eff.toFixed(0)}% - OFF CENTER`;
-                    statusLog.className = "text-sm font-bold text-h-yellow flex items-center gap-2";
-                    warning.classList.add('hidden'); waterJet.setAttribute('stroke', '#facc15');
+                    statusLog.className = "text-sm font-bold text-h-yellow flex items-center gap-2 p-2 bg-h-yellow/10 rounded border border-h-yellow/20";
+                    warning.classList.add('hidden'); 
+                    waterJet.setAttribute('stroke', '#facc15'); // Yellow jet warning
                 } else {
                     statusLog.innerHTML = '<div class="w-2 h-2 bg-h-red rounded-full animate-pulse"></div> < 80% - SPLITTER MISS';
-                    statusLog.className = "text-sm font-bold text-h-red flex items-center gap-2";
-                    warning.classList.remove('hidden'); waterJet.setAttribute('stroke', '#ef4444');
+                    statusLog.className = "text-sm font-bold text-h-red flex items-center gap-2 p-2 bg-h-red/10 rounded border border-h-red/20";
+                    warning.classList.remove('hidden'); 
+                    waterJet.setAttribute('stroke', '#ef4444'); // Red jet danger
                 }
             } else {
-                statusLog.innerHTML = 'NO FLOW'; statusLog.className = "text-sm font-bold text-slate-500"; warning.classList.add('hidden');
+                statusLog.innerHTML = 'NO FLOW'; 
+                statusLog.className = "text-sm font-bold text-slate-500 p-2 bg-white/5 rounded"; 
+                warning.classList.add('hidden');
+                splash.setAttribute('r', 0);
             }
         }
+        
         sliderStroke.addEventListener('input', updateSim);
         sliderAlign.addEventListener('input', updateSim);
+        
+        // Init
         updateSim();
     </script>
 </body>
