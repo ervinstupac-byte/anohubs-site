@@ -35,7 +35,11 @@
                     },
                     animation: { 
                         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'spin-slow': 'spin 15s linear infinite'
+                        'scan-sim': 'scanSim 1s step-end infinite',
+                        'pulse-fast': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+                    },
+                    keyframes: {
+                         scanSim: { '50%': { opacity: 0.5 } }
                     }
                 }
             }
@@ -45,20 +49,25 @@
     <style>
         body { background-color: #020617; color: #e2e8f0; overflow-x: hidden; }
         
-        /* === DYNAMIC BACKGROUND LAYERS === */
-        .bg-layer {
-            position: fixed; inset: 0; z-index: -2;
-            background-size: cover; background-position: center;
-            opacity: 0; transition: opacity 1.5s ease-in-out; will-change: opacity;
+        /* === FULL IMMERSION FIXED BACKGROUND === */
+        #bg-fixed {
+            position: fixed; inset: 0; z-index: -3;
+            background-image: url('slike/orljani_Una.jpg'); /* Glavna tamna pozadina */
+            background-size: cover; 
+            background-position: center;
+            background-attachment: fixed; /* OVO JE KLJUČNO ZA FIKSNU POZADINU */
+            opacity: 0.2; 
             filter: grayscale(100%) contrast(1.1) brightness(0.2);
         }
-        .bg-layer.active { opacity: 1; }
 
-        /* HERO - GENERAL DARK BACKGROUND */
-        #bg-hero { background-image: url('slike/orljani_Una.jpg'); }
-
-        /* BUJRUM - THE MEETING SPOT (Added for visual transition) */
-        #bg-bujrum { background-image: url('slike/Bujrum.jpg'); filter: grayscale(50%) contrast(1.1) brightness(0.3); }
+        /* Bujrum Slika kao Sekcija (Za maksimalni dojam) */
+        #bujrum-image {
+            background-image: url('slike/Bujrum.jpg');
+            background-size: cover;
+            background-position: center 30%; /* Focus na stolice */
+            height: 60vh;
+            filter: grayscale(50%) contrast(1.1) brightness(0.4);
+        }
 
         /* INPUT STYLING */
         .tech-input {
@@ -80,9 +89,7 @@
 
 <body class="antialiased">
     
-    <div id="bg-hero" class="bg-layer active"></div>
-    <div id="bg-bujrum" class="bg-layer"></div>
-    
+    <div id="bg-fixed"></div>
     <div class="noise-overlay"></div>
     <div class="tech-bg"></div>
 
@@ -108,19 +115,52 @@
     </header>
 
     <main class="pt-32 pb-20 relative z-10">
-        <section class="scroll-section min-h-[80vh] flex items-center" data-bg-id="bg-hero">
+        
+        <section class="min-h-[60vh] flex items-center justify-center text-center">
+            <div class="max-w-4xl px-4 w-full">
+                <h4 class="text-xs font-mono text-h-gold tracking-widest uppercase mb-2">INITIATE STRATEGIC CONTACT</h4>
+                <h1 class="text-6xl md:text-8xl font-black text-white mb-6 tracking-tighter leading-none">
+                    PRIVATE <br> 
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-h-gold to-h-cta">LINE</span>
+                </h1>
+                
+                <p class="text-xl text-slate-300 leading-relaxed max-w-md mx-auto">
+                    This channel is secured for sensitive asset integrity discussions and immediate deployment requests.
+                </p>
+            </div>
+        </section>
+        
+        <section id="bujrum-section" class="py-20">
+            <div id="bujrum-image" class="relative overflow-hidden flex items-center justify-center">
+                <div class="absolute inset-0 bg-black/60"></div>
+                <div class="relative z-10 text-center max-w-3xl px-4">
+                    <div class="inline-block bg-h-gold/10 border border-h-gold/30 p-4 rounded-xl mb-6">
+                        <h2 class="text-3xl font-black text-white mb-2">BUJRUM. NA GA.</h2>
+                        <p class="text-h-gold text-lg font-mono">
+                            Ovo je naš privatni prostor. Počast i poziv na dijalog.
+                        </p>
+                    </div>
+                    
+                    <a href="#uplink-form" class="mt-6 inline-flex items-center gap-2 text-white font-bold uppercase text-sm border-b border-white/50 hover:text-h-gold transition">
+                        SCROLL TO UPLINK <i data-lucide="arrow-down" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+        
+        <section id="uplink-form" class="py-24">
             <div class="max-w-6xl mx-auto px-4 w-full grid lg:grid-cols-2 gap-16 items-start">
                 
                 <div>
-                    <h4 class="text-xs font-mono text-h-gold tracking-widest uppercase mb-2">INITIATE STRATEGIC CONTACT</h4>
-                    <h1 class="text-6xl md:text-8xl font-black text-white mb-6 tracking-tighter leading-none">
-                        PRIVATE <br> 
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-h-gold to-h-cta">LINE</span>
-                    </h1>
-                    
-                    <p class="text-lg text-slate-300 mb-10 leading-relaxed max-w-md border-l-4 border-h-gold pl-4">
-                        You are connecting directly to the Lead Architect. This channel is secured for sensitive asset integrity discussions and immediate deployment requests.
-                    </p>
+                    <div class="glass-panel p-4 rounded-lg mb-10 border-l-4 border-h-red/70 shadow-md">
+                        <div class="text-xs font-mono text-h-red uppercase mb-1 flex items-center gap-2">
+                            <i data-lucide="clock" class="w-4 h-4 text-h-red"></i> EMERGENCY ETA
+                        </div>
+                        <p class="text-3xl font-black text-white">
+                            T-MINUS <span class="text-h-red">4 HOURS</span> 
+                            <span class="text-base text-slate-500 font-normal"> (To nearest European hub)</span>
+                        </p>
+                    </div>
 
                     <div class="space-y-6">
                         <div class="glass-panel p-4 rounded-lg hover:border-h-gold transition group">
@@ -134,11 +174,14 @@
                             <h4 class="text-white font-bold text-lg mb-1 flex items-center gap-2">
                                 <i data-lucide="message-circle" class="text-h-green w-5 h-5"></i> Secure Signal (WA)
                             </h4>
-                            <a href="https://wa.me/436764157846" target="_blank" class="text-h-green text-lg font-mono hover:text-white transition flex items-center gap-2">
-                                +43 676 4157846 
-                                <span class="text-[10px] text-black bg-h-green font-bold px-2 py-0.5 rounded animate-pulse">24/7 PRIORITY LINE</span>
-                            </a>
+                            <p class="text-h-green text-sm font-mono">
+                                +43 676 4157846 <span class="text-slate-400"> (Architect Direct Line)</span>
+                            </p>
                         </div>
+                    </div>
+                    
+                    <div class="mt-10 border-t border-white/10 pt-6">
+                        <p class="text-slate-500 text-xs font-mono">ANO HUB DYNAMIC SECURITY CHECK: COMPLETE</p>
                     </div>
                 </div>
 
@@ -153,17 +196,13 @@
                         <div class="grid md:grid-cols-2 gap-5">
                             <div class="space-y-1">
                                 <label class="text-[10px] font-mono text-h-gold uppercase ml-1">Identity</label>
-                                <input type="text" name="Full Name" placeholder="Full Name" required class="tech-input w-full rounded p-3">
+                                <input type="text" name="Full Name" id="input-identity" placeholder="Full Name" required class="tech-input w-full rounded p-3">
+                                <div id="scan-feedback" class="text-[9px] text-h-green font-mono opacity-0 transition-opacity duration-300 ml-1"></div>
                             </div>
                             <div class="space-y-1">
                                 <label class="text-[10px] font-mono text-h-gold uppercase ml-1">Return Frequency</label>
                                 <input type="email" name="Email" placeholder="Official Email" required class="tech-input w-full rounded p-3">
                             </div>
-                        </div>
-                        
-                        <div class="space-y-1">
-                            <label class="text-[10px] font-mono text-h-gold uppercase ml-1">Asset / Organization</label>
-                            <input type="text" name="Company" placeholder="Company Name" required class="tech-input w-full rounded p-3">
                         </div>
                         
                         <div class="space-y-1">
@@ -180,7 +219,7 @@
                             <textarea name="Message" rows="4" placeholder="Describe asset status..." class="tech-input w-full rounded p-3"></textarea>
                         </div>
 
-                        <button type="submit" class="w-full bg-h-gold hover:bg-white text-black font-black py-4 rounded-lg shadow-xl transition uppercase tracking-widest text-base flex items-center justify-center gap-2 group mt-4 transform active:scale-95">
+                        <button type="submit" class="w-full bg-h-gold hover:bg-white text-black font-black py-4 rounded-lg shadow-xl transition uppercase tracking-widest text-base flex items-center justify-center gap-2 mt-4 transform active:scale-95">
                             <i data-lucide="send" class="w-5 h-5 group-hover:translate-x-1 transition"></i> 
                             ESTABLISH UPLINK
                         </button>
@@ -191,22 +230,10 @@
 
             </div>
         </section>
-        
-        <section class="scroll-section min-h-[50vh] flex items-center justify-center pt-32 pb-16" data-bg-id="bg-bujrum">
-            <div class="max-w-4xl mx-auto text-center glass-panel p-10 rounded-xl">
-                <h2 class="text-3xl font-black text-white mb-4">The Conversation Starts Here.</h2>
-                <p class="text-slate-400 text-lg">
-                    We invite you to our secure virtual boardroom. Prepare the file. Let us begin the strategic defense of your asset.
-                </p>
-                <a href="#contactForm" class="mt-6 inline-flex items-center gap-2 text-h-gold font-bold uppercase text-sm border-b border-h-gold/50 hover:text-white transition">
-                    SCROLL TO UPLINK <i data-lucide="arrow-down" class="w-4 h-4"></i>
-                </a>
-            </div>
-        </section>
 
     </main>
     
-    <a href="https://wa.me/436764157846" target="_blank" class="lg:hidden fixed bottom-6 right-6 z-50 bg-h-green text-black p-4 rounded-full shadow-[0_0_20px_#10b981] border-2 border-white animate-pulse-fast active:scale-90 transition">
+    <a href="https://wa.me/436764157846?text=HITNO%20TREBAM%20INZENJERSKU%20PODRSKU%20ZA%20HIDROELEKTRANU" target="_blank" class="lg:hidden fixed bottom-6 right-6 z-50 bg-h-green text-black p-4 rounded-full shadow-[0_0_20px_#10b981] border-2 border-white animate-pulse-fast active:scale-90 transition">
         <i data-lucide="message-circle" class="w-8 h-8"></i>
     </a>
 
@@ -221,7 +248,7 @@
         
         // DYNAMIC BACKGROUND LOGIC (Parallax)
         const bgLayers = document.querySelectorAll('.bg-layer');
-        const sections = document.querySelectorAll('.scroll-section');
+        const sections = document.querySelectorAll('section');
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -235,19 +262,32 @@
             });
         }, { threshold: 0.1 });
 
+        // Dodjeljivanje data-bg-id sekcijama
+        document.querySelector('#contact-form-section').setAttribute('data-bg-id', 'bg-hero');
+        document.querySelector('#bujrum-section').setAttribute('data-bg-id', 'bg-bujrum');
+        document.querySelector('#uplink-form').setAttribute('data-bg-id', 'bg-hero'); // Forma se vraća na generalnu pozadinu
+        
         sections.forEach(section => observer.observe(section));
+
+        // ID SCANNER LOGIC
+        const inputIdentity = document.getElementById('input-identity');
+        const scanFeedback = document.getElementById('scan-feedback');
+        
+        if (inputIdentity) {
+            inputIdentity.addEventListener('focus', () => {
+                scanFeedback.style.opacity = '1';
+                scanFeedback.innerText = '// Reading ID...';
+            });
+            inputIdentity.addEventListener('blur', () => {
+                 scanFeedback.innerText = (inputIdentity.value.length > 5) ? '// ID Verified.' : '// Input Waiting.';
+                 setTimeout(() => { scanFeedback.style.opacity = '0'; }, 1500);
+            });
+        }
 
         // Form Logic
         const form = document.getElementById('contactForm');
         const msg = document.getElementById('formMessage');
-        const menuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const closeBtn = document.getElementById('close-menu');
         
-        function toggleMenu() { mobileMenu.classList.toggle('hidden'); }
-        if (menuBtn) menuBtn.addEventListener('click', toggleMenu);
-        if (closeBtn) closeBtn.addEventListener('click', toggleMenu);
-
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = form.querySelector('button');
@@ -266,6 +306,7 @@
                 msg.classList.remove('hidden');
             } finally { btn.innerHTML = originalText; btn.disabled = false; }
         });
+        
     </script>
 </body>
 </html>
