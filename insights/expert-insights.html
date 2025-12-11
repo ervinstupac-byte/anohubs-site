@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Expert Insights & Intelligence Hub | Anohubs</title>
-    <meta name="description" content="The AnoHUB Intelligence Center: Access thought leadership on hydro integrity, 48% dynamic risk mitigation, and the future of predictive maintenance.">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -20,21 +21,16 @@
                         mono: ['JetBrains Mono', 'monospace'] 
                     },
                     colors: {
+                        'h-blue': '#2563EB',
                         'h-cyan': '#06b6d4', 
-                        'h-green': '#10b981', 
-                        'h-red': '#ef4444', 
-                        'h-yellow': '#facc15', 
-                        'h-purple': '#8b5cf6',
-                        'h-dark': '#020617', 
-                        'h-panel': '#0f172a', 
-                        'h-border': '#1e293b',
-                        'h-cta': '#f59e0b'
+                        'h-dark': '#0B1120',
+                        'h-cta': '#FFAA00',
                     },
                     animation: {
-                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                        'fade-up': 'fadeUp 0.8s ease-out forwards',
                     },
                     keyframes: {
-                        fadeInUp: {
+                        fadeUp: {
                             '0%': { opacity: '0', transform: 'translateY(20px)' },
                             '100%': { opacity: '1', transform: 'translateY(0)' },
                         }
@@ -45,348 +41,305 @@
     </script>
 
     <style>
-        body { background-color: #020617; color: #f8fafc; overflow-x: hidden; }
+        /* VISUAL STYLE: WHITE & CLEAN (From Screenshot) */
+        body { background-color: #ffffff; color: #1e293b; overflow-x: hidden; }
         
-        /* Tech Grid Background */
-        .tech-bg {
-            background-image: 
-                linear-gradient(rgba(6, 182, 212, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(6, 182, 212, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+        /* DARK HEADER */
+        header { background-color: #0B1120; }
+
+        /* HERO TITLE - BLUE GRADIENT */
+        .intelligence-title {
+            background: linear-gradient(to right, #0ea5e9, #2563eb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: clamp(3rem, 10vw, 6rem);
+            font-weight: 900;
+            letter-spacing: -0.05em;
+            line-height: 1;
         }
 
-        /* Hero Background */
-        .hero-insights {
-            background-image: linear-gradient(180deg, rgba(2,6,23,0.8) 0%, rgba(2,6,23,1) 100%), url('../slike/digital_twin_main.png');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+        /* FLOATING FILTER BAR */
+        .filter-bar {
+            background-color: #0B1120;
+            box-shadow: 0 20px 40px -5px rgba(0,0,0,0.3);
         }
 
-        /* Intelligence Card */
+        /* CARDS */
         .insight-card {
-            background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(12px);
-            border: 1px solid #1e293b;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: white;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
             display: flex; flex-direction: column;
         }
         .insight-card:hover {
-            border-color: #06b6d4;
             transform: translateY(-5px);
-            box-shadow: 0 10px 30px -10px rgba(6, 182, 212, 0.15);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            border-color: #3b82f6;
+        }
+        
+        /* MANIFESTO CARD HIGHLIGHT */
+        .manifesto-card {
+            border-left: 6px solid #ef4444;
+            background: #fffafa;
+        }
+        .manifesto-card:hover {
+            border-color: #ef4444;
+            box-shadow: 0 20px 40px -10px rgba(239, 68, 68, 0.2);
         }
 
-        /* Category Tags */
-        .tag-tech { color: #06b6d4; border-color: rgba(6, 182, 212, 0.3); background: rgba(6, 182, 212, 0.1); }
-        .tag-finance { color: #facc15; border-color: rgba(250, 204, 21, 0.3); background: rgba(250, 204, 21, 0.1); }
-        .tag-strategy { color: #8b5cf6; border-color: rgba(139, 92, 246, 0.3); background: rgba(139, 92, 246, 0.1); }
-
-        /* Filter Button */
-        .filter-btn.active {
-            background-color: rgba(6, 182, 212, 0.1);
-            border-color: #06b6d4;
-            color: #06b6d4;
-        }
-
-        /* Scroll Bar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #020617; }
-        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #06b6d4; }
+        .filter-btn.active { color: #38bdf8; }
     </style>
 </head>
 
 <body class="antialiased">
-    <div class="tech-bg"></div>
 
-    <header class="fixed w-full z-50 top-0 border-b border-white/5 bg-h-dark/90 backdrop-blur-md transition-all duration-300" id="navbar">
-        <div class="max-w-7xl mx-auto px-4 h-20 flex justify-between items-center">
-            <a href="../index.html" class="flex items-center gap-3 group">
-                <img src="../logo.svg" alt="AnoHUB" class="h-10 w-auto transition group-hover:brightness-125">
-                <div class="hidden md:block">
-                    <span class="block text-lg font-black tracking-tighter text-white leading-none">ANOHUBS</span>
-                    <span class="block text-[10px] font-mono text-h-cyan tracking-widest uppercase">Intelligence</span>
-                </div>
+    <header class="fixed w-full z-50 top-0 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 h-24 flex justify-between items-center">
+            
+            <a href="../index.html" class="flex flex-col">
+                <span class="text-2xl font-black text-white tracking-tighter">ANOHUBS</span>
+                <span class="text-[10px] font-mono text-h-cyan tracking-[0.2em] uppercase">Intelligence</span>
             </a>
-            <nav class="hidden lg:flex items-center gap-6 text-xs font-bold uppercase tracking-wider">
-                <a href="../index.html" class="text-slate-400 hover:text-white transition">Home</a>
-                <a href="../about-us-vision.html" class="text-slate-400 hover:text-white transition">About</a>
-                <a href="../services.html" class="text-slate-400 hover:text-white transition">Services</a>
-                <a href="expert-insights.html" class="text-h-cyan transition">Insights</a>
-                <a href="../protocol.html" class="group relative inline-flex items-center gap-2 px-5 py-2 bg-h-cyan/10 text-h-cyan border border-h-cyan/50 rounded-full hover:bg-h-cyan hover:text-black transition-all duration-300">
-                    <span>PROTOCOL</span>
-                    <div class="w-1.5 h-1.5 bg-h-cyan rounded-full animate-pulse"></div>
-                </a>
-                <a href="../contact.html" class="px-5 py-2 bg-h-cta text-black rounded-full hover:bg-yellow-400 transition">Contact</a>
+
+            <nav class="hidden lg:flex items-center gap-8 text-xs font-bold uppercase tracking-widest text-slate-400">
+                <a href="../index.html" class="hover:text-white transition">Home</a>
+                <a href="../about-us-vision.html" class="hover:text-white transition">About</a>
+                <a href="../services.html" class="hover:text-white transition">Services</a>
+                <a href="#" class="text-h-cyan">Insights</a>
             </nav>
-            <button id="mobile-menu-btn" class="lg:hidden text-white p-2">
-                <svg data-lucide="menu" class="w-8 h-8"></svg>
-            </button>
-        </div>
-        <div id="mobile-menu" class="hidden lg:hidden absolute top-20 left-0 w-full bg-h-dark border-b border-h-border p-4 flex flex-col gap-4 shadow-2xl">
-            <a href="../index.html" class="text-slate-300 hover:text-h-cyan py-2 border-b border-h-border">Home</a>
-            <a href="../protocol.html" class="text-h-cyan font-bold py-2 border-b border-h-border flex items-center gap-2"><svg data-lucide="shield" class="w-4 h-4"></svg> PROTOCOL</a>
-            <a href="../contact.html" class="text-h-cta font-bold py-2">Contact Us</a>
+
+            <div class="hidden lg:flex items-center gap-6">
+                <a href="../protocol.html" class="text-h-cyan font-bold text-xs tracking-widest uppercase border border-h-cyan/30 px-6 py-3 rounded-full hover:bg-h-cyan hover:text-black transition">Protocol</a>
+                <a href="../contact.html" class="bg-h-cta hover:bg-yellow-400 text-black font-black text-xs uppercase tracking-widest px-8 py-3 rounded-full shadow-lg transition">Contact</a>
+            </div>
+
+            <button class="lg:hidden text-white"><i data-lucide="menu"></i></button>
         </div>
     </header>
 
-    <main class="pt-20">
+    <main class="pt-32 pb-24">
 
-        <section class="hero-insights min-h-[50vh] flex items-center justify-center relative">
-            <div class="max-w-5xl mx-auto px-4 text-center relative z-10">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-black/50 backdrop-blur-md text-xs font-mono text-slate-300 mb-6 animate-[fadeInUp_1s_ease-out]">
-                    <svg data-lucide="database" class="w-3 h-3 text-h-cyan"></svg>
-                    KNOWLEDGE BASE: ONLINE
-                </div>
-                <h1 class="text-5xl md:text-7xl font-black text-white mb-6 tracking-tight leading-none animate-[fadeInUp_1s_ease-out_0.2s_forwards] opacity-0">
-                    EXPERT <br>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-h-cyan to-blue-500">INTELLIGENCE</span>
-                </h1>
-                <p class="text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed mb-10 animate-[fadeInUp_1s_ease-out_0.4s_forwards] opacity-0">
-                    Decoding the complexity of hydro integrity. Access our library of technical briefs, case study breakdowns, and strategic forecasts.
-                </p>
+        <section class="text-center px-4 py-20">
+            <div class="inline-flex items-center gap-2 bg-gray-500/10 border border-gray-200 px-6 py-2 rounded-full mb-10 animate-fade-up">
+                <div class="w-2 h-2 bg-h-cyan rounded-full animate-pulse"></div>
+                <span class="text-[10px] font-mono font-bold text-gray-500 uppercase tracking-widest">Knowledge Base: Online</span>
             </div>
+
+            <h1 class="intelligence-title mb-8 animate-fade-up" style="animation-delay: 0.1s;">
+                INTELLIGENCE
+            </h1>
+
+            <p class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto font-light animate-fade-up" style="animation-delay: 0.2s;">
+                Decoding the complexity of hydro integrity. Access our library of technical briefs, case study breakdowns, and strategic forecasts.
+            </p>
         </section>
 
-        <section class="max-w-7xl mx-auto px-4 mb-12 sticky top-24 z-40">
-            <div class="bg-h-dark/90 backdrop-blur-md border border-h-border p-4 rounded-xl flex flex-col md:flex-row justify-between items-center gap-4 shadow-2xl animate-[fadeInUp_1s_ease-out_0.6s_forwards] opacity-0">
+        <section class="max-w-6xl mx-auto px-4 -mt-4 mb-24 relative z-20 animate-fade-up" style="animation-delay: 0.3s;">
+            <div class="filter-bar rounded-2xl p-6 flex flex-col md:flex-row justify-between items-center gap-6">
                 
-                <div class="flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0">
-                    <button class="filter-btn active px-4 py-2 rounded border border-transparent text-xs font-bold text-slate-400 hover:text-white uppercase transition font-mono" onclick="filterInsights('all')">All Briefs</button>
-                    <button class="filter-btn px-4 py-2 rounded border border-transparent text-xs font-bold text-slate-400 hover:text-white uppercase transition font-mono" onclick="filterInsights('tech')">Technical</button>
-                    <button class="filter-btn px-4 py-2 rounded border border-transparent text-xs font-bold text-slate-400 hover:text-white uppercase transition font-mono" onclick="filterInsights('finance')">Financial</button>
-                    <button class="filter-btn px-4 py-2 rounded border border-transparent text-xs font-bold text-slate-400 hover:text-white uppercase transition font-mono" onclick="filterInsights('strategy')">Strategic</button>
+                <div class="flex flex-wrap justify-center gap-4 md:gap-8 text-[10px] md:text-xs font-bold font-mono uppercase tracking-widest text-gray-500">
+                    <button class="filter-btn active hover:text-white transition" onclick="filterInsights('all')">All Briefs</button>
+                    <button class="filter-btn hover:text-white transition" onclick="filterInsights('tech')">Technical</button>
+                    <button class="filter-btn hover:text-white transition" onclick="filterInsights('finance')">Financial</button>
+                    <button class="filter-btn hover:text-white transition" onclick="filterInsights('strategy')">Strategic</button>
                 </div>
 
                 <div class="relative w-full md:w-64">
-                    <svg data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500"></svg>
-                    <input type="text" id="search-input" placeholder="Search keywords..." class="w-full bg-slate-900 border border-h-border rounded-lg pl-10 pr-4 py-2 text-sm text-white focus:border-h-cyan focus:outline-none transition">
+                    <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500"></i>
+                    <input type="text" id="search-input" placeholder="Search keywords..." 
+                           class="w-full bg-[#162032] text-white text-xs rounded-full py-3 pl-10 pr-4 border border-gray-800 focus:border-h-cyan focus:outline-none transition">
                 </div>
             </div>
         </section>
 
-        <section class="max-w-7xl mx-auto px-4 mb-24">
+        <section class="max-w-7xl mx-auto px-6">
             <div id="insights-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="col-span-full text-center py-20 text-slate-500 font-mono animate-pulse">
-                    DECRYPTING INTELLIGENCE FEED...
                 </div>
-            </div>
-        </section>
-
-        <section class="py-24 bg-h-panel border-t border-h-border relative overflow-hidden">
-            <div class="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-h-cyan/5 to-transparent pointer-events-none"></div>
-
-            <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
-                <div class="mb-8">
-                    <span class="bg-h-cyan/10 text-h-cyan px-3 py-1 rounded text-xs font-bold uppercase tracking-widest border border-h-cyan/20">Monthly Digest</span>
-                </div>
-                <h2 class="text-3xl md:text-4xl font-black text-white mb-6">Stay Ahead of the Curve</h2>
-                <p class="text-slate-300 mb-10 max-w-xl mx-auto text-lg">
-                    Don't let the Execution Gap catch you off guard. Get our latest technical briefs and risk analysis reports delivered directly to your secure inbox.
-                </p>
-                
-                <form class="flex flex-col sm:flex-row gap-4 justify-center max-w-lg mx-auto" action="https://formspree.io/f/xqaywlaq" method="POST">
-                    <input type="email" name="email" placeholder="Enter business email" class="px-6 py-4 rounded-lg bg-h-dark border border-h-border text-white placeholder-slate-500 w-full outline-none focus:border-h-cyan transition">
-                    <input type="hidden" name="_subject" value="Newsletter Subscription">
-                    <button type="submit" class="px-8 py-4 bg-h-cyan text-black font-bold rounded-lg hover:bg-cyan-400 transition shadow-lg whitespace-nowrap uppercase tracking-wider">
-                        Subscribe
-                    </button>
-                </form>
-                <p class="text-xs text-slate-500 mt-6 font-mono">Zero spam. Unsubscribe anytime. <a href="../privacy-policy.html" class="text-h-cyan hover:underline">Privacy Protocol</a>.</p>
-            </div>
         </section>
 
     </main>
 
-    <footer class="bg-black border-t border-slate-900 py-12 text-center">
-        <div class="max-w-7xl mx-auto px-4">
-            <p class="text-slate-600 text-xs font-mono">© 2025 Anohubs Inc. | INTELLIGENCE DIVISION</p>
+    <footer class="bg-h-dark text-white py-16 border-t border-gray-900">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <p class="text-xs font-mono text-gray-600">© 2025 Anohubs Inc. | INTELLIGENCE DIVISION</p>
         </div>
     </footer>
 
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <script>
         lucide.createIcons();
-        
-        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
-            document.getElementById('mobile-menu').classList.toggle('hidden');
-        });
 
-        // === REAL ARTICLE DATA (SA ARTIKLOM 17) ===
+        // === FULL ARTICLE DATABASE (17 ITEMS) ===
         const insightsData = [
-            // == NOVI ARTIKL 17 (Ovdje je tvoj članak!) ==
             {
                 id: 17,
+                tag: 'MANIFESTO',
                 cat: 'strategy',
-                tag: 'MANIFESTO', // Oznaka
-                date: 'DEC 11, 2025',
-                read: '12 MIN',
                 title: 'THE CULTURAL BETRAYAL: Corporate Violence Against Assets',
-                desc: 'The Full Manifest on Low-Bid Policy and Engineered Failure. It is an act of corporate violence against your long-term projected lifespan.',
-                link: 'article-17-cultural-betrayal.html' // Link na fajl koji smo napravili
+                desc: 'Why the Low-Bid Policy is an act of corporate violence. The 48% Risk and Zero-Tolerance Protocol.',
+                date: 'DEC 11, 2025',
+                link: 'article-17-cultural-betrayal.html',
+                read: '12 MIN'
             },
-            // == OSTALI ARTIKLI ==
             {
                 id: 16,
-                cat: 'strategy',
                 tag: 'LEADERSHIP',
-                date: 'DEC 05, 2025',
-                read: '4 MIN',
+                cat: 'strategy',
                 title: 'The AI Paradox: Faster Tech, Harder Physics',
                 desc: 'Why the accelerating pace of AI requires a return to unwavering engineering discipline.',
-                link: 'article-16-ai-paradox.html'
-            },
-            {
-                id: 1,
-                cat: 'strategy',
-                tag: 'STRATEGY',
-                date: 'DEC 01, 2025',
-                read: '7 MIN',
-                title: 'Engineering Immunity: The New Standard',
-                desc: 'Why traditional maintenance fails and how the "Immunity" protocol neutralizes 48% of dynamic risks.',
-                link: 'article-1-engineering-immunity.html'
-            },
-            {
-                id: 2,
-                cat: 'finance',
-                tag: 'FINANCE',
-                date: 'NOV 28, 2025',
-                read: '5 MIN',
-                title: 'The Hidden Cost of the "Low Bid"',
-                desc: 'A forensic breakdown of why the cheapest component often becomes the most expensive failure.',
-                link: 'article-2-low-bid.html'
-            },
-            {
-                id: 3,
-                cat: 'tech',
-                tag: 'TECHNICAL',
-                date: 'NOV 15, 2025',
-                read: '6 MIN',
-                title: 'Winter Operation Challenges',
-                desc: 'Navigating the specific hydraulic and mechanical stresses of cold-weather hydro operation.',
-                link: 'article-3-winter-challenges.html'
-            },
-            {
-                id: 4,
-                cat: 'strategy',
-                tag: 'LEADERSHIP',
-                date: 'NOV 10, 2025',
-                read: '8 MIN',
-                title: 'DACH Region Leadership Insights',
-                desc: 'Lessons learned from the high-precision standards of the German, Austrian, and Swiss hydro sectors.',
-                link: 'article-4-dach-leadership.html'
-            },
-            {
-                id: 5,
-                cat: 'strategy',
-                tag: 'HUMAN FACTOR',
-                date: 'OCT 25, 2025',
-                read: '5 MIN',
-                title: 'The Human Sensor',
-                desc: 'Why experienced operators often detect faults before sensors, and how to digitize their intuition.',
-                link: 'article-5-human-sensor.html'
-            },
-            {
-                id: 6,
-                cat: 'finance',
-                tag: 'RISK',
-                date: 'OCT 12, 2025',
-                read: '6 MIN',
-                title: 'The Ticking Bomb of Aging Assets',
-                desc: 'Strategies for extending the life of legacy turbines without total replacement.',
-                link: 'article-6-ticking-bomb.html'
-            },
-            {
-                id: 7,
-                cat: 'strategy',
-                tag: 'STRATEGY',
-                date: 'SEP 30, 2025',
-                read: '7 MIN',
-                title: 'Fortress Maintenance',
-                desc: 'Building a defensive maintenance perimeter that prevents cascading failures.',
-                link: 'article-7-fortress-maintenance.html'
-            },
-            {
-                id: 8,
-                cat: 'strategy',
-                tag: 'PHILOSOPHY',
-                date: 'SEP 15, 2025',
-                read: '5 MIN',
-                title: 'The Symbiosis Standard',
-                desc: 'Aligning mechanical integrity with ecological responsibility for sustainable hydro.',
-                link: 'article-8-symbiosis-standard.html'
-            },
-            {
-                id: 9,
-                cat: 'strategy',
-                tag: 'STRATEGY',
-                date: 'AUG 28, 2025',
-                read: '6 MIN',
-                title: 'A Holistic View of Hydro Assets',
-                desc: 'Moving beyond component-level fixes to understand the entire hydraulic system as one organism.',
-                link: 'article-9-holistic-view.html'
-            },
-            {
-                id: 10,
-                cat: 'tech',
-                tag: 'DIAGNOSTICS',
-                date: 'AUG 14, 2025',
-                read: '4 MIN',
-                title: 'The Hydro Check Engine Light',
-                desc: 'Decoding the early warning signals your turbine is sending before critical failure.',
-                link: 'article-10-check-engine-light.html'
-            },
-            {
-                id: 11,
-                cat: 'tech',
-                tag: 'DIGITAL TWIN',
-                date: 'JUL 30, 2025',
-                read: '8 MIN',
-                title: 'Digital Twin Implementation',
-                desc: 'How to successfully deploy a virtual replica of your plant for real-time stress testing.',
-                link: 'article-11-digital-twin.html'
-            },
-            {
-                id: 12,
-                cat: 'tech',
-                tag: 'AUDIT',
-                date: 'JUL 15, 2025',
-                read: '6 MIN',
-                title: 'M-E Synergy Audit Explained',
-                desc: 'Understanding the interplay between Mechanical vibration and Electrical discharge.',
-                link: 'article-12-me-synergy-audit.html'
-            },
-            {
-                id: 13,
-                cat: 'tech',
-                tag: 'EROSION',
-                date: 'JUN 28, 2025',
-                read: '5 MIN',
-                title: 'Sediment & Silt Management',
-                desc: 'Advanced coating and design strategies to combat abrasive wear in high-sediment rivers.',
-                link: 'article-13-sediment-silt.html'
-            },
-            {
-                id: 14,
-                cat: 'tech',
-                tag: 'CFD',
-                date: 'JUN 10, 2025',
-                read: '7 MIN',
-                title: '3D Flow Analysis',
-                desc: 'Using Computational Fluid Dynamics to visualize and correct turbulence within the draft tube.',
-                link: 'article-14-3d-flow-analysis.html'
+                date: 'DEC 05, 2025',
+                link: 'article-16-ai-paradox.html',
+                read: '4 MIN'
             },
             {
                 id: 15,
-                cat: 'strategy',
                 tag: 'GOVERNANCE',
-                date: 'MAY 25, 2025',
-                read: '9 MIN',
+                cat: 'strategy',
                 title: 'Bridging the SCADA-CEO Gap',
                 desc: 'Translating raw sensor data into executive-level decision intelligence.',
-                link: 'article-15-scada-ceo-gap.html'
+                date: 'MAY 25, 2025',
+                link: 'article-15-scada-ceo-gap.html',
+                read: '9 MIN'
+            },
+            {
+                id: 14,
+                tag: 'TECHNICAL',
+                cat: 'tech',
+                title: '3D Flow Analysis & CFD',
+                desc: 'Using Computational Fluid Dynamics to visualize and correct turbulence within the draft tube.',
+                date: 'JUN 10, 2025',
+                link: 'article-14-3d-flow-analysis.html',
+                read: '7 MIN'
+            },
+            {
+                id: 13,
+                tag: 'EROSION',
+                cat: 'tech',
+                title: 'Sediment & Silt Management',
+                desc: 'Advanced coating and design strategies to combat abrasive wear in high-sediment rivers.',
+                date: 'JUN 28, 2025',
+                link: 'article-13-sediment-silt.html',
+                read: '5 MIN'
+            },
+            {
+                id: 12,
+                tag: 'AUDIT',
+                cat: 'tech',
+                title: 'M-E Synergy Audit Explained',
+                desc: 'Understanding the interplay between Mechanical vibration and Electrical discharge.',
+                date: 'JUL 15, 2025',
+                link: 'article-12-me-synergy-audit.html',
+                read: '6 MIN'
+            },
+            {
+                id: 11,
+                tag: 'DIGITAL TWIN',
+                cat: 'tech',
+                title: 'Digital Twin Implementation',
+                desc: 'How to successfully deploy a virtual replica of your plant for real-time stress testing.',
+                date: 'JUL 30, 2025',
+                link: 'article-11-digital-twin.html',
+                read: '8 MIN'
+            },
+            {
+                id: 10,
+                tag: 'DIAGNOSTICS',
+                cat: 'tech',
+                title: 'The Hydro Check Engine Light',
+                desc: 'Decoding the early warning signals your turbine is sending before critical failure.',
+                date: 'AUG 14, 2025',
+                link: 'article-10-check-engine-light.html',
+                read: '4 MIN'
+            },
+            {
+                id: 9,
+                tag: 'STRATEGY',
+                cat: 'strategy',
+                title: 'A Holistic View of Hydro Assets',
+                desc: 'Moving beyond component-level fixes to understand the entire hydraulic system as one organism.',
+                date: 'AUG 28, 2025',
+                link: 'article-9-holistic-view.html',
+                read: '6 MIN'
+            },
+            {
+                id: 8,
+                tag: 'PHILOSOPHY',
+                cat: 'strategy',
+                title: 'The Symbiosis Standard',
+                desc: 'Aligning mechanical integrity with ecological responsibility for sustainable hydro.',
+                date: 'SEP 15, 2025',
+                link: 'article-8-symbiosis-standard.html',
+                read: '5 MIN'
+            },
+            {
+                id: 7,
+                tag: 'STRATEGY',
+                cat: 'strategy',
+                title: 'Fortress Maintenance',
+                desc: 'Building a defensive maintenance perimeter that prevents cascading failures.',
+                date: 'SEP 30, 2025',
+                link: 'article-7-fortress-maintenance.html',
+                read: '7 MIN'
+            },
+            {
+                id: 6,
+                tag: 'RISK',
+                cat: 'finance',
+                title: 'The Ticking Bomb of Aging Assets',
+                desc: 'Strategies for extending the life of legacy turbines without total replacement.',
+                date: 'OCT 12, 2025',
+                link: 'article-6-ticking-bomb.html',
+                read: '6 MIN'
+            },
+            {
+                id: 5,
+                tag: 'HUMAN FACTOR',
+                cat: 'strategy',
+                title: 'The Human Sensor',
+                desc: 'Why experienced operators often detect faults before sensors, and how to digitize their intuition.',
+                date: 'OCT 25, 2025',
+                link: 'article-5-human-sensor.html',
+                read: '5 MIN'
+            },
+            {
+                id: 4,
+                tag: 'LEADERSHIP',
+                cat: 'strategy',
+                title: 'DACH Region Leadership Insights',
+                desc: 'Lessons learned from the high-precision standards of the German, Austrian, and Swiss hydro sectors.',
+                date: 'NOV 10, 2025',
+                link: 'article-4-dach-leadership.html',
+                read: '8 MIN'
+            },
+            {
+                id: 3,
+                tag: 'TECHNICAL',
+                cat: 'tech',
+                title: 'Winter Operation Challenges',
+                desc: 'Navigating the specific hydraulic and mechanical stresses of cold-weather hydro operation.',
+                date: 'NOV 15, 2025',
+                link: 'article-3-winter-challenges.html',
+                read: '6 MIN'
+            },
+            {
+                id: 2,
+                tag: 'FINANCE',
+                cat: 'finance',
+                title: 'The Hidden Cost of the "Low Bid"',
+                desc: 'A forensic breakdown of why the cheapest component often becomes the most expensive failure.',
+                date: 'NOV 28, 2025',
+                link: 'article-2-low-bid.html',
+                read: '5 MIN'
+            },
+            {
+                id: 1,
+                tag: 'STRATEGY',
+                cat: 'strategy',
+                title: 'Engineering Immunity: The New Standard',
+                desc: 'Why traditional maintenance fails and how the "Immunity" protocol neutralizes 48% of dynamic risks.',
+                date: 'DEC 01, 2025',
+                link: 'article-1-engineering-immunity.html',
+                read: '7 MIN'
             }
         ];
 
@@ -396,31 +349,46 @@
 
         function renderInsights(data) {
             grid.innerHTML = '';
+            
+            if (data.length === 0) {
+                grid.innerHTML = '<div class="col-span-full text-center text-gray-400 py-10 font-mono">No intelligence briefs found. Try a different keyword.</div>';
+                return;
+            }
+
             data.forEach(item => {
-                // Determine tag style
-                let tagClass = 'tag-tech';
-                if(item.cat === 'finance') tagClass = 'tag-finance';
-                if(item.cat === 'strategy') tagClass = 'tag-strategy';
+                let tagColor = 'text-h-cyan border-h-cyan/30 bg-h-cyan/10';
+                if(item.cat === 'finance') tagColor = 'text-yellow-600 border-yellow-500/30 bg-yellow-100';
+                if(item.tag === 'MANIFESTO') tagColor = 'text-red-600 border-red-500/30 bg-red-100 font-black';
+
+                let cardClass = item.tag === 'MANIFESTO' ? 'insight-card manifesto-card' : 'insight-card';
 
                 const card = document.createElement('a');
                 card.href = item.link;
-                card.className = 'insight-card rounded-xl p-6 group block animate-[fadeInUp_0.5s_ease-out]';
+                card.className = `block rounded-xl p-8 flex flex-col h-full ${cardClass}`;
+                
                 card.innerHTML = `
-                    <div class="flex justify-between items-start mb-4">
-                        <span class="px-2 py-1 rounded text-[10px] font-bold uppercase border ${tagClass}">${item.tag}</span>
-                        <span class="text-[10px] font-mono text-slate-500">${item.read} READ</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-h-cyan transition leading-tight">${item.title}</h3>
-                    <p class="text-sm text-slate-400 mb-6 line-clamp-3 flex-grow">${item.desc}</p>
-                    <div class="flex justify-between items-center border-t border-slate-800 pt-4 mt-auto">
-                        <span class="text-[10px] font-mono text-slate-600">${item.date}</span>
-                        <span class="text-xs font-bold text-white flex items-center gap-2 group-hover:gap-3 transition-all">
-                            READ BRIEF <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    <div class="flex justify-between items-start mb-6">
+                        <span class="px-3 py-1 rounded text-[10px] font-bold uppercase border ${tagColor}">
+                            ${item.tag}
                         </span>
+                        <span class="text-[10px] font-mono text-gray-400">${item.read} READ</span>
+                    </div>
+                    
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4 leading-tight group-hover:text-h-blue transition">
+                        ${item.title}
+                    </h3>
+                    
+                    <p class="text-sm text-gray-500 leading-relaxed mb-8 flex-grow">
+                        ${item.desc}
+                    </p>
+                    
+                    <div class="pt-6 border-t border-gray-100 flex items-center gap-2 text-xs font-bold text-gray-900 uppercase tracking-widest group-hover:gap-4 transition-all">
+                        Read Brief <i data-lucide="arrow-right" class="w-4 h-4 text-h-cyan"></i>
                     </div>
                 `;
                 grid.appendChild(card);
             });
+            lucide.createIcons();
         }
 
         // Filter Logic
@@ -441,25 +409,14 @@
             const term = e.target.value.toLowerCase();
             const filtered = insightsData.filter(item => 
                 item.title.toLowerCase().includes(term) || 
-                item.desc.toLowerCase().includes(term)
+                item.desc.toLowerCase().includes(term) ||
+                item.tag.toLowerCase().includes(term)
             );
             renderInsights(filtered);
         });
 
         // Init
         renderInsights(insightsData);
-
-        // Navbar Scroll
-        window.addEventListener('scroll', () => {
-            const nav = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                nav.classList.add('shadow-lg', 'bg-h-dark/95');
-                nav.classList.remove('bg-h-dark/90');
-            } else {
-                nav.classList.remove('shadow-lg', 'bg-h-dark/95');
-                nav.classList.add('bg-h-dark/90');
-            }
-        });
     </script>
 </body>
 </html>
