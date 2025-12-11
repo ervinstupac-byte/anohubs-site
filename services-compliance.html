@@ -2,9 +2,9 @@
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Regulatory Compliance Firewall | AnoHUB Services</title>
-    <meta name="description" content="Automate complex compliance reporting. Our platform generates audit-ready documentation verifying adherence to regulations.">
+    <meta name="description" content="Automated regulatory reporting and audit defense. We provide the irrefutable data needed to secure your operating license.">
     
     <script type="application/ld+json">
     {
@@ -16,10 +16,8 @@
     }
     </script>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -31,8 +29,16 @@
                         'h-yellow': '#facc15', 'h-purple': '#8b5cf6', 'h-dark': '#020617', 
                         'h-panel': '#0f172a', 'h-border': '#1e293b', 'h-cta': '#f59e0b'
                     },
-                    animation: { 'fade-in-up': 'fadeInUp 0.8s ease-out forwards' },
-                    keyframes: { fadeInUp: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } } }
+                    animation: { 
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                        'pulse-shield': 'pulseShield 3s infinite',
+                        'scan-vertical': 'scanVertical 4s linear infinite'
+                    },
+                    keyframes: { 
+                        fadeInUp: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+                        pulseShield: { '0%, 100%': { boxShadow: '0 0 20px rgba(139, 92, 246, 0.2)' }, '50%': { boxShadow: '0 0 50px rgba(139, 92, 246, 0.5)' } },
+                        scanVertical: { '0%': { top: '-10%' }, '100%': { top: '110%' } }
+                    }
                 }
             }
         }
@@ -41,112 +47,140 @@
     <style>
         body { background-color: #020617; color: #f8fafc; overflow-x: hidden; }
         
-        /* Tech Grid Background */
+        /* NOISE & GRID */
+        .noise-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+            pointer-events: none; z-index: 50; opacity: 0.4;
+        }
         .tech-bg {
             background-image: linear-gradient(rgba(139, 92, 246, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(139, 92, 246, 0.03) 1px, transparent 1px);
             background-size: 50px 50px; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
         }
 
-        /* Hero Background */
+        /* HERO - BIHAC KANAL */
         .hero-compliance {
-            background-image: linear-gradient(180deg, rgba(2,6,23,0.8) 0%, rgba(2,6,23,1) 100%), url('bihackanal.jpg');
+            background-image: linear-gradient(180deg, rgba(2,6,23,0.7) 0%, rgba(2,6,23,1) 100%), url('slike/bihackanal.jpg');
             background-size: cover; background-position: center; background-attachment: fixed;
         }
 
-        /* Glass Cards */
+        /* GLASS CARDS (PURPLE THEME) */
         .glass-card {
             background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(12px);
-            border: 1px solid rgba(139, 92, 246, 0.3); transition: all 0.3s ease;
+            border: 1px solid rgba(139, 92, 246, 0.2); transition: all 0.3s ease;
         }
         .glass-card:hover { border-color: #8b5cf6; box-shadow: 0 0 30px rgba(139, 92, 246, 0.15); transform: translateY(-5px); }
 
-        /* --- PRINT OPTIMIZATION --- */
-        @media print {
-            body { background-color: white !important; color: black !important; font-family: serif; }
-            .tech-bg, #navbar, footer, #mobile-sticky-cta { display: none !important; }
-            main { padding-top: 0 !important; }
-            .hero-compliance { height: auto !important; background: none !important; color: black !important; padding: 0 !important; }
-            h1, h2, h3, p { color: black !important; }
-            .glass-card, .bg-h-dark, .bg-h-panel { background: white !important; border: 1px solid #ccc !important; color: black !important; box-shadow: none !important; page-break-inside: avoid; }
-            body::before { content: "ANOHUBS SERVICE DATA SHEET: REGULATORY COMPLIANCE"; display: block; border-bottom: 2px solid black; margin-bottom: 20px; font-weight: bold; }
+        /* SHIELD VISUALIZER */
+        .shield-container {
+            position: relative; width: 300px; height: 350px; margin: 0 auto;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .shield-scan-line {
+            position: absolute; width: 100%; height: 2px; background: #8b5cf6;
+            box-shadow: 0 0 15px #8b5cf6; animation: scanVertical 3s linear infinite; opacity: 0.7;
         }
     </style>
 </head>
 
 <body class="antialiased">
+    
+    <div class="noise-overlay"></div>
     <div class="tech-bg"></div>
 
     <header class="fixed w-full z-50 top-0 border-b border-white/5 bg-h-dark/90 backdrop-blur-md transition-all duration-300" id="navbar">
+        <div class="relative bg-h-red/10 border-b border-h-red/20 overflow-hidden">
+            <div class="max-w-7xl mx-auto px-4 py-2 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <span class="flex h-2 w-2 relative flex-shrink-0">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-h-red opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-h-red"></span>
+                    </span>
+                    <span class="text-[10px] font-mono text-h-red font-bold tracking-widest uppercase">READ MANIFESTO:</span>
+                    <a href="insights/article-17-cultural-betrayal.html" class="text-xs text-white font-bold hover:underline">The Cultural Betrayal &rarr;</a>
+                </div>
+            </div>
+        </div>
+
         <div class="max-w-7xl mx-auto px-4 h-20 flex justify-between items-center">
             <a href="index.html" class="flex items-center gap-3 group">
-                <img src="logo.svg" alt="AnoHUB" class="h-10 w-auto transition group-hover:brightness-125">
+                <img src="logo.svg" alt="AnoHUB" class="h-10 transition group-hover:brightness-125">
                 <div class="hidden md:block">
                     <span class="block text-lg font-black tracking-tighter text-white leading-none">ANOHUBS</span>
                     <span class="block text-[10px] font-mono text-h-purple tracking-widest uppercase">Compliance</span>
                 </div>
             </a>
-            <nav class="hidden lg:flex items-center gap-6 text-xs font-bold uppercase tracking-wider">
-                <a href="index.html" class="text-slate-400 hover:text-white transition">Home</a>
-                <a href="services.html" class="text-slate-400 hover:text-white transition">Services</a>
-                <a href="protocol.html" class="group relative inline-flex items-center gap-2 px-5 py-2 bg-h-purple/10 text-h-purple border border-h-purple/50 rounded-full hover:bg-h-purple hover:text-black transition-all duration-300">
+            <nav class="hidden lg:flex items-center gap-6 text-xs font-bold uppercase tracking-wider text-slate-400">
+                <a href="index.html" class="hover:text-white transition">Home</a>
+                <a href="services.html" class="hover:text-white transition flex items-center gap-2"><i data-lucide="arrow-left" class="w-3 h-3"></i> Services</a>
+                <a href="protocol.html" class="group relative inline-flex items-center gap-2 px-5 py-2 bg-h-purple/10 text-h-purple border border-h-purple/50 rounded-full hover:bg-h-purple hover:text-black transition-all">
                     <span>PROTOCOL</span>
                     <div class="w-1.5 h-1.5 bg-h-purple rounded-full animate-pulse"></div>
                 </a>
-                <a href="contact.html" class="px-5 py-2 bg-h-cta text-black rounded-full hover:bg-yellow-400 transition">Contact</a>
+                <a href="contact.html" class="px-5 py-2 bg-white text-black rounded-full hover:bg-gray-200 transition">Contact</a>
             </nav>
-            <button id="mobile-menu-btn" class="lg:hidden text-white p-2"><svg data-lucide="menu" class="w-8 h-8"></svg></button>
+            <button id="mobile-menu-btn" class="lg:hidden text-white p-2"><i data-lucide="menu" class="w-8 h-8"></i></button>
         </div>
-        <div id="mobile-menu" class="hidden lg:hidden absolute top-20 left-0 w-full bg-h-dark border-b border-h-border p-4 flex flex-col gap-4 shadow-2xl">
-            <a href="services.html" class="text-slate-300 hover:text-h-purple py-2 border-b border-h-border flex items-center gap-2"><svg data-lucide="arrow-left" class="w-4 h-4"></svg> Back to Services</a>
-            <a href="contact.html" class="text-h-cta font-bold py-2">Contact Us</a>
+        
+        <div id="mobile-menu" class="fixed inset-0 bg-h-dark/95 backdrop-blur-xl z-40 transform translate-x-full transition-transform duration-300 flex flex-col justify-center items-center gap-8 lg:hidden">
+            <a href="services.html" class="text-xl font-bold text-slate-300 hover:text-h-purple uppercase flex items-center gap-2 mobile-link"><i data-lucide="arrow-left" class="w-5 h-5"></i> Back to Services</a>
+            <a href="contact.html" class="text-xl font-bold text-black bg-h-purple px-8 py-3 rounded mobile-link">CONTACT US</a>
         </div>
     </header>
 
     <main class="pt-20">
 
-        <section class="hero-compliance min-h-[60vh] flex items-center justify-center relative">
-            <div class="max-w-5xl mx-auto px-4 text-center relative z-10">
-                <a href="services.html" class="inline-flex items-center gap-2 text-h-purple hover:text-white mb-6 transition text-sm font-mono uppercase tracking-widest">
-                    <svg data-lucide="arrow-left" class="w-4 h-4"></svg> Operational Capabilities
-                </a>
+        <section class="hero-compliance min-h-[70vh] flex items-center justify-center relative">
+            <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAwIDQwIDQwIj48cGF0aCBkPSJNMCAwaDQwdjQwSDB6IiBmaWxsPSJub25lIi8+PHBhdGggZD0iTTAgNDBoNDBNNDAgMHY0MCIgc3Ryb2tlPSJyZ2JhKDEzOSwgOTIsIDI0NiwgMC4xKSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9zdmc+')] opacity-20"></div>
+
+            <div class="max-w-6xl mx-auto px-4 text-center relative z-10">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-h-purple/30 bg-black/60 backdrop-blur-md text-xs font-mono text-h-purple mb-8 shadow-[0_0_20px_rgba(139,92,246,0.2)]">
+                    <span class="w-2 h-2 bg-h-purple rounded-full animate-pulse"></span>
+                    STATUS: SECURE VAULT
+                </div>
                 
-                <h1 class="text-5xl md:text-7xl font-black text-white mb-6 tracking-tight leading-none animate-[fadeInUp_1s_ease-out]">
+                <h1 class="text-6xl md:text-9xl font-black text-white mb-6 tracking-tighter leading-none drop-shadow-2xl animate-fade-in-up">
                     REGULATORY <br>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-h-purple to-blue-500">FIREWALL</span>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-h-purple to-indigo-500">FIREWALL</span>
                 </h1>
                 
-                <p class="text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed mb-10 animate-[fadeInUp_1s_ease-out_0.2s_forwards] opacity-0">
+                <p class="text-xl md:text-2xl text-slate-300 max-w-3xl mx-auto leading-relaxed mb-10 font-light animate-fade-in-up opacity-0" style="animation-delay: 0.2s;">
                     Automated, transparent, and irrefutable. We turn complex legal requirements into a verified digital defense for your operating license.
                 </p>
-                
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto animate-[fadeInUp_1s_ease-out_0.4s_forwards] opacity-0">
-                    <div class="bg-black/50 border border-slate-700 p-3 rounded text-center"><div class="text-h-purple font-black text-xl">ISO</div><div class="text-[10px] text-slate-400 uppercase">Standard 55000</div></div>
-                    <div class="bg-black/50 border border-slate-700 p-3 rounded text-center"><div class="text-h-purple font-black text-xl">GDPR</div><div class="text-[10px] text-slate-400 uppercase">Data Secure</div></div>
-                    <div class="bg-black/50 border border-slate-700 p-3 rounded text-center"><div class="text-h-purple font-black text-xl">IHA</div><div class="text-[10px] text-slate-400 uppercase">Sustainability</div></div>
-                    <div class="bg-black/50 border border-slate-700 p-3 rounded text-center"><div class="text-h-purple font-black text-xl">100%</div><div class="text-[10px] text-slate-400 uppercase">Audit Pass Rate</div></div>
+
+                <div class="flex flex-wrap justify-center gap-4 animate-fade-in-up opacity-0" style="animation-delay: 0.4s;">
+                    <div class="bg-black/50 border border-slate-700 px-6 py-2 rounded-lg flex items-center gap-2">
+                        <span class="text-h-purple font-black">ISO</span> <span class="text-xs text-slate-400">55000 READY</span>
+                    </div>
+                    <div class="bg-black/50 border border-slate-700 px-6 py-2 rounded-lg flex items-center gap-2">
+                        <span class="text-h-purple font-black">GDPR</span> <span class="text-xs text-slate-400">DATA SECURE</span>
+                    </div>
+                    <div class="bg-black/50 border border-slate-700 px-6 py-2 rounded-lg flex items-center gap-2">
+                        <span class="text-h-purple font-black">100%</span> <span class="text-xs text-slate-400">AUDIT DEFENSE</span>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section class="py-20 bg-h-dark border-b border-h-border">
+        <section class="py-24 bg-h-dark border-b border-h-border">
             <div class="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-16 items-center">
                 <div class="order-2 lg:order-1">
-                    <div class="glass-card p-8 rounded-xl border-l-4 border-l-h-purple">
-                        <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-3">
-                            <svg data-lucide="scale" class="w-6 h-6 text-h-purple"></svg> The Regulatory Minefield
+                    <div class="glass-card p-10 rounded-2xl border-l-4 border-l-h-purple">
+                        <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                            <i data-lucide="scale" class="w-6 h-6 text-h-purple"></i> The Legal Minefield
                         </h2>
-                        <p class="text-slate-300 leading-relaxed mb-6">
-                            Compliance is an act of <strong>integrity</strong>. In the modern energy sector, a single missing report or unverifiable maintenance log can lead to license revocation. The "Organizational Execution Gap" often results in data silos where critical safety proofs are lost.
+                        <p class="text-slate-300 leading-relaxed mb-6 text-lg">
+                            Compliance is an act of <strong>integrity</strong>. In the modern energy sector, a single missing report or unverifiable maintenance log can lead to license revocation.
                         </p>
-                        <p class="text-slate-300 leading-relaxed">
-                            We don't just ensure boxes are ticked; we provide the verifiable documentation needed to defend your assets in legal or regulatory conflicts.
+                        <p class="text-slate-300 leading-relaxed text-lg border-l-2 border-slate-700 pl-4">
+                            The "Organizational Execution Gap" creates data silos where critical safety proofs are lost. We don't just ensure boxes are ticked; we provide the verifiable documentation needed to defend your assets in court.
                         </p>
                     </div>
                 </div>
                 <div class="order-1 lg:order-2 text-center lg:text-left">
-                    <h3 class="text-sm font-mono text-h-purple uppercase tracking-widest mb-2">Our Approach</h3>
-                    <h2 class="text-4xl font-black text-white mb-6">Audit-Ready at <br>Any Moment.</h2>
-                    <p class="text-slate-400">Stop scrambling before inspections. Our system maintains a perpetual state of readiness.</p>
+                    <h3 class="text-sm font-mono text-h-purple uppercase tracking-widest mb-4">The Solution</h3>
+                    <h2 class="text-5xl font-black text-white mb-6 leading-tight">Audit-Ready at <br>Any Moment.</h2>
+                    <p class="text-slate-400 text-lg">Stop scrambling before inspections. Our system maintains a perpetual state of readiness.</p>
                 </div>
             </div>
         </section>
@@ -155,44 +189,75 @@
             <div class="max-w-7xl mx-auto px-4 relative z-10">
                 <div class="text-center mb-16">
                     <h2 class="text-3xl font-black text-white flex items-center justify-center gap-3">
-                        <svg data-lucide="shield-check" class="w-8 h-8 text-h-purple"></svg> The Assurance Protocol
+                        <i data-lucide="shield-check" class="w-8 h-8 text-h-purple"></i> The Assurance Protocol
                     </h2>
                 </div>
 
-                <div class="grid md:grid-cols-3 gap-8">
-                    <div class="glass-card p-8 rounded-xl relative group">
-                        <div class="absolute -top-6 left-8 bg-h-dark border border-h-purple text-h-purple font-black text-xl w-12 h-12 flex items-center justify-center rounded-full shadow-lg group-hover:scale-110 transition">01</div>
-                        <h3 class="text-xl font-bold text-white mt-4 mb-3">Automated Logging</h3>
-                        <p class="text-sm text-slate-400">Real-time ingestion of operational data. Every vibration spike, every maintenance action is timestamped and immutably recorded.</p>
+                <div class="grid md:grid-cols-3 gap-8 items-center">
+                    
+                    <div class="space-y-6">
+                        <div class="glass-card p-6 rounded-xl hover:bg-h-purple/5 transition text-right">
+                            <h3 class="text-lg font-bold text-white mb-2">Automated Logging</h3>
+                            <p class="text-sm text-slate-400">Real-time ingestion of operational data. Every vibration spike is timestamped.</p>
+                        </div>
+                        <div class="glass-card p-6 rounded-xl hover:bg-h-purple/5 transition text-right">
+                            <h3 class="text-lg font-bold text-white mb-2">Forensic Proof</h3>
+                            <p class="text-sm text-slate-400">NDT data linked to asset IDs, providing irrefutable evidence of condition.</p>
+                        </div>
                     </div>
-                    <div class="glass-card p-8 rounded-xl relative group">
-                        <div class="absolute -top-6 left-8 bg-h-dark border border-h-purple text-h-purple font-black text-xl w-12 h-12 flex items-center justify-center rounded-full shadow-lg group-hover:scale-110 transition">02</div>
-                        <h3 class="text-xl font-bold text-white mt-4 mb-3">Forensic Analysis</h3>
-                        <p class="text-sm text-slate-400">Root cause determination. In case of failure, we provide forensic proof (NDT/Metallurgy) to determine liability accurately.</p>
+
+                    <div class="shield-container">
+                        <div class="relative w-64 h-64 flex items-center justify-center">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" class="w-full h-full text-h-purple opacity-20 animate-pulse-shield">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                            </svg>
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <i data-lucide="lock" class="w-24 h-24 text-white drop-shadow-[0_0_15px_rgba(139,92,246,0.8)]"></i>
+                            </div>
+                            <div class="shield-scan-line" style="top: 0;"></div>
+                        </div>
                     </div>
-                    <div class="glass-card p-8 rounded-xl relative group">
-                        <div class="absolute -top-6 left-8 bg-h-dark border border-h-purple text-h-purple font-black text-xl w-12 h-12 flex items-center justify-center rounded-full shadow-lg group-hover:scale-110 transition">03</div>
-                        <h3 class="text-xl font-bold text-white mt-4 mb-3">Digital Integration</h3>
-                        <p class="text-sm text-slate-400">Generating standardized legal reports formatted for EU/Global regulatory bodies, reducing administrative load by 90%.</p>
+
+                    <div class="space-y-6">
+                        <div class="glass-card p-6 rounded-xl hover:bg-h-purple/5 transition">
+                            <h3 class="text-lg font-bold text-white mb-2">Digital Integration</h3>
+                            <p class="text-sm text-slate-400">Reports formatted for EU/Global regulatory bodies automatically.</p>
+                        </div>
+                        <div class="glass-card p-6 rounded-xl hover:bg-h-purple/5 transition">
+                            <h3 class="text-lg font-bold text-white mb-2">Data Security</h3>
+                            <p class="text-sm text-slate-400">Encrypted storage of all asset health records. GDPR compliant.</p>
+                        </div>
                     </div>
+
                 </div>
             </div>
         </section>
 
-        <section class="py-20 bg-h-dark border-t border-h-border">
+        <section class="py-24 bg-h-dark border-t border-h-border">
             <div class="max-w-5xl mx-auto px-4">
-                <div class="bg-gradient-to-r from-h-purple/10 to-transparent border border-h-purple/30 p-8 md:p-12 rounded-2xl relative overflow-hidden">
-                    <div class="absolute top-0 right-0 p-6 opacity-10"><svg data-lucide="gavel" class="w-32 h-32 text-h-purple"></svg></div>
+                <div class="bg-gradient-to-br from-h-purple/10 to-transparent border border-h-purple/30 p-10 md:p-14 rounded-3xl relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-8 opacity-10"><i data-lucide="gavel" class="w-64 h-64 text-h-purple"></i></div>
+                    
                     <div class="relative z-10">
-                        <h2 class="text-3xl font-black text-white mb-8">AnoHUB Defense Service</h2>
-                        <div class="grid md:grid-cols-2 gap-8">
-                            <div class="flex gap-4">
-                                <div class="bg-h-dark p-3 rounded border border-h-border h-fit"><svg data-lucide="users" class="w-6 h-6 text-h-purple"></svg></div>
-                                <div><h4 class="text-white font-bold text-lg">Audit Defense Team</h4><p class="text-sm text-slate-400 mt-2">We stand physically by your side during inspections.</p></div>
+                        <h2 class="text-3xl font-black text-white mb-10">AnoHUB Defense Service</h2>
+                        <div class="grid md:grid-cols-2 gap-12">
+                            <div class="flex gap-6">
+                                <div class="bg-h-dark p-4 rounded-xl border border-h-border h-fit shadow-lg"><i data-lucide="users" class="w-8 h-8 text-h-purple"></i></div>
+                                <div>
+                                    <h4 class="text-white font-bold text-xl mb-2">Audit Defense Team</h4>
+                                    <p class="text-sm text-slate-400 leading-relaxed">
+                                        We stand physically by your side during inspections. We speak the language of the auditors and provide data on demand.
+                                    </p>
+                                </div>
                             </div>
-                            <div class="flex gap-4">
-                                <div class="bg-h-dark p-3 rounded border border-h-border h-fit"><svg data-lucide="file-check" class="w-6 h-6 text-h-purple"></svg></div>
-                                <div><h4 class="text-white font-bold text-lg">Legal Support Briefs</h4><p class="text-sm text-slate-400 mt-2">Technical briefs for legal teams within 24 hours.</p></div>
+                            <div class="flex gap-6">
+                                <div class="bg-h-dark p-4 rounded-xl border border-h-border h-fit shadow-lg"><i data-lucide="file-check" class="w-8 h-8 text-h-purple"></i></div>
+                                <div>
+                                    <h4 class="text-white font-bold text-xl mb-2">Legal Support Briefs</h4>
+                                    <p class="text-sm text-slate-400 leading-relaxed">
+                                        Technical briefs generated for your legal team within 24 hours of an incident, protecting you from liability.
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -200,31 +265,26 @@
             </div>
         </section>
 
-        <section class="py-20 text-center">
+        <section class="py-24 text-center">
             <div class="max-w-3xl mx-auto px-4">
-                <h2 class="text-2xl font-bold text-white mb-4">Is Your License Secure?</h2>
-                <p class="text-slate-400 mb-8">Don't wait for the inspector. Verify your compliance status first.</p>
-                <a href="contact.html" class="inline-flex items-center justify-center px-10 py-4 bg-h-purple hover:bg-purple-400 text-black font-black rounded transition shadow-lg shadow-h-purple/20 uppercase tracking-widest">Secure Compliance</a>
+                <h2 class="text-3xl font-bold text-white mb-6">Is Your License Secure?</h2>
+                <p class="text-slate-400 mb-10 text-lg">Don't wait for the inspector to find a gap. Verify your compliance status first.</p>
+                <a href="contact.html" class="inline-flex items-center justify-center px-12 py-5 bg-h-purple hover:bg-purple-400 text-black font-black rounded-lg transition shadow-[0_0_30px_rgba(139,92,246,0.4)] uppercase tracking-widest transform hover:-translate-y-1">
+                    Secure Compliance
+                </a>
             </div>
         </section>
 
     </main>
 
-    <div id="mobile-sticky-cta" class="lg:hidden fixed bottom-4 left-4 right-4 z-50 animate-[fadeInUp_1s_ease-out_1s_forwards] opacity-0">
-        <a href="contact.html" class="flex items-center justify-between bg-h-purple/90 backdrop-blur-md text-white px-4 py-3 rounded-lg shadow-2xl border border-white/20">
-            <span class="text-xs font-bold uppercase tracking-wider">Secure Audit?</span>
-            <span class="bg-white text-h-purple text-xs font-black px-2 py-1 rounded">CONTACT &rarr;</span>
-        </a>
-    </div>
-
-    <footer class="bg-black border-t border-slate-900 py-12 text-center mb-20 lg:mb-0">
-        <div class="max-w-7xl mx-auto px-4"><p class="text-slate-600 text-xs font-mono">© 2025 Anohubs Inc. | REGULATORY DIVISION</p></div>
+    <footer class="bg-black border-t border-slate-900 py-12 text-center text-xs font-mono text-slate-600">
+        © 2025 Anohubs Inc. | REGULATORY DIVISION
     </footer>
 
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <script>
         lucide.createIcons();
         document.getElementById('mobile-menu-btn').addEventListener('click', () => { document.getElementById('mobile-menu').classList.toggle('hidden'); });
+
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('navbar');
             if (window.scrollY > 50) { nav.classList.add('shadow-lg', 'bg-h-dark/95'); nav.classList.remove('bg-h-dark/90'); } 
