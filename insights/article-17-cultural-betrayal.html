@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Article 17: THE CULTURAL BETRAYAL | AnoHUB Intel</title>
     
+    <link rel="preload" as="image" href="../slike/Article 17/A17_pozadina_1.jpg">
+    <link rel="preload" as="image" href="../slike/Article 17/A17_pozadina_2.jpg">
+    <link rel="preload" as="image" href="../slike/Article 17/A17_pozadina_3.jpg">
+    <link rel="preload" as="image" href="../slike/Article 17/A17_pozadina_4.jpg">
+    <link rel="preload" as="image" href="../slike/Article 17/A17_pozadina_5.jpg">
+    <link rel="preload" as="image" href="../slike/Article 17/A17_pozadina_6.jpg">
+    <link rel="preload" as="image" href="../slike/Article 17/A17_pozadina_7.jpg">
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -23,36 +31,38 @@
     <style>
         body { background-color: #020617; color: #cbd5e1; }
         
-        /* === MULTI-LAYER BACKGROUND SYSTEM === */
-        /* Pozadine su sada puno vidljivije kroz transparentni sadržaj */
+        /* === BULLETPROOF BACKGROUND SYSTEM === */
         .bg-layer {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
             background-size: cover; background-position: center;
             opacity: 0;
-            transition: opacity 1.2s ease-in-out; /* Malo duža tranzicija za glađi efekt */
+            /* GPU Akceleracija za glatkoću */
+            will-change: opacity;
+            transform: translateZ(0); 
+            transition: opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1); /* Finiji easing */
         }
-        .bg-layer.active { opacity: 1; } /* Puna vidljivost aktivne pozadine */
+        .bg-layer.active { opacity: 1; }
 
-        /* Overlay je sada suptilniji da ne sakriva pozadinu */
+        /* Overlay */
         #bg-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
-            background: linear-gradient(to bottom, rgba(2,6,23,0.8) 0%, rgba(2,6,23,0.4) 50%, rgba(2,6,23,0.9) 100%);
+            background: linear-gradient(to bottom, rgba(2,6,23,0.85) 0%, rgba(2,6,23,0.4) 50%, rgba(2,6,23,0.9) 100%);
             pointer-events: none;
         }
 
         #reading-progress { position: fixed; top: 0; left: 0; height: 4px; background: #ef4444; width: 0%; z-index: 100; box-shadow: 0 0 15px #ef4444; }
 
-        /* Typography - Jače sjene za bolju čitljivost na prozirnim pozadinama */
+        /* Typography */
         h2 { color: white; font-weight: 900; font-size: 2.5rem; margin: 5rem 0 2rem; border-left: 8px solid #ef4444; padding-left: 2rem; text-shadow: 3px 3px 15px black; letter-spacing: -0.03em; }
         h3 { color: #facc15; font-weight: 700; font-size: 1.6rem; margin-top: 2rem; margin-bottom: 1rem; text-shadow: 2px 2px 8px black; }
         p { margin-bottom: 1.5rem; line-height: 1.8; font-size: 1.2rem; text-shadow: 1px 1px 3px rgba(0,0,0,1); font-weight: 500; color: #f1f5f9; }
         
-        /* Blockquote - Puno prozirniji */
+        /* Transparent Glass Blocks */
         blockquote { 
-            background: rgba(0, 0, 0, 0.5); /* Povećana transparentnost */
+            background: rgba(0, 0, 0, 0.5); 
             border-left: 4px solid #ef4444; 
             padding: 2.5rem; font-style: italic; color: #fca5a5; margin: 3rem 0; cursor: pointer; 
-            backdrop-filter: blur(8px); /* Manji blur */
+            backdrop-filter: blur(5px); 
             border: 1px solid rgba(239, 68, 68, 0.3);
             font-size: 1.3rem; font-weight: 600; box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
@@ -380,15 +390,13 @@
     </main>
 
     <footer class="bg-black border-t border-slate-900 py-16 text-center text-xs font-mono text-slate-600">
-        <div class="max-w-7xl mx-auto px-4">
-            <p class="mb-4">&copy; 2025 ANOHUBS INC. | INTELLIGENCE DIVISION</p>
-            <p class="text-h-red/50">Zero-Tolerance for Execution Errors.</p>
-        </div>
+        <div class="max-w-7xl mx-auto px-4"><p>&copy; 2025 ANOHUBS INC. | INTELLIGENCE DIVISION</p></div>
     </footer>
 
     <script>
         lucide.createIcons();
 
+        // LOGIKA ZA PROMJENU POZADINE
         const bgLayers = document.querySelectorAll('.bg-layer');
         const sections = document.querySelectorAll('.scroll-section');
 
@@ -422,15 +430,8 @@
         function copyToClipboard(element) { navigator.clipboard.writeText(element.innerText).then(() => alert("Quote copied!")); }
         function copyLink() { navigator.clipboard.writeText(window.location.href).then(() => alert("Link copied!")); }
         function shareArticle() {
-            if (navigator.share) {
-                navigator.share({
-                    title: 'THE CULTURAL BETRAYAL',
-                    text: 'Low-Bid is Violence.',
-                    url: window.location.href,
-                });
-            } else {
-                copyLink();
-            }
+            if (navigator.share) navigator.share({ title: 'THE CULTURAL BETRAYAL', text: 'Low-Bid is Violence.', url: window.location.href });
+            else copyLink();
         }
     </script>
 </body>
