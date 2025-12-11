@@ -4,24 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Turbine Asset Library | AnoHUB</title>
-    <meta name="description" content="Technical integrity protocols for Francis, Kaplan, and Pelton turbines. Select your asset class for specific diagnostic procedures.">
+    <meta name="description" content="Select your hydro asset class. Francis, Kaplan, and Pelton integrity protocols and operational matrices.">
     
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "CollectionPage",
-      "name": "Turbine Asset Library",
-      "description": "Technical protocols for Francis, Kaplan, and Pelton hydro turbines.",
-      "provider": { "@type": "Organization", "name": "AnoHUB" }
-    }
-    </script>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -41,8 +27,7 @@
     </script>
 
     <style>
-        /* GLOBAL STYLE */
-        html, body { background-color: #020617; color: #f8fafc; overflow-x: hidden; width: 100%; }
+        body { background-color: #020617; color: #f8fafc; overflow-x: hidden; }
         
         /* NOISE TEXTURE */
         .noise-overlay {
@@ -51,35 +36,61 @@
             pointer-events: none; z-index: 50; opacity: 0.4;
         }
 
-        /* Tech Grid Background */
+        /* TECH GRID */
         .tech-bg {
-            background-image: linear-gradient(rgba(6, 182, 212, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(6, 182, 212, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
         }
 
-        /* Glass Cards (Pro) */
-        .glass-card {
-            background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative; overflow: hidden;
+        /* === AGGRESSIVE ASSET CARD === */
+        .asset-card {
+            position: relative;
+            height: 600px; /* Tall cards */
+            border-radius: 1.5rem;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            group: group;
         }
-        .glass-card:hover { transform: translateY(-8px); background: rgba(15, 23, 42, 0.95); }
         
-        /* Specific Card Styles */
-        .card-francis:hover { border-color: #06b6d4; box-shadow: 0 20px 40px -10px rgba(6, 182, 212, 0.2); }
-        .card-kaplan:hover { border-color: #10b981; box-shadow: 0 20px 40px -10px rgba(16, 185, 129, 0.2); }
-        .card-pelton:hover { border-color: #f59e0b; box-shadow: 0 20px 40px -10px rgba(245, 158, 11, 0.2); }
+        .asset-card:hover {
+            transform: scale(1.02);
+            border-color: var(--card-color);
+            box-shadow: 0 20px 50px -10px var(--card-shadow);
+        }
 
-        /* Scroll Bar */
+        .asset-bg {
+            position: absolute; inset: 0;
+            background-size: cover; background-position: center;
+            transition: transform 0.7s ease;
+        }
+        .asset-card:hover .asset-bg { transform: scale(1.1); }
+
+        /* Dark Gradient Overlay that fades out on hover */
+        .asset-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(to top, #020617 10%, rgba(2,6,23,0.8) 50%, rgba(2,6,23,0.3) 100%);
+            transition: background 0.5s ease;
+        }
+        .asset-card:hover .asset-overlay {
+            background: linear-gradient(to top, #020617 0%, rgba(2,6,23,0.6) 40%, rgba(var(--card-rgb), 0.2) 100%);
+        }
+
+        /* Stats Grid inside card */
+        .stat-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 0.5rem; overflow: hidden;
+        }
+        .stat-item { background: rgba(0,0,0,0.6); padding: 0.75rem; text-align: center; backdrop-filter: blur(4px); }
+        
+        /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: #020617; }
-        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #06b6d4; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
     </style>
 </head>
 
 <body class="antialiased">
-    
     <div class="noise-overlay"></div>
     <div class="tech-bg"></div>
 
@@ -94,102 +105,151 @@
             </a>
             <nav class="hidden lg:flex items-center gap-6 text-xs font-bold uppercase tracking-wider text-slate-400">
                 <a href="index.html" class="hover:text-white transition">Home</a>
-                <a href="services.html" class="text-h-cyan transition">Services</a>
+                <a href="services.html" class="text-white border-b-2 border-slate-700 transition">Library</a>
                 <a href="insights/expert-insights.html" class="hover:text-white transition">Insights</a>
-                <a href="protocol.html" class="group relative inline-flex items-center gap-2 px-5 py-2 bg-h-cyan/10 text-h-cyan border border-h-cyan/50 rounded-full hover:bg-h-cyan hover:text-black transition-all duration-300">
+                <a href="protocol.html" class="group relative inline-flex items-center gap-2 px-5 py-2 bg-white/5 border border-white/10 rounded-full hover:bg-white/10 hover:text-white transition-all">
                     <span>PROTOCOL</span>
-                    <div class="w-1.5 h-1.5 bg-h-cyan rounded-full animate-pulse"></div>
+                    <div class="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></div>
                 </a>
-                <a href="contact.html" class="px-5 py-2 bg-h-cta text-black rounded-full hover:bg-yellow-400 transition shadow-lg shadow-h-cta/20">Contact</a>
+                <a href="contact.html" class="px-5 py-2 bg-h-cta text-black rounded-full hover:bg-yellow-400 transition shadow-lg">Contact</a>
             </nav>
             <button id="mobile-menu-btn" class="lg:hidden text-white p-2"><i data-lucide="menu" class="w-8 h-8"></i></button>
         </div>
-        
         <div id="mobile-menu" class="fixed inset-0 bg-h-dark/95 backdrop-blur-xl z-40 transform translate-x-full transition-transform duration-300 flex flex-col justify-center items-center gap-8 lg:hidden">
-            <a href="index.html" class="text-2xl font-black text-white hover:text-h-cyan uppercase tracking-tight mobile-link">Home</a>
-            <a href="services.html" class="text-2xl font-black text-h-cyan uppercase tracking-tight mobile-link">Services</a>
-            <a href="protocol.html" class="text-xl font-bold text-h-cyan border border-h-cyan px-6 py-2 rounded flex items-center gap-2 mobile-link"><i data-lucide="shield" class="w-5 h-5"></i> PROTOCOL</a>
+            <a href="index.html" class="text-2xl font-black text-slate-300 hover:text-white uppercase mobile-link">Home</a>
+            <a href="services.html" class="text-2xl font-black text-white uppercase mobile-link">Library</a>
             <a href="contact.html" class="text-xl font-bold text-black bg-h-cta px-8 py-3 rounded mobile-link">CONTACT US</a>
         </div>
     </header>
 
     <main class="pt-32 pb-20">
 
-        <section class="max-w-7xl mx-auto px-4 mb-20 text-center">
-            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-black/40 backdrop-blur-md text-[10px] md:text-xs font-mono text-slate-400 mb-8 animate-[fadeInUp_1s_ease-out]">
+        <section class="max-w-7xl mx-auto px-4 mb-16 text-center">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md text-[10px] md:text-xs font-mono text-slate-400 mb-8 animate-fade-in-up">
                 <span class="w-2 h-2 bg-white rounded-full animate-pulse"></span>
-                DATABASE: OPERATIONAL ASSETS
+                CLASSIFIED ASSETS: LEVEL 1 ACCESS
             </div>
             
-            <h1 class="text-5xl md:text-7xl font-black text-white mb-6 tracking-tight leading-none animate-[fadeInUp_1s_ease-out]">
-                TURBINE <br>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-slate-200 to-slate-600">ARCHITECTURES</span>
+            <h1 class="text-5xl md:text-7xl font-black text-white mb-6 tracking-tight leading-none animate-fade-in-up">
+                SELECT YOUR <br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-slate-200 to-slate-600">INFRASTRUCTURE</span>
             </h1>
             
-            <p class="text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed animate-[fadeInUp_1s_ease-out_0.2s_forwards] opacity-0">
-                Select your asset class to access specific integrity protocols, failure mode analysis, and optimization strategies tailored to hydraulic geometry.
+            <p class="text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed animate-fade-in-up opacity-0" style="animation-delay: 0.2s;">
+                Advanced integrity protocols for the three pillars of hydropower. Select a turbine to access specific diagnostics, failure modes, and optimization matrices.
             </p>
         </section>
 
         <section class="max-w-7xl mx-auto px-4 mb-24">
-            <div class="grid md:grid-cols-3 gap-8">
+            <div class="grid lg:grid-cols-3 gap-8">
 
-                <a href="turbine-francis.html" class="glass-card card-francis rounded-2xl overflow-hidden group block animate-[fadeInUp_1s_ease-out_0.4s_forwards] opacity-0 h-full flex flex-col">
-                    <div class="h-56 relative overflow-hidden">
-                        <div class="absolute inset-0 bg-h-cyan/10 z-10 mix-blend-overlay group-hover:bg-h-cyan/0 transition duration-500"></div>
-                        <img src="slike/francis-diagram.jpg" alt="Francis Turbine" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-110 transition duration-700 grayscale group-hover:grayscale-0">
-                        <div class="absolute bottom-4 left-4 z-20 bg-black/80 px-3 py-1 rounded border border-h-cyan/50 text-h-cyan text-xs font-mono font-bold tracking-widest">MIXED FLOW</div>
-                    </div>
-                    <div class="p-8 flex flex-col flex-grow">
-                        <div class="flex justify-between items-start mb-4">
-                            <h2 class="text-3xl font-black text-white group-hover:text-h-cyan transition">Francis</h2>
-                            <i data-lucide="shield-check" class="w-6 h-6 text-slate-600 group-hover:text-h-cyan transition"></i>
+                <a href="turbine-francis.html" class="asset-card block group animate-fade-in-up opacity-0" style="animation-delay: 0.4s; --card-color: #06b6d4; --card-shadow: rgba(6, 182, 212, 0.4); --card-rgb: 6, 182, 212;">
+                    <div class="asset-bg" style="background-image: url('slike/francis_srvcs.jpg');"></div>
+                    <div class="asset-overlay"></div>
+                    
+                    <div class="absolute inset-0 p-8 flex flex-col justify-end z-10">
+                        <div class="absolute top-8 left-8 bg-black/60 border border-h-cyan/50 text-h-cyan text-[10px] font-mono font-bold px-3 py-1 rounded backdrop-blur-md">
+                            MIXED FLOW
                         </div>
-                        <p class="text-slate-400 text-sm mb-8 leading-relaxed flex-grow">
-                            The universal workhorse for medium head. Diagnostics focus on runner blade cracking, cavitation on the discharge ring, and labyrinth seal efficiency.
-                        </p>
-                        <div class="flex items-center text-xs font-bold text-white group-hover:text-h-cyan transition uppercase tracking-widest border-t border-white/5 pt-4">
-                            ACCESS PROTOCOL <i data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-1 transition"></i>
+
+                        <div class="mb-6 transform translate-y-4 group-hover:translate-y-0 transition duration-500">
+                            <h2 class="text-4xl font-black text-white mb-2 group-hover:text-h-cyan transition">FRANCIS</h2>
+                            <p class="text-slate-300 text-sm leading-relaxed border-l-2 border-h-cyan pl-4">
+                                The universal standard. Mastering the balance of pressure and velocity.
+                            </p>
+                        </div>
+
+                        <div class="stat-grid text-xs font-mono text-slate-400 opacity-80 group-hover:opacity-100 transition duration-500">
+                            <div class="stat-item border-r border-b border-white/10">
+                                <span class="block text-white font-bold text-lg">96%</span> EFFICIENCY
+                            </div>
+                            <div class="stat-item border-b border-white/10">
+                                <span class="block text-white font-bold text-lg">Medium</span> HEAD
+                            </div>
+                            <div class="stat-item border-r border-white/10 text-h-red">
+                                RSI
+                            </div>
+                            <div class="stat-item text-h-red">
+                                VORTEX
+                            </div>
+                        </div>
+
+                        <div class="mt-6 flex items-center text-xs font-bold text-white group-hover:text-h-cyan transition uppercase tracking-widest">
+                            ACCESS PROTOCOL <i data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-2 transition"></i>
                         </div>
                     </div>
                 </a>
 
-                <a href="turbine-kaplan.html" class="glass-card card-kaplan rounded-2xl overflow-hidden group block animate-[fadeInUp_1s_ease-out_0.5s_forwards] opacity-0 h-full flex flex-col">
-                    <div class="h-56 relative overflow-hidden">
-                        <div class="absolute inset-0 bg-h-green/10 z-10 mix-blend-overlay group-hover:bg-h-green/0 transition duration-500"></div>
-                        <img src="slike/kaplan-diagram.jpg" alt="Kaplan Turbine" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-110 transition duration-700 grayscale group-hover:grayscale-0">
-                        <div class="absolute bottom-4 left-4 z-20 bg-black/80 px-3 py-1 rounded border border-h-green/50 text-h-green text-xs font-mono font-bold tracking-widest">AXIAL FLOW</div>
-                    </div>
-                    <div class="p-8 flex flex-col flex-grow">
-                        <div class="flex justify-between items-start mb-4">
-                            <h2 class="text-3xl font-black text-white group-hover:text-h-green transition">Kaplan</h2>
-                            <i data-lucide="maximize" class="w-6 h-6 text-slate-600 group-hover:text-h-green transition"></i>
+                <a href="turbine-kaplan.html" class="asset-card block group animate-fade-in-up opacity-0" style="animation-delay: 0.5s; --card-color: #10b981; --card-shadow: rgba(16, 185, 129, 0.4); --card-rgb: 16, 185, 129;">
+                    <div class="asset-bg" style="background-image: url('slike/kaplan_srvcs.jpg');"></div>
+                    <div class="asset-overlay"></div>
+                    
+                    <div class="absolute inset-0 p-8 flex flex-col justify-end z-10">
+                        <div class="absolute top-8 left-8 bg-black/60 border border-h-green/50 text-h-green text-[10px] font-mono font-bold px-3 py-1 rounded backdrop-blur-md">
+                            AXIAL FLOW
                         </div>
-                        <p class="text-slate-400 text-sm mb-8 leading-relaxed flex-grow">
-                            Complex dual-regulation for low head. Critical checks include blade servo-motor integrity, hub oil leakage, and precise blade-to-discharge ring clearance.
-                        </p>
-                        <div class="flex items-center text-xs font-bold text-white group-hover:text-h-green transition uppercase tracking-widest border-t border-white/5 pt-4">
-                            ACCESS PROTOCOL <i data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-1 transition"></i>
+
+                        <div class="mb-6 transform translate-y-4 group-hover:translate-y-0 transition duration-500">
+                            <h2 class="text-4xl font-black text-white mb-2 group-hover:text-h-green transition">KAPLAN</h2>
+                            <p class="text-slate-300 text-sm leading-relaxed border-l-2 border-h-green pl-4">
+                                Dual regulation precision. Adjusting blade and gate for perfect flow synchronization.
+                            </p>
+                        </div>
+
+                        <div class="stat-grid text-xs font-mono text-slate-400 opacity-80 group-hover:opacity-100 transition duration-500">
+                            <div class="stat-item border-r border-b border-white/10">
+                                <span class="block text-white font-bold text-lg">94%</span> EFFICIENCY
+                            </div>
+                            <div class="stat-item border-b border-white/10">
+                                <span class="block text-white font-bold text-lg">Low</span> HEAD
+                            </div>
+                            <div class="stat-item border-r border-white/10 text-h-green">
+                                CAM-CURVE
+                            </div>
+                            <div class="stat-item text-h-red">
+                                OIL LEAK
+                            </div>
+                        </div>
+
+                        <div class="mt-6 flex items-center text-xs font-bold text-white group-hover:text-h-green transition uppercase tracking-widest">
+                            ACCESS PROTOCOL <i data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-2 transition"></i>
                         </div>
                     </div>
                 </a>
 
-                <a href="turbine-pelton.html" class="glass-card card-pelton rounded-2xl overflow-hidden group block animate-[fadeInUp_1s_ease-out_0.6s_forwards] opacity-0 h-full flex flex-col">
-                    <div class="h-56 relative overflow-hidden">
-                        <div class="absolute inset-0 bg-h-cta/10 z-10 mix-blend-overlay group-hover:bg-h-cta/0 transition duration-500"></div>
-                        <img src="slike/pelton-diagram.jpg" alt="Pelton Turbine" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-110 transition duration-700 grayscale group-hover:grayscale-0">
-                        <div class="absolute bottom-4 left-4 z-20 bg-black/80 px-3 py-1 rounded border border-h-cta/50 text-h-cta text-xs font-mono font-bold tracking-widest">IMPULSE</div>
-                    </div>
-                    <div class="p-8 flex flex-col flex-grow">
-                        <div class="flex justify-between items-start mb-4">
-                            <h2 class="text-3xl font-black text-white group-hover:text-h-cta transition">Pelton</h2>
-                            <i data-lucide="droplet" class="w-6 h-6 text-slate-600 group-hover:text-h-cta transition"></i>
+                <a href="turbine-pelton.html" class="asset-card block group animate-fade-in-up opacity-0" style="animation-delay: 0.6s; --card-color: #f59e0b; --card-shadow: rgba(245, 158, 11, 0.4); --card-rgb: 245, 158, 11;">
+                    <div class="asset-bg" style="background-image: url('slike/pelton_srvcs.jpg');"></div>
+                    <div class="asset-overlay"></div>
+                    
+                    <div class="absolute inset-0 p-8 flex flex-col justify-end z-10">
+                        <div class="absolute top-8 left-8 bg-black/60 border border-h-cta/50 text-h-cta text-[10px] font-mono font-bold px-3 py-1 rounded backdrop-blur-md">
+                            IMPULSE
                         </div>
-                        <p class="text-slate-400 text-sm mb-8 leading-relaxed flex-grow">
-                            High-head impulse energy. Focus on nozzle alignment precision (0.05mm), bucket surface abrasion from sediment, and deflector response time.
-                        </p>
-                        <div class="flex items-center text-xs font-bold text-white group-hover:text-h-cta transition uppercase tracking-widest border-t border-white/5 pt-4">
-                            ACCESS PROTOCOL <i data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-1 transition"></i>
+
+                        <div class="mb-6 transform translate-y-4 group-hover:translate-y-0 transition duration-500">
+                            <h2 class="text-4xl font-black text-white mb-2 group-hover:text-h-cta transition">PELTON</h2>
+                            <p class="text-slate-300 text-sm leading-relaxed border-l-2 border-h-cta pl-4">
+                                High-head kinetic mastery. Laser-focused water jets hitting steel at 500 km/h.
+                            </p>
+                        </div>
+
+                        <div class="stat-grid text-xs font-mono text-slate-400 opacity-80 group-hover:opacity-100 transition duration-500">
+                            <div class="stat-item border-r border-b border-white/10">
+                                <span class="block text-white font-bold text-lg">92%</span> EFFICIENCY
+                            </div>
+                            <div class="stat-item border-b border-white/10">
+                                <span class="block text-white font-bold text-lg">High</span> HEAD
+                            </div>
+                            <div class="stat-item border-r border-white/10 text-h-cta">
+                                KINETIC
+                            </div>
+                            <div class="stat-item text-h-red">
+                                ABRASION
+                            </div>
+                        </div>
+
+                        <div class="mt-6 flex items-center text-xs font-bold text-white group-hover:text-h-cta transition uppercase tracking-widest">
+                            ACCESS PROTOCOL <i data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-2 transition"></i>
                         </div>
                     </div>
                 </a>
@@ -197,12 +257,16 @@
             </div>
         </section>
 
-        <section class="max-w-5xl mx-auto px-4 animate-[fadeInUp_1s_ease-out_0.8s_forwards] opacity-0 mb-20">
-            <h3 class="text-sm font-mono text-slate-500 uppercase tracking-widest mb-6 text-center border-b border-white/10 pb-4">Operational Range Matrix</h3>
+        <section class="max-w-5xl mx-auto px-4 animate-fade-in-up opacity-0" style="animation-delay: 0.8s;">
+            <div class="flex items-center gap-4 mb-8">
+                <div class="h-px bg-white/10 flex-grow"></div>
+                <h3 class="text-sm font-mono text-slate-500 uppercase tracking-widest bg-h-dark px-4">Global Reference Matrix</h3>
+                <div class="h-px bg-white/10 flex-grow"></div>
+            </div>
             
             <div class="bg-h-panel/50 backdrop-blur-md border border-h-border rounded-xl overflow-hidden shadow-2xl">
                 <table class="w-full text-left text-sm">
-                    <thead class="bg-h-dark border-b border-h-border text-xs font-bold text-slate-400 uppercase">
+                    <thead class="bg-black/40 border-b border-h-border text-xs font-bold text-slate-400 uppercase">
                         <tr>
                             <th class="p-5">Parameter</th>
                             <th class="p-5 text-h-cyan">Francis</th>
@@ -224,16 +288,16 @@
                             <td class="p-5">Low</td>
                         </tr>
                         <tr class="hover:bg-white/5 transition">
-                            <td class="p-5 font-mono text-slate-500 font-bold">Primary Risk</td>
-                            <td class="p-5">Cavitation / Cracking</td>
-                            <td class="p-5">Blade Mechanism</td>
-                            <td class="p-5">Sand Abrasion</td>
+                            <td class="p-5 font-mono text-slate-500 font-bold">Primary Failure Mode</td>
+                            <td class="p-5 text-h-red">RSI / Cavitation</td>
+                            <td class="p-5 text-h-red">Hub Oil Leak</td>
+                            <td class="p-5 text-h-red">Silt Abrasion</td>
                         </tr>
                         <tr class="hover:bg-white/5 transition">
-                            <td class="p-5 font-mono text-slate-500 font-bold">Efficiency Check</td>
-                            <td class="p-5">Hill Chart</td>
-                            <td class="p-5">Cam Curve</td>
-                            <td class="p-5">Jet Alignment</td>
+                            <td class="p-5 font-mono text-slate-500 font-bold">Maintenance Priority</td>
+                            <td class="p-5">Runner Seals</td>
+                            <td class="p-5">Blade Servo</td>
+                            <td class="p-5">Nozzle Alignment</td>
                         </tr>
                     </tbody>
                 </table>
@@ -242,9 +306,9 @@
 
     </main>
 
-    <footer class="bg-black border-t border-slate-900 py-12 text-center">
+    <footer class="bg-black border-t border-slate-900 py-16 text-center mt-20">
         <div class="max-w-7xl mx-auto px-4">
-            <img src="logo.svg" alt="Logo" class="h-8 mx-auto mb-6 opacity-50 grayscale hover:grayscale-0 transition">
+            <img src="logo.svg" alt="AnoHUB" class="h-6 mx-auto mb-6 opacity-30 grayscale">
             <p class="text-slate-600 text-xs font-mono">© 2025 Anohubs Inc. | ASSET LIBRARY</p>
         </div>
     </footer>
