@@ -3,17 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Operational Capabilities | AnoHUB Services</title>
-    <meta name="description" content="Explore the full spectrum of Anohubs services: From digital integrity audits and 24/7 supervision to spare parts manufacturing and procurement.">
+    <title>Full Service Spectrum | AnoHUB</title>
+    <meta name="description" content="From heavy on-site machining and installation to digital twins. We handle the dirty work and the data work.">
     
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "Service",
-      "name": "AnoHUB Services Hub",
-      "provider": { "@type": "Organization", "name": "AnoHUB" },
-      "serviceType": ["Integrity Audit", "Predictive Maintenance", "Compliance", "Optimization"],
-      "areaServed": "Global"
+      "name": "AnoHUB Industrial Services",
+      "serviceType": ["Installation", "Machining", "Welding", "Alignment", "Digital Audit"],
+      "provider": { "@type": "Organization", "name": "AnoHUB" }
     }
     </script>
 
@@ -22,292 +21,261 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-    
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: { 
-                        sans: ['Inter', 'sans-serif'], 
-                        mono: ['JetBrains Mono', 'monospace'] 
-                    },
+                    fontFamily: { sans: ['Inter'], mono: ['JetBrains Mono'] },
                     colors: {
-                        'h-cyan': '#06b6d4', 
-                        'h-green': '#10b981', 
-                        'h-red': '#ef4444', 
-                        'h-yellow': '#facc15', 
-                        'h-purple': '#8b5cf6',
-                        'h-dark': '#020617', 
-                        'h-panel': '#0f172a', 
-                        'h-border': '#1e293b',
-                        'h-cta': '#f59e0b'
+                        'h-cyan': '#06b6d4', 'h-green': '#10b981', 'h-red': '#ef4444', 
+                        'h-yellow': '#facc15', 'h-orange': '#f97316', 'h-dark': '#020617', 
+                        'h-panel': '#0f172a', 'h-border': '#1e293b', 'h-cta': '#f59e0b'
                     },
-                    animation: {
-                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
-                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                    },
-                    keyframes: {
-                        fadeInUp: {
-                            '0%': { opacity: '0', transform: 'translateY(20px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
-                        }
-                    }
+                    animation: { 'fade-in-up': 'fadeInUp 0.8s ease-out forwards' },
+                    keyframes: { fadeInUp: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } } }
                 }
             }
         }
     </script>
 
     <style>
-        /* === MOBILE FIX & GLOBAL STYLE === */
-        html, body { 
-            background-color: #020617; 
-            color: #f8fafc; 
-            overflow-x: hidden; /* FIX: Sprječava horizontalno micanje */
-            width: 100%;
-            position: relative;
-        }
-
-        /* TEXTURE OVERLAY (Noise Effect) */
+        html, body { background-color: #020617; color: #f8fafc; overflow-x: hidden; width: 100%; }
+        
         .noise-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
             pointer-events: none; z-index: 50; opacity: 0.4;
         }
 
-        /* Hero Background */
         .hero-services {
-            background-image: linear-gradient(180deg, rgba(2,6,23,0.6) 0%, rgba(2,6,23,0.9) 100%), url('orljani_Una.jpg'); /* Provjeri putanju slike */
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+            background-image: linear-gradient(180deg, rgba(2,6,23,0.7) 0%, rgba(2,6,23,0.95) 100%), url('slike/orljani_Una.jpg');
+            background-size: cover; background-position: center; background-attachment: fixed;
         }
 
-        /* Tech Grid Pattern */
-        .tech-grid {
-            background-image: linear-gradient(rgba(6, 182, 212, 0.05) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(6, 182, 212, 0.05) 1px, transparent 1px);
-            background-size: 50px 50px;
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
-            pointer-events: none;
+        /* Industrial Card Style */
+        .ind-card {
+            background: rgba(30, 41, 59, 0.4); border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.3s ease; position: relative; overflow: hidden;
         }
-
-        /* Service Module Card - PRO GLOW UP */
-        .service-card {
-            background: rgba(15, 23, 42, 0.4); /* Prozirnije */
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            overflow: hidden;
-        }
+        .ind-card:hover { background: rgba(30, 41, 59, 0.8); transform: translateY(-5px); border-color: var(--accent); }
+        .ind-card i { color: var(--accent); }
         
-        .service-card::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
-            background: var(--accent-color);
-            transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease;
+        /* List Items */
+        .service-list li {
+            padding: 0.75rem 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+            display: flex; align-items: center; gap: 0.75rem; color: #94a3b8; font-size: 0.9rem;
         }
-
-        .service-card:hover {
-            border-color: var(--accent-color);
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px -10px var(--glow-color);
-            background: rgba(15, 23, 42, 0.7);
+        .service-list li:last-child { border-bottom: none; }
+        .service-list li::before {
+            content: ''; width: 6px; height: 6px; background: var(--accent); border-radius: 50%;
         }
-        
-        .service-card:hover::before { transform: scaleX(1); }
 
         /* Scroll Bar */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: #020617; }
-        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #06b6d4; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
     </style>
 </head>
 
 <body class="antialiased">
     
     <div class="noise-overlay"></div>
-    <div class="tech-grid"></div>
 
     <header class="fixed w-full z-50 top-0 border-b border-white/5 bg-h-dark/90 backdrop-blur-md transition-all duration-300" id="navbar">
-        
         <div class="relative bg-h-red/10 border-b border-h-red/20 overflow-hidden">
-            <div class="max-w-7xl mx-auto px-4 py-2 flex flex-col md:flex-row items-center justify-between gap-2 md:gap-4">
-                <div class="flex items-center gap-3 w-full md:w-auto justify-center md:justify-start">
+            <div class="max-w-7xl mx-auto px-4 py-2 flex items-center justify-between">
+                <div class="flex items-center gap-3">
                     <span class="flex h-2 w-2 relative flex-shrink-0">
                         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-h-red opacity-75"></span>
                         <span class="relative inline-flex rounded-full h-2 w-2 bg-h-red"></span>
                     </span>
-                    <span class="text-[10px] font-mono text-h-red font-bold tracking-widest uppercase flex-shrink-0">CRITICAL INTEL:</span>
-                    <span class="text-xs text-white font-semibold truncate">The Cultural Betrayal (Manifesto)</span>
+                    <span class="text-[10px] font-mono text-h-red font-bold tracking-widest uppercase">READ MANIFESTO:</span>
+                    <a href="insights/article-17-cultural-betrayal.html" class="text-xs text-white font-bold hover:underline">The Cultural Betrayal &rarr;</a>
                 </div>
-                <div class="flex items-center gap-4 hidden md:flex">
-                    <a href="insights/article-17-cultural-betrayal.html" class="group flex items-center gap-2 text-[10px] font-bold text-white hover:text-h-red transition uppercase tracking-wider">
-                        READ NOW 
-                        <i data-lucide="arrow-right" class="w-3 h-3 transition-transform group-hover:translate-x-1"></i>
-                    </a>
-                </div>
-                <a href="insights/article-17-cultural-betrayal.html" class="md:hidden text-[10px] font-bold text-h-red underline decoration-dotted">READ MANIFESTO &rarr;</a>
             </div>
         </div>
 
-        <div class="max-w-7xl mx-auto px-4 h-16 md:h-20 flex justify-between items-center">
+        <div class="max-w-7xl mx-auto px-4 h-20 flex justify-between items-center">
             <a href="index.html" class="flex items-center gap-3 group">
-                <img src="logo.svg" alt="AnoHUB" class="h-8 md:h-10 w-auto transition group-hover:brightness-125">
+                <img src="logo.svg" alt="AnoHUB" class="h-10 w-auto transition group-hover:brightness-125">
                 <div class="hidden md:block">
                     <span class="block text-lg font-black tracking-tighter text-white leading-none">ANOHUBS</span>
-                    <span class="block text-[10px] font-mono text-h-cyan tracking-widest uppercase">Capabilities</span>
+                    <span class="block text-[10px] font-mono text-slate-500 tracking-widest uppercase group-hover:text-white transition">Total Service</span>
                 </div>
             </a>
-            
             <nav class="hidden lg:flex items-center gap-6 text-xs font-bold uppercase tracking-wider text-slate-400">
                 <a href="index.html" class="hover:text-white transition">Home</a>
-                <a href="about-us-vision.html" class="hover:text-white transition">About</a>
-                <a href="services.html" class="text-h-cyan transition">Services</a>
+                <a href="services.html" class="text-white border-b-2 border-h-cta transition">Services</a>
                 <a href="insights/expert-insights.html" class="hover:text-white transition">Insights</a>
-                
-                <a href="protocol.html" class="group relative inline-flex items-center gap-2 px-5 py-2 bg-h-cyan/5 text-h-cyan border border-h-cyan/30 rounded-full hover:bg-h-cyan hover:text-black transition-all duration-300">
+                <a href="protocol.html" class="group relative inline-flex items-center gap-2 px-5 py-2 bg-h-cta/10 text-h-cta border border-h-cta/50 rounded-full hover:bg-h-cta hover:text-black transition-all">
                     <span>PROTOCOL</span>
-                    <div class="w-1.5 h-1.5 bg-h-cyan rounded-full animate-pulse-fast group-hover:bg-black"></div>
+                    <div class="w-1.5 h-1.5 bg-h-cta rounded-full animate-pulse"></div>
                 </a>
-                <a href="contact.html" class="px-5 py-2 bg-h-cta text-black rounded-full hover:bg-yellow-400 transition shadow-lg shadow-h-cta/20">Contact</a>
+                <a href="contact.html" class="px-5 py-2 bg-white text-black rounded-full hover:bg-gray-200 transition">Contact</a>
             </nav>
-            
-            <button id="mobile-menu-btn" class="lg:hidden text-white p-2">
-                <i data-lucide="menu" class="w-8 h-8"></i>
-            </button>
+            <button id="mobile-menu-btn" class="lg:hidden text-white p-2"><i data-lucide="menu" class="w-8 h-8"></i></button>
         </div>
-
+        
         <div id="mobile-menu" class="fixed inset-0 bg-h-dark/95 backdrop-blur-xl z-40 transform translate-x-full transition-transform duration-300 flex flex-col justify-center items-center gap-8 lg:hidden">
-            <div class="absolute inset-0 bg-grid-pattern opacity-10 pointer-events-none"></div>
-            
-            <a href="index.html" class="text-2xl font-black text-white hover:text-h-cyan uppercase tracking-tight mobile-link">Home</a>
-            <a href="about-us-vision.html" class="text-2xl font-black text-white hover:text-h-cyan uppercase tracking-tight mobile-link">About</a>
-            <a href="services.html" class="text-2xl font-black text-h-cyan uppercase tracking-tight mobile-link">Services</a>
-            <a href="insights/expert-insights.html" class="text-2xl font-black text-white hover:text-h-cyan uppercase tracking-tight mobile-link">Insights</a>
-            <a href="protocol.html" class="text-xl font-bold text-h-cyan border border-h-cyan px-6 py-3 rounded flex items-center gap-2 mobile-link"><i data-lucide="shield" class="w-5 h-5"></i> PROTOCOL</a>
-            <a href="contact.html" class="text-xl font-bold text-black bg-h-cta px-8 py-3 rounded shadow-lg mobile-link">CONTACT US</a>
+            <a href="index.html" class="text-2xl font-black text-slate-300 hover:text-white uppercase mobile-link">Home</a>
+            <a href="services.html" class="text-2xl font-black text-h-cta uppercase mobile-link">Services</a>
+            <a href="insights/expert-insights.html" class="text-2xl font-black text-slate-300 hover:text-white uppercase mobile-link">Insights</a>
+            <a href="contact.html" class="text-xl font-bold text-black bg-h-cta px-8 py-3 rounded mobile-link">CONTACT US</a>
         </div>
     </header>
 
     <main class="pt-20">
 
-        <section class="hero-services min-h-[60vh] md:min-h-[50vh] flex items-center justify-center relative">
-            <div class="max-w-5xl mx-auto px-4 text-center relative z-10 pt-12 md:pt-0">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-black/40 backdrop-blur-md text-xs font-mono text-slate-300 mb-6 animate-[fadeInUp_1s_ease-out]">
-                    <span class="w-2 h-2 bg-h-green rounded-full animate-pulse"></span>
-                    SYSTEM STATUS: OPERATIONAL
+        <section class="hero-services min-h-[60vh] flex items-center justify-center relative text-center px-4">
+            <div class="max-w-5xl relative z-10">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-black/60 backdrop-blur-md text-xs font-mono text-h-cta mb-8 animate-[fadeInUp_1s_ease-out]">
+                    <span class="w-2 h-2 bg-h-cta rounded-full animate-pulse"></span>
+                    SCOPE: END-TO-END
                 </div>
-                <h1 class="text-5xl md:text-7xl font-black text-white mb-6 tracking-tight leading-none animate-[fadeInUp_1s_ease-out_0.2s_forwards] opacity-0 drop-shadow-2xl">
-                    THE KNOWLEDGE & <br>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-h-cyan to-blue-500">EXECUTION HUB</span>
+                <h1 class="text-5xl md:text-8xl font-black text-white mb-6 tracking-tight leading-none animate-[fadeInUp_1s_ease-out]">
+                    DIRTY HANDS. <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-h-cta to-yellow-200">CLEAN DATA.</span>
                 </h1>
-                <p class="text-lg md:text-xl text-slate-200 max-w-3xl mx-auto leading-relaxed mb-10 animate-[fadeInUp_1s_ease-out_0.4s_forwards] opacity-0 shadow-black drop-shadow-md">
-                    We are not just auditors; we are your 365/24/7 partner. From digital diagnostics to physical parts manufacturing, Anohubs is the central nervous system for asset longevity.
+                <p class="text-xl text-slate-300 max-w-3xl mx-auto mb-10 animate-[fadeInUp_1s_ease-out_0.2s_forwards] opacity-0 font-medium">
+                    We don't just generate reports. We turn wrenches, machine steel, and weld cavitation. 
+                    From the <strong>banal basics</strong> to <strong>advanced forensics</strong>, we own the process.
                 </p>
-                
-                <div class="flex flex-wrap justify-center gap-4 animate-[fadeInUp_1s_ease-out_0.6s_forwards] opacity-0">
-                    <a href="#core-analytics" class="px-8 py-3 rounded border border-h-cyan text-h-cyan hover:bg-h-cyan hover:text-black transition font-bold uppercase tracking-wider text-sm">
-                        Explore Analytics
+                <div class="flex flex-wrap justify-center gap-4 animate-[fadeInUp_1s_ease-out_0.4s_forwards] opacity-0">
+                    <a href="#field-ops" class="px-8 py-4 bg-h-cta text-black font-black rounded hover:bg-yellow-400 transition uppercase tracking-widest shadow-lg">
+                        Field Operations
                     </a>
-                    <a href="#logistics" class="px-8 py-3 rounded bg-h-cta text-black hover:bg-yellow-400 transition font-bold uppercase tracking-wider text-sm shadow-lg shadow-h-cta/20">
-                        On-Site Solutions
+                    <a href="#digital-ops" class="px-8 py-4 border border-slate-500 text-slate-300 font-bold rounded hover:border-white hover:text-white transition uppercase tracking-widest">
+                        Digital Diagnostics
                     </a>
                 </div>
             </div>
         </section>
 
-        <section id="core-analytics" class="py-24 relative">
+        <section id="field-ops" class="py-24 bg-h-panel border-y border-h-border">
             <div class="max-w-7xl mx-auto px-4">
-                <div class="flex items-center gap-4 mb-12">
-                    <div class="h-px bg-white/10 flex-grow"></div>
-                    <h2 class="text-sm font-mono text-h-cyan uppercase tracking-widest bg-black/50 px-4 py-1 rounded">Core Diagnostic Modules</h2>
-                    <div class="h-px bg-white/10 flex-grow"></div>
+                <div class="flex items-center gap-4 mb-16">
+                    <div class="w-12 h-1 bg-h-orange"></div>
+                    <h2 class="text-3xl font-black text-white uppercase tracking-tight">Heavy Field Execution <span class="text-slate-500 text-lg block font-normal normal-case">The "Muscle" behind the Intelligence.</span></h2>
                 </div>
 
-                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                     
-                    <a href="services-integrity.html" class="service-card p-8 rounded-2xl group block h-full" style="--accent-color: #22d3ee; --glow-color: rgba(34, 211, 238, 0.3)">
-                        <div class="absolute top-0 right-0 bg-h-cyan text-black text-[10px] font-bold px-3 py-1 rounded-bl-lg opacity-0 group-hover:opacity-100 transition duration-300">TOP PRIORITY</div>
-                        
-                        <div class="bg-h-cyan/10 p-4 rounded-xl w-fit mb-6 text-h-cyan group-hover:scale-110 transition duration-300 border border-h-cyan/20">
-                            <i data-lucide="shield-check" class="w-8 h-8"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-white mb-3 group-hover:text-h-cyan transition">Execution Integrity</h3>
-                        <p class="text-sm text-slate-400 mb-6 leading-relaxed">Closing the "Execution Gap". Holistic FEA, NDT, and alignment audits to verify physical quality before digital integration.</p>
-                        <div class="text-xs font-mono text-h-cyan flex items-center gap-2 font-bold">
-                            DEPLOY AUDIT <i data-lucide="arrow-right" class="w-3 h-3 group-hover:translate-x-1 transition"></i>
-                        </div>
-                    </a>
+                    <div class="ind-card p-8 rounded-xl" style="--accent: #f97316;">
+                        <i data-lucide="wrench" class="w-10 h-10 mb-6"></i>
+                        <h3 class="text-xl font-bold text-white mb-4">Mechanical Assembly</h3>
+                        <p class="text-sm text-slate-400 mb-6">Complete disassembly, refurbishment, and reassembly.</p>
+                        <ul class="service-list">
+                            <li>Turbine & Generator Alignment</li>
+                            <li>Bearing Scraping & Fitting</li>
+                            <li>Bolt Torquing & Tensioning</li>
+                            <li>Hydraulic Unit Piping</li>
+                        </ul>
+                    </div>
 
-                    <a href="services-predictive.html" class="service-card p-8 rounded-2xl group block h-full" style="--accent-color: #10b981; --glow-color: rgba(16, 185, 129, 0.3)">
-                        <div class="bg-h-green/10 p-4 rounded-xl w-fit mb-6 text-h-green group-hover:scale-110 transition duration-300 border border-h-green/20">
-                            <i data-lucide="bot" class="w-8 h-8"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-white mb-3 group-hover:text-h-green transition">Predictive AI</h3>
-                        <p class="text-sm text-slate-400 mb-6 leading-relaxed">Forecasting failure vectors. Our neural models predict breakdown months before it happens.</p>
-                        <div class="text-xs font-mono text-h-green flex items-center gap-2 font-bold">
-                            OPEN MODULE <i data-lucide="arrow-right" class="w-3 h-3 group-hover:translate-x-1 transition"></i>
-                        </div>
-                    </a>
+                    <div class="ind-card p-8 rounded-xl" style="--accent: #eab308;">
+                        <i data-lucide="settings" class="w-10 h-10 mb-6"></i>
+                        <h3 class="text-xl font-bold text-white mb-4">On-Site Machining</h3>
+                        <p class="text-sm text-slate-400 mb-6">Precision metalworking without dismantling.</p>
+                        <ul class="service-list">
+                            <li>Flange Facing & Turning</li>
+                            <li>Line Boring (Stay Vanes)</li>
+                            <li>Journal Repair</li>
+                            <li>Milling & Drilling</li>
+                        </ul>
+                    </div>
 
-                    <a href="services-compliance.html" class="service-card p-8 rounded-2xl group block h-full" style="--accent-color: #8b5cf6; --glow-color: rgba(139, 92, 246, 0.3)">
-                        <div class="bg-h-purple/10 p-4 rounded-xl w-fit mb-6 text-h-purple group-hover:scale-110 transition duration-300 border border-h-purple/20">
-                            <i data-lucide="clipboard-check" class="w-8 h-8"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-white mb-3 group-hover:text-h-purple transition">Regulatory Compliance</h3>
-                        <p class="text-sm text-slate-400 mb-6 leading-relaxed">Automated legal reporting. We generate audit-ready documentation for global standards.</p>
-                        <div class="text-xs font-mono text-h-purple flex items-center gap-2 font-bold">
-                            OPEN MODULE <i data-lucide="arrow-right" class="w-3 h-3 group-hover:translate-x-1 transition"></i>
-                        </div>
-                    </a>
+                    <div class="ind-card p-8 rounded-xl" style="--accent: #ef4444;">
+                        <i data-lucide="flame" class="w-10 h-10 mb-6"></i>
+                        <h3 class="text-xl font-bold text-white mb-4">Welding & Erosion</h3>
+                        <p class="text-sm text-slate-400 mb-6">Cavitation repair and surface hardening.</p>
+                        <ul class="service-list">
+                            <li>Runner Blade Overlay</li>
+                            <li>Crack Gouging & Repair</li>
+                            <li>Ceramic Coating Application</li>
+                            <li>NDT (Dye Pen/Ultrasonic)</li>
+                        </ul>
+                    </div>
 
-                    <a href="services-optimization.html" class="service-card p-8 rounded-2xl group block h-full" style="--accent-color: #facc15; --glow-color: rgba(250, 204, 21, 0.3)">
-                        <div class="bg-h-yellow/10 p-4 rounded-xl w-fit mb-6 text-h-yellow group-hover:scale-110 transition duration-300 border border-h-yellow/20">
-                            <i data-lucide="bar-chart-2" class="w-8 h-8"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-white mb-3 group-hover:text-h-yellow transition">Optimization</h3>
-                        <p class="text-sm text-slate-400 mb-6 leading-relaxed">Profit maximization. Closing the 48% dynamic risk gap to increase MWh output.</p>
-                        <div class="text-xs font-mono text-h-yellow flex items-center gap-2 font-bold">
-                            OPEN MODULE <i data-lucide="arrow-right" class="w-3 h-3 group-hover:translate-x-1 transition"></i>
-                        </div>
-                    </a>
+                    <div class="ind-card p-8 rounded-xl" style="--accent: #64748b;">
+                        <i data-lucide="hard-hat" class="w-10 h-10 mb-6"></i>
+                        <h3 class="text-xl font-bold text-white mb-4">Site Services (The Basics)</h3>
+                        <p class="text-sm text-slate-400 mb-6">The essential tasks others ignore.</p>
+                        <ul class="service-list">
+                            <li>Oil Filtration & Analysis</li>
+                            <li>Industrial Cleaning (Dry Ice)</li>
+                            <li>Scaffolding & Rigging</li>
+                            <li>Waste Management</li>
+                        </ul>
+                    </div>
+
+                    <div class="ind-card p-8 rounded-xl" style="--accent: #3b82f6;">
+                        <i data-lucide="eye" class="w-10 h-10 mb-6"></i>
+                        <h3 class="text-xl font-bold text-white mb-4">Supervision & HSE</h3>
+                        <p class="text-sm text-slate-400 mb-6">Ensuring safety and protocol compliance.</p>
+                        <ul class="service-list">
+                            <li>Site Management</li>
+                            <li>HSE Safety Coordination</li>
+                            <li>Schedule & QA/QC Tracking</li>
+                            <li>Documentation (Daily Logs)</li>
+                        </ul>
+                    </div>
+
+                    <div class="ind-card p-8 rounded-xl" style="--accent: #10b981;">
+                        <i data-lucide="package" class="w-10 h-10 mb-6"></i>
+                        <h3 class="text-xl font-bold text-white mb-4">Supply & Logistics</h3>
+                        <p class="text-sm text-slate-400 mb-6">Getting the right part to the remote site.</p>
+                        <ul class="service-list">
+                            <li>Reverse Engineering Parts</li>
+                            <li>Seal & Gasket Manufacturing</li>
+                            <li>Heavy Transport Logistics</li>
+                            <li>Consumables Supply</li>
+                        </ul>
+                    </div>
 
                 </div>
             </div>
         </section>
 
-        <section id="logistics" class="py-24 bg-black/30 border-t border-white/5 relative">
-            <div class="max-w-7xl mx-auto px-4 text-center">
-                <h2 class="text-3xl font-black text-white mb-16">Physical Logistics & Supply Chain</h2>
-                <div class="grid md:grid-cols-3 gap-8">
-                    <div class="bg-h-panel/50 p-8 rounded-2xl border border-white/5 hover:border-h-cyan hover:bg-h-panel/80 transition duration-300 group">
-                        <i data-lucide="pen-tool" class="w-12 h-12 text-h-cyan mx-auto mb-6 group-hover:scale-110 transition"></i>
-                        <h3 class="text-lg font-bold text-white mb-2">Reverse Engineering</h3>
-                        <p class="text-sm text-slate-400">3D scanning obsolete parts to create digital blueprints.</p>
-                    </div>
-                    <div class="bg-h-panel/50 p-8 rounded-2xl border border-white/5 hover:border-h-cyan hover:bg-h-panel/80 transition duration-300 group">
-                        <i data-lucide="shopping-cart" class="w-12 h-12 text-h-cyan mx-auto mb-6 group-hover:scale-110 transition"></i>
-                        <h3 class="text-lg font-bold text-white mb-2">Global Sourcing</h3>
-                        <p class="text-sm text-slate-400">Procurement of raw materials and OEM certified parts.</p>
-                    </div>
-                    <div class="bg-h-panel/50 p-8 rounded-2xl border border-white/5 hover:border-h-cyan hover:bg-h-panel/80 transition duration-300 group">
-                        <i data-lucide="truck" class="w-12 h-12 text-h-cyan mx-auto mb-6 group-hover:scale-110 transition"></i>
-                        <h3 class="text-lg font-bold text-white mb-2">Secure Logistics</h3>
-                        <p class="text-sm text-slate-400">Delivery to site, handled by integrity experts.</p>
-                    </div>
+        <section id="digital-ops" class="py-24 bg-h-dark">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="flex items-center gap-4 mb-16 justify-end text-right">
+                    <h2 class="text-3xl font-black text-white uppercase tracking-tight">Advanced Diagnostics <span class="text-h-cyan text-lg block font-normal normal-case">The "Brain" behind the Muscle.</span></h2>
+                    <div class="w-12 h-1 bg-h-cyan"></div>
+                </div>
+
+                <div class="grid md:grid-cols-4 gap-4">
+                    <a href="services-integrity.html" class="p-6 rounded-lg border border-h-cyan/20 hover:bg-h-cyan/5 transition group">
+                        <i data-lucide="activity" class="w-8 h-8 text-h-cyan mb-4"></i>
+                        <h4 class="font-bold text-white mb-2">Vibration Analysis</h4>
+                        <p class="text-xs text-slate-400">Spectrum analysis, orbit plots, and phase analysis.</p>
+                    </a>
+                    <a href="services-predictive.html" class="p-6 rounded-lg border border-h-green/20 hover:bg-h-green/5 transition group">
+                        <i data-lucide="cpu" class="w-8 h-8 text-h-green mb-4"></i>
+                        <h4 class="font-bold text-white mb-2">Digital Twin</h4>
+                        <p class="text-xs text-slate-400">Real-time simulation and load scenario testing.</p>
+                    </a>
+                    <a href="services-compliance.html" class="p-6 rounded-lg border border-h-purple/20 hover:bg-h-purple/5 transition group">
+                        <i data-lucide="file-check" class="w-8 h-8 text-h-purple mb-4"></i>
+                        <h4 class="font-bold text-white mb-2">Compliance Audit</h4>
+                        <p class="text-xs text-slate-400">ISO/IEC standard verification and reporting.</p>
+                    </a>
+                    <a href="services-optimization.html" class="p-6 rounded-lg border border-h-yellow/20 hover:bg-h-yellow/5 transition group">
+                        <i data-lucide="zap" class="w-8 h-8 text-h-yellow mb-4"></i>
+                        <h4 class="font-bold text-white mb-2">Efficiency Opt.</h4>
+                        <p class="text-xs text-slate-400">Cam curve tuning and loss minimization.</p>
+                    </a>
                 </div>
             </div>
         </section>
 
-        <section class="py-24 bg-gradient-to-r from-h-dark to-h-panel border-t border-h-border text-center">
+        <section class="py-20 text-center bg-gradient-to-b from-h-panel to-h-dark border-t border-h-border">
             <div class="max-w-3xl mx-auto px-4">
-                <h2 class="text-3xl font-bold text-white mb-6">Unsure where to start?</h2>
-                <p class="text-slate-400 mb-10 text-lg">Let's discuss your plant's specific pain points and define a roadmap.</p>
-                <a href="contact.html" class="inline-flex items-center gap-3 text-white font-bold border-2 border-h-cta text-h-cta px-10 py-4 rounded-full hover:bg-h-cta hover:text-black transition uppercase tracking-widest text-sm shadow-lg hover:shadow-h-cta/30 transform hover:-translate-y-1">
-                    Start Conversation <i data-lucide="message-square" class="w-5 h-5"></i>
+                <h2 class="text-3xl font-bold text-white mb-6">Need a whole team, or just a welder?</h2>
+                <p class="text-slate-400 mb-10 text-lg">We adapt to your outage scope. From turnkey rehabilitation to emergency spot repair.</p>
+                <a href="contact.html" class="inline-flex items-center justify-center px-12 py-5 bg-white text-black font-black rounded-lg hover:bg-slate-200 transition shadow-lg uppercase tracking-widest">
+                    Request Service Quote
                 </a>
             </div>
         </section>
@@ -315,16 +283,13 @@
     </main>
 
     <footer class="bg-black border-t border-slate-900 py-12 text-center">
-        <div class="max-w-7xl mx-auto px-4">
-            <img src="logo.svg" alt="Logo" class="h-8 mx-auto mb-6 opacity-50 grayscale hover:grayscale-0 transition">
-            <p class="text-slate-500 text-xs font-mono">© 2025 Anohubs Inc. | Operational Hub</p>
-        </div>
+        <div class="max-w-7xl mx-auto px-4"><p class="text-slate-600 text-xs font-mono">© 2025 Anohubs Inc. | FIELD SERVICES DIVISION</p></div>
     </footer>
 
     <script>
         lucide.createIcons();
         
-        // Mobile Menu Logic (PRO)
+        // Mobile Menu
         const menuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         const mobileLinks = document.querySelectorAll('.mobile-link');
@@ -333,10 +298,10 @@
             const isClosed = mobileMenu.classList.contains('translate-x-full');
             if (isClosed) {
                 mobileMenu.classList.remove('translate-x-full');
-                document.body.style.overflow = 'hidden'; // Lock scroll
+                document.body.style.overflow = 'hidden';
             } else {
                 mobileMenu.classList.add('translate-x-full');
-                document.body.style.overflow = 'auto'; // Unlock scroll
+                document.body.style.overflow = 'auto';
             }
         });
 
@@ -347,16 +312,11 @@
             });
         });
 
-        // Navbar Scroll Effect
+        // Navbar Scroll
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                nav.classList.add('shadow-lg', 'bg-h-dark/95');
-                nav.classList.remove('bg-h-dark/90');
-            } else {
-                nav.classList.remove('shadow-lg', 'bg-h-dark/95');
-                nav.classList.add('bg-h-dark/90');
-            }
+            if (window.scrollY > 50) { nav.classList.add('shadow-lg', 'bg-h-dark/95'); nav.classList.remove('bg-h-dark/90'); } 
+            else { nav.classList.remove('shadow-lg', 'bg-h-dark/95'); nav.classList.add('bg-h-dark/90'); }
         });
     </script>
 </body>
