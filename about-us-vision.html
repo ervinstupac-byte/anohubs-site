@@ -2,7 +2,7 @@
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Our Vision & The Architect | AnoHUB</title>
     <meta name="description" content="The origin story of Anohubs. Meeting the architects behind the Engineering Immunity Protocol.">
 
@@ -14,10 +14,7 @@
         "@type": "Person",
         "name": "Ervin Stupac",
         "jobTitle": "Lead Architect & Founder",
-        "worksFor": {
-          "@type": "Organization",
-          "name": "AnoHUB"
-        },
+        "worksFor": { "@type": "Organization", "name": "AnoHUB" },
         "description": "Forensic engineering specialist focusing on hydropower integrity and dynamic risk mitigation."
       }
     }
@@ -27,15 +24,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: { 
-                        sans: ['Inter', 'sans-serif'], 
-                        mono: ['JetBrains Mono', 'monospace'] 
-                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
                     colors: {
                         'h-cyan': '#06b6d4', 'h-green': '#10b981', 'h-red': '#ef4444', 
                         'h-yellow': '#facc15', 'h-dark': '#020617', 'h-panel': '#0f172a', 
@@ -44,17 +39,10 @@
                     animation: {
                         'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
                         'scan': 'scan 4s linear infinite',
-                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                     },
                     keyframes: {
-                        fadeInUp: {
-                            '0%': { opacity: '0', transform: 'translateY(20px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
-                        },
-                        scan: {
-                            '0%': { top: '0%' },
-                            '100%': { top: '100%' },
-                        }
+                        fadeInUp: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+                        scan: { '0%': { top: '0%' }, '100%': { top: '100%' } }
                     }
                 }
             }
@@ -64,132 +52,79 @@
     <style>
         body { background-color: #020617; color: #f8fafc; overflow-x: hidden; }
         
-        /* --- NOVI SLOJ ZA POZADINSKU SLIKU --- */
-        .bg-image-layer {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            z-index: -2; /* Najdublji sloj */
-            
-            /* OVDJE PROMIJENI PUTANJU AKO JE SLIKA U FOLDERU (npr. 'slike/about_us_bckgrnd.jpg') */
-            background-image: url('about_us_bckgrnd.jpg'); 
-            
-            background-size: cover; background-position: center;
-            
-            /* Postavke za "Premium" tamni izgled: */
-            opacity: 0.25; /* Dovoljno tamno da tekst bude čitljiv */
-            filter: grayscale(100%) contrast(1.1); /* Crno-bijelo za profesionalni dojam */
+        /* NOISE & GRID */
+        .noise-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+            pointer-events: none; z-index: 50; opacity: 0.4;
         }
-
-        /* Tech Grid Background (Sada je iznad slike) */
         .tech-bg {
-            background-image: linear-gradient(rgba(6, 182, 212, 0.03) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(6, 182, 212, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            z-index: -1; /* Iznad slike, ispod sadržaja */
+            background-image: linear-gradient(rgba(6, 182, 212, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(6, 182, 212, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
         }
 
-        /* Glass Cards */
+        /* GLASS PANELS */
         .glass-panel {
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(51, 65, 85, 0.5);
+            background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(12px);
+            border: 1px solid rgba(51, 65, 85, 0.5); transition: all 0.3s ease;
         }
+        .glass-panel:hover { border-color: #06b6d4; box-shadow: 0 0 30px rgba(6, 182, 212, 0.1); }
 
-        /* Portrait Scan Effect */
-        .portrait-container { position: relative; overflow: hidden; }
+        /* FOUNDER PORTRAIT FX */
+        .portrait-container { position: relative; overflow: hidden; border-radius: 1rem; border: 1px solid rgba(6,182,212,0.3); }
         .portrait-scanline {
             position: absolute; width: 100%; height: 2px; background: #06b6d4;
-            box-shadow: 0 0 10px #06b6d4; opacity: 0.5; animation: scan 3s linear infinite;
+            box-shadow: 0 0 10px #06b6d4; opacity: 0.5; animation: scan 3s linear infinite; z-index: 10;
         }
 
-        /* Timeline Line */
-        .timeline-line {
-            position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: #1e293b; transform: translateX(-50%);
+        /* TURBINE CARDS (MASTERY) */
+        .mastery-card {
+            height: 400px; position: relative; overflow: hidden; border-radius: 1rem;
+            border: 1px solid rgba(255,255,255,0.1); transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .mastery-card:hover { transform: scale(1.02); box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5); }
+        .mastery-bg {
+            position: absolute; inset: 0; background-size: cover; background-position: center;
+            transition: transform 0.7s ease; filter: grayscale(100%) contrast(1.2);
+        }
+        .mastery-card:hover .mastery-bg { transform: scale(1.1); filter: grayscale(0%); }
+        .mastery-content {
+            position: absolute; inset: 0; background: linear-gradient(to top, #020617 10%, transparent 80%);
+            display: flex; flex-direction: column; justify-content: flex-end; padding: 2rem;
         }
 
-        /* --- PRINT OPTIMIZATION --- */
-        @media print {
-            body { background-color: white !important; color: black !important; font-family: serif; }
-            /* Sakrij pozadine kod printanja da se uštedi tinta */
-            .tech-bg, .bg-image-layer, #navbar, footer, #mobile-sticky-cta, .portrait-scanline, .timeline-line, .absolute { display: none !important; }
-            main { padding-top: 0 !important; }
-            h1 { color: black !important; font-size: 24pt !important; }
-            h2, h3, h4 { color: #333 !important; }
-            p, li { color: black !important; }
-            .glass-panel { 
-                background: white !important; border: none !important; 
-                box-shadow: none !important; padding: 0 !important; margin-bottom: 20px; 
-            }
-            .text-transparent { color: black !important; -webkit-text-fill-color: black !important; }
-            img { filter: none !important; border: 1px solid #ccc !important; max-width: 200px !important; }
-            
-            /* Layout fixes for print */
-            .grid { display: block !important; }
-            .md\:col-span-5, .md\:col-span-7 { width: 100% !important; display: block !important; margin-bottom: 20px; }
-            
-            body::before {
-                content: "ANOHUBS FOUNDER PROFILE & VISION";
-                display: block; border-bottom: 2px solid black; margin-bottom: 20px; font-weight: bold;
-            }
-        }
+        /* TIMELINE LINE */
+        .timeline-line { position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: linear-gradient(to bottom, transparent, #334155, transparent); transform: translateX(-50%); }
     </style>
 </head>
 
 <body class="antialiased">
     
-    <div class="bg-image-layer"></div>
-    
+    <div class="noise-overlay"></div>
     <div class="tech-bg"></div>
 
     <header class="fixed w-full z-50 top-0 border-b border-white/5 bg-h-dark/90 backdrop-blur-md transition-all duration-300" id="navbar">
-        
-        <div class="relative bg-h-purple/10 border-b border-h-purple/20 overflow-hidden">
-            <div class="max-w-7xl mx-auto px-4 py-2 flex flex-col md:flex-row items-center justify-between gap-2 md:gap-4">
-                <div class="flex items-center gap-3">
-                    <span class="flex h-2 w-2 relative">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-h-purple opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-2 w-2 bg-h-purple"></span>
-                    </span>
-                    <span class="text-[10px] font-mono text-h-purple font-bold tracking-widest uppercase">NEW INTEL:</span>
-                    <span class="text-xs text-white font-semibold truncate">The Hydro-Boom Paradox: AI vs. Physics</span>
-                </div>
-                <div class="flex items-center gap-4">
-                    <span class="hidden md:block text-[10px] text-slate-500 font-mono">DOC ID: INS-016</span>
-                    <a href="insights/article-16-ai-paradox.html" class="group flex items-center gap-2 text-[10px] font-bold text-white hover:text-h-purple transition uppercase tracking-wider">
-                        READ BRIEF 
-                        <svg class="w-3 h-3 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                    </a>
-                </div>
-            </div>
-        </div>
-
         <div class="max-w-7xl mx-auto px-4 h-20 flex justify-between items-center">
             <a href="index.html" class="flex items-center gap-3 group">
                 <img src="logo.svg" alt="AnoHUB" class="h-10 w-auto transition group-hover:brightness-125">
                 <div class="hidden md:block">
                     <span class="block text-lg font-black tracking-tighter text-white leading-none">ANOHUBS</span>
-                    <span class="block text-[10px] font-mono text-h-cyan tracking-widest uppercase">Mission Control</span>
+                    <span class="block text-[10px] font-mono text-slate-500 tracking-widest uppercase group-hover:text-white transition">The Vision</span>
                 </div>
             </a>
-            <nav class="hidden lg:flex items-center gap-6 text-xs font-bold uppercase tracking-wider">
-                <a href="index.html" class="text-slate-400 hover:text-white transition">Home</a>
-                <a href="services.html" class="text-slate-400 hover:text-white transition">Services</a>
-                <a href="insights/expert-insights.html" class="text-slate-400 hover:text-white transition">Insights</a>
-                <a href="protocol.html" class="group relative inline-flex items-center gap-2 px-5 py-2 bg-h-cyan/10 text-h-cyan border border-h-cyan/50 rounded-full hover:bg-h-cyan hover:text-black transition-all duration-300">
-                    <span>PROTOCOL</span>
-                    <div class="w-1.5 h-1.5 bg-h-cyan rounded-full animate-pulse"></div>
-                </a>
-                <a href="contact.html" class="px-5 py-2 bg-h-cta text-black rounded-full hover:bg-yellow-400 transition">Contact</a>
+            <nav class="hidden lg:flex items-center gap-6 text-xs font-bold uppercase tracking-wider text-slate-400">
+                <a href="index.html" class="hover:text-white transition">Home</a>
+                <a href="services.html" class="hover:text-white transition">Services</a>
+                <a href="insights/expert-insights.html" class="hover:text-white transition">Insights</a>
+                <a href="contact.html" class="px-5 py-2 bg-white text-black rounded-full hover:bg-gray-200 transition">Contact</a>
             </nav>
-            <button id="mobile-menu-btn" class="lg:hidden text-white p-2">
-                <svg data-lucide="menu" class="w-8 h-8"></svg>
-            </button>
+            <button id="mobile-menu-btn" class="lg:hidden text-white p-2"><i data-lucide="menu" class="w-8 h-8"></i></button>
         </div>
-        <div id="mobile-menu" class="hidden lg:hidden absolute top-28 left-0 w-full bg-h-dark border-b border-h-border p-4 flex flex-col gap-4 shadow-2xl">
-            <a href="index.html" class="text-slate-300 hover:text-h-cyan py-2 border-b border-h-border">Home</a>
-            <a href="services.html" class="text-slate-300 hover:text-h-cyan py-2 border-b border-h-border">Services</a>
-            <a href="protocol.html" class="text-h-cyan font-bold py-2 border-b border-h-border flex items-center gap-2"><svg data-lucide="shield" class="w-4 h-4"></svg> PROTOCOL</a>
-            <a href="contact.html" class="text-h-cta font-bold py-2">Contact Us</a>
+        
+        <div id="mobile-menu" class="fixed inset-0 bg-h-dark/95 backdrop-blur-xl z-40 transform translate-x-full transition-transform duration-300 flex flex-col justify-center items-center gap-8 lg:hidden">
+            <a href="index.html" class="text-2xl font-black text-white uppercase mobile-link">Home</a>
+            <a href="services.html" class="text-2xl font-black text-white uppercase mobile-link">Services</a>
+            <a href="contact.html" class="text-xl font-bold text-black bg-white px-8 py-3 rounded mobile-link">CONTACT US</a>
         </div>
     </header>
 
@@ -198,27 +133,25 @@
         <section class="max-w-7xl mx-auto px-4 mb-24">
             <div class="text-center max-w-4xl mx-auto">
                 <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-xs font-mono text-h-cyan mb-6 animate-[fadeInUp_1s_ease-out]">
-                    VISION LOG v1.0
+                    <span class="w-2 h-2 bg-h-cyan rounded-full animate-pulse"></span> VISION LOG v1.0
                 </div>
                 <h1 class="text-5xl md:text-7xl font-black text-white mb-8 tracking-tight leading-none animate-[fadeInUp_1s_ease-out_0.2s_forwards] opacity-0">
                     THE ARCHITECTS OF <br>
                     <span class="text-transparent bg-clip-text bg-gradient-to-r from-h-cyan to-blue-500">IMMUNITY</span>
                 </h1>
                 <p class="text-xl text-slate-400 leading-relaxed animate-[fadeInUp_1s_ease-out_0.4s_forwards] opacity-0">
-                    We didn't just want to inspect power plants. We wanted to solve the fundamental equation of 
-                    <strong class="text-white">Dynamic Risk</strong> versus <strong class="text-white">Operational Certainty</strong>.
+                    We didn't just want to inspect power plants. We wanted to solve the fundamental equation of <strong class="text-white">Dynamic Risk</strong> versus <strong class="text-white">Operational Certainty</strong>.
                 </p>
             </div>
         </section>
 
         <section class="max-w-6xl mx-auto px-4 mb-32 relative z-10">
-            <div class="glass-panel rounded-2xl p-8 md:p-12 border-l-4 border-l-h-cyan relative overflow-hidden animate-[fadeInUp_1s_ease-out_0.6s_forwards] opacity-0">
-                <div class="absolute top-0 right-0 p-12 opacity-5"><svg data-lucide="fingerprint" class="w-64 h-64 text-white"></svg></div>
+            <div class="glass-panel rounded-3xl p-8 md:p-12 border-l-4 border-l-h-cyan relative overflow-hidden animate-[fadeInUp_1s_ease-out_0.6s_forwards] opacity-0">
+                <div class="absolute top-0 right-0 p-12 opacity-5"><i data-lucide="fingerprint" class="w-64 h-64 text-white"></i></div>
 
                 <div class="grid md:grid-cols-12 gap-12 items-center">
-                    
                     <div class="md:col-span-5 relative">
-                        <div class="portrait-container rounded-xl border-2 border-slate-700 shadow-2xl">
+                        <div class="portrait-container">
                             <img src="slike/ervin_stupac_portrait.jpg" alt="Ervin Stupac" class="w-full h-auto object-cover filter grayscale hover:grayscale-0 transition duration-700">
                             <div class="portrait-scanline"></div>
                             
@@ -243,49 +176,105 @@
                         </p>
                         
                         <div class="pt-4 border-t border-slate-800 flex items-center gap-4">
-                            <div class="font-handwriting text-2xl text-h-cyan opacity-80" style="font-family: 'Brush Script MT', cursive;">Ervin Stupac</div>
+                            <div class="font-serif italic text-2xl text-h-cyan opacity-80">Ervin Stupac</div>
                             <div class="h-px bg-slate-700 flex-grow"></div>
-                            <div class="text-xs font-mono text-slate-500">EST. 2023</div>
+                            <div class="text-xs font-mono text-slate-500">EST. 2024</div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-24 bg-h-dark border-y border-white/5 relative">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="text-sm font-mono text-slate-500 uppercase tracking-widest mb-4">Domain Expertise</h2>
+                    <h3 class="text-4xl font-black text-white">Mastery Across Architectures</h3>
+                    <p class="text-slate-400 mt-4 max-w-2xl mx-auto">We don't generalize. We specialize in the specific pathology of each machine type. Select an asset to verify our competence.</p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    
+                    <a href="turbine-francis.html" class="mastery-card group block">
+                        <div class="mastery-bg" style="background-image: url('slike/francis_srvcs.jpg');"></div>
+                        <div class="mastery-content">
+                            <div class="flex justify-between items-end border-b border-white/20 pb-4 mb-4">
+                                <h4 class="text-3xl font-black text-white group-hover:text-h-cyan transition">FRANCIS</h4>
+                                <span class="text-xs font-mono text-h-cyan bg-h-cyan/10 px-2 py-1 rounded">MIXED FLOW</span>
+                            </div>
+                            <p class="text-slate-300 text-sm mb-4 line-clamp-2">
+                                The pressure beast. We solve RSI (Rotor-Stator Interaction) and Vortex Rope instability.
+                            </p>
+                            <div class="text-xs font-bold text-white flex items-center gap-2 group-hover:gap-4 transition-all">
+                                VIEW PROTOCOL <i data-lucide="arrow-right" class="w-4 h-4 text-h-cyan"></i>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="turbine-kaplan.html" class="mastery-card group block">
+                        <div class="mastery-bg" style="background-image: url('slike/kaplan_srvcs.jpg');"></div>
+                        <div class="mastery-content">
+                            <div class="flex justify-between items-end border-b border-white/20 pb-4 mb-4">
+                                <h4 class="text-3xl font-black text-white group-hover:text-h-green transition">KAPLAN</h4>
+                                <span class="text-xs font-mono text-h-green bg-h-green/10 px-2 py-1 rounded">AXIAL FLOW</span>
+                            </div>
+                            <p class="text-slate-300 text-sm mb-4 line-clamp-2">
+                                The flow master. We optimize the Cam Curve relation between wicket gates and blade angle.
+                            </p>
+                            <div class="text-xs font-bold text-white flex items-center gap-2 group-hover:gap-4 transition-all">
+                                VIEW PROTOCOL <i data-lucide="arrow-right" class="w-4 h-4 text-h-green"></i>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="turbine-pelton.html" class="mastery-card group block">
+                        <div class="mastery-bg" style="background-image: url('slike/pelton_srvcs.jpg');"></div>
+                        <div class="mastery-content">
+                            <div class="flex justify-between items-end border-b border-white/20 pb-4 mb-4">
+                                <h4 class="text-3xl font-black text-white group-hover:text-h-cta transition">PELTON</h4>
+                                <span class="text-xs font-mono text-h-cta bg-h-cta/10 px-2 py-1 rounded">IMPULSE</span>
+                            </div>
+                            <p class="text-slate-300 text-sm mb-4 line-clamp-2">
+                                The kinetic king. We align injector nozzles to < 0.05mm precision to prevent bucket erosion.
+                            </p>
+                            <div class="text-xs font-bold text-white flex items-center gap-2 group-hover:gap-4 transition-all">
+                                VIEW PROTOCOL <i data-lucide="arrow-right" class="w-4 h-4 text-h-cta"></i>
+                            </div>
+                        </div>
+                    </a>
 
                 </div>
             </div>
         </section>
 
-        <section class="max-w-7xl mx-auto px-4 mb-24">
+        <section class="max-w-7xl mx-auto px-4 mb-24 mt-24">
             <div class="grid md:grid-cols-3 gap-6">
-                
                 <div class="glass-panel p-8 rounded-xl hover:border-h-cyan transition group">
-                    <div class="w-12 h-12 bg-h-cyan/10 rounded-lg flex items-center justify-center text-h-cyan mb-6 border border-h-cyan/20 group-hover:bg-h-cyan group-hover:text-black transition">
-                        <svg data-lucide="microscope" class="w-6 h-6"></svg>
+                    <div class="w-12 h-12 bg-h-cyan/10 rounded-lg flex items-center justify-center text-h-cyan mb-6 border border-h-cyan/20">
+                        <i data-lucide="microscope" class="w-6 h-6"></i>
                     </div>
                     <h3 class="text-xl font-bold text-white mb-3">Forensic Truth</h3>
                     <p class="text-sm text-slate-400">We don't guess. We measure. Using sub-surface NDT and 3D metrology, we provide data that holds up in a court of law.</p>
                 </div>
-
                 <div class="glass-panel p-8 rounded-xl hover:border-h-green transition group">
-                    <div class="w-12 h-12 bg-h-green/10 rounded-lg flex items-center justify-center text-h-green mb-6 border border-h-green/20 group-hover:bg-h-green group-hover:text-black transition">
-                        <svg data-lucide="brain-circuit" class="w-6 h-6"></svg>
+                    <div class="w-12 h-12 bg-h-green/10 rounded-lg flex items-center justify-center text-h-green mb-6 border border-h-green/20">
+                        <i data-lucide="brain-circuit" class="w-6 h-6"></i>
                     </div>
                     <h3 class="text-xl font-bold text-white mb-3">Algorithmic Governance</h3>
                     <p class="text-sm text-slate-400">Technology fails if people don't talk. Our protocols bridge the "Execution Gap" between engineering and management.</p>
                 </div>
-
                 <div class="glass-panel p-8 rounded-xl hover:border-h-yellow transition group">
-                    <div class="w-12 h-12 bg-h-yellow/10 rounded-lg flex items-center justify-center text-h-yellow mb-6 border border-h-yellow/20 group-hover:bg-h-yellow group-hover:text-black transition">
-                        <svg data-lucide="infinity" class="w-6 h-6"></svg>
+                    <div class="w-12 h-12 bg-h-yellow/10 rounded-lg flex items-center justify-center text-h-yellow mb-6 border border-h-yellow/20">
+                        <i data-lucide="infinity" class="w-6 h-6"></i>
                     </div>
                     <h3 class="text-xl font-bold text-white mb-3">Infinite Lifecycle</h3>
                     <p class="text-sm text-slate-400">Our goal isn't just repair. It's to extend the operational life of assets beyond their original design limits.</p>
                 </div>
-
             </div>
         </section>
 
-        <section class="max-w-4xl mx-auto px-4 relative">
+        <section class="max-w-4xl mx-auto px-4 relative mb-32">
             <div class="timeline-line"></div>
-            
             <div class="space-y-12">
                 <div class="relative flex items-center justify-between group">
                     <div class="w-5/12 text-right pr-8">
@@ -295,7 +284,6 @@
                     <div class="absolute left-1/2 -translate-x-1/2 w-4 h-4 bg-h-dark border-2 border-h-cyan rounded-full z-10 group-hover:scale-150 transition"></div>
                     <div class="w-5/12 pl-8 text-xs font-mono text-slate-500">PHASE 01</div>
                 </div>
-
                 <div class="relative flex items-center justify-between group">
                     <div class="w-5/12 text-right pr-8 text-xs font-mono text-slate-500">PHASE 02</div>
                     <div class="absolute left-1/2 -translate-x-1/2 w-4 h-4 bg-h-dark border-2 border-h-green rounded-full z-10 group-hover:scale-150 transition"></div>
@@ -304,7 +292,6 @@
                         <p class="text-slate-400 text-sm mt-2">Development of the proprietary LCC Veto and NDT Matrix.</p>
                     </div>
                 </div>
-
                 <div class="relative flex items-center justify-between group">
                     <div class="w-5/12 text-right pr-8">
                         <h4 class="text-white font-bold text-xl">Global Standard</h4>
@@ -316,60 +303,48 @@
             </div>
         </section>
 
-        <section class="mt-32 text-center px-4">
-            <div class="max-w-3xl mx-auto glass-panel p-10 rounded-2xl relative overflow-hidden group">
+        <section class="text-center px-4">
+            <div class="max-w-3xl mx-auto glass-panel p-10 rounded-2xl relative overflow-hidden group border border-white/10">
                 <div class="absolute inset-0 bg-gradient-to-r from-transparent via-h-cyan/5 to-transparent opacity-0 group-hover:opacity-100 transition duration-700"></div>
-                
                 <h2 class="text-3xl font-black text-white mb-4 relative z-10">You've Seen The Vision. Now See The Logic.</h2>
                 <p class="text-slate-400 mb-8 relative z-10">Access the Engineering Immunity Protocol to see exactly how we execute this vision.</p>
-                
-                <a href="protocol.html" class="relative z-10 inline-flex items-center gap-3 bg-h-cyan hover:bg-cyan-400 text-black font-black px-8 py-4 rounded transition shadow-lg hover:shadow-cyan-500/50">
-                    ENTER COMMAND CENTER <svg data-lucide="arrow-right" class="w-5 h-5"></svg>
+                <a href="protocol.html" class="relative z-10 inline-flex items-center gap-3 bg-h-cyan hover:bg-cyan-400 text-black font-black px-8 py-4 rounded transition shadow-lg">
+                    ENTER COMMAND CENTER <i data-lucide="arrow-right" class="w-5 h-5"></i>
                 </a>
             </div>
         </section>
 
     </main>
-    
-    <div id="mobile-sticky-cta" class="lg:hidden fixed bottom-4 left-4 right-4 z-50 animate-[fadeInUp_1s_ease-out_1s_forwards] opacity-0">
-        <a href="contact.html" class="flex items-center justify-between bg-h-cyan/90 backdrop-blur-md text-black px-4 py-3 rounded-lg shadow-2xl border border-white/20">
-            <span class="text-xs font-bold uppercase tracking-wider">Partner With Us</span>
-            <span class="bg-black text-h-cyan text-xs font-black px-2 py-1 rounded">CONTACT &rarr;</span>
-        </a>
-    </div>
 
-    <footer class="bg-black border-t border-slate-900 py-12 text-center mt-12 mb-20 lg:mb-0">
+    <footer class="bg-black border-t border-slate-900 py-12 text-center mt-12">
         <div class="max-w-7xl mx-auto px-4">
             <img src="logo.svg" alt="Logo" class="h-8 mx-auto mb-6 opacity-50 grayscale hover:grayscale-0 transition">
             <p class="text-slate-500 text-sm mb-6">© 2025 Anohubs Inc.</p>
-            <div class="flex justify-center gap-6 text-xs font-mono text-slate-600">
-                <a href="privacy-policy.html" class="hover:text-white transition">PRIVACY</a>
-                <a href="terms-of-use.html" class="hover:text-white transition">TERMS</a>
-            </div>
         </div>
     </footer>
 
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <script>
         lucide.createIcons();
-        
-        // Mobile Menu
         const menuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        
         menuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
+            const isClosed = mobileMenu.classList.contains('translate-x-full');
+            if (isClosed) {
+                mobileMenu.classList.remove('translate-x-full');
+                document.body.style.overflow = 'hidden';
+            } else {
+                mobileMenu.classList.add('translate-x-full');
+                document.body.style.overflow = 'auto';
+            }
         });
 
-        // Navbar Scroll
-        window.addEventListener('scroll', () => {
-            const nav = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                nav.classList.add('shadow-lg', 'bg-h-dark/95');
-                nav.classList.remove('bg-h-dark/90');
-            } else {
-                nav.classList.remove('shadow-lg', 'bg-h-dark/95');
-                nav.classList.add('bg-h-dark/90');
-            }
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('translate-x-full');
+                document.body.style.overflow = 'auto';
+            });
         });
     </script>
 </body>
