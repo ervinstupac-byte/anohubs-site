@@ -4,60 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Francis Turbine Protocol | AnoHUB</title>
-    <meta name="description" content="Operational integrity protocols for Francis turbines. Hill chart optimization, RSI analysis, and cavitation mitigation.">
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/1.13.0/model-viewer.min.js"></script>
-    
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
-                    colors: { 
-                        'h-cyan': '#06b6d4', 
-                        'h-dark': '#020617', 
-                        'h-panel': '#0f172a', 
-                        'h-border': '#1e293b',
-                        'h-red': '#ef4444'
-                    },
-                    animation: { 'spin-slow': 'spin 20s linear infinite' }
+                    fontFamily: { sans: ['Inter'], mono: ['JetBrains Mono'] },
+                    colors: { 'h-cyan': '#06b6d4', 'h-dark': '#020617', 'h-panel': '#0f172a', 'h-border': '#1e293b', 'h-red': '#ef4444' }
                 }
             }
         }
     </script>
-    
     <style>
         body { background-color: #020617; color: #f8fafc; overflow-x: hidden; }
         
-        /* === BACKGROUND SYSTEM === */
+        /* === DUAL BACKGROUND SYSTEM === */
         .bg-layer {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
             background-size: cover; background-position: center;
             opacity: 0; transition: opacity 1.5s ease-in-out; will-change: opacity;
         }
-        /* Slika je vidljiva ali ne guši tekst */
-        .bg-layer.active { opacity: 0.6; } 
+        .bg-layer.active { opacity: 0.6; } /* Malo manji opacity da tekst bude čitljiviji na svijetlim dijelovima metala */
 
         #bg-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
-            background: linear-gradient(to bottom, rgba(2,6,23,0.85) 0%, rgba(2,6,23,0.7) 50%, rgba(2,6,23,0.95) 100%);
+            background: linear-gradient(to bottom, rgba(2,6,23,0.9) 0%, rgba(2,6,23,0.7) 50%, rgba(2,6,23,0.95) 100%);
             pointer-events: none;
         }
         
-        .noise { 
-            position: fixed; inset: 0; z-index: 50; pointer-events: none; opacity: 0.05; 
-            background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MCIgaGVpZ2h0PSI1MCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0ibm9uZSIvPjwvc3ZnPg=="); 
-        } 
+        .noise { position: fixed; inset: 0; z-index: 50; pointer-events: none; opacity: 0.05; background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MCIgaGVpZ2h0PSI1MCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0ibm9uZSIvPjwvc3ZnPg=="); } 
         
-        /* GLASSMORPHISM */
+        /* GLASS PANELS */
         .glass { 
             background: rgba(15, 23, 42, 0.6); 
             backdrop-filter: blur(12px); 
-            border: 1px solid rgba(6, 182, 212, 0.15); 
+            border: 1px solid rgba(6, 182, 212, 0.1); /* Cyan border */
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
         }
 
@@ -73,44 +58,39 @@
             position: absolute; transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); 
             box-shadow: 0 0 20px #ef4444; z-index: 10; 
         }
-        
+
         /* SLIDERS */
         input[type=range] { -webkit-appearance: none; background: transparent; cursor: pointer; }
         input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none; height: 16px; width: 16px; border-radius: 50%;
-            background: #06b6d4; margin-top: -6px; border: 2px solid white; box-shadow: 0 0 10px #06b6d4;
+            -webkit-appearance: none; height: 20px; width: 10px; 
+            background: #06b6d4; margin-top: -8px; border: 1px solid white;
+            box-shadow: 0 0 10px #06b6d4;
         }
-        input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 4px; background: #334155; border-radius: 2px; }
+        input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 4px; background: #1e293b; border-radius: 2px; }
     </style>
 </head>
 
 <body class="antialiased">
     
-    <div id="bg-1" class="bg-layer active" style="background-image: url('../slike/francis_srvcs.jpg');"></div>
-    <div id="bg-2" class="bg-layer" style="background-image: url('../slike/francis_srvcs2.jpg');"></div>
+    <div id="bg-1" class="bg-layer active" style="background-image: url('slike/francis_srvcs.jpg');"></div>
+    <div id="bg-2" class="bg-layer" style="background-image: url('slike/francis_srvcs2.jpg');"></div>
     
     <div id="bg-overlay"></div>
     <div class="noise"></div>
 
-    <header class="fixed w-full z-50 top-0 border-b border-white/5 bg-h-dark/80 backdrop-blur-md shadow-2xl">
+    <header class="fixed w-full z-50 top-0 border-b border-white/5 bg-h-dark/80 backdrop-blur-md">
         <div class="max-w-7xl mx-auto px-4 h-20 flex justify-between items-center">
             <a href="index.html" class="flex items-center gap-3 group">
-                <img src="logo.svg" alt="AnoHUB" class="h-10 w-auto transition group-hover:brightness-125">
+                <img src="logo.svg" alt="AnoHUB" class="h-10 w-auto">
                 <div class="hidden md:block">
-                    <span class="block text-lg font-black tracking-tighter text-white leading-none">ANOHUBS</span>
+                    <span class="block text-lg font-black tracking-tighter text-white">ANOHUBS</span>
                     <span class="block text-[10px] font-mono text-h-cyan tracking-widest uppercase">Francis Division</span>
                 </div>
             </a>
-            <nav class="hidden lg:flex items-center gap-6 text-xs font-bold uppercase tracking-wider text-slate-400">
-                <a href="index.html" class="hover:text-white transition">Home</a>
-                <a href="services.html" class="hover:text-white transition flex items-center gap-2"><i data-lucide="arrow-left" class="w-3 h-3"></i> Asset Library</a>
-                <a href="protocol.html" class="group relative inline-flex items-center gap-2 px-5 py-2 bg-h-cyan/5 text-h-cyan border border-h-cyan/30 rounded-full hover:bg-h-cyan hover:text-black transition-all duration-300">
-                    <span>PROTOCOL</span>
-                    <div class="w-1.5 h-1.5 bg-h-cyan rounded-full animate-pulse"></div>
-                </a>
-                <a href="contact.html" class="px-5 py-2 bg-h-cyan text-black rounded-full hover:bg-white transition shadow-lg shadow-h-cyan/20">Contact</a>
+            <nav class="hidden lg:flex gap-6 text-xs font-bold uppercase text-slate-400">
+                <a href="services.html" class="hover:text-white transition">Library</a>
+                <a href="contact.html" class="px-5 py-2 bg-h-cyan text-black rounded hover:bg-white transition shadow-lg">Contact</a>
             </nav>
-            <button class="lg:hidden text-white p-2"><i data-lucide="menu"></i></button>
         </div>
     </header>
 
@@ -118,7 +98,7 @@
         
         <section class="scroll-section min-h-screen flex items-center justify-center text-center relative" data-bg-id="bg-1">
             <div class="max-w-4xl px-4 relative z-10">
-                <div class="inline-block px-4 py-2 border border-h-cyan/50 bg-black/40 backdrop-blur-md text-h-cyan text-xs font-mono mb-8 rounded-full shadow-[0_0_30px_rgba(6,182,212,0.2)]">
+                <div class="inline-block px-4 py-2 border border-h-cyan bg-black/50 backdrop-blur text-h-cyan text-xs font-mono mb-8 rounded-full shadow-[0_0_20px_rgba(6,182,212,0.3)]">
                     ASSET CLASS: REACTION / MIXED FLOW
                 </div>
                 
@@ -131,7 +111,7 @@
                 </p>
                 
                 <div class="mt-12 flex justify-center gap-6">
-                    <a href="#history" class="text-xs font-bold text-white uppercase tracking-widest hover:text-h-cyan transition border-b border-h-cyan pb-1">
+                    <a href="#history" class="text-xs font-bold text-white uppercase tracking-widest hover:text-h-cyan transition">
                         History & Evolution &darr;
                     </a>
                 </div>
@@ -141,28 +121,25 @@
         <section id="history" class="scroll-section py-32 border-b border-white/5" data-bg-id="bg-1">
             <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-16 items-center">
                 <div>
-                    <h2 class="text-h-cyan font-mono text-sm mb-4 tracking-widest">01 // THE LEGACY</h2>
+                    <h2 class="text-h-cyan font-mono text-sm mb-4">01 // THE LEGACY</h2>
                     <h3 class="text-4xl md:text-5xl font-bold text-white mb-8 leading-tight">From 1848 to CFD Perfection</h3>
                     <p class="text-slate-300 mb-6 text-lg leading-relaxed">
                         Developed by James B. Francis in Lowell, Massachusetts, this design revolutionized hydropower by combining radial and axial flow concepts. Before Francis, turbines were inefficient "pinwheels". His analytical approach to vane curvature created the first scientifically optimized hydraulic machine.
                     </p>
-                    <div class="glass p-8 rounded-xl border-l-4 border-l-h-cyan">
+                    <div class="glass p-6 rounded-lg border-l-4 border-h-cyan">
                         <p class="text-slate-200 text-lg leading-relaxed">
-                            <strong>Today's Reality:</strong> Modern Francis units achieve efficiencies exceeding <span class="text-h-cyan font-bold">96%</span>. However, this peak performance narrows the operating band. Pushing a modern Francis into deep part-load (<40%) creates violent <span class="text-h-red font-bold">Inter-Blade Vortexes</span> that older, more robust designs tolerated better.
+                            <strong>Today's Reality:</strong> Modern Francis units achieve efficiencies exceeding <span class="text-h-cyan font-bold">96%</span>. However, this peak performance narrows the operating band. Pushing a modern Francis into deep part-load (<40%) creates violent <span class="text-h-red font-bold">Inter-Blade Vortexes</span>.
                         </p>
                     </div>
                 </div>
-                
-                <div class="glass p-10 rounded-2xl border-t-4 border-t-h-cyan shadow-2xl transform hover:-translate-y-2 transition duration-500">
-                    <h4 class="text-white font-bold mb-8 text-xl flex items-center gap-2">
-                        <i data-lucide="cpu" class="text-h-cyan"></i> Technical Specifications
-                    </h4>
+                <div class="glass p-10 rounded-2xl border-t-4 border-t-h-cyan shadow-2xl">
+                    <h4 class="text-white font-bold mb-6 text-xl">Technical Specifications</h4>
                     <ul class="space-y-6 font-mono text-sm text-slate-400">
                         <li class="flex justify-between border-b border-white/5 pb-2"><span>INVENTED</span> <span class="text-white">1848 (USA)</span></li>
                         <li class="flex justify-between border-b border-white/5 pb-2"><span>FLOW TYPE</span> <span class="text-white">Radial-Axial (Mixed)</span></li>
                         <li class="flex justify-between border-b border-white/5 pb-2"><span>MAX EFFICIENCY</span> <span class="text-h-cyan">~96.5%</span></li>
                         <li class="flex justify-between border-b border-white/5 pb-2"><span>HEAD RANGE</span> <span class="text-white">40m - 600m</span></li>
-                        <li class="flex justify-between"><span>CORE RISK</span> <span class="text-h-red font-bold">RSI & Vortex Rope</span></li>
+                        <li class="flex justify-between"><span>CORE RISK</span> <span class="text-h-red">RSI & Vortex Rope</span></li>
                     </ul>
                 </div>
             </div>
@@ -170,41 +147,30 @@
 
         <section class="scroll-section py-32 relative border-t border-white/5" data-bg-id="bg-2">
             <div class="max-w-7xl mx-auto px-4">
-                <div class="glass p-8 md:p-12 rounded-3xl shadow-2xl">
-                    <div class="flex flex-col md:flex-row justify-between items-end mb-12">
+                <div class="glass p-8 rounded-3xl">
+                    <div class="flex justify-between items-end mb-12">
                         <div>
                             <h2 class="text-4xl font-black text-white mb-2 flex items-center gap-3">
                                 <i data-lucide="activity" class="text-h-cyan"></i> Hill Chart Simulator
                             </h2>
                             <p class="text-slate-400">Visualize the Operating Point (OP) against the efficiency shell.</p>
                         </div>
-                        <div class="text-right mt-6 md:mt-0">
-                            <span class="text-xs text-slate-500 font-mono uppercase">Live Efficiency</span>
-                            <div id="eff-display" class="text-6xl font-black text-h-cyan tracking-tighter">92%</div>
-                        </div>
+                        <div class="text-right"><span class="text-xs text-slate-500 font-mono">LIVE EFFICIENCY</span><div id="eff-display" class="text-6xl font-black text-h-cyan tracking-tighter">92%</div></div>
                     </div>
                     
                     <div class="grid lg:grid-cols-3 gap-12">
                         <div class="space-y-8 h-fit">
-                            <div class="bg-black/40 p-6 rounded-xl border border-white/5">
-                                <label class="text-xs font-bold text-h-cyan mb-4 block flex justify-between">
-                                    <span>NET HEAD (H)</span> <span id="val-head" class="text-white font-mono">50m</span>
-                                </label>
-                                <input type="range" id="slider-head" min="0" max="100" class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer">
-                                <div class="flex justify-between text-[10px] text-slate-500 mt-2 font-mono"><span>MIN HEAD</span><span>MAX HEAD</span></div>
+                            <div>
+                                <label class="text-xs font-bold text-h-cyan mb-2 block">NET HEAD (H)</label>
+                                <input type="range" id="slider-head" min="0" max="100" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer">
+                                <div class="flex justify-between text-[10px] text-slate-400 mt-2"><span>MIN</span><span>MAX HEAD</span></div>
                             </div>
-                            
-                            <div class="bg-black/40 p-6 rounded-xl border border-white/5">
-                                <label class="text-xs font-bold text-h-cyan mb-4 block flex justify-between">
-                                    <span>DISCHARGE (Q)</span> <span id="val-flow" class="text-white font-mono">50 m³/s</span>
-                                </label>
-                                <input type="range" id="slider-flow" min="0" max="100" class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer">
-                                <div class="flex justify-between text-[10px] text-slate-500 mt-2 font-mono"><span>MIN FLOW</span><span>MAX FLOW</span></div>
+                            <div>
+                                <label class="text-xs font-bold text-h-cyan mb-2 block">DISCHARGE (Q)</label>
+                                <input type="range" id="slider-flow" min="0" max="100" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer">
+                                <div class="flex justify-between text-[10px] text-slate-400 mt-2"><span>MIN</span><span>MAX FLOW</span></div>
                             </div>
-                            
-                            <div id="status-box" class="p-4 bg-h-cyan/10 border border-h-cyan/30 rounded-lg text-sm font-mono text-center text-h-cyan font-bold animate-pulse">
-                                INITIALIZING SYSTEM...
-                            </div>
+                            <div id="status-box" class="p-4 bg-black/40 rounded border border-white/10 text-sm font-mono text-center text-white font-bold">Initializing...</div>
                         </div>
                         
                         <div class="lg:col-span-2 chart-container relative flex items-center justify-center group overflow-hidden">
@@ -216,12 +182,8 @@
                                 <ellipse cx="200" cy="150" rx="80" ry="50" fill="rgba(6,182,212,0.05)" stroke="#06b6d4" stroke-width="2"/>
                                 <text x="200" y="155" text-anchor="middle" fill="#06b6d4" font-size="10" font-family="monospace">PEAK ZONE</text>
                             </svg>
-                            
                             <div id="op-point" class="op-point"></div>
-                            
-                            <div class="absolute bottom-4 right-4 text-xs font-mono text-slate-500 bg-black/80 px-2 py-1 rounded border border-white/10">
-                                HILL CHART: Q/H CORRELATION
-                            </div>
+                            <div class="absolute bottom-4 right-4 text-xs font-mono text-slate-500 bg-black/80 px-2 py-1 rounded">Q/H CORRELATION</div>
                         </div>
                     </div>
                 </div>
@@ -230,17 +192,17 @@
 
         <section class="scroll-section py-32 border-t border-white/5" data-bg-id="bg-2">
             <div class="max-w-6xl mx-auto px-4">
-                <h2 class="text-h-cyan font-mono text-sm mb-4 tracking-widest">03 // FAILURE MODES</h2>
+                <h2 class="text-h-cyan font-mono text-sm mb-4">03 // FAILURE MODES</h2>
                 <h3 class="text-4xl font-bold text-white mb-16 max-w-2xl">The "Invisible" Threats Inside the Spiral Case</h3>
                 
                 <div class="space-y-8">
-                    <div class="glass p-10 rounded-2xl border border-white/5 hover:border-h-cyan transition group duration-500 hover:bg-black/40">
+                    <div class="glass p-10 rounded-2xl border border-white/5 hover:border-h-cyan transition group duration-500">
                         <div class="flex flex-col md:flex-row gap-8">
                             <div class="text-6xl font-black text-white/10 group-hover:text-h-cyan transition">01</div>
                             <div>
                                 <h4 class="text-2xl font-bold text-white mb-4 group-hover:text-h-cyan transition">Rotor-Stator Interaction (RSI)</h4>
                                 <p class="text-slate-300 text-lg leading-relaxed mb-6">
-                                    This is the pressure pulsation that occurs between the passing runner blades and the stationary guide vanes. It creates a high-frequency hydraulic hammer. If this frequency aligns with the natural frequency of the runner, you get catastrophic resonance that can crack blades in days.
+                                    The pressure pulsation between the passing runner blades and the stationary guide vanes creates a high-frequency hydraulic hammer. If this aligns with the runner's natural frequency, catastrophic resonance occurs.
                                 </p>
                                 <div class="inline-block px-4 py-2 bg-h-cyan/10 border border-h-cyan/30 rounded text-xs font-mono text-h-cyan font-bold">
                                     PROTOCOL: Frequency Analysis & Von Karman Check
@@ -249,13 +211,13 @@
                         </div>
                     </div>
 
-                    <div class="glass p-10 rounded-2xl border border-white/5 hover:border-h-cyan transition group duration-500 hover:bg-black/40">
+                    <div class="glass p-10 rounded-2xl border border-white/5 hover:border-h-cyan transition group duration-500">
                         <div class="flex flex-col md:flex-row gap-8">
                             <div class="text-6xl font-black text-white/10 group-hover:text-h-cyan transition">02</div>
                             <div>
                                 <h4 class="text-2xl font-bold text-white mb-4 group-hover:text-h-cyan transition">Draft Tube Vortex Rope</h4>
                                 <p class="text-slate-300 text-lg leading-relaxed mb-6">
-                                    At part load operation, the residual swirl leaving the runner creates a corkscrew vortex in the draft tube. This causes massive pressure surges ("surging") that can lift the entire generator rotor off its bearings and cause power swings in the grid.
+                                    At part load operation, the residual swirl leaving the runner creates a corkscrew vortex. This causes massive pressure surges ("surging") that can lift the entire generator rotor off its bearings.
                                 </p>
                                 <div class="inline-block px-4 py-2 bg-h-cyan/10 border border-h-cyan/30 rounded text-xs font-mono text-h-cyan font-bold">
                                     PROTOCOL: Air Injection & CFD Mapping
@@ -267,67 +229,43 @@
             </div>
         </section>
 
-        <section class="scroll-section py-32" data-bg-id="bg-2">
-            <div class="max-w-5xl mx-auto px-4 text-center">
+        <section id="contact-direct" class="scroll-section py-24 bg-h-dark border-t border-h-border relative overflow-hidden" data-bg-id="bg-2">
+            <div class="absolute top-0 right-0 w-1/2 h-full bg-h-cyan/5 blur-3xl pointer-events-none"></div>
+            <div class="max-w-4xl mx-auto px-4 relative z-10">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-black text-white mb-4">Initialize Francis Audit</h2>
+                    <p class="text-slate-400">Deploy our specialists to inspect your runner geometry and seals.</p>
+                </div>
                 
-                <div class="glass p-8 rounded-2xl mb-24">
-                    <h2 class="text-white font-bold text-3xl mb-12">Asset Classification Matrix</h2>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-slate-700/50 border border-slate-600 rounded-xl overflow-hidden">
-                        <div class="bg-black/60 p-8 backdrop-blur-sm">
-                            <div class="text-xs text-slate-400 font-mono mb-2">SPECIFIC SPEED (Ns)</div>
-                            <div class="text-3xl font-black text-white">60 - 400</div>
-                        </div>
-                        <div class="bg-black/60 p-8 backdrop-blur-sm">
-                            <div class="text-xs text-slate-400 font-mono mb-2">HEAD RANGE</div>
-                            <div class="text-3xl font-black text-white">40 - 600m</div>
-                        </div>
-                        <div class="bg-black/60 p-8 backdrop-blur-sm">
-                            <div class="text-xs text-slate-400 font-mono mb-2">FLOW TYPE</div>
-                            <div class="text-2xl font-bold text-white">Radial-Axial</div>
-                        </div>
-                        <div class="bg-black/60 p-8 backdrop-blur-sm">
-                            <div class="text-xs text-slate-400 font-mono mb-2">APPLICATION</div>
-                            <div class="text-2xl font-bold text-white">Base Load</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="glass p-10 md:p-14 rounded-3xl border border-h-cyan/30 relative overflow-hidden text-left max-w-4xl mx-auto">
-                     <div class="absolute top-0 right-0 w-1/2 h-full bg-h-cyan/10 blur-3xl pointer-events-none"></div>
-                     
-                     <div class="relative z-10">
-                        <h2 class="text-3xl font-black text-white mb-4">Initialize Francis Audit</h2>
-                        <p class="text-slate-300 mb-8">Deploy our specialists to inspect your runner geometry and seals.</p>
+                <div class="glass p-8 md:p-12 rounded-3xl border border-h-cyan/20 shadow-2xl">
+                    <form id="turbineContactForm" action="https://formspree.io/f/xqaywlaq" method="POST" class="space-y-6">
+                        <input type="hidden" name="Asset Type" value="Francis Turbine">
                         
-                        <form id="turbineContactForm" action="https://formspree.io/f/xqaywlaq" method="POST" class="space-y-6">
-                            <input type="hidden" name="Asset Type" value="Francis Turbine">
-                            
-                            <div class="grid md:grid-cols-2 gap-6">
-                                <div>
-                                    <label class="text-xs font-mono text-h-cyan uppercase ml-1 block mb-2">Full Name</label>
-                                    <input type="text" name="Full Name" required class="w-full bg-black/50 border border-slate-600 rounded-lg p-4 text-white focus:border-h-cyan focus:ring-1 focus:ring-h-cyan outline-none transition">
-                                </div>
-                                <div>
-                                    <label class="text-xs font-mono text-h-cyan uppercase ml-1 block mb-2">Official Email</label>
-                                    <input type="email" name="Email" required class="w-full bg-black/50 border border-slate-600 rounded-lg p-4 text-white focus:border-h-cyan focus:ring-1 focus:ring-h-cyan outline-none transition">
-                                </div>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label class="text-xs font-mono text-h-cyan uppercase ml-1">Full Name</label>
+                                <input type="text" name="Full Name" required class="w-full bg-slate-900/80 border border-slate-700 rounded-lg p-4 text-white focus:border-h-cyan focus:ring-1 focus:ring-h-cyan outline-none transition">
                             </div>
-                            
-                            <div>
-                                <label class="text-xs font-mono text-h-cyan uppercase ml-1 block mb-2">Operational Issue</label>
-                                <textarea name="Message" rows="3" placeholder="e.g. Excessive vibration at 60% load..." class="w-full bg-black/50 border border-slate-600 rounded-lg p-4 text-white focus:border-h-cyan focus:ring-1 focus:ring-h-cyan outline-none transition"></textarea>
+                            <div class="space-y-2">
+                                <label class="text-xs font-mono text-h-cyan uppercase ml-1">Official Email</label>
+                                <input type="email" name="Email" required class="w-full bg-slate-900/80 border border-slate-700 rounded-lg p-4 text-white focus:border-h-cyan focus:ring-1 focus:ring-h-cyan outline-none transition">
                             </div>
-                            
-                            <button type="submit" class="w-full bg-h-cyan hover:bg-cyan-400 text-black font-black py-5 rounded-lg shadow-[0_0_20px_rgba(6,182,212,0.4)] transition uppercase tracking-widest text-lg transform hover:scale-[1.01]">
-                                Submit Protocol Request
-                            </button>
-                            <p id="formMessage" class="mt-4 text-center text-sm font-mono hidden"></p>
-                        </form>
-                     </div>
+                        </div>
+                        
+                        <div class="space-y-2">
+                            <label class="text-xs font-mono text-h-cyan uppercase ml-1">Operational Issue</label>
+                            <textarea name="Message" rows="3" placeholder="e.g. Excessive vibration at 60% load..." class="w-full bg-slate-900/80 border border-slate-700 rounded-lg p-4 text-white focus:border-h-cyan focus:ring-1 focus:ring-h-cyan outline-none transition"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="w-full bg-h-cyan hover:bg-cyan-400 text-black font-black py-5 rounded-lg shadow-[0_0_20px_rgba(6,182,212,0.4)] transition uppercase tracking-widest text-lg transform hover:scale-[1.01]">
+                            Submit Protocol Request
+                        </button>
+                        <p id="formMessage" class="mt-4 text-center text-sm font-mono hidden"></p>
+                    </form>
                 </div>
-
             </div>
         </section>
+
     </main>
 
     <footer class="bg-black border-t border-slate-900 py-12 text-center text-xs font-mono text-slate-600">
@@ -351,7 +289,7 @@
                     });
                 }
             });
-        }, { threshold: 0.1 }); // Osjetljivost triggera
+        }, { threshold: 0.1 });
 
         sections.forEach(section => observer.observe(section));
 
