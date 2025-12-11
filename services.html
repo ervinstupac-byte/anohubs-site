@@ -39,6 +39,15 @@
     <style>
         html, body { background-color: #020617; color: #f8fafc; overflow-x: hidden; width: 100%; }
         
+        /* === MULTI-BACKGROUND SYSTEM === */
+        .bg-layer {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
+            background-size: cover; background-position: center;
+            opacity: 0; transition: opacity 1.2s ease-in-out; will-change: opacity;
+            filter: grayscale(100%) contrast(1.1) brightness(0.4); /* Dark cinematic look */
+        }
+        .bg-layer.active { opacity: 1; }
+
         /* NOISE TEXTURE */
         .noise-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -52,25 +61,17 @@
             background-size: 60px 60px; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
         }
 
-        /* HERO - ORLJANI */
-        .hero-services {
-            background-image: linear-gradient(180deg, rgba(2,6,23,0.5) 0%, rgba(2,6,23,0.95) 100%), url('slike/orljani_Una.jpg');
-            background-size: cover; background-position: center; background-attachment: fixed;
-        }
-
-        /* === NEW ASSET CARD (Koristi tvoje nove slike) === */
+        /* ASSET CARDS */
         .asset-card {
             position: relative; height: 450px; border-radius: 1rem; overflow: hidden;
             border: 1px solid rgba(255,255,255,0.1); transition: all 0.4s ease;
         }
         .asset-card:hover { transform: translateY(-5px); border-color: var(--card-color); box-shadow: 0 20px 40px -10px var(--card-shadow); }
-        
         .asset-bg { 
             position: absolute; inset: 0; background-size: cover; background-position: center; 
             transition: transform 0.7s ease; filter: grayscale(100%) contrast(1.1); 
         }
         .asset-card:hover .asset-bg { transform: scale(1.1); filter: grayscale(0%); }
-        
         .asset-overlay { position: absolute; inset: 0; background: linear-gradient(to top, #020617 10%, transparent 80%); }
 
         /* INDUSTRIAL CARD */
@@ -97,6 +98,11 @@
 
 <body class="antialiased">
     
+    <div id="bg-hero" class="bg-layer active" style="background-image: url('slike/orljani_Una.jpg');"></div>
+    <div id="bg-field" class="bg-layer" style="background-image: url('slike/services_field.jpg');"></div>
+    <div id="bg-digital" class="bg-layer" style="background-image: url('slike/services_digital.jpg');"></div>
+    <div id="bg-hardware" class="bg-layer" style="background-image: url('slike/services_hardware.jpg');"></div>
+
     <div class="noise-overlay"></div>
     <div class="tech-bg"></div>
 
@@ -145,7 +151,7 @@
 
     <main class="pt-20">
 
-        <section class="hero-services min-h-[60vh] flex items-center justify-center relative text-center px-4">
+        <section class="scroll-section min-h-[60vh] flex items-center justify-center relative text-center px-4" data-bg-id="bg-hero">
             <div class="max-w-5xl relative z-10">
                 <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-black/60 backdrop-blur-md text-xs font-mono text-h-cta mb-8 animate-fade-in-up">
                     <span class="w-2 h-2 bg-h-cta rounded-full animate-pulse"></span>
@@ -170,7 +176,7 @@
             </div>
         </section>
 
-        <section id="assets" class="py-24 bg-h-dark relative border-b border-h-border">
+        <section id="assets" class="scroll-section py-24 relative border-b border-h-border" data-bg-id="bg-hero">
             <div class="max-w-7xl mx-auto px-4">
                 <div class="text-center mb-16">
                     <h2 class="text-sm font-mono text-slate-500 uppercase tracking-widest mb-4">Core Competency</h2>
@@ -217,11 +223,11 @@
             </div>
         </section>
 
-        <section id="field-ops" class="py-24 bg-h-panel border-b border-h-border">
+        <section id="field-ops" class="scroll-section py-24 border-b border-h-border" data-bg-id="bg-field">
             <div class="max-w-7xl mx-auto px-4">
                 <div class="flex items-center gap-4 mb-16">
                     <div class="w-12 h-1 bg-h-orange"></div>
-                    <h2 class="text-3xl font-black text-white uppercase tracking-tight">Heavy Field Execution <span class="text-slate-500 text-lg block font-normal normal-case">The "Muscle" behind the Intelligence.</span></h2>
+                    <h2 class="text-3xl font-black text-white uppercase tracking-tight">Heavy Field Execution <span class="text-slate-400 text-lg block font-normal normal-case">The "Muscle" behind the Intelligence.</span></h2>
                 </div>
 
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -302,7 +308,7 @@
             </div>
         </section>
 
-        <section id="digital-ops" class="py-24 bg-h-dark">
+        <section id="digital-ops" class="scroll-section py-24" data-bg-id="bg-digital">
             <div class="max-w-7xl mx-auto px-4">
                 <div class="flex items-center gap-4 mb-16 justify-end text-right">
                     <h2 class="text-3xl font-black text-white uppercase tracking-tight">Advanced Diagnostics <span class="text-h-cyan text-lg block font-normal normal-case">The "Brain" behind the Muscle.</span></h2>
@@ -310,22 +316,22 @@
                 </div>
 
                 <div class="grid md:grid-cols-4 gap-4">
-                    <a href="services-integrity.html" class="p-6 rounded-lg border border-h-cyan/20 hover:bg-h-cyan/5 transition group">
+                    <a href="services-integrity.html" class="p-6 rounded-lg border border-h-cyan/20 hover:bg-h-cyan/5 transition group bg-black/60 backdrop-blur">
                         <i data-lucide="activity" class="w-8 h-8 text-h-cyan mb-4"></i>
                         <h4 class="font-bold text-white mb-2">Vibration Analysis</h4>
                         <p class="text-xs text-slate-400">Spectrum analysis, orbit plots, and phase analysis.</p>
                     </a>
-                    <a href="services-predictive.html" class="p-6 rounded-lg border border-h-green/20 hover:bg-h-green/5 transition group">
+                    <a href="services-predictive.html" class="p-6 rounded-lg border border-h-green/20 hover:bg-h-green/5 transition group bg-black/60 backdrop-blur">
                         <i data-lucide="cpu" class="w-8 h-8 text-h-green mb-4"></i>
                         <h4 class="font-bold text-white mb-2">Digital Twin</h4>
                         <p class="text-xs text-slate-400">Real-time simulation and load scenario testing.</p>
                     </a>
-                    <a href="services-compliance.html" class="p-6 rounded-lg border border-h-purple/20 hover:bg-h-purple/5 transition group">
+                    <a href="services-compliance.html" class="p-6 rounded-lg border border-h-purple/20 hover:bg-h-purple/5 transition group bg-black/60 backdrop-blur">
                         <i data-lucide="file-check" class="w-8 h-8 text-h-purple mb-4"></i>
                         <h4 class="font-bold text-white mb-2">Compliance Audit</h4>
                         <p class="text-xs text-slate-400">ISO/IEC standard verification and reporting.</p>
                     </a>
-                    <a href="services-optimization.html" class="p-6 rounded-lg border border-h-yellow/20 hover:bg-h-yellow/5 transition group">
+                    <a href="services-optimization.html" class="p-6 rounded-lg border border-h-yellow/20 hover:bg-h-yellow/5 transition group bg-black/60 backdrop-blur">
                         <i data-lucide="zap" class="w-8 h-8 text-h-yellow mb-4"></i>
                         <h4 class="font-bold text-white mb-2">Efficiency Opt.</h4>
                         <p class="text-xs text-slate-400">Cam curve tuning and loss minimization.</p>
@@ -334,10 +340,10 @@
             </div>
         </section>
 
-        <section class="py-20 text-center bg-gradient-to-b from-h-panel to-h-dark border-t border-h-border">
-            <div class="max-w-3xl mx-auto px-4">
+        <section class="scroll-section py-32 text-center border-t border-h-border" data-bg-id="bg-hardware">
+            <div class="max-w-3xl mx-auto px-4 bg-black/60 backdrop-blur-md p-12 rounded-3xl border border-white/10">
                 <h2 class="text-3xl font-bold text-white mb-6">Need a whole team, or just a welder?</h2>
-                <p class="text-slate-400 mb-10 text-lg">We adapt to your outage scope. From turnkey rehabilitation to emergency spot repair.</p>
+                <p class="text-slate-300 mb-10 text-lg">We adapt to your outage scope. From turnkey rehabilitation to emergency spot repair.</p>
                 <a href="contact.html" class="inline-flex items-center justify-center px-12 py-5 bg-white text-black font-black rounded-lg hover:bg-slate-200 transition shadow-lg uppercase tracking-widest">
                     Request Service Quote
                 </a>
@@ -353,7 +359,7 @@
     <script>
         lucide.createIcons();
         
-        // Mobile Menu
+        // MOBILE MENU
         const menuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         const mobileLinks = document.querySelectorAll('.mobile-link');
@@ -376,12 +382,30 @@
             });
         });
 
-        // Navbar Scroll
+        // NAVBAR SCROLL
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('navbar');
             if (window.scrollY > 50) { nav.classList.add('shadow-lg', 'bg-h-dark/95'); nav.classList.remove('bg-h-dark/90'); } 
             else { nav.classList.remove('shadow-lg', 'bg-h-dark/95'); nav.classList.add('bg-h-dark/90'); }
         });
+
+        // DYNAMIC BACKGROUND LOGIC
+        const bgLayers = document.querySelectorAll('.bg-layer');
+        const sections = document.querySelectorAll('.scroll-section');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const targetId = entry.target.getAttribute('data-bg-id');
+                    bgLayers.forEach(bg => {
+                        if (bg.id === targetId) bg.classList.add('active');
+                        else bg.classList.remove('active');
+                    });
+                }
+            });
+        }, { threshold: 0.1 });
+
+        sections.forEach(section => observer.observe(section));
     </script>
 </body>
 </html>
