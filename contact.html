@@ -49,27 +49,28 @@
     <style>
         body { background-color: #020617; color: #e2e8f0; overflow-x: hidden; }
         
-        /* === FULL IMMERSION FIXED BACKGROUND === */
+        /* === FIKSNA POZADINA ZA CIJELI SCROLL (ORLJANI) === */
         #bg-fixed {
             position: fixed; inset: 0; z-index: -3;
             background-image: url('slike/orljani_Una.jpg'); /* Glavna tamna pozadina */
             background-size: cover; 
             background-position: center;
-            background-attachment: fixed; /* OVO JE KLJUČNO ZA FIKSNU POZADINU */
+            background-attachment: fixed; /* OVO JE KLJUČNO */
             opacity: 0.2; 
             filter: grayscale(100%) contrast(1.1) brightness(0.2);
         }
 
-        /* Bujrum Slika kao Sekcija (Za maksimalni dojam) */
+        /* === BUJRUM SLIKA KAO SEKCIJA (NEMA FIXED) === */
         #bujrum-image {
             background-image: url('slike/Bujrum.jpg');
             background-size: cover;
-            background-position: center 30%; /* Focus na stolice */
+            background-position: center 30%; 
             height: 60vh;
             filter: grayscale(50%) contrast(1.1) brightness(0.4);
+            /* Ovdje nema fixed, pa skrola s ostalim sadržajem */
         }
 
-        /* INPUT STYLING */
+        /* Input Styling */
         .tech-input {
             background: rgba(15, 23, 42, 0.9); border: 1px solid #334155; color: #fff;
             font-family: 'JetBrains Mono', monospace; transition: all 0.2s;
@@ -83,6 +84,13 @@
         .glass-panel {
             background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* SCROLLABLE CONTENT WRAPPER */
+        #scroll-content-wrapper { 
+            position: relative; 
+            z-index: 10; 
+            background: linear-gradient(to bottom, #020617 0%, rgba(2, 6, 23, 0.9) 100%);
         }
     </style>
 </head>
@@ -116,122 +124,130 @@
 
     <main class="pt-32 pb-20 relative z-10">
         
-        <section class="min-h-[60vh] flex items-center justify-center text-center">
-            <div class="max-w-4xl px-4 w-full">
-                <h4 class="text-xs font-mono text-h-gold tracking-widest uppercase mb-2">INITIATE STRATEGIC CONTACT</h4>
-                <h1 class="text-6xl md:text-8xl font-black text-white mb-6 tracking-tighter leading-none">
-                    PRIVATE <br> 
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-h-gold to-h-cta">LINE</span>
-                </h1>
-                
-                <p class="text-xl text-slate-300 leading-relaxed max-w-md mx-auto">
-                    This channel is secured for sensitive asset integrity discussions and immediate deployment requests.
-                </p>
-            </div>
-        </section>
-        
-        <section id="bujrum-section" class="py-20">
-            <div id="bujrum-image" class="relative overflow-hidden flex items-center justify-center">
-                <div class="absolute inset-0 bg-black/60"></div>
-                <div class="relative z-10 text-center max-w-3xl px-4">
-                    <div class="inline-block bg-h-gold/10 border border-h-gold/30 p-4 rounded-xl mb-6">
-                        <h2 class="text-3xl font-black text-white mb-2">BUJRUM. NA GA.</h2>
-                        <p class="text-h-gold text-lg font-mono">
-                            Ovo je naš privatni prostor. Počast i poziv na dijalog.
-                        </p>
-                    </div>
+        <div id="scroll-content-wrapper"> 
+
+            <section id="hero-intro" class="min-h-[60vh] flex items-center justify-center text-center">
+                <div class="max-w-4xl px-4 w-full">
+                    <h4 class="text-xs font-mono text-h-gold tracking-widest uppercase mb-2">INITIATE STRATEGIC CONTACT</h4>
+                    <h1 class="text-6xl md:text-8xl font-black text-white mb-6 tracking-tighter leading-none">
+                        PRIVATE <br> 
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-h-gold to-h-cta">LINE</span>
+                    </h1>
                     
-                    <a href="#uplink-form" class="mt-6 inline-flex items-center gap-2 text-white font-bold uppercase text-sm border-b border-white/50 hover:text-h-gold transition">
-                        SCROLL TO UPLINK <i data-lucide="arrow-down" class="w-4 h-4"></i>
-                    </a>
+                    <p class="text-xl text-slate-300 leading-relaxed max-w-md mx-auto">
+                        This channel is secured for sensitive asset integrity discussions and immediate deployment requests.
+                    </p>
                 </div>
-            </div>
-        </section>
-        
-        <section id="uplink-form" class="py-24">
-            <div class="max-w-6xl mx-auto px-4 w-full grid lg:grid-cols-2 gap-16 items-start">
-                
-                <div>
-                    <div class="glass-panel p-4 rounded-lg mb-10 border-l-4 border-h-red/70 shadow-md">
-                        <div class="text-xs font-mono text-h-red uppercase mb-1 flex items-center gap-2">
-                            <i data-lucide="clock" class="w-4 h-4 text-h-red"></i> EMERGENCY ETA
-                        </div>
-                        <p class="text-3xl font-black text-white">
-                            T-MINUS <span class="text-h-red">4 HOURS</span> 
-                            <span class="text-base text-slate-500 font-normal"> (To nearest European hub)</span>
-                        </p>
-                    </div>
-
-                    <div class="space-y-6">
-                        <div class="glass-panel p-4 rounded-lg hover:border-h-gold transition group">
-                            <h4 class="text-white font-bold text-lg flex items-center gap-2 mb-1">
-                                <i data-lucide="mail" class="text-h-gold w-5 h-5"></i> Digital Mail Drop
-                            </h4>
-                            <a href="mailto:ino@anohubs.com" class="text-slate-400 text-sm font-mono hover:text-h-gold transition">ino@anohubs.com</a>
-                        </div>
-
-                        <div class="glass-panel p-4 rounded-lg hover:border-h-green transition group">
-                            <h4 class="text-white font-bold text-lg mb-1 flex items-center gap-2">
-                                <i data-lucide="message-circle" class="text-h-green w-5 h-5"></i> Secure Signal (WA)
-                            </h4>
-                            <p class="text-h-green text-sm font-mono">
-                                +43 676 4157846 <span class="text-slate-400"> (Architect Direct Line)</span>
+            </section>
+            
+            <section id="bujrum-section" class="py-20">
+                <div id="bujrum-image" class="relative overflow-hidden flex items-center justify-center">
+                    <div class="absolute inset-0 bg-black/50"></div>
+                    <div class="relative z-10 text-center max-w-3xl px-4 py-20">
+                        <div class="inline-block bg-h-gold/10 border border-h-gold/30 p-4 rounded-xl mb-6 shadow-xl">
+                            <h2 class="text-4xl font-black text-white mb-2">BUJRUM. NA GA.</h2>
+                            <p class="text-h-gold text-xl font-mono">
+                                Ovo je naš privatni prostor. Počast i poziv na dijalog.
                             </p>
                         </div>
-                    </div>
-                    
-                    <div class="mt-10 border-t border-white/10 pt-6">
-                        <p class="text-slate-500 text-xs font-mono">ANO HUB DYNAMIC SECURITY CHECK: COMPLETE</p>
+                        
+                        <a href="#uplink-form-target" class="mt-6 inline-flex items-center gap-2 text-white font-bold uppercase text-sm border-b border-white/50 hover:text-h-gold transition">
+                            SCROLL TO UPLINK <i data-lucide="arrow-down" class="w-4 h-4"></i>
+                        </a>
                     </div>
                 </div>
-
-                <div class="glass-panel p-8 md:p-10 rounded-2xl shadow-2xl relative overflow-hidden">
-                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-h-gold to-transparent"></div>
+            </section>
+            
+            <section id="uplink-form-target" class="py-24">
+                <div class="max-w-6xl mx-auto px-4 w-full grid lg:grid-cols-2 gap-16 items-start">
                     
-                    <h3 class="text-2xl font-bold text-white mb-6 flex items-center gap-2">
-                        <i data-lucide="terminal" class="text-h-gold"></i> DATA TRANSMISSION
-                    </h3>
-
-                    <form id="contactForm" action="https://formspree.io/f/xqaywlaq" method="POST" class="space-y-5">
-                        <div class="grid md:grid-cols-2 gap-5">
-                            <div class="space-y-1">
-                                <label class="text-[10px] font-mono text-h-gold uppercase ml-1">Identity</label>
-                                <input type="text" name="Full Name" id="input-identity" placeholder="Full Name" required class="tech-input w-full rounded p-3">
-                                <div id="scan-feedback" class="text-[9px] text-h-green font-mono opacity-0 transition-opacity duration-300 ml-1"></div>
+                    <div>
+                        <div class="glass-panel p-4 rounded-lg mb-10 border-l-4 border-h-red/70 shadow-md">
+                            <div class="text-xs font-mono text-h-red uppercase mb-1 flex items-center gap-2">
+                                <i data-lucide="clock" class="w-4 h-4 text-h-red"></i> EMERGENCY ETA
                             </div>
-                            <div class="space-y-1">
-                                <label class="text-[10px] font-mono text-h-gold uppercase ml-1">Return Frequency</label>
-                                <input type="email" name="Email" placeholder="Official Email" required class="tech-input w-full rounded p-3">
+                            <p class="text-3xl font-black text-white">
+                                T-MINUS <span class="text-h-red">4 HOURS</span> 
+                                <span class="text-base text-slate-500 font-normal"> (To nearest European hub)</span>
+                            </p>
+                        </div>
+
+                        <div class="space-y-6">
+                            <div class="glass-panel p-4 rounded-lg hover:border-h-gold transition group">
+                                <h4 class="text-white font-bold text-lg flex items-center gap-2 mb-1">
+                                    <i data-lucide="mail" class="text-h-gold w-5 h-5"></i> Digital Mail Drop
+                                </h4>
+                                <a href="mailto:ino@anohubs.com" class="text-slate-400 text-sm font-mono hover:text-h-gold transition">ino@anohubs.com</a>
+                            </div>
+
+                            <div class="glass-panel p-4 rounded-lg hover:border-h-green transition group">
+                                <h4 class="text-white font-bold text-lg mb-1 flex items-center gap-2">
+                                    <i data-lucide="message-circle" class="text-h-green w-5 h-5"></i> Secure Signal (WA)
+                                </h4>
+                                <p class="text-h-green text-sm font-mono">
+                                    +43 676 4157846 <span class="text-slate-400"> (Architect Direct Line)</span>
+                                </p>
                             </div>
                         </div>
                         
-                        <div class="space-y-1">
-                            <label class="text-[10px] font-mono text-h-gold uppercase ml-1">Priority Level</label>
-                            <select name="Priority" class="tech-input w-full rounded p-3 text-slate-300">
-                                <option value="Standard">Standard Audit Request</option>
-                                <option value="Urgent" class="text-h-red font-bold">⚠️ CRITICAL FAILURE IMMINENT</option>
-                                <option value="Consulting">Strategic Consulting</option>
-                            </select>
+                        <div class="mt-10 border-t border-white/10 pt-6">
+                            <p class="text-slate-500 text-xs font-mono">ANO HUB DYNAMIC SECURITY CHECK: COMPLETE</p>
                         </div>
+                    </div>
 
-                        <div class="space-y-1">
-                            <label class="text-[10px] font-mono text-h-gold uppercase ml-1">Intelligence Brief</label>
-                            <textarea name="Message" rows="4" placeholder="Describe asset status..." class="tech-input w-full rounded p-3"></textarea>
-                        </div>
-
-                        <button type="submit" class="w-full bg-h-gold hover:bg-white text-black font-black py-4 rounded-lg shadow-xl transition uppercase tracking-widest text-base flex items-center justify-center gap-2 mt-4 transform active:scale-95">
-                            <i data-lucide="send" class="w-5 h-5 group-hover:translate-x-1 transition"></i> 
-                            ESTABLISH UPLINK
-                        </button>
+                    <div class="glass-panel p-8 md:p-10 rounded-2xl shadow-2xl relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-h-gold to-transparent"></div>
                         
-                        <p id="formMessage" class="mt-4 text-center text-xs font-mono hidden"></p>
-                    </form>
-                </div>
+                        <h3 class="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+                            <i data-lucide="terminal" class="text-h-gold"></i> DATA TRANSMISSION
+                        </h3>
 
+                        <form id="contactForm" action="https://formspree.io/f/xqaywlaq" method="POST" class="space-y-5">
+                            <div class="grid md:grid-cols-2 gap-5">
+                                <div class="space-y-1">
+                                    <label class="text-[10px] font-mono text-h-gold uppercase ml-1">Identity</label>
+                                    <input type="text" name="Full Name" id="input-identity" placeholder="Full Name" required class="tech-input w-full rounded p-3">
+                                    <div id="scan-feedback" class="text-[9px] text-h-green font-mono opacity-0 transition-opacity duration-300 ml-1"></div>
+                                </div>
+                                <div class="space-y-1">
+                                    <label class="text-[10px] font-mono text-h-gold uppercase ml-1">Return Frequency</label>
+                                    <input type="email" name="Email" placeholder="Official Email" required class="tech-input w-full rounded p-3">
+                                </div>
+                            </div>
+                            
+                            <div class="space-y-1">
+                                <label class="text-[10px] font-mono text-h-gold uppercase ml-1">Asset / Organization</label>
+                                <input type="text" name="Company" placeholder="Company Name" required class="tech-input w-full rounded p-3">
+                            </div>
+                            
+                            <div class="space-y-1">
+                                <label class="text-[10px] font-mono text-h-gold uppercase ml-1">Priority Level</label>
+                                <select name="Priority" class="tech-input w-full rounded p-3 text-slate-300">
+                                    <option value="Standard">Standard Audit Request</option>
+                                    <option value="Urgent" class="text-h-red font-bold">⚠️ CRITICAL FAILURE IMMINENT</option>
+                                    <option value="Consulting">Strategic Consulting</option>
+                                </select>
+                            </div>
+
+                            <div class="space-y-1">
+                                <label class="text-[10px] font-mono text-h-gold uppercase ml-1">Intelligence Brief</label>
+                                <textarea name="Message" rows="4" placeholder="Describe asset status..." class="tech-input w-full rounded p-3"></textarea>
+                            </div>
+
+                            <button type="submit" class="w-full bg-h-gold hover:bg-white text-black font-black py-4 rounded-lg shadow-xl transition uppercase tracking-widest text-base flex items-center justify-center gap-2 mt-4 transform active:scale-95">
+                                <i data-lucide="send" class="w-5 h-5 group-hover:translate-x-1 transition"></i> 
+                                ESTABLISH UPLINK
+                            </button>
+                            
+                            <p id="formMessage" class="mt-4 text-center text-xs font-mono hidden"></p>
+                        </form>
+                    </div>
+
+                </div>
             </div>
         </section>
 
-    </main>
+        </div> </main>
     
     <a href="https://wa.me/436764157846?text=HITNO%20TREBAM%20INZENJERSKU%20PODRSKU%20ZA%20HIDROELEKTRANU" target="_blank" class="lg:hidden fixed bottom-6 right-6 z-50 bg-h-green text-black p-4 rounded-full shadow-[0_0_20px_#10b981] border-2 border-white animate-pulse-fast active:scale-90 transition">
         <i data-lucide="message-circle" class="w-8 h-8"></i>
@@ -246,29 +262,6 @@
     <script>
         lucide.createIcons();
         
-        // DYNAMIC BACKGROUND LOGIC (Parallax)
-        const bgLayers = document.querySelectorAll('.bg-layer');
-        const sections = document.querySelectorAll('section');
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const targetId = entry.target.getAttribute('data-bg-id');
-                    bgLayers.forEach(bg => {
-                        if (bg.id === targetId) bg.classList.add('active');
-                        else bg.classList.remove('active');
-                    });
-                }
-            });
-        }, { threshold: 0.1 });
-
-        // Dodjeljivanje data-bg-id sekcijama
-        document.querySelector('#contact-form-section').setAttribute('data-bg-id', 'bg-hero');
-        document.querySelector('#bujrum-section').setAttribute('data-bg-id', 'bg-bujrum');
-        document.querySelector('#uplink-form').setAttribute('data-bg-id', 'bg-hero'); // Forma se vraća na generalnu pozadinu
-        
-        sections.forEach(section => observer.observe(section));
-
         // ID SCANNER LOGIC
         const inputIdentity = document.getElementById('input-identity');
         const scanFeedback = document.getElementById('scan-feedback');
