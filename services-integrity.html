@@ -59,14 +59,15 @@
             /* TVOJA SLIKA ORLJANI */
             background-image: url('slike/orljani_Una.jpg'); 
             background-size: cover; background-position: center;
-            opacity: 0.3; /* Tamno da tekst iskoči */
-            filter: grayscale(100%) contrast(1.2); /* Forenzički look */
+            opacity: 0.25; /* Tamno da tekst iskoči */
+            filter: grayscale(100%) contrast(1.2); /* Forenzički B&W look */
         }
 
         /* === OVERLAYS === */
         .tech-grid {
             background-image: linear-gradient(rgba(6, 182, 212, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(6, 182, 212, 0.03) 1px, transparent 1px);
             background-size: 50px 50px; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
+            pointer-events: none;
         }
         
         .noise-overlay {
@@ -92,13 +93,19 @@
             background: #06b6d4; box-shadow: 0 0 20px #06b6d4;
             animation: scanLine 4s ease-in-out infinite; z-index: 20; pointer-events: none;
         }
+
+        /* CUSTOM SCROLLBAR */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #020617; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #06b6d4; }
     </style>
 </head>
 
 <body class="antialiased">
     
     <div class="bg-layer"></div>
-    <div class="tech-bg"></div>
+    <div class="tech-grid"></div>
     <div class="noise-overlay"></div>
 
     <header class="fixed w-full z-50 top-0 border-b border-white/5 bg-h-dark/90 backdrop-blur-md transition-all duration-300" id="navbar">
@@ -131,7 +138,7 @@
 
     <main class="pt-20">
 
-        <section class="min-h-screen flex items-center justify-center relative overflow-hidden">
+        <section class="min-h-[70vh] flex items-center justify-center relative overflow-hidden">
             <div class="scanner-bar"></div> <div class="max-w-6xl mx-auto px-4 text-center relative z-10">
                 <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-h-cyan/30 bg-black/60 backdrop-blur-md text-xs font-mono text-h-cyan mb-8 shadow-[0_0_20px_rgba(6,182,212,0.2)] animate-fade-in-up">
                     <span class="w-2 h-2 bg-h-cyan rounded-full animate-pulse"></span>
@@ -156,19 +163,21 @@
         </section>
 
         <section class="py-24 bg-h-dark border-y border-h-border">
-            <div class="max-w-6xl mx-auto px-4 grid lg:grid-cols-2 gap-16 items-center">
-                <div class="glass-card p-10 rounded-2xl border-l-4 border-l-h-cyan">
-                    <h2 class="text-3xl font-bold text-white mb-6 flex items-center gap-3">
-                        <i data-lucide="layers" class="w-8 h-8 text-h-cyan"></i> The Hidden 48%
-                    </h2>
-                    <p class="text-slate-300 text-lg leading-relaxed mb-6">
-                        Standard visual inspections miss <strong>48% of critical failure modes</strong>. Micro-cracks in runner blades, shaft misalignment of just 0.07mm, or foundation voids cannot be seen with the naked eye.
-                    </p>
-                    <p class="text-slate-400 text-sm font-mono border-t border-white/10 pt-4">
-                        // THE EXECUTION GAP: Where design intent and field reality diverge.
-                    </p>
+            <div class="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-16 items-center">
+                <div class="order-2 lg:order-1">
+                    <div class="glass-card p-10 rounded-2xl border-l-4 border-l-h-cyan">
+                        <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                            <i data-lucide="layers" class="w-8 h-8 text-h-cyan"></i> The Hidden 48%
+                        </h2>
+                        <p class="text-slate-300 text-lg leading-relaxed mb-6">
+                            Standard visual inspections miss <strong>48% of critical failure modes</strong>. Micro-cracks in runner blades, shaft misalignment of just 0.07mm, or foundation voids cannot be seen with the naked eye.
+                        </p>
+                        <p class="text-slate-300 text-lg leading-relaxed border-l-2 border-slate-700 pl-4">
+                            The <strong>Organizational Execution Gap</strong> creates blind spots where design intent and field reality diverge. We bridge that gap with forensic data.
+                        </p>
+                    </div>
                 </div>
-                <div>
+                <div class="order-1 lg:order-2 text-center lg:text-left">
                     <h3 class="text-h-cyan font-mono text-sm mb-2 uppercase tracking-widest">The Threat</h3>
                     <h2 class="text-5xl font-black text-white mb-6 leading-tight">What You Can't See <br>Will Stop You.</h2>
                     <p class="text-slate-400 text-lg leading-relaxed">
@@ -178,8 +187,8 @@
             </div>
         </section>
 
-        <section class="py-24">
-            <div class="max-w-7xl mx-auto px-4">
+        <section class="py-24 bg-h-panel relative">
+            <div class="max-w-7xl mx-auto px-4 relative z-10">
                 <div class="text-center mb-16">
                     <h2 class="text-3xl font-black text-white flex items-center justify-center gap-3">
                         <i data-lucide="scan-line" class="w-8 h-8 text-h-cyan"></i> Deep Scan Technology
@@ -214,7 +223,7 @@
             </div>
         </section>
 
-        <section class="py-24 bg-h-panel border-t border-h-border">
+        <section class="py-24 bg-h-dark border-t border-h-border">
             <div class="max-w-5xl mx-auto px-4">
                 <div class="glass-card p-12 rounded-3xl relative overflow-hidden bg-gradient-to-br from-h-cyan/5 to-transparent">
                     
@@ -245,6 +254,28 @@
                                 <div class="absolute top-10 right-14 w-4 h-4 bg-h-red rounded-full animate-ping"></div>
                                 <div class="absolute top-10 right-14 w-4 h-4 bg-h-red/50 rounded-full border border-h-red cursor-pointer" title="Crack Detected"></div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-24 bg-h-panel">
+            <div class="max-w-5xl mx-auto px-4 text-center">
+                <h2 class="text-3xl font-black text-white mb-16">Execution Protocols</h2>
+                <div class="grid md:grid-cols-2 gap-8 text-left">
+                    <div class="flex gap-6 items-start p-8 rounded-2xl bg-h-dark border border-h-border hover:border-h-cyan transition group">
+                        <div class="text-h-cyan bg-h-cyan/10 p-3 rounded-lg"><i data-lucide="hard-hat" class="w-8 h-8"></i></div>
+                        <div>
+                            <h4 class="text-white font-bold text-xl mb-2 group-hover:text-h-cyan transition">Forensic Field Team</h4>
+                            <p class="text-sm text-slate-400 leading-relaxed">Deploying ISO-certified NDT Level 3 engineers to your site within 48 hours of an anomaly detection.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-6 items-start p-8 rounded-2xl bg-h-dark border border-h-border hover:border-h-cyan transition group">
+                        <div class="text-h-cyan bg-h-cyan/10 p-3 rounded-lg"><i data-lucide="wrench" class="w-8 h-8"></i></div>
+                        <div>
+                            <h4 class="text-white font-bold text-xl mb-2 group-hover:text-h-cyan transition">Repair Supervision</h4>
+                            <p class="text-sm text-slate-400 leading-relaxed">We oversee third-party contractors to ensure welding and grinding meet the 0.05mm precision standard.</p>
                         </div>
                     </div>
                 </div>
@@ -315,7 +346,14 @@
                 }
             });
         }
-        
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('translate-x-full');
+                document.body.style.overflow = 'auto';
+            });
+        });
+
         // Form Logic
         const form = document.getElementById('contactForm');
         const msg = document.getElementById('formMessage');
@@ -356,7 +394,7 @@
             });
         }
 
-        // Navbar Scroll
+        // Navbar Scroll Effect
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('navbar');
             if (window.scrollY > 50) { nav.classList.add('shadow-lg', 'bg-h-dark/95'); nav.classList.remove('bg-h-dark/90'); } 
