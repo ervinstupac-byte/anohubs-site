@@ -1,445 +1,425 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AnoHUB | PROTOCOL 05: PRECISION ALIGNMENT</title>
+    <title>AnoHUB | PROTOCOL 05: PRECISION ALIGNMENT CERTIFICATE</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=JetBrains+Mono:wght@300;500;700&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
     <script>
-        tailwind.config = { 
-            theme: { 
-                extend: { 
-                    fontFamily: { 
-                        sans: ['Rajdhani', 'sans-serif'], 
-                        mono: ['JetBrains Mono', 'monospace'],
-                        divine: ['Cinzel', 'serif'] 
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Arimo', 'Arial', 'sans-serif'], // Standardni inženjerski font
+                        mono: ['JetBrains Mono', 'Courier New', 'monospace'],
                     },
-                    colors: { 
-                        'h-gold': '#FFD700',   
-                        'h-dark': '#050a10',   
-                        'h-green': '#10b981', 
-                        'h-red': '#ef4444'
+                    colors: {
+                        'eng-blue': '#003366',
+                        'eng-red': '#cc0000',
+                        'paper-w': '#ffffff',
                     },
                     screens: {
                         'print': {'raw': 'print'},
                     }
-                } 
+                }
             }
         }
     </script>
 
     <style>
-        body { background-color: #020202; color: #e2e8f0; }
-        
-        /* SCADA LOOK & FEEL */
-        .scada-panel { 
-            background: rgba(5, 10, 16, 0.9); 
-            backdrop-filter: blur(10px); 
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+        /* BASE SETTINGS */
+        body { 
+            background-color: #525659; /* Siva pozadina kao u Adobe Readeru */
+            -webkit-print-color-adjust: exact; 
         }
-        
-        .input-tech {
-            background: #000; border: 1px solid #333; color: #FFD700;
-            font-family: 'JetBrains Mono', monospace; padding: 4px 8px; width: 100%;
-            transition: all 0.3s;
-        }
-        .input-tech:focus { border-color: #FFD700; outline: none; box-shadow: 0 0 10px rgba(255,215,0,0.2); }
 
-        /* PRINT STYLES - CRUCIAL FOR CONTRACTS */
-        @media print {
-            body { background-color: #fff !important; color: #000 !important; }
-            .divine-grid, .bg-layer, header, aside, footer, #activate-atest, input[type=range] { display: none !important; }
-            .scada-panel { 
-                background: #fff !important; border: 1px solid #000 !important; 
-                box-shadow: none !important; margin-bottom: 20px; page-break-inside: avoid;
-            }
-            .text-white, .text-slate-300, .text-slate-400, .text-slate-500 { color: #000 !important; }
-            .text-h-gold { color: #000 !important; font-weight: bold; text-decoration: underline; }
-            .tech-box { background: #eee !important; border-left: 3px solid #000 !important; }
-            .input-tech { border: none !important; border-bottom: 1px solid #000 !important; background: transparent !important; color: #000 !important; }
-            
-            /* Show simplified values instead of interactive elements */
-            .print-only { display: block !important; }
-            .no-print { display: none !important; }
+        /* A4 PAPER SIMULATION */
+        .a4-page {
+            width: 210mm;
+            min-height: 297mm;
+            background: white;
+            margin: 40px auto;
+            padding: 20mm;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            position: relative;
         }
-        .print-only { display: none; }
+
+        /* EDITABLE FIELDS STYLING */
+        .field-input {
+            width: 100%;
+            background: rgba(255, 255, 0, 0.05); /* Vrlo blaga žuta da se vidi da je polje */
+            border-bottom: 1px dashed #ccc;
+            font-family: 'JetBrains Mono', monospace;
+            color: #333;
+            transition: all 0.2s;
+        }
+        .field-input:focus {
+            background: #eef6ff;
+            border-bottom: 1px solid #003366;
+            outline: none;
+        }
+        .field-input.danger { color: #cc0000; font-weight: bold; }
+        .field-input.success { color: #006633; font-weight: bold; }
+
+        /* TABLES */
+        table { width: 100%; border-collapse: collapse; margin-bottom: 15px; }
+        th, td { border: 1px solid #000; padding: 6px 10px; text-align: left; font-size: 11px; }
+        th { background-color: #f0f0f0; font-weight: bold; text-transform: uppercase; }
+
+        /* PRINT SETTINGS */
+        @media print {
+            body { background: none; margin: 0; }
+            .a4-page { margin: 0; box-shadow: none; width: 100%; height: auto; padding: 10mm; }
+            .no-print { display: none !important; }
+            .field-input { background: transparent !important; border-bottom: none !important; }
+            /* Forsiraj background boje za tablice */
+            th { background-color: #f0f0f0 !important; -webkit-print-color-adjust: exact; }
+        }
+
+        /* WATERMARK */
+        .watermark {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 120px;
+            color: rgba(0,0,0,0.03);
+            font-weight: 900;
+            pointer-events: none;
+            z-index: 0;
+            white-space: nowrap;
+        }
     </style>
 </head>
-<body class="min-h-screen flex flex-col selection:bg-h-gold selection:text-black">
+<body>
 
-    <div class="fixed inset-0 z-[-1] opacity-20 pointer-events-none divine-grid" style="background-image: linear-gradient(#333 1px, transparent 1px), linear-gradient(90deg, #333 1px, transparent 1px); background-size: 40px 40px;"></div>
-
-    <header class="fixed w-full z-50 border-b border-white/10 bg-black/95 h-16 flex items-center justify-between px-6 no-print">
+    <div class="fixed top-0 left-0 w-full bg-slate-800 text-white p-3 z-50 flex justify-between items-center no-print shadow-lg">
         <div class="flex items-center gap-4">
-            <div class="w-8 h-8 bg-h-gold flex items-center justify-center text-black font-black font-divine">A</div>
-            <div>
-                <h1 class="font-bold text-white tracking-widest text-sm">AnoHUB PROTOCOL SYS-05</h1>
-                <p class="text-[10px] text-slate-500 font-mono">ENGINEERING IMMUNITY SYSTEM</p>
-            </div>
-        </div>
-        <div class="flex gap-4">
-            <button onclick="window.print()" class="flex items-center gap-2 px-4 py-1 border border-slate-700 text-xs hover:bg-white hover:text-black transition uppercase font-mono">
-                <svg data-lucide="printer" class="w-3 h-3"></svg> Print Contract
-            </button>
-            <a href="../protocol.html" class="flex items-center gap-2 px-4 py-1 bg-h-gold text-black text-xs font-bold uppercase hover:bg-white transition">
-                Exit Protocol
+            <a href="../protocol.html" class="flex items-center gap-2 text-xs text-slate-300 hover:text-white transition">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i> Nazad
             </a>
+            <span class="font-mono text-xs text-yellow-400">EDITING MODE ACTIVE</span>
         </div>
-    </header>
-
-    <div class="pt-24 pb-12 px-4 max-w-7xl mx-auto grid lg:grid-cols-12 gap-8">
-
-        <div class="lg:col-span-12 scada-panel p-6 mb-4">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div>
-                    <label class="text-[9px] text-slate-500 uppercase font-mono block mb-1">Objekt / Elektrana</label>
-                    <input type="text" class="input-tech" placeholder="npr. HE Jablanica" value="HE ORLJANI">
-                </div>
-                <div>
-                    <label class="text-[9px] text-slate-500 uppercase font-mono block mb-1">Agregat / Pozicija</label>
-                    <input type="text" class="input-tech" placeholder="npr. G2 - Francis" value="G1 - KAPLAN">
-                </div>
-                <div>
-                    <label class="text-[9px] text-slate-500 uppercase font-mono block mb-1">Nalog / WO Number</label>
-                    <input type="text" class="input-tech" value="WO-2025-084-AH">
-                </div>
-                <div>
-                    <label class="text-[9px] text-slate-500 uppercase font-mono block mb-1">Datum Revizije</label>
-                    <input type="date" class="input-tech" id="date-field">
-                </div>
-            </div>
-        </div>
-
-        <aside class="hidden lg:block lg:col-span-3 no-print">
-            <div class="sticky top-24 space-y-4">
-                <div class="scada-panel p-4 border-l-2 border-h-gold">
-                    <h3 class="text-h-gold text-[10px] font-bold uppercase mb-2">Checklist</h3>
-                    <ul class="text-xs space-y-2 text-slate-400 font-mono">
-                        <li class="flex justify-between"><span>1. Safety Lockout</span> <span class="text-h-green">OK</span></li>
-                        <li class="flex justify-between"><span>2. Oil Drain</span> <span class="text-h-green">OK</span></li>
-                        <li class="flex justify-between"><span>3. Couplings Free</span> <span class="text-h-green">OK</span></li>
-                        <li class="flex justify-between"><span>4. Sensors Calib.</span> <span class="text-h-green">OK</span></li>
-                    </ul>
-                </div>
-                <div class="p-4 bg-h-red/10 border border-h-red/30 rounded">
-                    <h4 class="text-h-red font-bold text-xs mb-1 flex items-center gap-2"><svg data-lucide="alert-triangle" class="w-3 h-3"></svg> LCC VETO RULE</h4>
-                    <p class="text-[10px] text-h-red opacity-80 leading-tight">
-                        Svako odstupanje > 0.05mm automatski poništava garanciju. Nema izuzetaka.
-                    </p>
-                </div>
-            </div>
-        </aside>
-
-        <main class="lg:col-span-9 space-y-8">
-
-            <section class="scada-panel p-8 relative overflow-hidden">
-                <div class="absolute top-0 right-0 p-4 opacity-10 font-black text-6xl text-white select-none">05</div>
-                <h2 class="text-3xl font-divine text-white mb-2">Precision Alignment Protocol</h2>
-                <div class="h-px w-full bg-gradient-to-r from-h-gold to-transparent mb-6"></div>
-                <p class="text-slate-300 text-sm leading-relaxed mb-4">
-                    Ovaj dokument definira finalne geometrijske odnose rotirajućih dijelova. 
-                    Sve vrijednosti su kompenzirane za termički rast (Thermal Growth) i dinamički uljni film.
-                </p>
-                <div class="grid grid-cols-2 gap-4 text-xs font-mono bg-black/40 p-4 rounded border border-white/5">
-                    <div>
-                        <span class="text-slate-500 block">Metoda Mjerenja:</span>
-                        <span class="text-white">Dual-Laser (Rim/Face)</span>
-                    </div>
-                    <div>
-                        <span class="text-slate-500 block">Tolerancija (ISO 10816):</span>
-                        <span class="text-h-gold font-bold">± 0.05 mm / 1000 mm</span>
-                    </div>
-                </div>
-            </section>
-
-            <section class="scada-panel p-8">
-                <div class="flex justify-between items-center mb-6">
-                    <h3 class="text-xl font-bold text-white flex items-center gap-2">
-                        <span class="text-h-gold">01 //</span> Shaft Alignment
-                    </h3>
-                    <span class="text-[10px] font-mono bg-white/10 px-2 py-1 rounded text-white">UNIT: MM</span>
-                </div>
-
-                <div class="grid grid-cols-2 gap-4 mb-6 p-4 bg-h-gold/5 border border-h-gold/20 rounded">
-                    <div>
-                        <label class="text-[10px] text-h-gold uppercase font-bold block mb-1">Target Thermal Offset (V)</label>
-                        <input type="number" id="thermal-v" class="input-tech text-right" value="0.15" step="0.01">
-                        <span class="text-[9px] text-slate-500 block mt-1">*Očekivani rast statora vs rotora</span>
-                    </div>
-                    <div>
-                        <label class="text-[9px] text-h-gold uppercase font-bold block mb-1">Target Thermal Slope</label>
-                        <input type="number" id="thermal-s" class="input-tech text-right" value="0.02" step="0.01">
-                    </div>
-                </div>
-
-                <div class="space-y-6 mb-8 no-print">
-                    <div>
-                        <div class="flex justify-between text-xs mb-1">
-                            <span class="text-slate-400">Front Foot Shim Correction</span>
-                            <span class="text-h-gold font-mono" id="disp-front">0.00 mm</span>
-                        </div>
-                        <input type="range" id="shim-front" min="-1.0" max="1.0" step="0.01" value="0.15" class="w-full">
-                    </div>
-                    <div>
-                        <div class="flex justify-between text-xs mb-1">
-                            <span class="text-slate-400">Back Foot Shim Correction</span>
-                            <span class="text-h-gold font-mono" id="disp-back">0.00 mm</span>
-                        </div>
-                        <input type="range" id="shim-back" min="-1.0" max="1.0" step="0.01" value="0.25" class="w-full">
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="bg-black p-4 border border-slate-700 text-center rounded">
-                        <div class="text-[10px] text-slate-500 uppercase">Final Vertical Offset</div>
-                        <div class="text-2xl font-mono text-white my-1 font-bold" id="res-offset">0.00</div>
-                        <div class="text-[10px] font-bold" id="status-offset">CALCULATING...</div>
-                    </div>
-                    <div class="bg-black p-4 border-slate-700 border text-center rounded">
-                        <div class="text-[10px] text-slate-500 uppercase">Final Angular / 100mm</div>
-                        <div class="text-2xl font-mono text-white my-1 font-bold" id="res-angle">0.00</div>
-                        <div class="text-[10px] font-bold" id="status-angle">CALCULATING...</div>
-                    </div>
-                </div>
-            </section>
-
-            <section class="scada-panel p-8">
-                <div class="flex justify-between items-center mb-6">
-                    <h3 class="text-xl font-bold text-white flex items-center gap-2">
-                        <span class="text-h-gold">02 //</span> Thrust Equalization
-                    </h3>
-                    <div id="thrust-status" class="px-3 py-1 bg-slate-800 text-slate-400 text-xs font-bold font-mono rounded border border-slate-600">
-                        PENDING DATA
-                    </div>
-                </div>
-
-                <div class="flex items-end justify-between gap-2 h-48 mb-4 border-b border-slate-700 pb-2 px-2" id="bar-container">
-                    </div>
-
-                <div class="grid grid-cols-6 gap-2">
-                    </div>
-                <div id="pad-inputs-container" class="grid grid-cols-6 gap-2 mt-2">
-                    </div>
-                
-                <p class="text-[10px] text-slate-500 mt-4 text-center font-mono">
-                    *Unesite pritisak (MPa) za svaki segment. Max dozvoljena devijacija: 5%.
-                </p>
-            </section>
-
-            <section class="scada-panel p-8 border-t-4 border-h-gold">
-                <h3 class="text-lg font-bold text-white mb-6 uppercase tracking-widest text-center">Atest o Inženjerskom Imunitetu</h3>
-                
-                <p class="text-xs text-slate-400 mb-8 text-justify leading-relaxed">
-                    Potpisom ovog dokumenta, AnoHUB potvrđuje da su gore navedeni parametri unutar propisanih tolerancija (LCC Veto Standard). 
-                    Naručitelj preuzima postrojenje uz aktivnu garanciju. Svaka naknadna intervencija trećih lica bez nadzora poništava ovaj certifikat.
-                </p>
-
-                <div class="grid grid-cols-2 gap-12 mt-12">
-                    <div class="border-t border-slate-600 pt-2">
-                        <input type="text" class="bg-transparent text-white font-divine w-full mb-1" placeholder="Ime Inženjera (AnoHUB)">
-                        <div class="text-[10px] text-slate-500 uppercase">Za Izvršitelja (Potpis)</div>
-                    </div>
-                    <div class="border-t border-slate-600 pt-2">
-                        <input type="text" class="bg-transparent text-white font-divine w-full mb-1" placeholder="Ime Nadzora (Elektrana)">
-                        <div class="text-[10px] text-slate-500 uppercase">Za Naručitelja (Potpis)</div>
-                    </div>
-                </div>
-
-                <div class="mt-8 text-center no-print">
-                    <button id="sign-btn" class="bg-h-green hover:bg-green-400 text-black font-bold py-4 px-8 rounded shadow-[0_0_20px_rgba(16,185,129,0.4)] uppercase tracking-widest transition transform hover:scale-105">
-                        Digitalno Potpiši i Zaključaj
-                    </button>
-                </div>
-                
-                <div class="hidden print-only mt-8 text-center border-2 border-black p-4 w-48 mx-auto transform -rotate-12 opacity-50">
-                    <div class="text-xs font-bold">ANOHUB ENGINEERING</div>
-                    <div class="text-xl font-black">ATESTIRANO</div>
-                    <div class="text-[10px]">ISO 10816 COMPLIANT</div>
-                </div>
-            </section>
-
-        </main>
+        <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded text-sm font-bold flex items-center gap-2 transition">
+            <i data-lucide="printer" class="w-4 h-4"></i> DOWNLOAD / PRINT PDF
+        </button>
     </div>
 
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <div class="a4-page">
+        <div class="watermark">ANOHUB ORIGINAL</div>
+
+        <header class="flex justify-between items-start border-b-2 border-black pb-4 mb-6 relative z-10">
+            <div class="flex items-center gap-4">
+                <svg width="50" height="50" viewBox="0 0 100 100" class="fill-black">
+                    <rect x="20" y="20" width="60" height="60" fill="none" stroke="black" stroke-width="8"/>
+                    <text x="50" y="65" font-family="Arial" font-weight="bold" font-size="40" text-anchor="middle">A</text>
+                </svg>
+                <div>
+                    <h1 class="text-2xl font-bold tracking-tighter text-black uppercase">AnoHUB Engineering</h1>
+                    <p class="text-xs text-gray-600 font-mono">HYDRO-MECHANICAL INTEGRITY DIVISION</p>
+                </div>
+            </div>
+            <div class="text-right">
+                <h2 class="text-xl font-bold text-gray-400">CERTIFICATE OF ALIGNMENT</h2>
+                <p class="text-[10px] font-mono">ISO 10816-5 COMPLIANT</p>
+                <p class="text-[10px] font-mono">DOC ID: <input type="text" value="AH-ALIGN-005/25" class="field-input inline-block w-24 text-right" style="border:none;"></p>
+            </div>
+        </header>
+
+        <section class="mb-8 relative z-10">
+            <div class="grid grid-cols-2 gap-x-8 gap-y-2 text-sm border border-black p-4 bg-gray-50">
+                <div class="flex items-baseline gap-2">
+                    <span class="font-bold w-32 uppercase text-[10px]">Klijent / Elektrana:</span>
+                    <input type="text" class="field-input font-bold" value="HE JABLANICA">
+                </div>
+                <div class="flex items-baseline gap-2">
+                    <span class="font-bold w-32 uppercase text-[10px]">Lokacija / Agregat:</span>
+                    <input type="text" class="field-input" value="UNIT G3 - FRANCIS">
+                </div>
+                <div class="flex items-baseline gap-2">
+                    <span class="font-bold w-32 uppercase text-[10px]">Datum Izvođenja:</span>
+                    <input type="date" class="field-input" id="date-input">
+                </div>
+                <div class="flex items-baseline gap-2">
+                    <span class="font-bold w-32 uppercase text-[10px]">Radni Nalog (WO):</span>
+                    <input type="text" class="field-input" value="WO-2025-844-M">
+                </div>
+                <div class="flex items-baseline gap-2">
+                    <span class="font-bold w-32 uppercase text-[10px]">Odgovorni Inženjer:</span>
+                    <input type="text" class="field-input" value="Ervin Stupac">
+                </div>
+                <div class="flex items-baseline gap-2">
+                    <span class="font-bold w-32 uppercase text-[10px]">Nadzorni Organ:</span>
+                    <input type="text" class="field-input" placeholder="Unesi ime nadzora...">
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-8 relative z-10">
+            <h3 class="font-bold text-sm uppercase mb-2 border-b border-gray-400">1.0 PRECISION SHAFT ALIGNMENT (RIM/FACE)</h3>
+            
+            <div class="grid grid-cols-12 gap-4">
+                <div class="col-span-7">
+                    <table class="w-full">
+                        <thead>
+                            <tr>
+                                <th colspan="2">GEOMETRIJA MAŠINE (Unos mm)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Distanca: Laser -> Prednja noga (D1)</td>
+                                <td><input type="number" id="d1" class="field-input text-right" value="500"></td>
+                            </tr>
+                            <tr>
+                                <td>Distanca: Laser -> Zadnja noga (D2)</td>
+                                <td><input type="number" id="d2" class="field-input text-right" value="1250"></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Termički Cilj (Target Offset)</strong></td>
+                                <td><input type="number" id="target-off" class="field-input text-right text-blue-800 font-bold" value="0.12"></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Termički Cilj (Target Slope)</strong></td>
+                                <td><input type="number" id="target-slope" class="field-input text-right text-blue-800 font-bold" value="0.02"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <table class="w-full mt-4">
+                        <thead>
+                            <tr>
+                                <th>MJERENJE</th>
+                                <th>IZMJERENO (mm)</th>
+                                <th>TOLERANCIJA</th>
+                                <th>STATUS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Vertical Offset</td>
+                                <td class="font-mono text-right font-bold" id="res-offset">0.00</td>
+                                <td class="text-center">± 0.05</td>
+                                <td class="text-center font-bold" id="status-offset">PASS</td>
+                            </tr>
+                            <tr>
+                                <td>Angular (Gap/100mm)</td>
+                                <td class="font-mono text-right font-bold" id="res-angle">0.00</td>
+                                <td class="text-center">± 0.04</td>
+                                <td class="text-center font-bold" id="status-angle">PASS</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="col-span-5 flex flex-col justify-between border border-gray-300 p-2">
+                    <div class="text-[10px] font-bold text-gray-500 uppercase mb-2">Machine Diagram</div>
+                    <svg viewBox="0 0 200 100" class="w-full h-auto opacity-80">
+                        <rect x="10" y="40" width="80" height="40" fill="none" stroke="#333" stroke-width="2"/>
+                        <rect x="110" y="30" width="80" height="60" fill="none" stroke="#333" stroke-width="2"/>
+                        <line x1="90" y1="60" x2="110" y2="60" stroke="#000" stroke-width="3"/> <rect x="20" y="80" width="10" height="5" fill="#333"/>
+                        <rect x="70" y="80" width="10" height="5" fill="#333"/>
+                        
+                        <text x="25" y="95" font-size="8" text-anchor="middle" id="svg-shim-f">F: +0.00</text>
+                        <text x="75" y="95" font-size="8" text-anchor="middle" id="svg-shim-b">B: +0.00</text>
+                    </svg>
+
+                    <div class="mt-4 bg-gray-100 p-2 rounded">
+                        <label class="text-[10px] uppercase font-bold block">Front Foot Correction (mm)</label>
+                        <input type="number" id="shim-f" class="field-input bg-white border border-gray-300 p-1 text-right" value="0.00" step="0.01">
+                        
+                        <label class="text-[10px] uppercase font-bold block mt-2">Back Foot Correction (mm)</label>
+                        <input type="number" id="shim-b" class="field-input bg-white border border-gray-300 p-1 text-right" value="0.00" step="0.01">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-8 relative z-10">
+            <h3 class="font-bold text-sm uppercase mb-2 border-b border-gray-400">2.0 THRUST BEARING LOAD DISTRIBUTION</h3>
+            <p class="text-[10px] text-gray-500 mb-2 italic">Sve vrijednosti su u MPa (High Pressure Jacking Method). Dozvoljena devijacija < 5%.</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>PAD #</th>
+                        <th>01</th>
+                        <th>02</th>
+                        <th>03</th>
+                        <th>04</th>
+                        <th>05</th>
+                        <th>06</th>
+                        <th>AVG (MPa)</th>
+                        <th>MAX DEV (%)</th>
+                    </tr>
+                </thead>
+                <tbody id="thrust-table">
+                    <tr>
+                        <td class="font-bold">PRESSURE</td>
+                        <td><input type="number" class="field-input text-center thrust-input" value="35.5"></td>
+                        <td><input type="number" class="field-input text-center thrust-input" value="36.0"></td>
+                        <td><input type="number" class="field-input text-center thrust-input" value="35.2"></td>
+                        <td><input type="number" class="field-input text-center thrust-input" value="35.8"></td>
+                        <td><input type="number" class="field-input text-center thrust-input" value="34.9"></td>
+                        <td><input type="number" class="field-input text-center thrust-input" value="36.1"></td>
+                        <td class="font-bold text-center bg-gray-50" id="thrust-avg">35.58</td>
+                        <td class="font-bold text-center bg-gray-50" id="thrust-dev">1.9%</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div id="thrust-status-box" class="border border-green-600 bg-green-50 text-green-800 p-2 text-center text-xs font-bold uppercase">
+                STATUS: EQUALIZED - ACCEPTED
+            </div>
+        </section>
+
+        <section class="mb-8 relative z-10">
+            <h3 class="font-bold text-sm uppercase mb-2 border-b border-gray-400">3.0 NAPOMENE INŽENJERA</h3>
+            <textarea class="w-full h-24 border border-gray-300 p-2 text-sm font-mono resize-none field-input" placeholder="Ovdje upišite specifične napomene o stanju temelja, temperaturi ulja ili anomalijama..."></textarea>
+        </section>
+
+        <footer class="mt-auto pt-8 border-t-2 border-black relative z-10">
+            <div class="grid grid-cols-2 gap-12">
+                <div>
+                    <p class="text-[10px] uppercase font-bold mb-8">Za Izvršitelja (AnoHUB):</p>
+                    <div class="border-b border-black mb-1"></div>
+                    <input type="text" class="field-input w-full text-xs" placeholder="Ime i Prezime">
+                </div>
+                <div>
+                    <p class="text-[10px] uppercase font-bold mb-8">Za Naručitelja (Odobrio):</p>
+                    <div class="border-b border-black mb-1"></div>
+                    <input type="text" class="field-input w-full text-xs" placeholder="Ime i Prezime">
+                </div>
+            </div>
+            
+            <div class="mt-8 text-center">
+                <p class="text-[9px] text-gray-400 font-mono">
+                    This document certifies that the equipment has been aligned according to AnoHUB Protocol 05.
+                    Any subsequent alteration voids the Engineering Immunity warranty.
+                </p>
+                <p class="text-[9px] text-gray-400 font-mono mt-1">
+                    Generated via AnoHUB Digital Protocol System v3.0 | © 2025
+                </p>
+            </div>
+        </footer>
+
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             lucide.createIcons();
-            document.getElementById('date-field').valueAsDate = new Date();
+            document.getElementById('date-input').valueAsDate = new Date();
 
-            // === 1. LOGIKA PORAVNANJA (Sa termičkom kompenzacijom) ===
-            const shimF = document.getElementById('shim-front');
-            const shimB = document.getElementById('shim-back');
-            const thermalV = document.getElementById('thermal-v');
-            const thermalS = document.getElementById('thermal-s');
+            // === 1. ALIGNMENT CALCULATION LOGIC ===
+            const shimF = document.getElementById('shim-f');
+            const shimB = document.getElementById('shim-b');
+            const d1Input = document.getElementById('d1');
+            const d2Input = document.getElementById('d2');
+            const tOff = document.getElementById('target-off');
+            const tSlope = document.getElementById('target-slope');
             
-            function updateAlignment() {
-                // Uzimamo vrijednosti shimanja (korekcije)
-                let f = parseFloat(shimF.value);
-                let b = parseFloat(shimB.value);
+            const resOffset = document.getElementById('res-offset');
+            const resAngle = document.getElementById('res-angle');
+            const statOffset = document.getElementById('status-offset');
+            const statAngle = document.getElementById('status-angle');
+            
+            const svgShimF = document.getElementById('svg-shim-f');
+            const svgShimB = document.getElementById('svg-shim-b');
+
+            function calcAlignment() {
+                const f = parseFloat(shimF.value) || 0;
+                const b = parseFloat(shimB.value) || 0;
+                const d1 = parseFloat(d1Input.value) || 500;
+                const d2 = parseFloat(d2Input.value) || 1250;
+                const targetO = parseFloat(tOff.value) || 0;
+                const targetS = parseFloat(tSlope.value) || 0;
+
+                // Update SVG Text
+                svgShimF.textContent = `F: ${f > 0 ? '+' : ''}${f.toFixed(2)}`;
+                svgShimB.textContent = `B: ${b > 0 ? '+' : ''}${b.toFixed(2)}`;
+
+                // Math
+                const slope = (b - f) / (d2 - d1);
+                const rawOffset = f - (slope * d1);
                 
-                // Prikaz shim vrijednosti
-                document.getElementById('disp-front').innerText = (f > 0 ? "+" : "") + f.toFixed(2) + " mm";
-                document.getElementById('disp-back').innerText = (b > 0 ? "+" : "") + b.toFixed(2) + " mm";
+                // Compare to Target
+                const finalOffset = rawOffset - targetO;
+                const finalAngle = (slope * 100) - (targetS * 100); // per 100mm
 
-                // Geometrija
-                const distF = 500;
-                const distB = 1000;
-                
-                // Izračunata "Hladna" pozicija
-                let slope = (b - f) / (distB - distF);
-                let rawOffset = f - (slope * distF);
-                let rawAngle = slope * 100;
+                // Render
+                resOffset.textContent = finalOffset.toFixed(2);
+                resAngle.textContent = finalAngle.toFixed(2);
 
-                // Termička Kompenzacija (Target)
-                let targetOffset = parseFloat(thermalV.value) || 0;
-                let targetSlope = parseFloat(thermalS.value) || 0;
-
-                // Konačni rezultat = Izmjereno (Raw) - Cilj (Target)
-                // Ako želimo target 0.15, a imamo 0.15, rezultat je 0.00 (Perfect)
-                let finalOffset = rawOffset - targetOffset;
-                let finalAngle = rawAngle - targetSlope;
-
-                // UI Update
-                const resOff = document.getElementById('res-offset');
-                const statOff = document.getElementById('status-offset');
-                const resAng = document.getElementById('res-angle');
-                const statAng = document.getElementById('status-angle');
-
-                resOff.innerText = finalOffset.toFixed(2);
-                resAng.innerText = finalAngle.toFixed(2);
-
-                // Tolerance Check (0.05mm)
+                // Validation
                 if(Math.abs(finalOffset) <= 0.05) {
-                    resOff.className = "text-3xl font-mono text-h-green my-1 font-bold";
-                    statOff.className = "text-[10px] font-bold text-h-green";
-                    statOff.innerText = "WITHIN TOLERANCE";
+                    resOffset.className = "font-mono text-right font-bold text-green-700";
+                    statOffset.textContent = "PASS";
+                    statOffset.className = "text-center font-bold text-green-700";
                 } else {
-                    resOff.className = "text-3xl font-mono text-h-red my-1 font-bold";
-                    statOff.className = "text-[10px] font-bold text-h-red";
-                    statOff.innerText = "OUT OF SPEC";
+                    resOffset.className = "font-mono text-right font-bold text-red-600";
+                    statOffset.textContent = "FAIL";
+                    statOffset.className = "text-center font-bold text-red-600";
                 }
 
-                if(Math.abs(finalAngle) <= 0.05) {
-                    resAng.className = "text-3xl font-mono text-h-green my-1 font-bold";
-                    statAng.className = "text-[10px] font-bold text-h-green";
-                    statAng.innerText = "WITHIN TOLERANCE";
+                if(Math.abs(finalAngle) <= 0.04) {
+                    resAngle.className = "font-mono text-right font-bold text-green-700";
+                    statAngle.textContent = "PASS";
+                    statAngle.className = "text-center font-bold text-green-700";
                 } else {
-                    resAng.className = "text-3xl font-mono text-h-red my-1 font-bold";
-                    statAng.className = "text-[10px] font-bold text-h-red";
-                    statAng.innerText = "OUT OF SPEC";
+                    resAngle.className = "font-mono text-right font-bold text-red-600";
+                    statAngle.textContent = "FAIL";
+                    statAngle.className = "text-center font-bold text-red-600";
                 }
             }
 
-            [shimF, shimB, thermalV, thermalS].forEach(el => el.addEventListener('input', updateAlignment));
-            updateAlignment();
+            [shimF, shimB, d1Input, d2Input, tOff, tSlope].forEach(el => el.addEventListener('input', calcAlignment));
+            calcAlignment();
 
+            // === 2. THRUST CALCULATION LOGIC ===
+            const thrustInputs = document.querySelectorAll('.thrust-input');
+            const tAvg = document.getElementById('thrust-avg');
+            const tDev = document.getElementById('thrust-dev');
+            const tStatus = document.getElementById('thrust-status-box');
 
-            // === 2. LOGIKA THRUST LEŽAJA (Interaktivna) ===
-            const padContainer = document.getElementById('pad-inputs-container');
-            const barContainer = document.getElementById('bar-container');
-            const thrustStatus = document.getElementById('thrust-status');
-            
-            // Inicijalne vrijednosti (Namjerno loše da korisnik popravi)
-            let pads = [35, 38, 42, 36, 34, 35]; 
+            function calcThrust() {
+                let sum = 0;
+                let vals = [];
+                thrustInputs.forEach(inp => {
+                    let v = parseFloat(inp.value) || 0;
+                    vals.push(v);
+                    sum += v;
+                });
 
-            function renderThrust() {
-                padContainer.innerHTML = '';
-                barContainer.innerHTML = '';
+                let avg = sum / vals.length;
+                let maxDiff = 0;
                 
-                // Izračunaj prosjek
-                let total = pads.reduce((a, b) => a + b, 0);
-                let avg = total / pads.length;
-                let maxDev = 0;
-
-                pads.forEach((val, index) => {
-                    // 1. Input Fields
-                    let div = document.createElement('div');
-                    div.innerHTML = `
-                        <label class="text-[9px] text-slate-500 block text-center">PAD 0${index+1}</label>
-                        <input type="number" class="input-tech text-center text-xs" value="${val}" data-index="${index}">
-                    `;
-                    padContainer.appendChild(div);
-
-                    // 2. Bars
-                    let percent = (val / 50) * 100; // Pretpostavka Max 50 MPa
-                    let deviation = Math.abs((val - avg) / avg) * 100;
-                    if(deviation > maxDev) maxDev = deviation;
-
-                    let barColor = deviation <= 5 ? 'bg-h-green' : (deviation <= 10 ? 'bg-h-gold' : 'bg-h-red');
-
-                    let bar = document.createElement('div');
-                    bar.className = `flex-1 ${barColor} hover:opacity-80 transition-all relative group rounded-t`;
-                    bar.style.height = `${percent}%`;
-                    bar.innerHTML = `<span class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] text-white hidden group-hover:block font-mono">${val}</span>`;
-                    barContainer.appendChild(bar);
+                vals.forEach(v => {
+                    let diff = Math.abs((v - avg) / avg) * 100;
+                    if(diff > maxDiff) maxDev = diff;
                 });
 
-                // Status Check
-                if (maxDev <= 5) {
-                    thrustStatus.className = "px-3 py-1 bg-h-green/20 text-h-green text-xs font-bold font-mono rounded border border-h-green";
-                    thrustStatus.innerText = "EQUALIZED (Dev: " + maxDev.toFixed(1) + "%)";
+                // Since local var scope, recalculate simply:
+                let deviations = vals.map(v => Math.abs((v - avg) / avg) * 100);
+                let maxD = Math.max(...deviations);
+
+                tAvg.textContent = avg.toFixed(2);
+                tDev.textContent = maxD.toFixed(1) + "%";
+
+                if(maxD <= 5) {
+                    tStatus.className = "border border-green-600 bg-green-50 text-green-800 p-2 text-center text-xs font-bold uppercase";
+                    tStatus.textContent = "STATUS: EQUALIZED - ACCEPTED";
                 } else {
-                    thrustStatus.className = "px-3 py-1 bg-h-red/20 text-h-red text-xs font-bold font-mono rounded border border-h-red animate-pulse";
-                    thrustStatus.innerText = "REJECTED (Dev: " + maxDev.toFixed(1) + "%)";
+                    tStatus.className = "border border-red-600 bg-red-50 text-red-800 p-2 text-center text-xs font-bold uppercase";
+                    tStatus.textContent = "STATUS: REJECTED - RE-SHIMMING REQUIRED";
                 }
             }
 
-            // Event Listener za Thrust Inputs
-            padContainer.addEventListener('input', (e) => {
-                if(e.target.tagName === 'INPUT') {
-                    let idx = e.target.getAttribute('data-index');
-                    pads[idx] = parseFloat(e.target.value) || 0;
-                    // Ponovno iscrtaj samo Barove i Status, ne inpute (da ne izgubimo fokus)
-                    updateBarsOnly(); 
-                }
-            });
-
-            function updateBarsOnly() {
-                // Skraćena logika samo za update vizuala bez brisanja inputa
-                barContainer.innerHTML = '';
-                let total = pads.reduce((a, b) => a + b, 0);
-                let avg = total / pads.length;
-                let maxDev = 0;
-
-                pads.forEach(val => {
-                    let percent = (val / 50) * 100; 
-                    let deviation = Math.abs((val - avg) / avg) * 100;
-                    if(deviation > maxDev) maxDev = deviation;
-                    let barColor = deviation <= 5 ? 'bg-h-green' : (deviation <= 10 ? 'bg-h-gold' : 'bg-h-red');
-                    
-                    let bar = document.createElement('div');
-                    bar.className = `flex-1 ${barColor} hover:opacity-80 transition-all relative group rounded-t`;
-                    bar.style.height = `${percent}%`;
-                    bar.innerHTML = `<span class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] text-white hidden group-hover:block font-mono">${val}</span>`;
-                    barContainer.appendChild(bar);
-                });
-
-                if (maxDev <= 5) {
-                    thrustStatus.className = "px-3 py-1 bg-h-green/20 text-h-green text-xs font-bold font-mono rounded border border-h-green";
-                    thrustStatus.innerText = "EQUALIZED (Dev: " + maxDev.toFixed(1) + "%)";
-                } else {
-                    thrustStatus.className = "px-3 py-1 bg-h-red/20 text-h-red text-xs font-bold font-mono rounded border border-h-red animate-pulse";
-                    thrustStatus.innerText = "REJECTED (Dev: " + maxDev.toFixed(1) + "%)";
-                }
-            }
-
-            renderThrust(); // Initial Render
-
-            // === 3. SIGNATURE LOGIC ===
-            const signBtn = document.getElementById('sign-btn');
-            signBtn.addEventListener('click', () => {
-                signBtn.innerText = "DOKUMENT ZAKLJUČAN I POTPISAN";
-                signBtn.className = "bg-slate-800 text-slate-400 font-bold py-4 px-8 rounded cursor-not-allowed uppercase tracking-widest border border-slate-600";
-                // Disable all inputs
-                document.querySelectorAll('input').forEach(i => i.disabled = true);
-                alert("Protokol je uspješno verifikovan i pohranjen u lokalnu bazu.");
-            });
+            thrustInputs.forEach(el => el.addEventListener('input', calcThrust));
+            calcThrust();
         });
     </script>
 </body>
