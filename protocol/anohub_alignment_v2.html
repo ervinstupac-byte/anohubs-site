@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AnoHUB | PROTOCOL 05: PRECISION ALIGNMENT CERTIFICATE</title>
+    <title>AnoHUB | PROTOCOL 05: HYBRID INTERFACE</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=JetBrains+Mono:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 
@@ -15,16 +15,18 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Arimo', 'Arial', 'sans-serif'], // Standardni inženjerski font
-                        mono: ['JetBrains Mono', 'Courier New', 'monospace'],
+                        sans: ['Roboto', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                        divine: ['Cinzel', 'serif']
                     },
                     colors: {
-                        'eng-blue': '#003366',
-                        'eng-red': '#cc0000',
-                        'paper-w': '#ffffff',
+                        'ano-gold': '#FFD700',
+                        'ano-dark': '#0a0a0a',
+                        'ano-panel': '#111',
                     },
-                    screens: {
-                        'print': {'raw': 'print'},
+                    boxShadow: {
+                        'glow': '0 0 20px rgba(255, 215, 0, 0.15)',
+                        'paper': '0 0 50px rgba(0,0,0,0.5)'
                     }
                 }
             }
@@ -32,394 +34,383 @@
     </script>
 
     <style>
-        /* BASE SETTINGS */
-        body { 
-            background-color: #525659; /* Siva pozadina kao u Adobe Readeru */
-            -webkit-print-color-adjust: exact; 
+        /* === SCREEN MODE (THE EXPERIENCE) === */
+        body {
+            background-color: #050505;
+            background-image: 
+                radial-gradient(circle at 50% 50%, #1a1a1a 1px, transparent 1px),
+                linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 30px 30px, 100px 100px;
+            color: #333;
+            overflow-x: hidden;
         }
 
-        /* A4 PAPER SIMULATION */
-        .a4-page {
+        /* The "Live Paper" Container */
+        .workspace {
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+            perspective: 1000px;
+        }
+
+        .a4-sheet {
             width: 210mm;
             min-height: 297mm;
-            background: white;
-            margin: 40px auto;
-            padding: 20mm;
-            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            background: #fff;
             position: relative;
+            box-shadow: 0 0 60px rgba(0,0,0,0.7), 0 0 10px rgba(255, 215, 0, 0.1);
+            padding: 15mm;
+            transition: transform 0.3s ease;
         }
 
-        /* EDITABLE FIELDS STYLING */
-        .field-input {
-            width: 100%;
-            background: rgba(255, 255, 0, 0.05); /* Vrlo blaga žuta da se vidi da je polje */
-            border-bottom: 1px dashed #ccc;
+        /* Input Fields Styling (Screen) */
+        .smart-input {
+            background: rgba(240, 240, 240, 0.5);
+            border-bottom: 2px solid #ddd;
             font-family: 'JetBrains Mono', monospace;
-            color: #333;
+            color: #000;
             transition: all 0.2s;
         }
-        .field-input:focus {
-            background: #eef6ff;
-            border-bottom: 1px solid #003366;
+        .smart-input:focus {
+            background: #fff;
+            border-bottom: 2px solid #FFD700;
             outline: none;
         }
-        .field-input.danger { color: #cc0000; font-weight: bold; }
-        .field-input.success { color: #006633; font-weight: bold; }
-
-        /* TABLES */
-        table { width: 100%; border-collapse: collapse; margin-bottom: 15px; }
-        th, td { border: 1px solid #000; padding: 6px 10px; text-align: left; font-size: 11px; }
-        th { background-color: #f0f0f0; font-weight: bold; text-transform: uppercase; }
-
-        /* PRINT SETTINGS */
-        @media print {
-            body { background: none; margin: 0; }
-            .a4-page { margin: 0; box-shadow: none; width: 100%; height: auto; padding: 10mm; }
-            .no-print { display: none !important; }
-            .field-input { background: transparent !important; border-bottom: none !important; }
-            /* Forsiraj background boje za tablice */
-            th { background-color: #f0f0f0 !important; -webkit-print-color-adjust: exact; }
+        
+        /* Interactive Elements that look good on paper */
+        .chart-bar { transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s; }
+        
+        /* Floating UI (Screen Only) */
+        .hud-panel {
+            position: fixed; top: 50%; left: 20px; transform: translateY(-50%);
+            width: 200px; padding: 20px;
+            background: rgba(10, 10, 10, 0.8);
+            border-left: 2px solid #FFD700;
+            backdrop-filter: blur(10px);
+            color: white; z-index: 50;
         }
 
-        /* WATERMARK */
-        .watermark {
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%) rotate(-45deg);
-            font-size: 120px;
-            color: rgba(0,0,0,0.03);
-            font-weight: 900;
-            pointer-events: none;
-            z-index: 0;
-            white-space: nowrap;
+        /* === PRINT MODE (THE CONTRACT) === */
+        @media print {
+            body { background: none; margin: 0; padding: 0; }
+            .workspace { padding: 0; display: block; }
+            .a4-sheet { 
+                width: 100%; box-shadow: none; margin: 0; padding: 10mm; 
+                transform: none !important;
+            }
+            .no-print { display: none !important; }
+            .smart-input { 
+                background: transparent !important; border-bottom: 1px solid #000 !important; 
+                border-width: 0 0 1px 0 !important;
+            }
+            /* High contrast for charts */
+            .chart-bg { background-color: #eee !important; -webkit-print-color-adjust: exact; }
+            .print-border { border: 1px solid #000 !important; }
         }
     </style>
 </head>
 <body>
 
-    <div class="fixed top-0 left-0 w-full bg-slate-800 text-white p-3 z-50 flex justify-between items-center no-print shadow-lg">
-        <div class="flex items-center gap-4">
-            <a href="../protocol.html" class="flex items-center gap-2 text-xs text-slate-300 hover:text-white transition">
-                <i data-lucide="arrow-left" class="w-4 h-4"></i> Nazad
+    <div class="hud-panel no-print hidden xl:block shadow-glow">
+        <h2 class="text-ano-gold font-divine text-xl mb-4">COMMAND</h2>
+        <div class="space-y-4 text-xs font-mono text-gray-400">
+            <p>MODE: <span class="text-white">LIVE EDIT</span></p>
+            <p>PROTOCOL: <span class="text-white">ALIGN-05</span></p>
+            <div class="h-px w-full bg-white/20 my-4"></div>
+            <button onclick="window.print()" class="w-full py-3 bg-ano-gold text-black font-bold hover:bg-white transition flex items-center justify-center gap-2">
+                <i data-lucide="printer" class="w-4 h-4"></i> PRINT PDF
+            </button>
+            <a href="../protocol.html" class="block text-center py-2 border border-white/20 hover:border-ano-gold hover:text-ano-gold transition">
+                EXIT SYSTEM
             </a>
-            <span class="font-mono text-xs text-yellow-400">EDITING MODE ACTIVE</span>
         </div>
-        <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded text-sm font-bold flex items-center gap-2 transition">
-            <i data-lucide="printer" class="w-4 h-4"></i> DOWNLOAD / PRINT PDF
-        </button>
+        <div class="mt-8">
+            <div class="text-[10px] text-gray-500 mb-1">SYSTEM STATUS</div>
+            <div class="flex items-center gap-2 text-green-400 font-bold text-sm">
+                <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div> ONLINE
+            </div>
+        </div>
     </div>
 
-    <div class="a4-page">
-        <div class="watermark">ANOHUB ORIGINAL</div>
-
-        <header class="flex justify-between items-start border-b-2 border-black pb-4 mb-6 relative z-10">
-            <div class="flex items-center gap-4">
-                <svg width="50" height="50" viewBox="0 0 100 100" class="fill-black">
-                    <rect x="20" y="20" width="60" height="60" fill="none" stroke="black" stroke-width="8"/>
-                    <text x="50" y="65" font-family="Arial" font-weight="bold" font-size="40" text-anchor="middle">A</text>
-                </svg>
-                <div>
-                    <h1 class="text-2xl font-bold tracking-tighter text-black uppercase">AnoHUB Engineering</h1>
-                    <p class="text-xs text-gray-600 font-mono">HYDRO-MECHANICAL INTEGRITY DIVISION</p>
-                </div>
-            </div>
-            <div class="text-right">
-                <h2 class="text-xl font-bold text-gray-400">CERTIFICATE OF ALIGNMENT</h2>
-                <p class="text-[10px] font-mono">ISO 10816-5 COMPLIANT</p>
-                <p class="text-[10px] font-mono">DOC ID: <input type="text" value="AH-ALIGN-005/25" class="field-input inline-block w-24 text-right" style="border:none;"></p>
-            </div>
-        </header>
-
-        <section class="mb-8 relative z-10">
-            <div class="grid grid-cols-2 gap-x-8 gap-y-2 text-sm border border-black p-4 bg-gray-50">
-                <div class="flex items-baseline gap-2">
-                    <span class="font-bold w-32 uppercase text-[10px]">Klijent / Elektrana:</span>
-                    <input type="text" class="field-input font-bold" value="HE JABLANICA">
-                </div>
-                <div class="flex items-baseline gap-2">
-                    <span class="font-bold w-32 uppercase text-[10px]">Lokacija / Agregat:</span>
-                    <input type="text" class="field-input" value="UNIT G3 - FRANCIS">
-                </div>
-                <div class="flex items-baseline gap-2">
-                    <span class="font-bold w-32 uppercase text-[10px]">Datum Izvođenja:</span>
-                    <input type="date" class="field-input" id="date-input">
-                </div>
-                <div class="flex items-baseline gap-2">
-                    <span class="font-bold w-32 uppercase text-[10px]">Radni Nalog (WO):</span>
-                    <input type="text" class="field-input" value="WO-2025-844-M">
-                </div>
-                <div class="flex items-baseline gap-2">
-                    <span class="font-bold w-32 uppercase text-[10px]">Odgovorni Inženjer:</span>
-                    <input type="text" class="field-input" value="Ervin Stupac">
-                </div>
-                <div class="flex items-baseline gap-2">
-                    <span class="font-bold w-32 uppercase text-[10px]">Nadzorni Organ:</span>
-                    <input type="text" class="field-input" placeholder="Unesi ime nadzora...">
-                </div>
-            </div>
-        </section>
-
-        <section class="mb-8 relative z-10">
-            <h3 class="font-bold text-sm uppercase mb-2 border-b border-gray-400">1.0 PRECISION SHAFT ALIGNMENT (RIM/FACE)</h3>
+    <div class="workspace">
+        
+        <div class="a4-sheet" id="document-sheet">
             
-            <div class="grid grid-cols-12 gap-4">
-                <div class="col-span-7">
-                    <table class="w-full">
-                        <thead>
-                            <tr>
-                                <th colspan="2">GEOMETRIJA MAŠINE (Unos mm)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Distanca: Laser -> Prednja noga (D1)</td>
-                                <td><input type="number" id="d1" class="field-input text-right" value="500"></td>
-                            </tr>
-                            <tr>
-                                <td>Distanca: Laser -> Zadnja noga (D2)</td>
-                                <td><input type="number" id="d2" class="field-input text-right" value="1250"></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Termički Cilj (Target Offset)</strong></td>
-                                <td><input type="number" id="target-off" class="field-input text-right text-blue-800 font-bold" value="0.12"></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Termički Cilj (Target Slope)</strong></td>
-                                <td><input type="number" id="target-slope" class="field-input text-right text-blue-800 font-bold" value="0.02"></td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <div class="absolute top-6 right-6 opacity-10 pointer-events-none">
+                <svg width="100" height="100" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="45" stroke="black" stroke-width="2" fill="none"/>
+                    <path d="M50 5 L50 95 M5 50 L95 50" stroke="black" stroke-width="1"/>
+                    <text x="50" y="55" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="20">ANO</text>
+                </svg>
+            </div>
 
-                    <table class="w-full mt-4">
-                        <thead>
-                            <tr>
-                                <th>MJERENJE</th>
-                                <th>IZMJERENO (mm)</th>
-                                <th>TOLERANCIJA</th>
-                                <th>STATUS</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Vertical Offset</td>
-                                <td class="font-mono text-right font-bold" id="res-offset">0.00</td>
-                                <td class="text-center">± 0.05</td>
-                                <td class="text-center font-bold" id="status-offset">PASS</td>
-                            </tr>
-                            <tr>
-                                <td>Angular (Gap/100mm)</td>
-                                <td class="font-mono text-right font-bold" id="res-angle">0.00</td>
-                                <td class="text-center">± 0.04</td>
-                                <td class="text-center font-bold" id="status-angle">PASS</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="col-span-5 flex flex-col justify-between border border-gray-300 p-2">
-                    <div class="text-[10px] font-bold text-gray-500 uppercase mb-2">Machine Diagram</div>
-                    <svg viewBox="0 0 200 100" class="w-full h-auto opacity-80">
-                        <rect x="10" y="40" width="80" height="40" fill="none" stroke="#333" stroke-width="2"/>
-                        <rect x="110" y="30" width="80" height="60" fill="none" stroke="#333" stroke-width="2"/>
-                        <line x1="90" y1="60" x2="110" y2="60" stroke="#000" stroke-width="3"/> <rect x="20" y="80" width="10" height="5" fill="#333"/>
-                        <rect x="70" y="80" width="10" height="5" fill="#333"/>
-                        
-                        <text x="25" y="95" font-size="8" text-anchor="middle" id="svg-shim-f">F: +0.00</text>
-                        <text x="75" y="95" font-size="8" text-anchor="middle" id="svg-shim-b">B: +0.00</text>
-                    </svg>
-
-                    <div class="mt-4 bg-gray-100 p-2 rounded">
-                        <label class="text-[10px] uppercase font-bold block">Front Foot Correction (mm)</label>
-                        <input type="number" id="shim-f" class="field-input bg-white border border-gray-300 p-1 text-right" value="0.00" step="0.01">
-                        
-                        <label class="text-[10px] uppercase font-bold block mt-2">Back Foot Correction (mm)</label>
-                        <input type="number" id="shim-b" class="field-input bg-white border border-gray-300 p-1 text-right" value="0.00" step="0.01">
+            <header class="border-b-4 border-black pb-4 mb-8 flex justify-between items-end">
+                <div>
+                    <h1 class="text-3xl font-bold uppercase tracking-tighter">AnoHUB Engineering</h1>
+                    <div class="flex items-center gap-2 mt-1">
+                        <span class="bg-black text-white px-2 py-0.5 text-xs font-bold">MODULE 05</span>
+                        <span class="text-xs font-mono tracking-widest text-gray-600">PRECISION ALIGNMENT CERTIFICATE</span>
                     </div>
                 </div>
-            </div>
-        </section>
-
-        <section class="mb-8 relative z-10">
-            <h3 class="font-bold text-sm uppercase mb-2 border-b border-gray-400">2.0 THRUST BEARING LOAD DISTRIBUTION</h3>
-            <p class="text-[10px] text-gray-500 mb-2 italic">Sve vrijednosti su u MPa (High Pressure Jacking Method). Dozvoljena devijacija < 5%.</p>
-
-            <table>
-                <thead>
-                    <tr>
-                        <th>PAD #</th>
-                        <th>01</th>
-                        <th>02</th>
-                        <th>03</th>
-                        <th>04</th>
-                        <th>05</th>
-                        <th>06</th>
-                        <th>AVG (MPa)</th>
-                        <th>MAX DEV (%)</th>
-                    </tr>
-                </thead>
-                <tbody id="thrust-table">
-                    <tr>
-                        <td class="font-bold">PRESSURE</td>
-                        <td><input type="number" class="field-input text-center thrust-input" value="35.5"></td>
-                        <td><input type="number" class="field-input text-center thrust-input" value="36.0"></td>
-                        <td><input type="number" class="field-input text-center thrust-input" value="35.2"></td>
-                        <td><input type="number" class="field-input text-center thrust-input" value="35.8"></td>
-                        <td><input type="number" class="field-input text-center thrust-input" value="34.9"></td>
-                        <td><input type="number" class="field-input text-center thrust-input" value="36.1"></td>
-                        <td class="font-bold text-center bg-gray-50" id="thrust-avg">35.58</td>
-                        <td class="font-bold text-center bg-gray-50" id="thrust-dev">1.9%</td>
-                    </tr>
-                </tbody>
-            </table>
-            
-            <div id="thrust-status-box" class="border border-green-600 bg-green-50 text-green-800 p-2 text-center text-xs font-bold uppercase">
-                STATUS: EQUALIZED - ACCEPTED
-            </div>
-        </section>
-
-        <section class="mb-8 relative z-10">
-            <h3 class="font-bold text-sm uppercase mb-2 border-b border-gray-400">3.0 NAPOMENE INŽENJERA</h3>
-            <textarea class="w-full h-24 border border-gray-300 p-2 text-sm font-mono resize-none field-input" placeholder="Ovdje upišite specifične napomene o stanju temelja, temperaturi ulja ili anomalijama..."></textarea>
-        </section>
-
-        <footer class="mt-auto pt-8 border-t-2 border-black relative z-10">
-            <div class="grid grid-cols-2 gap-12">
-                <div>
-                    <p class="text-[10px] uppercase font-bold mb-8">Za Izvršitelja (AnoHUB):</p>
-                    <div class="border-b border-black mb-1"></div>
-                    <input type="text" class="field-input w-full text-xs" placeholder="Ime i Prezime">
+                <div class="text-right">
+                    <div class="text-[10px] uppercase font-bold text-gray-500">Document ID</div>
+                    <input type="text" value="AH-2025-X05" class="smart-input text-right font-mono font-bold w-32">
                 </div>
-                <div>
-                    <p class="text-[10px] uppercase font-bold mb-8">Za Naručitelja (Odobrio):</p>
-                    <div class="border-b border-black mb-1"></div>
-                    <input type="text" class="field-input w-full text-xs" placeholder="Ime i Prezime">
-                </div>
-            </div>
-            
-            <div class="mt-8 text-center">
-                <p class="text-[9px] text-gray-400 font-mono">
-                    This document certifies that the equipment has been aligned according to AnoHUB Protocol 05.
-                    Any subsequent alteration voids the Engineering Immunity warranty.
-                </p>
-                <p class="text-[9px] text-gray-400 font-mono mt-1">
-                    Generated via AnoHUB Digital Protocol System v3.0 | © 2025
-                </p>
-            </div>
-        </footer>
+            </header>
 
+            <section class="mb-8">
+                <div class="grid grid-cols-3 gap-6 text-sm">
+                    <div>
+                        <label class="block text-[10px] uppercase font-bold text-gray-400">Client / Plant</label>
+                        <input type="text" value="HE ORLJANI" class="smart-input w-full font-bold text-lg">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] uppercase font-bold text-gray-400">Unit / Position</label>
+                        <input type="text" value="G1 - KAPLAN" class="smart-input w-full font-bold text-lg">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] uppercase font-bold text-gray-400">Date</label>
+                        <input type="date" id="date-now" class="smart-input w-full font-bold text-lg">
+                    </div>
+                </div>
+            </section>
+
+            <section class="mb-8 border border-gray-200 p-4 print-border">
+                <div class="flex justify-between items-center mb-4 border-b border-gray-100 pb-2">
+                    <h3 class="font-bold text-lg">1.0 SHAFT ALIGNMENT (Dynamic Analysis)</h3>
+                    <div class="flex gap-4 text-xs font-mono">
+                        <div>TOLERANCE: <span class="font-bold">0.05 mm</span></div>
+                        <div>METHOD: <span class="font-bold">RIM/FACE</span></div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-12 gap-8">
+                    <div class="col-span-5 space-y-4">
+                        <div class="bg-gray-50 p-3 rounded chart-bg">
+                            <label class="text-[10px] font-bold text-blue-800 uppercase">Target Thermal Growth (Vertical)</label>
+                            <div class="flex items-center gap-2">
+                                <input type="number" id="target-v" value="0.15" step="0.01" class="smart-input w-full text-right font-bold">
+                                <span class="text-xs">mm</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between items-end mb-1">
+                                <label class="text-[10px] uppercase font-bold">Front Shim</label>
+                                <span id="disp-f" class="text-xs font-mono font-bold text-blue-600">+0.15 mm</span>
+                            </div>
+                            <input type="range" id="range-f" min="-1" max="1" step="0.01" value="0.15" class="w-full no-print accent-black cursor-pointer">
+                            <input type="number" id="num-f" value="0.15" step="0.01" class="smart-input w-full text-right text-xs print-only">
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between items-end mb-1">
+                                <label class="text-[10px] uppercase font-bold">Back Shim</label>
+                                <span id="disp-b" class="text-xs font-mono font-bold text-blue-600">+0.25 mm</span>
+                            </div>
+                            <input type="range" id="range-b" min="-1" max="1" step="0.01" value="0.25" class="w-full no-print accent-black cursor-pointer">
+                            <input type="number" id="num-b" value="0.25" step="0.01" class="smart-input w-full text-right text-xs print-only">
+                        </div>
+                    </div>
+
+                    <div class="col-span-7 flex flex-col justify-center items-center relative">
+                        <div class="absolute inset-0 border border-gray-100 grid grid-cols-4 grid-rows-4 opacity-50 pointer-events-none"></div>
+                        
+                        <svg viewBox="0 0 300 150" class="w-full h-auto z-10">
+                            <line x1="0" y1="100" x2="300" y2="100" stroke="#ccc" stroke-dasharray="4"/>
+                            
+                            <rect x="50" y="50" width="80" height="50" fill="none" stroke="#333" stroke-width="2"/>
+                            <rect x="170" y="40" width="80" height="60" fill="none" stroke="#333" stroke-width="2"/>
+                            
+                            <line id="shaft-line" x1="130" y1="75" x2="170" y2="75" stroke="#FFD700" stroke-width="4"/>
+                            
+                            <text x="150" y="30" text-anchor="middle" font-family="monospace" font-size="10" font-weight="bold" id="status-text" fill="black">CALCULATING...</text>
+                        </svg>
+
+                        <div class="grid grid-cols-2 w-full gap-2 mt-2">
+                            <div class="border border-black p-2 text-center">
+                                <div class="text-[9px] uppercase text-gray-500">Final Offset</div>
+                                <div id="res-offset" class="text-xl font-mono font-bold">0.00</div>
+                            </div>
+                            <div class="border border-black p-2 text-center">
+                                <div class="text-[9px] uppercase text-gray-500">Final Angle</div>
+                                <div id="res-angle" class="text-xl font-mono font-bold">0.00</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="mb-8">
+                <h3 class="font-bold text-lg mb-4 border-b border-gray-100 pb-2">2.0 THRUST LOAD DISTRIBUTION (MPa)</h3>
+                
+                <div class="flex items-end gap-2 h-32 mb-2 px-4 border-b border-black">
+                    <div class="flex-1 flex flex-col justify-end gap-1 group">
+                        <div id="bar-1" class="w-full bg-gray-800 chart-bar rounded-t text-center text-[10px] text-white pt-1" style="height: 70%">35</div>
+                    </div>
+                    <div class="flex-1 flex flex-col justify-end gap-1 group">
+                        <div id="bar-2" class="w-full bg-gray-800 chart-bar rounded-t text-center text-[10px] text-white pt-1" style="height: 72%">36</div>
+                    </div>
+                    <div class="flex-1 flex flex-col justify-end gap-1 group">
+                        <div id="bar-3" class="w-full bg-gray-800 chart-bar rounded-t text-center text-[10px] text-white pt-1" style="height: 68%">34</div>
+                    </div>
+                    <div class="flex-1 flex flex-col justify-end gap-1 group">
+                        <div id="bar-4" class="w-full bg-gray-800 chart-bar rounded-t text-center text-[10px] text-white pt-1" style="height: 71%">35.5</div>
+                    </div>
+                    <div class="flex-1 flex flex-col justify-end gap-1 group">
+                        <div id="bar-5" class="w-full bg-gray-800 chart-bar rounded-t text-center text-[10px] text-white pt-1" style="height: 69%">34.5</div>
+                    </div>
+                    <div class="flex-1 flex flex-col justify-end gap-1 group">
+                        <div id="bar-6" class="w-full bg-gray-800 chart-bar rounded-t text-center text-[10px] text-white pt-1" style="height: 73%">36.5</div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-6 gap-2 mb-4">
+                    <input type="number" data-idx="1" value="35" class="smart-input text-center text-xs thrust-in">
+                    <input type="number" data-idx="2" value="36" class="smart-input text-center text-xs thrust-in">
+                    <input type="number" data-idx="3" value="34" class="smart-input text-center text-xs thrust-in">
+                    <input type="number" data-idx="4" value="35.5" class="smart-input text-center text-xs thrust-in">
+                    <input type="number" data-idx="5" value="34.5" class="smart-input text-center text-xs thrust-in">
+                    <input type="number" data-idx="6" value="36.5" class="smart-input text-center text-xs thrust-in">
+                </div>
+
+                <div id="thrust-status" class="w-full p-2 bg-gray-100 border-l-4 border-gray-400 text-xs font-bold font-mono uppercase chart-bg">
+                    STATUS: PENDING CALCULATION...
+                </div>
+            </section>
+
+            <footer class="mt-12 pt-8 border-t-2 border-black">
+                <div class="flex justify-between items-end">
+                    <div class="w-1/3">
+                        <div class="h-16 border-b border-black mb-2 flex items-end">
+                            <span class="font-divine text-lg ml-2" id="sig-tech">Ervin Stupac</span>
+                        </div>
+                        <p class="text-[10px] uppercase font-bold">Lead Engineer (AnoHUB)</p>
+                    </div>
+                    
+                    <div class="w-24 h-24 rounded-full border-4 border-ano-gold flex items-center justify-center relative opacity-80 print:border-black print:opacity-100">
+                        <div class="absolute inset-0 border border-ano-gold rounded-full m-1 print:border-black"></div>
+                        <div class="text-center transform -rotate-12">
+                            <div class="text-[8px] font-bold uppercase tracking-widest text-ano-gold print:text-black">Engineering</div>
+                            <div class="text-xl font-black uppercase text-ano-gold print:text-black">IMMUNITY</div>
+                            <div class="text-[8px] font-bold uppercase tracking-widest text-ano-gold print:text-black">Activated</div>
+                        </div>
+                    </div>
+
+                    <div class="w-1/3">
+                        <div class="h-16 border-b border-black mb-2"></div>
+                        <input type="text" placeholder="CLIENT SUPERVISOR" class="smart-input w-full text-[10px] uppercase font-bold bg-transparent">
+                    </div>
+                </div>
+            </footer>
+
+        </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             lucide.createIcons();
-            document.getElementById('date-input').valueAsDate = new Date();
+            document.getElementById('date-now').valueAsDate = new Date();
 
-            // === 1. ALIGNMENT CALCULATION LOGIC ===
-            const shimF = document.getElementById('shim-f');
-            const shimB = document.getElementById('shim-b');
-            const d1Input = document.getElementById('d1');
-            const d2Input = document.getElementById('d2');
-            const tOff = document.getElementById('target-off');
-            const tSlope = document.getElementById('target-slope');
+            // --- 1. LASER ALIGNMENT LOGIC ---
+            const rangeF = document.getElementById('range-f');
+            const rangeB = document.getElementById('range-b');
+            const dispF = document.getElementById('disp-f');
+            const dispB = document.getElementById('disp-b');
+            const targetV = document.getElementById('target-v');
             
-            const resOffset = document.getElementById('res-offset');
-            const resAngle = document.getElementById('res-angle');
-            const statOffset = document.getElementById('status-offset');
-            const statAngle = document.getElementById('status-angle');
-            
-            const svgShimF = document.getElementById('svg-shim-f');
-            const svgShimB = document.getElementById('svg-shim-b');
+            const resOff = document.getElementById('res-offset');
+            const resAng = document.getElementById('res-angle');
+            const statusText = document.getElementById('status-text');
+            const shaftLine = document.getElementById('shaft-line');
 
-            function calcAlignment() {
-                const f = parseFloat(shimF.value) || 0;
-                const b = parseFloat(shimB.value) || 0;
-                const d1 = parseFloat(d1Input.value) || 500;
-                const d2 = parseFloat(d2Input.value) || 1250;
-                const targetO = parseFloat(tOff.value) || 0;
-                const targetS = parseFloat(tSlope.value) || 0;
+            function updateAlign() {
+                const f = parseFloat(rangeF.value);
+                const b = parseFloat(rangeB.value);
+                const t = parseFloat(targetV.value) || 0;
 
-                // Update SVG Text
-                svgShimF.textContent = `F: ${f > 0 ? '+' : ''}${f.toFixed(2)}`;
-                svgShimB.textContent = `B: ${b > 0 ? '+' : ''}${b.toFixed(2)}`;
+                dispF.innerText = (f>0?'+':'') + f.toFixed(2) + ' mm';
+                dispB.innerText = (b>0?'+':'') + b.toFixed(2) + ' mm';
 
-                // Math
-                const slope = (b - f) / (d2 - d1);
-                const rawOffset = f - (slope * d1);
+                // Simple geometry simulation
+                const dist = 500; // arbitrary unit distance
+                const slope = (b - f) / dist;
+                const rawOffset = f; // Simplified for visual
                 
-                // Compare to Target
-                const finalOffset = rawOffset - targetO;
-                const finalAngle = (slope * 100) - (targetS * 100); // per 100mm
+                const finalOff = rawOffset - t;
+                const finalAng = slope * 100;
 
-                // Render
-                resOffset.textContent = finalOffset.toFixed(2);
-                resAngle.textContent = finalAngle.toFixed(2);
+                resOff.innerText = finalOff.toFixed(2);
+                resAng.innerText = finalAng.toFixed(2);
 
-                // Validation
-                if(Math.abs(finalOffset) <= 0.05) {
-                    resOffset.className = "font-mono text-right font-bold text-green-700";
-                    statOffset.textContent = "PASS";
-                    statOffset.className = "text-center font-bold text-green-700";
+                // Update Visual Shaft
+                // Center is 150, 75. 
+                // We rotate lines based on inputs to give visual feedback
+                const y1 = 75 - (f * 20); // Scale up movement
+                const y2 = 75 - (b * 20);
+                
+                shaftLine.setAttribute('y1', y1);
+                shaftLine.setAttribute('y2', y2);
+
+                // Color Logic
+                if(Math.abs(finalOff) <= 0.05) {
+                    resOff.style.color = 'green';
+                    shaftLine.setAttribute('stroke', '#10b981'); // Green
+                    statusText.textContent = "ALIGNED";
+                    statusText.setAttribute('fill', '#10b981');
                 } else {
-                    resOffset.className = "font-mono text-right font-bold text-red-600";
-                    statOffset.textContent = "FAIL";
-                    statOffset.className = "text-center font-bold text-red-600";
-                }
-
-                if(Math.abs(finalAngle) <= 0.04) {
-                    resAngle.className = "font-mono text-right font-bold text-green-700";
-                    statAngle.textContent = "PASS";
-                    statAngle.className = "text-center font-bold text-green-700";
-                } else {
-                    resAngle.className = "font-mono text-right font-bold text-red-600";
-                    statAngle.textContent = "FAIL";
-                    statAngle.className = "text-center font-bold text-red-600";
+                    resOff.style.color = 'red';
+                    shaftLine.setAttribute('stroke', '#ef4444'); // Red
+                    statusText.textContent = "MISALIGNED";
+                    statusText.setAttribute('fill', '#ef4444');
                 }
             }
 
-            [shimF, shimB, d1Input, d2Input, tOff, tSlope].forEach(el => el.addEventListener('input', calcAlignment));
-            calcAlignment();
+            [rangeF, rangeB, targetV].forEach(el => el.addEventListener('input', updateAlign));
+            updateAlign();
 
-            // === 2. THRUST CALCULATION LOGIC ===
-            const thrustInputs = document.querySelectorAll('.thrust-input');
-            const tAvg = document.getElementById('thrust-avg');
-            const tDev = document.getElementById('thrust-dev');
-            const tStatus = document.getElementById('thrust-status-box');
+            // --- 2. THRUST BEARING LOGIC ---
+            const thrustInputs = document.querySelectorAll('.thrust-in');
+            const statusBox = document.getElementById('thrust-status');
 
-            function calcThrust() {
-                let sum = 0;
-                let vals = [];
-                thrustInputs.forEach(inp => {
-                    let v = parseFloat(inp.value) || 0;
-                    vals.push(v);
-                    sum += v;
-                });
-
-                let avg = sum / vals.length;
-                let maxDiff = 0;
+            function updateThrust() {
+                let values = [];
+                thrustInputs.forEach(i => values.push(parseFloat(i.value)||0));
                 
-                vals.forEach(v => {
-                    let diff = Math.abs((v - avg) / avg) * 100;
-                    if(diff > maxDiff) maxDev = diff;
+                let sum = values.reduce((a,b)=>a+b,0);
+                let avg = sum / values.length;
+                let maxDev = 0;
+
+                values.forEach((v, i) => {
+                    let dev = Math.abs((v - avg)/avg)*100;
+                    if(dev > maxDev) maxDev = dev;
+
+                    // Update Bar Height & Color
+                    let bar = document.getElementById(`bar-${i+1}`);
+                    let h = (v / 50) * 100; // Max 50MPa assumption
+                    if(h > 100) h = 100;
+                    bar.style.height = h + '%';
+                    bar.innerText = v;
+
+                    // Remove old classes
+                    bar.classList.remove('bg-gray-800', 'bg-red-600', 'bg-green-600', 'bg-yellow-500');
+
+                    if(dev <= 5) bar.classList.add('bg-green-600');
+                    else if(dev <= 10) bar.classList.add('bg-yellow-500');
+                    else bar.classList.add('bg-red-600');
                 });
 
-                // Since local var scope, recalculate simply:
-                let deviations = vals.map(v => Math.abs((v - avg) / avg) * 100);
-                let maxD = Math.max(...deviations);
-
-                tAvg.textContent = avg.toFixed(2);
-                tDev.textContent = maxD.toFixed(1) + "%";
-
-                if(maxD <= 5) {
-                    tStatus.className = "border border-green-600 bg-green-50 text-green-800 p-2 text-center text-xs font-bold uppercase";
-                    tStatus.textContent = "STATUS: EQUALIZED - ACCEPTED";
+                if(maxDev <= 5) {
+                    statusBox.innerHTML = `STATUS: <span class="text-green-700">EQUALIZED</span> (Max Dev: ${maxDev.toFixed(1)}%)`;
+                    statusBox.style.borderColor = '#10b981';
                 } else {
-                    tStatus.className = "border border-red-600 bg-red-50 text-red-800 p-2 text-center text-xs font-bold uppercase";
-                    tStatus.textContent = "STATUS: REJECTED - RE-SHIMMING REQUIRED";
+                    statusBox.innerHTML = `STATUS: <span class="text-red-700">REJECTED</span> (Max Dev: ${maxDev.toFixed(1)}%)`;
+                    statusBox.style.borderColor = '#ef4444';
                 }
             }
 
-            thrustInputs.forEach(el => el.addEventListener('input', calcThrust));
-            calcThrust();
+            thrustInputs.forEach(el => el.addEventListener('input', updateThrust));
+            updateThrust();
         });
     </script>
 </body>
