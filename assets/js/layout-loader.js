@@ -33,13 +33,11 @@ document.addEventListener("DOMContentLoaded", () => {
             if (window.lucide) window.lucide.createIcons();
             if (typeof initGridTicker === "function") initGridTicker();
 
-            // C. Bind Language Switcher (Fixes Issue #1)
-            // Looks for buttons with ID 'btn-en' and 'btn-bs'
-            const btnEn = document.querySelector("button[data-lang='en']");
-            const btnBs = document.querySelector("button[data-lang='bs']");
-
-            if (btnEn && window.changeLanguage) btnEn.addEventListener("click", () => window.changeLanguage('en'));
-            if (btnBs && window.changeLanguage) btnBs.addEventListener("click", () => window.changeLanguage('bs'));
+            // C. Bind Language Switcher (Event Delegation)
+            document.body.addEventListener('click', (e) => {
+                if (e.target.id === 'btn-en' || e.target.closest('#btn-en')) window.changeLanguage('en');
+                if (e.target.id === 'btn-bs' || e.target.closest('#btn-bs')) window.changeLanguage('bs');
+            });
 
             // D. Mobile Menu Logic
             const menuBtn = document.getElementById("mobile-menu-btn");

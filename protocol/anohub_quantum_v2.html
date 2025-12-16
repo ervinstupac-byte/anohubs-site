@@ -1,98 +1,131 @@
 ﻿<!DOCTYPE html>
-<html lang="hr" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AnoHUB | QUANTUM LOAD BALANCING // MODULE 19</title>
+    <title>AnoHUB | QUANTUM</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=JetBrains+Mono:wght@300;500&family=Rajdhani:wght@300;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Roboto+Mono:wght@300;400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     
     
     <link rel="stylesheet" href="../assets/css/preloader.css">
 <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
     <script>
-        tailwind.config = { 
-            theme: { 
-                extend: { 
-                    fontFamily: { 
-                        sans: ['Rajdhani', 'sans-serif'], 
-                        mono: ['JetBrains Mono', 'monospace'],
-                        divine: ['Cinzel', 'serif'] 
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Roboto Mono', 'monospace'],
+                        header: ['Oswald', 'sans-serif']
                     },
-                    colors: { 
-                        'h-gold': '#FFD700',   
-                        'h-void': '#020202',   
-                        'h-glass': 'rgba(10, 10, 10, 0.9)',
-                        'h-border': '#333333',
-                        'h-purple': '#a855f7',
-                        'h-cyan': '#06b6d4',
-                        'h-pink': '#ec4899'
+                    colors: {
+                        'tech-gold': '#FFB800',
+                        'tech-dark': '#0c0c0c',
+                        'tech-panel': '#141414',
+                        'tech-border': '#333',
                     },
-                    backgroundImage: {
-                        'quantum-gradient': "radial-gradient(circle at center, rgba(168, 85, 247, 0.1) 0%, transparent 70%)",
-                    },
-                    animation: {
-                        'spin-slow': 'spin 20s linear infinite',
-                        'pulse-fast': 'pulse 0.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'orbit': 'orbit 3s linear infinite',
-                        'float': 'float 6s ease-in-out infinite',
-                    },
-                    keyframes: {
-                        orbit: {
-                            '0%': { transform: 'rotate(0deg) translateX(50px) rotate(0deg)' },
-                            '100%': { transform: 'rotate(360deg) translateX(50px) rotate(-360deg)' }
-                        },
-                        float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' } }
+                    boxShadow: {
+                        'screen': '0 0 50px rgba(0,0,0,0.9)',
+                        'paper': '0 0 30px rgba(0,0,0,0.2)'
                     }
-                } 
+                }
             }
         }
     </script>
 
     <style>
-        body { background-color: #020202; color: #e2e8f0; cursor: crosshair; }
-        
-        /* DIVINE GRID */
-        .divine-grid {
-            position: fixed; inset: 0; z-index: -1;
-            background-size: 50px 50px;
+        /* === SCREEN ATMOSPHERE === */
+        body {
+            background-color: #050505;
+            color: #ccc;
+            /* Subtilan tehnički grid u pozadini */
             background-image: 
-                linear-gradient(to right, rgba(168, 85, 247, 0.03) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(168, 85, 247, 0.03) 1px, transparent 1px);
-            mask-image: radial-gradient(circle at 50% 50%, black 0%, transparent 90%);
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            overflow-x: hidden;
         }
 
-        .scada-panel { 
-            background: rgba(5, 10, 16, 0.85); 
-            backdrop-filter: blur(15px); 
-            border: 1px solid rgba(168, 85, 247, 0.15);
-            box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
-        }
-        
-        .tech-box { border-left: 3px solid #a855f7; background: rgba(168, 85, 247, 0.05); }
-        
-        /* Custom Range Slider */
-        input[type=range] { -webkit-appearance: none; background: transparent; }
-        input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none; height: 16px; width: 16px; border-radius: 50%;
-            background: #a855f7; cursor: pointer; margin-top: -6px; border: 2px solid #000;
-            box-shadow: 0 0 10px #a855f7;
-        }
-        input[type=range]::-webkit-slider-runnable-track {
-            width: 100%; height: 2px; background: #333; 
+        /* === THE ARTIFACT (THE PAPER) === */
+        .iso-sheet {
+            width: 210mm;
+            min-height: 297mm;
+            background: #fff;
+            color: #000;
+            margin: 40px auto;
+            padding: 0; /* Grid controlled padding */
+            box-shadow: 0 0 100px rgba(0,0,0,0.8);
+            position: relative;
+            display: grid;
+            grid-template-rows: auto 1fr auto;
         }
 
-        /* Bloch Sphere Atom */
-        .atom-core {
-            width: 20px; height: 20px; background: #fff; border-radius: 50%;
-            box-shadow: 0 0 20px #fff; position: absolute; top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
+        /* WATERMARK LOGIC (CSS STATE MACHINE) */
+        .sheet-overlay {
+            position: absolute; inset: 0; pointer-events: none; z-index: 0;
+            background-position: center; background-repeat: no-repeat;
+            opacity: 0.1; mix-blend-mode: multiply;
+            transition: all 0.5s ease;
         }
-        .electron {
-            position: absolute; top: 50%; left: 50%; width: 8px; height: 8px;
-            background: #06b6d4; border-radius: 50%;
-            box-shadow: 0 0 10px #06b6d4;
+        /* State 1: DRAFT (Default) */
+        .status-draft .sheet-overlay {
+            background-image: url("data:image/svg+xml,%3Csvg width='500' height='500' viewBox='0 0 500 500' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-weight='900' font-size='80' fill='gray' transform='rotate(-45 250 250)' text-anchor='middle'%3EWORK IN PROGRESS%3C/text%3E%3C/svg%3E");
+        }
+        /* State 2: ALIGNED (Success) */
+        .status-aligned .sheet-overlay {
+            background-image: url("data:image/svg+xml,%3Csvg width='600' height='600' viewBox='0 0 600 600' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='300' cy='300' r='200' stroke='%23FFB800' stroke-width='10' fill='none'/%3E%3Ctext x='300' y='320' font-family='Courier' font-weight='bold' font-size='40' fill='%23FFB800' text-anchor='middle'%3EANOHUB VERIFIED%3C/text%3E%3C/svg%3E");
+            opacity: 0.15;
+        }
+        /* State 3: FAIL (Danger) */
+        .status-fail .sheet-overlay {
+            background-image: url("data:image/svg+xml,%3Csvg width='500' height='500' viewBox='0 0 500 500' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-weight='900' font-size='100' fill='red' transform='rotate(-45 250 250)' text-anchor='middle'%3EREJECTED%3C/text%3E%3C/svg%3E");
+            opacity: 0.1;
+        }
+
+        /* === INPUT FIELDS (THE "INVISIBLE" EDIT) === */
+        .field {
+            width: 100%;
+            border: none;
+            background: rgba(255, 184, 0, 0.05);
+            font-family: 'Roboto Mono', monospace;
+            font-size: 11px;
+            color: #000;
+            padding: 4px;
+            border-bottom: 1px dotted #ccc;
+            transition: all 0.2s;
+        }
+        .field:focus {
+            background: #fff;
+            border-bottom: 2px solid #000;
+            outline: none;
+        }
+        .field-num { text-align: right; font-weight: bold; }
+
+        /* === VISUALIZER (THE HOOK) === */
+        /* Simulate a graph paper background */
+        .graph-bg {
+            background-image: 
+                linear-gradient(#eee 1px, transparent 1px),
+                linear-gradient(90deg, #eee 1px, transparent 1px);
+            background-size: 20px 20px;
+            background-color: #fff;
+        }
+
+        /* === PRINT RULES === */
+        @media print {
+            body { background: none; }
+            .no-print { display: none !important; }
+            .iso-sheet { margin: 0; box-shadow: none; width: 100%; height: 100%; }
+            .field { background: transparent !important; border-bottom: none !important; padding: 0; }
+            .graph-bg { border: 1px solid #000 !important; }
+            /* Ensure colors print correctly */
+            .print-black { color: #000 !important; }
+            .print-border { border-color: #000 !important; }
+            -webkit-print-color-adjust: exact;
         }
     </style>
 
@@ -102,7 +135,7 @@
     <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
     <link rel="manifest" href="../assets/site.webmanifest">
 </head>
-<body class="min-h-screen flex flex-col font-sans selection:bg-h-purple selection:text-white">
+<body>
     <noscript>
         <div style="border: 1px solid #ef4444; padding: 20px;">
             <h1 style="color: #ef4444; font-size: 24px; margin-bottom: 10px;">SYSTEM ERROR: SCRIPT BLOCKED</h1>
@@ -111,295 +144,299 @@
     </noscript>
 
 
-    <div class="divine-grid"></div>
+    <div class="fixed top-10 left-10 w-64 no-print z-50">
+        <div class="bg-tech-panel border border-tech-border p-6 shadow-screen">
+            <h1 class="text-tech-gold font-header text-2xl tracking-wide mb-1">ANOHUB <span class="text-white text-sm font-sans tracking-normal opacity-50">CONSOLE</span></h1>
+            <div class="h-0.5 w-full bg-tech-gold mb-6"></div>
+            
+            <div class="space-y-4">
+                <button onclick="window.print()" class="w-full bg-white text-black font-bold py-3 px-4 text-xs font-mono uppercase hover:bg-tech-gold transition flex items-center justify-center gap-2">
+                    <i data-lucide="printer" class="w-4 h-4"></i> Generate PDF
+                </button>
+                <a href="../protocol.html" class="block w-full border border-gray-700 text-gray-400 text-center py-2 text-xs font-mono hover:text-white hover:border-white transition">
+                    &lt; RETURN TO INDEX
+                </a>
+            </div>
 
-        <div id="global-header"></div>
-
-    <div class="pt-24 pb-12 px-4 max-w-7xl mx-auto grid lg:grid-cols-12 gap-8 relative z-10">
-
-        <aside class="hidden lg:block lg:col-span-3">
-            <div class="sticky top-24 space-y-6">
-                
-                <div class="scada-panel p-4 border-l-2 border-l-h-purple">
-                    <h3 class="text-slate-500 font-mono text-[10px] font-bold uppercase tracking-widest mb-3">System Network</h3>
-                    <nav class="space-y-1 font-mono text-xs">
-                        <a href="anohub_protocol_v2.html" class="block px-3 py-2 text-slate-400 hover:text-h-purple hover:bg-white/5 rounded transition">01. LCC Veto</a>
-                        <a href="anohub_dam_v2.html" class="block px-3 py-2 text-slate-400 hover:text-h-purple hover:bg-white/5 rounded transition">12. Dam Struct</a>
-                        <a href="anohub_sat_v2.html" class="block px-3 py-2 text-slate-400 hover:text-h-purple hover:bg-white/5 rounded transition">13. Sat Uplink</a>
-                        <a href="anohub_blackbox_v2.html" class="block px-3 py-2 text-slate-400 hover:text-h-purple hover:bg-white/5 rounded transition">14. Black Box</a>
-                        <a href="anohub_scada_v2.html" class="block px-3 py-2 text-slate-400 hover:text-h-purple hover:bg-white/5 rounded transition">15. SCADA OVR</a>
-                        <a href="anohub_asset_v2.html" class="block px-3 py-2 text-slate-400 hover:text-h-purple hover:bg-white/5 rounded transition">16. Asset Life</a>
-                        <a href="anohub_iso_v2.html" class="block px-3 py-2 text-slate-400 hover:text-h-purple hover:bg-white/5 rounded transition">17. ISO Audit</a>
-                        <a href="anohub_global_v2.html" class="block px-3 py-2 text-slate-400 hover:text-h-purple hover:bg-white/5 rounded transition">18. Global Link</a>
-                        <div class="block px-3 py-2 text-black bg-h-purple font-bold rounded shadow-[0_0_15px_rgba(168,85,247,0.4)]">19. Quantum Load</div>
-                    </nav>
+            <div class="mt-8 pt-4 border-t border-gray-800">
+                <div class="flex justify-between items-center text-[10px] font-mono text-gray-500 mb-2">
+                    <span>LIVE STATUS</span>
+                    <span id="hud-status" class="text-tech-gold">CALCULATING</span>
                 </div>
-
-                <div class="scada-panel p-4">
-                    <h3 class="text-h-purple font-mono text-[10px] font-bold uppercase tracking-widest mb-3">Module Sections</h3>
-                    <nav class="space-y-1">
-                        <a href="#overview" class="flex items-center gap-3 px-3 py-2 text-sm text-white bg-white/5 border-l-2 border-h-purple transition"><span class="font-mono text-h-purple opacity-50">01</span> Quantum Advantage</a>
-                        <a href="#bloch" class="flex items-center gap-3 px-3 py-2 text-sm text-slate-400 hover:text-white hover:bg-white/5 border-l-2 border-transparent hover:border-slate-500 transition"><span class="font-mono text-slate-600">02</span> Qubit Monitor</a>
-                        <a href="#optimizer" class="flex items-center gap-3 px-3 py-2 text-sm text-slate-400 hover:text-white hover:bg-white/5 border-l-2 border-transparent hover:border-slate-500 transition"><span class="font-mono text-slate-600">03</span> Load Annealing</a>
-                    </nav>
-                </div>
-                
-                <div class="scada-panel p-4 border-t-2 border-t-h-purple">
-                    <h4 class="text-h-purple font-mono text-[10px] font-bold uppercase mb-2">QPU Status</h4>
-                    <div class="space-y-3 text-xs font-mono text-slate-400">
-                        <div class="flex justify-between items-center border-b border-slate-700 pb-1"><span>Processor</span> <span class="text-white">D-Wave 5000Q</span></div>
-                        <div class="flex justify-between items-center border-b border-slate-700 pb-1"><span>Temperature</span> <span class="text-h-cyan">0.015 Kelvin</span></div>
-                        <div class="flex justify-between items-center"><span>Entanglement</span> <span class="text-h-purple">MAXIMAL</span></div>
-                    </div>
+                <div class="w-full bg-gray-800 h-1">
+                    <div id="hud-bar" class="h-full bg-tech-gold w-0 transition-all duration-300"></div>
                 </div>
             </div>
-        </aside>
-
-        <main class="lg:col-span-9 space-y-16">
-            
-            <section id="overview" class="relative scada-panel p-8 overflow-hidden group">
-                <div class="relative z-10">
-                    <div class="flex gap-2 mb-4">
-                        <span class="bg-h-purple/10 text-h-purple px-2 py-0.5 text-[10px] font-mono font-bold border border-h-purple/30">ADVANCED COMPUTING</span>
-                        <span class="text-slate-500 font-mono text-[10px]">DOC-QUAN-019 | REV 1.0</span>
-                    </div>
-                    <h1 class="text-5xl font-divine text-white mb-6 tracking-tight">
-                        Optimization Beyond <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-h-purple to-cyan-400">Classical Limits</span>
-                    </h1>
-                    <p class="text-slate-300 leading-relaxed text-lg border-l border-slate-700 pl-6 max-w-3xl font-light">
-                        Classical PID loops cannot solve the NP-hard problem of multi-unit load distribution in real-time. We utilize <strong class="text-white">Quantum Annealing</strong> to find the global energy minimum instantly, balancing wear, cavitation, and profit across 12 turbines simultaneously.
-                    </p>
-                </div>
-                <div class="absolute right-0 top-0 w-96 h-96 bg-h-purple/10 blur-[120px] pointer-events-none"></div>
-            </section>
-
-            <section id="bloch">
-                <div class="flex items-center gap-3 mb-6 border-b border-slate-800 pb-2">
-                    <span class="text-h-purple font-mono">02 //</span>
-                    <h3 class="text-2xl font-divine text-white">Coherence Monitor (Bloch Sphere)</h3>
-                </div>
-
-                <div class="scada-panel p-0 border-t-4 border-t-h-purple overflow-hidden">
-                    <div class="grid md:grid-cols-2">
-                        
-                        <div class="bg-black p-10 flex items-center justify-center border-r border-slate-800 relative overflow-hidden">
-                            <div class="absolute inset-0 bg-quantum-gradient opacity-20"></div>
-                            
-                            <div class="relative w-64 h-64 rounded-full border border-slate-700 flex items-center justify-center">
-                                <div class="absolute inset-0 border border-slate-800 rounded-full transform rotate-x-60"></div>
-                                <div class="absolute inset-0 border border-slate-800 rounded-full transform rotate-y-60"></div>
-                                
-                                <div class="atom-core animate-pulse-fast"></div>
-                                
-                                <div class="electron animate-orbit"></div>
-                                <div class="electron animate-orbit" style="animation-duration: 4s; animation-direction: reverse; background: #a855f7; box-shadow: 0 0 10px #a855f7;"></div>
-                            </div>
-
-                            <div class="absolute bottom-4 text-center font-mono text-[10px]">
-                                <div class="text-slate-500">SUPERPOSITION STATE</div>
-                                <div class="text-white" id="state-val">|ψ⟩ = 0.7|0⟩ + 0.7|1⟩</div>
-                            </div>
-                        </div>
-
-                        <div class="p-8 space-y-8 bg-black/90">
-                            <div>
-                                <div class="flex justify-between mb-2">
-                                    <label class="text-xs font-bold text-white uppercase tracking-widest">System Temperature</label>
-                                    <span class="text-xs font-mono text-h-purple" id="val-temp">15 mK</span>
-                                </div>
-                                <input type="range" id="in-temp" min="10" max="500" step="10" value="15" class="w-full">
-                                <div class="flex justify-between text-[10px] text-slate-600 mt-1">
-                                    <span>ABSOLUTE ZERO</span>
-                                    <span>DECOHERENCE</span>
-                                </div>
-                            </div>
-
-                            <div class="bg-slate-900 p-4 rounded border border-slate-700">
-                                <div class="flex justify-between items-center mb-2">
-                                    <span class="text-[10px] text-slate-500 uppercase">Qubit Fidelity</span>
-                                    <span class="text-lg font-mono text-white font-bold" id="val-fidelity">99.99%</span>
-                                </div>
-                                <div class="w-full h-1 bg-slate-800 rounded overflow-hidden">
-                                    <div id="fidelity-bar" class="h-full bg-h-purple w-[99%] transition-all duration-300"></div>
-                                </div>
-                            </div>
-
-                            <div class="text-xs text-slate-400 leading-relaxed border-l-2 border-h-purple pl-3" id="coherence-msg">
-                                <strong class="text-white">Status:</strong> System running at near-zero Kelvin. Quantum tunneling enabled.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section id="optimizer">
-                <div class="flex items-center gap-3 mb-6 border-b border-slate-800 pb-2">
-                    <span class="text-h-cyan font-mono">03 //</span>
-                    <h3 class="text-xl font-bold text-white">Multi-Unit Optimization Engine</h3>
-                </div>
-
-                <div class="scada-panel p-8 relative overflow-hidden">
-                    <div class="grid md:grid-cols-2 gap-12 items-start">
-                        
-                        <div class="space-y-6">
-                            <h4 class="font-bold text-white">Plant Demand Setpoint</h4>
-                            
-                            <div>
-                                <div class="flex justify-between mb-2">
-                                    <label class="text-xs text-slate-400 uppercase">Total Load Req.</label>
-                                    <span class="text-lg font-mono text-white font-bold" id="val-load">250 MW</span>
-                                </div>
-                                <input type="range" id="in-load" min="0" max="400" step="10" value="250" class="w-full accent-h-cyan">
-                            </div>
-
-                            <div class="flex gap-2">
-                                <button id="btn-classic" class="flex-1 py-3 border border-slate-600 text-slate-400 hover:text-white text-xs font-bold rounded uppercase">Classic PID</button>
-                                <button id="btn-quantum" class="flex-1 py-3 border border-h-purple text-h-purple bg-h-purple/10 font-bold text-xs rounded uppercase shadow-[0_0_15px_rgba(168,85,247,0.3)]">Quantum Algo</button>
-                            </div>
-
-                            <div class="flex justify-between items-center p-3 bg-slate-900 border border-slate-700 rounded">
-                                <span class="text-xs text-slate-400">Projected Efficiency Gain</span>
-                                <span class="text-sm font-mono text-h-green font-bold" id="eff-gain">+2.4%</span>
-                            </div>
-                        </div>
-
-                        <div class="space-y-2">
-                            <div class="flex justify-between text-[10px] text-slate-500 uppercase">
-                                <span>Unit 1</span> <span>Unit 2</span> <span>Unit 3</span> <span>Unit 4</span>
-                            </div>
-                            <div class="flex items-end h-48 gap-4 bg-black/50 border border-slate-800 p-4 rounded">
-                                <div class="flex-1 bg-slate-800 relative group transition-all duration-500" id="bar-u1" style="height: 60%">
-                                    <div class="absolute bottom-0 w-full bg-h-cyan opacity-50 h-full transition-all duration-500" id="fill-u1"></div>
-                                    <span class="absolute -top-6 w-full text-center text-[10px] text-white font-mono" id="txt-u1">60</span>
-                                </div>
-                                <div class="flex-1 bg-slate-800 relative group transition-all duration-500" id="bar-u2" style="height: 60%">
-                                    <div class="absolute bottom-0 w-full bg-h-cyan opacity-50 h-full transition-all duration-500" id="fill-u2"></div>
-                                    <span class="absolute -top-6 w-full text-center text-[10px] text-white font-mono" id="txt-u2">60</span>
-                                </div>
-                                <div class="flex-1 bg-slate-800 relative group transition-all duration-500" id="bar-u3" style="height: 60%">
-                                    <div class="absolute bottom-0 w-full bg-h-cyan opacity-50 h-full transition-all duration-500" id="fill-u3"></div>
-                                    <span class="absolute -top-6 w-full text-center text-[10px] text-white font-mono" id="txt-u3">60</span>
-                                </div>
-                                <div class="flex-1 bg-slate-800 relative group transition-all duration-500" id="bar-u4" style="height: 70%">
-                                    <div class="absolute bottom-0 w-full bg-h-cyan opacity-50 h-full transition-all duration-500" id="fill-u4"></div>
-                                    <span class="absolute -top-6 w-full text-center text-[10px] text-white font-mono" id="txt-u4">70</span>
-                                </div>
-                            </div>
-                            <div class="text-center text-[10px] text-slate-500 font-mono" id="algo-status">MODE: QUANTUM ANNEALING (OPTIMIZED)</div>
-                        </div>
-
-                    </div>
-                </div>
-            </section>
-
-        </main>
+        </div>
     </div>
 
-    <footer class="border-t border-slate-800 bg-black py-8 mt-auto">
-        <div class="max-w-7xl mx-auto px-4 text-center text-slate-600 text-xs font-mono tracking-[0.2em]">
-            ANO_HUB // QUANTUM RESEARCH DIVISION
-        </div>
-    </footer>
+    <div class="flex justify-center pb-20">
+        
+        <div id="doc-wrapper" class="iso-sheet status-draft">
+            <div class="sheet-overlay"></div>
 
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+            <header class="p-10 border-b-2 border-black grid grid-cols-12 gap-8 items-end relative z-10">
+                <div class="col-span-2">
+                    <svg viewBox="0 0 100 100" class="w-full h-auto border border-black p-1">
+                        <rect width="100" height="100" fill="white"/>
+                        <path d="M10 10h30v30h-30zM60 10h30v30h-30zM10 60h30v30h-30z" fill="black"/>
+                        <rect x="45" y="45" width="10" height="10" fill="black"/>
+                        <rect x="55" y="15" width="10" height="10" fill="black"/>
+                        <rect x="20" y="20" width="10" height="10" fill="black"/>
+                        <rect x="70" y="20" width="10" height="10" fill="black"/>
+                        <rect x="20" y="70" width="10" height="10" fill="black"/>
+                    </svg>
+                    <div class="text-[8px] font-mono text-center mt-1">SCAN FOR DIGITAL TWIN</div>
+                </div>
+                <div class="col-span-6">
+                    <h1 class="text-4xl font-header font-bold text-black leading-none uppercase">AnoHUB QUANTUM</h1>
+                    <p class="text-xs font-mono text-gray-600 tracking-[0.2em] mt-1">QUANTUM VERIFICATION PROTOCOL</p>
+                </div>
+                <div class="col-span-4 text-right">
+                    <div class="border-2 border-black p-2 inline-block text-center min-w-[140px]">
+                        <div class="text-[9px] font-bold uppercase text-gray-500">PROTOCOL ID</div>
+                        <input type="text" value="AH-QUANTU-01" class="text-lg font-mono font-bold text-center w-full bg-transparent border-none outline-none">
+                    </div>
+                </div>
+            </header>
+
+            <main class="p-10 relative z-10">
+                
+                <section class="mb-8">
+                    <h3 class="text-xs font-bold uppercase border-b border-black mb-2 flex justify-between">
+                        <span>01. PROJECT IDENTIFICATION</span>
+                        <span class="font-mono text-gray-500">ISO 10816-5</span>
+                    </h3>
+                    <div class="grid grid-cols-4 gap-4 border-b border-gray-200 pb-4">
+                        <div>
+                            <label class="text-[9px] uppercase font-bold text-gray-400">Plant / Facility</label>
+                            <input type="text" class="field font-bold" value="HE ORLJANI">
+                        </div>
+                        <div>
+                            <label class="text-[9px] uppercase font-bold text-gray-400">Unit ID</label>
+                            <input type="text" class="field font-bold" value="G1 - KAPLAN">
+                        </div>
+                        <div>
+                            <label class="text-[9px] uppercase font-bold text-gray-400">Job Order</label>
+                            <input type="text" class="field" value="WO-25-884">
+                        </div>
+                        <div>
+                            <label class="text-[9px] uppercase font-bold text-gray-400">Date</label>
+                            <input type="date" id="date-now" class="field">
+                        </div>
+                    </div>
+                </section>
+
+                
+                <section class="mb-8">
+                    <h3 class="text-xs font-bold uppercase border-b border-black mb-4">02. STANDARD VALIDATION CHECKLIST</h3>
+                    <div class="space-y-2">
+                        <label class="flex items-center gap-2 text-xs font-mono border-b border-dotted border-gray-300 pb-1">
+                            <input type="checkbox" class="accent-black"> <span>SENSOR CALIBRATION VERIFIED</span>
+                        </label>
+                        <label class="flex items-center gap-2 text-xs font-mono border-b border-dotted border-gray-300 pb-1">
+                            <input type="checkbox" class="accent-black"> <span>BASELINE PARAMETERS ESTABLISHED</span>
+                        </label>
+                        <label class="flex items-center gap-2 text-xs font-mono border-b border-dotted border-gray-300 pb-1">
+                            <input type="checkbox" class="accent-black"> <span>DATA INTEGRITY CHECK: PASS</span>
+                        </label>
+                        <label class="flex items-center gap-2 text-xs font-mono border-b border-dotted border-gray-300 pb-1">
+                            <input type="checkbox" class="accent-black"> <span>SAFETY INTERLOCKS ACTIVE</span>
+                        </label>
+                        <label class="flex items-center gap-2 text-xs font-mono border-b border-dotted border-gray-300 pb-1">
+                            <input type="checkbox" class="accent-black"> <span>PROTOCOL EXECUTION COMPLETE</span>
+                        </label>
+                    </div>
+                </section>
+
+                <section class="mb-8">
+                    <h3 class="text-xs font-bold uppercase border-b border-black mb-4">03. MEASUREMENT DATA</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div><label class="text-[9px] uppercase font-bold text-gray-400">Parameter A</label><input type="text" class="field" placeholder="Enter value..."></div>
+                        <div><label class="text-[9px] uppercase font-bold text-gray-400">Parameter B</label><input type="text" class="field" placeholder="Enter value..."></div>
+                        <div><label class="text-[9px] uppercase font-bold text-gray-400">Parameter C</label><input type="text" class="field" placeholder="Enter value..."></div>
+                        <div><label class="text-[9px] uppercase font-bold text-gray-400">Notes</label><input type="text" class="field" placeholder="..."></div>
+                    </div>
+                </section>
+<section class="mb-8">
+                    <h3 class="text-xs font-bold uppercase mb-2">04. ENGINEER'S REMARKS</h3>
+                    <textarea class="w-full h-20 border border-gray-300 p-2 text-xs font-mono resize-none bg-transparent" placeholder="Enter comments here..."></textarea>
+                </section>
+
+            </main>
+
+            <footer class="p-10 pt-0 relative z-10">
+                <div class="grid grid-cols-2 gap-20 border-t-2 border-black pt-8">
+                    <div>
+                        <div class="h-10 border-b border-black mb-1 flex items-end">
+                            <input type="text" class="w-full text-sm font-header uppercase bg-transparent outline-none" placeholder="SIGNATURE (AnoHUB)">
+                        </div>
+                        <div class="flex justify-between text-[8px] font-mono uppercase text-gray-500">
+                            <span>LEAD ENGINEER</span>
+                            <span>DATE: <span id="footer-date"></span></span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="h-10 border-b border-black mb-1 flex items-end">
+                            <input type="text" class="w-full text-sm font-header uppercase bg-transparent outline-none" placeholder="SIGNATURE (CLIENT)">
+                        </div>
+                        <div class="flex justify-between text-[8px] font-mono uppercase text-gray-500">
+                            <span>PLANT SUPERVISOR</span>
+                            <span>APPROVED</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-8 text-center">
+                    <div class="text-[8px] font-mono text-gray-400">
+                        ANOHUB-SECURE-DOC // HASH: <span id="doc-hash">GENERATING...</span> // ISO 10816 COMPLIANT
+                    </div>
+                </div>
+            </footer>
+
+        </div>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            lucide.createIcons();
-
-            // === COHERENCE LOGIC ===
-            const inTemp = document.getElementById('in-temp');
-            const valTemp = document.getElementById('val-temp');
-            const valFid = document.getElementById('val-fidelity');
-            const barFid = document.getElementById('fidelity-bar');
-            const msg = document.getElementById('coherence-msg');
-
-            inTemp.addEventListener('input', (e) => {
-                const t = parseInt(e.target.value);
-                valTemp.innerText = t + " mK";
-
-                // Fidelity drops as Temp increases
-                // 15mK = 100%, 500mK = 0%
-                let fid = 100 - ((t - 10) / 490) * 100;
-                if(fid < 0) fid = 0;
-                
-                valFid.innerText = fid.toFixed(2) + "%";
-                barFid.style.width = fid + "%";
-
-                if (t > 200) {
-                    barFid.className = "h-full bg-h-red transition-all duration-300";
-                    msg.innerHTML = "<strong class='text-h-red'>WARNING:</strong> Thermal noise causing decoherence. Quantum advantage lost.";
-                } else {
-                    barFid.className = "h-full bg-h-purple transition-all duration-300";
-                    msg.innerHTML = "<strong class='text-white'>Status:</strong> System running at near-zero Kelvin. Quantum tunneling enabled.";
-                }
-            });
-
-            // === OPTIMIZER LOGIC ===
-            const inLoad = document.getElementById('in-load');
-            const valLoad = document.getElementById('val-load');
-            const btnClass = document.getElementById('btn-classic');
-            const btnQuant = document.getElementById('btn-quantum');
-            const status = document.getElementById('algo-status');
-            const gain = document.getElementById('eff-gain');
+            if (window.lucide) lucide.createIcons();
             
-            let mode = 'quantum'; // 'classic' or 'quantum'
+            // Set Dates
+            const now = new Date().toISOString().split('T')[0];
+            const dateInput = document.getElementById('date-now');
+            if(dateInput) dateInput.value = now;
+            
+            const footerDate = document.getElementById('footer-date');
+            if(footerDate) footerDate.innerText = now;
+            
+            const docHash = document.getElementById('doc-hash');
+            if(docHash) docHash.innerText = Math.random().toString(36).substring(2, 15).toUpperCase();
+        });
 
-            function updateLoad() {
-                const total = parseInt(inLoad.value);
-                valLoad.innerText = total + " MW";
+            function updateAlign() {
+                const sf = parseFloat(els.sf.value) || 0;
+                const sb = parseFloat(els.sb.value) || 0;
+                const to = parseFloat(els.to.value) || 0;
+                const ts = parseFloat(els.ts.value) || 0;
 
-                let u1, u2, u3, u4;
+                // Logic: 
+                // 1. Calculate Raw State (from shims)
+                // Assuming Distances: D1=500, D2=1000 for simulation scaling
+                const slope = (sb - sf) / 1000; // per mm
+                const rawOff = sf; 
 
-                if (mode === 'classic') {
-                    // Classic: Even split (dumb)
-                    const split = total / 4;
-                    u1 = u2 = u3 = u4 = split;
-                    gain.innerText = "0.0%";
-                    gain.className = "text-sm font-mono text-slate-500 font-bold";
-                } else {
-                    // Quantum: Optimize based on imaginary efficiency curves
-                    // U1 is best at low load, U4 at high load
-                    // This is a mock logic for visual effect
-                    if (total < 100) { u1 = total * 0.8; u2 = total * 0.2; u3=0; u4=0; }
-                    else if (total < 200) { u1 = 90; u2 = total - 90; u3=0; u4=0; }
-                    else if (total < 300) { u1 = 95; u2 = 90; u3 = total - 185; u4=0; }
-                    else { u1 = 100; u2 = 100; u3 = 100; u4 = total - 300; }
+                // 2. Compare to Thermal Targets
+                const finalOff = rawOff - to;
+                const finalAng = (slope * 100) - (ts * 100); // per 100mm
+
+                // 3. UI Numbers
+                els.ro.innerText = finalOff.toFixed(2);
+                els.ra.innerText = finalAng.toFixed(2);
+
+                // 4. Plotter Logic (SVG Coordinates)
+                // Center (0,0) is visually at (200, 100) in SVG
+                // Scale factor for visuals: x50 to make small moves visible
+                const yC = 100 - (finalOff * 100); // Center point Y
+                const yL = yC + (slope * 200 * 50); // Left point Y
+                const yR = yC - (slope * 200 * 50); // Right point Y
+
+                // Clamp for visuals so it doesn't leave box
+                els.line.setAttribute('y1', Math.max(10, Math.min(190, yL))); 
+                els.line.setAttribute('y2', Math.max(10, Math.min(190, yR)));
+                els.pt.setAttribute('cy', Math.max(10, Math.min(190, yC)));
+
+                // 5. Validation State
+                const isOk = Math.abs(finalOff) <= 0.05 && Math.abs(finalAng) <= 0.05;
+
+                if(isOk) {
+                    els.ro.style.color = '#10b981';
+                    els.ra.style.color = '#10b981';
+                    els.line.setAttribute('stroke', '#10b981');
+                    els.pt.setAttribute('fill', '#10b981');
                     
-                    gain.innerText = "+2.4%";
-                    gain.className = "text-sm font-mono text-h-green font-bold";
+                    els.stamp.innerText = "PASSED";
+                    els.stamp.className = "absolute top-4 right-4 border-2 border-green-600 text-green-600 px-3 py-1 font-header text-lg font-bold transform rotate-[-10deg] opacity-100 transition-opacity";
+                    
+                    els.sheet.className = "iso-sheet status-aligned";
+                    els.hudStatus.innerText = "OPTIMAL";
+                    els.hudStatus.style.color = "#10b981";
+                    els.hudBar.style.width = "100%";
+                    els.hudBar.className = "h-full bg-green-500 w-full transition-all duration-300";
+                } else {
+                    els.ro.style.color = '#ef4444';
+                    els.ra.style.color = '#ef4444';
+                    els.line.setAttribute('stroke', '#ef4444');
+                    els.pt.setAttribute('fill', '#ef4444');
+
+                    els.stamp.innerText = "REJECTED";
+                    els.stamp.className = "absolute top-4 right-4 border-2 border-red-600 text-red-600 px-3 py-1 font-header text-lg font-bold transform rotate-[-10deg] opacity-100 transition-opacity";
+                    
+                    els.sheet.className = "iso-sheet status-fail";
+                    els.hudStatus.innerText = "CRITICAL";
+                    els.hudStatus.style.color = "#ef4444";
+                    els.hudBar.style.width = "100%";
+                    els.hudBar.className = "h-full bg-red-500 w-full transition-all duration-300 animate-pulse";
                 }
-
-                // Cap at 100 MW per unit
-                const apply = (id, val) => {
-                    const h = Math.min(100, val);
-                    document.getElementById(`fill-${id}`).style.height = h + "%"; // Just visual fill
-                    document.getElementById(`bar-${id}`).style.height = h + "%";
-                    document.getElementById(`txt-${id}`).innerText = Math.round(val);
-                };
-
-                apply('u1', u1); apply('u2', u2); apply('u3', u3); apply('u4', u4);
             }
 
-            btnClass.addEventListener('click', () => {
-                mode = 'classic';
-                updateLoad();
-                status.innerText = "MODE: PID CONTROLLER (LINEAR)";
-                btnClass.classList.add('bg-slate-700', 'text-white');
-                btnQuant.classList.remove('bg-h-purple/10', 'text-h-purple', 'border-h-purple');
-                btnQuant.classList.add('border-slate-600', 'text-slate-400');
-            });
+            // === 2. THRUST ENGINE ===
+            const tContainer = document.getElementById('thrust-rows');
+            const pads = [35.0, 36.2, 34.8, 35.5, 36.0, 35.1]; // Init values
 
-            btnQuant.addEventListener('click', () => {
-                mode = 'quantum';
-                updateLoad();
-                status.innerText = "MODE: QUANTUM ANNEALING (OPTIMIZED)";
-                btnClass.classList.remove('bg-slate-700', 'text-white');
-                btnQuant.classList.add('bg-h-purple/10', 'text-h-purple', 'border-h-purple');
-                btnQuant.classList.remove('border-slate-600', 'text-slate-400');
-            });
+            function renderThrust() {
+                tContainer.innerHTML = '';
+                const avg = pads.reduce((a,b)=>a+b,0) / pads.length;
+                let maxDev = 0;
 
-            inLoad.addEventListener('input', updateLoad);
-            updateLoad(); // Init
+                pads.forEach((val, i) => {
+                    const dev = ((val - avg) / avg) * 100;
+                    const absDev = Math.abs(dev);
+                    if(absDev > maxDev) maxDev = absDev;
+
+                    const status = absDev <= 5 ? 
+                        '<span class="text-green-600 font-bold">OK</span>' : 
+                        '<span class="text-red-600 font-bold">FAIL</span>';
+
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td class="border border-gray-300 p-2 font-bold">PAD 0${i+1}</td>
+                        <td class="border border-gray-300 p-0">
+                            <input type="number" class="field text-center thrust-in" value="${val}" data-idx="${i}" step="0.1">
+                        </td>
+                        <td class="border border-gray-300 p-2 text-center text-gray-500">${dev > 0 ? '+' : ''}${dev.toFixed(1)}%</td>
+                        <td class="border border-gray-300 p-2 text-center text-xs">${status}</td>
+                    `;
+                    tContainer.appendChild(row);
+                });
+
+                // Update Stats
+                const mdEl = document.getElementById('thrust-max-dev');
+                const stEl = document.getElementById('thrust-status-text');
+                
+                mdEl.innerText = maxDev.toFixed(1) + "%";
+                if(maxDev <= 5) {
+                    mdEl.style.color = '#10b981';
+                    stEl.innerText = "EQUALIZED";
+                    stEl.className = "text-xs font-bold mt-2 px-4 py-1 text-white bg-green-600 rounded";
+                } else {
+                    mdEl.style.color = '#ef4444';
+                    stEl.innerText = "RE-SHIM REQUIRED";
+                    stEl.className = "text-xs font-bold mt-2 px-4 py-1 text-white bg-red-600 rounded";
+                }
+
+                // Re-attach listeners
+                document.querySelectorAll('.thrust-in').forEach(el => {
+                    el.addEventListener('input', (e) => {
+                        pads[e.target.dataset.idx] = parseFloat(e.target.value) || 0;
+                        renderThrust(); // Re-render (a bit brute force but safe for small tables)
+                        // Note: Focus is lost on re-render, in prod use optimized update
+                    });
+                });
+            }
+
+            // Init Calls
+            updateAlign();
+            renderThrust();
         });
     </script>
 

@@ -1,89 +1,132 @@
 ﻿<!DOCTYPE html>
-<html lang="hr" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AnoHUB | GLOBAL GRID LINK // MODULE 18</title>
+    <title>AnoHUB | GLOBAL</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=JetBrains+Mono:wght@300;500&family=Rajdhani:wght@300;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Roboto+Mono:wght@300;400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     
     
     <link rel="stylesheet" href="../assets/css/preloader.css">
 <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
     <script>
-        tailwind.config = { 
-            theme: { 
-                extend: { 
-                    fontFamily: { 
-                        sans: ['Rajdhani', 'sans-serif'], 
-                        mono: ['JetBrains Mono', 'monospace'],
-                        divine: ['Cinzel', 'serif'] 
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Roboto Mono', 'monospace'],
+                        header: ['Oswald', 'sans-serif']
                     },
-                    colors: { 
-                        'h-gold': '#FFD700',   
-                        'h-void': '#020202',   
-                        'h-glass': 'rgba(10, 10, 10, 0.9)',
-                        'h-border': '#333333',
-                        'h-blue': '#3b82f6', 
-                        'h-cyan': '#06b6d4',
-                        'h-red': '#ef4444',
-                        'h-green': '#10b981'
+                    colors: {
+                        'tech-gold': '#FFB800',
+                        'tech-dark': '#0c0c0c',
+                        'tech-panel': '#141414',
+                        'tech-border': '#333',
                     },
-                    backgroundImage: {
-                        'world-map': "url('https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg')", 
-                    },
-                    animation: {
-                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'ping-slow': 'ping 2s cubic-bezier(0, 0, 0.2, 1) infinite',
-                        'flow-h': 'flowH 2s linear infinite',
-                    },
-                    keyframes: {
-                        flowH: {
-                            '0%': { strokeDashoffset: '24' },
-                            '100%': { strokeDashoffset: '0' },
-                        }
+                    boxShadow: {
+                        'screen': '0 0 50px rgba(0,0,0,0.9)',
+                        'paper': '0 0 30px rgba(0,0,0,0.2)'
                     }
-                } 
+                }
             }
         }
     </script>
 
     <style>
-        body { background-color: #020202; color: #e2e8f0; cursor: crosshair; }
-        
-        /* DIVINE GRID */
-        .divine-grid {
-            position: fixed; inset: 0; z-index: -1;
-            background-size: 50px 50px;
+        /* === SCREEN ATMOSPHERE === */
+        body {
+            background-color: #050505;
+            color: #ccc;
+            /* Subtilan tehnički grid u pozadini */
             background-image: 
-                linear-gradient(to right, rgba(59, 130, 246, 0.03) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(59, 130, 246, 0.03) 1px, transparent 1px);
-            mask-image: radial-gradient(circle at 50% 50%, black 0%, transparent 90%);
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            overflow-x: hidden;
         }
 
-        .scada-panel { 
-            background: rgba(5, 10, 16, 0.85); 
-            backdrop-filter: blur(15px); 
-            border: 1px solid rgba(59, 130, 246, 0.15);
-            box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+        /* === THE ARTIFACT (THE PAPER) === */
+        .iso-sheet {
+            width: 210mm;
+            min-height: 297mm;
+            background: #fff;
+            color: #000;
+            margin: 40px auto;
+            padding: 0; /* Grid controlled padding */
+            box-shadow: 0 0 100px rgba(0,0,0,0.8);
+            position: relative;
+            display: grid;
+            grid-template-rows: auto 1fr auto;
         }
-        
-        .tech-box { border-left: 3px solid #3b82f6; background: rgba(59, 130, 246, 0.05); }
-        
-        /* Map Node Styling */
-        .map-node {
-            position: absolute; width: 8px; height: 8px; border-radius: 50%; cursor: pointer; transition: all 0.3s;
-        }
-        .map-node:hover { transform: scale(2); box-shadow: 0 0 15px currentColor; }
-        .map-node::after {
-            content: ''; position: absolute; top: -4px; left: -4px; right: -4px; bottom: -4px;
-            border: 1px solid currentColor; border-radius: 50%; opacity: 0; transition: 0.3s;
-        }
-        .map-node:hover::after { opacity: 1; transform: scale(1.5); }
 
-        /* Frequency Graph Line */
-        .freq-line { transition: d 0.1s linear; }
+        /* WATERMARK LOGIC (CSS STATE MACHINE) */
+        .sheet-overlay {
+            position: absolute; inset: 0; pointer-events: none; z-index: 0;
+            background-position: center; background-repeat: no-repeat;
+            opacity: 0.1; mix-blend-mode: multiply;
+            transition: all 0.5s ease;
+        }
+        /* State 1: DRAFT (Default) */
+        .status-draft .sheet-overlay {
+            background-image: url("data:image/svg+xml,%3Csvg width='500' height='500' viewBox='0 0 500 500' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-weight='900' font-size='80' fill='gray' transform='rotate(-45 250 250)' text-anchor='middle'%3EWORK IN PROGRESS%3C/text%3E%3C/svg%3E");
+        }
+        /* State 2: ALIGNED (Success) */
+        .status-aligned .sheet-overlay {
+            background-image: url("data:image/svg+xml,%3Csvg width='600' height='600' viewBox='0 0 600 600' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='300' cy='300' r='200' stroke='%23FFB800' stroke-width='10' fill='none'/%3E%3Ctext x='300' y='320' font-family='Courier' font-weight='bold' font-size='40' fill='%23FFB800' text-anchor='middle'%3EANOHUB VERIFIED%3C/text%3E%3C/svg%3E");
+            opacity: 0.15;
+        }
+        /* State 3: FAIL (Danger) */
+        .status-fail .sheet-overlay {
+            background-image: url("data:image/svg+xml,%3Csvg width='500' height='500' viewBox='0 0 500 500' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-weight='900' font-size='100' fill='red' transform='rotate(-45 250 250)' text-anchor='middle'%3EREJECTED%3C/text%3E%3C/svg%3E");
+            opacity: 0.1;
+        }
+
+        /* === INPUT FIELDS (THE "INVISIBLE" EDIT) === */
+        .field {
+            width: 100%;
+            border: none;
+            background: rgba(255, 184, 0, 0.05);
+            font-family: 'Roboto Mono', monospace;
+            font-size: 11px;
+            color: #000;
+            padding: 4px;
+            border-bottom: 1px dotted #ccc;
+            transition: all 0.2s;
+        }
+        .field:focus {
+            background: #fff;
+            border-bottom: 2px solid #000;
+            outline: none;
+        }
+        .field-num { text-align: right; font-weight: bold; }
+
+        /* === VISUALIZER (THE HOOK) === */
+        /* Simulate a graph paper background */
+        .graph-bg {
+            background-image: 
+                linear-gradient(#eee 1px, transparent 1px),
+                linear-gradient(90deg, #eee 1px, transparent 1px);
+            background-size: 20px 20px;
+            background-color: #fff;
+        }
+
+        /* === PRINT RULES === */
+        @media print {
+            body { background: none; }
+            .no-print { display: none !important; }
+            .iso-sheet { margin: 0; box-shadow: none; width: 100%; height: 100%; }
+            .field { background: transparent !important; border-bottom: none !important; padding: 0; }
+            .graph-bg { border: 1px solid #000 !important; }
+            /* Ensure colors print correctly */
+            .print-black { color: #000 !important; }
+            .print-border { border-color: #000 !important; }
+            -webkit-print-color-adjust: exact;
+        }
     </style>
 
     <!-- Favicons -->
@@ -92,7 +135,7 @@
     <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
     <link rel="manifest" href="../assets/site.webmanifest">
 </head>
-<body class="min-h-screen flex flex-col font-sans selection:bg-h-blue selection:text-white">
+<body>
     <noscript>
         <div style="border: 1px solid #ef4444; padding: 20px;">
             <h1 style="color: #ef4444; font-size: 24px; margin-bottom: 10px;">SYSTEM ERROR: SCRIPT BLOCKED</h1>
@@ -101,248 +144,299 @@
     </noscript>
 
 
-    <div class="divine-grid"></div>
+    <div class="fixed top-10 left-10 w-64 no-print z-50">
+        <div class="bg-tech-panel border border-tech-border p-6 shadow-screen">
+            <h1 class="text-tech-gold font-header text-2xl tracking-wide mb-1">ANOHUB <span class="text-white text-sm font-sans tracking-normal opacity-50">CONSOLE</span></h1>
+            <div class="h-0.5 w-full bg-tech-gold mb-6"></div>
+            
+            <div class="space-y-4">
+                <button onclick="window.print()" class="w-full bg-white text-black font-bold py-3 px-4 text-xs font-mono uppercase hover:bg-tech-gold transition flex items-center justify-center gap-2">
+                    <i data-lucide="printer" class="w-4 h-4"></i> Generate PDF
+                </button>
+                <a href="../protocol.html" class="block w-full border border-gray-700 text-gray-400 text-center py-2 text-xs font-mono hover:text-white hover:border-white transition">
+                    &lt; RETURN TO INDEX
+                </a>
+            </div>
 
-        <div id="global-header"></div>
-
-    <div class="pt-24 pb-12 px-4 max-w-7xl mx-auto grid lg:grid-cols-12 gap-8 relative z-10">
-
-        <aside class="hidden lg:block lg:col-span-3">
-            <div class="sticky top-24 space-y-6">
-                
-                <div class="scada-panel p-4 border-l-2 border-l-h-blue">
-                    <h3 class="text-slate-500 font-mono text-[10px] font-bold uppercase tracking-widest mb-3">System Network</h3>
-                    <nav class="space-y-1 font-mono text-xs">
-                        <a href="anohub_scada_v2.html" class="block px-3 py-2 text-slate-400 hover:text-h-blue hover:bg-white/5 rounded transition">15. SCADA OVR</a>
-                        <a href="anohub_asset_v2.html" class="block px-3 py-2 text-slate-400 hover:text-h-blue hover:bg-white/5 rounded transition">16. Asset Life</a>
-                        <a href="anohub_iso_v2.html" class="block px-3 py-2 text-slate-400 hover:text-h-blue hover:bg-white/5 rounded transition">17. ISO Audit</a>
-                        <div class="block px-3 py-2 text-black bg-h-blue font-bold rounded shadow-[0_0_15px_rgba(59,130,246,0.4)]">18. Global Link</div>
-                    </nav>
+            <div class="mt-8 pt-4 border-t border-gray-800">
+                <div class="flex justify-between items-center text-[10px] font-mono text-gray-500 mb-2">
+                    <span>LIVE STATUS</span>
+                    <span id="hud-status" class="text-tech-gold">CALCULATING</span>
                 </div>
-
-                <div class="scada-panel p-4">
-                    <h3 class="text-h-blue font-mono text-[10px] font-bold uppercase tracking-widest mb-3">Module Sections</h3>
-                    <nav class="space-y-1">
-                        <a href="#overview" class="flex items-center gap-3 px-3 py-2 text-sm text-white bg-white/5 border-l-2 border-h-blue transition"><span class="font-mono text-h-blue opacity-50">01</span> The Super-Grid</a>
-                        <a href="#map" class="flex items-center gap-3 px-3 py-2 text-sm text-slate-400 hover:text-white hover:bg-white/5 border-l-2 border-transparent hover:border-slate-500 transition"><span class="font-mono text-slate-600">02</span> Node Map</a>
-                        <a href="#frequency" class="flex items-center gap-3 px-3 py-2 text-sm text-slate-400 hover:text-white hover:bg-white/5 border-l-2 border-transparent hover:border-slate-500 transition"><span class="font-mono text-slate-600">03</span> Inertia Control</a>
-                    </nav>
-                </div>
-                
-                <div class="scada-panel p-4 border-t-2 border-t-h-blue">
-                    <h4 class="text-h-blue font-mono text-[10px] font-bold uppercase mb-2">Continental Grid</h4>
-                    <div class="space-y-3 text-xs font-mono text-slate-400">
-                        <div class="flex justify-between items-center border-b border-slate-700 pb-1"><span>ENTSO-E Sync</span> <span class="text-h-green">LOCKED</span></div>
-                        <div class="flex justify-between items-center border-b border-slate-700 pb-1"><span>Net Exchange</span> <span class="text-white">-450 MW</span></div>
-                        <div class="flex justify-between items-center"><span>Grid Inertia</span> <span class="text-h-gold" id="inertia-val">LOW</span></div>
-                    </div>
+                <div class="w-full bg-gray-800 h-1">
+                    <div id="hud-bar" class="h-full bg-tech-gold w-0 transition-all duration-300"></div>
                 </div>
             </div>
-        </aside>
-
-        <main class="lg:col-span-9 space-y-16">
-            
-            <section id="overview" class="relative scada-panel p-8 overflow-hidden group">
-                <div class="relative z-10">
-                    <div class="flex gap-2 mb-4">
-                        <span class="bg-h-blue/10 text-h-blue px-2 py-0.5 text-[10px] font-mono font-bold border border-h-blue/30">MACRO GRID</span>
-                        <span class="text-slate-500 font-mono text-[10px]">DOC-GRID-018 | REV 1.4</span>
-                    </div>
-                    <h1 class="text-5xl font-divine text-white mb-6 tracking-tight">
-                        Planetary <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-h-blue to-cyan-200">Synchronization</span>
-                    </h1>
-                    <p class="text-slate-300 leading-relaxed text-lg border-l border-slate-700 pl-6 max-w-3xl font-light">
-                        AnoHUB is not an island. We are a critical node in the continental Super-Grid. This module governs <strong class="text-white">HVDC Interconnections</strong> and provides <strong class="text-h-gold">Synthetic Inertia</strong> to stabilize the grid against frequency collapse.
-                    </p>
-                </div>
-            </section>
-
-            <section id="map">
-                <div class="flex items-center gap-3 mb-6 border-b border-slate-800 pb-2">
-                    <span class="text-h-blue font-mono">02 //</span>
-                    <h3 class="text-2xl font-divine text-white">Active Node Topology</h3>
-                </div>
-
-                <div class="scada-panel p-0 border-t-4 border-t-h-blue overflow-hidden relative h-[400px] bg-black">
-                    <div class="absolute inset-0 bg-world-map bg-cover bg-center opacity-20 pointer-events-none grayscale"></div>
-                    <div class="absolute inset-0 bg-grid-pattern opacity-20 pointer-events-none"></div>
-
-                    <div id="node-layer" class="absolute inset-0">
-                        <div class="map-node bg-h-green" style="top: 40%; left: 50%;" title="AnoHUB Core"></div>
-                        <div class="absolute top-40 left-1/2 w-32 h-[1px] bg-h-green/30 -rotate-12 origin-left"></div>
-                    </div>
-
-                    <div id="node-info" class="absolute bottom-4 left-4 bg-slate-900/90 border border-h-blue p-4 rounded w-64 backdrop-blur hidden">
-                        <h4 class="text-h-blue font-bold text-sm mb-1" id="node-name">NODE NAME</h4>
-                        <div class="text-[10px] font-mono text-slate-400 space-y-1">
-                            <div class="flex justify-between"><span>OUTPUT:</span> <span class="text-white" id="node-mw">-- MW</span></div>
-                            <div class="flex justify-between"><span>STATUS:</span> <span class="text-h-green" id="node-status">ONLINE</span></div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section id="frequency">
-                <div class="flex items-center gap-3 mb-6 border-b border-slate-800 pb-2">
-                    <span class="text-h-gold font-mono">03 //</span>
-                    <h3 class="text-xl font-bold text-white">Frequency Response (Synthetic Inertia)</h3>
-                </div>
-
-                <div class="scada-panel p-8 relative overflow-hidden border-t-4 border-t-h-gold">
-                    <div class="grid md:grid-cols-3 gap-8">
-                        
-                        <div class="md:col-span-2 bg-black border border-slate-700 rounded h-64 relative overflow-hidden">
-                            <div class="absolute top-2 left-2 text-[9px] text-slate-500">GRID FREQUENCY (Hz)</div>
-                            <div class="absolute top-1/2 left-0 w-full h-px bg-slate-600 border-t border-dashed border-slate-500"></div> <svg class="absolute inset-0 w-full h-full" preserveAspectRatio="none">
-                                <path id="freq-path" d="" fill="none" stroke="#FFD700" stroke-width="2" class="freq-line" />
-                                <linearGradient id="grad-gold" x1="0" x2="0" y1="0" y2="1">
-                                    <stop offset="0%" stop-color="rgba(255, 215, 0, 0.2)" />
-                                    <stop offset="100%" stop-color="rgba(255, 215, 0, 0)" />
-                                </linearGradient>
-                                <path id="freq-fill" d="" fill="url(#grad-gold)" stroke="none" />
-                            </svg>
-
-                            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
-                                <div class="text-6xl font-black text-white tracking-tighter" id="big-freq">50.00</div>
-                                <div class="text-xs font-bold text-h-gold bg-black/50 px-2 rounded">Hz</div>
-                            </div>
-                        </div>
-
-                        <div class="space-y-6 bg-black/50 p-4 rounded border border-slate-800">
-                            <div>
-                                <div class="flex justify-between mb-2">
-                                    <label class="text-xs font-bold text-white uppercase">Droop Control</label>
-                                    <span class="text-xs font-mono text-h-blue" id="val-droop">4 %</span>
-                                </div>
-                                <input type="range" id="in-droop" min="0" max="10" step="0.5" value="4" class="w-full accent-h-blue">
-                            </div>
-
-                            <div>
-                                <div class="flex justify-between mb-2">
-                                    <label class="text-xs font-bold text-white uppercase">Load Injection</label>
-                                    <span class="text-xs font-mono text-h-red" id="val-load">0 MW</span>
-                                </div>
-                                <input type="range" id="in-load" min="-500" max="500" step="10" value="0" class="w-full accent-h-red">
-                            </div>
-
-                            <button id="boost-btn" class="w-full py-4 bg-h-gold/10 border border-h-gold text-h-gold hover:bg-h-gold hover:text-black font-bold font-mono text-xs rounded transition shadow-[0_0_15px_rgba(255,215,0,0.2)]">
-                                INJECT INERTIA
-                            </button>
-                        </div>
-
-                    </div>
-                </div>
-            </section>
-
-        </main>
+        </div>
     </div>
 
-    <footer class="border-t border-slate-800 bg-black py-8 mt-auto">
-        <div class="max-w-7xl mx-auto px-4 text-center text-slate-600 text-xs font-mono tracking-[0.2em]">
-            ANO_HUB // GRID OPERATIONS // ENTSO-E
-        </div>
-    </footer>
+    <div class="flex justify-center pb-20">
+        
+        <div id="doc-wrapper" class="iso-sheet status-draft">
+            <div class="sheet-overlay"></div>
 
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-    
+            <header class="p-10 border-b-2 border-black grid grid-cols-12 gap-8 items-end relative z-10">
+                <div class="col-span-2">
+                    <svg viewBox="0 0 100 100" class="w-full h-auto border border-black p-1">
+                        <rect width="100" height="100" fill="white"/>
+                        <path d="M10 10h30v30h-30zM60 10h30v30h-30zM10 60h30v30h-30z" fill="black"/>
+                        <rect x="45" y="45" width="10" height="10" fill="black"/>
+                        <rect x="55" y="15" width="10" height="10" fill="black"/>
+                        <rect x="20" y="20" width="10" height="10" fill="black"/>
+                        <rect x="70" y="20" width="10" height="10" fill="black"/>
+                        <rect x="20" y="70" width="10" height="10" fill="black"/>
+                    </svg>
+                    <div class="text-[8px] font-mono text-center mt-1">SCAN FOR DIGITAL TWIN</div>
+                </div>
+                <div class="col-span-6">
+                    <h1 class="text-4xl font-header font-bold text-black leading-none uppercase">AnoHUB GLOBAL</h1>
+                    <p class="text-xs font-mono text-gray-600 tracking-[0.2em] mt-1">GLOBAL VERIFICATION PROTOCOL</p>
+                </div>
+                <div class="col-span-4 text-right">
+                    <div class="border-2 border-black p-2 inline-block text-center min-w-[140px]">
+                        <div class="text-[9px] font-bold uppercase text-gray-500">PROTOCOL ID</div>
+                        <input type="text" value="AH-GLOBAL-01" class="text-lg font-mono font-bold text-center w-full bg-transparent border-none outline-none">
+                    </div>
+                </div>
+            </header>
+
+            <main class="p-10 relative z-10">
+                
+                <section class="mb-8">
+                    <h3 class="text-xs font-bold uppercase border-b border-black mb-2 flex justify-between">
+                        <span>01. PROJECT IDENTIFICATION</span>
+                        <span class="font-mono text-gray-500">ISO 10816-5</span>
+                    </h3>
+                    <div class="grid grid-cols-4 gap-4 border-b border-gray-200 pb-4">
+                        <div>
+                            <label class="text-[9px] uppercase font-bold text-gray-400">Plant / Facility</label>
+                            <input type="text" class="field font-bold" value="HE ORLJANI">
+                        </div>
+                        <div>
+                            <label class="text-[9px] uppercase font-bold text-gray-400">Unit ID</label>
+                            <input type="text" class="field font-bold" value="G1 - KAPLAN">
+                        </div>
+                        <div>
+                            <label class="text-[9px] uppercase font-bold text-gray-400">Job Order</label>
+                            <input type="text" class="field" value="WO-25-884">
+                        </div>
+                        <div>
+                            <label class="text-[9px] uppercase font-bold text-gray-400">Date</label>
+                            <input type="date" id="date-now" class="field">
+                        </div>
+                    </div>
+                </section>
+
+                
+                <section class="mb-8">
+                    <h3 class="text-xs font-bold uppercase border-b border-black mb-4">02. STANDARD VALIDATION CHECKLIST</h3>
+                    <div class="space-y-2">
+                        <label class="flex items-center gap-2 text-xs font-mono border-b border-dotted border-gray-300 pb-1">
+                            <input type="checkbox" class="accent-black"> <span>SENSOR CALIBRATION VERIFIED</span>
+                        </label>
+                        <label class="flex items-center gap-2 text-xs font-mono border-b border-dotted border-gray-300 pb-1">
+                            <input type="checkbox" class="accent-black"> <span>BASELINE PARAMETERS ESTABLISHED</span>
+                        </label>
+                        <label class="flex items-center gap-2 text-xs font-mono border-b border-dotted border-gray-300 pb-1">
+                            <input type="checkbox" class="accent-black"> <span>DATA INTEGRITY CHECK: PASS</span>
+                        </label>
+                        <label class="flex items-center gap-2 text-xs font-mono border-b border-dotted border-gray-300 pb-1">
+                            <input type="checkbox" class="accent-black"> <span>SAFETY INTERLOCKS ACTIVE</span>
+                        </label>
+                        <label class="flex items-center gap-2 text-xs font-mono border-b border-dotted border-gray-300 pb-1">
+                            <input type="checkbox" class="accent-black"> <span>PROTOCOL EXECUTION COMPLETE</span>
+                        </label>
+                    </div>
+                </section>
+
+                <section class="mb-8">
+                    <h3 class="text-xs font-bold uppercase border-b border-black mb-4">03. MEASUREMENT DATA</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div><label class="text-[9px] uppercase font-bold text-gray-400">Parameter A</label><input type="text" class="field" placeholder="Enter value..."></div>
+                        <div><label class="text-[9px] uppercase font-bold text-gray-400">Parameter B</label><input type="text" class="field" placeholder="Enter value..."></div>
+                        <div><label class="text-[9px] uppercase font-bold text-gray-400">Parameter C</label><input type="text" class="field" placeholder="Enter value..."></div>
+                        <div><label class="text-[9px] uppercase font-bold text-gray-400">Notes</label><input type="text" class="field" placeholder="..."></div>
+                    </div>
+                </section>
+<section class="mb-8">
+                    <h3 class="text-xs font-bold uppercase mb-2">04. ENGINEER'S REMARKS</h3>
+                    <textarea class="w-full h-20 border border-gray-300 p-2 text-xs font-mono resize-none bg-transparent" placeholder="Enter comments here..."></textarea>
+                </section>
+
+            </main>
+
+            <footer class="p-10 pt-0 relative z-10">
+                <div class="grid grid-cols-2 gap-20 border-t-2 border-black pt-8">
+                    <div>
+                        <div class="h-10 border-b border-black mb-1 flex items-end">
+                            <input type="text" class="w-full text-sm font-header uppercase bg-transparent outline-none" placeholder="SIGNATURE (AnoHUB)">
+                        </div>
+                        <div class="flex justify-between text-[8px] font-mono uppercase text-gray-500">
+                            <span>LEAD ENGINEER</span>
+                            <span>DATE: <span id="footer-date"></span></span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="h-10 border-b border-black mb-1 flex items-end">
+                            <input type="text" class="w-full text-sm font-header uppercase bg-transparent outline-none" placeholder="SIGNATURE (CLIENT)">
+                        </div>
+                        <div class="flex justify-between text-[8px] font-mono uppercase text-gray-500">
+                            <span>PLANT SUPERVISOR</span>
+                            <span>APPROVED</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-8 text-center">
+                    <div class="text-[8px] font-mono text-gray-400">
+                        ANOHUB-SECURE-DOC // HASH: <span id="doc-hash">GENERATING...</span> // ISO 10816 COMPLIANT
+                    </div>
+                </div>
+            </footer>
+
+        </div>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            lucide.createIcons();
+            if (window.lucide) lucide.createIcons();
+            
+            // Set Dates
+            const now = new Date().toISOString().split('T')[0];
+            const dateInput = document.getElementById('date-now');
+            if(dateInput) dateInput.value = now;
+            
+            const footerDate = document.getElementById('footer-date');
+            if(footerDate) footerDate.innerText = now;
+            
+            const docHash = document.getElementById('doc-hash');
+            if(docHash) docHash.innerText = Math.random().toString(36).substring(2, 15).toUpperCase();
+        });
 
-            // === MAP NODES GENERATOR ===
-            const mapLayer = document.getElementById('node-layer');
-            const infoBox = document.getElementById('node-info');
-            const nameEl = document.getElementById('node-name');
-            const mwEl = document.getElementById('node-mw');
-            const statusEl = document.getElementById('node-status');
+            function updateAlign() {
+                const sf = parseFloat(els.sf.value) || 0;
+                const sb = parseFloat(els.sb.value) || 0;
+                const to = parseFloat(els.to.value) || 0;
+                const ts = parseFloat(els.ts.value) || 0;
 
-            const nodes = [
-                { top: 30, left: 45, name: "NORTH_LINK_01", mw: 1200, color: "text-h-green", bg: "bg-h-green" },
-                { top: 60, left: 55, name: "EAST_INTER_04", mw: 850, color: "text-h-green", bg: "bg-h-green" },
-                { top: 45, left: 30, name: "WEST_WIND_OFFSHORE", mw: 400, color: "text-h-yellow", bg: "bg-h-yellow" },
-                { top: 70, left: 40, name: "SOUTH_SOLAR_ARRAY", mw: 0, color: "text-h-red", bg: "bg-h-red" } // Night time
-            ];
+                // Logic: 
+                // 1. Calculate Raw State (from shims)
+                // Assuming Distances: D1=500, D2=1000 for simulation scaling
+                const slope = (sb - sf) / 1000; // per mm
+                const rawOff = sf; 
 
-            nodes.forEach(n => {
-                const div = document.createElement('div');
-                div.className = `map-node ${n.bg}`;
-                div.style.top = n.top + "%";
-                div.style.left = n.left + "%";
-                
-                div.addEventListener('mouseenter', () => {
-                    infoBox.classList.remove('hidden');
-                    nameEl.innerText = n.name;
-                    mwEl.innerText = n.mw + " MW";
-                    statusEl.className = n.color;
-                    statusEl.innerText = n.mw > 0 ? "ONLINE" : "OFFLINE";
+                // 2. Compare to Thermal Targets
+                const finalOff = rawOff - to;
+                const finalAng = (slope * 100) - (ts * 100); // per 100mm
+
+                // 3. UI Numbers
+                els.ro.innerText = finalOff.toFixed(2);
+                els.ra.innerText = finalAng.toFixed(2);
+
+                // 4. Plotter Logic (SVG Coordinates)
+                // Center (0,0) is visually at (200, 100) in SVG
+                // Scale factor for visuals: x50 to make small moves visible
+                const yC = 100 - (finalOff * 100); // Center point Y
+                const yL = yC + (slope * 200 * 50); // Left point Y
+                const yR = yC - (slope * 200 * 50); // Right point Y
+
+                // Clamp for visuals so it doesn't leave box
+                els.line.setAttribute('y1', Math.max(10, Math.min(190, yL))); 
+                els.line.setAttribute('y2', Math.max(10, Math.min(190, yR)));
+                els.pt.setAttribute('cy', Math.max(10, Math.min(190, yC)));
+
+                // 5. Validation State
+                const isOk = Math.abs(finalOff) <= 0.05 && Math.abs(finalAng) <= 0.05;
+
+                if(isOk) {
+                    els.ro.style.color = '#10b981';
+                    els.ra.style.color = '#10b981';
+                    els.line.setAttribute('stroke', '#10b981');
+                    els.pt.setAttribute('fill', '#10b981');
+                    
+                    els.stamp.innerText = "PASSED";
+                    els.stamp.className = "absolute top-4 right-4 border-2 border-green-600 text-green-600 px-3 py-1 font-header text-lg font-bold transform rotate-[-10deg] opacity-100 transition-opacity";
+                    
+                    els.sheet.className = "iso-sheet status-aligned";
+                    els.hudStatus.innerText = "OPTIMAL";
+                    els.hudStatus.style.color = "#10b981";
+                    els.hudBar.style.width = "100%";
+                    els.hudBar.className = "h-full bg-green-500 w-full transition-all duration-300";
+                } else {
+                    els.ro.style.color = '#ef4444';
+                    els.ra.style.color = '#ef4444';
+                    els.line.setAttribute('stroke', '#ef4444');
+                    els.pt.setAttribute('fill', '#ef4444');
+
+                    els.stamp.innerText = "REJECTED";
+                    els.stamp.className = "absolute top-4 right-4 border-2 border-red-600 text-red-600 px-3 py-1 font-header text-lg font-bold transform rotate-[-10deg] opacity-100 transition-opacity";
+                    
+                    els.sheet.className = "iso-sheet status-fail";
+                    els.hudStatus.innerText = "CRITICAL";
+                    els.hudStatus.style.color = "#ef4444";
+                    els.hudBar.style.width = "100%";
+                    els.hudBar.className = "h-full bg-red-500 w-full transition-all duration-300 animate-pulse";
+                }
+            }
+
+            // === 2. THRUST ENGINE ===
+            const tContainer = document.getElementById('thrust-rows');
+            const pads = [35.0, 36.2, 34.8, 35.5, 36.0, 35.1]; // Init values
+
+            function renderThrust() {
+                tContainer.innerHTML = '';
+                const avg = pads.reduce((a,b)=>a+b,0) / pads.length;
+                let maxDev = 0;
+
+                pads.forEach((val, i) => {
+                    const dev = ((val - avg) / avg) * 100;
+                    const absDev = Math.abs(dev);
+                    if(absDev > maxDev) maxDev = absDev;
+
+                    const status = absDev <= 5 ? 
+                        '<span class="text-green-600 font-bold">OK</span>' : 
+                        '<span class="text-red-600 font-bold">FAIL</span>';
+
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td class="border border-gray-300 p-2 font-bold">PAD 0${i+1}</td>
+                        <td class="border border-gray-300 p-0">
+                            <input type="number" class="field text-center thrust-in" value="${val}" data-idx="${i}" step="0.1">
+                        </td>
+                        <td class="border border-gray-300 p-2 text-center text-gray-500">${dev > 0 ? '+' : ''}${dev.toFixed(1)}%</td>
+                        <td class="border border-gray-300 p-2 text-center text-xs">${status}</td>
+                    `;
+                    tContainer.appendChild(row);
                 });
 
-                div.addEventListener('mouseleave', () => infoBox.classList.add('hidden'));
+                // Update Stats
+                const mdEl = document.getElementById('thrust-max-dev');
+                const stEl = document.getElementById('thrust-status-text');
                 
-                mapLayer.appendChild(div);
-            });
+                mdEl.innerText = maxDev.toFixed(1) + "%";
+                if(maxDev <= 5) {
+                    mdEl.style.color = '#10b981';
+                    stEl.innerText = "EQUALIZED";
+                    stEl.className = "text-xs font-bold mt-2 px-4 py-1 text-white bg-green-600 rounded";
+                } else {
+                    mdEl.style.color = '#ef4444';
+                    stEl.innerText = "RE-SHIM REQUIRED";
+                    stEl.className = "text-xs font-bold mt-2 px-4 py-1 text-white bg-red-600 rounded";
+                }
 
-            // === FREQUENCY SIMULATOR ===
-            const freqPath = document.getElementById('freq-path');
-            const freqFill = document.getElementById('freq-fill');
-            const bigFreq = document.getElementById('big-freq');
-            const boostBtn = document.getElementById('boost-btn');
-            const inLoad = document.getElementById('in-load');
-            const valLoad = document.getElementById('val-load');
-
-            let dataPoints = Array(50).fill(50.0); // Start stable
-            let currentFreq = 50.00;
-            let targetFreq = 50.00;
-
-            inLoad.addEventListener('input', (e) => {
-                const load = parseInt(e.target.value);
-                valLoad.innerText = (load > 0 ? "+" : "") + load + " MW";
-                // Load impacts frequency (Simple physics: Load > Gen = Freq Drop)
-                targetFreq = 50.00 - (load / 1000); 
-            });
-
-            boostBtn.addEventListener('click', () => {
-                // Reset stability
-                inLoad.value = 0;
-                targetFreq = 50.00;
-                valLoad.innerText = "0 MW";
-                boostBtn.classList.add('bg-h-gold', 'text-black');
-                setTimeout(() => boostBtn.classList.remove('bg-h-gold', 'text-black'), 200);
-            });
-
-            // Update Loop
-            setInterval(() => {
-                // Smooth drift towards target
-                currentFreq += (targetFreq - currentFreq) * 0.1;
-                // Add noise
-                const noise = (Math.random() - 0.5) * 0.01;
-                const displayFreq = currentFreq + noise;
-
-                bigFreq.innerText = displayFreq.toFixed(3);
-                if(displayFreq < 49.9 || displayFreq > 50.1) bigFreq.classList.add('text-h-red');
-                else bigFreq.classList.remove('text-h-red');
-
-                // Update Graph Array
-                dataPoints.push(displayFreq);
-                dataPoints.shift();
-
-                // Render SVG
-                // Y scale: 49.50 = 100%, 50.50 = 0%
-                const getY = (val) => {
-                    let y = 100 - ((val - 49.5) / 1.0) * 100;
-                    return Math.max(0, Math.min(100, y));
-                };
-
-                let d = `M 0 ${getY(dataPoints[0])}`;
-                dataPoints.forEach((val, i) => {
-                    const x = (i / (dataPoints.length - 1)) * 100;
-                    d += ` L ${x} ${getY(val)}`;
+                // Re-attach listeners
+                document.querySelectorAll('.thrust-in').forEach(el => {
+                    el.addEventListener('input', (e) => {
+                        pads[e.target.dataset.idx] = parseFloat(e.target.value) || 0;
+                        renderThrust(); // Re-render (a bit brute force but safe for small tables)
+                        // Note: Focus is lost on re-render, in prod use optimized update
+                    });
                 });
+            }
 
-                freqPath.setAttribute('d', d);
-                freqFill.setAttribute('d', `${d} V 100 H 0 Z`); // Close shape for fill
-
-            }, 50);
+            // Init Calls
+            updateAlign();
+            renderThrust();
         });
     </script>
 
