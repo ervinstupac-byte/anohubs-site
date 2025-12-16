@@ -1,512 +1,297 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AnoHUB | ORGANIZATION</title>
-
+    <title>AnoHub Protocol | Secure Document</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Roboto+Mono:wght@300;400;700&family=Inter:wght@300;400;600&display=swap"
-        rel="stylesheet">
-
-
-    <link rel="stylesheet" href="../assets/css/preloader.css">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Roboto+Mono:wght@300;400&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        mono: ['Roboto Mono', 'monospace'],
-                        header: ['Oswald', 'sans-serif']
-                    },
-                    colors: {
-                        'tech-gold': '#FFB800',
-                        'tech-dark': '#0c0c0c',
-                        'tech-panel': '#141414',
-                        'tech-border': '#333',
-                    },
-                    boxShadow: {
-                        'screen': '0 0 50px rgba(0,0,0,0.9)',
-                        'paper': '0 0 30px rgba(0,0,0,0.2)'
-                    }
-                }
-            }
-        }
+        tailwind.config = { theme: { extend: { colors: { 'h-gold': '#FFB800', 'h-cyan': '#06b6d4', 'h-red': '#ef4444' } } } }
     </script>
-
     <style>
-        /* === SCREEN ATMOSPHERE === */
-        body {
-            background-color: #050505;
-            color: #ccc;
-            /* Subtilan tehnički grid u pozadini */
-            background-image:
-                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 40px 40px;
-            overflow-x: hidden;
-        }
-
-        /* === THE ARTIFACT (THE PAPER) === */
-        .iso-sheet {
-            width: 210mm;
-            min-height: 297mm;
-            background: #fff;
-            color: #000;
-            margin: 40px auto;
-            padding: 0;
-            /* Grid controlled padding */
-            box-shadow: 0 0 100px rgba(0, 0, 0, 0.8);
-            position: relative;
-            display: grid;
-            grid-template-rows: auto 1fr auto;
-        }
-
-        /* WATERMARK LOGIC (CSS STATE MACHINE) */
-        .sheet-overlay {
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            z-index: 0;
-            background-position: center;
-            background-repeat: no-repeat;
-            opacity: 0.1;
-            mix-blend-mode: multiply;
-            transition: all 0.5s ease;
-        }
-
-        /* State 1: DRAFT (Default) */
-        .status-draft .sheet-overlay {
-            background-image: url("data:image/svg+xml,%3Csvg width='500' height='500' viewBox='0 0 500 500' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-weight='900' font-size='80' fill='gray' transform='rotate(-45 250 250)' text-anchor='middle'%3EWORK IN PROGRESS%3C/text%3E%3C/svg%3E");
-        }
-
-        /* State 2: ALIGNED (Success) */
-        .status-aligned .sheet-overlay {
-            background-image: url("data:image/svg+xml,%3Csvg width='600' height='600' viewBox='0 0 600 600' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='300' cy='300' r='200' stroke='%23FFB800' stroke-width='10' fill='none'/%3E%3Ctext x='300' y='320' font-family='Courier' font-weight='bold' font-size='40' fill='%23FFB800' text-anchor='middle'%3EANOHUB VERIFIED%3C/text%3E%3C/svg%3E");
-            opacity: 0.15;
-        }
-
-        /* State 3: FAIL (Danger) */
-        .status-fail .sheet-overlay {
-            background-image: url("data:image/svg+xml,%3Csvg width='500' height='500' viewBox='0 0 500 500' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-weight='900' font-size='100' fill='red' transform='rotate(-45 250 250)' text-anchor='middle'%3EREJECTED%3C/text%3E%3C/svg%3E");
-            opacity: 0.1;
-        }
-
-        /* === INPUT FIELDS (THE "INVISIBLE" EDIT) === */
-        .field {
-            width: 100%;
-            border: none;
-            background: rgba(255, 184, 0, 0.05);
-            font-family: 'Roboto Mono', monospace;
-            font-size: 11px;
-            color: #000;
-            padding: 4px;
-            border-bottom: 1px dotted #ccc;
-            transition: all 0.2s;
-        }
-
-        .field:focus {
-            background: #fff;
-            border-bottom: 2px solid #000;
-            outline: none;
-        }
-
-        .field-num {
-            text-align: right;
-            font-weight: bold;
-        }
-
-        /* === VISUALIZER (THE HOOK) === */
-        /* Simulate a graph paper background */
-        .graph-bg {
-            background-image:
-                linear-gradient(#eee 1px, transparent 1px),
-                linear-gradient(90deg, #eee 1px, transparent 1px);
-            background-size: 20px 20px;
-            background-color: #fff;
-        }
-
-        /* === PRINT RULES === */
-        @media print {
-            body {
-                background: none;
-            }
-
-            .no-print {
-                display: none !important;
-            }
-
-            .iso-sheet {
-                margin: 0;
-                box-shadow: none;
-                width: 100%;
-                height: 100%;
-            }
-
-            .field {
-                background: transparent !important;
-                border-bottom: none !important;
-                padding: 0;
-            }
-
-            .graph-bg {
-                border: 1px solid #000 !important;
-            }
-
-            /* Ensure colors print correctly */
-            .print-black {
-                color: #000 !important;
-            }
-
-            .print-border {
-                border-color: #000 !important;
-            }
-
-            -webkit-print-color-adjust: exact;
-        }
+        /* Print-like styles for the content */
+        .protocol-content table { width: 100%; border-collapse: collapse; margin-bottom: 1rem; border: 1px solid #ddd; }
+        .protocol-content th, .protocol-content td { border: 1px solid #ccc; padding: 8px; font-family: 'Roboto Mono', monospace; font-size: 0.85rem; }
+        .protocol-content th { background-color: #f3f4f6; font-weight: bold; }
+        .protocol-content h1, .protocol-content h2 { font-family: 'Oswald', sans-serif; margin-bottom: 10px; }
     </style>
-
-    <!-- Favicons -->
-    <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon-16x16.png">
-    <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
-    <link rel="manifest" href="../assets/site.webmanifest">
 </head>
-
-<body data-translation-source="protocol_organization">
-    <noscript>
-        <div style="border: 1px solid #ef4444; padding: 20px;">
-            <h1 style="color: #ef4444; font-size: 24px; margin-bottom: 10px;">SYSTEM ERROR: SCRIPT BLOCKED</h1>
-            <p>The AnoHUB Protocol requires JavaScript to function.<br>Please enable scripts to access the interface.
-            </p>
+<body class="bg-[#0f172a] text-slate-300 overflow-x-hidden">
+    <div id="protocol-header-placeholder"></div>
+    <main class="relative w-full md:w-[210mm] min-h-[297mm] mx-auto my-12 bg-white text-black shadow-[0_0_50px_rgba(0,0,0,0.5)] p-[15mm] md:p-[20mm] overflow-hidden">
+    
+        <div class="absolute top-0 right-0 p-6 opacity-30 pointer-events-none">
+            <span class="font-mono text-xs uppercase tracking-[0.2em] border border-black px-2 py-1">OFFICIAL RECORD</span>
         </div>
-    </noscript>
+        <div class="protocol-content">
+            <div class="divine-grid"></div>
 
-
-    <div class="fixed top-10 left-10 w-64 no-print z-50">
-        <div class="bg-tech-panel border border-tech-border p-6 shadow-screen">
-            <h1 class="text-tech-gold font-header text-2xl tracking-wide mb-1">ANOHUB <span
-                    class="text-white text-sm font-sans tracking-normal opacity-50">CONSOLE</span></h1>
-            <div class="h-0.5 w-full bg-tech-gold mb-6"></div>
-
-            <div class="space-y-4">
-                <button onclick="window.print()"
-                    class="w-full bg-white text-black font-bold py-3 px-4 text-xs font-mono uppercase hover:bg-tech-gold transition flex items-center justify-center gap-2">
-                    <i data-lucide="printer" class="w-4 h-4"></i> Generate PDF
-                </button>
-                <a href="../protocol.html" data-i18n="nav.back_index"
-                    class="block w-full border border-gray-700 text-gray-400 text-center py-2 text-xs font-mono hover:text-white hover:border-white transition">
-                    &lt; RETURN TO INDEX
-                </a>
-            </div>
-
-            <div class="mt-8 pt-4 border-t border-gray-800">
-                <div class="flex justify-between items-center text-[10px] font-mono text-gray-500 mb-2">
-                    <span>LIVE STATUS</span>
-                    <span id="hud-status" class="text-tech-gold">CALCULATING</span>
+    <header class="fixed w-full z-50 border-b border-white/10 bg-black/90 backdrop-blur-md h-16 flex items-center justify-between px-6">
+        <div class="flex items-center gap-3">
+            <a href="../index.html" class="flex items-center gap-3 group">
+                <div class="w-8 h-8 border border-white/30 flex items-center justify-center text-white font-divine group-hover:border-h-gold group-hover:text-h-gold transition bg-black">A</div>
+                <div class="leading-tight">
+                    <h1 class="font-divine text-lg text-white tracking-[0.1em] group-hover:text-h-gold transition">AnoHUB</h1>
+                    <p class="text-[9px] font-mono text-slate-500 tracking-widest uppercase">Module 03: Org. Intelligence</p>
                 </div>
-                <div class="w-full bg-gray-800 h-1">
-                    <div id="hud-bar" class="h-full bg-tech-gold w-0 transition-all duration-300"></div>
-                </div>
+            </a>
+        </div>
+        <div class="flex items-center gap-6 text-xs font-mono">
+            <a href="../protocol.html" class="flex items-center gap-2 text-slate-400 hover:text-h-gold transition border border-transparent hover:border-h-gold/30 px-3 py-1 rounded">
+                <svg data-lucide="arrow-left" class="w-3 h-3"></svg> BACK TO COMMAND
+            </a>
+            <div class="hidden md:flex items-center gap-2 text-h-gold">
+                <div class="w-1.5 h-1.5 bg-h-gold rounded-full animate-pulse-fast"></div>
+                GOVERNANCE ACTIVE
             </div>
         </div>
+    </header>
+
+    <div class="pt-24 pb-12 px-4 max-w-7xl mx-auto grid lg:grid-cols-12 gap-8 relative z-10">
+
+        <aside class="hidden lg:block lg:col-span-3">
+            <div class="sticky top-24 space-y-6">
+                
+                <div class="scada-panel p-4 border-l-2 border-l-h-gold">
+                    <h3 class="text-slate-500 font-mono text-[10px] font-bold uppercase tracking-widest mb-3">System Network</h3>
+                    <nav class="space-y-1 font-mono text-xs">
+                        <a href="anohub_protocol_v2.html" class="block px-3 py-2 text-slate-400 hover:text-h-gold hover:bg-white/5 rounded transition">01. LCC Veto</a>
+                        <a href="anohub_methodology_v2.html" class="block px-3 py-2 text-slate-400 hover:text-h-gold hover:bg-white/5 rounded transition">02. NDT & Metrology</a>
+                        <div class="block px-3 py-2 text-black bg-h-gold font-bold rounded shadow-[0_0_15px_rgba(255,215,0,0.4)]">03. Org. Intelligence</div>
+                        <a href="anohub_synergy_v2.html" class="block px-3 py-2 text-slate-400 hover:text-h-gold hover:bg-white/5 rounded transition">04. M-E Synergy</a>
+                        <a href="anohub_alignment_v2.html" class="block px-3 py-2 text-slate-400 hover:text-h-gold hover:bg-white/5 rounded transition">05. Precision Align.</a>
+                    </nav>
+                </div>
+
+                <div class="scada-panel p-4">
+                    <h3 class="text-h-gold font-mono text-[10px] font-bold uppercase tracking-widest mb-3">Module Sections</h3>
+                    <nav class="space-y-1">
+                        <a href="#summary" class="flex items-center gap-3 px-3 py-2 text-sm text-white bg-white/5 border-l-2 border-h-gold transition"><span class="font-mono text-h-gold opacity-50">01</span> Execution Gap</a>
+                        <a href="#digital-twin" class="flex items-center gap-3 px-3 py-2 text-sm text-slate-400 hover:text-white hover:bg-white/5 border-l-2 border-transparent hover:border-slate-500 transition"><span class="font-mono text-slate-600">02</span> Org. Digital Twin</a>
+                        <a href="#simulation" class="flex items-center gap-3 px-3 py-2 text-sm text-slate-400 hover:text-white hover:bg-white/5 border-l-2 border-transparent hover:border-slate-500 transition"><span class="font-mono text-slate-600">03</span> Entropy Simulator</a>
+                    </nav>
+                </div>
+                
+                <div class="scada-panel p-4 border-t-2 border-t-h-gold">
+                    <h4 class="text-h-gold font-mono text-[10px] font-bold uppercase mb-2">Knowledge Base</h4>
+                    <div class="space-y-3 text-xs font-mono text-slate-400">
+                        <div class="flex justify-between items-center border-b border-slate-700 pb-1"><span>SOP Vectors</span> <span class="text-white">12,405</span></div>
+                        <div class="flex justify-between items-center border-b border-slate-700 pb-1"><span>Retention</span> <span class="text-h-green">99.8%</span></div>
+                        <div class="flex justify-between items-center"><span>Silo Risks</span> <span class="text-h-gold animate-pulse">2 Detected</span></div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <main class="lg:col-span-9 space-y-12">
+            
+            <section id="summary" class="relative scada-panel p-8 overflow-hidden group">
+                <div class="relative z-10">
+                    <div class="flex gap-2 mb-4">
+                        <span class="bg-h-gold/10 text-h-gold px-2 py-0.5 text-[10px] font-mono font-bold border border-h-gold/30">MANAGEMENT PROTOCOL</span>
+                        <span class="text-slate-500 font-mono text-[10px]">DOC-ORG-004 | REV 3.0</span>
+                    </div>
+                    <h1 class="text-4xl font-divine text-white mb-6 tracking-tight">
+                        Bridging the <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-h-gold to-yellow-200">Execution Gap</span>
+                    </h1>
+                    <p class="text-slate-300 leading-relaxed text-lg max-w-2xl border-l border-slate-700 pl-4 font-light">
+                        70% of engineering failures are not calculation errors—they are <span class="text-h-gold font-bold">interface errors</span> between departments. We use AI-driven Algorithmic Governance to eliminate organizational silos.
+                    </p>
+                    
+                    <div class="mt-8 tech-box p-6 rounded text-sm font-mono text-slate-300 bg-black/40">
+                        <h3 class="text-h-gold font-bold mb-2 flex items-center gap-2">
+                            <svg data-lucide="triangle-alert" class="w-4 h-4"></svg> KEY TECHNICAL MANDATE
+                        </h3>
+                        <p>
+                            All decision-trees must be digitized. Verbal instructions on critical path items are forbidden. 
+                            The <strong>"Information Entropy"</strong> between the Chief Engineer and the Site Foreman must remain below <span class="text-white font-bold bg-h-gold/20 px-1">5%</span>.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="digital-twin">
+                <div class="flex items-center gap-3 mb-6 border-b border-slate-800 pb-2">
+                    <span class="text-h-gold font-mono">02 //</span>
+                    <h3 class="text-xl font-divine text-white">The Organizational Digital Twin</h3>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="scada-panel p-6 flex flex-col justify-center">
+                        <h4 class="text-white font-bold mb-3">Knowledge Retention Architecture</h4>
+                        <p class="text-sm text-slate-400 mb-4">
+                            Hydropower projects span decades. Senior engineers retire. To prevent "Brain Drain," we use a Vector Database to index every technical decision.
+                        </p>
+                        <ul class="space-y-3 text-xs font-mono text-slate-300">
+                            <li class="flex items-center gap-2 p-3 bg-black rounded border border-slate-800"><svg data-lucide="database" class="w-4 h-4 text-h-gold"></svg> Vectorized SOPs & Standards</li>
+                            <li class="flex items-center gap-2 p-3 bg-black rounded border border-slate-800"><svg data-lucide="bot" class="w-4 h-4 text-h-gold"></svg> AI Retrieval Augmented Generation (RAG)</li>
+                            <li class="flex items-center gap-2 p-3 bg-black rounded border border-slate-800"><svg data-lucide="network" class="w-4 h-4 text-h-gold"></svg> Cross-Silo Semantic Search</li>
+                        </ul>
+                    </div>
+
+                    <div class="scada-panel relative h-64 bg-black overflow-hidden flex items-center justify-center border border-slate-700">
+                        <div class="relative w-full px-8 flex items-center justify-between">
+                            <div class="flex flex-col items-center z-10">
+                                <div class="w-16 h-16 rounded-full bg-slate-900 border-2 border-slate-700 flex items-center justify-center shadow-lg"><svg data-lucide="hard-hat" class="w-8 h-8 text-slate-400"></svg></div>
+                                <span class="text-[10px] font-mono text-slate-500 mt-2">CIVIL</span>
+                            </div>
+                            
+                            <div class="absolute left-[15%] right-[15%] top-1/2 h-[2px] bg-slate-800 z-0 -translate-y-8">
+                                <div class="absolute top-0 left-0 w-1/2 h-full bg-h-gold animate-scan-horizontal"></div>
+                                <div class="absolute top-0 right-0 w-1/2 h-full bg-h-gold animate-scan-horizontal" style="animation-delay: 1s;"></div>
+                            </div>
+
+                            <div class="flex flex-col items-center z-20 -mt-4">
+                                <div class="w-24 h-24 rounded-full bg-h-gold/10 border-2 border-h-gold flex items-center justify-center shadow-[0_0_30px_rgba(255,215,0,0.3)] animate-pulse-fast">
+                                    <svg data-lucide="brain-circuit" class="w-12 h-12 text-h-gold"></svg>
+                                </div>
+                                <span class="text-xs font-mono text-h-gold font-bold mt-2">AnoHUB CORE</span>
+                            </div>
+
+                            <div class="flex flex-col items-center z-10">
+                                <div class="w-16 h-16 rounded-full bg-slate-900 border-2 border-slate-700 flex items-center justify-center shadow-lg"><svg data-lucide="zap" class="w-8 h-8 text-slate-400"></svg></div>
+                                <span class="text-[10px] font-mono text-slate-500 mt-2">ELECTRO</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="simulation">
+                <div class="flex items-center gap-3 mb-6 border-b border-slate-800 pb-2">
+                    <span class="text-h-gold font-mono">03 //</span>
+                    <h3 class="text-xl font-divine text-white">Organizational Entropy Simulator</h3>
+                </div>
+
+                <div class="scada-panel p-8 border-t-4 border-t-h-gold">
+                    <div class="grid md:grid-cols-2 gap-12">
+                        <div class="space-y-8">
+                            <div class="flex items-center gap-2 mb-4">
+                                <svg data-lucide="sliders-horizontal" class="w-5 h-5 text-h-gold"></svg>
+                                <h4 class="font-bold text-white">Input Parameters</h4>
+                            </div>
+                            
+                            <div>
+                                <div class="flex justify-between mb-2"><label class="text-xs font-bold text-slate-400 uppercase tracking-widest">Management Layers</label><span id="val-layers" class="text-xs font-mono text-h-gold font-bold">4</span></div>
+                                <input type="range" id="in-layers" min="1" max="8" step="1" value="4">
+                                <div class="flex justify-between text-[10px] text-slate-600 mt-1"><span>Flat (1)</span><span>Bureaucratic (8)</span></div>
+                            </div>
+
+                            <div>
+                                <div class="flex justify-between mb-2"><label class="text-xs font-bold text-slate-400 uppercase tracking-widest">Stakeholder Complexity</label><span id="val-stakeholders" class="text-xs font-mono text-h-gold font-bold">High</span></div>
+                                <input type="range" id="in-stakeholders" min="1" max="3" step="1" value="3">
+                                <div class="flex justify-between text-[10px] text-slate-600 mt-1"><span>Single Client</span><span>Multi-National</span></div>
+                            </div>
+                            
+                            <div class="bg-slate-900 p-4 rounded border border-slate-700 mt-4">
+                                <div class="text-[10px] text-slate-500 uppercase mb-2">Calculation Model</div>
+                                <div class="text-xs font-mono text-slate-300">$$ H(x) = - \sum p(x) \log p(x) \times Layers $$</div>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col items-center justify-center relative p-6 bg-black/40 rounded-xl border border-slate-700/50">
+                            <div class="relative w-56 h-56">
+                                <svg class="w-full h-full" viewBox="0 0 100 100">
+                                    <circle class="circle-bg" cx="50" cy="50" r="45"></circle>
+                                    <circle id="entropy-circle" class="circle-progress" cx="50" cy="50" r="45" stroke="#FFD700" stroke-dasharray="283" stroke-dashoffset="100"></circle>
+                                </svg>
+                                <div class="absolute inset-0 flex flex-col items-center justify-center">
+                                    <span id="res-entropy" class="text-5xl font-black text-white drop-shadow-[0_0_15px_rgba(255,215,0,0.5)]">45%</span>
+                                    <span class="text-[10px] text-slate-500 uppercase tracking-widest mt-2 font-bold">Information Loss</span>
+                                </div>
+                            </div>
+                            <div id="verdict-box" class="mt-8 px-8 py-3 rounded bg-h-orange/10 border border-h-orange text-h-orange font-bold text-sm tracking-wide shadow-lg">
+                                HIGH RISK: SILOS DETECTED
+                            </div>
+                            <p id="verdict-desc" class="text-xs text-center text-slate-500 mt-4 max-w-xs leading-relaxed">
+                                At this level, instructions from the C-Suite are 45% distorted before reaching the site foreman.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
     </div>
 
-    <div class="flex justify-center pb-20">
-
-        <div id="doc-wrapper" class="iso-sheet status-draft">
-            <div class="sheet-overlay"></div>
-
-            <header class="p-10 border-b-2 border-black grid grid-cols-12 gap-8 items-end relative z-10">
-                <div class="col-span-2">
-                    <svg viewBox="0 0 100 100" class="w-full h-auto border border-black p-1">
-                        <rect width="100" height="100" fill="white" />
-                        <path d="M10 10h30v30h-30zM60 10h30v30h-30zM10 60h30v30h-30z" fill="black" />
-                        <rect x="45" y="45" width="10" height="10" fill="black" />
-                        <rect x="55" y="15" width="10" height="10" fill="black" />
-                        <rect x="20" y="20" width="10" height="10" fill="black" />
-                        <rect x="70" y="20" width="10" height="10" fill="black" />
-                        <rect x="20" y="70" width="10" height="10" fill="black" />
-                    </svg>
-                    <div class="text-[8px] font-mono text-center mt-1">SCAN FOR DIGITAL TWIN</div>
-                </div>
-                <div class="col-span-6">
-                    <h1 class="text-4xl font-header font-bold text-black leading-none uppercase"
-                        data-i18n="protocol_organization.title">AnoHUB ORGANIZATION</h1>
-                    <p class="text-xs font-mono text-gray-600 tracking-[0.2em] mt-1"
-                        data-i18n="protocol_organization.subtitle">ORGANIZATION VERIFICATION PROTOCOL</p>
-                </div>
-                <div class="col-span-4 text-right">
-                    <div class="border-2 border-black p-2 inline-block text-center min-w-[140px]">
-                        <div class="text-[9px] font-bold uppercase text-gray-500">PROTOCOL ID</div>
-                        <input type="text" value="AH-ORGANI-01"
-                            class="text-lg font-mono font-bold text-center w-full bg-transparent border-none outline-none">
-                    </div>
-                </div>
-            </header>
-
-            <main class="p-10 relative z-10">
-
-                <section class="mb-8">
-                    <h3 class="text-xs font-bold uppercase border-b border-black mb-2 flex justify-between">
-                        <span>01. PROJECT IDENTIFICATION</span>
-                        <span class="font-mono text-gray-500">ISO 10816-5</span>
-                    </h3>
-                    <div class="grid grid-cols-4 gap-4 border-b border-gray-200 pb-4">
-                        <div>
-                            <label class="text-[9px] uppercase font-bold text-gray-400">Plant / Facility</label>
-                            <input type="text" class="field font-bold" value="HE ORLJANI">
-                        </div>
-                        <div>
-                            <label class="text-[9px] uppercase font-bold text-gray-400">Unit ID</label>
-                            <input type="text" class="field font-bold" value="G1 - KAPLAN">
-                        </div>
-                        <div>
-                            <label class="text-[9px] uppercase font-bold text-gray-400">Job Order</label>
-                            <input type="text" class="field" value="WO-25-884">
-                        </div>
-                        <div>
-                            <label class="text-[9px] uppercase font-bold text-gray-400">Date</label>
-                            <input type="date" id="date-now" class="field">
-                        </div>
-                    </div>
-                </section>
-
-
-                <section class="mb-8">
-                    <h3 class="text-xs font-bold uppercase border-b border-black mb-4">02. STANDARD VALIDATION CHECKLIST
-                    </h3>
-                    <div class="space-y-2">
-                        <label
-                            class="flex items-center gap-2 text-xs font-mono border-b border-dotted border-gray-300 pb-1">
-                            <input type="checkbox" class="accent-black"> <span>SENSOR CALIBRATION VERIFIED</span>
-                        </label>
-                        <label
-                            class="flex items-center gap-2 text-xs font-mono border-b border-dotted border-gray-300 pb-1">
-                            <input type="checkbox" class="accent-black"> <span>BASELINE PARAMETERS ESTABLISHED</span>
-                        </label>
-                        <label
-                            class="flex items-center gap-2 text-xs font-mono border-b border-dotted border-gray-300 pb-1">
-                            <input type="checkbox" class="accent-black"> <span>DATA INTEGRITY CHECK: PASS</span>
-                        </label>
-                        <label
-                            class="flex items-center gap-2 text-xs font-mono border-b border-dotted border-gray-300 pb-1">
-                            <input type="checkbox" class="accent-black"> <span>SAFETY INTERLOCKS ACTIVE</span>
-                        </label>
-                        <label
-                            class="flex items-center gap-2 text-xs font-mono border-b border-dotted border-gray-300 pb-1">
-                            <input type="checkbox" class="accent-black"> <span>PROTOCOL EXECUTION COMPLETE</span>
-                        </label>
-                    </div>
-                </section>
-
-                <section class="mb-8">
-                    <h3 class="text-xs font-bold uppercase border-b border-black mb-4">03. MEASUREMENT DATA</h3>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div><label class="text-[9px] uppercase font-bold text-gray-400">Parameter A</label><input
-                                type="text" class="field" placeholder="Enter value..."></div>
-                        <div><label class="text-[9px] uppercase font-bold text-gray-400">Parameter B</label><input
-                                type="text" class="field" placeholder="Enter value..."></div>
-                        <div><label class="text-[9px] uppercase font-bold text-gray-400">Parameter C</label><input
-                                type="text" class="field" placeholder="Enter value..."></div>
-                        <div><label class="text-[9px] uppercase font-bold text-gray-400">Notes</label><input type="text"
-                                class="field" placeholder="..."></div>
-                    </div>
-                </section>
-                <section class="mb-8">
-                    <h3 class="text-xs font-bold uppercase mb-2">04. ENGINEER'S REMARKS</h3>
-                    <textarea
-                        class="w-full h-20 border border-gray-300 p-2 text-xs font-mono resize-none bg-transparent"
-                        placeholder="Enter comments here..."></textarea>
-                </section>
-
-            </main>
-
-            <footer class="p-10 pt-0 relative z-10">
-                <div class="grid grid-cols-2 gap-20 border-t-2 border-black pt-8">
-                    <div>
-                        <div class="h-10 border-b border-black mb-1 flex items-end">
-                            <input type="text" class="w-full text-sm font-header uppercase bg-transparent outline-none"
-                                placeholder="SIGNATURE (AnoHUB)">
-                        </div>
-                        <div class="flex justify-between text-[8px] font-mono uppercase text-gray-500">
-                            <span>LEAD ENGINEER</span>
-                            <span>DATE: <span id="footer-date"></span></span>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="h-10 border-b border-black mb-1 flex items-end">
-                            <input type="text" class="w-full text-sm font-header uppercase bg-transparent outline-none"
-                                placeholder="SIGNATURE (CLIENT)">
-                        </div>
-                        <div class="flex justify-between text-[8px] font-mono uppercase text-gray-500">
-                            <span>PLANT SUPERVISOR</span>
-                            <span>APPROVED</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mt-8 text-center">
-                    <div class="text-[8px] font-mono text-gray-400">
-                        ANOHUB-SECURE-DOC // HASH: <span id="doc-hash">GENERATING...</span> // ISO 10816 COMPLIANT
-                    </div>
-                </div>
-            </footer>
-
+    <footer class="border-t border-slate-800 bg-black py-8 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 text-center text-slate-600 text-xs font-mono tracking-[0.2em]">
+            ANO_HUB // GOVERNANCE DIVISION // ISO 55000
         </div>
-    </div>
+    </footer>
 
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            if (window.lucide) lucide.createIcons();
+            lucide.createIcons();
 
-            // Set Dates
-            const now = new Date().toISOString().split('T')[0];
-            const dateInput = document.getElementById('date-now');
-            if (dateInput) dateInput.value = now;
+            // === SIMULATOR LOGIC ===
+            const inLayers = document.getElementById('in-layers');
+            const inStake = document.getElementById('in-stakeholders');
+            const valLayers = document.getElementById('val-layers');
+            const valStake = document.getElementById('val-stakeholders');
+            const entropyCircle = document.getElementById('entropy-circle');
+            const resEntropy = document.getElementById('res-entropy');
+            const verdictBox = document.getElementById('verdict-box');
+            const verdictDesc = document.getElementById('verdict-desc');
 
-            const footerDate = document.getElementById('footer-date');
-            if (footerDate) footerDate.innerText = now;
+            const CIRCLE_CIRCUMFERENCE = 283;
 
-            const docHash = document.getElementById('doc-hash');
-            if (docHash) docHash.innerText = Math.random().toString(36).substring(2, 15).toUpperCase();
-        });
+            function updateSim() {
+                const layers = parseInt(inLayers.value);
+                const stake = parseInt(inStake.value);
 
-        function updateAlign() {
-            const sf = parseFloat(els.sf.value) || 0;
-            const sb = parseFloat(els.sb.value) || 0;
-            const to = parseFloat(els.to.value) || 0;
-            const ts = parseFloat(els.ts.value) || 0;
+                valLayers.innerText = layers;
+                const stakeLabels = ["Low", "Medium", "High"];
+                valStake.innerText = stakeLabels[stake - 1];
 
-            // Logic: 
-            // 1. Calculate Raw State (from shims)
-            // Assuming Distances: D1=500, D2=1000 for simulation scaling
-            const slope = (sb - sf) / 1000; // per mm
-            const rawOff = sf;
+                let baseLoss = (layers - 1) * 8; 
+                let multiplier = 1 + (stake * 0.3);
+                let loss = baseLoss * multiplier;
+                
+                if (loss > 95) loss = 95; if (loss < 0) loss = 0;
 
-            // 2. Compare to Thermal Targets
-            const finalOff = rawOff - to;
-            const finalAng = (slope * 100) - (ts * 100); // per 100mm
+                resEntropy.innerText = Math.round(loss) + '%';
+                const offset = CIRCLE_CIRCUMFERENCE - ((loss / 100) * CIRCLE_CIRCUMFERENCE);
+                entropyCircle.style.strokeDashoffset = offset;
 
-            // 3. UI Numbers
-            els.ro.innerText = finalOff.toFixed(2);
-            els.ra.innerText = finalAng.toFixed(2);
-
-            // 4. Plotter Logic (SVG Coordinates)
-            // Center (0,0) is visually at (200, 100) in SVG
-            // Scale factor for visuals: x50 to make small moves visible
-            const yC = 100 - (finalOff * 100); // Center point Y
-            const yL = yC + (slope * 200 * 50); // Left point Y
-            const yR = yC - (slope * 200 * 50); // Right point Y
-
-            // Clamp for visuals so it doesn't leave box
-            els.line.setAttribute('y1', Math.max(10, Math.min(190, yL)));
-            els.line.setAttribute('y2', Math.max(10, Math.min(190, yR)));
-            els.pt.setAttribute('cy', Math.max(10, Math.min(190, yC)));
-
-            // 5. Validation State
-            const isOk = Math.abs(finalOff) <= 0.05 && Math.abs(finalAng) <= 0.05;
-
-            if (isOk) {
-                els.ro.style.color = '#10b981';
-                els.ra.style.color = '#10b981';
-                els.line.setAttribute('stroke', '#10b981');
-                els.pt.setAttribute('fill', '#10b981');
-
-                els.stamp.innerText = "PASSED";
-                els.stamp.className = "absolute top-4 right-4 border-2 border-green-600 text-green-600 px-3 py-1 font-header text-lg font-bold transform rotate-[-10deg] opacity-100 transition-opacity";
-
-                els.sheet.className = "iso-sheet status-aligned";
-                els.hudStatus.innerText = "OPTIMAL";
-                els.hudStatus.style.color = "#10b981";
-                els.hudBar.style.width = "100%";
-                els.hudBar.className = "h-full bg-green-500 w-full transition-all duration-300";
-            } else {
-                els.ro.style.color = '#ef4444';
-                els.ra.style.color = '#ef4444';
-                els.line.setAttribute('stroke', '#ef4444');
-                els.pt.setAttribute('fill', '#ef4444');
-
-                els.stamp.innerText = "REJECTED";
-                els.stamp.className = "absolute top-4 right-4 border-2 border-red-600 text-red-600 px-3 py-1 font-header text-lg font-bold transform rotate-[-10deg] opacity-100 transition-opacity";
-
-                els.sheet.className = "iso-sheet status-fail";
-                els.hudStatus.innerText = "CRITICAL";
-                els.hudStatus.style.color = "#ef4444";
-                els.hudBar.style.width = "100%";
-                els.hudBar.className = "h-full bg-red-500 w-full transition-all duration-300 animate-pulse";
-            }
-        }
-
-        // === 2. THRUST ENGINE ===
-        const tContainer = document.getElementById('thrust-rows');
-        const pads = [35.0, 36.2, 34.8, 35.5, 36.0, 35.1]; // Init values
-
-        function renderThrust() {
-            tContainer.innerHTML = '';
-            const avg = pads.reduce((a, b) => a + b, 0) / pads.length;
-            let maxDev = 0;
-
-            pads.forEach((val, i) => {
-                const dev = ((val - avg) / avg) * 100;
-                const absDev = Math.abs(dev);
-                if (absDev > maxDev) maxDev = absDev;
-
-                const status = absDev <= 5 ?
-                    '<span class="text-green-600 font-bold">OK</span>' :
-                    '<span class="text-red-600 font-bold">FAIL</span>';
-
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                        <td class="border border-gray-300 p-2 font-bold">PAD 0${i + 1}</td>
-                        <td class="border border-gray-300 p-0">
-                            <input type="number" class="field text-center thrust-in" value="${val}" data-idx="${i}" step="0.1">
-                        </td>
-                        <td class="border border-gray-300 p-2 text-center text-gray-500">${dev > 0 ? '+' : ''}${dev.toFixed(1)}%</td>
-                        <td class="border border-gray-300 p-2 text-center text-xs">${status}</td>
-                    `;
-                tContainer.appendChild(row);
-            });
-
-            // Update Stats
-            const mdEl = document.getElementById('thrust-max-dev');
-            const stEl = document.getElementById('thrust-status-text');
-
-            mdEl.innerText = maxDev.toFixed(1) + "%";
-            if (maxDev <= 5) {
-                mdEl.style.color = '#10b981';
-                stEl.innerText = "EQUALIZED";
-                stEl.className = "text-xs font-bold mt-2 px-4 py-1 text-white bg-green-600 rounded";
-            } else {
-                mdEl.style.color = '#ef4444';
-                stEl.innerText = "RE-SHIM REQUIRED";
-                stEl.className = "text-xs font-bold mt-2 px-4 py-1 text-white bg-red-600 rounded";
+                if (loss < 15) {
+                    entropyCircle.style.stroke = '#10b981'; // Green
+                    verdictBox.className = "mt-8 px-8 py-3 rounded bg-h-green/10 border border-h-green text-h-green font-bold text-sm tracking-wide shadow-lg";
+                    verdictBox.innerText = "OPTIMAL FLOW";
+                    verdictDesc.innerText = "Direct line of command. Minimal distortion.";
+                } else if (loss < 40) {
+                    entropyCircle.style.stroke = '#facc15'; // Yellow
+                    verdictBox.className = "mt-8 px-8 py-3 rounded bg-h-yellow/10 border border-h-yellow text-h-yellow font-bold text-sm tracking-wide shadow-lg";
+                    verdictBox.innerText = "CAUTION: NOISE DETECTED";
+                    verdictDesc.innerText = "Standard corporate friction. Requires digitized SOPs to manage.";
+                } else if (loss < 65) {
+                    entropyCircle.style.stroke = '#f97316'; // Orange
+                    verdictBox.className = "mt-8 px-8 py-3 rounded bg-h-orange/10 border border-h-orange text-h-orange font-bold text-sm tracking-wide shadow-lg";
+                    verdictBox.innerText = "HIGH RISK: SILOS DETECTED";
+                    verdictDesc.innerText = `At this level, instructions are ${Math.round(loss)}% distorted before execution.`;
+                } else {
+                    entropyCircle.style.stroke = '#ef4444'; // Red
+                    verdictBox.className = "mt-8 px-8 py-3 rounded bg-h-red/10 border border-h-red text-h-red font-bold text-sm tracking-wide shadow-lg animate-pulse";
+                    verdictBox.innerText = "CRITICAL: EXECUTION FAILURE";
+                    verdictDesc.innerText = "Total breakdown of command chain. Immediate restructuring required.";
+                }
             }
 
-            // Re-attach listeners
-            document.querySelectorAll('.thrust-in').forEach(el => {
-                el.addEventListener('input', (e) => {
-                    pads[e.target.dataset.idx] = parseFloat(e.target.value) || 0;
-                    renderThrust(); // Re-render (a bit brute force but safe for small tables)
-                    // Note: Focus is lost on re-render, in prod use optimized update
-                });
-            });
-        }
-
-        // Init Calls
-        updateAlign();
-        renderThrust();
+            inLayers.addEventListener('input', updateSim);
+            inStake.addEventListener('input', updateSim);
+            updateSim();
         });
     </script>
+        </div>
 
-    <!-- Component Loader -->
+        <div class="mt-20 pt-8 border-t-2 border-black flex justify-between items-end">
+            <div class="text-xs font-mono">ANOHUB INTELLIGENCE GRID</div>
+            <div class="text-xs font-mono">AUTH_SIG: __________________</div>
+        </div>
+    </main>
+    <div id="protocol-footer-placeholder"></div>
     <script src="../assets/js/layout-loader.js"></script>
 </body>
-
 </html>
