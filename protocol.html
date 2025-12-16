@@ -115,18 +115,42 @@
         }
 
         /* PLANET STYLES (Dynamic) */
+        /* 1. CONTAINER - MUST PASS CLICKS THROUGH */
+        .universe-container,
+        #galaxy,
+        .orbit-container {
+            pointer-events: none !important;
+            z-index: 10;
+        }
+
+        /* 2. PLANET LINKS - MUST BE CLICKABLE */
         .planet-link {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            /* Zero size container to prevent hit-box issues */
+            /* Force a real clickable area */
+            width: 120px;
+            height: 80px;
+            /* Center the hit-box */
+            transform-style: preserve-3d;
+            /* AGGRESSIVE CLICK FIXES: */
+            pointer-events: auto !important;
+            z-index: 9999 !important;
+            /* Put on top of EVERYTHING */
+            cursor: pointer;
+
+            /* Visual alignment */
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            z-index: 50;
+            justify-content: center;
             text-decoration: none;
+        }
+
+        /* 3. ENSURE SUN IS CLICKABLE */
+        .sun,
+        .core-sun {
+            pointer-events: auto !important;
+            z-index: 9999 !important;
+            cursor: pointer;
         }
 
         .planet-content {
@@ -297,7 +321,8 @@
                     Object.assign(rotator.style, {
                         position: 'absolute', top: '50%', left: '50%', width: '0', height: '0',
                         animation: `spin-orbit ${currentSpeed}s linear infinite`,
-                        transformStyle: 'preserve-3d'
+                        transformStyle: 'preserve-3d',
+                        pointerEvents: 'none' // CRITICAL FIX
                     });
                     // Alternate direction
                     if (i % 2 !== 0) rotator.style.animationDirection = 'reverse';
