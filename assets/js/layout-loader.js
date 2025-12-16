@@ -3,25 +3,59 @@
 // Dynamic Header/Footer + Preloader System
 // ========================================
 
-// STEP 1: Inject Preloader HTML immediately
+// STEP 1: Inject Hydro Boot Sequence Preloader
 (function injectPreloader() {
     const preloaderHTML = `
-        <div id="site-preloader">
-            <div class="preloader-grid"></div>
-            <div class="preloader-logo">
-                <div class="preloader-ring"></div>
-                <div class="preloader-ring"></div>
-                <div class="preloader-ring"></div>
-                <div class="preloader-icon"></div>
-            </div>
-            <div class="preloader-bar-container">
-                <div class="preloader-bar"></div>
-            </div>
-            <div class="preloader-text">Initializing System</div>
+        <div id="hydro-loader">
+            <div id="boot-sequence"></div>
         </div>
     `;
     document.body.insertAdjacentHTML('afterbegin', preloaderHTML);
+    runBootSequence();
 })();
+
+// Hydro-Specific Boot Sequence
+function runBootSequence() {
+    const bootMessages = [
+        "INITIALIZING ANOHUB PROTOCOL v35.0...",
+        "CHECKING PENSTOCK PRESSURE...",
+        "SERVO OIL PUMPS: ONLINE...",
+        "GUIDE VANE LOCKS: RELEASED...",
+        "TURBINE BEARING TEMP: NOMINAL...",
+        "WICKET GATE POSITION: VERIFIED...",
+        "SYNCHRONIZING WITH GRID...",
+        "FREQUENCY LOCK: 50.00 Hz",
+        "VOLTAGE MATCH: CONFIRMED",
+        "BREAKER STATUS: READY",
+        "ACCESS GRANTED."
+    ];
+
+    const bootSequenceContainer = document.getElementById('boot-sequence');
+    let messageIndex = 0;
+
+    const displayNextMessage = () => {
+        if (messageIndex < bootMessages.length) {
+            const logLine = document.createElement('div');
+            logLine.className = 'boot-log';
+            logLine.textContent = `> ${bootMessages[messageIndex]}`;
+            bootSequenceContainer.appendChild(logLine);
+            messageIndex++;
+            setTimeout(displayNextMessage, 150);
+        } else {
+            // Boot complete, fade out after a brief pause
+            setTimeout(() => {
+                const loader = document.getElementById('hydro-loader');
+                if (loader) {
+                    loader.classList.add('fade-out');
+                    setTimeout(() => loader.remove(), 500);
+                }
+            }, 400);
+        }
+    };
+
+    // Start the sequence after a brief delay
+    setTimeout(displayNextMessage, 200);
+}
 
 // STEP 2: Load Components on DOM Ready
 document.addEventListener("DOMContentLoaded", async () => {
@@ -58,14 +92,22 @@ document.addEventListener("DOMContentLoaded", async () => {
         // Highlight Active Navigation Link
         highlightActiveLink();
 
-        // STEP 3: Wait 500ms for visual smoothness, then remove preloader
-        await new Promise(resolve => setTimeout(resolve, 500));
-        removePreloader();
+        // Initialize Grid Frequency Ticker (SCADA Easter Egg)
+        initGridTicker();
+
+        // Apply translations after components are loaded
+        if (typeof window.updateContent === 'function') {
+            window.updateContent();
+        }
 
     } catch (error) {
         console.error("Error loading components:", error);
-        // Remove preloader even on error to prevent infinite loading
-        removePreloader();
+        // Remove boot loader even on error to prevent infinite loading
+        const loader = document.getElementById('hydro-loader');
+        if (loader) {
+            loader.classList.add('fade-out');
+            setTimeout(() => loader.remove(), 500);
+        }
     }
 });
 
@@ -98,20 +140,42 @@ function highlightActiveLink() {
     navLinks.forEach(link => {
         const href = link.getAttribute("href");
         if (href && href.includes(currentPath)) {
-            link.classList.add("text-white");
+            link.classList.add("active-link", "text-white");
             link.classList.remove("text-slate-400");
         }
     });
 }
 
-// Preloader Removal
-function removePreloader() {
-    const preloader = document.getElementById("site-preloader");
-    if (preloader) {
-        preloader.classList.add("fade-out");
-        // Remove from DOM after fade animation completes
-        setTimeout(() => {
-            preloader.remove();
-        }, 500); // Matches CSS transition duration
-    }
+// Grid Frequency Ticker (SCADA Easter Egg)
+function initGridTicker() {
+    const freqElement = document.getElementById("grid-freq");
+    if (!freqElement) return;
+
+    // Update frequency every 2 seconds
+    setInterval(() => {
+        // Generate random frequency between 49.95 and 50.05 Hz
+        const frequency = (Math.random() * 0.10) + 49.95;
+
+        // Format to 2 decimal places
+        const formattedFreq = frequency.toFixed(2);
+
+        // Update text
+        freqElement.textContent = `${formattedFreq} Hz`;
+
+        // Update color based on threshold
+        if (frequency < 49.98) {
+            // Warning: below nominal
+            freqElement.classList.remove("text-h-green");
+            freqElement.classList.add("text-h-yellow");
+        } else {
+            // Nominal: green
+            freqElement.classList.remove("text-h-yellow");
+            freqElement.classList.add("text-h-green");
+        }
+    }, 2000); // Every 2 seconds
 }
+
+// === ANTI-FOUC: Fade in page when fully loaded ===
+window.onload = function () {
+    document.documentElement.classList.add('wf-active');
+};
