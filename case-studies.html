@@ -277,7 +277,7 @@
         let allMissions = [];
         let currentFilter = 'ALL';
 
-        // Colors mapping const typeColors = { 'FRANCIS': 'text-h-cyan', 'PELTON': 'text-white', 'KAPLAN': 'text-h-green', 'FINANCE': 'text-h-gold' };
+        // Colors mapping
         const typeColors = {
             'FRANCIS': 'text-h-cyan',
             'PELTON': 'text-white',
@@ -290,10 +290,12 @@
             const grid = document.getElementById('mission-grid');
             if (!grid) return;
             grid.innerHTML = '<div class="col-span-full text-center py-20"><div class="inline-block animate-pulse text-h-gold font-mono text-sm tracking-widest">ACCESSING SECURE ARCHIVE...</div></div>';
+
             const { data, error } = await supabase
                 .from('missions')
                 .select('*')
                 .order('case_id', { ascending: true });
+
             if (error) {
                 console.error('DB Error:', error);
                 grid.innerHTML = '<div class="col-span-full text-center text-red-500 font-mono">CONNECTION LOST. REFRESH REQUIRED.</div>';
@@ -303,28 +305,39 @@
             renderGrid();
             setupFilters();
         }
+
         // 2. RENDER GRID (Language Aware)
         function renderGrid() {
             const grid = document.getElementById('mission-grid');
             const lang = localStorage.getItem('anohub_lang') || 'en'; // Default to EN if not set
             const isEn = lang === 'en';
+
             // Labels
             const labelThreat = isEn ? 'THREAT' : 'PRIJETNJA';
             const labelResult = isEn ? 'RESULT' : 'REZULTAT';
+
             // Filter Data
             const visibleMissions = currentFilter === 'ALL'
                 ? allMissions
                 : allMissions.filter(m => m.turbine_type === currentFilter.toUpperCase());
+
             grid.innerHTML = '';
+
             visibleMissions.forEach(mission => {
                 // Choose language column
                 const title = isEn ? (mission.title_en || mission.title) : mission.title;
                 const threat = isEn ? (mission.threat_en || mission.threat) : mission.threat;
                 const result = isEn ? (mission.result_en || mission.result) : mission.result;
 
+                // Construct Link
+                const paddedId = String(mission.case_id).padStart(3, '0');
+                const link = `case-study-${paddedId}.html`;
+
                 const colorClass = typeColors[mission.turbine_type] || 'text-slate-400';
+
+                // Changed div to a href and added block display
                 const html = `
-                    <div class="group relative bg-white/5 border border-white/10 p-6 hover:border-h-gold/50 transition-all duration-300 hover:bg-black/40 flex flex-col h-full animate-in fade-in zoom-in duration-500">
+                    <a href="${link}" class="group relative bg-white/5 border border-white/10 p-6 hover:border-h-gold/50 transition-all duration-300 hover:bg-black/40 flex flex-col h-full animate-in fade-in zoom-in duration-500 block text-left">
                         <div class="absolute top-4 right-4 text-[10px] font-mono opacity-30 group-hover:opacity-100 text-h-gold transition-opacity">
                             CASE ID: ${mission.case_id}
                         </div>
@@ -346,11 +359,15 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 `;
                 grid.innerHTML += html;
             });
+
+            // Re-init generic UI logic if visible content changed and lucide exists
+            if (window.lucide) window.lucide.createIcons();
         }
+
         // 3. SETUP FILTERS
         function setupFilters() {
             // Find the container with buttons (Assuming user has buttons like "All Missions", "Finance", etc.)
@@ -360,19 +377,23 @@
             filters.forEach(btn => {
                 // Logic to identify filter buttons based on text content if no class exists
                 const text = btn.innerText.toUpperCase();
+
+                // Add click listener if it matches known filter types
                 if (['ALL MISSIONS', 'SVE MISIJE', 'FINANCE', 'FRANCIS', 'KAPLAN', 'PELTON'].some(k => text.includes(k))) {
 
                     btn.addEventListener('click', (e) => {
                         e.preventDefault();
-                        // Update Active State Visuals (Optional basic toggle)
+
+                        // Update Active State Visuals
                         filters.forEach(b => {
                             if (b.classList.contains('filter-btn')) {
-                                b.classList.remove('active');
-                                b.classList.remove('border-h-gold', 'text-h-gold');
+                                b.classList.remove('active'); // Remove custom active class if exists
+                                b.classList.remove('border-h-gold', 'text-h-gold'); // Remove active styling
                             }
                         });
 
-                        btn.classList.add('border-h-gold', 'text-h-gold'); // Active style
+                        // Add active styling to clicked button
+                        btn.classList.add('border-h-gold', 'text-h-gold');
 
                         // Determine Filter
                         if (text.includes('ALL') || text.includes('SVE')) currentFilter = 'ALL';
@@ -386,10 +407,12 @@
                 }
             });
         }
+
         // 4. LISTEN FOR LANGUAGE CHANGE (Global Event)
         document.addEventListener('languageChanged', () => {
             renderGrid(); // Re-render immediately when user clicks EN/BS in header
         });
+
         // INIT
         document.addEventListener('DOMContentLoaded', initMissions);
 
@@ -434,6 +457,7 @@
                 }
             }
         });
+
     </script>
 
     <!-- Component Loader -->
