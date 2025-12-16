@@ -109,22 +109,32 @@
 
             <div class="w-full md:w-1/3 space-y-8">
                 <div>
-                    <h1 class="text-4xl md:text-5xl font-black text-white mb-2 font-header">INITIATE<br><span
-                            class="text-h-gold">PROTOCOL</span></h1>
-                    <p class="text-slate-400 text-sm">We don't do sales pitches. We do engineering audits. If you have a
-                        problem, we have the sensors.</p>
+                    <h1 class="text-4xl md:text-5xl font-black text-white mb-2 font-header"><span
+                            class="text-h-gold">INITIATE</span><br>PROTOCOL</h1>
+                    <p class="text-slate-400 text-sm italic border-l-2 border-h-red pl-2">
+                        WARNING: We are not a sales team. We are an engineering authority. Protocol initiation requires
+                        a verified technical anomaly.
+                    </p>
                 </div>
 
                 <div class="space-y-4 font-mono text-sm">
                     <div class="flex items-center gap-4 text-slate-300">
                         <div class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-h-cyan"><i
                                 data-lucide="mail"></i></div>
-                        <span>info@anohubs.com</span>
+                        <a href="mailto:info@anohubs.com"
+                            class="hover:text-white transition-colors">info@anohubs.com</a>
                     </div>
+
                     <div class="flex items-center gap-4 text-slate-300">
                         <div class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-h-gold"><i
+                                data-lucide="phone"></i></div>
+                        <a href="tel:+436601234567" class="hover:text-white transition-colors">+43 (0) 660 123 4567</a>
+                    </div>
+
+                    <div class="flex items-center gap-4 text-slate-300">
+                        <div class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-h-green"><i
                                 data-lucide="map-pin"></i></div>
-                        <span>Sarajevo, HQ / Global Reach</span>
+                        <span>Sarajevo (HQ) / Vienna (EU Base)</span>
                     </div>
                 </div>
             </div>
@@ -132,31 +142,37 @@
                 <form id="contactForm" action="https://formspree.io/f/xqaywlaq" method="POST" class="space-y-4">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div class="space-y-1">
-                            <label class="text-[10px] uppercase tracking-widest text-slate-500">Identity</label>
-                            <input type="text" name="name" placeholder="Full Name"
+                            <label for="full_name"
+                                class="text-[10px] uppercase tracking-widest text-slate-500">Identity</label>
+                            <input type="text" id="full_name" name="full_name" placeholder="Full Name"
                                 class="w-full bg-white/5 border border-white/10 p-3 text-white focus:border-h-gold focus:outline-none transition-colors text-sm">
                         </div>
                         <div class="space-y-1">
-                            <label class="text-[10px] uppercase tracking-widest text-slate-500">Organization</label>
-                            <input type="text" name="company" placeholder="Company Name"
+                            <label for="company_name"
+                                class="text-[10px] uppercase tracking-widest text-slate-500">Organization</label>
+                            <input type="text" id="company_name" name="company_name" placeholder="Company Name"
                                 class="w-full bg-white/5 border border-white/10 p-3 text-white focus:border-h-gold focus:outline-none transition-colors text-sm">
                         </div>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div class="space-y-1">
-                            <label class="text-[10px] uppercase tracking-widest text-slate-500">Comms</label>
-                            <input type="email" name="email" placeholder="Email Address"
+                            <label for="email_addr"
+                                class="text-[10px] uppercase tracking-widest text-slate-500">Comms</label>
+                            <input type="email" id="email_addr" name="email_addr" placeholder="Email Address"
                                 class="w-full bg-white/5 border border-white/10 p-3 text-white focus:border-h-cyan focus:outline-none transition-colors text-sm">
                         </div>
                         <div class="space-y-1">
-                            <label class="text-[10px] uppercase tracking-widest text-slate-500">Direct Line</label>
-                            <input type="tel" name="phone" placeholder="+387..."
+                            <label for="phone_num" class="text-[10px] uppercase tracking-widest text-slate-500">Direct
+                                Line</label>
+                            <input type="tel" id="phone_num" name="phone_num" placeholder="+387..."
                                 class="w-full bg-white/5 border border-white/10 p-3 text-white focus:border-h-cyan focus:outline-none transition-colors text-sm">
                         </div>
                     </div>
                     <div class="space-y-1">
-                        <label class="text-[10px] uppercase tracking-widest text-slate-500">Briefing</label>
-                        <textarea name="message" rows="3" placeholder="Describe the mechanical anomaly..."
+                        <label for="message_body"
+                            class="text-[10px] uppercase tracking-widest text-slate-500">Briefing</label>
+                        <textarea id="message_body" name="message_body" rows="3"
+                            placeholder="Describe the mechanical anomaly..."
                             class="w-full bg-white/5 border border-white/10 p-3 text-white focus:border-h-red focus:outline-none transition-colors text-sm resize-none"></textarea>
                     </div>
                     <button type="submit"
@@ -211,11 +227,11 @@
                 btn.classList.add('bg-slate-600');
 
                 const formData = {
-                    name: form.querySelector('input[placeholder="Full Name"]').value,
-                    company: form.querySelector('input[placeholder="Company Name"]').value,
-                    email: form.querySelector('input[placeholder="Email Address"]').value,
-                    phone: form.querySelector('input[placeholder="+387..."]').value,
-                    message: form.querySelector('textarea').value
+                    name: form.querySelector('#full_name').value,
+                    company: form.querySelector('#company_name').value,
+                    email: form.querySelector('#email_addr').value,
+                    phone: form.querySelector('#phone_num').value,
+                    message: form.querySelector('#message_body').value
                 };
                 const result = await submitInquiry(formData);
                 if (result.success) {
