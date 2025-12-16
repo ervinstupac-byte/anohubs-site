@@ -117,59 +117,70 @@
         /* PLANET STYLES (Dynamic) */
         .planet-link {
             position: absolute;
+            top: 50%;
+            left: 50%;
             width: 0;
             height: 0;
+            /* Zero size container to prevent hit-box issues */
             display: flex;
             justify-content: center;
             align-items: center;
-            pointer-events: auto;
+            z-index: 50;
+            text-decoration: none;
         }
 
         .planet-content {
+            /* Critical: Counter-rotate to keep text upright relative to the screen */
+            animation: spin-orbit 120s linear infinite reverse;
             display: flex;
             flex-direction: column;
             align-items: center;
-            width: 100px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            animation: counter-spin inherit linear infinite;
-            /* Inherit duration from parent orbit */
+            justify-content: center;
+            transform-origin: center center;
+            width: 120px;
+            /* Fixed width for stability */
         }
+
+        /* Dynamic animation speeds will be applied via JS */
 
         .planet-core {
-            width: 12px;
-            height: 12px;
+            width: 14px;
+            height: 14px;
             background: #020617;
             border: 2px solid;
-            margin-bottom: 10px;
-            transform: rotate(45deg);
-            transition: all 0.3s;
-        }
-
-        .planet-link:hover .planet-core {
-            background: #FFB800;
-            border-color: #FFB800 !important;
-            box-shadow: 0 0 20px #FFB800;
-            transform: rotate(45deg) scale(1.5);
+            border-radius: 50%;
+            box-shadow: 0 0 15px currentColor;
+            transition: all 0.3s ease;
         }
 
         .planet-label {
+            margin-top: 8px;
             font-family: 'Roboto Mono', monospace;
             font-size: 10px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            background: rgba(0, 0, 0, 0.8);
-            padding: 2px 6px;
+            font-weight: bold;
+            color: rgba(255, 255, 255, 0.6);
+            background: rgba(2, 6, 23, 0.8);
+            padding: 2px 8px;
+            border-radius: 4px;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #64748b;
             white-space: nowrap;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 0 0 5px black;
+        }
+
+        .planet-link:hover .planet-core {
+            transform: scale(1.5);
+            background: white;
+            border-color: white !important;
         }
 
         .planet-link:hover .planet-label {
-            color: #06b6d4;
-            border-color: #06b6d4;
-            text-shadow: 0 0 5px #06b6d4;
+            color: white;
+            border-color: currentColor;
+            opacity: 1;
+            transform: scale(1.1);
         }
 
         /* === SEARCH UI === */
@@ -263,88 +274,65 @@
 
             buildSolarSystem() {
                 const system = document.getElementById('galaxy');
-                if (!system) return;
+                system.innerHTML = ''; // Clear previous content
+                // Kept sun separate in HTML structure to avoid duplication/style mismatch
 
-                // Logic: Automatically slice modules into rings
-                const rings = [];
-                const itemsPerRing = 8; // Max planets per orbit
-                let currentRadius = 220; // Starting radius (Adjusted for visual spacing)
-                let currentSpeed = 40;   // Starting rotation speed (seconds)
-
+                const itemsPerRing = 8;
+                let currentRadius = 220;
+                let currentSpeed = 40;
                 for (let i = 0; i < this.modules.length; i += itemsPerRing) {
-                    // Create a ring for every chunk
-                    rings.push({
-                        r: currentRadius,
-                        speed: currentSpeed,
-                        items: this.modules.slice(i, i + itemsPerRing)
+                    const chunk = this.modules.slice(i, i + itemsPerRing);
+
+                    // Create Orbit Ring (Visual)
+                    const orbitRing = document.createElement('div');
+                    Object.assign(orbitRing.style, {
+                        position: 'absolute', top: '50%', left: '50%',
+                        width: `${currentRadius * 2}px`, height: `${currentRadius * 2}px`,
+                        border: '1px dashed rgba(255,255,255,0.1)', borderRadius: '50%',
+                        transform: 'translate(-50%, -50%)', pointerEvents: 'none'
                     });
-
-                    // Increment layout
-                    currentRadius += 160; // Add distance
-                    currentSpeed += 30;   // Slow down
-                }
-
-                rings.forEach((ring, idx) => {
-                    const orbitContainer = document.createElement('div');
-                    Object.assign(orbitContainer.style, {
+                    system.appendChild(orbitRing);
+                    // Create Rotating Container for Planets
+                    const rotator = document.createElement('div');
+                    Object.assign(rotator.style, {
                         position: 'absolute', top: '50%', left: '50%', width: '0', height: '0',
-                        transformStyle: 'preserve-3d',
-                        animation: `spin-orbit ${ring.speed}s linear infinite`,
-                        pointerEvents: 'none'
+                        animation: `spin-orbit ${currentSpeed}s linear infinite`,
+                        transformStyle: 'preserve-3d'
                     });
-                    // Visible Orbit Line
-                    const orbitLine = document.createElement('div');
-                    Object.assign(orbitLine.style, {
-                        position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
-                        width: `${ring.r * 2}px`, height: `${ring.r * 2}px`,
-                        borderRadius: '50%', border: '1px dashed rgba(255,255,255,0.1)',
-                        pointerEvents: 'none'
-                    });
-                    system.appendChild(orbitLine); // Append line separately so it doesn't rotate? 
-                    // Wait, if line rotates, dashes rotate. That's cool.
-                    // But if I put line inside container, it rotates.
+                    // Alternate direction
+                    if (i % 2 !== 0) rotator.style.animationDirection = 'reverse';
 
-                    // The Previous Design had .orbit elements.
-                    // Let's put the line INSIDE the container? No, container has width 0.
-                    // I'll append the container to system.
-
-                    if (idx % 2 !== 0) orbitContainer.style.animationDirection = 'reverse';
-                    system.appendChild(orbitContainer);
-
-                    // Add Planets to Container
-                    const step = (2 * Math.PI) / ring.items.length;
-
-                    ring.items.forEach((m, i) => {
-                        const angle = step * i;
-                        const x = Math.cos(angle) * ring.r;
-                        const z = Math.sin(angle) * ring.r;
-
+                    system.appendChild(rotator);
+                    const step = (2 * Math.PI) / chunk.length;
+                    chunk.forEach((m, idx) => {
+                        const angle = step * idx;
+                        const x = Math.cos(angle) * currentRadius;
+                        const y = Math.sin(angle) * currentRadius;
                         const link = document.createElement('a');
                         link.className = 'planet-link';
-
                         if (m.isSpecial) {
-                            link.href = "#"; link.onclick = (e) => { e.preventDefault(); /* App.deployAI(); */ };
+                            link.href = "#"; link.onclick = (e) => { e.preventDefault(); App.deployAI(); };
                         } else {
                             link.href = m.link;
                         }
 
-                        // Positioning
-                        link.style.transform = `translate3d(${x}px, 0, ${z}px) rotateX(0deg)`; // 2D Plane
-                        // Note: rotateX(-90deg) was for 3D tilt. This new design looks 2D flat from top?
-                        // "Final Design" CSS had no 3D universe container. It was flat.
-                        // So I remove rotateX(-90deg).
-
+                        // Position the planet
+                        link.style.transform = `translate(${x}px, ${y}px)`;
+                        // Calculate Counter-Animation duration match
+                        const counterDir = (i % 2 !== 0) ? 'normal' : 'reverse'; // Opposite of parent
                         link.innerHTML = `
-                            <div class="planet-content" style="animation-duration: ${ring.speed}s; animation-direction: ${idx % 2 !== 0 ? 'normal' : 'reverse'};">
-                                <div class="planet-core" style="border-color: ${m.color}; box-shadow: 0 0 15px ${m.color}"></div>
-                                <div class="planet-label" style="border-color: ${m.color}">
-                                    <span style="color:${m.color}; margin-right:4px;">${m.id}</span> ${m.name}
-                                </div>
+                        <div class="planet-content" style="animation: spin-orbit ${currentSpeed}s linear infinite ${counterDir}">
+                            <div class="planet-core" style="border-color: ${m.color}; box-shadow: 0 0 10px ${m.color}"></div>
+                            <div class="planet-label" style="border-color: rgba(255,255,255,0.1); color: ${m.color}">
+                                ${m.name}
                             </div>
-                        `;
-                        orbitContainer.appendChild(link);
+                        </div>
+                    `;
+                        rotator.appendChild(link);
                     });
-                });
+                    currentRadius += 140;
+                    currentSpeed += 30;
+                }
             },
 
             initSearch() {
