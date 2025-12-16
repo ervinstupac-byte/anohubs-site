@@ -1,11 +1,13 @@
 ﻿<!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Full Service Spectrum | AnoHUB</title>
-    <meta name="description" content="From heavy on-site machining and installation to digital twins. We handle the dirty work and the data work.">
-    
+    <title>Capabilities & Protocol Scope | AnoHUB</title>
+    <meta name="description"
+        content="From heavy on-site machining and installation to digital twins. We handle the dirty work and the data work.">
+
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -16,10 +18,12 @@
     }
     </script>
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+
     <link rel="stylesheet" href="assets/css/preloader.css">
-<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -27,8 +31,8 @@
                 extend: {
                     fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
                     colors: {
-                        'h-cyan': '#06b6d4', 'h-green': '#10b981', 'h-red': '#ef4444', 
-                        'h-yellow': '#facc15', 'h-orange': '#f97316', 'h-dark': '#020617', 
+                        'h-cyan': '#06b6d4', 'h-green': '#10b981', 'h-red': '#ef4444',
+                        'h-yellow': '#facc15', 'h-orange': '#f97316', 'h-dark': '#020617',
                         'h-panel': '#0f172a', 'h-border': '#1e293b', 'h-cta': '#f59e0b',
                         'h-purple': '#8b5cf6'
                     },
@@ -40,60 +44,151 @@
     </script>
 
     <style>
-        html, body { background-color: #020617; color: #f8fafc; overflow-x: hidden; width: 100%; }
-        
+        html,
+        body {
+            background-color: #020617;
+            color: #f8fafc;
+            overflow-x: hidden;
+            width: 100%;
+        }
+
         /* === DYNAMIC BACKGROUND SYSTEM (PARALLAX) === */
         .bg-layer {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -3; /* Najniži sloj */
-            background-size: cover; background-position: center;
-            opacity: 0; transition: opacity 1.2s ease-in-out; will-change: opacity;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -3;
+            /* Najniži sloj */
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1.2s ease-in-out;
+            will-change: opacity;
             filter: grayscale(100%) contrast(1.1) brightness(0.4);
             /* Dodano: Osigurava pravi Parallax osjećaj */
-            background-attachment: fixed; 
+            background-attachment: fixed;
         }
-        .bg-layer.active { opacity: 1; }
+
+        .bg-layer.active {
+            opacity: 1;
+        }
 
         /* NOISE & GRID */
         .noise-overlay {
-            position: fixed; inset: 0; z-index: 50; opacity: 0.4; pointer-events: none;
+            position: fixed;
+            inset: 0;
+            z-index: 50;
+            opacity: 0.4;
+            pointer-events: none;
             background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
         }
+
         .tech-bg {
-            position: fixed; inset: 0; z-index: -1; pointer-events: none;
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
             background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
             background-size: 60px 60px;
         }
 
         /* ASSET CARDS */
-        .asset-card { position: relative; height: 450px; border-radius: 1rem; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); transition: all 0.4s ease; }
-        .asset-card:hover { transform: translateY(-5px); border-color: var(--card-color); box-shadow: 0 20px 40px -10px var(--card-shadow); }
-        .asset-bg { 
-            position: absolute; inset: 0; background-size: cover; background-position: center; 
-            transition: transform 0.7s ease; filter: grayscale(100%) contrast(1.1); 
+        .asset-card {
+            position: relative;
+            height: 450px;
+            border-radius: 1rem;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
         }
-        .asset-card:hover .asset-bg { transform: scale(1.1); filter: grayscale(0%); }
-        .asset-overlay { position: absolute; inset: 0; background: linear-gradient(to top, #020617 10%, transparent 80%); }
+
+        .asset-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--card-color);
+            box-shadow: 0 20px 40px -10px var(--card-shadow);
+        }
+
+        .asset-bg {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.7s ease;
+            filter: grayscale(100%) contrast(1.1);
+        }
+
+        .asset-card:hover .asset-bg {
+            transform: scale(1.1);
+            filter: grayscale(0%);
+        }
+
+        .asset-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, #020617 10%, transparent 80%);
+        }
 
         /* INDUSTRIAL CARD */
-        .ind-card { background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.05); transition: all 0.3s ease; }
-        .ind-card:hover { background: rgba(30, 41, 59, 0.8); transform: translateY(-5px); border-color: var(--accent); }
-        .ind-card i { color: var(--accent); }
-        
-        .service-list li { padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; gap: 0.75rem; color: #94a3b8; font-size: 0.85rem; font-family: 'JetBrains Mono', monospace; }
-        .service-list li:last-child { border-bottom: none; }
-        .service-list li::before { content: '>'; color: var(--accent); font-weight: bold; }
+        .ind-card {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .ind-card:hover {
+            background: rgba(30, 41, 59, 0.8);
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+
+        .ind-card i {
+            color: var(--accent);
+        }
+
+        .service-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: #94a3b8;
+            font-size: 0.85rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .service-list li:last-child {
+            border-bottom: none;
+        }
+
+        .service-list li::before {
+            content: '>';
+            color: var(--accent);
+            font-weight: bold;
+        }
 
         /* SCROLLBAR */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #020617; }
-        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #020617;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
     </style>
 </head>
 
 <body class="antialiased">
-    
+
     <div id="bg-hero" class="bg-layer active" style="background-image: url('assets/images/orljani_Una.jpg');"></div>
-    <div id="bg-assets" class="bg-layer" style="background-image: url('assets/images/francis_srvcs.jpg');"></div> 
+    <div id="bg-assets" class="bg-layer" style="background-image: url('assets/images/francis_srvcs.jpg');"></div>
     <div id="bg-field" class="bg-layer" style="background-image: url('assets/images/zima_arm.jpg');"></div>
     <div id="bg-digital" class="bg-layer" style="background-image: url('assets/images/proljece_arm.jpg');"></div>
     <div id="bg-hardware" class="bg-layer" style="background-image: url('assets/images/bihackanal.jpg');"></div>
@@ -101,36 +196,51 @@
     <div class="noise-overlay"></div>
     <div class="tech-bg"></div>
 
-        <div id="global-header"></div>
+    <div id="global-header"></div>
 
     <main class="pt-20">
 
-        <section class="scroll-section **min-h-screen** flex items-center justify-center relative text-center px-4" data-bg-id="bg-hero">
+        <section class="scroll-section **min-h-screen** flex items-center justify-center relative text-center px-4"
+            data-bg-id="bg-hero">
             <div class="max-w-5xl relative z-10">
-                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-black/60 backdrop-blur-md text-xs font-mono text-h-cta mb-8 animate-fade-in-up">
+                <div
+                    class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-black/60 backdrop-blur-md text-xs font-mono text-h-cta mb-8 animate-fade-in-up">
                     <span class="w-2 h-2 bg-h-cta rounded-full animate-pulse"></span>
                     SCOPE: END-TO-END EXECUTION
                 </div>
-                <h1 class="text-5xl md:text-8xl font-black text-white mb-6 tracking-tight leading-none animate-fade-in-up shadow-black drop-shadow-xl">
-                    DIRTY HANDS. <br>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-h-cta to-yellow-200">CLEAN DATA.</span>
+                <div class="mb-6 px-4 py-3 bg-h-cyan/10 border border-h-cyan/30 rounded-lg backdrop-blur-sm">
+                    <p class="text-sm text-slate-300 font-mono">
+                        <span class="text-h-cyan font-bold">NOTE:</span> This is an index of our technical competencies
+                        and protocol scope, not a commercial service list.
+                    </p>
+                </div>
+                <h1
+                    class="text-5xl md:text-8xl font-black text-white mb-6 tracking-tight leading-none animate-fade-in-up shadow-black drop-shadow-xl">
+                    PROTOCOL <br>
+                    <span
+                        class="text-transparent bg-clip-text bg-gradient-to-r from-h-cta to-yellow-200">CAPABILITIES</span>
                 </h1>
-                <p class="text-xl text-slate-200 max-w-3xl mx-auto mb-10 animate-fade-in-up opacity-0 font-medium drop-shadow-md" style="animation-delay: 0.2s;">
-                    We don't just generate reports. We turn wrenches, machine steel, and weld cavitation. 
+                <p class="text-xl text-slate-200 max-w-3xl mx-auto mb-10 animate-fade-in-up opacity-0 font-medium drop-shadow-md"
+                    style="animation-delay: 0.2s;">
+                    We don't just generate reports. We turn wrenches, machine steel, and weld cavitation.
                     From the <strong>banal basics</strong> to <strong>advanced forensics</strong>, we own the process.
                 </p>
-                <div class="flex flex-wrap justify-center gap-4 animate-fade-in-up opacity-0" style="animation-delay: 0.4s;">
-                    <a href="#assets" class="px-8 py-4 border border-white/30 text-white font-bold rounded hover:bg-white hover:text-black transition uppercase tracking-widest backdrop-blur-sm">
+                <div class="flex flex-wrap justify-center gap-4 animate-fade-in-up opacity-0"
+                    style="animation-delay: 0.4s;">
+                    <a href="#assets"
+                        class="px-8 py-4 border border-white/30 text-white font-bold rounded hover:bg-white hover:text-black transition uppercase tracking-widest backdrop-blur-sm">
                         Select Asset
                     </a>
-                    <a href="#field-ops" class="px-8 py-4 bg-h-cta text-black font-black rounded hover:bg-yellow-400 transition uppercase tracking-widest shadow-lg hover:shadow-h-cta/50">
+                    <a href="#field-ops"
+                        class="px-8 py-4 bg-h-cta text-black font-black rounded hover:bg-yellow-400 transition uppercase tracking-widest shadow-lg hover:shadow-h-cta/50">
                         Field Operations
                     </a>
                 </div>
             </div>
         </section>
 
-        <section id="assets" class="scroll-section **min-h-screen** py-24 relative border-b border-h-border" data-bg-id="bg-assets">
+        <section id="assets" class="scroll-section **min-h-screen** py-24 relative border-b border-h-border"
+            data-bg-id="bg-assets">
             <div class="max-w-7xl mx-auto px-4">
                 <div class="text-center mb-16">
                     <h2 class="text-sm font-mono text-slate-500 uppercase tracking-widest mb-4">Core Competency</h2>
@@ -138,38 +248,49 @@
                 </div>
 
                 <div class="grid md:grid-cols-3 gap-8">
-                    <a href="turbine-francis.html" class="asset-card group block" style="--card-color: #06b6d4; --card-shadow: rgba(6, 182, 212, 0.3);">
+                    <a href="turbine-francis.html" class="asset-card group block"
+                        style="--card-color: #06b6d4; --card-shadow: rgba(6, 182, 212, 0.3);">
                         <div class="asset-bg" style="background-image: url('assets/images/francis_srvcs.jpg');"></div>
                         <div class="asset-overlay"></div>
                         <div class="absolute bottom-0 left-0 p-8">
-                            <span class="text-h-cyan font-mono text-xs font-bold bg-h-cyan/10 px-2 py-1 rounded mb-2 inline-block">MIXED FLOW</span>
+                            <span
+                                class="text-h-cyan font-mono text-xs font-bold bg-h-cyan/10 px-2 py-1 rounded mb-2 inline-block">MIXED
+                                FLOW</span>
                             <h3 class="text-3xl font-black text-white group-hover:text-h-cyan transition">FRANCIS</h3>
                             <div class="mt-4 flex items-center text-xs font-bold text-white uppercase tracking-widest">
-                                Protocols <i data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-2 transition"></i>
+                                Protocols <i data-lucide="arrow-right"
+                                    class="w-4 h-4 ml-2 group-hover:translate-x-2 transition"></i>
                             </div>
                         </div>
                     </a>
 
-                    <a href="turbine-kaplan.html" class="asset-card group block" style="--card-color: #10b981; --card-shadow: rgba(16, 185, 129, 0.3);">
+                    <a href="turbine-kaplan.html" class="asset-card group block"
+                        style="--card-color: #10b981; --card-shadow: rgba(16, 185, 129, 0.3);">
                         <div class="asset-bg" style="background-image: url('assets/images/kaplan_srvcs.jpg');"></div>
                         <div class="asset-overlay"></div>
                         <div class="absolute bottom-0 left-0 p-8">
-                            <span class="text-h-green font-mono text-xs font-bold bg-h-green/10 px-2 py-1 rounded mb-2 inline-block">AXIAL FLOW</span>
+                            <span
+                                class="text-h-green font-mono text-xs font-bold bg-h-green/10 px-2 py-1 rounded mb-2 inline-block">AXIAL
+                                FLOW</span>
                             <h3 class="text-3xl font-black text-white group-hover:text-h-green transition">KAPLAN</h3>
                             <div class="mt-4 flex items-center text-xs font-bold text-white uppercase tracking-widest">
-                                Protocols <i data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-2 transition"></i>
+                                Protocols <i data-lucide="arrow-right"
+                                    class="w-4 h-4 ml-2 group-hover:translate-x-2 transition"></i>
                             </div>
                         </div>
                     </a>
 
-                    <a href="turbine-pelton.html" class="asset-card group block" style="--card-color: #f59e0b; --card-shadow: rgba(245, 158, 11, 0.3);">
+                    <a href="turbine-pelton.html" class="asset-card group block"
+                        style="--card-color: #f59e0b; --card-shadow: rgba(245, 158, 11, 0.3);">
                         <div class="asset-bg" style="background-image: url('assets/images/pelton_srvcs.jpg');"></div>
                         <div class="asset-overlay"></div>
                         <div class="absolute bottom-0 left-0 p-8">
-                            <span class="text-h-cta font-mono text-xs font-bold bg-h-cta/10 px-2 py-1 rounded mb-2 inline-block">IMPULSE</span>
+                            <span
+                                class="text-h-cta font-mono text-xs font-bold bg-h-cta/10 px-2 py-1 rounded mb-2 inline-block">IMPULSE</span>
                             <h3 class="text-3xl font-black text-white group-hover:text-h-cta transition">PELTON</h3>
                             <div class="mt-4 flex items-center text-xs font-bold text-white uppercase tracking-widest">
-                                Protocols <i data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-2 transition"></i>
+                                Protocols <i data-lucide="arrow-right"
+                                    class="w-4 h-4 ml-2 group-hover:translate-x-2 transition"></i>
                             </div>
                         </div>
                     </a>
@@ -177,15 +298,18 @@
             </div>
         </section>
 
-        <section id="field-ops" class="scroll-section **min-h-screen** py-24 border-b border-h-border" data-bg-id="bg-field">
+        <section id="field-ops" class="scroll-section **min-h-screen** py-24 border-b border-h-border"
+            data-bg-id="bg-field">
             <div class="max-w-7xl mx-auto px-4">
                 <div class="flex items-center gap-4 mb-16">
                     <div class="w-12 h-1 bg-h-orange"></div>
-                    <h2 class="text-3xl font-black text-white uppercase tracking-tight">Heavy Field Execution <span class="text-slate-400 text-lg block font-normal normal-case">The "Muscle" behind the Intelligence.</span></h2>
+                    <h2 class="text-3xl font-black text-white uppercase tracking-tight">Heavy Field Execution <span
+                            class="text-slate-400 text-lg block font-normal normal-case">The "Muscle" behind the
+                            Intelligence.</span></h2>
                 </div>
 
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    
+
                     <div class="ind-card p-8 rounded-xl" style="--accent: #f97316;">
                         <i data-lucide="wrench" class="w-10 h-10 mb-6"></i>
                         <h3 class="text-xl font-bold text-white mb-4">Mechanical Assembly</h3>
@@ -265,27 +389,33 @@
         <section id="digital-ops" class="scroll-section **min-h-screen** py-24" data-bg-id="bg-digital">
             <div class="max-w-7xl mx-auto px-4">
                 <div class="flex items-center gap-4 mb-16 justify-end text-right">
-                    <h2 class="text-3xl font-black text-white uppercase tracking-tight">Advanced Diagnostics <span class="text-h-cyan text-lg block font-normal normal-case">The "Brain" behind the Muscle.</span></h2>
+                    <h2 class="text-3xl font-black text-white uppercase tracking-tight">Advanced Diagnostics <span
+                            class="text-h-cyan text-lg block font-normal normal-case">The "Brain" behind the
+                            Muscle.</span></h2>
                     <div class="w-12 h-1 bg-h-cyan"></div>
                 </div>
 
                 <div class="grid md:grid-cols-4 gap-4">
-                    <a href="services-integrity.html" class="p-6 rounded-lg border border-h-cyan/20 hover:bg-h-cyan/5 transition group bg-black/60 backdrop-blur">
+                    <a href="services-integrity.html"
+                        class="p-6 rounded-lg border border-h-cyan/20 hover:bg-h-cyan/5 transition group bg-black/60 backdrop-blur">
                         <i data-lucide="activity" class="w-8 h-8 text-h-cyan mb-4"></i>
                         <h4 class="font-bold text-white mb-2">Vibration Analysis</h4>
                         <p class="text-xs text-slate-400">Spectrum analysis, orbit plots, and phase analysis.</p>
                     </a>
-                    <a href="services-predictive.html" class="p-6 rounded-lg border border-h-green/20 hover:bg-h-green/5 transition group bg-black/60 backdrop-blur">
+                    <a href="services-predictive.html"
+                        class="p-6 rounded-lg border border-h-green/20 hover:bg-h-green/5 transition group bg-black/60 backdrop-blur">
                         <i data-lucide="cpu" class="w-8 h-8 text-h-green mb-4"></i>
                         <h4 class="font-bold text-white mb-2">Digital Twin</h4>
                         <p class="text-xs text-slate-400">Real-time simulation and load scenario testing.</p>
                     </a>
-                    <a href="services-compliance.html" class="p-6 rounded-lg border border-h-purple/20 hover:bg-h-purple/5 transition group bg-black/60 backdrop-blur">
+                    <a href="services-compliance.html"
+                        class="p-6 rounded-lg border border-h-purple/20 hover:bg-h-purple/5 transition group bg-black/60 backdrop-blur">
                         <i data-lucide="file-check" class="w-8 h-8 text-h-purple mb-4"></i>
                         <h4 class="font-bold text-white mb-2">Compliance Audit</h4>
                         <p class="text-xs text-slate-400">ISO/IEC standard verification and reporting.</p>
                     </a>
-                    <a href="services-optimization.html" class="p-6 rounded-lg border border-h-yellow/20 hover:bg-h-yellow/5 transition group bg-black/60 backdrop-blur">
+                    <a href="services-optimization.html"
+                        class="p-6 rounded-lg border border-h-yellow/20 hover:bg-h-yellow/5 transition group bg-black/60 backdrop-blur">
                         <i data-lucide="zap" class="w-8 h-8 text-h-yellow mb-4"></i>
                         <h4 class="font-bold text-white mb-2">Efficiency Opt.</h4>
                         <p class="text-xs text-slate-400">Cam curve tuning and loss minimization.</p>
@@ -297,8 +427,10 @@
         <section class="scroll-section py-32 text-center border-t border-h-border" data-bg-id="bg-hardware">
             <div class="max-w-3xl mx-auto px-4 bg-black/60 backdrop-blur-md p-12 rounded-3xl border border-white/10">
                 <h2 class="text-3xl font-bold text-white mb-6">Need a whole team, or just a welder?</h2>
-                <p class="text-slate-300 mb-10 text-lg">We adapt to your outage scope. From turnkey rehabilitation to emergency spot repair.</p>
-                <a href="contact.html" class="inline-flex items-center justify-center px-12 py-5 bg-white text-black font-black rounded-lg hover:bg-slate-200 transition shadow-lg uppercase tracking-widest">
+                <p class="text-slate-300 mb-10 text-lg">We adapt to your outage scope. From turnkey rehabilitation to
+                    emergency spot repair.</p>
+                <a href="contact.html"
+                    class="inline-flex items-center justify-center px-12 py-5 bg-white text-black font-black rounded-lg hover:bg-slate-200 transition shadow-lg uppercase tracking-widest">
                     Request Service Quote
                 </a>
             </div>
@@ -306,16 +438,16 @@
 
     </main>
 
-        <div id="global-footer"></div>
+    <div id="global-footer"></div>
 
     <script>
         lucide.createIcons();
-        
+
         // MOBILE MENU
         const menuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         const mobileLinks = document.querySelectorAll('.mobile-link');
-        
+
         menuBtn.addEventListener('click', () => {
             const isClosed = mobileMenu.classList.contains('translate-x-full');
             if (isClosed) {
@@ -337,7 +469,7 @@
         // NAVBAR SCROLL
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('navbar');
-            if (window.scrollY > 50) { nav.classList.add('shadow-lg', 'bg-h-dark/95'); nav.classList.remove('bg-h-dark/90'); } 
+            if (window.scrollY > 50) { nav.classList.add('shadow-lg', 'bg-h-dark/95'); nav.classList.remove('bg-h-dark/90'); }
             else { nav.classList.remove('shadow-lg', 'bg-h-dark/95'); nav.classList.add('bg-h-dark/90'); }
         });
 
@@ -364,4 +496,5 @@
     <!-- Component Loader -->
     <script src="assets/js/layout-loader.js"></script>
 </body>
+
 </html>
