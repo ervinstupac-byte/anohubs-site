@@ -532,69 +532,6 @@
                     scrollHint.style.opacity = '1';
                 }
             });
-
-            // 2. HEADER LOGIC (Auto-Hide)
-            const checkForHeader = setInterval(() => {
-                const header = document.getElementById('global-header');
-                const trigger = document.getElementById('header-trigger'); // The latch we just added
-
-                // Look for the navbar element specifically if global-header is just a wrapper
-                const navbar = document.getElementById('navbar');
-
-                // If we found the navbar (loaded by layout-loader), we can proceed
-                if (navbar) {
-                    clearInterval(checkForHeader);
-                    initSmartHeader(navbar, trigger);
-                }
-            }, 100);
-
-            function initSmartHeader(header, trigger) {
-                // Define the hidden state class (moves header up, leaves latch visible)
-                // Note: Header height is approx 64px (h-16) to 80px (h-20). 
-                // We want to hide most of it but leave the latch.
-                // The prompt suggested: -translate-y-[calc(100%-4px)]
-                const hiddenClass = '-translate-y-[calc(100%-4px)]';
-
-                let closeTimer;
-
-                // Function to Hide
-                const hideHeader = () => {
-                    header.classList.add('transform', 'transition-transform', 'duration-500', 'ease-in-out');
-                    header.classList.add(hiddenClass);
-                };
-
-                // Function to Show
-                const showHeader = () => {
-                    header.classList.remove(hiddenClass);
-                };
-
-                // A. Start Timer on Load (6 seconds then hide)
-                setTimeout(() => {
-                    hideHeader();
-                }, 6000);
-
-                // B. Interaction: Mouse Enter Header (Show)
-                header.addEventListener('mouseenter', () => {
-                    clearTimeout(closeTimer);
-                    showHeader();
-                });
-
-                // C. Interaction: Mouse Leave Header (Hide after 3s)
-                header.addEventListener('mouseleave', () => {
-                    closeTimer = setTimeout(() => {
-                        hideHeader();
-                    }, 3000);
-                });
-
-                // D. Interaction: Manual Trigger (Latch)
-                if (trigger) {
-                    trigger.addEventListener('click', () => {
-                        // Toggle or just show? "Invite interaction" implies clicking opens it.
-                        // If it's hidden, show it.
-                        showHeader();
-                    });
-                }
-            }
         });
     </script>
 </body>

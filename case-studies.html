@@ -1,15 +1,19 @@
 ﻿<!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Mission Archive: Proven Results | AnoHUB</title>
-    <meta name="description" content="Documented case studies of Engineering Immunity. Real-world applications of the AnoHUB Protocol in neutralizing dynamic risk.">
+    <meta name="description"
+        content="Documented case studies of Engineering Immunity. Real-world applications of the AnoHUB Protocol in neutralizing dynamic risk.">
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+
     <link rel="stylesheet" href="assets/css/preloader.css">
-<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -17,8 +21,8 @@
                 extend: {
                     fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
                     colors: {
-                        'h-cyan': '#06b6d4', 'h-green': '#10b981', 'h-red': '#ef4444', 
-                        'h-yellow': '#facc15', 'h-purple': '#8b5cf6', 'h-dark': '#020617', 
+                        'h-cyan': '#06b6d4', 'h-green': '#10b981', 'h-red': '#ef4444',
+                        'h-yellow': '#facc15', 'h-purple': '#8b5cf6', 'h-dark': '#020617',
                         'h-panel': '#0f172a', 'h-border': '#1e293b', 'h-cta': '#f59e0b'
                     },
                     animation: { 'fade-in-up': 'fadeInUp 0.8s ease-out forwards' },
@@ -29,64 +33,136 @@
     </script>
 
     <style>
-        body { background-color: #020617; color: #f8fafc; overflow-x: hidden; }
-        
+        body {
+            background-color: #020617;
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+
         /* === BACKGROUND LAYERS === */
-        
+
         /* 1. IMAGE LAYER (cssts.jpg) */
         .bg-image-layer {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             z-index: -3;
-            background-image: url('assets/images/cssts.jpg'); /* VAŠA SLIKA */
-            background-size: cover; background-position: center;
-            opacity: 0.2; /* Tamno, suptilno */
+            background-image: url('assets/images/cssts.jpg');
+            /* VAŠA SLIKA */
+            background-size: cover;
+            background-position: center;
+            opacity: 0.2;
+            /* Tamno, suptilno */
             filter: grayscale(100%) contrast(1.2);
         }
 
         /* 2. TECH GRID LAYER */
         .tech-bg {
             background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 60px 60px; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
+            background-size: 60px 60px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
         }
 
         /* 3. NOISE TEXTURE */
         .noise-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
-            pointer-events: none; z-index: 50; opacity: 0.4;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.4;
         }
 
         /* === DOSSIER CARD === */
         .dossier-card {
-            background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(12px);
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.05);
             transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            position: relative; overflow: hidden;
-            display: flex; flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
-        .dossier-card:hover { transform: translateY(-5px); background: rgba(15, 23, 42, 0.9); }
-        
+
+        .dossier-card:hover {
+            transform: translateY(-5px);
+            background: rgba(15, 23, 42, 0.9);
+        }
+
         /* Left Border Colors */
-        .type-finance { border-left: 4px solid #3b82f6; }
-        .type-finance:hover { border-color: #3b82f6; box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.2); }
+        .type-finance {
+            border-left: 4px solid #3b82f6;
+        }
 
-        .type-francis { border-left: 4px solid #06b6d4; }
-        .type-francis:hover { border-color: #06b6d4; box-shadow: 0 10px 30px -10px rgba(6, 182, 212, 0.2); }
+        .type-finance:hover {
+            border-color: #3b82f6;
+            box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.2);
+        }
 
-        .type-kaplan { border-left: 4px solid #10b981; }
-        .type-kaplan:hover { border-color: #10b981; box-shadow: 0 10px 30px -10px rgba(16, 185, 129, 0.2); }
+        .type-francis {
+            border-left: 4px solid #06b6d4;
+        }
 
-        .type-pelton { border-left: 4px solid #f59e0b; }
-        .type-pelton:hover { border-color: #f59e0b; box-shadow: 0 10px 30px -10px rgba(245, 158, 11, 0.2); }
+        .type-francis:hover {
+            border-color: #06b6d4;
+            box-shadow: 0 10px 30px -10px rgba(6, 182, 212, 0.2);
+        }
+
+        .type-kaplan {
+            border-left: 4px solid #10b981;
+        }
+
+        .type-kaplan:hover {
+            border-color: #10b981;
+            box-shadow: 0 10px 30px -10px rgba(16, 185, 129, 0.2);
+        }
+
+        .type-pelton {
+            border-left: 4px solid #f59e0b;
+        }
+
+        .type-pelton:hover {
+            border-color: #f59e0b;
+            box-shadow: 0 10px 30px -10px rgba(245, 158, 11, 0.2);
+        }
 
         /* Filter Buttons */
-        .filter-btn { transition: all 0.3s; }
-        .filter-btn:hover { color: white; background: rgba(255,255,255,0.05); }
-        .filter-btn.active { background: #06b6d4; color: black; font-weight: bold; border-color: #06b6d4; }
-        
+        .filter-btn {
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .filter-btn.active {
+            background: #06b6d4;
+            color: black;
+            font-weight: bold;
+            border-color: #06b6d4;
+        }
+
         /* Hide scrollbar in filter bar */
-        .scrollbar-hide::-webkit-scrollbar { display: none; }
-        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
     </style>
 
     <!-- Favicons -->
@@ -100,188 +176,176 @@
     <noscript>
         <div style="border: 1px solid #ef4444; padding: 20px;">
             <h1 style="color: #ef4444; font-size: 24px; margin-bottom: 10px;">SYSTEM ERROR: SCRIPT BLOCKED</h1>
-            <p>The AnoHUB Protocol requires JavaScript to function.<br>Please enable scripts to access the interface.</p>
+            <p>The AnoHUB Protocol requires JavaScript to function.<br>Please enable scripts to access the interface.
+            </p>
         </div>
     </noscript>
 
-    
+
     <div class="bg-image-layer"></div>
     <div class="tech-bg"></div>
     <div class="noise-overlay"></div>
 
-        <div id="global-header"></div>
+    <div id="global-header"></div>
 
     <main class="pt-32 pb-20">
 
         <section class="max-w-7xl mx-auto px-4 mb-16 text-center">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-xs font-mono text-h-green mb-6 animate-[fadeInUp_1s_ease-out]">
+            <div
+                class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-xs font-mono text-h-green mb-6 animate-[fadeInUp_1s_ease-out]">
                 <span class="w-2 h-2 bg-h-green rounded-full animate-pulse"></span>
-                ARCHIVE ACCESS: GRANTED
+                <span data-i18n="case_studies_page.header.access">ARCHIVE ACCESS: GRANTED</span>
             </div>
-            
-            <h1 class="text-5xl md:text-6xl font-black text-white mb-6 tracking-tight leading-none animate-[fadeInUp_1s_ease-out_0.2s_forwards] opacity-0">
-                DECLASSIFIED <br>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-h-cyan to-blue-500">MISSION LOGS</span>
+
+            <h1
+                class="text-5xl md:text-6xl font-black text-white mb-6 tracking-tight leading-none animate-[fadeInUp_1s_ease-out_0.2s_forwards] opacity-0">
+                <span data-i18n="case_studies_page.header.status">DECLASSIFIED</span> <br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-h-cyan to-blue-500"
+                    data-i18n="case_studies_page.header.title">MISSION LOGS</span>
             </h1>
-            
-            <p class="text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed animate-[fadeInUp_1s_ease-out_0.4s_forwards] opacity-0">
-                Verifiable proof of the <strong class="text-white">Engineering Immunity Protocol</strong> in action. 
+
+            <p class="text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed animate-[fadeInUp_1s_ease-out_0.4s_forwards] opacity-0"
+                data-i18n="case_studies_page.header.subtitle">
+                Verifiable proof of the <strong class="text-white">Engineering Immunity Protocol</strong> in action.
                 12 documented missions neutralizing dynamic risk.
             </p>
         </section>
 
         <section class="max-w-7xl mx-auto px-4 mb-12 sticky top-24 z-40">
-            <div class="bg-h-dark/90 backdrop-blur-md border border-h-border p-4 rounded-xl flex flex-col md:flex-row justify-between items-center gap-4 shadow-2xl animate-[fadeInUp_1s_ease-out_0.6s_forwards] opacity-0">
-                
+            <div
+                class="bg-h-dark/90 backdrop-blur-md border border-h-border p-4 rounded-xl flex flex-col md:flex-row justify-between items-center gap-4 shadow-2xl animate-[fadeInUp_1s_ease-out_0.6s_forwards] opacity-0">
+
                 <div class="flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 scrollbar-hide">
-                    <button class="filter-btn active px-4 py-2 rounded border border-white/10 text-xs font-bold text-slate-400 uppercase font-mono whitespace-nowrap" data-filter="all">All Missions</button>
-                    <button class="filter-btn px-4 py-2 rounded border border-white/10 text-xs font-bold text-slate-400 uppercase font-mono whitespace-nowrap" data-filter="finance">Finance & ROI</button>
-                    <button class="filter-btn px-4 py-2 rounded border border-white/10 text-xs font-bold text-slate-400 uppercase font-mono whitespace-nowrap" data-filter="francis">Francis</button>
-                    <button class="filter-btn px-4 py-2 rounded border border-white/10 text-xs font-bold text-slate-400 uppercase font-mono whitespace-nowrap" data-filter="kaplan">Kaplan</button>
-                    <button class="filter-btn px-4 py-2 rounded border border-white/10 text-xs font-bold text-slate-400 uppercase font-mono whitespace-nowrap" data-filter="pelton">Pelton</button>
+                    <button
+                        class="filter-btn active px-4 py-2 rounded border border-white/10 text-xs font-bold text-slate-400 uppercase font-mono whitespace-nowrap"
+                        data-filter="all" data-i18n="case_studies_page.filters.all">All Missions</button>
+                    <button
+                        class="filter-btn px-4 py-2 rounded border border-white/10 text-xs font-bold text-slate-400 uppercase font-mono whitespace-nowrap"
+                        data-filter="finance" data-i18n="case_studies_page.filters.finance">Finance & ROI</button>
+                    <button
+                        class="filter-btn px-4 py-2 rounded border border-white/10 text-xs font-bold text-slate-400 uppercase font-mono whitespace-nowrap"
+                        data-filter="francis">Francis</button>
+                    <button
+                        class="filter-btn px-4 py-2 rounded border border-white/10 text-xs font-bold text-slate-400 uppercase font-mono whitespace-nowrap"
+                        data-filter="kaplan">Kaplan</button>
+                    <button
+                        class="filter-btn px-4 py-2 rounded border border-white/10 text-xs font-bold text-slate-400 uppercase font-mono whitespace-nowrap"
+                        data-filter="pelton">Pelton</button>
                 </div>
 
                 <div class="relative w-full md:w-64">
                     <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500"></i>
-                    <input type="text" id="search-input" placeholder="Search by ID or Risk..." class="w-full bg-slate-900 border border-h-border rounded-lg pl-10 pr-4 py-2 text-sm text-white focus:border-h-cyan focus:outline-none transition font-mono">
+                    <input type="text" id="search-input" placeholder="Search by ID or Risk..."
+                        class="w-full bg-slate-900 border border-h-border rounded-lg pl-10 pr-4 py-2 text-sm text-white focus:border-h-cyan focus:outline-none transition font-mono">
                 </div>
             </div>
         </section>
 
         <section class="max-w-7xl mx-auto px-4 mb-24">
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="cases-grid">
-                <div class="col-span-full text-center py-20 text-slate-500 font-mono animate-pulse border border-dashed border-slate-800 rounded-xl">
-                    RETRIEVING DATA FROM SECURE SERVER...
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="mission-grid">
+                <!-- DYNAMIC CONTENT LOADING FROM SUPABASE -->
+                <div
+                    class="col-span-full text-center py-20 text-slate-500 font-mono animate-pulse border border-dashed border-slate-800 rounded-xl">
+                    WAITING FOR SECURE UPLINK...
                 </div>
             </div>
         </section>
 
         <section class="text-center px-4">
             <div class="max-w-3xl mx-auto bg-h-panel/50 backdrop-blur border border-white/10 p-10 rounded-2xl">
-                <h2 class="text-3xl font-black text-white mb-4">Facing a similar threat?</h2>
-                <p class="text-slate-400 mb-8">Our protocols are adaptable to any hydro environment. Initialize a consultation today.</p>
-                <a href="contact.html" class="inline-flex items-center gap-3 bg-h-cyan hover:bg-cyan-400 text-black font-black px-8 py-4 rounded transition shadow-lg hover:shadow-cyan-500/50 uppercase tracking-widest text-sm">
-                    INITIATE PROTOCOL <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                <h2 class="text-3xl font-black text-white mb-4" data-i18n="case_studies_page.cta.title">Facing a similar
+                    threat?</h2>
+                <p class="text-slate-400 mb-8" data-i18n="case_studies_page.cta.text">Our protocols are adaptable to any
+                    hydro environment. Initialize a consultation today.</p>
+                <a href="contact.html"
+                    class="inline-flex items-center gap-3 bg-h-cyan hover:bg-cyan-400 text-black font-black px-8 py-4 rounded transition shadow-lg hover:shadow-cyan-500/50 uppercase tracking-widest text-sm">
+                    <span data-i18n="case_studies_page.cta.btn">INITIATE PROTOCOL</span> <i data-lucide="arrow-right"
+                        class="w-5 h-5"></i>
                 </a>
             </div>
         </section>
 
     </main>
 
-        <div id="global-footer"></div>
+    <div id="global-footer"></div>
 
-    <script>
-        lucide.createIcons();
+    <script src="assets/js/translations.js"></script>
+    <script type="module">
+        import { supabase } from './assets/js/db.js';
 
-        // === DATA: THE 12 MISSION FILES ===
-        // Note: Assumes folder structure: /case-studies/file.html
-        const casesData = [
-            { id: '001', title: 'Compliance Shield', type: 'finance', file: 'cs-compliance-shield.html', risk: 'Regulatory Fines', outcome: '€200k Saved', color: 'text-h-green', borderClass: 'type-finance' },
-            { id: '002', title: 'Digital Protocol ROI', type: 'finance', file: 'cs-digital-protocol-roi.html', risk: 'Budget Bloat', outcome: '25% Labor Cut', color: 'text-h-blue', borderClass: 'type-finance' },
-            { id: '003', title: 'Fish Passage Opt.', type: 'kaplan', file: 'cs-fish-passage-optimization.html', risk: 'License Revok.', outcome: '100% Compliance', color: 'text-h-green', borderClass: 'type-kaplan' },
-            { id: '004', title: 'Forensic NDT Fatigue', type: 'francis', file: 'cs-forensic-ndt-fatigue.html', risk: 'Blade Separation', outcome: 'Fatigue Arrested', color: 'text-h-purple', borderClass: 'type-francis' },
-            { id: '005', title: 'Francis Misalignment', type: 'francis', file: 'cs-francis-misalignment.html', risk: 'Bearing Failure', outcome: '99.1% Uptime', color: 'text-h-cyan', borderClass: 'type-francis' },
-            { id: '006', title: 'Hydraulic Hammer', type: 'pelton', file: 'cs-hydraulic-hammer-mitigation.html', risk: 'Penstock Burst', outcome: '-40% Surge', color: 'text-h-cta', borderClass: 'type-pelton' },
-            { id: '007', title: 'Kaplan Optimization', type: 'kaplan', file: 'cs-kaplan-optimization.html', risk: 'Efficiency Loss', outcome: '+3.1% Output', color: 'text-h-green', borderClass: 'type-kaplan' },
-            { id: '008', title: 'LCC Procurement Audit', type: 'finance', file: 'cs-lcc-procurement-audit.html', risk: 'Low-Bid Failure', outcome: '18% LCC Savings', color: 'text-h-blue', borderClass: 'type-finance' },
-            { id: '009', title: 'M-E Synergy Erosion', type: 'pelton', file: 'cs-me-synergy-erosion.html', risk: 'Electro-Erosion', outcome: 'Shaft 0V', color: 'text-h-yellow', borderClass: 'type-pelton' },
-            { id: '010', title: 'Pelton Abrasion', type: 'pelton', file: 'cs-pelton-abrasion.html', risk: 'Bucket Wear', outcome: '5yr Life Ext.', color: 'text-h-cta', borderClass: 'type-pelton' },
-            { id: '011', title: 'Predictive ROI', type: 'finance', file: 'cs-predictive-maintenance-roi.html', risk: 'Unplanned Outage', outcome: 'Zero Downtime', color: 'text-h-green', borderClass: 'type-finance' },
-            { id: '012', title: 'Shaft Stability', type: 'francis', file: 'cs-shaft-system-stability.html', risk: 'Vibration Trip', outcome: '-85% Amplitude', color: 'text-h-cta', borderClass: 'type-francis' }
-        ];
+        // Mapping for translations (fallback if needed, though we fetch text directly)
+        const typeColors = {
+            'FRANCIS': 'text-h-cyan',
+            'PELTON': 'text-white',
+            'KAPLAN': 'text-h-green',
+            'FINANCE': 'text-h-gold'
+        };
 
-        const grid = document.getElementById('cases-grid');
-        const filterBtns = document.querySelectorAll('.filter-btn');
-        const searchInput = document.getElementById('search-input');
+        async function loadMissions() {
+            const grid = document.getElementById('mission-grid');
+            if (!grid) return;
+            // Loading State
+            grid.innerHTML = '<div class="col-span-full text-center py-20"><div class="inline-block animate-pulse text-h-gold font-mono text-sm tracking-widest">ACCESSING CLASSIFIED ARCHIVE...</div></div>';
 
-        function renderCases(filterType) {
-            grid.innerHTML = '';
-            
-            let filtered;
-            if (filterType === 'all') {
-                filtered = casesData;
-            } else {
-                filtered = casesData.filter(c => c.type === filterType);
-            }
+            // Fetch from Supabase
+            const { data, error } = await supabase
+                .from('missions')
+                .select('*')
+                .order('case_id', { ascending: true });
 
-            if(filtered.length === 0) {
-                grid.innerHTML = '<div class="col-span-full text-center py-12 text-slate-500 font-mono border border-dashed border-slate-800 rounded-xl bg-white/5">NO MISSIONS FOUND IN THIS SECTOR.</div>';
+            if (error) {
+                console.error('Archive Error:', error);
+                grid.innerHTML = '<div class="col-span-full text-center text-red-500 font-mono">CONNECTION LOST. ARCHIVE OFFLINE.</div>';
                 return;
             }
+            // Render
+            grid.innerHTML = '';
+            data.forEach(mission => {
+                const colorClass = typeColors[mission.turbine_type] || 'text-slate-400';
 
-            filtered.forEach((item, index) => {
-                const delay = index * 50; 
-                const card = document.createElement('a');
-                
-                // Path logic:
-                card.href = `case-studies/${item.file}`; 
-                
-                card.className = `dossier-card rounded-xl p-8 group block ${item.borderClass} animate-[fadeInUp_0.5s_ease-out]`;
-                card.style.animationDelay = `${delay}ms`;
-                card.style.opacity = '0';
-                card.style.animationFillMode = 'forwards';
-                
-                card.innerHTML = `
-                    <div class="flex justify-between items-start mb-6">
-                        <div>
-                            <div class="text-[10px] font-mono text-slate-500 mb-1">CASE ID: ${item.id}</div>
-                            <h3 class="text-xl font-bold text-white transition group-hover:text-white/90">${item.title}</h3>
+                const cardHTML = `
+                    <div class="group relative bg-white/5 border border-white/10 p-6 hover:border-h-gold/50 transition-all duration-300 hover:bg-black/40 flex flex-col h-full">
+                        <div class="absolute top-4 right-4 text-[10px] font-mono opacity-30 group-hover:opacity-100 text-h-gold transition-opacity">
+                            CASE ID: ${mission.case_id}
                         </div>
-                        <div class="bg-white/5 px-2 py-1 rounded text-[10px] font-bold border border-white/10 uppercase text-slate-400 font-mono">
-                            ${item.type.toUpperCase()}
+                        
+                        <h3 class="text-lg font-bold text-white mb-1 font-header uppercase">${mission.title}</h3>
+                        
+                        <div class="text-xs font-mono ${colorClass} mb-6 tracking-wider border-b border-white/10 pb-2 inline-block self-start">
+                            ${mission.turbine_type}
                         </div>
-                    </div>
-
-                    <div class="mt-auto space-y-4 pt-6 border-t border-white/5">
-                        <div class="flex justify-between text-xs">
-                            <span class="text-slate-500 font-mono">THREAT</span>
-                            <span class="text-h-red font-bold text-right">${item.risk}</span>
+                        
+                        <div class="grid grid-cols-2 gap-4 mt-auto">
+                            <div>
+                                <div class="text-[10px] uppercase text-slate-500 tracking-widest mb-1">${mission.threat_label || 'PRIJETNJA'}</div>
+                                <div class="text-sm text-slate-300 font-mono border-l-2 border-red-500/50 pl-2">
+                                    ${mission.threat}
+                                </div>
+                            </div>
+                            <div>
+                                <div class="text-[10px] uppercase text-slate-500 tracking-widest mb-1">${mission.result_label || 'REZULTAT'}</div>
+                                <div class="text-sm text-h-gold font-bold font-mono border-l-2 border-h-gold/50 pl-2">
+                                    ${mission.result}
+                                </div>
+                            </div>
                         </div>
-                        <div class="flex justify-between text-sm">
-                            <span class="text-slate-400 font-mono uppercase text-[10px] pt-1">RESULT</span>
-                            <span class="${item.color} font-black text-right text-lg">${item.outcome}</span>
-                        </div>
-                    </div>
-
-                    <div class="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition transform translate-x-2 group-hover:translate-x-0">
-                        <i data-lucide="file-text" class="w-6 h-6 text-white/20"></i>
                     </div>
                 `;
-                grid.appendChild(card);
+                grid.innerHTML += cardHTML;
             });
-            lucide.createIcons();
+
+            // Re-init generic UI logic if not already handled
+            if (window.lucide) window.lucide.createIcons();
         }
 
-        // Filter Logic
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                filterBtns.forEach(b => b.classList.remove('active'));
-                e.target.classList.add('active');
-                renderCases(e.target.getAttribute('data-filter'));
-            });
-        });
+        // Execute on load
+        document.addEventListener('DOMContentLoaded', loadMissions);
 
-        // Search Logic
-        if(searchInput) {
-            searchInput.addEventListener('input', (e) => {
-                const term = e.target.value.toLowerCase();
-                const cards = document.querySelectorAll('.dossier-card');
-                cards.forEach(card => {
-                    const text = card.innerText.toLowerCase();
-                    card.style.display = text.includes(term) ? 'flex' : 'none';
-                });
-            });
-        }
-
-        // Init
-        document.addEventListener('DOMContentLoaded', () => { renderCases('all'); });
-        
-        // Mobile Menu Logic
+        // Mobile Menu Logic (Preserved)
         const menuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         const mobileLinks = document.querySelectorAll('.mobile-link');
-        
-        if(menuBtn) {
+        if (menuBtn) {
             menuBtn.addEventListener('click', () => {
                 const isClosed = mobileMenu.classList.contains('translate-x-full');
                 if (isClosed) {
@@ -293,7 +357,6 @@
                 }
             });
         }
-
         mobileLinks.forEach(link => {
             link.addEventListener('click', () => {
                 mobileMenu.classList.add('translate-x-full');
@@ -301,15 +364,17 @@
             });
         });
 
-        // Navbar Scroll Effect
+        // Navbar Scroll Effect (Preserved)
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                nav.classList.add('shadow-lg', 'bg-h-dark/95');
-                nav.classList.remove('bg-h-dark/90');
-            } else {
-                nav.classList.remove('shadow-lg', 'bg-h-dark/95');
-                nav.classList.add('bg-h-dark/90');
+            if (nav) {
+                if (window.scrollY > 50) {
+                    nav.classList.add('shadow-lg', 'bg-h-dark/95');
+                    nav.classList.remove('bg-h-dark/90');
+                } else {
+                    nav.classList.remove('shadow-lg', 'bg-h-dark/95');
+                    nav.classList.add('bg-h-dark/90');
+                }
             }
         });
     </script>
@@ -317,4 +382,5 @@
     <!-- Component Loader -->
     <script src="assets/js/layout-loader.js"></script>
 </body>
+
 </html>

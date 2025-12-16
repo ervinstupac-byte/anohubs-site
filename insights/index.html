@@ -12,9 +12,9 @@
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap"
         rel="stylesheet">
 
-    
+
     <link rel="stylesheet" href="../assets/css/preloader.css">
-<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -174,7 +174,8 @@
     <noscript>
         <div style="border: 1px solid #ef4444; padding: 20px;">
             <h1 style="color: #ef4444; font-size: 24px; margin-bottom: 10px;">SYSTEM ERROR: SCRIPT BLOCKED</h1>
-            <p>The AnoHUB Protocol requires JavaScript to function.<br>Please enable scripts to access the interface.</p>
+            <p>The AnoHUB Protocol requires JavaScript to function.<br>Please enable scripts to access the interface.
+            </p>
         </div>
     </noscript>
 
@@ -182,7 +183,7 @@
     <div class="fixed-bg"></div>
     <div class="bg-overlay"></div>
 
-        <div id="global-header"></div>
+    <div id="global-header"></div>
 
     <main class="pt-32 pb-24">
 
@@ -190,12 +191,14 @@
             <div
                 class="inline-flex items-center gap-2 bg-white/5 border border-white/10 px-6 py-2 rounded-full mb-8 animate-fade-up backdrop-blur-md">
                 <div class="w-2 h-2 bg-h-cyan rounded-full animate-pulse"></div>
-                <span class="text-[10px] font-mono font-bold text-slate-300 uppercase tracking-widest">Knowledge Base:
+                <span class="text-[10px] font-mono font-bold text-slate-300 uppercase tracking-widest"
+                    data-i18n="insights_page.status">Knowledge Base:
                     Online</span>
             </div>
-            <h1 class="intelligence-title mb-6 animate-fade-up" style="animation-delay: 0.1s;">INTELLIGENCE</h1>
+            <h1 class="intelligence-title mb-6 animate-fade-up" style="animation-delay: 0.1s;"
+                data-i18n="insights_page.main_title">INTELLIGENCE</h1>
             <p class="text-slate-400 text-lg md:text-xl max-w-2xl mx-auto font-light animate-fade-up"
-                style="animation-delay: 0.2s;">
+                style="animation-delay: 0.2s;" data-i18n="insights_page.subtitle">
                 Forensic engineering insights, strategic forecasts, and the unvarnished truth about asset integrity.
             </p>
         </section>
@@ -208,10 +211,14 @@
             <div class="filter-bar rounded-2xl p-4 md:p-6 flex flex-col md:flex-row justify-between items-center gap-6">
                 <div
                     class="flex flex-wrap justify-center gap-6 md:gap-8 text-[10px] md:text-xs font-bold font-mono uppercase tracking-widest">
-                    <button class="filter-btn active" onclick="filterInsights('all')">All Briefs</button>
-                    <button class="filter-btn" onclick="filterInsights('tech')">Technical</button>
-                    <button class="filter-btn" onclick="filterInsights('finance')">Financial</button>
-                    <button class="filter-btn" onclick="filterInsights('strategy')">Strategic</button>
+                    <button class="filter-btn active" onclick="filterInsights('all')"
+                        data-i18n="insights_page.filter_all">All Briefs</button>
+                    <button class="filter-btn" onclick="filterInsights('tech')"
+                        data-i18n="insights_page.filter_tech">Technical</button>
+                    <button class="filter-btn" onclick="filterInsights('finance')"
+                        data-i18n="insights_page.filter_fin">Financial</button>
+                    <button class="filter-btn" onclick="filterInsights('strategy')"
+                        data-i18n="insights_page.filter_strat">Strategic</button>
                 </div>
                 <div class="relative w-full md:w-72">
                     <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
@@ -228,17 +235,35 @@
 
     </main>
 
-    <footer class="bg-black/50 text-white py-16 border-t border-white/10 backdrop-blur-lg">
-        <div class="max-w-7xl mx-auto px-6 text-center">
-            <p class="text-xs font-mono text-gray-500">© 2025 Anohubs Inc. | INTELLIGENCE DIVISION</p>
-        </div>
-    </footer>
+    <div id="global-footer"></div>
 
+    <script src="../assets/js/translations.js"></script>
     <script>
         lucide.createIcons();
 
         // === DATA LOADING ===
         let insightsData = [];
+
+        // ID to Translation Key Mapping
+        const idToKey = {
+            17: 'manifesto',
+            16: 'ai_paradox',
+            15: 'scada_gap',
+            14: 'cfd_analysis',
+            13: 'sediment',
+            12: 'me_synergy',
+            11: 'digital_twin',
+            10: 'check_engine',
+            9: 'holistic',
+            8: 'symbiosis',
+            7: 'fortress',
+            6: 'ticking_bomb',
+            5: 'human_sensor',
+            4: 'dach_insights',
+            3: 'winter_ops',
+            2: 'hidden_cost',
+            1: 'immunity'
+        };
 
         async function loadInsightsData() {
             try {
@@ -251,6 +276,10 @@
                 // Initialize page after data loads
                 renderFeatured();
                 renderInsights(insightsData);
+
+                // Re-run translations
+                if (window.updateContent) window.updateContent();
+
             } catch (error) {
                 console.error('Failed to load insights data:', error);
                 document.getElementById('insights-grid').innerHTML =
@@ -268,6 +297,8 @@
             const manifesto = insightsData.find(item => item.id === 17);
             if (manifesto) {
                 const imageUrl = manifesto.image || '../assets/images/Article 17/A17-pozadina1.jpg';
+                const key = idToKey[17];
+
                 featuredContainer.innerHTML = `
                     <a href="${manifesto.link}" class="block bg-gradient-to-br from-red-900/40 to-black/80 border border-red-500/50 rounded-2xl p-8 md:p-12 relative overflow-hidden group hover:border-red-500 transition-all duration-500 shadow-[0_0_50px_rgba(220,38,38,0.15)]">
                         <div class="absolute inset-0 bg-[url('${imageUrl}')] opacity-20 bg-cover mix-blend-overlay transition group-hover:opacity-30"></div>
@@ -276,17 +307,17 @@
                         </div>
                         <div class="relative z-10 max-w-3xl">
                             <div class="flex items-center gap-4 mb-6">
-                                <span class="bg-red-600 text-white px-3 py-1 rounded text-[10px] font-black uppercase tracking-widest shadow-md animate-pulse">EDITOR'S CHOICE</span>
-                                <span class="text-xs font-mono text-red-300 font-bold">MUST READ // ${manifesto.readTime}</span>
+                                <span class="bg-red-600 text-white px-3 py-1 rounded text-[10px] font-black uppercase tracking-widest shadow-md animate-pulse" data-i18n="insights_page.editors_choice">EDITOR'S CHOICE</span>
+                                <span class="text-xs font-mono text-red-300 font-bold" data-i18n="insights_page.must_read">MUST READ // ${manifesto.readTime}</span>
                             </div>
-                            <h2 class="text-3xl md:text-5xl font-black text-white mb-6 leading-tight group-hover:text-red-400 transition">
+                            <h2 class="text-3xl md:text-5xl font-black text-white mb-6 leading-tight group-hover:text-red-400 transition" data-i18n="articles_list.${key}.title">
                                 ${manifesto.title}
                             </h2>
-                            <p class="text-lg text-slate-300 mb-8 leading-relaxed font-medium">
+                            <p class="text-lg text-slate-300 mb-8 leading-relaxed font-medium" data-i18n="articles_list.${key}.desc">
                                 ${manifesto.description}
                             </p>
                             <div class="inline-flex items-center gap-3 text-sm font-bold text-red-500 uppercase tracking-widest group-hover:text-white transition-all border-b-2 border-red-600 pb-1">
-                                Read The Manifesto <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                                <span data-i18n="insights_page.read_btn">Read The Manifesto</span> <i data-lucide="arrow-right" class="w-5 h-5"></i>
                             </div>
                         </div>
                     </a>
@@ -321,6 +352,8 @@
                     badgeColor = 'text-blue-500 border-blue-500/30 bg-blue-500/10';
                 }
 
+                const key = idToKey[item.id];
+
                 const card = document.createElement('a');
                 card.href = item.link;
                 card.className = `insight-card p-8 group ${borderClass}`;
@@ -332,16 +365,16 @@
                         </span>
                         <i data-lucide="${icon}" class="w-5 h-5 text-slate-500 group-hover:text-white transition"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-4 leading-tight group-hover:text-h-cyan transition">
+                    <h3 class="text-xl font-bold text-white mb-4 leading-tight group-hover:text-h-cyan transition" data-i18n="articles_list.${key}.title">
                         ${item.title}
                     </h3>
-                    <p class="text-sm text-slate-400 leading-relaxed mb-8 flex-grow">
+                    <p class="text-sm text-slate-400 leading-relaxed mb-8 flex-grow" data-i18n="articles_list.${key}.desc">
                         ${item.description}
                     </p>
                     <div class="pt-6 border-t border-white/5 flex items-center justify-between">
                         <span class="text-[10px] font-mono text-slate-500">${item.date}</span>
                         <div class="flex items-center gap-2 text-xs font-bold text-slate-300 uppercase tracking-widest group-hover:gap-4 transition-all">
-                            Read <i data-lucide="arrow-right" class="w-4 h-4 text-h-cyan"></i>
+                            <span data-i18n="insights_page.read_btn">Read</span> <i data-lucide="arrow-right" class="w-4 h-4 text-h-cyan"></i>
                         </div>
                     </div>
                 `;
@@ -360,6 +393,7 @@
                 const filtered = insightsData.filter(item => item.category === category);
                 renderInsights(filtered);
             }
+            if (window.updateContent) window.updateContent();
         }
 
         searchInput.addEventListener('input', (e) => {
@@ -370,6 +404,7 @@
                 item.tag.toLowerCase().includes(term)
             );
             renderInsights(filtered);
+            if (window.updateContent) window.updateContent();
         });
 
         // INIT - Load data and render

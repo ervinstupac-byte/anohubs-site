@@ -33,9 +33,8 @@ document.addEventListener("DOMContentLoaded", () => {
             if (window.lucide) window.lucide.createIcons();
             if (typeof initGridTicker === "function") initGridTicker();
 
-            // C. Bind Language Switcher (Event Delegation)
-            // C. Bind Language Switcher (Handled via onclick in HTML)
-            // Logic removed to prevent conflicts
+            // C. Smart Header Logic
+            if (typeof initSmartHeader === "function") initSmartHeader();
 
             // D. Mobile Menu Logic
             const menuBtn = document.getElementById("mobile-menu-btn");
@@ -163,30 +162,120 @@ function runBootSequence() {
 }
 
 // Grid Frequency Ticker (SCADA Easter Egg)
-function initGridTicker() {
-    const freqElement = document.getElementById("grid-freq");
-    if (!freqElement) return;
+// Grid Frequency Ticker (Supabase Connected)
+async function initGridTicker() {
+    // 1. Find elements (Heuristic as requested via User)
+    const allDivs = document.querySelectorAll('div');
+    let freqEl = null;
 
-    // Update frequency every 2 seconds
-    setInterval(() => {
-        // Generate random frequency between 49.95 and 50.05 Hz
-        const frequency = (Math.random() * 0.10) + 49.95;
+    // Heuristic search for the 50.xx Hz element or ID 'grid-freq'
+    // First try ID if exists (from previous code)
+    freqEl = document.getElementById("grid-freq");
 
-        // Format to 2 decimal places
-        const formattedFreq = frequency.toFixed(2);
-
-        // Update text
-        freqElement.textContent = `${formattedFreq} Hz`;
-
-        // Update color based on threshold
-        if (frequency < 49.98) {
-            // Warning: below nominal
-            freqElement.classList.remove("text-h-green");
-            freqElement.classList.add("text-h-yellow");
-        } else {
-            // Nominal: green
-            freqElement.classList.remove("text-h-yellow");
-            freqElement.classList.add("text-h-green");
+    // If not found by ID (legacy header might not have it), search by text
+    if (!freqEl) {
+        for (let div of allDivs) {
+            if (div.innerText && div.innerText.includes('Hz')) {
+                freqEl = div;
+                break;
+            }
         }
-    }, 2000); // Every 2 seconds
+    }
+
+    if (!freqEl) return;
+
+    // 2. Import Client (Dynamic Import for safety in non-module scripts)
+    // Note: This relies on modern browser support for dynamic imports
+    const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');
+
+    const sbUrl = 'https://nehxtecejxklqknscbgf.supabase.co';
+    const sbKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5laHh0ZWNlanhrbHFrbnNjYmdmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU2MjA4NTksImV4cCI6MjA4MTE5Njg1OX0.AWWPN9ocAhjBTMtOgQ29ey3y4KcEXQLvfB98Z998n7A';
+    const supabase = createClient(sbUrl, sbKey);
+
+    // 3. Update Function
+    const updateFreq = async () => {
+        const { data, error } = await supabase
+            .from('system_status')
+            .select('*')
+            .eq('id', 'main_grid')
+            .single();
+
+        if (data && !error) {
+            const freqVal = parseFloat(data.frequency).toFixed(2);
+            freqEl.innerText = `${freqVal} Hz`;
+
+            // Color Logic
+            freqEl.classList.remove('text-h-cyan', 'text-h-red', 'text-h-gold', 'text-h-green', 'text-h-yellow');
+            if (freqVal >= 49.98 && freqVal <= 50.02) {
+                freqEl.classList.add('text-h-green'); // Nominal (Green per user request logic or similar to header design)
+            } else if (freqVal >= 49.95 && freqVal <= 50.05) {
+                freqEl.classList.add('text-h-cyan'); // Acceptable
+            } else {
+                freqEl.classList.add('text-h-red', 'animate-pulse'); // Unstable
+            }
+        }
+    };
+
+    // Initial Fetch
+    updateFreq();
+
+    // Subscribe to Realtime changes
+    supabase
+        .channel('grid_updates')
+        .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'system_status' }, payload => {
+            if (payload.new.id === 'main_grid') {
+                const newFreq = parseFloat(payload.new.frequency).toFixed(2);
+                freqEl.innerText = `${newFreq} Hz`;
+
+                // Re-apply color logic
+                freqEl.classList.remove('text-h-cyan', 'text-h-red', 'text-h-gold', 'text-h-green', 'text-h-yellow');
+                if (newFreq >= 49.98 && newFreq <= 50.02) {
+                    freqEl.classList.add('text-h-cyan'); // Using user's requested color logic for "Stable"
+                } else {
+                    freqEl.classList.add('text-h-red', 'animate-pulse');
+                }
+            }
+        })
+        .subscribe();
+}
+
+// function to handle the Smart Header behavior
+function initSmartHeader() {
+    const header = document.getElementById('global-header');
+    if (!header) return;
+
+    // If the header element doesn't have transform transition classes, add them
+    if (!header.classList.contains('transition-transform')) {
+        header.classList.add('transition-transform', 'duration-500', 'ease-in-out', 'transform');
+    }
+
+    const hiddenClass = '-translate-y-[calc(100%-4px)]'; // Keeps the gold line visible
+    let closeTimer;
+
+    // Helper functions
+    const hideHeader = () => header.classList.add(hiddenClass);
+    const showHeader = () => header.classList.remove(hiddenClass);
+
+    // 1. Initial Timer: Hide after 6 seconds (Global behavior)
+    setTimeout(() => {
+        hideHeader();
+    }, 6000);
+
+    // 2. Mouse Interaction
+    header.addEventListener('mouseenter', () => {
+        clearTimeout(closeTimer);
+        showHeader();
+    });
+
+    header.addEventListener('mouseleave', () => {
+        closeTimer = setTimeout(() => {
+            hideHeader();
+        }, 3000);
+    });
+
+    // 3. (Optional) Mobile Touch logic - tap to open
+    header.addEventListener('touchstart', () => {
+        clearTimeout(closeTimer);
+        showHeader();
+    });
 }
