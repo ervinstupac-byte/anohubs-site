@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AnoHUB | ORG INTELLIGENCE // MODULE 03</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=JetBrains+Mono:wght@300;500&family=Rajdhani:wght@300;600&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { 
+            theme: { 
+                extend: { 
+                    fontFamily: { 
+                        sans: ['Rajdhani', 'sans-serif'], 
+                        mono: ['JetBrains Mono', 'monospace'],
+                        divine: ['Cinzel', 'serif'] 
+                    },
+                    colors: { 
+                        'h-gold': '#FFD700',   
+                        'h-void': '#020202',   
+                        'h-glass': 'rgba(10, 10, 10, 0.9)',
+                        'h-border': '#333333',
+                        'h-orange': '#f97316',
+                        'h-red': '#ef4444',
+                        'h-green': '#10b981'
+                    },
+                    animation: {
+                        'flow': 'flow 20s linear infinite',
+                        'scan-horizontal': 'scanHorizontal 3s cubic-bezier(0.4, 0, 0.2, 1) infinite',
+                        'pulse-fast': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        flow: {
+                            '0%': { backgroundPosition: '0 0' },
+                            '100%': { backgroundPosition: '40px 40px' },
+                        },
+                        scanHorizontal: {
+                            '0%': { transform: 'translateX(-100%)', opacity: '0' },
+                            '50%': { opacity: '1' },
+                            '100%': { transform: 'translateX(200%)', opacity: '0' }
+                        }
+                    }
+                } 
+            }
+        }
+    </script>
+
+    <style>
+        body { background-color: #020202; color: #e2e8f0; cursor: crosshair; }
+        
+        /* DIVINE GRID */
+        .divine-grid {
+            position: fixed; inset: 0; z-index: -1;
+            background-size: 50px 50px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 215, 0, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 215, 0, 0.03) 1px, transparent 1px);
+            mask-image: radial-gradient(circle at 50% 50%, black 0%, transparent 90%);
+        }
+
+        .scada-panel { 
+            background: rgba(5, 10, 16, 0.85); 
+            backdrop-filter: blur(15px); 
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+        }
+        
+        .tech-box { border-left: 3px solid #FFD700; background: rgba(255, 215, 0, 0.05); }
+        
+        /* Custom Range Slider */
+        input[type=range] { -webkit-appearance: none; background: transparent; }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none; height: 16px; width: 16px; border-radius: 50%;
+            background: #FFD700; cursor: pointer; margin-top: -6px; border: 2px solid #000;
+            box-shadow: 0 0 10px #FFD700;
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%; height: 2px; background: #333; 
+        }
+        
+        /* Circular Progress */
+        .circle-bg { fill: none; stroke: #1e293b; stroke-width: 8; }
+        .circle-progress { fill: none; stroke-width: 8; stroke-linecap: round; transition: stroke-dashoffset 1s ease-out, stroke 0.3s; transform: rotate(-90deg); transform-origin: 50% 50%; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col font-sans selection:bg-h-gold selection:text-black">
+
+    <div class="divine-grid"></div>
+
+    <header class="fixed w-full z-50 border-b border-white/10 bg-black/90 backdrop-blur-md h-16 flex items-center justify-between px-6">
+        <div class="flex items-center gap-3">
+            <a href="../index.html" class="flex items-center gap-3 group">
+                <div class="w-8 h-8 border border-white/30 flex items-center justify-center text-white font-divine group-hover:border-h-gold group-hover:text-h-gold transition bg-black">A</div>
+                <div class="leading-tight">
+                    <h1 class="font-divine text-lg text-white tracking-[0.1em] group-hover:text-h-gold transition">AnoHUB</h1>
+                    <p class="text-[9px] font-mono text-slate-500 tracking-widest uppercase">Module 03: Org. Intelligence</p>
+                </div>
+            </a>
+        </div>
+        <div class="flex items-center gap-6 text-xs font-mono">
+            <a href="../protocol.html" class="flex items-center gap-2 text-slate-400 hover:text-h-gold transition border border-transparent hover:border-h-gold/30 px-3 py-1 rounded">
+                <svg data-lucide="arrow-left" class="w-3 h-3"></svg> BACK TO COMMAND
+            </a>
+            <div class="hidden md:flex items-center gap-2 text-h-gold">
+                <div class="w-1.5 h-1.5 bg-h-gold rounded-full animate-pulse-fast"></div>
+                GOVERNANCE ACTIVE
+            </div>
+        </div>
+    </header>
+
+    <div class="pt-24 pb-12 px-4 max-w-7xl mx-auto grid lg:grid-cols-12 gap-8 relative z-10">
+
+        <aside class="hidden lg:block lg:col-span-3">
+            <div class="sticky top-24 space-y-6">
+                
+                <div class="scada-panel p-4 border-l-2 border-l-h-gold">
+                    <h3 class="text-slate-500 font-mono text-[10px] font-bold uppercase tracking-widest mb-3">System Network</h3>
+                    <nav class="space-y-1 font-mono text-xs">
+                        <a href="anohub_protocol_v2.html" class="block px-3 py-2 text-slate-400 hover:text-h-gold hover:bg-white/5 rounded transition">01. LCC Veto</a>
+                        <a href="anohub_methodology_v2.html" class="block px-3 py-2 text-slate-400 hover:text-h-gold hover:bg-white/5 rounded transition">02. NDT & Metrology</a>
+                        <div class="block px-3 py-2 text-black bg-h-gold font-bold rounded shadow-[0_0_15px_rgba(255,215,0,0.4)]">03. Org. Intelligence</div>
+                        <a href="anohub_synergy_v2.html" class="block px-3 py-2 text-slate-400 hover:text-h-gold hover:bg-white/5 rounded transition">04. M-E Synergy</a>
+                        <a href="anohub_alignment_v2.html" class="block px-3 py-2 text-slate-400 hover:text-h-gold hover:bg-white/5 rounded transition">05. Precision Align.</a>
+                    </nav>
+                </div>
+
+                <div class="scada-panel p-4">
+                    <h3 class="text-h-gold font-mono text-[10px] font-bold uppercase tracking-widest mb-3">Module Sections</h3>
+                    <nav class="space-y-1">
+                        <a href="#summary" class="flex items-center gap-3 px-3 py-2 text-sm text-white bg-white/5 border-l-2 border-h-gold transition"><span class="font-mono text-h-gold opacity-50">01</span> Execution Gap</a>
+                        <a href="#digital-twin" class="flex items-center gap-3 px-3 py-2 text-sm text-slate-400 hover:text-white hover:bg-white/5 border-l-2 border-transparent hover:border-slate-500 transition"><span class="font-mono text-slate-600">02</span> Org. Digital Twin</a>
+                        <a href="#simulation" class="flex items-center gap-3 px-3 py-2 text-sm text-slate-400 hover:text-white hover:bg-white/5 border-l-2 border-transparent hover:border-slate-500 transition"><span class="font-mono text-slate-600">03</span> Entropy Simulator</a>
+                    </nav>
+                </div>
+                
+                <div class="scada-panel p-4 border-t-2 border-t-h-gold">
+                    <h4 class="text-h-gold font-mono text-[10px] font-bold uppercase mb-2">Knowledge Base</h4>
+                    <div class="space-y-3 text-xs font-mono text-slate-400">
+                        <div class="flex justify-between items-center border-b border-slate-700 pb-1"><span>SOP Vectors</span> <span class="text-white">12,405</span></div>
+                        <div class="flex justify-between items-center border-b border-slate-700 pb-1"><span>Retention</span> <span class="text-h-green">99.8%</span></div>
+                        <div class="flex justify-between items-center"><span>Silo Risks</span> <span class="text-h-gold animate-pulse">2 Detected</span></div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <main class="lg:col-span-9 space-y-12">
+            
+            <section id="summary" class="relative scada-panel p-8 overflow-hidden group">
+                <div class="relative z-10">
+                    <div class="flex gap-2 mb-4">
+                        <span class="bg-h-gold/10 text-h-gold px-2 py-0.5 text-[10px] font-mono font-bold border border-h-gold/30">MANAGEMENT PROTOCOL</span>
+                        <span class="text-slate-500 font-mono text-[10px]">DOC-ORG-004 | REV 3.0</span>
+                    </div>
+                    <h1 class="text-4xl font-divine text-white mb-6 tracking-tight">
+                        Bridging the <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-h-gold to-yellow-200">Execution Gap</span>
+                    </h1>
+                    <p class="text-slate-300 leading-relaxed text-lg max-w-2xl border-l border-slate-700 pl-4 font-light">
+                        70% of engineering failures are not calculation errors—they are <span class="text-h-gold font-bold">interface errors</span> between departments. We use AI-driven Algorithmic Governance to eliminate organizational silos.
+                    </p>
+                    
+                    <div class="mt-8 tech-box p-6 rounded text-sm font-mono text-slate-300 bg-black/40">
+                        <h3 class="text-h-gold font-bold mb-2 flex items-center gap-2">
+                            <svg data-lucide="triangle-alert" class="w-4 h-4"></svg> KEY TECHNICAL MANDATE
+                        </h3>
+                        <p>
+                            All decision-trees must be digitized. Verbal instructions on critical path items are forbidden. 
+                            The <strong>"Information Entropy"</strong> between the Chief Engineer and the Site Foreman must remain below <span class="text-white font-bold bg-h-gold/20 px-1">5%</span>.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="digital-twin">
+                <div class="flex items-center gap-3 mb-6 border-b border-slate-800 pb-2">
+                    <span class="text-h-gold font-mono">02 //</span>
+                    <h3 class="text-xl font-divine text-white">The Organizational Digital Twin</h3>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="scada-panel p-6 flex flex-col justify-center">
+                        <h4 class="text-white font-bold mb-3">Knowledge Retention Architecture</h4>
+                        <p class="text-sm text-slate-400 mb-4">
+                            Hydropower projects span decades. Senior engineers retire. To prevent "Brain Drain," we use a Vector Database to index every technical decision.
+                        </p>
+                        <ul class="space-y-3 text-xs font-mono text-slate-300">
+                            <li class="flex items-center gap-2 p-3 bg-black rounded border border-slate-800"><svg data-lucide="database" class="w-4 h-4 text-h-gold"></svg> Vectorized SOPs & Standards</li>
+                            <li class="flex items-center gap-2 p-3 bg-black rounded border border-slate-800"><svg data-lucide="bot" class="w-4 h-4 text-h-gold"></svg> AI Retrieval Augmented Generation (RAG)</li>
+                            <li class="flex items-center gap-2 p-3 bg-black rounded border border-slate-800"><svg data-lucide="network" class="w-4 h-4 text-h-gold"></svg> Cross-Silo Semantic Search</li>
+                        </ul>
+                    </div>
+
+                    <div class="scada-panel relative h-64 bg-black overflow-hidden flex items-center justify-center border border-slate-700">
+                        <div class="relative w-full px-8 flex items-center justify-between">
+                            <div class="flex flex-col items-center z-10">
+                                <div class="w-16 h-16 rounded-full bg-slate-900 border-2 border-slate-700 flex items-center justify-center shadow-lg"><svg data-lucide="hard-hat" class="w-8 h-8 text-slate-400"></svg></div>
+                                <span class="text-[10px] font-mono text-slate-500 mt-2">CIVIL</span>
+                            </div>
+                            
+                            <div class="absolute left-[15%] right-[15%] top-1/2 h-[2px] bg-slate-800 z-0 -translate-y-8">
+                                <div class="absolute top-0 left-0 w-1/2 h-full bg-h-gold animate-scan-horizontal"></div>
+                                <div class="absolute top-0 right-0 w-1/2 h-full bg-h-gold animate-scan-horizontal" style="animation-delay: 1s;"></div>
+                            </div>
+
+                            <div class="flex flex-col items-center z-20 -mt-4">
+                                <div class="w-24 h-24 rounded-full bg-h-gold/10 border-2 border-h-gold flex items-center justify-center shadow-[0_0_30px_rgba(255,215,0,0.3)] animate-pulse-fast">
+                                    <svg data-lucide="brain-circuit" class="w-12 h-12 text-h-gold"></svg>
+                                </div>
+                                <span class="text-xs font-mono text-h-gold font-bold mt-2">AnoHUB CORE</span>
+                            </div>
+
+                            <div class="flex flex-col items-center z-10">
+                                <div class="w-16 h-16 rounded-full bg-slate-900 border-2 border-slate-700 flex items-center justify-center shadow-lg"><svg data-lucide="zap" class="w-8 h-8 text-slate-400"></svg></div>
+                                <span class="text-[10px] font-mono text-slate-500 mt-2">ELECTRO</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="simulation">
+                <div class="flex items-center gap-3 mb-6 border-b border-slate-800 pb-2">
+                    <span class="text-h-gold font-mono">03 //</span>
+                    <h3 class="text-xl font-divine text-white">Organizational Entropy Simulator</h3>
+                </div>
+
+                <div class="scada-panel p-8 border-t-4 border-t-h-gold">
+                    <div class="grid md:grid-cols-2 gap-12">
+                        <div class="space-y-8">
+                            <div class="flex items-center gap-2 mb-4">
+                                <svg data-lucide="sliders-horizontal" class="w-5 h-5 text-h-gold"></svg>
+                                <h4 class="font-bold text-white">Input Parameters</h4>
+                            </div>
+                            
+                            <div>
+                                <div class="flex justify-between mb-2"><label class="text-xs font-bold text-slate-400 uppercase tracking-widest">Management Layers</label><span id="val-layers" class="text-xs font-mono text-h-gold font-bold">4</span></div>
+                                <input type="range" id="in-layers" min="1" max="8" step="1" value="4">
+                                <div class="flex justify-between text-[10px] text-slate-600 mt-1"><span>Flat (1)</span><span>Bureaucratic (8)</span></div>
+                            </div>
+
+                            <div>
+                                <div class="flex justify-between mb-2"><label class="text-xs font-bold text-slate-400 uppercase tracking-widest">Stakeholder Complexity</label><span id="val-stakeholders" class="text-xs font-mono text-h-gold font-bold">High</span></div>
+                                <input type="range" id="in-stakeholders" min="1" max="3" step="1" value="3">
+                                <div class="flex justify-between text-[10px] text-slate-600 mt-1"><span>Single Client</span><span>Multi-National</span></div>
+                            </div>
+                            
+                            <div class="bg-slate-900 p-4 rounded border border-slate-700 mt-4">
+                                <div class="text-[10px] text-slate-500 uppercase mb-2">Calculation Model</div>
+                                <div class="text-xs font-mono text-slate-300">$$ H(x) = - \sum p(x) \log p(x) \times Layers $$</div>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col items-center justify-center relative p-6 bg-black/40 rounded-xl border border-slate-700/50">
+                            <div class="relative w-56 h-56">
+                                <svg class="w-full h-full" viewBox="0 0 100 100">
+                                    <circle class="circle-bg" cx="50" cy="50" r="45"></circle>
+                                    <circle id="entropy-circle" class="circle-progress" cx="50" cy="50" r="45" stroke="#FFD700" stroke-dasharray="283" stroke-dashoffset="100"></circle>
+                                </svg>
+                                <div class="absolute inset-0 flex flex-col items-center justify-center">
+                                    <span id="res-entropy" class="text-5xl font-black text-white drop-shadow-[0_0_15px_rgba(255,215,0,0.5)]">45%</span>
+                                    <span class="text-[10px] text-slate-500 uppercase tracking-widest mt-2 font-bold">Information Loss</span>
+                                </div>
+                            </div>
+                            <div id="verdict-box" class="mt-8 px-8 py-3 rounded bg-h-orange/10 border border-h-orange text-h-orange font-bold text-sm tracking-wide shadow-lg">
+                                HIGH RISK: SILOS DETECTED
+                            </div>
+                            <p id="verdict-desc" class="text-xs text-center text-slate-500 mt-4 max-w-xs leading-relaxed">
+                                At this level, instructions from the C-Suite are 45% distorted before reaching the site foreman.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="border-t border-slate-800 bg-black py-8 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 text-center text-slate-600 text-xs font-mono tracking-[0.2em]">
+            ANO_HUB // GOVERNANCE DIVISION // ISO 55000
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+
+            // === SIMULATOR LOGIC ===
+            const inLayers = document.getElementById('in-layers');
+            const inStake = document.getElementById('in-stakeholders');
+            const valLayers = document.getElementById('val-layers');
+            const valStake = document.getElementById('val-stakeholders');
+            const entropyCircle = document.getElementById('entropy-circle');
+            const resEntropy = document.getElementById('res-entropy');
+            const verdictBox = document.getElementById('verdict-box');
+            const verdictDesc = document.getElementById('verdict-desc');
+
+            const CIRCLE_CIRCUMFERENCE = 283;
+
+            function updateSim() {
+                const layers = parseInt(inLayers.value);
+                const stake = parseInt(inStake.value);
+
+                valLayers.innerText = layers;
+                const stakeLabels = ["Low", "Medium", "High"];
+                valStake.innerText = stakeLabels[stake - 1];
+
+                let baseLoss = (layers - 1) * 8; 
+                let multiplier = 1 + (stake * 0.3);
+                let loss = baseLoss * multiplier;
+                
+                if (loss > 95) loss = 95; if (loss < 0) loss = 0;
+
+                resEntropy.innerText = Math.round(loss) + '%';
+                const offset = CIRCLE_CIRCUMFERENCE - ((loss / 100) * CIRCLE_CIRCUMFERENCE);
+                entropyCircle.style.strokeDashoffset = offset;
+
+                if (loss < 15) {
+                    entropyCircle.style.stroke = '#10b981'; // Green
+                    verdictBox.className = "mt-8 px-8 py-3 rounded bg-h-green/10 border border-h-green text-h-green font-bold text-sm tracking-wide shadow-lg";
+                    verdictBox.innerText = "OPTIMAL FLOW";
+                    verdictDesc.innerText = "Direct line of command. Minimal distortion.";
+                } else if (loss < 40) {
+                    entropyCircle.style.stroke = '#facc15'; // Yellow
+                    verdictBox.className = "mt-8 px-8 py-3 rounded bg-h-yellow/10 border border-h-yellow text-h-yellow font-bold text-sm tracking-wide shadow-lg";
+                    verdictBox.innerText = "CAUTION: NOISE DETECTED";
+                    verdictDesc.innerText = "Standard corporate friction. Requires digitized SOPs to manage.";
+                } else if (loss < 65) {
+                    entropyCircle.style.stroke = '#f97316'; // Orange
+                    verdictBox.className = "mt-8 px-8 py-3 rounded bg-h-orange/10 border border-h-orange text-h-orange font-bold text-sm tracking-wide shadow-lg";
+                    verdictBox.innerText = "HIGH RISK: SILOS DETECTED";
+                    verdictDesc.innerText = `At this level, instructions are ${Math.round(loss)}% distorted before execution.`;
+                } else {
+                    entropyCircle.style.stroke = '#ef4444'; // Red
+                    verdictBox.className = "mt-8 px-8 py-3 rounded bg-h-red/10 border border-h-red text-h-red font-bold text-sm tracking-wide shadow-lg animate-pulse";
+                    verdictBox.innerText = "CRITICAL: EXECUTION FAILURE";
+                    verdictDesc.innerText = "Total breakdown of command chain. Immediate restructuring required.";
+                }
+            }
+
+            inLayers.addEventListener('input', updateSim);
+            inStake.addEventListener('input', updateSim);
+            updateSim();
+        });
+    </script>
+</body>
+</html>

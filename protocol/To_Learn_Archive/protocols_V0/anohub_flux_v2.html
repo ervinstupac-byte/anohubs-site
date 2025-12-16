@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="hr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AnoHUB | MAGNETIC FLUX MONITORING // MODULE 08</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=JetBrains+Mono:wght@300;500&family=Rajdhani:wght@300;600&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { 
+            theme: { 
+                extend: { 
+                    fontFamily: { 
+                        sans: ['Rajdhani', 'sans-serif'], 
+                        mono: ['JetBrains Mono', 'monospace'],
+                        divine: ['Cinzel', 'serif'] 
+                    },
+                    colors: { 
+                        'h-gold': '#FFD700',   
+                        'h-void': '#020202',   
+                        'h-glass': 'rgba(10, 10, 10, 0.9)',
+                        'h-border': '#333333',
+                        'h-mag': '#ec4899', /* Magenta for Magnetism */
+                        'h-red': '#ef4444',
+                        'h-cyan': '#06b6d4',
+                        'h-green': '#10b981'
+                    },
+                    animation: {
+                        'spin-slow': 'spin 20s linear infinite',
+                        'pulse-fast': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'radar-sweep': 'spin 2s linear infinite',
+                    },
+                    backgroundImage: {
+                        'flux-pattern': "radial-gradient(circle, rgba(236, 72, 153, 0.1) 0%, transparent 70%)",
+                    }
+                } 
+            }
+        }
+    </script>
+
+    <style>
+        body { background-color: #020202; color: #e2e8f0; cursor: crosshair; }
+        
+        /* DIVINE GRID */
+        .divine-grid {
+            position: fixed; inset: 0; z-index: -1;
+            background-size: 50px 50px;
+            background-image: 
+                linear-gradient(to right, rgba(236, 72, 153, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(236, 72, 153, 0.03) 1px, transparent 1px);
+            mask-image: radial-gradient(circle at 50% 50%, black 0%, transparent 90%);
+        }
+
+        .scada-panel { 
+            background: rgba(5, 10, 16, 0.85); 
+            backdrop-filter: blur(15px); 
+            border: 1px solid rgba(236, 72, 153, 0.1);
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+        }
+        
+        .tech-box { border-left: 3px solid #ec4899; background: rgba(236, 72, 153, 0.05); }
+        
+        /* Custom Range Slider */
+        input[type=range] { -webkit-appearance: none; background: transparent; }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none; height: 16px; width: 16px; border-radius: 50%;
+            background: #ec4899; cursor: pointer; margin-top: -6px; border: 2px solid #000;
+            box-shadow: 0 0 10px #ec4899;
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%; height: 2px; background: #333; 
+        }
+
+        /* Pole Bars */
+        .pole-bar { transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col font-sans selection:bg-h-mag selection:text-white">
+
+    <div class="divine-grid"></div>
+
+    <header class="fixed w-full z-50 border-b border-white/10 bg-black/90 backdrop-blur-md h-16 flex items-center justify-between px-6">
+        <div class="flex items-center gap-3">
+            <a href="../index.html" class="flex items-center gap-3 group">
+                <div class="w-8 h-8 border border-white/30 flex items-center justify-center text-white font-divine group-hover:border-h-mag group-hover:text-h-mag transition bg-black">A</div>
+                <div class="leading-tight">
+                    <h1 class="font-divine text-lg text-white tracking-[0.1em] group-hover:text-h-mag transition">AnoHUB</h1>
+                    <p class="text-[9px] font-mono text-slate-500 tracking-widest uppercase">Module 08: Mag Flux</p>
+                </div>
+            </a>
+        </div>
+        <div class="flex items-center gap-6 text-xs font-mono">
+            <a href="../protocol.html" class="flex items-center gap-2 text-slate-400 hover:text-h-mag transition border border-transparent hover:border-h-mag/30 px-3 py-1 rounded">
+                <svg data-lucide="arrow-left" class="w-3 h-3"></svg> BACK TO COMMAND
+            </a>
+            <div class="hidden md:flex items-center gap-2 text-h-mag">
+                <div class="w-1.5 h-1.5 bg-h-mag rounded-full animate-pulse-fast"></div>
+                FLUX SENSORS ACTIVE
+            </div>
+        </div>
+    </header>
+
+    <div class="pt-24 pb-12 px-4 max-w-7xl mx-auto grid lg:grid-cols-12 gap-8 relative z-10">
+
+        <aside class="hidden lg:block lg:col-span-3">
+            <div class="sticky top-24 space-y-6">
+                
+                <div class="scada-panel p-4 border-l-2 border-l-h-mag">
+                    <h3 class="text-slate-500 font-mono text-[10px] font-bold uppercase tracking-widest mb-3">System Network</h3>
+                    <nav class="space-y-1 font-mono text-xs">
+                        <a href="anohub_protocol_v2.html" class="block px-3 py-2 text-slate-400 hover:text-h-mag hover:bg-white/5 rounded transition">01. LCC Veto</a>
+                        <a href="anohub_methodology_v2.html" class="block px-3 py-2 text-slate-400 hover:text-h-mag hover:bg-white/5 rounded transition">02. NDT & Metrology</a>
+                        <a href="anohub_organization_v2.html" class="block px-3 py-2 text-slate-400 hover:text-h-mag hover:bg-white/5 rounded transition">03. Org. Intelligence</a>
+                        <a href="anohub_synergy_v2.html" class="block px-3 py-2 text-slate-400 hover:text-h-mag hover:bg-white/5 rounded transition">04. M-E Synergy</a>
+                        <a href="anohub_alignment_v2.html" class="block px-3 py-2 text-slate-400 hover:text-h-mag hover:bg-white/5 rounded transition">05. Precision Align.</a>
+                        <div class="block px-3 py-2 text-black bg-h-mag font-bold rounded shadow-[0_0_15px_rgba(236,72,153,0.4)]">08. Mag Flux</div>
+                    </nav>
+                </div>
+
+                <div class="scada-panel p-4">
+                    <h3 class="text-h-mag font-mono text-[10px] font-bold uppercase tracking-widest mb-3">Module Sections</h3>
+                    <nav class="space-y-1">
+                        <a href="#overview" class="flex items-center gap-3 px-3 py-2 text-sm text-white bg-white/5 border-l-2 border-h-mag transition"><span class="font-mono text-h-mag opacity-50">01</span> The Invisible Grip</a>
+                        <a href="#airgap" class="flex items-center gap-3 px-3 py-2 text-sm text-slate-400 hover:text-white hover:bg-white/5 border-l-2 border-transparent hover:border-slate-500 transition"><span class="font-mono text-slate-600">02</span> Air Gap Radar</a>
+                        <a href="#shorts" class="flex items-center gap-3 px-3 py-2 text-sm text-slate-400 hover:text-white hover:bg-white/5 border-l-2 border-transparent hover:border-slate-500 transition"><span class="font-mono text-slate-600">03</span> Pole Short Sim</a>
+                    </nav>
+                </div>
+                
+                <div class="scada-panel p-4 border-t-2 border-t-h-mag">
+                    <h4 class="text-h-mag font-mono text-[10px] font-bold uppercase mb-2">Magnetic Status</h4>
+                    <div class="space-y-3 text-xs font-mono text-slate-400">
+                        <div class="flex justify-between items-center border-b border-slate-700 pb-1"><span>Flux Density</span> <span class="text-white">1.2 Tesla</span></div>
+                        <div class="flex justify-between items-center border-b border-slate-700 pb-1"><span>Air Gap Avg</span> <span class="text-white">14.0 mm</span></div>
+                        <div class="flex justify-between items-center"><span>Symmetry</span> <span class="text-h-green" id="symmetry-status">99.8%</span></div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <main class="lg:col-span-9 space-y-16">
+            
+            <section id="overview" class="relative scada-panel p-8 overflow-hidden group">
+                <div class="relative z-10">
+                    <div class="flex gap-2 mb-4">
+                        <span class="bg-h-mag/10 text-h-mag px-2 py-0.5 text-[10px] font-mono font-bold border border-h-mag/30">ELECTROMAGNETICS</span>
+                        <span class="text-slate-500 font-mono text-[10px]">DOC-FLUX-008 | REV 2.0</span>
+                    </div>
+                    <h1 class="text-5xl font-divine text-white mb-6 tracking-tight">
+                        The Invisible <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-h-mag to-purple-400">Magnetic Grip</span>
+                    </h1>
+                    <p class="text-slate-300 leading-relaxed text-lg border-l border-slate-700 pl-6 max-w-3xl font-light">
+                        A generator rotor is held in place not just by bearings, but by massive magnetic forces. If the <strong>Air Gap</strong> becomes asymmetrical, the <strong>Unbalanced Magnetic Pull (UMP)</strong> can rip the machine from its foundation.
+                    </p>
+                </div>
+                <div class="absolute right-0 top-0 w-96 h-96 bg-h-mag/5 blur-[100px] pointer-events-none"></div>
+            </section>
+
+            <section id="airgap">
+                <div class="flex items-center gap-3 mb-6 border-b border-slate-800 pb-2">
+                    <span class="text-h-mag font-mono">02 //</span>
+                    <h3 class="text-2xl font-divine text-white">Dynamic Air Gap Monitor</h3>
+                </div>
+
+                <div class="scada-panel p-0 border-t-4 border-t-h-mag overflow-hidden">
+                    <div class="bg-black p-4 flex justify-between items-center border-b border-slate-700">
+                        <div class="flex items-center gap-3">
+                            <div class="w-3 h-3 bg-h-green rounded-full" id="gap-led"></div>
+                            <span class="font-mono text-xs text-white" id="gap-text">STATUS: CENTERED</span>
+                        </div>
+                        <div class="font-mono text-[10px] text-slate-500">SENSOR: CAPACITIVE ARRAY</div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2">
+                        
+                        <div class="p-8 bg-black relative flex items-center justify-center border-r border-slate-800 min-h-[350px]">
+                            <div class="absolute w-64 h-64 rounded-full border-4 border-slate-700 border-dashed"></div>
+                            
+                            <div id="rotor-visual" class="relative w-52 h-52 rounded-full border-2 border-h-mag bg-h-mag/10 flex items-center justify-center transition-all duration-300 ease-out">
+                                <div class="w-2 h-2 bg-white rounded-full"></div> <div class="absolute w-full h-[1px] bg-gradient-to-r from-transparent to-h-mag top-1/2 animate-spin-slow origin-center"></div>
+                            </div>
+
+                            <div class="absolute top-2 font-mono text-[10px] text-slate-500">GAP A: <span id="gap-a">14.0</span>mm</div>
+                            <div class="absolute bottom-2 font-mono text-[10px] text-slate-500">GAP C: <span id="gap-c">14.0</span>mm</div>
+                        </div>
+
+                        <div class="p-8 space-y-8 bg-black/80">
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <label class="text-xs font-bold text-white uppercase tracking-widest">Rotor Eccentricity</label>
+                                    <span class="text-xs font-mono text-h-mag" id="ecc-val">0 %</span>
+                                </div>
+                                <input type="range" id="in-ecc" min="0" max="30" step="1" value="0" class="w-full">
+                                <div class="flex justify-between text-[10px] text-slate-600 mt-1">
+                                    <span>PERFECT CENTER</span>
+                                    <span>CRITICAL OFFSET</span>
+                                </div>
+                            </div>
+
+                            <div class="bg-slate-900 p-4 rounded border border-slate-700">
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-[10px] text-slate-500 uppercase">Calculated UMP Force</span>
+                                    <span class="text-lg font-mono text-white font-bold" id="ump-val">0 kN</span>
+                                </div>
+                                <div class="w-full h-1 bg-slate-800 rounded overflow-hidden">
+                                    <div id="ump-bar" class="h-full bg-h-mag w-0 transition-all duration-300"></div>
+                                </div>
+                            </div>
+
+                            <div class="text-xs text-slate-400 leading-relaxed border-l-2 border-h-mag pl-3">
+                                <strong class="text-white">The Danger:</strong> As the rotor moves closer to one side, magnetic attraction increases inversely to the square of the gap distance. This creates a runaway "pull-over" effect.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="shorts">
+                <div class="flex items-center gap-3 mb-6 border-b border-slate-800 pb-2">
+                    <span class="text-h-mag font-mono">03 //</span>
+                    <h3 class="text-2xl font-divine text-white">Flux Profile (Inter-Turn Shorts)</h3>
+                </div>
+
+                <div class="scada-panel p-8 relative overflow-hidden">
+                    <div class="grid md:grid-cols-2 gap-12 items-center">
+                        
+                        <div class="h-64 bg-black/50 border border-slate-700 rounded flex items-end justify-between px-8 pb-0 pt-8 relative">
+                            <div class="absolute top-2 left-2 text-[10px] font-mono text-slate-500">MAGNETIC FLUX DENSITY (Tesla)</div>
+                            
+                            <div class="w-1/5 bg-h-cyan/20 border border-h-cyan h-[90%] relative group pole-bar" id="pole-1">
+                                <div class="absolute bottom-full w-full text-center text-[10px] text-h-cyan mb-1">N1</div>
+                            </div>
+                            <div class="w-1/5 bg-h-cyan/20 border border-h-cyan h-[90%] relative group pole-bar" id="pole-2">
+                                <div class="absolute bottom-full w-full text-center text-[10px] text-h-cyan mb-1">S1</div>
+                                <div id="sparks" class="absolute inset-0 hidden">
+                                    <div class="absolute top-1/2 left-1/2 w-4 h-4 bg-white rounded-full animate-ping"></div>
+                                </div>
+                            </div>
+                            <div class="w-1/5 bg-h-cyan/20 border border-h-cyan h-[90%] relative group pole-bar" id="pole-3">
+                                <div class="absolute bottom-full w-full text-center text-[10px] text-h-cyan mb-1">N2</div>
+                            </div>
+                            <div class="w-1/5 bg-h-cyan/20 border border-h-cyan h-[90%] relative group pole-bar" id="pole-4">
+                                <div class="absolute bottom-full w-full text-center text-[10px] text-h-cyan mb-1">S2</div>
+                            </div>
+                            
+                            <div class="absolute bottom-0 w-full h-px bg-slate-600"></div>
+                        </div>
+
+                        <div class="space-y-6">
+                            <h4 class="font-bold text-white">Simulate Failure</h4>
+                            <p class="text-xs text-slate-400">Shorting turns in a pole reduces its magnetic strength, creating thermal hotspots and vibration.</p>
+
+                            <button id="btn-short" class="w-full py-4 border border-h-red text-h-red hover:bg-h-red hover:text-black font-bold font-mono text-xs tracking-widest transition uppercase rounded">
+                                TRIGGER SHORT CIRCUIT (POLE S1)
+                            </button>
+
+                            <div class="bg-slate-900 p-4 rounded flex justify-between items-center">
+                                <span class="text-xs text-slate-500">Vibration Amplitude (1x)</span>
+                                <span class="font-mono text-white font-bold" id="vib-val">0.05 mm/s</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <footer class="border-t border-slate-800 bg-black py-8 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 text-center text-slate-600 text-xs font-mono tracking-[0.2em]">
+            ANO_HUB // ELECTRICAL DIVISION // IEEE 112
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+
+            // === AIR GAP SIMULATOR ===
+            const inEcc = document.getElementById('in-ecc');
+            const valEcc = document.getElementById('ecc-val');
+            const rotor = document.getElementById('rotor-visual');
+            const gapA = document.getElementById('gap-a');
+            const gapC = document.getElementById('gap-c');
+            const umpVal = document.getElementById('ump-val');
+            const umpBar = document.getElementById('ump-bar');
+            const gapLed = document.getElementById('gap-led');
+            const gapText = document.getElementById('gap-text');
+
+            const NOMINAL_GAP = 14.0; // mm
+
+            inEcc.addEventListener('input', (e) => {
+                const ecc = parseInt(e.target.value); // 0 to 30%
+                valEcc.innerText = ecc + " %";
+
+                // Visual shift (max 30px for demo)
+                const shift = ecc * 1.5; 
+                rotor.style.transform = `translateY(-${shift}px)`;
+
+                // Calculate Gaps
+                const gapMin = NOMINAL_GAP * (1 - (ecc/100));
+                const gapMax = NOMINAL_GAP * (1 + (ecc/100));
+                
+                gapA.innerText = gapMin.toFixed(1);
+                gapC.innerText = gapMax.toFixed(1);
+
+                // Calculate UMP (Exponential with eccentricity)
+                const ump = Math.pow(ecc, 1.5) * 10; // Mock math
+                umpVal.innerText = Math.round(ump) + " kN";
+                umpBar.style.width = Math.min(100, (ump / 1000) * 100) + "%";
+
+                // Color Logic
+                if (ecc < 10) {
+                    gapLed.className = "w-3 h-3 bg-h-green rounded-full";
+                    gapText.innerText = "STATUS: CENTERED";
+                    gapText.className = "font-mono text-xs text-white";
+                    rotor.className = "relative w-52 h-52 rounded-full border-2 border-h-mag bg-h-mag/10 flex items-center justify-center transition-all duration-300 ease-out";
+                    gapA.className = "font-bold text-white";
+                } else {
+                    gapLed.className = "w-3 h-3 bg-h-red rounded-full animate-pulse";
+                    gapText.innerText = "STATUS: OFF-CENTER";
+                    gapText.className = "font-mono text-xs text-h-red font-bold";
+                    rotor.className = "relative w-52 h-52 rounded-full border-2 border-h-red bg-h-red/10 flex items-center justify-center transition-all duration-300 ease-out shadow-[0_0_20px_#ef4444]";
+                    gapA.className = "font-bold text-h-red";
+                }
+            });
+
+            // === SHORT CIRCUIT SIMULATOR ===
+            const btnShort = document.getElementById('btn-short');
+            const pole2 = document.getElementById('pole-2');
+            const sparks = document.getElementById('sparks');
+            const vibVal = document.getElementById('vib-val');
+            let isShorted = false;
+
+            btnShort.addEventListener('click', () => {
+                isShorted = !isShorted;
+                
+                if(isShorted) {
+                    pole2.style.height = "60%"; // Drop flux
+                    pole2.classList.remove('bg-h-cyan/20', 'border-h-cyan');
+                    pole2.classList.add('bg-h-red/20', 'border-h-red');
+                    sparks.classList.remove('hidden');
+                    btnShort.innerText = "RESET POLE S1";
+                    btnShort.classList.add('bg-h-red', 'text-black');
+                    vibVal.innerText = "8.5 mm/s (ALARM)";
+                    vibVal.className = "font-mono text-h-red font-bold animate-pulse";
+                } else {
+                    pole2.style.height = "90%"; // Restore
+                    pole2.classList.add('bg-h-cyan/20', 'border-h-cyan');
+                    pole2.classList.remove('bg-h-red/20', 'border-h-red');
+                    sparks.classList.add('hidden');
+                    btnShort.innerText = "TRIGGER SHORT CIRCUIT (POLE S1)";
+                    btnShort.classList.remove('bg-h-red', 'text-black');
+                    vibVal.innerText = "0.05 mm/s";
+                    vibVal.className = "font-mono text-white font-bold";
+                }
+            });
+        });
+    </script>
+</body>
+</html>
