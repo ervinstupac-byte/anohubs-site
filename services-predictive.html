@@ -1,11 +1,13 @@
 ﻿<!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>AI-Powered Predictive Maintenance | AnoHUB Services</title>
-    <meta name="description" content="Leverage our proprietary AI models to forecast potential equipment failures, reduce downtime, and optimize maintenance schedules.">
-    
+    <meta name="description"
+        content="Leverage our proprietary AI models to forecast potential equipment failures, reduce downtime, and optimize maintenance schedules.">
+
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -16,12 +18,14 @@
     }
     </script>
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+
+
     <link rel="stylesheet" href="assets/css/preloader.css">
-<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-    
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -29,10 +33,10 @@
                 extend: {
                     fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
                     colors: {
-                        'h-cyan': '#06b6d4', 'h-green': '#10b981', 'h-red': '#ef4444', 
+                        'h-cyan': '#06b6d4', 'h-green': '#10b981', 'h-red': '#ef4444',
                         'h-yellow': '#facc15', 'h-dark': '#020617', 'h-panel': '#0f172a', 'h-border': '#1e293b', 'h-cta': '#f59e0b'
                     },
-                    animation: { 
+                    animation: {
                         'pulse-fast': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                         'data-stream': 'dash 20s linear infinite'
                     },
@@ -45,51 +49,100 @@
     </script>
 
     <style>
-        body { background-color: #020617; color: #f8fafc; overflow-x: hidden; }
-        
-        /* === BACKGROUND SYSTEM === */
-        .bg-layer { 
-            position: fixed; inset: 0; z-index: -2; 
-            background-image: url('assets/images/proljece_arm.jpg'); 
-            background-size: cover; background-position: center; 
-            opacity: 0.25; filter: grayscale(100%) contrast(1.2); 
+        body {
+            background-color: #020617;
+            color: #f8fafc;
+            overflow-x: hidden;
         }
-        
+
+        /* === BACKGROUND SYSTEM === */
+        .bg-layer {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            background-image: url('assets/images/proljece_arm.jpg');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.25;
+            filter: grayscale(100%) contrast(1.2);
+        }
+
         .noise-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
-            pointer-events: none; z-index: -1; opacity: 0.4;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.4;
         }
 
         /* === GLASS COMPONENTS === */
         .glass-card {
-            background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(16px);
-            border: 1px solid rgba(16, 185, 129, 0.2); transition: all 0.3s ease;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            transition: all 0.3s ease;
         }
-        .glass-card:hover { 
-            border-color: #10b981; 
-            box-shadow: 0 0 30px rgba(16, 185, 129, 0.15); 
-            transform: translateY(-5px); 
+
+        .glass-card:hover {
+            border-color: #10b981;
+            box-shadow: 0 0 30px rgba(16, 185, 129, 0.15);
+            transform: translateY(-5px);
         }
 
         /* === P-F CURVE SIMULATOR === */
         .chart-container {
-            position: relative; width: 100%; height: 400px;
-            background: radial-gradient(circle at 10% 90%, rgba(16,185,129,0.1), transparent 70%);
-            border: 1px solid #334155; border-radius: 1rem; overflow: hidden;
+            position: relative;
+            width: 100%;
+            height: 400px;
+            background: radial-gradient(circle at 10% 90%, rgba(16, 185, 129, 0.1), transparent 70%);
+            border: 1px solid #334155;
+            border-radius: 1rem;
+            overflow: hidden;
         }
-        
-        .pf-curve { fill: none; stroke: #334155; stroke-width: 2; stroke-dasharray: 5 5; }
-        .pf-curve-active { fill: none; stroke: #10b981; stroke-width: 4; stroke-linecap: round; filter: drop-shadow(0 0 10px #10b981); }
-        
+
+        .pf-curve {
+            fill: none;
+            stroke: #334155;
+            stroke-width: 2;
+            stroke-dasharray: 5 5;
+        }
+
+        .pf-curve-active {
+            fill: none;
+            stroke: #10b981;
+            stroke-width: 4;
+            stroke-linecap: round;
+            filter: drop-shadow(0 0 10px #10b981);
+        }
+
         /* SLIDERS */
-        input[type=range] { -webkit-appearance: none; background: transparent; cursor: pointer; }
+        input[type=range] {
+            appearance: none;
+            -webkit-appearance: none;
+            background: transparent;
+            cursor: pointer;
+        }
+
         input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none; height: 20px; width: 10px; 
-            background: #10b981; margin-top: -8px; border: 1px solid white; 
+            -webkit-appearance: none;
+            height: 20px;
+            width: 10px;
+            background: #10b981;
+            margin-top: -8px;
+            border: 1px solid white;
             box-shadow: 0 0 15px #10b981;
         }
-        input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 4px; background: #1e293b; border-radius: 2px; }
+
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            background: #1e293b;
+            border-radius: 2px;
+        }
     </style>
 
     <!-- Favicons -->
@@ -99,187 +152,184 @@
     <link rel="manifest" href="assets/site.webmanifest">
 </head>
 
-<body class="antialiased">
+<body class="antialiased" data-translation-source="service_predictive">
     <noscript>
         <div style="border: 1px solid #ef4444; padding: 20px;">
             <h1 style="color: #ef4444; font-size: 24px; margin-bottom: 10px;">SYSTEM ERROR: SCRIPT BLOCKED</h1>
-            <p>The AnoHUB Protocol requires JavaScript to function.<br>Please enable scripts to access the interface.</p>
+            <p>The AnoHUB Protocol requires JavaScript to function.<br>Please enable scripts to access the interface.
+            </p>
         </div>
     </noscript>
+    <div class="text-[10px] font-mono text-slate-400 uppercase tracking-widest">Unplanned Downtime</div>
+    </div>
+    <div>
+        <div class="text-4xl font-black text-white mb-1">24/7</div>
+        <div class="text-[10px] font-mono text-slate-400 uppercase tracking-widest">Neural Monitoring</div>
+    </div>
+    </div>
+    </div>
+    </section>
 
-    
-    <div class="bg-layer"></div>
-    <div class="noise-overlay"></div>
-
-        <div id="global-header"></div>
-
-    <main class="pt-20">
-
-        <section class="hero-predictive min-h-[70vh] flex items-center justify-center relative">
-            
-            <div class="max-w-6xl mx-auto px-4 text-center relative z-10">
-                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-h-green/30 bg-black/60 backdrop-blur-md text-xs font-mono text-h-green mb-8 shadow-[0_0_20px_rgba(16,185,129,0.2)]">
-                    <span class="w-2 h-2 bg-h-green rounded-full animate-pulse"></span>
-                    STATUS: LIVE MONITORING
-                </div>
-                
-                <h1 class="text-6xl md:text-9xl font-black text-white mb-6 tracking-tighter leading-none drop-shadow-2xl">
-                    PREDICTIVE <br>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-h-green to-emerald-400">INTELLIGENCE</span>
-                </h1>
-                
-                <p class="text-xl md:text-2xl text-slate-300 max-w-3xl mx-auto mb-10 font-light leading-relaxed">
-                    Transforming machine data into actionable foresight. We eliminate surprise failures by predicting breakdown vectors <span class="text-h-green font-bold">months</span> before they manifest.
-                </p>
-
-                <div class="flex justify-center gap-12 text-center border-t border-white/10 pt-8 max-w-xl mx-auto">
-                    <div>
-                        <div class="text-4xl font-black text-h-green mb-1">0%</div>
-                        <div class="text-[10px] font-mono text-slate-400 uppercase tracking-widest">Unplanned Downtime</div>
-                    </div>
-                    <div>
-                        <div class="text-4xl font-black text-white mb-1">24/7</div>
-                        <div class="text-[10px] font-mono text-slate-400 uppercase tracking-widest">Neural Monitoring</div>
-                    </div>
+    <section class="py-24 bg-h-dark border-y border-h-border relative">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-10 pb-6 border-b border-white/5">
+                <div>
+                    <h2 class="text-3xl font-black text-white flex items-center gap-3">
+                        <i data-lucide="activity" class="w-8 h-8 text-h-green"></i>
+                        The P-F Curve <span class="text-h-green">Simulator</span>
+                    </h2>
+                    <p class="text-slate-400 mt-2 font-mono text-sm">Visualize the "Failure Horizon" and where AnoHUB
+                        intervenes.</p>
                 </div>
             </div>
-        </section>
 
-        <section class="py-24 bg-h-dark border-y border-h-border relative">
-            <div class="max-w-7xl mx-auto px-4">
-                <div class="flex flex-col md:flex-row justify-between items-end mb-10 pb-6 border-b border-white/5">
-                    <div>
-                        <h2 class="text-3xl font-black text-white flex items-center gap-3">
-                            <i data-lucide="activity" class="w-8 h-8 text-h-green"></i>
-                            The P-F Curve <span class="text-h-green">Simulator</span>
-                        </h2>
-                        <p class="text-slate-400 mt-2 font-mono text-sm">Visualize the "Failure Horizon" and where AnoHUB intervenes.</p>
+            <div class="grid lg:grid-cols-12 gap-8">
+                <div class="lg:col-span-4 space-y-6">
+                    <div class="glass-card p-6 rounded-xl border-l-4 border-l-h-green">
+                        <h3 class="text-white font-bold mb-6 flex items-center gap-2"><i data-lucide="clock"
+                                class="w-4 h-4"></i> TIME MACHINE</h3>
+
+                        <div class="mb-8">
+                            <label class="text-xs font-bold text-slate-400 uppercase block mb-2">Asset Health
+                                Timeline</label>
+                            <input type="range" id="time-slider" min="0" max="100" value="10" class="w-full">
+                            <div class="flex justify-between text-[10px] font-mono text-slate-600 mt-2"><span>NEW
+                                    ASSET</span><span>FAILURE</span></div>
+                        </div>
+
+                        <div class="p-4 bg-black/40 rounded border border-white/5">
+                            <div class="text-[10px] font-mono text-slate-500 uppercase mb-2">Current Status</div>
+                            <div id="ai-status" class="text-sm font-bold text-h-green flex items-center gap-2">
+                                <div class="w-2 h-2 bg-h-green rounded-full animate-pulse"></div> HEALTHY
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-6 rounded-xl border border-white/5 bg-white/5">
+                        <h4 class="text-white font-bold text-sm mb-4">Detection Benchmark</h4>
+                        <ul class="space-y-4 text-xs font-mono text-slate-400">
+                            <li class="flex justify-between"><span>AnoHUB AI</span> <span class="text-h-green">6 Months
+                                    Early</span></li>
+                            <li class="flex justify-between"><span>Vibration Analysis</span> <span
+                                    class="text-yellow-500">1 Month Early</span></li>
+                            <li class="flex justify-between"><span>SCADA Alarm</span> <span class="text-h-red">Too Late
+                                    (Damage Done)</span></li>
+                        </ul>
                     </div>
                 </div>
 
-                <div class="grid lg:grid-cols-12 gap-8">
-                    <div class="lg:col-span-4 space-y-6">
-                        <div class="glass-card p-6 rounded-xl border-l-4 border-l-h-green">
-                            <h3 class="text-white font-bold mb-6 flex items-center gap-2"><i data-lucide="clock" class="w-4 h-4"></i> TIME MACHINE</h3>
-                            
-                            <div class="mb-8">
-                                <label class="text-xs font-bold text-slate-400 uppercase block mb-2">Asset Health Timeline</label>
-                                <input type="range" id="time-slider" min="0" max="100" value="10" class="w-full">
-                                <div class="flex justify-between text-[10px] font-mono text-slate-600 mt-2"><span>NEW ASSET</span><span>FAILURE</span></div>
-                            </div>
-
-                            <div class="p-4 bg-black/40 rounded border border-white/5">
-                                <div class="text-[10px] font-mono text-slate-500 uppercase mb-2">Current Status</div>
-                                <div id="ai-status" class="text-sm font-bold text-h-green flex items-center gap-2">
-                                    <div class="w-2 h-2 bg-h-green rounded-full animate-pulse"></div> HEALTHY
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="p-6 rounded-xl border border-white/5 bg-white/5">
-                            <h4 class="text-white font-bold text-sm mb-4">Detection Benchmark</h4>
-                            <ul class="space-y-4 text-xs font-mono text-slate-400">
-                                <li class="flex justify-between"><span>AnoHUB AI</span> <span class="text-h-green">6 Months Early</span></li>
-                                <li class="flex justify-between"><span>Vibration Analysis</span> <span class="text-yellow-500">1 Month Early</span></li>
-                                <li class="flex justify-between"><span>SCADA Alarm</span> <span class="text-h-red">Too Late (Damage Done)</span></li>
-                            </ul>
-                        </div>
+                <div class="lg:col-span-8 chart-container relative flex items-center justify-center group">
+                    <div
+                        class="absolute inset-0 bg-[linear-gradient(rgba(16,185,129,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(16,185,129,0.05)_1px,transparent_1px)] bg-[size:40px_40px]">
                     </div>
 
-                    <div class="lg:col-span-8 chart-container relative flex items-center justify-center group">
-                        <div class="absolute inset-0 bg-[linear-gradient(rgba(16,185,129,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(16,185,129,0.05)_1px,transparent_1px)] bg-[size:40px_40px]"></div>
-                        
-                        <svg width="100%" height="100%" viewBox="0 0 600 400" class="absolute inset-0 z-0">
-                            <line x1="50" y1="350" x2="550" y2="350" stroke="#334155" stroke-width="2" />
-                            <line x1="50" y1="50" x2="50" y2="350" stroke="#334155" stroke-width="2" />
-                            <text x="300" y="380" fill="#64748b" font-size="10" font-family="monospace">TIME &rarr;</text>
-                            <text x="20" y="200" fill="#64748b" font-size="10" font-family="monospace" transform="rotate(-90 20 200)">FAILURE PROBABILITY &rarr;</text>
+                    <svg width="100%" height="100%" viewBox="0 0 600 400" class="absolute inset-0 z-0">
+                        <line x1="50" y1="350" x2="550" y2="350" stroke="#334155" stroke-width="2" />
+                        <line x1="50" y1="50" x2="50" y2="350" stroke="#334155" stroke-width="2" />
+                        <text x="300" y="380" fill="#64748b" font-size="10" font-family="monospace">TIME &rarr;</text>
+                        <text x="20" y="200" fill="#64748b" font-size="10" font-family="monospace"
+                            transform="rotate(-90 20 200)">FAILURE PROBABILITY &rarr;</text>
 
-                            <path d="M 50 340 Q 300 340, 500 50" class="pf-curve" />
-                            
-                            <path id="dynamic-curve" d="M 50 340" class="pf-curve-active" />
-                            
-                            <circle cx="150" cy="340" r="4" fill="#10b981" />
-                            <text x="150" y="320" fill="#10b981" font-size="10" font-family="monospace" text-anchor="middle">AnoHUB DETECTS</text>
-                            
-                            <circle cx="350" cy="280" r="4" fill="#facc15" />
-                            <text x="350" y="260" fill="#facc15" font-size="10" font-family="monospace" text-anchor="middle">AUDIBLE NOISE</text>
-                            
-                            <circle cx="480" cy="80" r="4" fill="#ef4444" />
-                            <text x="450" y="80" fill="#ef4444" font-size="10" font-family="monospace" text-anchor="end">FAILURE</text>
-                        </svg>
+                        <path d="M 50 340 Q 300 340, 500 50" class="pf-curve" />
 
-                        <div id="tracker-dot" class="w-4 h-4 bg-white rounded-full absolute shadow-[0_0_15px_white]" style="top: 85%; left: 8%;"></div>
-                    </div>
-                </div>
-            </div>
-        </section>
+                        <path id="dynamic-curve" d="M 50 340" class="pf-curve-active" />
 
-        <section class="py-24 bg-h-panel">
-            <div class="max-w-6xl mx-auto px-4">
-                <h2 class="text-h-green font-mono text-sm mb-2 text-center">THE ECOSYSTEM</h2>
-                <h3 class="text-3xl font-bold text-white mb-16 text-center">From Sensor to Strategy</h3>
-                
-                <div class="grid md:grid-cols-3 gap-8">
-                    <div class="glass-card p-8 rounded-xl text-center hover:bg-h-green/5 transition">
-                        <div class="w-16 h-16 mx-auto bg-h-green/10 rounded-full flex items-center justify-center text-h-green mb-6 border border-h-green/20">
-                            <i data-lucide="radio" class="w-8 h-8"></i>
-                        </div>
-                        <h4 class="text-xl font-bold text-white mb-3">1. IoT Ingestion</h4>
-                        <p class="text-slate-400 text-sm">High-fidelity vibration, temperature, and pressure sensors stream raw data to our secure cloud.</p>
-                    </div>
-                    
-                    <div class="glass-card p-8 rounded-xl text-center border-h-green/50 shadow-[0_0_30px_rgba(16,185,129,0.1)] hover:bg-h-green/10 transition">
-                        <div class="w-16 h-16 mx-auto bg-h-green rounded-full flex items-center justify-center text-black mb-6 shadow-lg">
-                            <i data-lucide="brain-circuit" class="w-8 h-8"></i>
-                        </div>
-                        <h4 class="text-xl font-bold text-white mb-3">2. Neural Analysis</h4>
-                        <p class="text-slate-300 text-sm">Our AI models compare your asset against a global database of failure signatures (Digital Twin).</p>
-                    </div>
-                    
-                    <div class="glass-card p-8 rounded-xl text-center hover:bg-h-green/5 transition">
-                        <div class="w-16 h-16 mx-auto bg-h-green/10 rounded-full flex items-center justify-center text-h-green mb-6 border border-h-green/20">
-                            <i data-lucide="file-check" class="w-8 h-8"></i>
-                        </div>
-                        <h4 class="text-xl font-bold text-white mb-3">3. Human Validation</h4>
-                        <p class="text-slate-400 text-sm">Before alerting you, a Senior Engineer validates the AI finding to ensure 0% false alarms.</p>
-                    </div>
+                        <circle cx="150" cy="340" r="4" fill="#10b981" />
+                        <text x="150" y="320" fill="#10b981" font-size="10" font-family="monospace"
+                            text-anchor="middle">AnoHUB DETECTS</text>
+
+                        <circle cx="350" cy="280" r="4" fill="#facc15" />
+                        <text x="350" y="260" fill="#facc15" font-size="10" font-family="monospace"
+                            text-anchor="middle">AUDIBLE NOISE</text>
+
+                        <circle cx="480" cy="80" r="4" fill="#ef4444" />
+                        <text x="450" y="80" fill="#ef4444" font-size="10" font-family="monospace"
+                            text-anchor="end">FAILURE</text>
+                    </svg>
+
+                    <div id="tracker-dot" class="w-4 h-4 bg-white rounded-full absolute shadow-[0_0_15px_white]"
+                        style="top: 85%; left: 8%;"></div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section class="py-24 bg-h-dark border-t border-h-border">
-            <div class="max-w-4xl mx-auto px-4 text-center">
-                <h2 class="text-3xl font-bold text-white mb-4">Stop Reacting. Start Predicting.</h2>
-                <p class="text-slate-400 mb-12">Install our monitoring node today and see the future of your asset.</p>
-                
-                <div class="glass-card p-10 md:p-14 rounded-3xl border border-h-green/20 shadow-2xl text-left">
-                    <form id="contactForm" action="https://formspree.io/f/xqaywlaq" method="POST" class="space-y-6">
-                        <input type="hidden" name="Service" value="Predictive AI">
-                        
-                        <div class="grid md:grid-cols-2 gap-6">
-                            <div>
-                                <label class="text-xs font-mono text-h-green uppercase ml-1 block mb-2">Full Name</label>
-                                <input type="text" name="Full Name" required class="w-full bg-slate-900/80 border border-slate-700 rounded-lg p-4 text-white focus:border-h-green focus:outline-none transition">
-                            </div>
-                            <div>
-                                <label class="text-xs font-mono text-h-green uppercase ml-1 block mb-2">Official Email</label>
-                                <input type="email" name="Email" required class="w-full bg-slate-900/80 border border-slate-700 rounded-lg p-4 text-white focus:border-h-green focus:outline-none transition">
-                            </div>
-                        </div>
-                        
-                        <button type="submit" class="w-full bg-h-green hover:bg-emerald-400 text-black font-black py-5 rounded-lg shadow-[0_0_20px_rgba(16,185,129,0.4)] transition uppercase tracking-widest text-lg transform hover:scale-[1.01]">
-                            Deploy Predictive Node
-                        </button>
-                        <p id="formMessage" class="mt-4 text-center text-sm font-mono hidden"></p>
-                    </form>
+    <section class="py-24 bg-h-panel">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="text-h-green font-mono text-sm mb-2 text-center">THE ECOSYSTEM</h2>
+            <h3 class="text-3xl font-bold text-white mb-16 text-center">From Sensor to Strategy</h3>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="glass-card p-8 rounded-xl text-center hover:bg-h-green/5 transition">
+                    <div
+                        class="w-16 h-16 mx-auto bg-h-green/10 rounded-full flex items-center justify-center text-h-green mb-6 border border-h-green/20">
+                        <i data-lucide="radio" class="w-8 h-8"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-3">1. IoT Ingestion</h4>
+                    <p class="text-slate-400 text-sm">High-fidelity vibration, temperature, and pressure sensors stream
+                        raw data to our secure cloud.</p>
+                </div>
+
+                <div
+                    class="glass-card p-8 rounded-xl text-center border-h-green/50 shadow-[0_0_30px_rgba(16,185,129,0.1)] hover:bg-h-green/10 transition">
+                    <div
+                        class="w-16 h-16 mx-auto bg-h-green rounded-full flex items-center justify-center text-black mb-6 shadow-lg">
+                        <i data-lucide="brain-circuit" class="w-8 h-8"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-3">2. Neural Analysis</h4>
+                    <p class="text-slate-300 text-sm">Our AI models compare your asset against a global database of
+                        failure signatures (Digital Twin).</p>
+                </div>
+
+                <div class="glass-card p-8 rounded-xl text-center hover:bg-h-green/5 transition">
+                    <div
+                        class="w-16 h-16 mx-auto bg-h-green/10 rounded-full flex items-center justify-center text-h-green mb-6 border border-h-green/20">
+                        <i data-lucide="file-check" class="w-8 h-8"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-3">3. Human Validation</h4>
+                    <p class="text-slate-400 text-sm">Before alerting you, a Senior Engineer validates the AI finding to
+                        ensure 0% false alarms.</p>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
+
+    <section class="py-24 bg-h-dark border-t border-h-border">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold text-white mb-4">Stop Reacting. Start Predicting.</h2>
+            <p class="text-slate-400 mb-12">Install our monitoring node today and see the future of your asset.</p>
+
+            <div class="glass-card p-10 md:p-14 rounded-3xl border border-h-green/20 shadow-2xl text-left">
+                <form id="contactForm" action="https://formspree.io/f/xqaywlaq" method="POST" class="space-y-6">
+                    <input type="hidden" name="Service" value="Predictive AI">
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="text-xs font-mono text-h-green uppercase ml-1 block mb-2">Full Name</label>
+                            <input type="text" name="Full Name" required
+                                class="w-full bg-slate-900/80 border border-slate-700 rounded-lg p-4 text-white focus:border-h-green focus:outline-none transition">
+                        </div>
+                        <div>
+                            <label class="text-xs font-mono text-h-green uppercase ml-1 block mb-2">Official
+                                Email</label>
+                            <input type="email" name="Email" required
+                                class="w-full bg-slate-900/80 border border-slate-700 rounded-lg p-4 text-white focus:border-h-green focus:outline-none transition">
+                        </div>
+                    </div>
+
+                    <button type="submit"
+                        class="w-full bg-h-green hover:bg-emerald-400 text-black font-black py-5 rounded-lg shadow-[0_0_20px_rgba(16,185,129,0.4)] transition uppercase tracking-widest text-lg transform hover:scale-[1.01]">
+                        Deploy Predictive Node
+                    </button>
+                    <p id="formMessage" class="mt-4 text-center text-sm font-mono hidden"></p>
+                </form>
+            </div>
+        </div>
+    </section>
 
     </main>
 
-        <div id="global-footer"></div>
+    <div id="global-footer"></div>
 
     <script>
         lucide.createIcons();
@@ -292,33 +342,33 @@
         const status = document.getElementById('ai-status');
 
         function updateGraph() {
-            const t = slider.value; 
+            const t = slider.value;
             const x = 50 + (t / 100 * 500);
             const normalizedT = t / 100;
             const y = 350 - (Math.pow(normalizedT, 4) * 300); // Exponential curve
 
             dot.setAttribute("cx", x); dot.setAttribute("cy", y);
-            curve.setAttribute("d", `M 50 350 Q ${50 + (t*2.5)} 350, ${x} ${y}`);
+            curve.setAttribute("d", `M 50 350 Q ${50 + (t * 2.5)} 350, ${x} ${y}`);
 
-            if (t < 20) { 
-                status.innerHTML = '<div class="w-2 h-2 bg-h-green rounded-full animate-pulse"></div> HEALTHY'; 
+            if (t < 20) {
+                status.innerHTML = '<div class="w-2 h-2 bg-h-green rounded-full animate-pulse"></div> HEALTHY';
                 status.className = "text-sm font-bold text-h-green flex items-center gap-2";
-                dot.setAttribute("fill", "#10b981"); 
+                dot.setAttribute("fill", "#10b981");
             }
-            else if (t < 50) { 
-                status.innerHTML = '<div class="w-2 h-2 bg-h-green rounded-full animate-pulse"></div> ANOMALY DETECTED (AI)'; 
+            else if (t < 50) {
+                status.innerHTML = '<div class="w-2 h-2 bg-h-green rounded-full animate-pulse"></div> ANOMALY DETECTED (AI)';
                 status.className = "text-sm font-bold text-h-green flex items-center gap-2";
-                dot.setAttribute("fill", "#10b981"); 
+                dot.setAttribute("fill", "#10b981");
             }
-            else if (t < 80) { 
-                status.innerHTML = '<div class="w-2 h-2 bg-yellow-500 rounded-full animate-pulse"></div> AUDIBLE NOISE'; 
+            else if (t < 80) {
+                status.innerHTML = '<div class="w-2 h-2 bg-yellow-500 rounded-full animate-pulse"></div> AUDIBLE NOISE';
                 status.className = "text-sm font-bold text-yellow-500 flex items-center gap-2";
-                dot.setAttribute("fill", "#facc15"); 
+                dot.setAttribute("fill", "#facc15");
             }
-            else { 
-                status.innerHTML = '<div class="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div> CRITICAL FAILURE'; 
+            else {
+                status.innerHTML = '<div class="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div> CRITICAL FAILURE';
                 status.className = "text-sm font-bold text-red-500 flex items-center gap-2";
-                dot.setAttribute("fill", "#ef4444"); 
+                dot.setAttribute("fill", "#ef4444");
             }
         }
         slider.addEventListener('input', updateGraph);
@@ -328,23 +378,23 @@
         const form = document.getElementById('contactForm');
         const msg = document.getElementById('formMessage');
 
-        if(form) {
+        if (form) {
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 const btn = form.querySelector('button');
                 const originalText = btn.innerText;
                 btn.innerText = 'TRANSMITTING...';
                 btn.disabled = true;
-                
+
                 const formData = new FormData(form);
-                
+
                 try {
                     const response = await fetch(form.action, {
                         method: 'POST',
                         body: formData,
                         headers: { 'Accept': 'application/json' }
                     });
-                    
+
                     if (response.ok) {
                         msg.innerText = "REQUEST RECEIVED. STAND BY.";
                         msg.style.color = "#10b981";
@@ -368,4 +418,5 @@
     <!-- Component Loader -->
     <script src="assets/js/layout-loader.js"></script>
 </body>
+
 </html>

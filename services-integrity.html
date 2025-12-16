@@ -1,11 +1,13 @@
 ﻿<!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Systemic Integrity Audits | AnoHUB</title>
-    <meta name="description" content="Holistic examination of hydropower systems using FEA, NDT, and 3D Metrology protocols to ensure zero-defect structural integrity.">
-    
+    <meta name="description"
+        content="Holistic examination of hydropower systems using FEA, NDT, and 3D Metrology protocols to ensure zero-defect structural integrity.">
+
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -16,10 +18,12 @@
     }
     </script>
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+
     <link rel="stylesheet" href="assets/css/preloader.css">
-<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -27,17 +31,17 @@
                 extend: {
                     fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
                     colors: {
-                        'h-cyan': '#06b6d4', 'h-green': '#10b981', 'h-red': '#ef4444', 
-                        'h-yellow': '#facc15', 'h-dark': '#020617', 'h-panel': '#0f172a', 
+                        'h-cyan': '#06b6d4', 'h-green': '#10b981', 'h-red': '#ef4444',
+                        'h-yellow': '#facc15', 'h-dark': '#020617', 'h-panel': '#0f172a',
                         'h-border': '#1e293b'
                     },
-                    animation: { 
+                    animation: {
                         'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
                         'scan-line': 'scanLine 4s ease-in-out infinite',
                         'spin-slow': 'spin 15s linear infinite',
                         'pulse-fast': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite'
                     },
-                    keyframes: { 
+                    keyframes: {
                         fadeInUp: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
                         scanLine: {
                             '0%': { top: '0%', opacity: 0 },
@@ -52,55 +56,99 @@
     </script>
 
     <style>
-        body { background-color: #020617; color: #f8fafc; overflow-x: hidden; }
-        
+        body {
+            background-color: #020617;
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+
         /* === PARALLAX BACKGROUND === */
         .bg-layer {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             z-index: -3;
             /* TVOJA SLIKA ORLJANI */
-            background-image: url('assets/images/orljani_Una.jpg'); 
-            background-size: cover; background-position: center;
-            opacity: 0.25; /* Tamno da tekst iskoči */
-            filter: grayscale(100%) contrast(1.2); /* Forenzički B&W look */
+            background-image: url('assets/images/orljani_Una.jpg');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.25;
+            /* Tamno da tekst iskoči */
+            filter: grayscale(100%) contrast(1.2);
+            /* Forenzički B&W look */
         }
 
         /* === OVERLAYS === */
         .tech-grid {
             background-image: linear-gradient(rgba(6, 182, 212, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(6, 182, 212, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
+            background-size: 50px 50px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
             pointer-events: none;
         }
-        
+
         .noise-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
-            pointer-events: none; z-index: -1; opacity: 0.4;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.4;
         }
 
         /* === GLASS COMPONENTS === */
         .glass-card {
-            background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(12px);
-            border: 1px solid rgba(6, 182, 212, 0.2); transition: all 0.3s ease;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            transition: all 0.3s ease;
         }
-        .glass-card:hover { 
-            border-color: #06b6d4; 
-            box-shadow: 0 0 40px rgba(6, 182, 212, 0.15); 
-            transform: translateY(-5px); 
+
+        .glass-card:hover {
+            border-color: #06b6d4;
+            box-shadow: 0 0 40px rgba(6, 182, 212, 0.15);
+            transform: translateY(-5px);
         }
 
         /* SCANNER LASER */
         .scanner-bar {
-            position: absolute; left: 0; width: 100%; height: 2px;
-            background: #06b6d4; box-shadow: 0 0 20px #06b6d4;
-            animation: scanLine 4s ease-in-out infinite; z-index: 20; pointer-events: none;
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #06b6d4;
+            box-shadow: 0 0 20px #06b6d4;
+            animation: scanLine 4s ease-in-out infinite;
+            z-index: 20;
+            pointer-events: none;
         }
 
         /* CUSTOM SCROLLBAR */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #020617; }
-        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #06b6d4; }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #020617;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #06b6d4;
+        }
     </style>
 
     <!-- Favicons -->
@@ -110,218 +158,225 @@
     <link rel="manifest" href="assets/site.webmanifest">
 </head>
 
-<body class="antialiased">
+<body class="antialiased" data-translation-source="service_integrity">
     <noscript>
         <div style="border: 1px solid #ef4444; padding: 20px;">
             <h1 style="color: #ef4444; font-size: 24px; margin-bottom: 10px;">SYSTEM ERROR: SCRIPT BLOCKED</h1>
-            <p>The AnoHUB Protocol requires JavaScript to function.<br>Please enable scripts to access the interface.</p>
+            <p>The AnoHUB Protocol requires JavaScript to function.<br>Please enable scripts to access the interface.
+            </p>
         </div>
     </noscript>
+    <div class="flex items-center gap-2 px-4 py-2 bg-black/40 rounded border border-white/5">
+        <div class="w-2 h-2 bg-h-cyan rounded-full"></div> 3D METROLOGY
+    </div>
+    </div>
+    </div>
+    </section>
 
-    
-    <div class="bg-layer"></div>
-    <div class="tech-grid"></div>
-    <div class="noise-overlay"></div>
-
-        <div id="global-header"></div>
-
-    <main class="pt-20">
-
-        <section class="min-h-[70vh] flex items-center justify-center relative overflow-hidden">
-            <div class="scanner-bar"></div> <div class="max-w-6xl mx-auto px-4 text-center relative z-10">
-                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-h-cyan/30 bg-black/60 backdrop-blur-md text-xs font-mono text-h-cyan mb-8 shadow-[0_0_20px_rgba(6,182,212,0.2)] animate-fade-in-up">
-                    <span class="w-2 h-2 bg-h-cyan rounded-full animate-pulse"></span>
-                    STATUS: DEEP FORENSIC SCAN
-                </div>
-                
-                <h1 class="text-6xl md:text-9xl font-black text-white mb-6 tracking-tighter leading-none drop-shadow-2xl animate-fade-in-up">
-                    SYSTEMIC <br>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-h-cyan to-blue-500">INTEGRITY</span>
-                </h1>
-                
-                <p class="text-xl md:text-2xl text-slate-300 max-w-3xl mx-auto leading-relaxed mb-10 font-light animate-fade-in-up opacity-0" style="animation-delay: 0.2s;">
-                    We don't guess. We scan. A holistic examination of your entire hydropower system using <span class="text-h-cyan font-bold">Military-Grade Metrology</span> and NDT protocols.
-                </p>
-                
-                <div class="flex flex-wrap justify-center gap-8 text-xs font-mono text-slate-400 animate-fade-in-up opacity-0" style="animation-delay: 0.4s;">
-                    <div class="flex items-center gap-2 px-4 py-2 bg-black/40 rounded border border-white/5"><div class="w-2 h-2 bg-h-cyan rounded-full"></div> FEA SIMULATION</div>
-                    <div class="flex items-center gap-2 px-4 py-2 bg-black/40 rounded border border-white/5"><div class="w-2 h-2 bg-h-cyan rounded-full"></div> NDT PAUT</div>
-                    <div class="flex items-center gap-2 px-4 py-2 bg-black/40 rounded border border-white/5"><div class="w-2 h-2 bg-h-cyan rounded-full"></div> 3D METROLOGY</div>
-                </div>
-            </div>
-        </section>
-
-        <section class="py-24 bg-h-dark border-y border-h-border">
-            <div class="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-16 items-center">
-                <div class="order-2 lg:order-1">
-                    <div class="glass-card p-10 rounded-2xl border-l-4 border-l-h-cyan">
-                        <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
-                            <i data-lucide="layers" class="w-8 h-8 text-h-cyan"></i> The Hidden 48%
-                        </h2>
-                        <p class="text-slate-300 text-lg leading-relaxed mb-6">
-                            Standard visual inspections miss <strong>48% of critical failure modes</strong>. Micro-cracks in runner blades, shaft misalignment of just 0.07mm, or foundation voids cannot be seen with the naked eye.
-                        </p>
-                        <p class="text-slate-300 text-lg leading-relaxed border-l-2 border-slate-700 pl-4">
-                            The <strong>Organizational Execution Gap</strong> creates blind spots where design intent and field reality diverge. We bridge that gap with forensic data.
-                        </p>
-                    </div>
-                </div>
-                <div class="order-1 lg:order-2 text-center lg:text-left">
-                    <h3 class="text-h-cyan font-mono text-sm mb-2 uppercase tracking-widest">The Threat</h3>
-                    <h2 class="text-5xl font-black text-white mb-6 leading-tight">What You Can't See <br>Will Stop You.</h2>
-                    <p class="text-slate-400 text-lg leading-relaxed">
-                        Surface-level audits are a liability. True integrity lies beneath the metal. We use technology to see through the steel.
+    <section class="py-24 bg-h-dark border-y border-h-border">
+        <div class="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-16 items-center">
+            <div class="order-2 lg:order-1">
+                <div class="glass-card p-10 rounded-2xl border-l-4 border-l-h-cyan">
+                    <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                        <i data-lucide="layers" class="w-8 h-8 text-h-cyan"></i> The Hidden 48%
+                    </h2>
+                    <p class="text-slate-300 text-lg leading-relaxed mb-6">
+                        Standard visual inspections miss <strong>48% of critical failure modes</strong>. Micro-cracks in
+                        runner blades, shaft misalignment of just 0.07mm, or foundation voids cannot be seen with the
+                        naked eye.
+                    </p>
+                    <p class="text-slate-300 text-lg leading-relaxed border-l-2 border-slate-700 pl-4">
+                        The <strong>Organizational Execution Gap</strong> creates blind spots where design intent and
+                        field reality diverge. We bridge that gap with forensic data.
                     </p>
                 </div>
             </div>
-        </section>
+            <div class="order-1 lg:order-2 text-center lg:text-left">
+                <h3 class="text-h-cyan font-mono text-sm mb-2 uppercase tracking-widest">The Threat</h3>
+                <h2 class="text-5xl font-black text-white mb-6 leading-tight">What You Can't See <br>Will Stop You.</h2>
+                <p class="text-slate-400 text-lg leading-relaxed">
+                    Surface-level audits are a liability. True integrity lies beneath the metal. We use technology to
+                    see through the steel.
+                </p>
+            </div>
+        </div>
+    </section>
 
-        <section class="py-24 bg-h-panel relative">
-            <div class="max-w-7xl mx-auto px-4 relative z-10">
-                <div class="text-center mb-16">
-                    <h2 class="text-3xl font-black text-white flex items-center justify-center gap-3">
-                        <i data-lucide="scan-line" class="w-8 h-8 text-h-cyan"></i> Deep Scan Technology
-                    </h2>
+    <section class="py-24 bg-h-panel relative">
+        <div class="max-w-7xl mx-auto px-4 relative z-10">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-black text-white flex items-center justify-center gap-3">
+                    <i data-lucide="scan-line" class="w-8 h-8 text-h-cyan"></i> Deep Scan Technology
+                </h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="glass-card p-10 rounded-2xl group hover:bg-h-cyan/5 transition">
+                    <div
+                        class="bg-h-dark p-4 rounded-full w-fit mb-6 border border-h-cyan text-h-cyan group-hover:scale-110 transition">
+                        <i data-lucide="box-select" class="w-8 h-8"></i></div>
+                    <h3 class="text-2xl font-bold text-white mb-3">3D Laser Metrology</h3>
+                    <p class="text-sm text-slate-400 leading-relaxed">
+                        We create a sub-millimeter digital twin of your turbine. This reveals deviations from the OEM
+                        design (0.05mm tolerance) that cause flow inefficiency.
+                    </p>
                 </div>
 
-                <div class="grid md:grid-cols-3 gap-8">
-                    <div class="glass-card p-10 rounded-2xl group hover:bg-h-cyan/5 transition">
-                        <div class="bg-h-dark p-4 rounded-full w-fit mb-6 border border-h-cyan text-h-cyan group-hover:scale-110 transition"><i data-lucide="box-select" class="w-8 h-8"></i></div>
-                        <h3 class="text-2xl font-bold text-white mb-3">3D Laser Metrology</h3>
-                        <p class="text-sm text-slate-400 leading-relaxed">
-                            We create a sub-millimeter digital twin of your turbine. This reveals deviations from the OEM design (0.05mm tolerance) that cause flow inefficiency.
+                <div class="glass-card p-10 rounded-2xl group hover:bg-h-cyan/5 transition">
+                    <div
+                        class="bg-h-dark p-4 rounded-full w-fit mb-6 border border-h-cyan text-h-cyan group-hover:scale-110 transition">
+                        <i data-lucide="activity" class="w-8 h-8"></i></div>
+                    <h3 class="text-2xl font-bold text-white mb-3">Advanced NDT</h3>
+                    <p class="text-sm text-slate-400 leading-relaxed">
+                        Phased Array Ultrasonic Testing (PAUT) allows us to "see" inside welds and castings, detecting
+                        fatigue cracks before they propagate to failure.
+                    </p>
+                </div>
+
+                <div class="glass-card p-10 rounded-2xl group hover:bg-h-cyan/5 transition">
+                    <div
+                        class="bg-h-dark p-4 rounded-full w-fit mb-6 border border-h-cyan text-h-cyan group-hover:scale-110 transition">
+                        <i data-lucide="cpu" class="w-8 h-8"></i></div>
+                    <h3 class="text-2xl font-bold text-white mb-3">FEA Simulation</h3>
+                    <p class="text-sm text-slate-400 leading-relaxed">
+                        Finite Element Analysis. We apply digital stress loads to your asset's digital twin to predict
+                        exactly where and when it will break under surge conditions.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 bg-h-dark border-t border-h-border">
+        <div class="max-w-5xl mx-auto px-4">
+            <div
+                class="glass-card p-12 rounded-3xl relative overflow-hidden bg-gradient-to-br from-h-cyan/5 to-transparent">
+
+                <div class="flex flex-col md:flex-row items-center gap-16 relative z-10">
+                    <div class="md:w-1/2">
+                        <h3 class="text-3xl font-black text-white mb-6">Live Digital Twin</h3>
+                        <p class="text-slate-400 text-lg leading-relaxed mb-8">
+                            Our audits generate a live, interactive model. Click on a component to see its stress
+                            rating, material composition, and remaining lifespan.
                         </p>
-                    </div>
 
-                    <div class="glass-card p-10 rounded-2xl group hover:bg-h-cyan/5 transition">
-                        <div class="bg-h-dark p-4 rounded-full w-fit mb-6 border border-h-cyan text-h-cyan group-hover:scale-110 transition"><i data-lucide="activity" class="w-8 h-8"></i></div>
-                        <h3 class="text-2xl font-bold text-white mb-3">Advanced NDT</h3>
-                        <p class="text-sm text-slate-400 leading-relaxed">
-                            Phased Array Ultrasonic Testing (PAUT) allows us to "see" inside welds and castings, detecting fatigue cracks before they propagate to failure.
-                        </p>
-                    </div>
-
-                    <div class="glass-card p-10 rounded-2xl group hover:bg-h-cyan/5 transition">
-                        <div class="bg-h-dark p-4 rounded-full w-fit mb-6 border border-h-cyan text-h-cyan group-hover:scale-110 transition"><i data-lucide="cpu" class="w-8 h-8"></i></div>
-                        <h3 class="text-2xl font-bold text-white mb-3">FEA Simulation</h3>
-                        <p class="text-sm text-slate-400 leading-relaxed">
-                            Finite Element Analysis. We apply digital stress loads to your asset's digital twin to predict exactly where and when it will break under surge conditions.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="py-24 bg-h-dark border-t border-h-border">
-            <div class="max-w-5xl mx-auto px-4">
-                <div class="glass-card p-12 rounded-3xl relative overflow-hidden bg-gradient-to-br from-h-cyan/5 to-transparent">
-                    
-                    <div class="flex flex-col md:flex-row items-center gap-16 relative z-10">
-                        <div class="md:w-1/2">
-                            <h3 class="text-3xl font-black text-white mb-6">Live Digital Twin</h3>
-                            <p class="text-slate-400 text-lg leading-relaxed mb-8">
-                                Our audits generate a live, interactive model. Click on a component to see its stress rating, material composition, and remaining lifespan.
-                            </p>
-                            
-                            <div class="space-y-4">
-                                <div class="flex items-center gap-4 text-xs font-mono text-white bg-black/40 px-4 py-3 rounded border border-white/5">
-                                    <span class="w-2 h-2 rounded-full bg-h-red animate-pulse-fast"></span> 
-                                    <span>STRESS HOTSPOT DETECTED: RUNNER HUB</span>
-                                </div>
-                                <div class="flex items-center gap-4 text-xs font-mono text-white bg-black/40 px-4 py-3 rounded border border-white/5">
-                                    <span class="w-2 h-2 rounded-full bg-h-green"></span> 
-                                    <span>STRUCTURAL INTEGRITY: 98.4%</span>
-                                </div>
+                        <div class="space-y-4">
+                            <div
+                                class="flex items-center gap-4 text-xs font-mono text-white bg-black/40 px-4 py-3 rounded border border-white/5">
+                                <span class="w-2 h-2 rounded-full bg-h-red animate-pulse-fast"></span>
+                                <span>STRESS HOTSPOT DETECTED: RUNNER HUB</span>
+                            </div>
+                            <div
+                                class="flex items-center gap-4 text-xs font-mono text-white bg-black/40 px-4 py-3 rounded border border-white/5">
+                                <span class="w-2 h-2 rounded-full bg-h-green"></span>
+                                <span>STRUCTURAL INTEGRITY: 98.4%</span>
                             </div>
                         </div>
-                        
-                        <div class="md:w-1/2 flex justify-center relative">
-                            <div class="relative w-64 h-64 flex items-center justify-center">
-                                <div class="absolute inset-0 border-2 border-dashed border-h-cyan/20 rounded-full animate-spin-slow"></div>
-                                <div class="absolute inset-8 border border-h-cyan/10 rounded-full"></div>
-                                <i data-lucide="fan" class="w-40 h-40 text-h-cyan opacity-80"></i>
-                                <div class="absolute top-10 right-14 w-4 h-4 bg-h-red rounded-full animate-ping"></div>
-                                <div class="absolute top-10 right-14 w-4 h-4 bg-h-red/50 rounded-full border border-h-red cursor-pointer" title="Crack Detected"></div>
+                    </div>
+
+                    <div class="md:w-1/2 flex justify-center relative">
+                        <div class="relative w-64 h-64 flex items-center justify-center">
+                            <div
+                                class="absolute inset-0 border-2 border-dashed border-h-cyan/20 rounded-full animate-spin-slow">
                             </div>
+                            <div class="absolute inset-8 border border-h-cyan/10 rounded-full"></div>
+                            <i data-lucide="fan" class="w-40 h-40 text-h-cyan opacity-80"></i>
+                            <div class="absolute top-10 right-14 w-4 h-4 bg-h-red rounded-full animate-ping"></div>
+                            <div class="absolute top-10 right-14 w-4 h-4 bg-h-red/50 rounded-full border border-h-red cursor-pointer"
+                                title="Crack Detected"></div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section class="py-24 bg-h-panel">
-            <div class="max-w-5xl mx-auto px-4 text-center">
-                <h2 class="text-3xl font-black text-white mb-16">Execution Protocols</h2>
-                <div class="grid md:grid-cols-2 gap-8 text-left">
-                    <div class="flex gap-6 items-start p-8 rounded-2xl bg-h-dark border border-h-border hover:border-h-cyan transition group">
-                        <div class="text-h-cyan bg-h-cyan/10 p-3 rounded-lg"><i data-lucide="hard-hat" class="w-8 h-8"></i></div>
+    <section class="py-24 bg-h-panel">
+        <div class="max-w-5xl mx-auto px-4 text-center">
+            <h2 class="text-3xl font-black text-white mb-16">Execution Protocols</h2>
+            <div class="grid md:grid-cols-2 gap-8 text-left">
+                <div
+                    class="flex gap-6 items-start p-8 rounded-2xl bg-h-dark border border-h-border hover:border-h-cyan transition group">
+                    <div class="text-h-cyan bg-h-cyan/10 p-3 rounded-lg"><i data-lucide="hard-hat" class="w-8 h-8"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold text-xl mb-2 group-hover:text-h-cyan transition">Forensic Field
+                            Team</h4>
+                        <p class="text-sm text-slate-400 leading-relaxed">Deploying ISO-certified NDT Level 3 engineers
+                            to your site within 48 hours of an anomaly detection.</p>
+                    </div>
+                </div>
+                <div
+                    class="flex gap-6 items-start p-8 rounded-2xl bg-h-dark border border-h-border hover:border-h-cyan transition group">
+                    <div class="text-h-cyan bg-h-cyan/10 p-3 rounded-lg"><i data-lucide="wrench" class="w-8 h-8"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold text-xl mb-2 group-hover:text-h-cyan transition">Repair
+                            Supervision</h4>
+                        <p class="text-sm text-slate-400 leading-relaxed">We oversee third-party contractors to ensure
+                            welding and grinding meet the 0.05mm precision standard.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 bg-h-dark border-t border-h-border relative">
+        <div class="absolute top-0 right-0 w-1/2 h-full bg-h-cyan/5 blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-4xl mx-auto px-4 relative z-10">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-black text-white mb-4">Initialize Forensic Audit</h2>
+                <p class="text-slate-400">Deploy our Level 3 NDT engineers to your site.</p>
+            </div>
+
+            <div class="glass-card p-10 md:p-14 rounded-3xl border border-h-cyan/20 shadow-2xl">
+                <form id="contactForm" action="https://formspree.io/f/xqaywlaq" method="POST" class="space-y-6">
+                    <input type="hidden" name="Service" value="Integrity Audit">
+
+                    <div class="grid md:grid-cols-2 gap-6">
                         <div>
-                            <h4 class="text-white font-bold text-xl mb-2 group-hover:text-h-cyan transition">Forensic Field Team</h4>
-                            <p class="text-sm text-slate-400 leading-relaxed">Deploying ISO-certified NDT Level 3 engineers to your site within 48 hours of an anomaly detection.</p>
+                            <label class="text-xs font-mono text-h-cyan uppercase ml-1 block mb-2">Full Name</label>
+                            <input type="text" name="Full Name" required
+                                class="w-full bg-slate-900/80 border border-slate-700 rounded-lg p-4 text-white focus:border-h-cyan focus:outline-none transition">
                         </div>
-                    </div>
-                    <div class="flex gap-6 items-start p-8 rounded-2xl bg-h-dark border border-h-border hover:border-h-cyan transition group">
-                        <div class="text-h-cyan bg-h-cyan/10 p-3 rounded-lg"><i data-lucide="wrench" class="w-8 h-8"></i></div>
                         <div>
-                            <h4 class="text-white font-bold text-xl mb-2 group-hover:text-h-cyan transition">Repair Supervision</h4>
-                            <p class="text-sm text-slate-400 leading-relaxed">We oversee third-party contractors to ensure welding and grinding meet the 0.05mm precision standard.</p>
+                            <label class="text-xs font-mono text-h-cyan uppercase ml-1 block mb-2">Official
+                                Email</label>
+                            <input type="email" name="Email" required
+                                class="w-full bg-slate-900/80 border border-slate-700 rounded-lg p-4 text-white focus:border-h-cyan focus:outline-none transition">
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
 
-        <section class="py-24 bg-h-dark border-t border-h-border relative">
-            <div class="absolute top-0 right-0 w-1/2 h-full bg-h-cyan/5 blur-3xl pointer-events-none"></div>
-            
-            <div class="max-w-4xl mx-auto px-4 relative z-10">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl font-black text-white mb-4">Initialize Forensic Audit</h2>
-                    <p class="text-slate-400">Deploy our Level 3 NDT engineers to your site.</p>
-                </div>
-                
-                <div class="glass-card p-10 md:p-14 rounded-3xl border border-h-cyan/20 shadow-2xl">
-                    <form id="contactForm" action="https://formspree.io/f/xqaywlaq" method="POST" class="space-y-6">
-                        <input type="hidden" name="Service" value="Integrity Audit">
-                        
-                        <div class="grid md:grid-cols-2 gap-6">
-                            <div>
-                                <label class="text-xs font-mono text-h-cyan uppercase ml-1 block mb-2">Full Name</label>
-                                <input type="text" name="Full Name" required class="w-full bg-slate-900/80 border border-slate-700 rounded-lg p-4 text-white focus:border-h-cyan focus:outline-none transition">
-                            </div>
-                            <div>
-                                <label class="text-xs font-mono text-h-cyan uppercase ml-1 block mb-2">Official Email</label>
-                                <input type="email" name="Email" required class="w-full bg-slate-900/80 border border-slate-700 rounded-lg p-4 text-white focus:border-h-cyan focus:outline-none transition">
-                            </div>
-                        </div>
-                        
-                        <div>
-                            <label class="text-xs font-mono text-h-cyan uppercase ml-1 block mb-2">Asset Description</label>
-                            <textarea name="Message" rows="3" placeholder="Describe the turbine or component..." class="w-full bg-slate-900/80 border border-slate-700 rounded-lg p-4 text-white focus:border-h-cyan focus:outline-none transition"></textarea>
-                        </div>
-                        
-                        <button type="submit" class="w-full bg-h-cyan hover:bg-cyan-400 text-black font-black py-5 rounded-lg shadow-[0_0_20px_rgba(6,182,212,0.4)] transition uppercase tracking-widest text-lg transform hover:scale-[1.01]">
-                            Submit Protocol Request
-                        </button>
-                        <p id="formMessage" class="mt-4 text-center text-sm font-mono hidden"></p>
-                    </form>
-                </div>
+                    <div>
+                        <label class="text-xs font-mono text-h-cyan uppercase ml-1 block mb-2">Asset Description</label>
+                        <textarea name="Message" rows="3" placeholder="Describe the turbine or component..."
+                            class="w-full bg-slate-900/80 border border-slate-700 rounded-lg p-4 text-white focus:border-h-cyan focus:outline-none transition"></textarea>
+                    </div>
+
+                    <button type="submit"
+                        class="w-full bg-h-cyan hover:bg-cyan-400 text-black font-black py-5 rounded-lg shadow-[0_0_20px_rgba(6,182,212,0.4)] transition uppercase tracking-widest text-lg transform hover:scale-[1.01]">
+                        Submit Protocol Request
+                    </button>
+                    <p id="formMessage" class="mt-4 text-center text-sm font-mono hidden"></p>
+                </form>
             </div>
-        </section>
+        </div>
+    </section>
 
     </main>
 
-        <div id="global-footer"></div>
+    <div id="global-footer"></div>
 
     <script>
         lucide.createIcons();
-        
+
         // Mobile Menu Logic
         const menuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         const mobileLinks = document.querySelectorAll('.mobile-link');
-        
-        if(menuBtn) {
+
+        if (menuBtn) {
             menuBtn.addEventListener('click', () => {
                 const isClosed = mobileMenu.classList.contains('translate-x-full');
                 if (isClosed) {
@@ -345,23 +400,23 @@
         const form = document.getElementById('contactForm');
         const msg = document.getElementById('formMessage');
 
-        if(form) {
+        if (form) {
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 const btn = form.querySelector('button');
                 const originalText = btn.innerText;
                 btn.innerText = 'TRANSMITTING...';
                 btn.disabled = true;
-                
+
                 const formData = new FormData(form);
-                
+
                 try {
                     const response = await fetch(form.action, {
                         method: 'POST',
                         body: formData,
                         headers: { 'Accept': 'application/json' }
                     });
-                    
+
                     if (response.ok) {
                         msg.innerText = "REQUEST RECEIVED. STAND BY.";
                         msg.style.color = "#10b981";
@@ -384,7 +439,7 @@
         // Navbar Scroll Effect
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('navbar');
-            if (window.scrollY > 50) { nav.classList.add('shadow-lg', 'bg-h-dark/95'); nav.classList.remove('bg-h-dark/90'); } 
+            if (window.scrollY > 50) { nav.classList.add('shadow-lg', 'bg-h-dark/95'); nav.classList.remove('bg-h-dark/90'); }
             else { nav.classList.remove('shadow-lg', 'bg-h-dark/95'); nav.classList.add('bg-h-dark/90'); }
         });
     </script>
@@ -392,4 +447,5 @@
     <!-- Component Loader -->
     <script src="assets/js/layout-loader.js"></script>
 </body>
+
 </html>

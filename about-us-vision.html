@@ -1,10 +1,12 @@
 ﻿<!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Our Vision & The Architect | AnoHUB</title>
-    <meta name="description" content="The origin story of Anohubs. Meeting the architects behind the Engineering Immunity Protocol.">
+    <meta name="description"
+        content="The origin story of Anohubs. Meeting the architects behind the Engineering Immunity Protocol.">
 
     <script type="application/ld+json">
     {
@@ -22,12 +24,14 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+
+
     <link rel="stylesheet" href="assets/css/preloader.css">
-<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-    
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -35,8 +39,8 @@
                 extend: {
                     fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
                     colors: {
-                        'h-cyan': '#06b6d4', 'h-green': '#10b981', 'h-red': '#ef4444', 
-                        'h-yellow': '#facc15', 'h-dark': '#020617', 'h-panel': '#0f172a', 
+                        'h-cyan': '#06b6d4', 'h-green': '#10b981', 'h-red': '#ef4444',
+                        'h-yellow': '#facc15', 'h-dark': '#020617', 'h-panel': '#0f172a',
                         'h-border': '#1e293b', 'h-cta': '#f59e0b', 'h-purple': '#8b5cf6'
                     },
                     animation: {
@@ -55,72 +59,139 @@
 
     <style>
         /* GLOBAL SETTINGS */
-        body { background-color: #020617; color: #f8fafc; overflow-x: hidden; }
-        
+        body {
+            background-color: #020617;
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+
         /* === BACKGROUND LAYERS === */
         /* 1. Tvoja slika (Fixed) */
         .bg-image-layer {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             z-index: -3;
-            background-image: url('assets/images/about_us_bckgrnd.jpg'); 
-            background-size: cover; background-position: center;
-            opacity: 0.3; /* Zatamnjeno za čitljivost */
-            filter: grayscale(100%) contrast(1.2); /* Cinematic B&W */
+            background-image: url('assets/images/about_us_bckgrnd.jpg');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.3;
+            /* Zatamnjeno za čitljivost */
+            filter: grayscale(100%) contrast(1.2);
+            /* Cinematic B&W */
         }
-        
+
         /* 2. Tech Grid (Overlay) */
         .tech-bg {
             background-image: linear-gradient(rgba(6, 182, 212, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(6, 182, 212, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
+            background-size: 50px 50px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
             pointer-events: none;
         }
 
         /* 3. Noise Texture (Grain) */
         .noise-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
-            pointer-events: none; z-index: 50; opacity: 0.4;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.4;
         }
 
         /* === COMPONENT STYLES === */
-        
+
         /* Glass Panels */
         .glass-panel {
-            background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(16px);
-            border: 1px solid rgba(51, 65, 85, 0.5); transition: all 0.3s ease;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(51, 65, 85, 0.5);
+            transition: all 0.3s ease;
         }
-        .glass-panel:hover { border-color: #06b6d4; box-shadow: 0 0 40px rgba(6, 182, 212, 0.15); transform: translateY(-2px); }
+
+        .glass-panel:hover {
+            border-color: #06b6d4;
+            box-shadow: 0 0 40px rgba(6, 182, 212, 0.15);
+            transform: translateY(-2px);
+        }
 
         /* Portrait Scanner Effect */
-        .portrait-container { position: relative; overflow: hidden; border-radius: 1rem; border: 1px solid rgba(6,182,212,0.3); }
+        .portrait-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1rem;
+            border: 1px solid rgba(6, 182, 212, 0.3);
+        }
+
         .portrait-scanline {
-            position: absolute; width: 100%; height: 2px; background: #06b6d4;
-            box-shadow: 0 0 15px #06b6d4; opacity: 0.8; animation: scan 3s linear infinite; z-index: 10;
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: #06b6d4;
+            box-shadow: 0 0 15px #06b6d4;
+            opacity: 0.8;
+            animation: scan 3s linear infinite;
+            z-index: 10;
         }
 
         /* Turbine Mastery Cards */
         .mastery-card {
-            height: 450px; position: relative; overflow: hidden; border-radius: 1rem;
-            border: 1px solid rgba(255,255,255,0.1); transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            height: 450px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
-        .mastery-card:hover { transform: scale(1.02); box-shadow: 0 30px 60px -20px rgba(0,0,0,0.8); }
-        
+
+        .mastery-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.8);
+        }
+
         .mastery-bg {
-            position: absolute; inset: 0; background-size: cover; background-position: center;
-            transition: transform 0.7s ease; filter: grayscale(100%) contrast(1.2) brightness(0.6);
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.7s ease;
+            filter: grayscale(100%) contrast(1.2) brightness(0.6);
         }
-        .mastery-card:hover .mastery-bg { transform: scale(1.1); filter: grayscale(0%) brightness(1); }
-        
+
+        .mastery-card:hover .mastery-bg {
+            transform: scale(1.1);
+            filter: grayscale(0%) brightness(1);
+        }
+
         .mastery-content {
-            position: absolute; inset: 0; background: linear-gradient(to top, #020617 10%, transparent 90%);
-            display: flex; flex-direction: column; justify-content: flex-end; padding: 2rem;
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, #020617 10%, transparent 90%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 2rem;
         }
 
         /* Timeline Line */
-        .timeline-line { 
-            position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; 
-            background: linear-gradient(to bottom, transparent, #334155, #334155, transparent); 
-            transform: translateX(-50%); 
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, transparent, #334155, #334155, transparent);
+            transform: translateX(-50%);
         }
     </style>
 
@@ -135,46 +206,56 @@
     <noscript>
         <div style="border: 1px solid #ef4444; padding: 20px;">
             <h1 style="color: #ef4444; font-size: 24px; margin-bottom: 10px;">SYSTEM ERROR: SCRIPT BLOCKED</h1>
-            <p>The AnoHUB Protocol requires JavaScript to function.<br>Please enable scripts to access the interface.</p>
+            <p>The AnoHUB Protocol requires JavaScript to function.<br>Please enable scripts to access the interface.
+            </p>
         </div>
     </noscript>
 
-    
+
     <div class="bg-image-layer"></div>
     <div class="tech-bg"></div>
     <div class="noise-overlay"></div>
 
-        <div id="global-header"></div>
+    <div id="global-header"></div>
 
     <main class="pt-32 pb-20">
 
         <section class="max-w-7xl mx-auto px-4 mb-24">
             <div class="text-center max-w-4xl mx-auto">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-xs font-mono text-h-cyan mb-8 animate-fade-in-up backdrop-blur-md">
+                <div
+                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-xs font-mono text-h-cyan mb-8 animate-fade-in-up backdrop-blur-md">
                     <span class="w-2 h-2 bg-h-cyan rounded-full animate-pulse"></span> VISION LOG v1.0
                 </div>
-                <h1 class="text-5xl md:text-8xl font-black text-white mb-8 tracking-tight leading-none animate-fade-in-up opacity-0" style="animation-delay: 0.2s;">
+                <h1 class="text-5xl md:text-8xl font-black text-white mb-8 tracking-tight leading-none animate-fade-in-up opacity-0"
+                    style="animation-delay: 0.2s;" data-i18n="about.title">
                     THE ARCHITECTS OF <br>
                     <span class="text-transparent bg-clip-text bg-gradient-to-r from-h-cyan to-blue-500">IMMUNITY</span>
                 </h1>
-                <p class="text-xl md:text-2xl text-slate-300 leading-relaxed font-light animate-fade-in-up opacity-0 drop-shadow-md" style="animation-delay: 0.4s;">
-                    We don't just inspect power plants. We solve the fundamental equation of <strong class="text-white font-bold">Dynamic Risk</strong> versus <strong class="text-white font-bold">Operational Certainty</strong>.
+                <p class="text-xl md:text-2xl text-slate-300 leading-relaxed font-light animate-fade-in-up opacity-0 drop-shadow-md"
+                    style="animation-delay: 0.4s;" data-i18n="about.subtitle">
+                    We don't just inspect power plants. We solve the fundamental equation of <strong
+                        class="text-white font-bold">Dynamic Risk</strong> versus <strong
+                        class="text-white font-bold">Operational Certainty</strong>.
                 </p>
             </div>
         </section>
 
         <section class="max-w-6xl mx-auto px-4 mb-32 relative z-10">
-            <div class="glass-panel rounded-3xl p-8 md:p-12 border-l-4 border-l-h-cyan relative overflow-hidden animate-fade-in-up opacity-0" style="animation-delay: 0.6s;">
-                <div class="absolute top-0 right-0 p-12 opacity-5"><i data-lucide="fingerprint" class="w-64 h-64 text-white"></i></div>
+            <div class="glass-panel rounded-3xl p-8 md:p-12 border-l-4 border-l-h-cyan relative overflow-hidden animate-fade-in-up opacity-0"
+                style="animation-delay: 0.6s;">
+                <div class="absolute top-0 right-0 p-12 opacity-5"><i data-lucide="fingerprint"
+                        class="w-64 h-64 text-white"></i></div>
 
                 <div class="grid md:grid-cols-12 gap-12 items-center">
-                    
+
                     <div class="md:col-span-5 relative">
                         <div class="portrait-container shadow-2xl">
-                            <img src="assets/images/about_intro.jpg.jpg" alt="Ervin Stupac" class="w-full h-auto object-cover filter grayscale hover:grayscale-0 transition duration-1000 scale-105 hover:scale-100">
+                            <img src="assets/images/about_intro.jpg.jpg" alt="Ervin Stupac"
+                                class="w-full h-auto object-cover filter grayscale hover:grayscale-0 transition duration-1000 scale-105 hover:scale-100">
                             <div class="portrait-scanline"></div>
-                            
-                            <div class="absolute bottom-0 left-0 w-full bg-black/80 backdrop-blur-sm p-4 border-t border-h-cyan/30">
+
+                            <div
+                                class="absolute bottom-0 left-0 w-full bg-black/80 backdrop-blur-sm p-4 border-t border-h-cyan/30">
                                 <h3 class="text-white font-bold text-xl tracking-wide">ERVIN STUPAC</h3>
                                 <div class="flex justify-between items-end mt-1">
                                     <p class="text-xs font-mono text-h-cyan font-bold">LEAD ARCHITECT // FOUNDER</p>
@@ -186,20 +267,26 @@
 
                     <div class="md:col-span-7 space-y-8">
                         <h2 class="text-3xl font-bold text-white flex items-center gap-3">
-                            <i data-lucide="radio" class="text-h-cyan"></i> The Origin Signal
+                            <i data-lucide="radio" class="text-h-cyan"></i> <span data-i18n="about.mission_title">The
+                                Origin Signal</span>
                         </h2>
                         <div class="text-slate-300 leading-relaxed text-lg space-y-6">
-                            <p>
-                                "For years, I watched the industry accept a <strong>48% failure rate</strong> as 'unavoidable wear and tear'. I saw millions of dollars lost to vibration, erosion, and organizational silence.
+                            <p data-i18n="about.mission_text">
+                                "For years, I watched the industry accept a <strong>48% failure rate</strong> as
+                                'unavoidable wear and tear'. I saw millions of dollars lost to vibration, erosion, and
+                                organizational silence.
                             </p>
                             <p>
-                                I realized that standard maintenance wasn't enough. We needed a forensic approach. We needed to treat a hydropower plant not like a static building, but like a <strong>living organism with an immune system</strong>.
+                                I realized that standard maintenance wasn't enough. We needed a forensic approach. We
+                                needed to treat a hydropower plant not like a static building, but like a <strong>living
+                                    organism with an immune system</strong>.
                             </p>
                             <p class="border-l-4 border-h-cyan pl-6 italic text-slate-400">
-                                AnoHUB was born from that necessity. To build a protocol that doesn't just find problems, but predicts and neutralizes them before they exist."
+                                AnoHUB was born from that necessity. To build a protocol that doesn't just find
+                                problems, but predicts and neutralizes them before they exist."
                             </p>
                         </div>
-                        
+
                         <div class="pt-6 border-t border-slate-700/50 flex items-center gap-4">
                             <div class="font-serif italic text-2xl text-h-cyan opacity-80">Ervin Stupac</div>
                             <div class="h-px bg-slate-700 flex-grow"></div>
@@ -215,22 +302,27 @@
                 <div class="text-center mb-16">
                     <h2 class="text-sm font-mono text-slate-500 uppercase tracking-widest mb-4">Domain Expertise</h2>
                     <h3 class="text-4xl font-black text-white">Mastery Across Architectures</h3>
-                    <p class="text-slate-400 mt-4 max-w-2xl mx-auto">We don't generalize. We specialize in the specific pathology of each machine type. Select an asset to verify our competence.</p>
+                    <p class="text-slate-400 mt-4 max-w-2xl mx-auto">We don't generalize. We specialize in the specific
+                        pathology of each machine type. Select an asset to verify our competence.</p>
                 </div>
 
                 <div class="grid md:grid-cols-3 gap-8">
-                    
+
                     <a href="turbine-francis.html" class="mastery-card group block">
                         <div class="mastery-bg" style="background-image: url('assets/images/francis_srvcs.jpg');"></div>
                         <div class="mastery-content">
                             <div class="flex justify-between items-end border-b border-white/20 pb-4 mb-4">
-                                <h4 class="text-4xl font-black text-white group-hover:text-h-cyan transition">FRANCIS</h4>
-                                <span class="text-[10px] font-mono font-bold text-h-cyan bg-h-cyan/10 px-2 py-1 rounded">MIXED FLOW</span>
+                                <h4 class="text-4xl font-black text-white group-hover:text-h-cyan transition">FRANCIS
+                                </h4>
+                                <span
+                                    class="text-[10px] font-mono font-bold text-h-cyan bg-h-cyan/10 px-2 py-1 rounded">MIXED
+                                    FLOW</span>
                             </div>
                             <p class="text-slate-300 text-sm mb-6 line-clamp-2 font-medium">
                                 The pressure beast. We solve RSI (Rotor-Stator Interaction) and Vortex Rope instability.
                             </p>
-                            <div class="text-xs font-bold text-white flex items-center gap-2 group-hover:gap-4 transition-all uppercase tracking-widest">
+                            <div
+                                class="text-xs font-bold text-white flex items-center gap-2 group-hover:gap-4 transition-all uppercase tracking-widest">
                                 VIEW PROTOCOL <i data-lucide="arrow-right" class="w-4 h-4 text-h-cyan"></i>
                             </div>
                         </div>
@@ -240,13 +332,18 @@
                         <div class="mastery-bg" style="background-image: url('assets/images/kaplan_srvcs.jpg');"></div>
                         <div class="mastery-content">
                             <div class="flex justify-between items-end border-b border-white/20 pb-4 mb-4">
-                                <h4 class="text-4xl font-black text-white group-hover:text-h-green transition">KAPLAN</h4>
-                                <span class="text-[10px] font-mono font-bold text-h-green bg-h-green/10 px-2 py-1 rounded">AXIAL FLOW</span>
+                                <h4 class="text-4xl font-black text-white group-hover:text-h-green transition">KAPLAN
+                                </h4>
+                                <span
+                                    class="text-[10px] font-mono font-bold text-h-green bg-h-green/10 px-2 py-1 rounded">AXIAL
+                                    FLOW</span>
                             </div>
                             <p class="text-slate-300 text-sm mb-6 line-clamp-2 font-medium">
-                                The flow master. We optimize the Cam Curve relation between wicket gates and blade angle.
+                                The flow master. We optimize the Cam Curve relation between wicket gates and blade
+                                angle.
                             </p>
-                            <div class="text-xs font-bold text-white flex items-center gap-2 group-hover:gap-4 transition-all uppercase tracking-widest">
+                            <div
+                                class="text-xs font-bold text-white flex items-center gap-2 group-hover:gap-4 transition-all uppercase tracking-widest">
                                 VIEW PROTOCOL <i data-lucide="arrow-right" class="w-4 h-4 text-h-green"></i>
                             </div>
                         </div>
@@ -257,14 +354,16 @@
                         <div class="mastery-content">
                             <div class="flex justify-between items-end border-b border-white/20 pb-4 mb-4">
                                 <h4 class="text-4xl font-black text-white group-hover:text-h-cta transition">PELTON</h4>
-                                <span class="text-[10px] font-mono font-bold text-h-cta bg-h-cta/10 px-2 py-1 rounded">IMPULSE</span>
+                                <span
+                                    class="text-[10px] font-mono font-bold text-h-cta bg-h-cta/10 px-2 py-1 rounded">IMPULSE</span>
                             </div>
                             <p class="text-slate-300 text-sm mb-6 line-clamp-2 font-medium">
-                                The kinetic king. We align injector nozzles to < 0.05mm precision to prevent bucket erosion.
-                            </p>
-                            <div class="text-xs font-bold text-white flex items-center gap-2 group-hover:gap-4 transition-all uppercase tracking-widest">
-                                VIEW PROTOCOL <i data-lucide="arrow-right" class="w-4 h-4 text-h-cta"></i>
-                            </div>
+                                The kinetic king. We align injector nozzles to < 0.05mm precision to prevent bucket
+                                    erosion. </p>
+                                    <div
+                                        class="text-xs font-bold text-white flex items-center gap-2 group-hover:gap-4 transition-all uppercase tracking-widest">
+                                        VIEW PROTOCOL <i data-lucide="arrow-right" class="w-4 h-4 text-h-cta"></i>
+                                    </div>
                         </div>
                     </a>
 
@@ -275,25 +374,31 @@
         <section class="max-w-7xl mx-auto px-4 mb-24 mt-24">
             <div class="grid md:grid-cols-3 gap-6">
                 <div class="glass-panel p-8 rounded-xl hover:border-h-cyan transition group">
-                    <div class="w-12 h-12 bg-h-cyan/10 rounded-lg flex items-center justify-center text-h-cyan mb-6 border border-h-cyan/20">
+                    <div
+                        class="w-12 h-12 bg-h-cyan/10 rounded-lg flex items-center justify-center text-h-cyan mb-6 border border-h-cyan/20">
                         <i data-lucide="microscope" class="w-6 h-6"></i>
                     </div>
                     <h3 class="text-xl font-bold text-white mb-3">Forensic Truth</h3>
-                    <p class="text-sm text-slate-400">We don't guess. We measure. Using sub-surface NDT and 3D metrology, we provide data that holds up in a court of law.</p>
+                    <p class="text-sm text-slate-400">We don't guess. We measure. Using sub-surface NDT and 3D
+                        metrology, we provide data that holds up in a court of law.</p>
                 </div>
                 <div class="glass-panel p-8 rounded-xl hover:border-h-green transition group">
-                    <div class="w-12 h-12 bg-h-green/10 rounded-lg flex items-center justify-center text-h-green mb-6 border border-h-green/20">
+                    <div
+                        class="w-12 h-12 bg-h-green/10 rounded-lg flex items-center justify-center text-h-green mb-6 border border-h-green/20">
                         <i data-lucide="brain-circuit" class="w-6 h-6"></i>
                     </div>
                     <h3 class="text-xl font-bold text-white mb-3">Algorithmic Governance</h3>
-                    <p class="text-sm text-slate-400">Technology fails if people don't talk. Our protocols bridge the "Execution Gap" between engineering and management.</p>
+                    <p class="text-sm text-slate-400">Technology fails if people don't talk. Our protocols bridge the
+                        "Execution Gap" between engineering and management.</p>
                 </div>
                 <div class="glass-panel p-8 rounded-xl hover:border-h-yellow transition group">
-                    <div class="w-12 h-12 bg-h-yellow/10 rounded-lg flex items-center justify-center text-h-yellow mb-6 border border-h-yellow/20">
+                    <div
+                        class="w-12 h-12 bg-h-yellow/10 rounded-lg flex items-center justify-center text-h-yellow mb-6 border border-h-yellow/20">
                         <i data-lucide="infinity" class="w-6 h-6"></i>
                     </div>
                     <h3 class="text-xl font-bold text-white mb-3">Infinite Lifecycle</h3>
-                    <p class="text-sm text-slate-400">Our goal isn't just repair. It's to extend the operational life of assets beyond their original design limits.</p>
+                    <p class="text-sm text-slate-400">Our goal isn't just repair. It's to extend the operational life of
+                        assets beyond their original design limits.</p>
                 </div>
             </div>
         </section>
@@ -304,36 +409,51 @@
                 <div class="relative flex items-center justify-between group">
                     <div class="w-5/12 text-right pr-8">
                         <h4 class="text-h-cyan font-bold text-2xl">Inception</h4>
-                        <p class="text-slate-400 text-sm mt-2">Identification of the 48% dynamic failure gap in standard audits.</p>
+                        <p class="text-slate-400 text-sm mt-2">Identification of the 48% dynamic failure gap in standard
+                            audits.</p>
                     </div>
-                    <div class="absolute left-1/2 -translate-x-1/2 w-4 h-4 bg-h-dark border-2 border-h-cyan rounded-full z-10 group-hover:scale-150 transition duration-300 shadow-[0_0_10px_#06b6d4]"></div>
+                    <div
+                        class="absolute left-1/2 -translate-x-1/2 w-4 h-4 bg-h-dark border-2 border-h-cyan rounded-full z-10 group-hover:scale-150 transition duration-300 shadow-[0_0_10px_#06b6d4]">
+                    </div>
                     <div class="w-5/12 pl-8 text-xs font-mono text-slate-500">PHASE 01</div>
                 </div>
                 <div class="relative flex items-center justify-between group">
                     <div class="w-5/12 text-right pr-8 text-xs font-mono text-slate-500">PHASE 02</div>
-                    <div class="absolute left-1/2 -translate-x-1/2 w-4 h-4 bg-h-dark border-2 border-h-green rounded-full z-10 group-hover:scale-150 transition duration-300 shadow-[0_0_10px_#10b981]"></div>
+                    <div
+                        class="absolute left-1/2 -translate-x-1/2 w-4 h-4 bg-h-dark border-2 border-h-green rounded-full z-10 group-hover:scale-150 transition duration-300 shadow-[0_0_10px_#10b981]">
+                    </div>
                     <div class="w-5/12 pl-8">
                         <h4 class="text-h-green font-bold text-2xl">The Protocol</h4>
-                        <p class="text-slate-400 text-sm mt-2">Development of the proprietary LCC Veto and NDT Matrix.</p>
+                        <p class="text-slate-400 text-sm mt-2">Development of the proprietary LCC Veto and NDT Matrix.
+                        </p>
                     </div>
                 </div>
                 <div class="relative flex items-center justify-between group">
                     <div class="w-5/12 text-right pr-8">
                         <h4 class="text-white font-bold text-2xl">Global Standard</h4>
-                        <p class="text-slate-400 text-sm mt-2">Establishing AnoHUB as the mandatory integrity benchmark.</p>
+                        <p class="text-slate-400 text-sm mt-2">Establishing AnoHUB as the mandatory integrity benchmark.
+                        </p>
                     </div>
-                    <div class="absolute left-1/2 -translate-x-1/2 w-6 h-6 bg-h-cta rounded-full z-10 shadow-[0_0_20px_#f59e0b] animate-pulse-slow"></div>
+                    <div
+                        class="absolute left-1/2 -translate-x-1/2 w-6 h-6 bg-h-cta rounded-full z-10 shadow-[0_0_20px_#f59e0b] animate-pulse-slow">
+                    </div>
                     <div class="w-5/12 pl-8 text-xs font-mono text-h-cta font-bold">CURRENT STATE</div>
                 </div>
             </div>
         </section>
 
         <section class="text-center px-4 mb-24">
-            <div class="max-w-3xl mx-auto glass-panel p-12 rounded-3xl relative overflow-hidden group border border-white/10">
-                <div class="absolute inset-0 bg-gradient-to-r from-transparent via-h-cyan/5 to-transparent opacity-0 group-hover:opacity-100 transition duration-700"></div>
-                <h2 class="text-3xl md:text-4xl font-black text-white mb-6 relative z-10">You've Seen The Vision. Now See The Logic.</h2>
-                <p class="text-slate-400 mb-10 relative z-10 text-lg">Access the Engineering Immunity Protocol to see exactly how we execute this vision.</p>
-                <a href="protocol.html" class="relative z-10 inline-flex items-center gap-3 bg-h-cyan hover:bg-cyan-400 text-black font-black px-10 py-5 rounded-lg transition shadow-lg hover:shadow-cyan-500/50 uppercase tracking-widest text-sm">
+            <div
+                class="max-w-3xl mx-auto glass-panel p-12 rounded-3xl relative overflow-hidden group border border-white/10">
+                <div
+                    class="absolute inset-0 bg-gradient-to-r from-transparent via-h-cyan/5 to-transparent opacity-0 group-hover:opacity-100 transition duration-700">
+                </div>
+                <h2 class="text-3xl md:text-4xl font-black text-white mb-6 relative z-10">You've Seen The Vision. Now
+                    See The Logic.</h2>
+                <p class="text-slate-400 mb-10 relative z-10 text-lg">Access the Engineering Immunity Protocol to see
+                    exactly how we execute this vision.</p>
+                <a href="protocol.html"
+                    class="relative z-10 inline-flex items-center gap-3 bg-h-cyan hover:bg-cyan-400 text-black font-black px-10 py-5 rounded-lg transition shadow-lg hover:shadow-cyan-500/50 uppercase tracking-widest text-sm">
                     ENTER COMMAND CENTER <i data-lucide="arrow-right" class="w-5 h-5"></i>
                 </a>
             </div>
@@ -341,14 +461,14 @@
 
     </main>
 
-        <div id="global-footer"></div>
+    <div id="global-footer"></div>
 
     <script>
         lucide.createIcons();
         const menuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         const mobileLinks = document.querySelectorAll('.mobile-link');
-        
+
         menuBtn.addEventListener('click', () => {
             const isClosed = mobileMenu.classList.contains('translate-x-full');
             if (isClosed) {
@@ -371,4 +491,5 @@
     <!-- Component Loader -->
     <script src="assets/js/layout-loader.js"></script>
 </body>
+
 </html>

@@ -46,6 +46,10 @@ const i18n = {
             if (value) {
                 if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
                     el.placeholder = value;
+                } else if (el.tagName === 'META') {
+                    el.setAttribute('content', value);
+                } else if (el.tagName === 'IMG') {
+                    el.alt = value;
                 } else {
                     el.innerHTML = value; // innerHTML allows formatting tags
                 }

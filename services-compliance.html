@@ -1,11 +1,13 @@
 ﻿<!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Regulatory Compliance Firewall | AnoHUB Services</title>
-    <meta name="description" content="Automated regulatory reporting and audit defense. We provide the irrefutable data needed to secure your operating license.">
-    
+    <meta name="description"
+        content="Automated regulatory reporting and audit defense. We provide the irrefutable data needed to secure your operating license.">
+
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -16,10 +18,12 @@
     }
     </script>
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+
     <link rel="stylesheet" href="assets/css/preloader.css">
-<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -27,16 +31,16 @@
                 extend: {
                     fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
                     colors: {
-                        'h-cyan': '#06b6d4', 'h-green': '#10b981', 'h-red': '#ef4444', 
-                        'h-yellow': '#facc15', 'h-purple': '#8b5cf6', 'h-dark': '#020617', 
+                        'h-cyan': '#06b6d4', 'h-green': '#10b981', 'h-red': '#ef4444',
+                        'h-yellow': '#facc15', 'h-purple': '#8b5cf6', 'h-dark': '#020617',
                         'h-panel': '#0f172a', 'h-border': '#1e293b', 'h-cta': '#f59e0b'
                     },
-                    animation: { 
+                    animation: {
                         'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
                         'pulse-shield': 'pulseShield 3s infinite',
                         'scan-vertical': 'scanVertical 4s linear infinite'
                     },
-                    keyframes: { 
+                    keyframes: {
                         fadeInUp: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
                         pulseShield: { '0%, 100%': { boxShadow: '0 0 20px rgba(139, 92, 246, 0.2)' }, '50%': { boxShadow: '0 0 50px rgba(139, 92, 246, 0.5)' } },
                         scanVertical: { '0%': { top: '-10%' }, '100%': { top: '110%' } }
@@ -47,43 +51,84 @@
     </script>
 
     <style>
-        body { background-color: #020617; color: #f8fafc; overflow-x: hidden; }
-        
+        body {
+            background-color: #020617;
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+
         /* NOISE & GRID */
         .noise-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
-            pointer-events: none; z-index: 50; opacity: 0.4;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.4;
         }
+
         .tech-bg {
             background-image: linear-gradient(rgba(139, 92, 246, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(139, 92, 246, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            background-size: 50px 50px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
         }
 
         /* HERO - BIHAC KANAL */
         .bg-layer {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             z-index: -2;
             background-image: url('assets/images/bihackanal.jpg');
-            background-size: cover; background-position: center;
-            opacity: 0.25; filter: grayscale(100%) contrast(1.2);
+            background-size: cover;
+            background-position: center;
+            opacity: 0.25;
+            filter: grayscale(100%) contrast(1.2);
         }
 
         /* GLASS CARDS (PURPLE THEME) */
         .glass-card {
-            background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(12px);
-            border: 1px solid rgba(139, 92, 246, 0.2); transition: all 0.3s ease;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            transition: all 0.3s ease;
         }
-        .glass-card:hover { border-color: #8b5cf6; box-shadow: 0 0 30px rgba(139, 92, 246, 0.15); transform: translateY(-5px); }
+
+        .glass-card:hover {
+            border-color: #8b5cf6;
+            box-shadow: 0 0 30px rgba(139, 92, 246, 0.15);
+            transform: translateY(-5px);
+        }
 
         /* SHIELD VISUALIZER */
         .shield-container {
-            position: relative; width: 300px; height: 350px; margin: 0 auto;
-            display: flex; align-items: center; justify-content: center;
+            position: relative;
+            width: 300px;
+            height: 350px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
+
         .shield-scan-line {
-            position: absolute; width: 100%; height: 2px; background: #8b5cf6;
-            box-shadow: 0 0 15px #8b5cf6; animation: scanVertical 3s linear infinite; opacity: 0.7;
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: #8b5cf6;
+            box-shadow: 0 0 15px #8b5cf6;
+            animation: scanVertical 3s linear infinite;
+            opacity: 0.7;
         }
     </style>
 
@@ -94,206 +139,200 @@
     <link rel="manifest" href="assets/site.webmanifest">
 </head>
 
-<body class="antialiased">
+<body class="antialiased" data-translation-source="service_compliance">
     <noscript>
         <div style="border: 1px solid #ef4444; padding: 20px;">
             <h1 style="color: #ef4444; font-size: 24px; margin-bottom: 10px;">SYSTEM ERROR: SCRIPT BLOCKED</h1>
-            <p>The AnoHUB Protocol requires JavaScript to function.<br>Please enable scripts to access the interface.</p>
+            <p>The AnoHUB Protocol requires JavaScript to function.<br>Please enable scripts to access the interface.
+            </p>
         </div>
     </noscript>
+    </div>
+    <div class="bg-black/50 border border-slate-700 px-6 py-2 rounded-lg flex items-center gap-2">
+        <span class="text-h-purple font-black">GDPR</span> <span class="text-xs text-slate-400">DATA SECURE</span>
+    </div>
+    <div class="bg-black/50 border border-slate-700 px-6 py-2 rounded-lg flex items-center gap-2">
+        <span class="text-h-purple font-black">100%</span> <span class="text-xs text-slate-400">AUDIT DEFENSE</span>
+    </div>
+    </div>
+    </div>
+    </section>
 
-    
-    <div class="bg-layer"></div>
-    <div class="noise-overlay"></div>
-    <div class="tech-bg"></div>
-
-        <div id="global-header"></div>
-
-    <main class="pt-20">
-
-        <section class="min-h-[70vh] flex items-center justify-center relative">
-            <div class="max-w-6xl mx-auto px-4 text-center relative z-10">
-                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-h-purple/30 bg-black/60 backdrop-blur-md text-xs font-mono text-h-purple mb-8 shadow-[0_0_20px_rgba(139,92,246,0.2)]">
-                    <span class="w-2 h-2 bg-h-purple rounded-full animate-pulse"></span>
-                    STATUS: SECURE VAULT
-                </div>
-                
-                <h1 class="text-6xl md:text-9xl font-black text-white mb-6 tracking-tighter leading-none drop-shadow-2xl animate-fade-in-up">
-                    REGULATORY <br>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-h-purple to-indigo-500">FIREWALL</span>
-                </h1>
-                
-                <p class="text-xl md:text-2xl text-slate-300 max-w-3xl mx-auto leading-relaxed mb-10 font-light animate-fade-in-up opacity-0" style="animation-delay: 0.2s;">
-                    Automated, transparent, and irrefutable. We turn complex legal requirements into a verified digital defense for your operating license.
-                </p>
-
-                <div class="flex flex-wrap justify-center gap-4 animate-fade-in-up opacity-0" style="animation-delay: 0.4s;">
-                    <div class="bg-black/50 border border-slate-700 px-6 py-2 rounded-lg flex items-center gap-2">
-                        <span class="text-h-purple font-black">ISO</span> <span class="text-xs text-slate-400">55000 READY</span>
-                    </div>
-                    <div class="bg-black/50 border border-slate-700 px-6 py-2 rounded-lg flex items-center gap-2">
-                        <span class="text-h-purple font-black">GDPR</span> <span class="text-xs text-slate-400">DATA SECURE</span>
-                    </div>
-                    <div class="bg-black/50 border border-slate-700 px-6 py-2 rounded-lg flex items-center gap-2">
-                        <span class="text-h-purple font-black">100%</span> <span class="text-xs text-slate-400">AUDIT DEFENSE</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="py-24 bg-h-dark border-b border-h-border">
-            <div class="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-16 items-center">
-                <div class="order-2 lg:order-1">
-                    <div class="glass-card p-10 rounded-2xl border-l-4 border-l-h-purple">
-                        <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
-                            <i data-lucide="scale" class="w-6 h-6 text-h-purple"></i> The Legal Minefield
-                        </h2>
-                        <p class="text-slate-300 leading-relaxed mb-6 text-lg">
-                            Compliance is an act of <strong>integrity</strong>. In the modern energy sector, a single missing report or unverifiable maintenance log can lead to license revocation.
-                        </p>
-                        <p class="text-slate-300 leading-relaxed text-lg border-l-2 border-slate-700 pl-4">
-                            The "Organizational Execution Gap" creates data silos where critical safety proofs are lost. We don't just ensure boxes are ticked; we provide the verifiable documentation needed to defend your assets in court.
-                        </p>
-                    </div>
-                </div>
-                <div class="order-1 lg:order-2 text-center lg:text-left">
-                    <h3 class="text-sm font-mono text-h-purple uppercase tracking-widest mb-4">The Solution</h3>
-                    <h2 class="text-5xl font-black text-white mb-6 leading-tight">Audit-Ready at <br>Any Moment.</h2>
-                    <p class="text-slate-400 text-lg">Stop scrambling before inspections. Our system maintains a perpetual state of readiness.</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="py-24 bg-h-panel relative">
-            <div class="max-w-7xl mx-auto px-4 relative z-10">
-                <div class="text-center mb-16">
-                    <h2 class="text-3xl font-black text-white flex items-center justify-center gap-3">
-                        <i data-lucide="shield-check" class="w-8 h-8 text-h-purple"></i> The Assurance Protocol
+    <section class="py-24 bg-h-dark border-b border-h-border">
+        <div class="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-16 items-center">
+            <div class="order-2 lg:order-1">
+                <div class="glass-card p-10 rounded-2xl border-l-4 border-l-h-purple">
+                    <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                        <i data-lucide="scale" class="w-6 h-6 text-h-purple"></i> The Legal Minefield
                     </h2>
-                </div>
-
-                <div class="grid md:grid-cols-3 gap-8 items-center">
-                    
-                    <div class="space-y-6">
-                        <div class="glass-card p-6 rounded-xl hover:bg-h-purple/5 transition text-right">
-                            <h3 class="text-lg font-bold text-white mb-2">Automated Logging</h3>
-                            <p class="text-sm text-slate-400">Real-time ingestion of operational data. Every vibration spike is timestamped.</p>
-                        </div>
-                        <div class="glass-card p-6 rounded-xl hover:bg-h-purple/5 transition text-right">
-                            <h3 class="text-lg font-bold text-white mb-2">Forensic Proof</h3>
-                            <p class="text-sm text-slate-400">NDT data linked to asset IDs, providing irrefutable evidence of condition.</p>
-                        </div>
-                    </div>
-
-                    <div class="shield-container">
-                        <div class="relative w-64 h-64 flex items-center justify-center">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" class="w-full h-full text-h-purple opacity-20 animate-pulse-shield">
-                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                            </svg>
-                            <div class="absolute inset-0 flex items-center justify-center">
-                                <i data-lucide="lock" class="w-24 h-24 text-white drop-shadow-[0_0_15px_rgba(139,92,246,0.8)]"></i>
-                            </div>
-                            <div class="shield-scan-line" style="top: 0;"></div>
-                        </div>
-                    </div>
-
-                    <div class="space-y-6">
-                        <div class="glass-card p-6 rounded-xl hover:bg-h-purple/5 transition">
-                            <h3 class="text-lg font-bold text-white mb-2">Digital Integration</h3>
-                            <p class="text-sm text-slate-400">Reports formatted for EU/Global regulatory bodies automatically.</p>
-                        </div>
-                        <div class="glass-card p-6 rounded-xl hover:bg-h-purple/5 transition">
-                            <h3 class="text-lg font-bold text-white mb-2">Data Security</h3>
-                            <p class="text-sm text-slate-400">Encrypted storage of all asset health records. GDPR compliant.</p>
-                        </div>
-                    </div>
-
+                    <p class="text-slate-300 leading-relaxed mb-6 text-lg">
+                        Compliance is an act of <strong>integrity</strong>. In the modern energy sector, a single
+                        missing report or unverifiable maintenance log can lead to license revocation.
+                    </p>
+                    <p class="text-slate-300 leading-relaxed text-lg border-l-2 border-slate-700 pl-4">
+                        The "Organizational Execution Gap" creates data silos where critical safety proofs are lost. We
+                        don't just ensure boxes are ticked; we provide the verifiable documentation needed to defend
+                        your assets in court.
+                    </p>
                 </div>
             </div>
-        </section>
+            <div class="order-1 lg:order-2 text-center lg:text-left">
+                <h3 class="text-sm font-mono text-h-purple uppercase tracking-widest mb-4">The Solution</h3>
+                <h2 class="text-5xl font-black text-white mb-6 leading-tight">Audit-Ready at <br>Any Moment.</h2>
+                <p class="text-slate-400 text-lg">Stop scrambling before inspections. Our system maintains a perpetual
+                    state of readiness.</p>
+            </div>
+        </div>
+    </section>
 
-        <section class="py-24 bg-h-dark border-t border-h-border">
-            <div class="max-w-5xl mx-auto px-4">
-                <div class="bg-gradient-to-br from-h-purple/10 to-transparent border border-h-purple/30 p-10 md:p-14 rounded-3xl relative overflow-hidden">
-                    <div class="absolute top-0 right-0 p-8 opacity-10"><i data-lucide="gavel" class="w-64 h-64 text-h-purple"></i></div>
-                    
-                    <div class="relative z-10">
-                        <h2 class="text-3xl font-black text-white mb-10">AnoHUB Defense Service</h2>
-                        <div class="grid md:grid-cols-2 gap-12">
-                            <div class="flex gap-6">
-                                <div class="bg-h-dark p-4 rounded-xl border border-h-border h-fit shadow-lg"><i data-lucide="users" class="w-8 h-8 text-h-purple"></i></div>
-                                <div>
-                                    <h4 class="text-white font-bold text-xl mb-2">Audit Defense Team</h4>
-                                    <p class="text-sm text-slate-400 leading-relaxed">
-                                        We stand physically by your side during inspections. We speak the language of the auditors and provide data on demand.
-                                    </p>
-                                </div>
+    <section class="py-24 bg-h-panel relative">
+        <div class="max-w-7xl mx-auto px-4 relative z-10">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-black text-white flex items-center justify-center gap-3">
+                    <i data-lucide="shield-check" class="w-8 h-8 text-h-purple"></i> The Assurance Protocol
+                </h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 items-center">
+
+                <div class="space-y-6">
+                    <div class="glass-card p-6 rounded-xl hover:bg-h-purple/5 transition text-right">
+                        <h3 class="text-lg font-bold text-white mb-2">Automated Logging</h3>
+                        <p class="text-sm text-slate-400">Real-time ingestion of operational data. Every vibration spike
+                            is timestamped.</p>
+                    </div>
+                    <div class="glass-card p-6 rounded-xl hover:bg-h-purple/5 transition text-right">
+                        <h3 class="text-lg font-bold text-white mb-2">Forensic Proof</h3>
+                        <p class="text-sm text-slate-400">NDT data linked to asset IDs, providing irrefutable evidence
+                            of condition.</p>
+                    </div>
+                </div>
+
+                <div class="shield-container">
+                    <div class="relative w-64 h-64 flex items-center justify-center">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"
+                            class="w-full h-full text-h-purple opacity-20 animate-pulse-shield">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                        </svg>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <i data-lucide="lock"
+                                class="w-24 h-24 text-white drop-shadow-[0_0_15px_rgba(139,92,246,0.8)]"></i>
+                        </div>
+                        <div class="shield-scan-line" style="top: 0;"></div>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    <div class="glass-card p-6 rounded-xl hover:bg-h-purple/5 transition">
+                        <h3 class="text-lg font-bold text-white mb-2">Digital Integration</h3>
+                        <p class="text-sm text-slate-400">Reports formatted for EU/Global regulatory bodies
+                            automatically.</p>
+                    </div>
+                    <div class="glass-card p-6 rounded-xl hover:bg-h-purple/5 transition">
+                        <h3 class="text-lg font-bold text-white mb-2">Data Security</h3>
+                        <p class="text-sm text-slate-400">Encrypted storage of all asset health records. GDPR compliant.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 bg-h-dark border-t border-h-border">
+        <div class="max-w-5xl mx-auto px-4">
+            <div
+                class="bg-gradient-to-br from-h-purple/10 to-transparent border border-h-purple/30 p-10 md:p-14 rounded-3xl relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-8 opacity-10"><i data-lucide="gavel"
+                        class="w-64 h-64 text-h-purple"></i></div>
+
+                <div class="relative z-10">
+                    <h2 class="text-3xl font-black text-white mb-10">AnoHUB Defense Service</h2>
+                    <div class="grid md:grid-cols-2 gap-12">
+                        <div class="flex gap-6">
+                            <div class="bg-h-dark p-4 rounded-xl border border-h-border h-fit shadow-lg"><i
+                                    data-lucide="users" class="w-8 h-8 text-h-purple"></i></div>
+                            <div>
+                                <h4 class="text-white font-bold text-xl mb-2">Audit Defense Team</h4>
+                                <p class="text-sm text-slate-400 leading-relaxed">
+                                    We stand physically by your side during inspections. We speak the language of the
+                                    auditors and provide data on demand.
+                                </p>
                             </div>
-                            <div class="flex gap-6">
-                                <div class="bg-h-dark p-4 rounded-xl border border-h-border h-fit shadow-lg"><i data-lucide="file-check" class="w-8 h-8 text-h-purple"></i></div>
-                                <div>
-                                    <h4 class="text-white font-bold text-xl mb-2">Legal Support Briefs</h4>
-                                    <p class="text-sm text-slate-400 leading-relaxed">
-                                        Technical briefs generated for your legal team within 24 hours of an incident, protecting you from liability.
-                                    </p>
-                                </div>
+                        </div>
+                        <div class="flex gap-6">
+                            <div class="bg-h-dark p-4 rounded-xl border border-h-border h-fit shadow-lg"><i
+                                    data-lucide="file-check" class="w-8 h-8 text-h-purple"></i></div>
+                            <div>
+                                <h4 class="text-white font-bold text-xl mb-2">Legal Support Briefs</h4>
+                                <p class="text-sm text-slate-400 leading-relaxed">
+                                    Technical briefs generated for your legal team within 24 hours of an incident,
+                                    protecting you from liability.
+                                </p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section class="py-24 bg-h-dark border-t border-h-border relative">
-            <div class="absolute top-0 right-0 w-1/2 h-full bg-h-purple/5 blur-3xl pointer-events-none"></div>
-            
-            <div class="max-w-4xl mx-auto px-4 relative z-10">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl font-black text-white mb-4">Is Your License Secure?</h2>
-                    <p class="text-slate-400">Don't wait for the inspector. Verify your compliance status first.</p>
-                </div>
-                
-                <div class="glass-card p-10 md:p-14 rounded-3xl border border-h-purple/20 shadow-2xl">
-                    <form id="contactForm" action="https://formspree.io/f/xqaywlaq" method="POST" class="space-y-6">
-                        <input type="hidden" name="Service" value="Regulatory Compliance">
-                        
-                        <div class="grid md:grid-cols-2 gap-6">
-                            <div>
-                                <label class="text-xs font-mono text-h-purple uppercase ml-1 block mb-2">Full Name</label>
-                                <input type="text" name="Full Name" required class="w-full bg-slate-900/80 border border-slate-700 rounded-lg p-4 text-white focus:border-h-purple focus:outline-none transition">
-                            </div>
-                            <div>
-                                <label class="text-xs font-mono text-h-purple uppercase ml-1 block mb-2">Official Email</label>
-                                <input type="email" name="Email" required class="w-full bg-slate-900/80 border border-slate-700 rounded-lg p-4 text-white focus:border-h-purple focus:outline-none transition">
-                            </div>
-                        </div>
-                        
+    <section class="py-24 bg-h-dark border-t border-h-border relative">
+        <div class="absolute top-0 right-0 w-1/2 h-full bg-h-purple/5 blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-4xl mx-auto px-4 relative z-10">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-black text-white mb-4">Is Your License Secure?</h2>
+                <p class="text-slate-400">Don't wait for the inspector. Verify your compliance status first.</p>
+            </div>
+
+            <div class="glass-card p-10 md:p-14 rounded-3xl border border-h-purple/20 shadow-2xl">
+                <form id="contactForm" action="https://formspree.io/f/xqaywlaq" method="POST" class="space-y-6">
+                    <input type="hidden" name="Service" value="Regulatory Compliance">
+
+                    <div class="grid md:grid-cols-2 gap-6">
                         <div>
-                            <label class="text-xs font-mono text-h-purple uppercase ml-1 block mb-2">Compliance Challenge</label>
-                            <textarea name="Message" rows="3" placeholder="Describe the audit or regulatory issue..." class="w-full bg-slate-900/80 border border-slate-700 rounded-lg p-4 text-white focus:border-h-purple focus:outline-none transition"></textarea>
+                            <label class="text-xs font-mono text-h-purple uppercase ml-1 block mb-2">Full Name</label>
+                            <input type="text" name="Full Name" required
+                                class="w-full bg-slate-900/80 border border-slate-700 rounded-lg p-4 text-white focus:border-h-purple focus:outline-none transition">
                         </div>
-                        
-                        <button type="submit" class="w-full bg-h-purple hover:bg-purple-400 text-black font-black py-5 rounded-lg shadow-[0_0_20px_rgba(139,92,246,0.4)] transition uppercase tracking-widest text-lg transform hover:scale-[1.01]">
-                            Secure Compliance
-                        </button>
-                        <p id="formMessage" class="mt-4 text-center text-sm font-mono hidden"></p>
-                    </form>
-                </div>
+                        <div>
+                            <label class="text-xs font-mono text-h-purple uppercase ml-1 block mb-2">Official
+                                Email</label>
+                            <input type="email" name="Email" required
+                                class="w-full bg-slate-900/80 border border-slate-700 rounded-lg p-4 text-white focus:border-h-purple focus:outline-none transition">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="text-xs font-mono text-h-purple uppercase ml-1 block mb-2">Compliance
+                            Challenge</label>
+                        <textarea name="Message" rows="3" placeholder="Describe the audit or regulatory issue..."
+                            class="w-full bg-slate-900/80 border border-slate-700 rounded-lg p-4 text-white focus:border-h-purple focus:outline-none transition"></textarea>
+                    </div>
+
+                    <button type="submit"
+                        class="w-full bg-h-purple hover:bg-purple-400 text-black font-black py-5 rounded-lg shadow-[0_0_20px_rgba(139,92,246,0.4)] transition uppercase tracking-widest text-lg transform hover:scale-[1.01]">
+                        Secure Compliance
+                    </button>
+                    <p id="formMessage" class="mt-4 text-center text-sm font-mono hidden"></p>
+                </form>
             </div>
-        </section>
+        </div>
+    </section>
 
     </main>
 
-        <div id="global-footer"></div>
+    <div id="global-footer"></div>
 
     <script>
         lucide.createIcons();
-        
+
         // Mobile Menu Logic
         const menuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
-        
-        if(menuBtn) {
+
+        if (menuBtn) {
             menuBtn.addEventListener('click', () => {
                 const isClosed = mobileMenu.classList.contains('translate-x-full');
                 if (isClosed) {
@@ -305,28 +344,28 @@
                 }
             });
         }
-        
+
         // Form Logic
         const form = document.getElementById('contactForm');
         const msg = document.getElementById('formMessage');
 
-        if(form) {
+        if (form) {
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 const btn = form.querySelector('button');
                 const originalText = btn.innerText;
                 btn.innerText = 'TRANSMITTING...';
                 btn.disabled = true;
-                
+
                 const formData = new FormData(form);
-                
+
                 try {
                     const response = await fetch(form.action, {
                         method: 'POST',
                         body: formData,
                         headers: { 'Accept': 'application/json' }
                     });
-                    
+
                     if (response.ok) {
                         msg.innerText = "REQUEST RECEIVED. STAND BY.";
                         msg.style.color = "#10b981";
@@ -349,7 +388,7 @@
         // Navbar Scroll Effect
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('navbar');
-            if (window.scrollY > 50) { nav.classList.add('shadow-lg', 'bg-h-dark/95'); nav.classList.remove('bg-h-dark/90'); } 
+            if (window.scrollY > 50) { nav.classList.add('shadow-lg', 'bg-h-dark/95'); nav.classList.remove('bg-h-dark/90'); }
             else { nav.classList.remove('shadow-lg', 'bg-h-dark/95'); nav.classList.add('bg-h-dark/90'); }
         });
     </script>
@@ -357,4 +396,5 @@
     <!-- Component Loader -->
     <script src="assets/js/layout-loader.js"></script>
 </body>
+
 </html>
