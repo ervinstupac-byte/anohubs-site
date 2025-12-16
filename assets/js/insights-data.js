@@ -1,7 +1,7 @@
 // ==============================================
 // INSIGHTS DATA (js/insights-data.js)
 // Centralna baza podataka za dinamičko generisanje arhivskih kartica.
-// Putanje u "content_file" su relativne u odnosu na expert-insights.html
+// Putanje u "content_file" su relativne u odnosu na index.html
 // ==============================================
 
 const insightsData = [
@@ -33,7 +33,7 @@ const insightsData = [
         "content_file": "article-3-winter-challenges.html"
     },
     {
-        "id": "module4", 
+        "id": "module4",
         "icon": "🛡️",
         "title": "Precision Leadership: DACH Region and the New Hydro Standard",
         "subtitle": "How Precision Reclaims Leadership and secures asset value over decades.",
@@ -42,7 +42,7 @@ const insightsData = [
         "content_file": "article-4-dach-leadership.html"
     },
     {
-        "id": "module5", 
+        "id": "module5",
         "icon": "🤝",
         "title": "The Human Sensor: Why Ethics and Experience Guarantee Precision",
         "subtitle": "The vital role of human sensory knowledge in complementing digital analytics.",
@@ -60,7 +60,7 @@ const insightsData = [
         "content_file": "article-6-ticking-bomb.html"
     },
     {
-        "id": "module7", 
+        "id": "module7",
         "icon": "🏰",
         "title": "Your Hydropower Plant as a Fortress",
         "subtitle": "How to Take Control of Maintenance and Profit.",

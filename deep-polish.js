@@ -140,6 +140,12 @@ function processHTMLFile(filePath) {
         // Add noscript block
         htmlContent = addNoscriptBlock(htmlContent);
 
+        // Explicit content update for expert-insights.html links (Deep Polish Extra)
+        if (htmlContent.includes('insights/expert-insights.html')) {
+            htmlContent = htmlContent.replace(/insights\/expert-insights\.html/g, 'insights/');
+            console.log('  ✓ Updated insights/expert-insights.html links to insights/');
+        }
+
         // Write back to file
         fs.writeFileSync(filePath, htmlContent, 'utf8');
 
