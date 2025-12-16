@@ -1,175 +1,77 @@
-// ========================================
-// ANOHUBS i18n TRANSLATION ENGINE
-// JSON-based multilingual support
-// ========================================
-
-(function () {
-    // Global state
-    let currentLang = 'en';
-    let translations = {};
-
-    // Initialize on page load
-    function init() {
-        // Load saved language preference or default to 'en'
-        currentLang = localStorage.getItem('anoHubsLang') || 'en';
-        loadTranslations(currentLang);
-    }
-
-    // Load translation JSON file
-    async function loadTranslations(lang) {
+const i18n = {
+    currentLang: localStorage.getItem('anohub_lang') || 'en',
+    translations: {},
+    // 1. Initialize System
+    async init() {
+        console.log(`[i18n] Initializing language: ${this.currentLang}`);
+        await this.loadTranslations(this.currentLang);
+        this.updatePage();
+    },
+    // 2. Load JSON
+    async loadTranslations(lang) {
         try {
-            // Determine if we're in a subfolder
-            const isSubfolder = window.location.pathname.includes("/insights/") ||
-                window.location.pathname.includes("/case-studies/") ||
-                window.location.pathname.includes("/protocol/");
+            // Check if we are in a subfolder
+            const basePath = window.location.pathname.includes('/insights/') ||
+                window.location.pathname.includes('/protocol/') ||
+                window.location.pathname.includes('/case-studies/') ? '../' : '';
 
-            const basePath = isSubfolder ? "../" : "";
-
-            // Load global translations
             const response = await fetch(`${basePath}assets/i18n/${lang}.json`);
-
-            if (!response.ok) {
-                throw new Error(`Failed to load ${lang}.json`);
-            }
-
-            translations = await response.json();
-
-            // Check if page has a specific translation source
-            const translationSource = document.body.getAttribute('data-translation-source');
-
-            if (translationSource) {
-                try {
-                    // Load page-specific translations
-                    const pageResponse = await fetch(`${basePath}assets/i18n/insights/${translationSource}.${lang}.json`);
-
-                    if (pageResponse.ok) {
-                        const pageTranslations = await pageResponse.json();
-                        // Merge page-specific translations into global translations
-                        translations = { ...translations, ...pageTranslations };
-                        console.log(`Loaded page-specific translations: ${translationSource}.${lang}.json`);
-                    }
-                } catch (pageError) {
-                    console.warn(`Page-specific translation file not found: ${translationSource}.${lang}.json`, pageError);
-                    // Continue with global translations only
-                }
-            }
-
-            currentLang = lang;
-
-            // Apply translations immediately
-            updateContent();
-
-            // Dispatch custom event for other scripts to react
-            window.dispatchEvent(new CustomEvent('languageChanged', {
-                detail: { lang: currentLang, translations: translations }
-            }));
-
-        } catch (error) {
-            console.error('Translation loading error:', error);
-            // Fallback to English if loading fails
-            if (lang !== 'en') {
-                console.warn('Falling back to English');
-                loadTranslations('en');
-            }
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            this.translations = await response.json();
+            console.log(`[i18n] Loaded ${lang} data:`, this.translations);
+        } catch (e) {
+            console.error('[i18n] Failed to load translations:', e);
         }
-    }
+    },
+    // 3. Change Language (Called by buttons)
+    async setLanguage(lang) {
+        console.log(`[i18n] Switching to ${lang}...`);
+        this.currentLang = lang;
+        localStorage.setItem('anohub_lang', lang);
+        await this.loadTranslations(lang);
+        this.updatePage();
 
-    // Update all elements with data-i18n attributes
-    function updateContent() {
+        // Dispatch event for other components
+        window.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang } }));
+    },
+    // 4. Update HTML Elements
+    updatePage() {
         const elements = document.querySelectorAll('[data-i18n]');
+        console.log(`[i18n] Updating ${elements.length} elements...`);
 
-        elements.forEach(element => {
-            const key = element.getAttribute('data-i18n');
-            const translation = getNestedValue(translations, key);
+        elements.forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            const value = this.getNestedValue(this.translations, key);
 
-            if (translation) {
-                // Check if we should update innerHTML or textContent
-                const useInnerHTML = element.hasAttribute('data-i18n-html');
-
-                if (useInnerHTML) {
-                    element.innerHTML = translation;
+            if (value) {
+                if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                    el.placeholder = value;
                 } else {
-                    element.textContent = translation;
+                    el.innerHTML = value; // innerHTML allows formatting tags
                 }
-            }
-        });
-
-        // Handle placeholder translations
-        const placeholderElements = document.querySelectorAll('[data-i18n-placeholder]');
-        placeholderElements.forEach(element => {
-            const key = element.getAttribute('data-i18n-placeholder');
-            const translation = getNestedValue(translations, key);
-            if (translation) {
-                element.setAttribute('placeholder', translation);
-            }
-        });
-
-        // Handle title attribute translations
-        const titleElements = document.querySelectorAll('[data-i18n-title]');
-        titleElements.forEach(element => {
-            const key = element.getAttribute('data-i18n-title');
-            const translation = getNestedValue(translations, key);
-            if (translation) {
-                element.setAttribute('title', translation);
-            }
-        });
-
-        // Handle aria-label translations
-        const ariaElements = document.querySelectorAll('[data-i18n-aria]');
-        ariaElements.forEach(element => {
-            const key = element.getAttribute('data-i18n-aria');
-            const translation = getNestedValue(translations, key);
-            if (translation) {
-                element.setAttribute('aria-label', translation);
-            }
-        });
-
-        // Update active language button styling
-        updateLanguageSwitcher();
-    }
-
-    // Get nested value from object using dot notation (e.g., "nav.home")
-    function getNestedValue(obj, path) {
-        return path.split('.').reduce((current, key) => current?.[key], obj);
-    }
-
-    // Update language switcher UI
-    function updateLanguageSwitcher() {
-        const langButtons = document.querySelectorAll('[data-lang]');
-
-        langButtons.forEach(button => {
-            const buttonLang = button.getAttribute('data-lang');
-
-            if (buttonLang === currentLang) {
-                button.classList.add('text-white', 'font-bold');
-                button.classList.remove('text-slate-400');
             } else {
-                button.classList.remove('text-white', 'font-bold');
-                button.classList.add('text-slate-400');
+                console.warn(`[i18n] Missing key: ${key}`);
             }
         });
+
+        // Update Active Button State
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.classList.remove('text-h-cyan', 'font-bold');
+            if (btn.dataset.lang === this.currentLang) {
+                btn.classList.add('text-h-cyan', 'font-bold');
+            }
+        });
+    },
+    // Helper: Find "hero.title" inside object
+    getNestedValue(obj, path) {
+        return path.split('.').reduce((prev, curr) => {
+            return prev ? prev[curr] : null;
+        }, obj);
     }
+};
 
-    // Global function to change language
-    window.changeLanguage = function (lang) {
-        if (lang === currentLang) {
-            return; // Already using this language
-        }
+// Expose globally
+window.changeLanguage = (lang) => i18n.setLanguage(lang);
 
-        // Save preference
-        localStorage.setItem('anoHubsLang', lang);
-
-        // Load new translations
-        loadTranslations(lang);
-    };
-
-    // Expose updateContent globally for layout-loader to call
-    window.updateContent = updateContent;
-
-    // Initialize when DOM is ready
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
-    } else {
-        init();
-    }
-})();
+// Auto-start
+document.addEventListener('DOMContentLoaded', () => i18n.init());

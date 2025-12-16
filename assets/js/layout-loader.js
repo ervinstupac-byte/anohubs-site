@@ -34,10 +34,8 @@ document.addEventListener("DOMContentLoaded", () => {
             if (typeof initGridTicker === "function") initGridTicker();
 
             // C. Bind Language Switcher (Event Delegation)
-            document.body.addEventListener('click', (e) => {
-                if (e.target.id === 'btn-en' || e.target.closest('#btn-en')) window.changeLanguage('en');
-                if (e.target.id === 'btn-bs' || e.target.closest('#btn-bs')) window.changeLanguage('bs');
-            });
+            // C. Bind Language Switcher (Handled via onclick in HTML)
+            // Logic removed to prevent conflicts
 
             // D. Mobile Menu Logic
             const menuBtn = document.getElementById("mobile-menu-btn");
