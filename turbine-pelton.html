@@ -1,13 +1,18 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Pelton Turbine Protocol | AnoHUB</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/1.13.0/model-viewer.min.js"></script>
+    <link rel="stylesheet" href="assets/css/preloader.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.3.0/model-viewer.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -22,78 +27,157 @@
         }
     </script>
     <style>
-        body { background-color: #020617; color: #f8fafc; overflow-x: hidden; }
-        
+        body {
+            background-color: #020617;
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+
         /* === BACKGROUND SYSTEM === */
         .bg-layer {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
-            background-size: cover; background-position: center;
-            opacity: 0; transition: opacity 1.5s ease-in-out; will-change: opacity;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+            will-change: opacity;
         }
+
         /* Pelton slike su tamne, pa možemo staviti veći opacity */
-        .bg-layer.active { opacity: 0.7; } 
+        .bg-layer.active {
+            opacity: 0.7;
+        }
 
         #bg-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
-            background: linear-gradient(to bottom, rgba(2,6,23,0.9) 0%, rgba(2,6,23,0.6) 50%, rgba(2,6,23,0.95) 100%);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(to bottom, rgba(2, 6, 23, 0.9) 0%, rgba(2, 6, 23, 0.6) 50%, rgba(2, 6, 23, 0.95) 100%);
             pointer-events: none;
         }
-        
-        .noise { position: fixed; inset: 0; z-index: 50; pointer-events: none; opacity: 0.05; background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MCIgaGVpZ2h0PSI1MCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0ibm9uZSIvPjwvc3ZnPg=="); } 
-        
+
+        .noise {
+            position: fixed;
+            inset: 0;
+            z-index: 50;
+            pointer-events: none;
+            opacity: 0.05;
+            background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MCIgaGVpZ2h0PSI1MCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0ibm9uZSIvPjwvc3ZnPg==");
+        }
+
         /* GLASSMOPHISM */
-        .glass { 
-            background: rgba(15, 23, 42, 0.6); 
-            backdrop-filter: blur(12px); 
-            border: 1px solid rgba(245, 158, 11, 0.1); /* Amber border */
+        .glass {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(245, 158, 11, 0.1);
+            /* Amber border */
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
         }
 
         /* SIMULATOR */
-        .chart-container { 
-            position: relative; width: 100%; height: 500px; 
-            background: radial-gradient(circle at 75% 50%, rgba(245,158,11,0.1), transparent 70%); 
-            border: 1px solid #334155; border-radius: 1rem; 
+        .chart-container {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            background: radial-gradient(circle at 75% 50%, rgba(245, 158, 11, 0.1), transparent 70%);
+            border: 1px solid #334155;
+            border-radius: 1rem;
         }
 
         /* SLIDERS */
-        input[type=range] { -webkit-appearance: none; background: transparent; cursor: pointer; }
-        input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none; height: 16px; width: 16px; border-radius: 50%;
-            background: #f59e0b; margin-top: -6px; border: 2px solid white; box-shadow: 0 0 10px #f59e0b;
+        input[type=range] {
+            -webkit-appearance: none;
+            background: transparent;
+            cursor: pointer;
         }
-        input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 4px; background: #1e293b; border-radius: 2px; }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            background: #f59e0b;
+            margin-top: -6px;
+            border: 2px solid white;
+            box-shadow: 0 0 10px #f59e0b;
+        }
+
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            background: #1e293b;
+            border-radius: 2px;
+        }
     </style>
 </head>
 
 <body class="antialiased">
-    
+
     <div id="bg-1" class="bg-layer active" style="background-image: url('assets/images/pelton_srvcs.jpg');"></div>
     <div id="bg-2" class="bg-layer" style="background-image: url('assets/images/pelton_srvcs2.jpg');"></div>
-    
+
     <div id="bg-overlay"></div>
     <div class="noise"></div>
 
-        <div id="global-header"></div>
+    <div id="global-header"></div>
 
     <main class="pt-20">
-        
-        <section class="scroll-section min-h-screen flex items-center justify-center text-center relative" data-bg-id="bg-1">
+
+        <section class="scroll-section min-h-screen flex items-center justify-center text-center relative"
+            data-bg-id="bg-1">
             <div class="max-w-4xl px-4 relative z-10">
-                <div class="inline-block px-4 py-2 border border-h-cta bg-black/50 backdrop-blur text-h-cta text-xs font-mono mb-8 rounded-full shadow-[0_0_20px_rgba(245,158,11,0.3)]">
+                <div
+                    class="inline-block px-4 py-2 border border-h-cta bg-black/50 backdrop-blur text-h-cta text-xs font-mono mb-8 rounded-full shadow-[0_0_20px_rgba(245,158,11,0.3)]">
                     ASSET CLASS: IMPULSE
                 </div>
-                
+
                 <h1 class="text-7xl md:text-9xl font-black text-white mb-8 tracking-tighter drop-shadow-2xl">PELTON</h1>
-                
+
                 <p class="text-2xl text-slate-200 max-w-3xl mx-auto leading-relaxed font-light drop-shadow-md">
                     High head mastery. Where water becomes a laser beam cutting through steel if misaligned.
                 </p>
-                
+
                 <div class="mt-12 flex justify-center gap-6">
-                    <a href="#history" class="text-xs font-bold text-white uppercase tracking-widest hover:text-h-cta transition border-b border-h-cta pb-1">
+                    <a href="#history"
+                        class="text-xs font-bold text-white uppercase tracking-widest hover:text-h-cta transition border-b border-h-cta pb-1">
                         History & Evolution &darr;
                     </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3D MODEL VIEWER SECTION (PLACEHOLDER) -->
+        <section class="scroll-section py-32 border-b border-white/5" data-bg-id="bg-1">
+            <div class="max-w-6xl mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-h-cta font-mono text-sm mb-4 tracking-widest">02 // INTERACTIVE 3D ASSET</h2>
+                    <h3 class="text-4xl md:text-5xl font-bold text-white mb-4 leading-tight">Pelton Turbine Runner</h3>
+                    <p class="text-slate-400 max-w-2xl mx-auto">High-resolution 3D model currently in development.
+                        Coming soon.</p>
+                </div>
+
+                <div
+                    class="w-full h-[500px] bg-gradient-to-b from-slate-900 to-black rounded-xl border border-h-cta/30 overflow-hidden relative group flex items-center justify-center">
+                    <div class="text-center px-4">
+                        <i data-lucide="box" class="w-24 h-24 text-h-cta/30 mx-auto mb-6"></i>
+                        <h4 class="text-2xl font-bold text-white mb-4">3D Model In Development</h4>
+                        <p class="text-slate-400 max-w-md mx-auto">Our team is creating a high-fidelity digital twin of
+                            the Pelton bucket geometry. Check back soon for the interactive experience.</p>
+                    </div>
+                    <div class="absolute bottom-4 right-4 pointer-events-none">
+                        <div
+                            class="bg-black/50 backdrop-blur px-3 py-1 rounded border border-white/20 text-[10px] font-mono text-h-cta uppercase">
+                            Coming Soon
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -102,26 +186,38 @@
             <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-16 items-center">
                 <div>
                     <h2 class="text-h-cta font-mono text-sm mb-4 tracking-widest">01 // THE LEGACY</h2>
-                    <h3 class="text-4xl md:text-5xl font-bold text-white mb-8 leading-tight">Lester Pelton's Breakthrough</h3>
+                    <h3 class="text-4xl md:text-5xl font-bold text-white mb-8 leading-tight">Lester Pelton's
+                        Breakthrough</h3>
                     <p class="text-slate-300 mb-6 text-lg leading-relaxed">
-                        In the California Gold Rush, inefficient water wheels wasted energy. Lester Pelton invented the split-bucket design, which reverses the water jet nearly 180°, extracting almost every joule of kinetic energy.
+                        In the California Gold Rush, inefficient water wheels wasted energy. Lester Pelton invented the
+                        split-bucket design, which reverses the water jet nearly 180°, extracting almost every joule of
+                        kinetic energy.
                     </p>
                     <div class="glass p-8 rounded-xl border-l-4 border-h-cta">
                         <p class="text-slate-200 text-lg leading-relaxed">
-                            <strong>Today's Reality:</strong> Modern Peltons operate at heads over 1000m. The jet velocity exceeds <span class="text-white font-bold">140 m/s</span>. At this speed, a misalignment of <span class="text-h-red font-bold">0.5mm</span> destroys the bucket surface in weeks.
+                            <strong>Today's Reality:</strong> Modern Peltons operate at heads over 1000m. The jet
+                            velocity exceeds <span class="text-white font-bold">140 m/s</span>. At this speed, a
+                            misalignment of <span class="text-h-red font-bold">0.5mm</span> destroys the bucket surface
+                            in weeks.
                         </p>
                     </div>
                 </div>
-                <div class="glass p-10 rounded-2xl border-t-4 border-t-h-cta shadow-2xl transform hover:-translate-y-2 transition duration-500">
+                <div
+                    class="glass p-10 rounded-2xl border-t-4 border-t-h-cta shadow-2xl transform hover:-translate-y-2 transition duration-500">
                     <h4 class="text-white font-bold mb-8 text-xl flex items-center gap-2">
                         <i data-lucide="droplet" class="text-h-cta"></i> Technical Specifications
                     </h4>
                     <ul class="space-y-6 font-mono text-sm text-slate-400">
-                        <li class="flex justify-between border-b border-white/5 pb-2"><span>INVENTED</span> <span class="text-white">1870s (USA)</span></li>
-                        <li class="flex justify-between border-b border-white/5 pb-2"><span>ENERGY TYPE</span> <span class="text-white">Impulse (Kinetic)</span></li>
-                        <li class="flex justify-between border-b border-white/5 pb-2"><span>MAX EFFICIENCY</span> <span class="text-h-cta">~92%</span></li>
-                        <li class="flex justify-between border-b border-white/5 pb-2"><span>HEAD RANGE</span> <span class="text-white">200m - 2000m</span></li>
-                        <li class="flex justify-between"><span>CORE RISK</span> <span class="text-h-red font-bold">Silt Abrasion</span></li>
+                        <li class="flex justify-between border-b border-white/5 pb-2"><span>INVENTED</span> <span
+                                class="text-white">1870s (USA)</span></li>
+                        <li class="flex justify-between border-b border-white/5 pb-2"><span>ENERGY TYPE</span> <span
+                                class="text-white">Impulse (Kinetic)</span></li>
+                        <li class="flex justify-between border-b border-white/5 pb-2"><span>MAX EFFICIENCY</span> <span
+                                class="text-h-cta">~92%</span></li>
+                        <li class="flex justify-between border-b border-white/5 pb-2"><span>HEAD RANGE</span> <span
+                                class="text-white">200m - 2000m</span></li>
+                        <li class="flex justify-between"><span>CORE RISK</span> <span class="text-h-red font-bold">Silt
+                                Abrasion</span></li>
                     </ul>
                 </div>
             </div>
@@ -142,40 +238,55 @@
                             <div id="eff-display" class="text-6xl font-black text-h-cta tracking-tighter">PERFECT</div>
                         </div>
                     </div>
-                    
+
                     <div class="grid lg:grid-cols-3 gap-12">
                         <div class="space-y-8 h-fit">
                             <div class="bg-black/40 p-6 rounded-xl border border-white/5">
                                 <label class="text-xs font-bold text-h-cta mb-4 block flex justify-between">
-                                    <span>NEEDLE STROKE (%)</span> <span id="val-stroke" class="text-white font-mono">80%</span>
+                                    <span>NEEDLE STROKE (%)</span> <span id="val-stroke"
+                                        class="text-white font-mono">80%</span>
                                 </label>
-                                <input type="range" id="slider-stroke" min="0" max="100" value="80" class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer">
+                                <input type="range" id="slider-stroke" min="0" max="100" value="80"
+                                    class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer">
                             </div>
-                            
+
                             <div class="bg-black/40 p-6 rounded-xl border border-white/5">
                                 <label class="text-xs font-bold text-h-cta mb-4 block flex justify-between">
-                                    <span>NOZZLE ALIGNMENT (mm)</span> <span id="val-align" class="text-white font-mono">0.0 mm</span>
+                                    <span>NOZZLE ALIGNMENT (mm)</span> <span id="val-align"
+                                        class="text-white font-mono">0.0 mm</span>
                                 </label>
-                                <input type="range" id="slider-align" min="-5" max="5" step="0.1" value="0" class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer">
-                                <div class="flex justify-between text-[10px] text-slate-500 mt-2 font-mono"><span>-5mm</span><span>CENTER</span><span>+5mm</span></div>
+                                <input type="range" id="slider-align" min="-5" max="5" step="0.1" value="0"
+                                    class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer">
+                                <div class="flex justify-between text-[10px] text-slate-500 mt-2 font-mono">
+                                    <span>-5mm</span><span>CENTER</span><span>+5mm</span></div>
                             </div>
-                            
-                            <div id="jet-status" class="p-4 bg-h-cta/10 border border-h-cta/30 rounded-lg text-sm font-mono text-center text-h-cta font-bold animate-pulse">
+
+                            <div id="jet-status"
+                                class="p-4 bg-h-cta/10 border border-h-cta/30 rounded-lg text-sm font-mono text-center text-h-cta font-bold animate-pulse">
                                 OPTIMAL STRIKE ZONE
                             </div>
                         </div>
-                        
-                        <div class="lg:col-span-2 chart-container relative flex items-center justify-center group overflow-hidden">
-                            <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTTAgNDBMMDQgMEgwIiBzdHJva2U9InJnYmEoMjQ1LDE1OCwxMSwwLjA1KSIgZmlsbD0ibm9uZSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmlkKSIvPjwvc3ZnPg==')] opacity-20"></div>
-                            
-                            <div class="w-full h-12 bg-slate-800/50 relative overflow-hidden rounded-full border border-white/10 flex items-center shadow-[inset_0_0_20px_rgba(0,0,0,0.8)]">
-                                <div class="absolute left-1/2 top-0 bottom-0 w-0.5 bg-white/30 z-20"></div>
-                                <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 border-2 border-h-cta rounded-full z-30 opacity-50"></div>
-                                
-                                <div id="jet-stream" class="h-3 bg-h-cta absolute top-1/2 -translate-y-1/2 left-0 transition-all duration-100 shadow-[0_0_25px_#f59e0b] rounded-r-full" style="width: 80%"></div>
+
+                        <div
+                            class="lg:col-span-2 chart-container relative flex items-center justify-center group overflow-hidden">
+                            <div
+                                class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTTAgNDBMMDQgMEgwIiBzdHJva2U9InJnYmEoMjQ1LDE1OCwxMSwwLjA1KSIgZmlsbD0ibm9uZSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmlkKSIvPjwvc3ZnPg==')] opacity-20">
                             </div>
-                            
-                            <div class="absolute bottom-4 right-4 text-xs font-mono text-slate-500 bg-black/80 px-2 py-1 rounded border border-white/10">
+
+                            <div
+                                class="w-full h-12 bg-slate-800/50 relative overflow-hidden rounded-full border border-white/10 flex items-center shadow-[inset_0_0_20px_rgba(0,0,0,0.8)]">
+                                <div class="absolute left-1/2 top-0 bottom-0 w-0.5 bg-white/30 z-20"></div>
+                                <div
+                                    class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 border-2 border-h-cta rounded-full z-30 opacity-50">
+                                </div>
+
+                                <div id="jet-stream"
+                                    class="h-3 bg-h-cta absolute top-1/2 -translate-y-1/2 left-0 transition-all duration-100 shadow-[0_0_25px_#f59e0b] rounded-r-full"
+                                    style="width: 80%"></div>
+                            </div>
+
+                            <div
+                                class="absolute bottom-4 right-4 text-xs font-mono text-slate-500 bg-black/80 px-2 py-1 rounded border border-white/10">
                                 LASER CALIBRATION MODULE
                             </div>
                         </div>
@@ -188,32 +299,42 @@
             <div class="max-w-6xl mx-auto px-4">
                 <h2 class="text-h-cta font-mono text-sm mb-4 tracking-widest">03 // FAILURE MODES</h2>
                 <h3 class="text-4xl font-bold text-white mb-16 max-w-2xl">Impulse Failure Mechanisms</h3>
-                
+
                 <div class="space-y-8">
-                    <div class="glass p-10 rounded-2xl border border-white/5 hover:border-h-cta transition group duration-500 hover:bg-black/40">
+                    <div
+                        class="glass p-10 rounded-2xl border border-white/5 hover:border-h-cta transition group duration-500 hover:bg-black/40">
                         <div class="flex flex-col md:flex-row gap-8">
                             <div class="text-6xl font-black text-white/10 group-hover:text-h-cta transition">01</div>
                             <div>
-                                <h4 class="text-2xl font-bold text-white mb-4 group-hover:text-h-cta transition">Sand/Silt Abrasion</h4>
+                                <h4 class="text-2xl font-bold text-white mb-4 group-hover:text-h-cta transition">
+                                    Sand/Silt Abrasion</h4>
                                 <p class="text-slate-300 text-lg leading-relaxed mb-6">
-                                    High-velocity water turns glacial silt into liquid sandpaper. It erodes the splitter and bucket cut-out, destroying the hydraulic profile and reducing efficiency by 3-5% in a single season.
+                                    High-velocity water turns glacial silt into liquid sandpaper. It erodes the splitter
+                                    and bucket cut-out, destroying the hydraulic profile and reducing efficiency by 3-5%
+                                    in a single season.
                                 </p>
-                                <div class="inline-block px-4 py-2 bg-h-cta/10 border border-h-cta/30 rounded text-xs font-mono text-h-cta font-bold">
+                                <div
+                                    class="inline-block px-4 py-2 bg-h-cta/10 border border-h-cta/30 rounded text-xs font-mono text-h-cta font-bold">
                                     PROTOCOL: HVOF Coating & Profile Mapping
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="glass p-10 rounded-2xl border border-white/5 hover:border-h-cta transition group duration-500 hover:bg-black/40">
+                    <div
+                        class="glass p-10 rounded-2xl border border-white/5 hover:border-h-cta transition group duration-500 hover:bg-black/40">
                         <div class="flex flex-col md:flex-row gap-8">
                             <div class="text-6xl font-black text-white/10 group-hover:text-h-cta transition">02</div>
                             <div>
-                                <h4 class="text-2xl font-bold text-white mb-4 group-hover:text-h-cta transition">Jet Misalignment</h4>
+                                <h4 class="text-2xl font-bold text-white mb-4 group-hover:text-h-cta transition">Jet
+                                    Misalignment</h4>
                                 <p class="text-slate-300 text-lg leading-relaxed mb-6">
-                                    If the jet doesn't hit the splitter dead-center, energy is wasted and asymmetrical load destroys the runner bearings. A deviation of just 1 degree creates massive eccentric forces.
+                                    If the jet doesn't hit the splitter dead-center, energy is wasted and asymmetrical
+                                    load destroys the runner bearings. A deviation of just 1 degree creates massive
+                                    eccentric forces.
                                 </p>
-                                <div class="inline-block px-4 py-2 bg-h-cta/10 border border-h-cta/30 rounded text-xs font-mono text-h-cta font-bold">
+                                <div
+                                    class="inline-block px-4 py-2 bg-h-cta/10 border border-h-cta/30 rounded text-xs font-mono text-h-cta font-bold">
                                     PROTOCOL: Laser Calibration (Dry Test)
                                 </div>
                             </div>
@@ -225,10 +346,11 @@
 
         <section class="scroll-section py-32" data-bg-id="bg-2">
             <div class="max-w-5xl mx-auto px-4 text-center">
-                
+
                 <div class="glass p-8 rounded-2xl mb-24">
                     <h2 class="text-white font-bold text-3xl mb-12">Asset Classification Matrix</h2>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-slate-700/50 border border-slate-600 rounded-xl overflow-hidden">
+                    <div
+                        class="grid grid-cols-2 md:grid-cols-4 gap-px bg-slate-700/50 border border-slate-600 rounded-xl overflow-hidden">
                         <div class="bg-black/60 p-8 backdrop-blur-sm">
                             <div class="text-xs text-slate-400 font-mono mb-2">SPECIFIC SPEED (Ns)</div>
                             <div class="text-3xl font-black text-white">2 - 70</div>
@@ -248,38 +370,47 @@
                     </div>
                 </div>
 
-                <div class="glass p-10 md:p-14 rounded-3xl border border-h-cta/30 relative overflow-hidden text-left max-w-4xl mx-auto">
-                     <div class="absolute top-0 right-0 w-1/2 h-full bg-h-cta/10 blur-3xl pointer-events-none"></div>
-                     
-                     <div class="relative z-10">
+                <div
+                    class="glass p-10 md:p-14 rounded-3xl border border-h-cta/30 relative overflow-hidden text-left max-w-4xl mx-auto">
+                    <div class="absolute top-0 right-0 w-1/2 h-full bg-h-cta/10 blur-3xl pointer-events-none"></div>
+
+                    <div class="relative z-10">
                         <h2 class="text-3xl font-black text-white mb-4">Initialize Jet Alignment</h2>
                         <p class="text-slate-300 mb-8">Schedule laser calibration and bucket wear analysis.</p>
-                        
-                        <form id="turbineContactForm" action="https://formspree.io/f/xqaywlaq" method="POST" class="space-y-6">
+
+                        <form id="turbineContactForm" action="https://formspree.io/f/xqaywlaq" method="POST"
+                            class="space-y-6">
                             <input type="hidden" name="Asset Type" value="Pelton Turbine">
-                            
+
                             <div class="grid md:grid-cols-2 gap-6">
                                 <div>
-                                    <label class="text-xs font-mono text-h-cta uppercase ml-1 block mb-2">Full Name</label>
-                                    <input type="text" name="Full Name" required class="w-full bg-black/50 border border-slate-600 rounded-lg p-4 text-white focus:border-h-cta focus:ring-1 focus:ring-h-cta outline-none transition">
+                                    <label class="text-xs font-mono text-h-cta uppercase ml-1 block mb-2">Full
+                                        Name</label>
+                                    <input type="text" name="Full Name" required
+                                        class="w-full bg-black/50 border border-slate-600 rounded-lg p-4 text-white focus:border-h-cta focus:ring-1 focus:ring-h-cta outline-none transition">
                                 </div>
                                 <div>
-                                    <label class="text-xs font-mono text-h-cta uppercase ml-1 block mb-2">Official Email</label>
-                                    <input type="email" name="Email" required class="w-full bg-black/50 border border-slate-600 rounded-lg p-4 text-white focus:border-h-cta focus:ring-1 focus:ring-h-cta outline-none transition">
+                                    <label class="text-xs font-mono text-h-cta uppercase ml-1 block mb-2">Official
+                                        Email</label>
+                                    <input type="email" name="Email" required
+                                        class="w-full bg-black/50 border border-slate-600 rounded-lg p-4 text-white focus:border-h-cta focus:ring-1 focus:ring-h-cta outline-none transition">
                                 </div>
                             </div>
-                            
+
                             <div>
-                                <label class="text-xs font-mono text-h-cta uppercase ml-1 block mb-2">Operational Issue</label>
-                                <textarea name="Message" rows="3" placeholder="e.g. Injector nozzle deviation..." class="w-full bg-black/50 border border-slate-600 rounded-lg p-4 text-white focus:border-h-cta focus:ring-1 focus:ring-h-cta outline-none transition"></textarea>
+                                <label class="text-xs font-mono text-h-cta uppercase ml-1 block mb-2">Operational
+                                    Issue</label>
+                                <textarea name="Message" rows="3" placeholder="e.g. Injector nozzle deviation..."
+                                    class="w-full bg-black/50 border border-slate-600 rounded-lg p-4 text-white focus:border-h-cta focus:ring-1 focus:ring-h-cta outline-none transition"></textarea>
                             </div>
-                            
-                            <button type="submit" class="w-full bg-h-cta hover:bg-yellow-500 text-black font-black py-5 rounded-lg shadow-[0_0_20px_rgba(245,158,11,0.4)] transition uppercase tracking-widest text-lg transform hover:scale-[1.01]">
+
+                            <button type="submit"
+                                class="w-full bg-h-cta hover:bg-yellow-500 text-black font-black py-5 rounded-lg shadow-[0_0_20px_rgba(245,158,11,0.4)] transition uppercase tracking-widest text-lg transform hover:scale-[1.01]">
                                 Submit Protocol Request
                             </button>
                             <p id="formMessage" class="mt-4 text-center text-sm font-mono hidden"></p>
                         </form>
-                     </div>
+                    </div>
                 </div>
 
             </div>
@@ -287,7 +418,7 @@
 
     </main>
 
-        <div id="global-footer"></div>
+    <div id="global-footer"></div>
 
     <script>
         lucide.createIcons();
@@ -320,19 +451,19 @@
         const valAlign = document.getElementById('val-align');
 
         function update() {
-            const s = stroke.value; 
+            const s = stroke.value;
             const a = parseFloat(align.value);
-            
+
             valStroke.innerText = s + "%";
             valAlign.innerText = a.toFixed(1) + " mm";
-            
+
             // Visual Width (Needle Stroke)
             jet.style.width = s + "%";
-            
+
             // Visual Alignment (Moving Top/Bottom)
             // Center is 50%. Move by alignment value.
             // Scale: 5mm = 20% movement
-            const offset = 50 + (a * 4); 
+            const offset = 50 + (a * 4);
             jet.style.top = offset + "%";
 
             // Logic
@@ -354,7 +485,7 @@
         const form = document.getElementById('turbineContactForm');
         const msg = document.getElementById('formMessage');
 
-        if(form) {
+        if (form) {
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 const btn = form.querySelector('button');
@@ -362,16 +493,16 @@
                 btn.innerText = 'TRANSMITTING...';
                 btn.disabled = true;
                 btn.classList.add('opacity-50', 'cursor-not-allowed');
-                
+
                 const formData = new FormData(form);
-                
+
                 try {
                     const response = await fetch(form.action, {
                         method: 'POST',
                         body: formData,
                         headers: { 'Accept': 'application/json' }
                     });
-                    
+
                     if (response.ok) {
                         msg.innerText = "REQUEST RECEIVED. STAND BY FOR DEPLOYMENT.";
                         msg.style.color = "#10b981";
@@ -396,4 +527,5 @@
     <!-- Component Loader -->
     <script src="assets/js/layout-loader.js"></script>
 </body>
+
 </html>
