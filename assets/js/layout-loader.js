@@ -1,21 +1,128 @@
-// ========================================
-// ANOHUBS SITE LAYOUT LOADER
-// Dynamic Header/Footer + Preloader System
-// ========================================
+document.addEventListener("DOMContentLoaded", () => {
+    // 1. Detect Location
+    const path = window.location.pathname;
+    const page = path.split("/").pop();
+    const isSubfolder = path.includes("/insights/") ||
+        path.includes("/case-studies/") ||
+        path.includes("/protocol/");
+    const basePath = isSubfolder ? "../" : "";
 
-// STEP 1: Inject Hydro Boot Sequence Preloader
-(function injectPreloader() {
-    const preloaderHTML = `
-        <div id="hydro-loader">
-            <div id="boot-sequence"></div>
-        </div>
-    `;
-    document.body.insertAdjacentHTML('afterbegin', preloaderHTML);
-    runBootSequence();
-})();
+    // 2. Load Header
+    fetch(basePath + "components/header.html")
+        .then(response => response.text())
+        .then(data => {
+            const headerEl = document.getElementById("global-header");
+            headerEl.innerHTML = data;
+
+            // A. Fix Navigation Links for Subfolders
+            if (isSubfolder) {
+                const navLinks = headerEl.querySelectorAll("a");
+                navLinks.forEach(link => {
+                    const href = link.getAttribute("href");
+                    // Don't change external links, anchors, or absolute paths
+                    if (href && !href.startsWith("http") && !href.startsWith("#") && !href.startsWith("mailto")) {
+                        link.setAttribute("href", "../" + href);
+                    }
+                });
+                // Fix Logo Image Source separately
+                const logoImg = headerEl.querySelector("img");
+                if (logoImg) logoImg.src = "../" + logoImg.getAttribute("src");
+            }
+
+            // B. Initialize Icons & Grid Ticker
+            if (window.lucide) window.lucide.createIcons();
+            if (typeof initGridTicker === "function") initGridTicker();
+
+            // C. Bind Language Switcher (Fixes Issue #1)
+            // Looks for buttons with ID 'btn-en' and 'btn-bs'
+            const btnEn = document.querySelector("button[data-lang='en']");
+            const btnBs = document.querySelector("button[data-lang='bs']");
+
+            if (btnEn && window.changeLanguage) btnEn.addEventListener("click", () => window.changeLanguage('en'));
+            if (btnBs && window.changeLanguage) btnBs.addEventListener("click", () => window.changeLanguage('bs'));
+
+            // D. Mobile Menu Logic
+            const menuBtn = document.getElementById("mobile-menu-btn");
+            const mobileMenu = document.getElementById("mobile-menu");
+            const closeLinks = document.querySelectorAll(".mobile-link");
+
+            if (menuBtn && mobileMenu) {
+                menuBtn.addEventListener("click", () => {
+                    mobileMenu.classList.toggle("translate-x-full");
+                    document.body.style.overflow = mobileMenu.classList.contains("translate-x-full") ? "auto" : "hidden";
+                });
+
+                closeLinks.forEach(link => {
+                    link.addEventListener("click", () => {
+                        mobileMenu.classList.add("translate-x-full");
+                        document.body.style.overflow = "auto";
+                    });
+                });
+            }
+
+            // E. Highlight Active Link
+            const navLinks = document.querySelectorAll("nav a");
+            navLinks.forEach(link => {
+                if (link.getAttribute("href").includes(page) && page !== "") {
+                    link.classList.add("active-link", "text-white");
+                    link.classList.remove("text-slate-400");
+                }
+            });
+
+            // F. Apply Translations (Immediate check)
+            if (window.updateContent) window.updateContent();
+        });
+
+    // 3. Load Footer
+    fetch(basePath + "components/footer.html")
+        .then(response => response.text())
+        .then(data => {
+            const footerEl = document.getElementById("global-footer");
+            footerEl.innerHTML = data;
+
+            if (isSubfolder) {
+                // Fix footer links similarly
+                footerEl.querySelectorAll("a").forEach(link => {
+                    const href = link.getAttribute("href");
+                    if (href && !href.startsWith("http") && !href.startsWith("#")) {
+                        link.setAttribute("href", "../" + href);
+                    }
+                });
+            }
+
+            if (window.lucide) window.lucide.createIcons();
+            if (window.updateContent) window.updateContent();
+        });
+
+    // 4. Conditional Preloader (Fixes Issue #3)
+    // Only run on Index or Protocol main page
+    if (page === "index.html" || page === "" || page === "protocol.html") {
+        if (typeof runBootSequence === "function") runBootSequence();
+    }
+});
+
+// 5. Anti-FOUC
+window.onload = function () {
+    document.documentElement.classList.add('wf-active');
+};
+
+
+// ========================================
+// HELPER FUNCTIONS (Preserved)
+// ========================================
 
 // Hydro-Specific Boot Sequence
 function runBootSequence() {
+    // Inject Preloader HTML if missing (since we removed the automatic injection)
+    if (!document.getElementById('hydro-loader')) {
+        const preloaderHTML = `
+            <div id="hydro-loader">
+                <div id="boot-sequence"></div>
+            </div>
+        `;
+        document.body.insertAdjacentHTML('afterbegin', preloaderHTML);
+    }
+
     const bootMessages = [
         "INITIALIZING ANOHUB PROTOCOL v35.0...",
         "CHECKING PENSTOCK PRESSURE...",
@@ -31,6 +138,8 @@ function runBootSequence() {
     ];
 
     const bootSequenceContainer = document.getElementById('boot-sequence');
+    if (!bootSequenceContainer) return; // Safety check
+
     let messageIndex = 0;
 
     const displayNextMessage = () => {
@@ -55,95 +164,6 @@ function runBootSequence() {
 
     // Start the sequence after a brief delay
     setTimeout(displayNextMessage, 200);
-}
-
-// STEP 2: Load Components on DOM Ready
-document.addEventListener("DOMContentLoaded", async () => {
-    const isSubfolder = window.location.pathname.includes("/insights/") ||
-        window.location.pathname.includes("/case-studies/") ||
-        window.location.pathname.includes("/protocol/");
-
-    const basePath = isSubfolder ? "../" : "";
-
-    try {
-        // Fetch Header and Footer in parallel
-        const [headerResponse, footerResponse] = await Promise.all([
-            fetch(basePath + "components/header.html"),
-            fetch(basePath + "components/footer.html")
-        ]);
-
-        const [headerData, footerData] = await Promise.all([
-            headerResponse.text(),
-            footerResponse.text()
-        ]);
-
-        // Inject Header
-        document.getElementById("global-header").innerHTML = headerData;
-
-        // Inject Footer
-        document.getElementById("global-footer").innerHTML = footerData;
-
-        // Re-initialize Lucide icons for both header and footer
-        if (window.lucide) window.lucide.createIcons();
-
-        // Initialize Mobile Menu (after header is injected)
-        initializeMobileMenu();
-
-        // Highlight Active Navigation Link
-        highlightActiveLink();
-
-        // Initialize Grid Frequency Ticker (SCADA Easter Egg)
-        initGridTicker();
-
-        // Apply translations after components are loaded
-        if (typeof window.updateContent === 'function') {
-            window.updateContent();
-        }
-
-    } catch (error) {
-        console.error("Error loading components:", error);
-        // Remove boot loader even on error to prevent infinite loading
-        const loader = document.getElementById('hydro-loader');
-        if (loader) {
-            loader.classList.add('fade-out');
-            setTimeout(() => loader.remove(), 500);
-        }
-    }
-});
-
-// Mobile Menu Toggle Logic
-function initializeMobileMenu() {
-    const menuBtn = document.getElementById("mobile-menu-btn");
-    const mobileMenu = document.getElementById("mobile-menu");
-    const closeLinks = document.querySelectorAll(".mobile-link");
-
-    if (menuBtn && mobileMenu) {
-        menuBtn.addEventListener("click", () => {
-            mobileMenu.classList.toggle("translate-x-full");
-            document.body.style.overflow = mobileMenu.classList.contains("translate-x-full") ? "auto" : "hidden";
-        });
-
-        closeLinks.forEach(link => {
-            link.addEventListener("click", () => {
-                mobileMenu.classList.add("translate-x-full");
-                document.body.style.overflow = "auto";
-            });
-        });
-    }
-}
-
-// Active Link Highlighting
-function highlightActiveLink() {
-    const currentPath = window.location.pathname.split("/").pop() || "index.html";
-    const navLinks = document.querySelectorAll("nav a");
-
-    navLinks.forEach(link => {
-        const href = link.getAttribute("href");
-        if (href && href.includes(currentPath)) {
-            link.classList.add("active-link", "text-white");
-            link.classList.remove("text-slate-400");
-        }
-    });
 }
 
 // Grid Frequency Ticker (SCADA Easter Egg)
@@ -174,8 +194,3 @@ function initGridTicker() {
         }
     }, 2000); // Every 2 seconds
 }
-
-// === ANTI-FOUC: Fade in page when fully loaded ===
-window.onload = function () {
-    document.documentElement.classList.add('wf-active');
-};

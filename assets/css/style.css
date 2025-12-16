@@ -45,221 +45,165 @@ noscript {
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         overflow-x: hidden;
-        background-color: var(--color-background-primary);
-        color: #E2E8F0;
-        background-attachment: fixed;
-        scroll-behavior: smooth;
     }
 }
 
-@layer components {
+.font-mono {
+    font-family: 'JetBrains Mono', monospace;
+}
 
-    /* HERO SECTION */
-    .hero-gradient {
-        background: linear-gradient(180deg, rgba(10, 10, 10, 0.95) 0%, rgba(10, 10, 10, 0.85) 100%);
-        min-height: 95vh;
-        clip-path: polygon(0 0, 100% 0, 100% 90%, 50% 100%, 0 90%);
-        padding-bottom: 140px;
-        position: relative;
-        overflow: hidden;
-    }
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+    background: #020617;
+}
 
-    /* Accordion */
-    .accordion-content {
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), padding 0.5s ease-in-out;
-        padding-top: 0;
-        padding-bottom: 0;
-    }
+::-webkit-scrollbar-thumb {
+    background: #1e293b;
+    border-radius: 4px;
+}
 
-    .accordion-content.is-open {
-        padding-top: 1.5rem;
-        padding-bottom: 1.5rem;
-    }
+::-webkit-scrollbar-thumb:hover {
+    background: #06b6d4;
+}
 
-    .accordion-header {
-        cursor: pointer;
-        transition: color 0.3s;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
+/* Base styles needed for active link behavior */
+.nav-link {
+    transition: color 0.3s ease;
+}
 
-    .accordion-header svg {
-        transition: transform 0.3s ease-in-out;
-    }
+.bg-grid-pattern {
+    background-image: linear-gradient(to right, rgba(6, 182, 212, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(6, 182, 212, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+}
 
-    /* Sekcije i Kartice */
-    .section-dark {
-        background-color: #1A1A1A;
-    }
 
-    .section-cyan {
-        background-color: var(--color-background-secondary);
-    }
+/* === SCADA BOOT SEQUENCE === */
+#hydro-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #020617;
+    /* h-dark */
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 10%;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    color: #06b6d4;
+    transition: opacity 0.5s ease-out;
+    /* Ensure it handles mouse events while visible */
+    pointer-events: all;
+}
 
-    .section-stripe {
-        background: linear-gradient(90deg, var(--color-background-primary) 0%, var(--color-primary-cyan) 50%, var(--color-background-primary) 100%);
-        height: 8px;
-        box-shadow: 0 0 15px rgba(6, 182, 212, 0.8);
-    }
+/* When fade out is triggered */
+#hydro-loader.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
 
-    .section-divider {
-        height: 60px;
-        background-color: var(--color-background-primary);
-        clip-path: polygon(0 0, 100% 100%, 0 100%);
-    }
+.boot-log {
+    font-size: 12px;
+    line-height: 1.8;
+    opacity: 0;
+    animation: logFade 0.2s forwards;
+    margin: 2px 0;
+}
 
-    .section-divider.inverted {
-        clip-path: polygon(0 100%, 100% 0, 100% 100%);
-        background-color: var(--color-background-primary);
-    }
-
-    /* Sticky Mobile CTA */
-    @media (max-width: 768px) {
-        .mobile-sticky-cta {
-            display: block;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.4);
-            padding: 10px 0;
-            background-color: rgba(10, 10, 10, 0.95);
-            border-top: 2px solid var(--color-warning-yellow);
-        }
-    }
-
-    /* Visual Authenticity: UPUTE */
-    .visual-placeholder {
-        min-height: 200px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        flex-direction: column;
-        background-color: #111827;
-        border: 2px dashed #06B6D4;
-        color: #94A3B8;
-        padding: 20px;
-        border-radius: 12px;
-        font-family: monospace;
-        font-size: 0.9rem;
-    }
-
-    /* ANIMACIJE */
-    .fade-in-up,
-    .zoom-in {
-        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-    }
-
-    .fade-in-up {
-        opacity: 0;
-        transform: translateY(50px);
-    }
-
-    .fade-in-up.is-visible {
+@keyframes logFade {
+    to {
         opacity: 1;
-        transform: translateY(0);
+    }
+}
+
+/* RADAR BLIP ACTIVE LINK INDICATOR */
+nav a {
+    position: relative;
+}
+
+/* The blip itself - hidden by default */
+nav a::before {
+    content: '';
+    position: absolute;
+    left: -12px;
+    top: 50%;
+    transform: translateY(-50%) scale(0);
+    width: 6px;
+    height: 6px;
+    background-color: #06b6d4;
+    border-radius: 50%;
+    opacity: 0;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 8px #06b6d4;
+}
+
+/* The active state that shows the blip */
+nav a.active-link::before {
+    transform: translateY(-50%) scale(1);
+    opacity: 1;
+    animation: pulse-blip 2s infinite;
+}
+
+@keyframes pulse-blip {
+    0% {
+        box-shadow: 0 0 0 0 rgba(6, 182, 212, 0.7);
     }
 
-    .zoom-in {
-        opacity: 0;
-        transform: scale(0.9);
+    70% {
+        box-shadow: 0 0 0 6px rgba(6, 182, 212, 0);
     }
 
-    .zoom-in.is-visible {
-        opacity: 1;
-        transform: scale(1);
+    100% {
+        box-shadow: 0 0 0 0 rgba(6, 182, 212, 0);
+    }
+}
+
+/* === PRINT STYLES === */
+@media print {
+
+    #global-header,
+    #global-footer,
+    .no-print,
+    .noise-overlay,
+    .video-overlay {
+        display: none !important;
     }
 
-    .delay-200 {
-        transition-delay: 200ms;
+    body {
+        background: white !important;
+        color: black !important;
     }
 
-    .delay-400 {
-        transition-delay: 400ms;
+    .prose {
+        color: black !important;
     }
 
-    .delay-600 {
-        transition-delay: 600ms;
+    .prose h1,
+    .prose h2,
+    .prose h3,
+    .prose h4,
+    .prose strong {
+        color: black !important;
     }
 
-    /* HYDRO BOOT SEQUENCE PRELOADER */
-    #hydro-loader {
-        position: fixed;
-        inset: 0;
-        background: #020617;
-        z-index: 9999;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: flex-start;
-        padding-left: 10%;
-        font-family: 'JetBrains Mono', 'Courier New', monospace;
-        color: #06b6d4;
-        transition: opacity 0.5s ease-out;
+    .bg-h-dark,
+    .bg-h-panel {
+        background: white !important;
     }
 
-    #hydro-loader.fade-out {
-        opacity: 0;
+    .text-white,
+    .text-slate-200,
+    .text-slate-300,
+    .text-slate-400 {
+        color: black !important;
     }
 
-    .boot-log {
-        font-size: 12px;
-        line-height: 1.8;
-        opacity: 0;
-        animation: logFade 0.2s forwards;
-        margin: 2px 0;
-    }
-
-    @keyframes logFade {
-        to {
-            opacity: 1;
-        }
-    }
-
-    /* RADAR BLIP ACTIVE LINK INDICATOR */
-    nav a {
-        position: relative;
-    }
-
-    /* The blip itself - hidden by default */
-    nav a::before {
-        content: '';
-        position: absolute;
-        left: -12px;
-        top: 50%;
-        transform: translateY(-50%) scale(0);
-        width: 6px;
-        height: 6px;
-        background-color: #06b6d4;
-        border-radius: 50%;
-        opacity: 0;
-        transition: all 0.3s ease;
-        box-shadow: 0 0 8px #06b6d4;
-    }
-
-    /* The active state that shows the blip */
-    nav a.active-link::before {
-        transform: translateY(-50%) scale(1);
-        opacity: 1;
-        animation: pulse-blip 2s infinite;
-    }
-
-    @keyframes pulse-blip {
-        0% {
-            box-shadow: 0 0 0 0 rgba(6, 182, 212, 0.7);
-        }
-
-        70% {
-            box-shadow: 0 0 0 10px rgba(6, 182, 212, 0);
-        }
-
-        100% {
-            box-shadow: 0 0 0 0 rgba(6, 182, 212, 0);
-        }
+    a {
+        text-decoration: underline;
+        color: black !important;
     }
 }
