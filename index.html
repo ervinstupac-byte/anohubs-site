@@ -8,30 +8,36 @@
     <meta name="description"
         content="Establishing the global standard for hydro integrity. Neutralizing dynamic risk through forensic engineering and algorithmic governance.">
 
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Roboto+Mono:wght@300;400;700&family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap"
         rel="stylesheet">
 
-
+    <!-- CSS -->
     <link rel="stylesheet" href="assets/css/preloader.css">
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 
+    <!-- Scripts (Head) -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
-                        mono: ['JetBrains Mono', 'monospace']
+                        mono: ['JetBrains Mono', 'monospace'],
+                        header: ['Oswald', 'sans-serif']
                     },
                     colors: {
                         'h-cyan': '#06b6d4',
                         'h-green': '#10b981',
                         'h-red': '#ef4444',
                         'h-yellow': '#facc15',
+                        'h-gold': '#FFB800',
                         'h-purple': '#8b5cf6',
                         'h-dark': '#020617',
                         'h-panel': '#0f172a',
@@ -54,18 +60,17 @@
     </script>
 
     <style>
-        /* === MOBILE FIX & GLOBAL STYLE === */
+        /* === GLOBAL STYLE === */
         html,
         body {
             background-color: #020617;
             color: #f8fafc;
             overflow-x: hidden;
-            /* FIX: Sprječava horizontalno micanje */
             width: 100%;
             position: relative;
         }
 
-        /* TEXTURE OVERLAY (Noise Effect) */
+        /* TEXTURE OVERLAY */
         .noise-overlay {
             position: fixed;
             top: 0;
@@ -78,44 +83,7 @@
             opacity: 0.4;
         }
 
-        /* Hero Video Overlay */
-        .video-overlay {
-            background: linear-gradient(180deg, rgba(2, 6, 23, 0.5) 0%, rgba(2, 6, 23, 0.8) 70%, #020617 100%);
-            position: absolute;
-            inset: 0;
-            z-index: 1;
-        }
-
-        /* Tech Grid Pattern */
-        .tech-grid {
-            background-image: linear-gradient(rgba(6, 182, 212, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(6, 182, 212, 0.05) 1px, transparent 1px);
-            background-size: 50px 50px;
-            position: absolute;
-            inset: 0;
-            z-index: 2;
-            pointer-events: none;
-            opacity: 0.3;
-        }
-
-        /* Glass Cards (Pro Version) */
-        .glass-card {
-            background: rgba(15, 23, 42, 0.4);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .glass-card:hover {
-            border-color: rgba(6, 182, 212, 0.5);
-            transform: translateY(-5px);
-            box-shadow: 0 0 30px rgba(6, 182, 212, 0.15);
-            background: rgba(15, 23, 42, 0.6);
-        }
-
-        /* Scroll Bar */
+        /* SCROLL BAR */
         ::-webkit-scrollbar {
             width: 6px;
         }
@@ -133,15 +101,7 @@
             background: #06b6d4;
         }
 
-        /* Section Stripe */
-        .section-stripe {
-            height: 1px;
-            background: linear-gradient(90deg, transparent, #1e293b, #334155, #1e293b, transparent);
-            margin: 0;
-            opacity: 0.5;
-        }
-
-        /* Dynamic Height for Mobile Hero (Fixes address bar jump) */
+        /* HERO UTILS */
         .h-dvh {
             height: 100vh;
             height: 100dvh;
@@ -153,11 +113,11 @@
     <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
     <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
     <link rel="manifest" href="assets/site.webmanifest">
-    <!-- Three.js for 3D Visualization -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 
-<body class="antialiased">
+<body class="antialiased" data-translation-source="home">
+
+    <!-- HANGAR LOADER -->
     <div id="hangar-loader" class="fixed inset-0 z-[10000] flex flex-col pointer-events-none">
         <div id="hangar-top"
             class="w-full h-1/2 bg-[#020617] border-b border-h-gold/30 flex items-end justify-center pb-1 relative transition-transform duration-1000 ease-[cubic-bezier(0.87,0,0.13,1)]">
@@ -175,6 +135,7 @@
             </div>
         </div>
     </div>
+
     <noscript>
         <div style="border: 1px solid #ef4444; padding: 20px;">
             <h1 style="color: #ef4444; font-size: 24px; margin-bottom: 10px;">SYSTEM ERROR: SCRIPT BLOCKED</h1>
@@ -183,59 +144,66 @@
         </div>
     </noscript>
 
-
     <div class="noise-overlay"></div>
 
+    <!-- HEADER PLACEHOLDER -->
     <div id="global-header"></div>
 
     <main class="relative z-10 w-full overflow-x-hidden">
 
-        <div class="fixed inset-0 z-[-1] bg-[#020617]"></div>
-        <div
-            class="fixed inset-0 z-0 bg-[url('assets/images/hero-turbine.jpg')] bg-cover bg-center opacity-20 mix-blend-overlay">
-        </div>
-        <div class="fixed inset-0 z-0 bg-gradient-to-b from-black/80 via-transparent to-black"></div>
-
+        <!-- === 1. HERO SECTION: ENGINEERING IMMUNITY === -->
         <section
             class="relative w-full min-h-screen flex flex-col justify-center items-start px-6 md:px-20 pt-32 pb-20 border-b border-white/5">
+            <!-- Hero Backdrops -->
+            <div class="fixed inset-0 z-[-1] bg-[#020617]"></div>
 
-            <div
-                class="inline-flex items-center gap-2 px-3 py-1 rounded border border-h-red/30 bg-h-red/10 text-h-red text-[10px] font-mono tracking-widest uppercase mb-6 animate-pulse">
-                <div class="w-1.5 h-1.5 rounded-full bg-h-red"></div>
-                <span data-i18n="hero.status">SYSTEM STATUS: 48% DYNAMIC RISK DETECTED</span>
+            <!-- Video Background -->
+            <div class="fixed inset-0 z-0 opacity-20 mix-blend-overlay">
+                <video autoplay loop muted playsinline poster="assets/images/protocol_eng_immunity.jpg"
+                    class="w-full h-full object-cover">
+                    <source src="assets/videos/Videoone.mp4" type="video/mp4">
+                </video>
             </div>
 
-            <h1 class="text-6xl md:text-8xl font-black text-white tracking-tighter leading-[0.9] mb-8">
-                <span class="block" data-i18n="hero.title_line1">ENGINEERING</span>
-                <span class="block text-transparent bg-clip-text bg-gradient-to-r from-h-cyan to-white"
-                    data-i18n="hero.title_line2">IMMUNITY</span>
-            </h1>
+            <div class="fixed inset-0 z-0 bg-gradient-to-b from-black/80 via-transparent to-black"></div>
 
-            <p class="max-w-xl text-lg text-slate-400 mb-12 leading-relaxed" data-i18n="hero.subtitle">
-                We don't just generate reports. We turn wrenches, align shafts, and eliminate the root causes of
-                hydro-mechanical failure.
-            </p>
+            <div class="relative z-10">
+                <div
+                    class="inline-flex items-center gap-2 px-3 py-1 rounded border border-h-red/30 bg-h-red/10 text-h-red text-[10px] font-mono tracking-widest uppercase mb-6 animate-pulse">
+                    <div class="w-1.5 h-1.5 rounded-full bg-h-red"></div>
+                    <span data-i18n="hero.status">SYSTEM STATUS: 48% DYNAMIC RISK DETECTED</span>
+                </div>
 
-            <div class="flex flex-col md:flex-row gap-4">
-                <a href="protocol.html"
-                    class="px-8 py-4 bg-h-cyan text-black font-bold uppercase tracking-widest hover:bg-white transition shadow-[0_0_20px_rgba(6,182,212,0.4)]">
-                    INITIALIZE PROTOCOL
-                </a>
-                <a href="contact.html"
-                    class="px-8 py-4 border border-white/20 text-white font-bold uppercase tracking-widest hover:bg-white/10 transition">
-                    SCHEDULE AUDIT
-                </a>
+                <h1 class="text-6xl md:text-8xl font-black text-white tracking-tighter leading-[0.9] mb-8">
+                    <span class="block" data-i18n="hero.title_line1">ENGINEERING</span>
+                    <span class="block text-transparent bg-clip-text bg-gradient-to-r from-h-cyan to-white"
+                        data-i18n="hero.title_line2">IMMUNITY</span>
+                </h1>
+
+                <p class="max-w-xl text-lg text-slate-400 mb-12 leading-relaxed" data-i18n="hero.subtitle">
+                    We don't just generate reports. We turn wrenches, align shafts, and eliminate the root causes of
+                    hydro-mechanical failure.
+                </p>
+
+                <div class="flex flex-col md:flex-row gap-4">
+                    <a href="protocol.html"
+                        class="px-8 py-4 bg-h-cyan text-black font-bold uppercase tracking-widest hover:bg-white transition shadow-[0_0_20px_rgba(6,182,212,0.4)]">
+                        INITIALIZE PROTOCOL
+                    </a>
+                    <a href="contact.html"
+                        class="px-8 py-4 border border-white/20 text-white font-bold uppercase tracking-widest hover:bg-white/10 transition">
+                        SCHEDULE AUDIT
+                    </a>
+                </div>
             </div>
         </section>
 
-        <section class="relative w-full bg-[#050505] py-32 px-6 md:px-20 border-t border-white/10">
-
+        <!-- === 2. CORE EXPERTISE: THE DATA MATRIX === -->
+        <section class="relative w-full bg-[#050505] py-32 px-6 md:px-20 border-t border-white/10 z-10">
             <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-
                 <div>
                     <span class="text-h-cyan font-mono text-xs tracking-widest uppercase mb-2 block"
-                        data-i18n="expertise.label">Core
-                        Expertise</span>
+                        data-i18n="expertise.label">Core Expertise</span>
                     <h2 class="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight"
                         data-i18n="expertise.title">
                         Turbine-Specific <br>
@@ -248,8 +216,9 @@
                     </p>
                     <a href="capabilities.html"
                         class="text-white border-b border-h-cyan pb-1 hover:text-h-cyan transition"
-                        data-i18n="expertise.link">VIEW CAPABILITIES
-                        MATRIX -></a>
+                        data-i18n="expertise.link">
+                        VIEW CAPABILITIES MATRIX ->
+                    </a>
                 </div>
 
                 <div class="relative bg-white/5 border border-white/10 p-8 rounded-lg backdrop-blur-sm">
@@ -275,29 +244,29 @@
             </div>
         </section>
 
+        <!-- === 3. THE PROBLEM MATRIX === -->
         <section class="relative z-20 py-24 px-6 md:px-20 bg-[#020617] border-t border-white/5">
             <div class="max-w-7xl mx-auto">
                 <div class="mb-12">
                     <span class="text-h-red font-mono text-xs tracking-widest uppercase mb-2 block"
-                        data-i18n="problems.label">Threat
-                        Identification</span>
+                        data-i18n="problems.label">Threat Identification</span>
                     <h2 class="text-3xl md:text-4xl font-bold text-white" data-i18n="problems.title">The Invisible Decay
                     </h2>
                 </div>
+
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Card 1 -->
                     <a href="insights/article-17-cultural-betrayal.html"
                         class="group relative block p-8 bg-white/5 border border-white/10 hover:border-h-red/50 transition-all duration-300 hover:-translate-y-2 overflow-hidden">
                         <div class="absolute inset-0 bg-h-red/5 opacity-0 group-hover:opacity-100 transition-opacity">
                         </div>
-
                         <div class="relative z-10">
                             <div class="flex justify-between items-start mb-6">
                                 <i data-lucide="zap-off" class="text-h-red w-8 h-8"></i>
                                 <span class="text-[10px] font-mono text-slate-500 group-hover:text-h-red">ERR_01</span>
                             </div>
                             <h3 class="text-xl font-bold text-white mb-2 group-hover:text-h-red transition"
-                                data-i18n="problems.card1_title">Hidden
-                                Erosion</h3>
+                                data-i18n="problems.card1_title">Hidden Erosion</h3>
                             <p class="text-sm text-slate-400 mb-6 leading-relaxed" data-i18n="problems.card1_text">
                                 Micro-arcing in bearings (EDM) goes undetected until seizure. Standard vibration
                                 analysis often misses high-frequency signs.
@@ -308,19 +277,19 @@
                             </div>
                         </div>
                     </a>
+
+                    <!-- Card 2 -->
                     <a href="insights/article-17-cultural-betrayal.html"
                         class="group relative block p-8 bg-white/5 border border-white/10 hover:border-h-gold/50 transition-all duration-300 hover:-translate-y-2 overflow-hidden">
                         <div class="absolute inset-0 bg-h-gold/5 opacity-0 group-hover:opacity-100 transition-opacity">
                         </div>
-
                         <div class="relative z-10">
                             <div class="flex justify-between items-start mb-6">
                                 <i data-lucide="activity" class="text-h-gold w-8 h-8"></i>
                                 <span class="text-[10px] font-mono text-slate-500 group-hover:text-h-gold">ERR_02</span>
                             </div>
                             <h3 class="text-xl font-bold text-white mb-2 group-hover:text-h-gold transition"
-                                data-i18n="problems.card2_title">Resonance
-                                Drift</h3>
+                                data-i18n="problems.card2_title">Resonance Drift</h3>
                             <p class="text-sm text-slate-400 mb-6 leading-relaxed" data-i18n="problems.card2_text">
                                 Structural frequencies shift over decades. What was stable in 1980 is now amplifying
                                 hydraulic pulsation.
@@ -332,19 +301,19 @@
                             </div>
                         </div>
                     </a>
+
+                    <!-- Card 3 -->
                     <a href="insights/article-17-cultural-betrayal.html"
                         class="group relative block p-8 bg-white/5 border border-white/10 hover:border-h-cyan/50 transition-all duration-300 hover:-translate-y-2 overflow-hidden">
                         <div class="absolute inset-0 bg-h-cyan/5 opacity-0 group-hover:opacity-100 transition-opacity">
                         </div>
-
                         <div class="relative z-10">
                             <div class="flex justify-between items-start mb-6">
                                 <i data-lucide="eye-off" class="text-h-cyan w-8 h-8"></i>
                                 <span class="text-[10px] font-mono text-slate-500 group-hover:text-h-cyan">ERR_03</span>
                             </div>
                             <h3 class="text-xl font-bold text-white mb-2 group-hover:text-h-cyan transition"
-                                data-i18n="problems.card3_title">Sensor
-                                Blindness</h3>
+                                data-i18n="problems.card3_title">Sensor Blindness</h3>
                             <p class="text-sm text-slate-400 mb-6 leading-relaxed" data-i18n="problems.card3_text">
                                 SCADA tells you the average. It lies about the peaks. We deploy transient monitoring to
                                 catch the milliseconds that kill.
@@ -358,11 +327,29 @@
                     </a>
                 </div>
             </div>
-            <div class="max-w-4xl mx-auto">
+        </section>
+
+        <!-- === 4. THE MANIFESTO (Red Section) === -->
+        <section class="relative py-32 px-6 md:px-20 bg-h-dark border-t border-h-red/20 overflow-hidden">
+            <!-- Background Image for Manifesto -->
+            <div class="absolute inset-0 z-0 opacity-10 mix-blend-luminosity">
+                <img src="assets/images/A17-Korporativno-Nasilje-Korozija.jpg" alt="Structural Decay"
+                    class="w-full h-full object-cover">
+            </div>
+
+            <!-- 3D Container -->
+            <div id="turbine-canvas-container"
+                class="absolute inset-0 z-0 opacity-40 pointer-events-none mix-blend-screen"></div>
+
+            <!-- Red Gradient Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-h-red/10 to-transparent z-0"></div>
+
+            <div class="relative z-10 max-w-4xl mx-auto text-center">
                 <div class="inline-block border border-h-red text-h-red px-4 py-1 text-xs font-bold tracking-widest mb-6 uppercase"
                     data-i18n="manifesto.label">
                     Critical Intelligence
                 </div>
+                <!-- data-i18n for h2 was manifest.title in previous file, checking keys. Keeping simple structure -->
                 <h2 class="text-5xl md:text-7xl font-black text-white mb-8 tracking-tighter"
                     data-i18n="manifesto.title">
                     THE CULTURAL <span class="text-h-red">BETRAYAL</span>
@@ -376,96 +363,20 @@
                 </a>
             </div>
         </section>
-
     </main>
 
+    <!-- FOOTER PLACEHOLDER -->
     <div id="global-footer"></div>
 
-    <script>
-        // Init Icons
-        lucide.createIcons();
+    <!-- === SCRIPTS === -->
 
-        // Navbar Scroll Effect (Glassmorphism on Scroll)
-        window.addEventListener('scroll', () => {
-            const nav = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                nav.classList.add('shadow-lg', 'bg-h-dark/95', 'py-0');
-                nav.classList.remove('bg-h-dark/90');
-            } else {
-                nav.classList.remove('shadow-lg', 'bg-h-dark/95', 'py-0');
-                nav.classList.add('bg-h-dark/90');
-            }
-        });
+    <!-- 1. Translations -->
+    <script src="assets/js/translations.js"></script>
 
-        // Mobile Menu Logic (Full Screen Overlay)
-        const menuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const mobileLinks = document.querySelectorAll('.mobile-link');
-
-        // Toggle Menu
-        menuBtn.addEventListener('click', () => {
-            const isClosed = mobileMenu.classList.contains('translate-x-full');
-            if (isClosed) {
-                mobileMenu.classList.remove('translate-x-full'); // Open
-                document.body.style.overflow = 'hidden'; // Stop scrolling
-            } else {
-                mobileMenu.classList.add('translate-x-full'); // Close
-                document.body.style.overflow = 'auto'; // Resume scrolling
-            }
-        });
-
-        // Close menu when a link is clicked
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('translate-x-full');
-                document.body.style.overflow = 'auto';
-            });
-        });
-
-        // Form Handling (Professional Feedback)
-        const form = document.getElementById('contactForm');
-        const msg = document.getElementById('formMessage');
-
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const btn = form.querySelector('button');
-            const originalText = btn.innerText;
-            btn.innerText = 'TRANSMITTING...';
-            btn.disabled = true;
-            btn.classList.add('opacity-70', 'cursor-not-allowed');
-
-            const formData = new FormData(form);
-
-            try {
-                const response = await fetch(form.action, {
-                    method: 'POST',
-                    body: formData,
-                    headers: { 'Accept': 'application/json' }
-                });
-
-                if (response.ok) {
-                    msg.innerText = "TRANSMISSION RECEIVED. STAND BY FOR CONTACT.";
-                    msg.className = "mt-4 text-center text-sm font-mono text-h-green animate-pulse";
-                    msg.classList.remove('hidden');
-                    form.reset();
-                } else {
-                    throw new Error('Network response was not ok');
-                }
-            } catch (error) {
-                msg.innerText = "TRANSMISSION ERROR. PLEASE RETRY.";
-                msg.className = "mt-4 text-center text-sm font-mono text-h-red";
-                msg.classList.remove('hidden');
-            } finally {
-                btn.innerText = originalText;
-                btn.disabled = false;
-                btn.classList.remove('opacity-70', 'cursor-not-allowed');
-            }
-        });
-    </script>
-
-    <!-- Component Loader -->
+    <!-- 2. Logic (Headers/Look) -->
     <script src="assets/js/layout-loader.js"></script>
 
+    <!-- 3. Hangar Breach Logic -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const topPanel = document.getElementById('hangar-top');
@@ -473,109 +384,112 @@
             const line = document.getElementById('hangar-line');
             const text = document.getElementById('hangar-text');
             const loader = document.getElementById('hangar-loader');
-            // 1. Simulate Loading Numbers
+
+            // Simulation
             let progress = 0;
             const interval = setInterval(() => {
                 progress += Math.floor(Math.random() * 15) + 5;
                 if (progress > 100) progress = 100;
 
                 text.innerText = progress + "%";
-                text.style.color = progress === 100 ? '#10b981' : 'white'; // Green at 100%
+                text.style.color = progress === 100 ? '#10b981' : 'white';
                 if (progress === 100) {
                     clearInterval(interval);
                     initiateBreach();
                 }
-            }, 150); // Fast ticks
-            // 2. The Breach Animation
+            }, 150);
+
+            // Animation
             function initiateBreach() {
                 setTimeout(() => {
                     text.innerText = "ACCESS GRANTED";
                     text.classList.add('animate-pulse');
 
-                    // Flash effect
                     line.style.boxShadow = "0 0 100px #10b981";
                     line.style.backgroundColor = "#10b981";
                     setTimeout(() => {
-                        // Open the doors
                         topPanel.style.transform = "translateY(-100%)";
                         btmPanel.style.transform = "translateY(100%)";
                         line.style.opacity = "0";
 
-                        // Fade out container to allow clicks underneath
                         setTimeout(() => {
                             loader.style.display = 'none';
                         }, 1000);
 
-                        // Trigger standard Anti-FOUC reveal if present
                         document.documentElement.classList.add('wf-active');
                     }, 800);
                 }, 300);
             }
         });
     </script>
+
+    <!-- 4. Three.js Turbine Logic -->
     <script>
-        // === 3D TURBINE VISUALIZATION ===
         document.addEventListener("DOMContentLoaded", () => {
             const container = document.getElementById('turbine-canvas-container');
             if (!container) return;
-            // 1. Setup Scene
+
+            // Setup
             const scene = new THREE.Scene();
-            // Add fog for depth fading
-            scene.fog = new THREE.FogExp2(0x000000, 0.03);
+            scene.fog = new THREE.FogExp2(0x020617, 0.05); // Dark fog matching bg
             const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
             camera.position.z = 5;
             camera.position.y = 1;
+
             const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
             renderer.setSize(container.clientWidth, container.clientHeight);
             container.appendChild(renderer.domElement);
-            // 2. Build Turbine Geometry (Procedural Group)
+
+            // Geometry
             const turbineGroup = new THREE.Group();
-            // A. The Runner (Hub)
+
+            // Hub
             const hubGeo = new THREE.CylinderGeometry(1, 1, 2, 16);
             const hubMat = new THREE.MeshBasicMaterial({ color: 0x333333, wireframe: true, transparent: true, opacity: 0.5 });
             const hub = new THREE.Mesh(hubGeo, hubMat);
             turbineGroup.add(hub);
-            // B. Blades (represented by angled planes)
-            const bladeGeo = new THREE.BoxGeometry(0.1, 1.8, 3);
-            const bladeMat = new THREE.MeshBasicMaterial({ color: 0x06b6d4, wireframe: true }); // Cyan color
 
+            // Blades
+            const bladeGeo = new THREE.BoxGeometry(0.1, 1.8, 3);
+            const bladeMat = new THREE.MeshBasicMaterial({ color: 0xef4444, wireframe: true }); // Red for manifesto
             for (let i = 0; i < 7; i++) {
                 const blade = new THREE.Mesh(bladeGeo, bladeMat);
                 const angle = (i / 7) * Math.PI * 2;
                 blade.position.x = Math.cos(angle) * 1.2;
                 blade.position.z = Math.sin(angle) * 1.2;
                 blade.rotation.y = -angle;
-                blade.rotation.x = 0.5; // Twist
+                blade.rotation.x = 0.5;
                 turbineGroup.add(blade);
             }
-            // C. Spiral Case (Torus rings)
+
+            // Spiral Case
             const caseGeo = new THREE.TorusGeometry(3.5, 0.1, 8, 50);
-            const caseMat = new THREE.MeshBasicMaterial({ color: 0xFFB800, wireframe: true, transparent: true, opacity: 0.3 }); // Gold color
+            const caseMat = new THREE.MeshBasicMaterial({ color: 0xef4444, wireframe: true, transparent: true, opacity: 0.2 });
             const spiral = new THREE.Mesh(caseGeo, caseMat);
             spiral.rotation.x = Math.PI / 2;
             turbineGroup.add(spiral);
+
             scene.add(turbineGroup);
-            // 3. Animation Loop
+
+            // Anim
             let mouseX = 0;
             let mouseY = 0;
-            // Interactive Tilt
             container.addEventListener('mousemove', (e) => {
                 const rect = container.getBoundingClientRect();
                 mouseX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
                 mouseY = -((e.clientY - rect.top) / rect.height) * 2 + 1;
             });
+
             function animate() {
                 requestAnimationFrame(animate);
-                // Constant Rotation
                 turbineGroup.rotation.y -= 0.005;
-
-                // Mouse Interaction (Lerp for smoothness)
                 turbineGroup.rotation.x += (mouseY * 0.5 - turbineGroup.rotation.x) * 0.05;
                 turbineGroup.rotation.z += (-mouseX * 0.5 - turbineGroup.rotation.z) * 0.05;
                 renderer.render(scene, camera);
             }
             animate();
-            // Handle Resize
+
+            // Resize
             window.addEventListener('resize', () => {
                 if (!container) return;
                 camera.aspect = container.clientWidth / container.clientHeight;
