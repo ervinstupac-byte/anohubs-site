@@ -81,7 +81,7 @@ const imageFilenames = [
 
 // Priprema galerije (putanja do slika)
 const galleryImages = imageFilenames.map(filename => ({
-    src: 'slike/gallery/' + filename, 
+    src: 'assets/images/gallery/' + filename, 
     caption: '' // Prazan opis
 }));
  

@@ -14,10 +14,10 @@ function initFavicons() {
     const rootPath = "/"; // Koristite relativnu putanju
 
     const faviconLinks = [
-        { rel: "shortcut icon", href: rootPath + "favicon.ico", type: "image/x-icon" },
-        { rel: "icon", type: "image/png", sizes: "32x32", href: rootPath + "favicon-32x32.png" },
-        { rel: "icon", type: "image/png", sizes: "16x16", href: rootPath + "favicon-16x16.png" },
-        { rel: "apple-touch-icon", sizes: "180x180", href: rootPath + "apple-touch-icon.png" }
+        { rel: "shortcut icon", href: rootPath + "../assets/images/favicon.ico", type: "image/x-icon" },
+        { rel: "icon", type: "image/png", sizes: "32x32", href: rootPath + "../assets/images/favicon-32x32.png" },
+        { rel: "icon", type: "image/png", sizes: "16x16", href: rootPath + "../assets/images/favicon-16x16.png" },
+        { rel: "apple-touch-icon", sizes: "180x180", href: rootPath + "../assets/images/apple-touch-icon.png" }
     ];
 
     faviconLinks.forEach(link => {
