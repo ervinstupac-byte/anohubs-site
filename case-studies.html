@@ -330,31 +330,35 @@
                 const result = isEn ? (mission.result_en || mission.result) : mission.result;
 
                 // Construct Link
-                // Filename Mapping
-                // Filename Mapping (Explicit String Keys)
-                const caseFilenameMap = {
-                    '1': 'cs-compliance-shield.html',
-                    '2': 'cs-digital-protocol-roi.html',
-                    '3': 'cs-fish-passage-optimization.html',
-                    '4': 'cs-forensic-ndt-fatigue.html',
-                    '5': 'cs-francis-misalignment.html',
-                    '6': 'cs-hydraulic-hammer-mitigation.html',
-                    '7': 'cs-kaplan-optimization.html',
-                    '8': 'cs-lcc-procurement-audit.html',
-                    '9': 'cs-me-synergy-erosion.html',
-                    '10': 'cs-pelton-abrasion.html',
-                    '11': 'cs-predictive-maintenance-roi.html',
-                    '12': 'cs-shaft-system-stability.html'
+                // ROBUST LINKING STRATEGY
+                // Instead of relying on specific IDs (which might shift), we map based on unique keywords in the English Title.
+                const getFilename = (m) => {
+                    const t = (m.title_en || m.title || '').toLowerCase();
+                    if (t.includes('compliance')) return 'cs-compliance-shield.html';
+                    if (t.includes('digital protocol')) return 'cs-digital-protocol-roi.html';
+                    if (t.includes('fish') || t.includes('eco-compliance')) return 'cs-fish-passage-optimization.html';
+                    if (t.includes('forensic') || t.includes('fatigue')) return 'cs-forensic-ndt-fatigue.html';
+                    if (t.includes('francis') && (t.includes('misalignment') || t.includes('alignment') || t.includes('disbalans'))) return 'cs-francis-misalignment.html';
+                    if (t.includes('hammer') || t.includes('hydraulic defense')) return 'cs-hydraulic-hammer-mitigation.html';
+                    if (t.includes('kaplan') && (t.includes('calibration') || t.includes('efficiency') || t.includes('optimizacija'))) return 'cs-kaplan-optimization.html';
+                    if (t.includes('procurment') || t.includes('lcc') || t.includes('procurement') || t.includes('nabavke')) return 'cs-lcc-procurement-audit.html';
+                    if (t.includes('electro-erosion') || t.includes('synergy') || t.includes('erozija')) return 'cs-me-synergy-erosion.html';
+                    if (t.includes('pelton') && (t.includes('abrasion') || t.includes('abrazija'))) return 'cs-pelton-abrasion.html';
+                    if (t.includes('predictive') || t.includes('certainty') || t.includes('prediktivni')) return 'cs-predictive-maintenance-roi.html';
+                    if (t.includes('shaft') || t.includes('stability') || t.includes('osovina')) return 'cs-shaft-system-stability.html';
+
+                    // Fallback to ID map if strictly needed, or default
+                    const idMap = {
+                        '1': 'cs-compliance-shield.html', '2': 'cs-digital-protocol-roi.html', '3': 'cs-fish-passage-optimization.html',
+                        '4': 'cs-forensic-ndt-fatigue.html', '5': 'cs-francis-misalignment.html', '6': 'cs-hydraulic-hammer-mitigation.html',
+                        '7': 'cs-kaplan-optimization.html', '8': 'cs-lcc-procurement-audit.html', '9': 'cs-me-synergy-erosion.html',
+                        '10': 'cs-pelton-abrasion.html', '11': 'cs-predictive-maintenance-roi.html', '12': 'cs-shaft-system-stability.html'
+                    };
+                    return idMap[String(m.case_id)] || '#';
                 };
 
-                // Robust ID matching (Handle Number or String from DB)
-                const safeId = String(mission.case_id);
-                const filename = caseFilenameMap[safeId];
-
-                // Fallback to # but log warning if missing
-                if (!filename) console.warn(`Missing file for Case ID: ${mission.case_id}`);
-
-                const link = filename ? `case-studies/${filename}` : '#';
+                const filename = getFilename(mission);
+                const link = filename !== '#' ? `case-studies/${filename}` : '#';
 
                 const colorClass = typeColors[mission.turbine_type] || 'text-slate-400';
 
