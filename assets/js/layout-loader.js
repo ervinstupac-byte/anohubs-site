@@ -240,27 +240,28 @@ async function initGridTicker() {
 }
 
 // function to handle the Smart Header behavior
-// function to handle the Smart Header behavior
 function initSmartHeader() {
     const header = document.getElementById('global-header');
     if (!header) return;
 
-    // If the header element doesn't have transform transition classes, add them
-    if (!header.classList.contains('transition-transform')) {
-        header.classList.add('transition-transform', 'duration-500', 'ease-in-out', 'transform');
-    }
+    // Ensure transition properties are active (using Tailwind utility classes for the transition itself is fine)
+    header.classList.add('transition-transform', 'duration-500', 'ease-in-out');
+    // Ensure it has a z-index and fixed or sticky positioning (usually handled in CSS/HTML, but let's be safe)
+    header.classList.add('z-50');
 
-    const hiddenClass = '-translate-y-[calc(100%-4px)]'; // Keeps the gold line visible
     let closeTimer;
-    let lastScrollY = window.scrollY; // Track scroll position
+    let lastScrollY = window.scrollY;
 
-    // Helper functions
-    const hideHeader = () => header.classList.add(hiddenClass);
-    const showHeader = () => header.classList.remove(hiddenClass);
+    // Helper functions - Using inline styles for guaranteed behavior
+    const hideHeader = () => {
+        header.style.transform = 'translateY(calc(-100% + 4px))'; // Pull up, leave 4px visible
+    };
+    const showHeader = () => {
+        header.style.transform = 'translateY(0)';
+    };
 
-    // 1. Initial Timer: Hide after 6 seconds (Global behavior)
+    // 1. Initial Timer: Hide after 6 seconds
     setTimeout(() => {
-        // Only hide if not hovered
         if (!header.matches(':hover')) {
             hideHeader();
         }
@@ -273,22 +274,21 @@ function initSmartHeader() {
     });
 
     header.addEventListener('mouseleave', () => {
-        // Delay hiding to allow re-entry
         closeTimer = setTimeout(() => {
             hideHeader();
-        }, 1500); // reduced from 3000 to feel more responsive but solid
+        }, 1500);
     });
 
-    // 3. Scroll Interaction (The "Subtle Reaction" Logic)
+    // 3. Scroll Interaction
     window.addEventListener('scroll', () => {
         const currentScrollY = window.scrollY;
 
-        // If scrolling UP, show header
+        // Scroll Up -> Show
         if (currentScrollY < lastScrollY && currentScrollY > 0) {
-            clearTimeout(closeTimer); // Cancel any pending hide
+            clearTimeout(closeTimer);
             showHeader();
         }
-        // If scrolling DOWN, hide header immediately
+        // Scroll Down -> Hide
         else if (currentScrollY > lastScrollY && currentScrollY > 50) {
             hideHeader();
         }
@@ -296,7 +296,7 @@ function initSmartHeader() {
         lastScrollY = currentScrollY;
     });
 
-    // 4. Mobile Touch logic
+    // 4. Touch
     header.addEventListener('touchstart', () => {
         clearTimeout(closeTimer);
         showHeader();
