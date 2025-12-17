@@ -240,6 +240,7 @@ async function initGridTicker() {
 }
 
 // function to handle the Smart Header behavior
+// function to handle the Smart Header behavior
 function initSmartHeader() {
     const header = document.getElementById('global-header');
     if (!header) return;
@@ -251,6 +252,7 @@ function initSmartHeader() {
 
     const hiddenClass = '-translate-y-[calc(100%-4px)]'; // Keeps the gold line visible
     let closeTimer;
+    let lastScrollY = window.scrollY; // Track scroll position
 
     // Helper functions
     const hideHeader = () => header.classList.add(hiddenClass);
@@ -258,7 +260,10 @@ function initSmartHeader() {
 
     // 1. Initial Timer: Hide after 6 seconds (Global behavior)
     setTimeout(() => {
-        hideHeader();
+        // Only hide if not hovered
+        if (!header.matches(':hover')) {
+            hideHeader();
+        }
     }, 6000);
 
     // 2. Mouse Interaction
@@ -268,12 +273,30 @@ function initSmartHeader() {
     });
 
     header.addEventListener('mouseleave', () => {
+        // Delay hiding to allow re-entry
         closeTimer = setTimeout(() => {
             hideHeader();
-        }, 3000);
+        }, 1500); // reduced from 3000 to feel more responsive but solid
     });
 
-    // 3. (Optional) Mobile Touch logic - tap to open
+    // 3. Scroll Interaction (The "Subtle Reaction" Logic)
+    window.addEventListener('scroll', () => {
+        const currentScrollY = window.scrollY;
+
+        // If scrolling UP, show header
+        if (currentScrollY < lastScrollY && currentScrollY > 0) {
+            clearTimeout(closeTimer); // Cancel any pending hide
+            showHeader();
+        }
+        // If scrolling DOWN, hide header immediately
+        else if (currentScrollY > lastScrollY && currentScrollY > 50) {
+            hideHeader();
+        }
+
+        lastScrollY = currentScrollY;
+    });
+
+    // 4. Mobile Touch logic
     header.addEventListener('touchstart', () => {
         clearTimeout(closeTimer);
         showHeader();
