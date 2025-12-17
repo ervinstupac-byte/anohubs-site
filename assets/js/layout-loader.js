@@ -260,12 +260,12 @@ function initSmartHeader() {
         header.style.transform = 'translateY(0)';
     };
 
-    // 1. Initial Timer: Hide after 6 seconds
+    // 1. Initial Timer: Hide after 3 seconds
     setTimeout(() => {
         if (!header.matches(':hover')) {
             hideHeader();
         }
-    }, 6000);
+    }, 3000);
 
     // 2. Mouse Interaction
     header.addEventListener('mouseenter', () => {
@@ -276,7 +276,7 @@ function initSmartHeader() {
     header.addEventListener('mouseleave', () => {
         closeTimer = setTimeout(() => {
             hideHeader();
-        }, 1500);
+        }, 3000);
     });
 
     // 3. Scroll Interaction
