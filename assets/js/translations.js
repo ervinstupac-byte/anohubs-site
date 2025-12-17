@@ -6,6 +6,7 @@ const i18n = {
         console.log(`[i18n] Initializing language: ${this.currentLang}`);
         await this.loadTranslations(this.currentLang);
         this.updatePage();
+        window.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang: this.currentLang } }));
     },
     // 2. Load JSON
     async loadTranslations(lang) {
@@ -76,6 +77,7 @@ const i18n = {
 
 // Expose globally
 window.changeLanguage = (lang) => i18n.setLanguage(lang);
+window.getTrans = (key) => i18n.getNestedValue(i18n.translations, key);
 
 // Auto-start
 document.addEventListener('DOMContentLoaded', () => i18n.init());
