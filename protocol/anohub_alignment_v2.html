@@ -1,265 +1,361 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AnoHub Protocol | Secure Document</title>
+    <title>AnoHub Protocol | Precision Alignment</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Roboto+Mono:wght@300;400&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Roboto+Mono:wght@300;400&display=swap"
+        rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        tailwind.config = { theme: { extend: { colors: { 'h-gold': '#FFB800', 'h-cyan': '#06b6d4', 'h-red': '#ef4444' } } } }
+        tailwind.config = { theme: { extend: { colors: { 'h-gold': '#FFB800', 'h-cyan': '#06b6d4', 'h-red': '#ef4444', 'h-green': '#10b981' }, fontFamily: { divine: ['Oswald', 'sans-serif'], mono: ['Roboto Mono', 'monospace'] } } } }
     </script>
     <style>
-        /* Print-like styles for the content */
-        .protocol-content table { width: 100%; border-collapse: collapse; margin-bottom: 1rem; border: 1px solid #ddd; }
-        .protocol-content th, .protocol-content td { border: 1px solid #ccc; padding: 8px; font-family: 'Roboto Mono', monospace; font-size: 0.85rem; }
-        .protocol-content th { background-color: #f3f4f6; font-weight: bold; }
-        .protocol-content h1, .protocol-content h2 { font-family: 'Oswald', sans-serif; margin-bottom: 10px; }
+        body {
+            background-color: #020617;
+            color: #cbd5e1;
+        }
+
+        .scada-panel {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
+        }
+
+        .field {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #FFB800;
+            font-family: 'Roboto Mono', monospace;
+            padding: 4px 8px;
+            width: 100%;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .field:focus {
+            border-color: #06b6d4;
+            box-shadow: 0 0 10px rgba(6, 182, 212, 0.2);
+        }
     </style>
 </head>
-<body class="bg-[#0f172a] text-slate-300 overflow-x-hidden">
-    <div id="protocol-header-placeholder"></div>
-    <main class="relative w-full md:w-[210mm] min-h-[297mm] mx-auto my-12 bg-white text-black shadow-[0_0_50px_rgba(0,0,0,0.5)] p-[15mm] md:p-[20mm] overflow-hidden">
-    
-        <div class="absolute top-0 right-0 p-6 opacity-30 pointer-events-none">
-            <span class="font-mono text-xs uppercase tracking-[0.2em] border border-black px-2 py-1">OFFICIAL RECORD</span>
-        </div>
-        <div class="protocol-content">
-            <div class="fixed top-10 left-10 w-64 no-print z-50">
-        <div class="bg-tech-panel border border-tech-border p-6 shadow-screen">
-            <h1 class="text-tech-gold font-header text-2xl tracking-wide mb-1">ANOHUB <span class="text-white text-sm font-sans tracking-normal opacity-50">CONSOLE</span></h1>
-            <div class="h-0.5 w-full bg-tech-gold mb-6"></div>
-            
-            <div class="space-y-4">
-                <button onclick="window.print()" class="w-full bg-white text-black font-bold py-3 px-4 text-xs font-mono uppercase hover:bg-tech-gold transition flex items-center justify-center gap-2">
-                    <i data-lucide="printer" class="w-4 h-4"></i> Generate PDF
-                </button>
-                <a href="../protocol.html" class="block w-full border border-gray-700 text-gray-400 text-center py-2 text-xs font-mono hover:text-white hover:border-white transition">
-                    &lt; RETURN TO INDEX
-                </a>
-            </div>
 
-            <div class="mt-8 pt-4 border-t border-gray-800">
-                <div class="flex justify-between items-center text-[10px] font-mono text-gray-500 mb-2">
-                    <span>LIVE STATUS</span>
-                    <span id="hud-status" class="text-tech-gold">CALCULATING</span>
-                </div>
-                <div class="w-full bg-gray-800 h-1">
-                    <div id="hud-bar" class="h-full bg-tech-gold w-0 transition-all duration-300"></div>
-                </div>
-            </div>
-        </div>
+<body class="overflow-x-hidden">
+    <div id="protocol-header-placeholder"></div>
+    <div class="divine-grid fixed inset-0 z-[-1] opacity-20 pointer-events-none"
+        style="background-image: linear-gradient(rgba(6, 182, 212, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(6, 182, 212, 0.05) 1px, transparent 1px); background-size: 40px 40px;">
     </div>
 
-    <div class="flex justify-center pb-20">
-        
-        <div id="doc-wrapper" class="iso-sheet status-draft">
-            <div class="sheet-overlay"></div>
+    <header
+        class="fixed w-full z-50 border-b border-white/10 bg-black/90 backdrop-blur-md h-16 flex items-center justify-between px-6">
+        <div class="flex items-center gap-3">
+            <a href="../index.html" class="flex items-center gap-3 group">
+                <div
+                    class="w-8 h-8 border border-white/30 flex items-center justify-center text-white font-divine group-hover:border-h-cyan group-hover:text-h-cyan transition bg-black">
+                    A</div>
+                <div class="leading-tight">
+                    <h1 class="font-divine text-lg text-white tracking-[0.1em] group-hover:text-h-cyan transition">
+                        AnoHUB</h1>
+                    <p class="text-[9px] font-mono text-slate-500 tracking-widest uppercase">Module 05: Alignment</p>
+                </div>
+            </a>
+        </div>
+        <div class="flex items-center gap-6 text-xs font-mono">
+            <a href="../protocol.html"
+                class="flex items-center gap-2 text-slate-400 hover:text-h-cyan transition border border-transparent hover:border-h-cyan/30 px-3 py-1 rounded">
+                <svg data-lucide="arrow-left" class="w-3 h-3"></svg> BACK TO COMMAND
+            </a>
+            <div class="hidden md:flex items-center gap-2 text-h-cyan">
+                <div class="w-1.5 h-1.5 bg-h-cyan rounded-full animate-pulse-fast"></div>
+                LASER MATRIX ACTIVE
+            </div>
+        </div>
+    </header>
 
-            <header class="p-10 border-b-2 border-black grid grid-cols-12 gap-8 items-end relative z-10">
-                <div class="col-span-2">
-                    <svg viewBox="0 0 100 100" class="w-full h-auto border border-black p-1">
-                        <rect width="100" height="100" fill="white"/>
-                        <path d="M10 10h30v30h-30zM60 10h30v30h-30zM10 60h30v30h-30z" fill="black"/>
-                        <rect x="45" y="45" width="10" height="10" fill="black"/>
-                        <rect x="55" y="15" width="10" height="10" fill="black"/>
-                        <rect x="20" y="20" width="10" height="10" fill="black"/>
-                        <rect x="70" y="20" width="10" height="10" fill="black"/>
-                        <rect x="20" y="70" width="10" height="10" fill="black"/>
-                    </svg>
-                    <div class="text-[8px] font-mono text-center mt-1">SCAN FOR DIGITAL TWIN</div>
+    <div class="pt-24 pb-12 px-4 max-w-7xl mx-auto grid lg:grid-cols-12 gap-8 relative z-10">
+
+        <!-- SIDEBAR -->
+        <aside class="hidden lg:block lg:col-span-3">
+            <div class="sticky top-24 space-y-6">
+
+                <div class="scada-panel p-4 border-l-2 border-l-h-cyan">
+                    <h3 class="text-slate-500 font-mono text-[10px] font-bold uppercase tracking-widest mb-3">System
+                        Network</h3>
+                    <nav class="space-y-1 font-mono text-xs">
+                        <a href="anohub_protocol_v2.html"
+                            class="block px-3 py-2 text-slate-400 hover:text-h-cyan hover:bg-white/5 rounded transition">01.
+                            LCC Veto</a>
+                        <a href="anohub_methodology_v2.html"
+                            class="block px-3 py-2 text-slate-400 hover:text-h-cyan hover:bg-white/5 rounded transition">02.
+                            NDT & Metrology</a>
+                        <a href="anohub_organization_v2.html"
+                            class="block px-3 py-2 text-slate-400 hover:text-h-cyan hover:bg-white/5 rounded transition">03.
+                            Org. Intelligence</a>
+                        <a href="anohub_synergy_v2.html"
+                            class="block px-3 py-2 text-slate-400 hover:text-h-cyan hover:bg-white/5 rounded transition">04.
+                            M-E Synergy</a>
+                        <div
+                            class="block px-3 py-2 text-black bg-h-cyan font-bold rounded shadow-[0_0_15px_rgba(6,182,212,0.4)]">
+                            05. Precision Align.</div>
+                    </nav>
                 </div>
-                <div class="col-span-6">
-                    <h1 class="text-4xl font-header font-bold text-black leading-none uppercase">AnoHUB Engineering</h1>
-                    <p class="text-xs font-mono text-gray-600 tracking-[0.2em] mt-1">HYDRO-MECHANICAL INTEGRITY DIVISION</p>
+
+                <div class="scada-panel p-4">
+                    <h3 class="text-h-cyan font-mono text-[10px] font-bold uppercase tracking-widest mb-3">Module
+                        Sections</h3>
+                    <nav class="space-y-1">
+                        <a href="#identification"
+                            class="flex items-center gap-3 px-3 py-2 text-sm text-white bg-white/5 border-l-2 border-h-cyan transition"><span
+                                class="font-mono text-h-cyan opacity-50">01</span> Project ID</a>
+                        <a href="#alignment"
+                            class="flex items-center gap-3 px-3 py-2 text-sm text-slate-400 hover:text-white hover:bg-white/5 border-l-2 border-transparent hover:border-slate-500 transition"><span
+                                class="font-mono text-slate-600">02</span> Shaft Analysis</a>
+                        <a href="#thrust"
+                            class="flex items-center gap-3 px-3 py-2 text-sm text-slate-400 hover:text-white hover:bg-white/5 border-l-2 border-transparent hover:border-slate-500 transition"><span
+                                class="font-mono text-slate-600">03</span> Thrust Equalization</a>
+                    </nav>
                 </div>
-                <div class="col-span-4 text-right">
-                    <div class="border-2 border-black p-2 inline-block text-center min-w-[140px]">
-                        <div class="text-[9px] font-bold uppercase text-gray-500">PROTOCOL ID</div>
-                        <input type="text" value="AH-ALIGN-05" class="text-lg font-mono font-bold text-center w-full bg-transparent border-none outline-none">
+
+                <div class="scada-panel p-4 border-t-2 border-t-h-cyan">
+                    <h4 class="text-h-cyan font-mono text-[10px] font-bold uppercase mb-2">Unit Status</h4>
+                    <div class="space-y-3 text-xs font-mono text-slate-400">
+                        <div class="flex justify-between items-center border-b border-slate-700 pb-1"><span>Vibration
+                                (X)</span> <span class="text-white">45 µm</span></div>
+                        <div class="flex justify-between items-center border-b border-slate-700 pb-1"><span>Vibration
+                                (Y)</span> <span class="text-white">52 µm</span></div>
+                        <div class="flex justify-between items-center"><span>Air Gap</span> <span
+                                class="text-h-green">BALANCED</span></div>
                     </div>
                 </div>
-            </header>
+            </div>
+        </aside>
 
-            <main class="p-10 relative z-10">
-                
-                <section class="mb-8">
-                    <h3 class="text-xs font-bold uppercase border-b border-black mb-2 flex justify-between">
-                        <span>01. PROJECT IDENTIFICATION</span>
-                        <span class="font-mono text-gray-500">ISO 10816-5</span>
-                    </h3>
-                    <div class="grid grid-cols-4 gap-4 border-b border-gray-200 pb-4">
+        <!-- MAIN CONTENT -->
+        <main class="lg:col-span-9 space-y-12">
+
+            <!-- HEADER -->
+            <section id="identification" class="relative scada-panel p-8 overflow-hidden group">
+                <div class="absolute top-0 right-0 p-4 opacity-10">
+                    <svg viewBox="0 0 100 100" class="w-32 h-32 text-h-cyan fill-current">
+                        <path d="M50 0L100 50L50 100L0 50Z" />
+                    </svg>
+                </div>
+                <div class="relative z-10">
+                    <div class="flex gap-2 mb-4">
+                        <span
+                            class="bg-h-cyan/10 text-h-cyan px-2 py-0.5 text-[10px] font-mono font-bold border border-h-cyan/30">ISO
+                            10816-5</span>
+                        <span class="text-slate-500 font-mono text-[10px]">DOC-ALIGN-05 | REV 4.0</span>
+                    </div>
+                    <h1 class="text-4xl font-divine text-white mb-6 tracking-tight">
+                        Precision Shaft <br /><span
+                            class="text-transparent bg-clip-text bg-gradient-to-r from-h-cyan to-blue-400">Alignment
+                            Protocol</span>
+                    </h1>
+
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 border-t border-slate-700 pt-6">
                         <div>
-                            <label class="text-[9px] uppercase font-bold text-gray-400">Plant / Facility</label>
+                            <label class="text-[9px] uppercase font-bold text-slate-500">Plant / Facility</label>
                             <input type="text" class="field font-bold" value="HE ORLJANI">
                         </div>
                         <div>
-                            <label class="text-[9px] uppercase font-bold text-gray-400">Unit ID</label>
+                            <label class="text-[9px] uppercase font-bold text-slate-500">Unit ID</label>
                             <input type="text" class="field font-bold" value="G1 - KAPLAN">
                         </div>
                         <div>
-                            <label class="text-[9px] uppercase font-bold text-gray-400">Job Order</label>
+                            <label class="text-[9px] uppercase font-bold text-slate-500">Job Order</label>
                             <input type="text" class="field" value="WO-25-884">
                         </div>
                         <div>
-                            <label class="text-[9px] uppercase font-bold text-gray-400">Date</label>
-                            <input type="date" id="date-now" class="field">
-                        </div>
-                    </div>
-                </section>
-
-                <section class="mb-8">
-                    <div class="flex justify-between items-end mb-2">
-                        <h3 class="text-xs font-bold uppercase border-b border-black w-full pb-1">02. SHAFT ALIGNMENT ANALYSIS (RIM/FACE)</h3>
-                    </div>
-
-                    <div class="grid grid-cols-12 gap-6 h-[320px]">
-                        
-                        <div class="col-span-4 flex flex-col justify-between bg-gray-50 p-4 border border-gray-200">
-                            
-                            <div>
-                                <div class="text-[10px] font-bold bg-black text-white px-2 py-1 mb-3 inline-block">TARGETS (Thermal)</div>
-                                <div class="grid grid-cols-2 gap-4 mb-4">
-                                    <div>
-                                        <label class="text-[9px] text-gray-500 block">V-Offset (mm)</label>
-                                        <input type="number" id="t-off" class="field field-num text-blue-800" value="0.15">
-                                    </div>
-                                    <div>
-                                        <label class="text-[9px] text-gray-500 block">Slope (mm/m)</label>
-                                        <input type="number" id="t-slope" class="field field-num text-blue-800" value="0.02">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div>
-                                <div class="text-[10px] font-bold bg-gray-300 text-black px-2 py-1 mb-3 inline-block">CORRECTIONS (Shims)</div>
-                                <div class="space-y-3">
-                                    <div class="flex justify-between items-center">
-                                        <label class="text-[10px] font-mono font-bold">FRONT FOOT</label>
-                                        <input type="number" id="s-front" class="field field-num w-20" value="0.15" step="0.01">
-                                    </div>
-                                    <input type="range" id="r-front" class="w-full h-1 bg-gray-300 appearance-none no-print" min="-1" max="1" step="0.01" value="0.15">
-                                    
-                                    <div class="flex justify-between items-center">
-                                        <label class="text-[10px] font-mono font-bold">BACK FOOT</label>
-                                        <input type="number" id="s-back" class="field field-num w-20" value="0.25" step="0.01">
-                                    </div>
-                                    <input type="range" id="r-back" class="w-full h-1 bg-gray-300 appearance-none no-print" min="-1" max="1" step="0.01" value="0.25">
-                                </div>
-                            </div>
-
-                            <div class="mt-4 pt-4 border-t border-gray-300">
-                                <div class="flex justify-between text-xs font-bold mb-1">
-                                    <span>FINAL OFFSET:</span>
-                                    <span id="res-off" class="font-mono">0.00</span>
-                                </div>
-                                <div class="flex justify-between text-xs font-bold">
-                                    <span>FINAL ANGLE:</span>
-                                    <span id="res-ang" class="font-mono">0.00</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-span-8 border border-black graph-bg relative overflow-hidden">
-                            <div class="absolute top-2 left-2 text-[9px] font-mono text-gray-400">VERTICAL PLANE PLOT [1:100 Scale]</div>
-                            <div class="absolute bottom-2 right-2 text-[9px] font-mono text-gray-400">X-AXIS: SHAFT LENGTH (mm)</div>
-                            
-                            <div class="absolute top-1/2 left-0 w-full h-[40px] -mt-[20px] bg-green-100/30 border-y border-green-500/20 pointer-events-none print:border-green-500"></div>
-                            
-                            <svg viewBox="0 0 400 200" class="w-full h-full absolute inset-0" preserveAspectRatio="none">
-                                <line x1="0" y1="100" x2="400" y2="100" stroke="#999" stroke-dasharray="2 2" stroke-width="1" />
-                                
-                                <path d="M50 80 L100 80 L100 120 L50 120 Z" fill="none" stroke="#333" stroke-width="1" opacity="0.5"/>
-                                <path d="M250 70 L350 70 L350 130 L250 130 Z" fill="none" stroke="#333" stroke-width="1" opacity="0.5"/>
-                                
-                                <line id="plot-line" x1="0" y1="100" x2="400" y2="100" stroke="black" stroke-width="2" />
-                                
-                                <circle id="plot-point" cx="200" cy="100" r="3" fill="black" />
-                                
-                                <line x1="200" y1="90" x2="200" y2="110" stroke="red" stroke-width="1" opacity="0.3"/>
-                            </svg>
-
-                            <div id="plot-stamp" class="absolute top-4 right-4 border-2 border-black px-3 py-1 font-header text-lg font-bold transform rotate-[-10deg] opacity-0 transition-opacity">
-                                PASSED
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <section class="mb-8">
-                    <h3 class="text-xs font-bold uppercase border-b border-black mb-4">03. THRUST BEARING EQUALIZATION</h3>
-                    
-                    <div class="grid grid-cols-12 gap-4">
-                        <div class="col-span-8">
-                            <table class="w-full text-[10px] font-mono border-collapse">
-                                <thead>
-                                    <tr class="bg-gray-100">
-                                        <th class="border border-gray-300 p-2 text-left">PAD ID</th>
-                                        <th class="border border-gray-300 p-2 text-center">PRESSURE (MPa)</th>
-                                        <th class="border border-gray-300 p-2 text-center">DEVIATION (%)</th>
-                                        <th class="border border-gray-300 p-2 text-center">STATUS</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="thrust-rows">
-                                    </tbody>
-                            </table>
-                        </div>
-                        <div class="col-span-4 bg-gray-50 border border-gray-200 p-4 flex flex-col justify-center items-center">
-                            <div class="text-[9px] uppercase font-bold text-gray-500 mb-2">MAX DEVIATION</div>
-                            <div id="thrust-max-dev" class="text-3xl font-mono font-bold">0.0%</div>
-                            <div id="thrust-status-text" class="text-xs font-bold mt-2 px-2 py-1 text-white bg-gray-400">CALCULATING</div>
-                        </div>
-                    </div>
-                </section>
-
-                <section class="mb-8">
-                    <h3 class="text-xs font-bold uppercase mb-2">04. ENGINEER'S REMARKS</h3>
-                    <textarea class="w-full h-20 border border-gray-300 p-2 text-xs font-mono resize-none bg-transparent" placeholder="Enter comments here..."></textarea>
-                </section>
-
-            </main>
-
-            <footer class="p-10 pt-0 relative z-10">
-                <div class="grid grid-cols-2 gap-20 border-t-2 border-black pt-8">
-                    <div>
-                        <div class="h-10 border-b border-black mb-1 flex items-end">
-                            <input type="text" class="w-full text-sm font-header uppercase bg-transparent outline-none" placeholder="SIGNATURE (AnoHUB)">
-                        </div>
-                        <div class="flex justify-between text-[8px] font-mono uppercase text-gray-500">
-                            <span>LEAD ENGINEER</span>
-                            <span>DATE: <span id="footer-date"></span></span>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="h-10 border-b border-black mb-1 flex items-end">
-                            <input type="text" class="w-full text-sm font-header uppercase bg-transparent outline-none" placeholder="SIGNATURE (CLIENT)">
-                        </div>
-                        <div class="flex justify-between text-[8px] font-mono uppercase text-gray-500">
-                            <span>PLANT SUPERVISOR</span>
-                            <span>APPROVED</span>
+                            <label class="text-[9px] uppercase font-bold text-slate-500">Date</label>
+                            <input type="date" id="date-now" class="field text-slate-400">
                         </div>
                     </div>
                 </div>
-                
-                <div class="mt-8 text-center">
-                    <div class="text-[8px] font-mono text-gray-400">
-                        ANOHUB-SECURE-DOC // HASH: <span id="doc-hash">GENERATING...</span> // ISO 10816 COMPLIANT
+            </section>
+
+            <!-- 02 SHAFT ANALYSIS -->
+            <section id="alignment">
+                <div class="flex items-center gap-3 mb-6 border-b border-slate-800 pb-2">
+                    <span class="text-h-cyan font-mono">02 //</span>
+                    <h3 class="text-xl font-divine text-white">Shaft Alignment Analysis (Rim/Face)</h3>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-6 h-auto md:h-[400px]">
+                    <!-- Controls -->
+                    <div
+                        class="md:col-span-4 flex flex-col justify-between scada-panel p-6 border-l-2 border-l-slate-600">
+                        <div>
+                            <div
+                                class="text-[10px] font-bold bg-h-cyan/20 text-h-cyan px-2 py-1 mb-4 inline-block border border-h-cyan/30">
+                                THERMAL TARGETS</div>
+                            <div class="grid grid-cols-2 gap-4 mb-6">
+                                <div>
+                                    <label class="text-[9px] text-slate-400 block mb-1">V-Offset (mm)</label>
+                                    <input type="number" id="t-off" class="field text-h-cyan font-bold" value="0.15">
+                                </div>
+                                <div>
+                                    <label class="text-[9px] text-slate-400 block mb-1">Slope (mm/m)</label>
+                                    <input type="number" id="t-slope" class="field text-h-cyan font-bold" value="0.02">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div
+                                class="text-[10px] font-bold bg-white/10 text-white px-2 py-1 mb-4 inline-block border border-white/20">
+                                CORRECTIONS (SHIMS)</div>
+                            <div class="space-y-4">
+                                <div>
+                                    <div class="flex justify-between items-center mb-1">
+                                        <label class="text-[10px] font-mono font-bold text-slate-400">FRONT FOOT</label>
+                                        <input type="number" id="s-front" class="field w-20 text-right" value="0.15"
+                                            step="0.01">
+                                    </div>
+                                    <input type="range" id="r-front"
+                                        class="w-full h-1 bg-slate-700 appearance-none rounded-full cursor-pointer"
+                                        min="-1" max="1" step="0.01" value="0.15">
+                                </div>
+
+                                <div>
+                                    <div class="flex justify-between items-center mb-1">
+                                        <label class="text-[10px] font-mono font-bold text-slate-400">BACK FOOT</label>
+                                        <input type="number" id="s-back" class="field w-20 text-right" value="0.25"
+                                            step="0.01">
+                                    </div>
+                                    <input type="range" id="r-back"
+                                        class="w-full h-1 bg-slate-700 appearance-none rounded-full cursor-pointer"
+                                        min="-1" max="1" step="0.01" value="0.25">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 pt-4 border-t border-slate-700">
+                            <div class="flex justify-between text-xs font-bold mb-1 text-slate-300">
+                                <span>FINAL OFFSET:</span>
+                                <span id="res-off" class="font-mono">0.00</span>
+                            </div>
+                            <div class="flex justify-between text-xs font-bold text-slate-300">
+                                <span>FINAL ANGLE:</span>
+                                <span id="res-ang" class="font-mono">0.00</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Visualizer -->
+                    <div class="md:col-span-8 bg-black/40 border border-slate-700 relative overflow-hidden rounded-lg">
+                        <div class="absolute inset-0 scada-grid opacity-20"
+                            style="background-image: linear-gradient(#334155 1px, transparent 1px), linear-gradient(90deg, #334155 1px, transparent 1px); background-size: 20px 20px;">
+                        </div>
+
+                        <div class="absolute top-3 left-3 text-[9px] font-mono text-slate-500">VERTICAL PLANE PLOT
+                            [1:100]</div>
+                        <div class="absolute bottom-3 right-3 text-[9px] font-mono text-slate-500">X-AXIS: SHAFT LENGTH
+                        </div>
+
+                        <!-- Center Line -->
+                        <div class="absolute top-1/2 left-0 w-full h-[1px] bg-slate-600 z-0"></div>
+                        <!-- Tolerance Band -->
+                        <div
+                            class="absolute top-1/2 left-0 w-full h-[40px] -mt-[20px] bg-green-500/5 border-y border-green-500/30 z-0 pointer-events-none">
+                        </div>
+
+                        <svg viewBox="0 0 400 200" class="w-full h-full absolute inset-0 z-10"
+                            preserveAspectRatio="none">
+                            <!-- Couplings Ghosts -->
+                            <path d="M50 80 L100 80 L100 120 L50 120 Z" fill="none" stroke="#475569" stroke-width="1"
+                                stroke-dasharray="4 4" />
+                            <path d="M250 70 L350 70 L350 130 L250 130 Z" fill="none" stroke="#475569" stroke-width="1"
+                                stroke-dasharray="4 4" />
+
+                            <!-- Key Line -->
+                            <line id="plot-line" x1="0" y1="100" x2="400" y2="100" stroke="#06b6d4" stroke-width="2" />
+                            <circle id="plot-point" cx="200" cy="100" r="4" fill="#06b6d4" stroke="white"
+                                stroke-width="1" />
+                        </svg>
+
+                        <div id="plot-stamp"
+                            class="absolute top-4 right-4 border border-green-500 bg-green-500/10 text-green-500 px-4 py-2 font-divine text-xl tracking-widest transform rotate-[-5deg] opacity-0 transition-opacity shadow-[0_0_20px_rgba(16,185,129,0.2)]">
+                            PASSED
+                        </div>
                     </div>
                 </div>
-            </footer>
+            </section>
 
-        </div>
+            <!-- 03 THRUST EQUALIZATION -->
+            <section id="thrust">
+                <div class="flex items-center gap-3 mb-6 border-b border-slate-800 pb-2">
+                    <span class="text-h-cyan font-mono">03 //</span>
+                    <h3 class="text-xl font-divine text-white">Thrust Bearing Equalization</h3>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+                    <div class="md:col-span-8 scada-panel p-1 overflow-hidden">
+                        <table class="w-full text-left text-xs font-mono">
+                            <thead class="bg-black/50 text-slate-400 text-[10px] uppercase">
+                                <tr>
+                                    <th class="p-3 border-b border-slate-700">Pad ID</th>
+                                    <th class="p-3 border-b border-slate-700 text-center">Pressure (MPa)</th>
+                                    <th class="p-3 border-b border-slate-700 text-center">Deviation (%)</th>
+                                    <th class="p-3 border-b border-slate-700 text-center">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="thrust-rows" class="divide-y divide-slate-800 text-slate-300">
+                                <!-- JS Injection -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div
+                        class="md:col-span-4 scada-panel p-6 flex flex-col justify-center items-center text-center border-t-2 border-t-h-cyan bg-h-cyan/5">
+                        <div class="text-[10px] uppercase font-bold text-h-cyan mb-2 tracking-widest">Max Deviation
+                        </div>
+                        <div id="thrust-max-dev" class="text-5xl font-mono font-bold text-white mb-4">0.0%</div>
+                        <div id="thrust-status-text"
+                            class="text-xs font-bold px-4 py-2 text-black bg-slate-600 rounded shadow-lg uppercase tracking-wider">
+                            CALCULATING</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- REMARKS -->
+            <section class="pb-8">
+                <h3 class="text-xs font-bold uppercase mb-2 text-slate-400">04 // Engineer's Remarks</h3>
+                <textarea
+                    class="w-full h-24 bg-black/50 border border-slate-700 p-4 text-xs font-mono text-white resize-none focus:border-h-cyan outline-none transition"
+                    placeholder="Enter session notes..."></textarea>
+            </section>
+
+        </main>
     </div>
 
+    <!-- FOOTER -->
+    <footer class="border-t border-slate-800 bg-black py-8 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-2 gap-8 text-slate-600 text-xs font-mono">
+            <div>
+                <div class="text-[10px] uppercase mb-1">Authenticating Node</div>
+                <div>ANO_HUB // ALIGN_CORE // ISO 10816</div>
+            </div>
+            <div class="text-right">
+                <div class="text-[10px] uppercase mb-1">Session ID</div>
+                <div id="doc-hash">GENERATING...</div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="../assets/js/layout-loader.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             lucide.createIcons();
-            
-            // Set Dates
+
             const now = new Date().toISOString().split('T')[0];
-            document.getElementById('date-now').value = now;
-            document.getElementById('footer-date').innerText = now;
+            const dateEl = document.getElementById('date-now');
+            if (dateEl) dateEl.value = now;
             document.getElementById('doc-hash').innerText = Math.random().toString(36).substring(2, 15).toUpperCase();
 
             // === 1. ALIGNMENT ENGINE ===
@@ -274,25 +370,24 @@
                 ra: document.getElementById('res-ang'),
                 line: document.getElementById('plot-line'),
                 pt: document.getElementById('plot-point'),
-                stamp: document.getElementById('plot-stamp'),
-                sheet: document.getElementById('doc-wrapper'),
-                hudStatus: document.getElementById('hud-status'),
-                hudBar: document.getElementById('hud-bar')
+                stamp: document.getElementById('plot-stamp')
             };
 
             function syncInputs(e) {
-                if(e.target.type === 'range') {
-                    if(e.target.id === 'r-front') els.sf.value = e.target.value;
-                    if(e.target.id === 'r-back') els.sb.value = e.target.value;
+                if (e.target.type === 'range') {
+                    if (e.target.id === 'r-front') els.sf.value = e.target.value;
+                    if (e.target.id === 'r-back') els.sb.value = e.target.value;
                 } else {
-                    if(e.target.id === 's-front') els.rf.value = e.target.value;
-                    if(e.target.id === 's-back') els.rb.value = e.target.value;
+                    if (e.target.id === 's-front') els.rf.value = e.target.value;
+                    if (e.target.id === 's-back') els.rb.value = e.target.value;
                 }
                 updateAlign();
             }
 
             ['input'].forEach(evt => {
-                [els.sf, els.sb, els.rf, els.rb, els.to, els.ts].forEach(el => el.addEventListener(evt, syncInputs));
+                [els.sf, els.sb, els.rf, els.rb, els.to, els.ts].forEach(el => {
+                    if (el) el.addEventListener(evt, syncInputs);
+                });
             });
 
             function updateAlign() {
@@ -301,134 +396,99 @@
                 const to = parseFloat(els.to.value) || 0;
                 const ts = parseFloat(els.ts.value) || 0;
 
-                // Logic: 
-                // 1. Calculate Raw State (from shims)
-                // Assuming Distances: D1=500, D2=1000 for simulation scaling
-                const slope = (sb - sf) / 1000; // per mm
-                const rawOff = sf; 
-
-                // 2. Compare to Thermal Targets
+                const slope = (sb - sf) / 1000;
+                const rawOff = sf;
                 const finalOff = rawOff - to;
-                const finalAng = (slope * 100) - (ts * 100); // per 100mm
+                const finalAng = (slope * 100) - (ts * 100);
 
-                // 3. UI Numbers
                 els.ro.innerText = finalOff.toFixed(2);
                 els.ra.innerText = finalAng.toFixed(2);
 
-                // 4. Plotter Logic (SVG Coordinates)
-                // Center (0,0) is visually at (200, 100) in SVG
-                // Scale factor for visuals: x50 to make small moves visible
-                const yC = 100 - (finalOff * 100); // Center point Y
-                const yL = yC + (slope * 200 * 50); // Left point Y
-                const yR = yC - (slope * 200 * 50); // Right point Y
+                // Plotter (Scaled for visual)
+                const yC = 100 - (finalOff * 100);
+                const yL = yC + (slope * 200 * 50);
+                const yR = yC - (slope * 200 * 50);
 
-                // Clamp for visuals so it doesn't leave box
-                els.line.setAttribute('y1', Math.max(10, Math.min(190, yL))); 
+                els.line.setAttribute('y1', Math.max(10, Math.min(190, yL)));
                 els.line.setAttribute('y2', Math.max(10, Math.min(190, yR)));
                 els.pt.setAttribute('cy', Math.max(10, Math.min(190, yC)));
 
-                // 5. Validation State
                 const isOk = Math.abs(finalOff) <= 0.05 && Math.abs(finalAng) <= 0.05;
 
-                if(isOk) {
+                if (isOk) {
                     els.ro.style.color = '#10b981';
                     els.ra.style.color = '#10b981';
                     els.line.setAttribute('stroke', '#10b981');
                     els.pt.setAttribute('fill', '#10b981');
-                    
                     els.stamp.innerText = "PASSED";
-                    els.stamp.className = "absolute top-4 right-4 border-2 border-green-600 text-green-600 px-3 py-1 font-header text-lg font-bold transform rotate-[-10deg] opacity-100 transition-opacity";
-                    
-                    els.sheet.className = "iso-sheet status-aligned";
-                    els.hudStatus.innerText = "OPTIMAL";
-                    els.hudStatus.style.color = "#10b981";
-                    els.hudBar.style.width = "100%";
-                    els.hudBar.className = "h-full bg-green-500 w-full transition-all duration-300";
+                    els.stamp.className = "absolute top-4 right-4 border border-green-500 bg-green-500/10 text-green-500 px-4 py-2 font-divine text-xl tracking-widest transform rotate-[-5deg] opacity-100 transition-opacity shadow-[0_0_20px_rgba(16,185,129,0.2)]";
                 } else {
                     els.ro.style.color = '#ef4444';
                     els.ra.style.color = '#ef4444';
                     els.line.setAttribute('stroke', '#ef4444');
                     els.pt.setAttribute('fill', '#ef4444');
-
                     els.stamp.innerText = "REJECTED";
-                    els.stamp.className = "absolute top-4 right-4 border-2 border-red-600 text-red-600 px-3 py-1 font-header text-lg font-bold transform rotate-[-10deg] opacity-100 transition-opacity";
-                    
-                    els.sheet.className = "iso-sheet status-fail";
-                    els.hudStatus.innerText = "CRITICAL";
-                    els.hudStatus.style.color = "#ef4444";
-                    els.hudBar.style.width = "100%";
-                    els.hudBar.className = "h-full bg-red-500 w-full transition-all duration-300 animate-pulse";
+                    els.stamp.className = "absolute top-4 right-4 border border-red-500 bg-red-500/10 text-red-500 px-4 py-2 font-divine text-xl tracking-widest transform rotate-[-5deg] opacity-100 transition-opacity shadow-[0_0_20px_rgba(239,68,68,0.2)]";
                 }
             }
 
             // === 2. THRUST ENGINE ===
             const tContainer = document.getElementById('thrust-rows');
-            const pads = [35.0, 36.2, 34.8, 35.5, 36.0, 35.1]; // Init values
+            const pads = [35.0, 36.2, 34.8, 35.5, 36.0, 35.1];
 
             function renderThrust() {
                 tContainer.innerHTML = '';
-                const avg = pads.reduce((a,b)=>a+b,0) / pads.length;
+                const avg = pads.reduce((a, b) => a + b, 0) / pads.length;
                 let maxDev = 0;
 
                 pads.forEach((val, i) => {
                     const dev = ((val - avg) / avg) * 100;
                     const absDev = Math.abs(dev);
-                    if(absDev > maxDev) maxDev = absDev;
+                    if (absDev > maxDev) maxDev = absDev;
 
-                    const status = absDev <= 5 ? 
-                        '<span class="text-green-600 font-bold">OK</span>' : 
-                        '<span class="text-red-600 font-bold">FAIL</span>';
+                    const status = absDev <= 5 ?
+                        '<span class="text-h-green font-bold">OK</span>' :
+                        '<span class="text-h-red font-bold">FAIL</span>';
 
                     const row = document.createElement('tr');
+                    row.className = "hover:bg-white/5 transition";
                     row.innerHTML = `
-                        <td class="border border-gray-300 p-2 font-bold">PAD 0${i+1}</td>
-                        <td class="border border-gray-300 p-0">
-                            <input type="number" class="field text-center thrust-in" value="${val}" data-idx="${i}" step="0.1">
+                        <td class="p-3 border-b border-slate-700 font-bold text-white">PAD 0${i + 1}</td>
+                        <td class="p-3 border-b border-slate-700 p-0 text-center">
+                            <input type="number" class="field text-center thrust-in w-20 bg-transparent border-none focus:ring-0" value="${val}" data-idx="${i}" step="0.1">
                         </td>
-                        <td class="border border-gray-300 p-2 text-center text-gray-500">${dev > 0 ? '+' : ''}${dev.toFixed(1)}%</td>
-                        <td class="border border-gray-300 p-2 text-center text-xs">${status}</td>
+                        <td class="p-3 border-b border-slate-700 text-center font-mono ${dev > 0 ? 'text-h-cyan' : 'text-slate-400'}">${dev > 0 ? '+' : ''}${dev.toFixed(1)}%</td>
+                        <td class="p-3 border-b border-slate-700 text-center text-xs">${status}</td>
                     `;
                     tContainer.appendChild(row);
                 });
 
-                // Update Stats
                 const mdEl = document.getElementById('thrust-max-dev');
                 const stEl = document.getElementById('thrust-status-text');
-                
+
                 mdEl.innerText = maxDev.toFixed(1) + "%";
-                if(maxDev <= 5) {
+                if (maxDev <= 5) {
                     mdEl.style.color = '#10b981';
                     stEl.innerText = "EQUALIZED";
-                    stEl.className = "text-xs font-bold mt-2 px-4 py-1 text-white bg-green-600 rounded";
+                    stEl.className = "text-xs font-bold px-4 py-2 text-black bg-h-green rounded shadow-[0_0_20px_rgba(16,185,129,0.4)] uppercase tracking-wider";
                 } else {
                     mdEl.style.color = '#ef4444';
-                    stEl.innerText = "RE-SHIM REQUIRED";
-                    stEl.className = "text-xs font-bold mt-2 px-4 py-1 text-white bg-red-600 rounded";
+                    stEl.innerText = "RE-SHIM REQ";
+                    stEl.className = "text-xs font-bold px-4 py-2 text-white bg-h-red rounded shadow-[0_0_20px_rgba(239,68,68,0.4)] uppercase tracking-wider animate-pulse";
                 }
 
-                // Re-attach listeners
                 document.querySelectorAll('.thrust-in').forEach(el => {
                     el.addEventListener('input', (e) => {
                         pads[e.target.dataset.idx] = parseFloat(e.target.value) || 0;
-                        renderThrust(); // Re-render (a bit brute force but safe for small tables)
-                        // Note: Focus is lost on re-render, in prod use optimized update
+                        renderThrust();
                     });
                 });
             }
 
-            // Init Calls
             updateAlign();
             renderThrust();
         });
     </script>
-        </div>
-
-        <div class="mt-20 pt-8 border-t-2 border-black flex justify-between items-end">
-            <div class="text-xs font-mono">ANOHUB INTELLIGENCE GRID</div>
-            <div class="text-xs font-mono">AUTH_SIG: __________________</div>
-        </div>
-    </main>
-    <div id="protocol-footer-placeholder"></div>
-    <script src="../assets/js/layout-loader.js"></script>
 </body>
+
 </html>

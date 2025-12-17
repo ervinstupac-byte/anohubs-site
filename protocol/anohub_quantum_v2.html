@@ -8,27 +8,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Roboto+Mono:wght@300;400&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        tailwind.config = { theme: { extend: { colors: { 'h-gold': '#FFB800', 'h-cyan': '#06b6d4', 'h-red': '#ef4444' } } } }
+        tailwind.config = { theme: { extend: { colors: { 'h-gold': '#FFB800', 'h-cyan': '#06b6d4', 'h-red': '#ef4444', 'h-green': '#10b981', 'h-purple': '#8b5cf6', 'h-orange': '#f97316' }, fontFamily: { divine: ['Oswald', 'sans-serif'], mono: ['Roboto Mono', 'monospace'] } } } }
     </script>
     <style>
-        /* Print-like styles for the content */
-        .protocol-content table { width: 100%; border-collapse: collapse; margin-bottom: 1rem; border: 1px solid #ddd; }
-        .protocol-content th, .protocol-content td { border: 1px solid #ccc; padding: 8px; font-family: 'Roboto Mono', monospace; font-size: 0.85rem; }
-        .protocol-content th { background-color: #f3f4f6; font-weight: bold; }
-        .protocol-content h1, .protocol-content h2 { font-family: 'Oswald', sans-serif; margin-bottom: 10px; }
+        body { background-color: #020617; color: #cbd5e1; }
+        .scada-panel { background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(8px); }
+        .field { background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.15); color: #FFB800; font-family: 'Roboto Mono', monospace; padding: 4px 8px; width: 100%; outline: none; transition: all 0.3s; }
+        .field:focus { border-color: #06b6d4; box-shadow: 0 0 10px rgba(6, 182, 212, 0.2); }
     </style>
 </head>
-<body class="bg-[#0f172a] text-slate-300 overflow-x-hidden">
+<body class="overflow-x-hidden">
     <div id="protocol-header-placeholder"></div>
-    <main class="relative w-full md:w-[210mm] min-h-[297mm] mx-auto my-12 bg-white text-black shadow-[0_0_50px_rgba(0,0,0,0.5)] p-[15mm] md:p-[20mm] overflow-hidden">
-    
-        <div class="absolute top-0 right-0 p-6 opacity-30 pointer-events-none">
-            <span class="font-mono text-xs uppercase tracking-[0.2em] border border-black px-2 py-1">OFFICIAL RECORD</span>
-        </div>
-        <div class="protocol-content">
-            <div class="divine-grid"></div>
-
-    <header class="fixed w-full z-50 border-b border-white/10 bg-black/90 backdrop-blur-md h-16 flex items-center justify-between px-6">
+    <div class="divine-grid fixed inset-0 z-[-1] opacity-20 pointer-events-none" style="background-image: linear-gradient(rgba(6, 182, 212, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(6, 182, 212, 0.05) 1px, transparent 1px); background-size: 40px 40px;"></div>
+<header class="fixed w-full z-50 border-b border-white/10 bg-black/90 backdrop-blur-md h-16 flex items-center justify-between px-6">
         <div class="flex items-center gap-3">
             <a href="../index.html" class="flex items-center gap-3 group">
                 <div class="w-8 h-8 border border-white/30 flex items-center justify-center text-white font-divine group-hover:border-h-purple group-hover:text-h-purple transition bg-black">A</div>
@@ -48,8 +40,7 @@
             </div>
         </div>
     </header>
-
-    <div class="pt-24 pb-12 px-4 max-w-7xl mx-auto grid lg:grid-cols-12 gap-8 relative z-10">
+<div class="pt-24 pb-12 px-4 max-w-7xl mx-auto grid lg:grid-cols-12 gap-8 relative z-10">
 
         <aside class="hidden lg:block lg:col-span-3">
             <div class="sticky top-24 space-y-6">
@@ -228,14 +219,13 @@
 
         </main>
     </div>
-
-    <footer class="border-t border-slate-800 bg-black py-8 mt-auto">
+<footer class="border-t border-slate-800 bg-black py-8 mt-auto">
         <div class="max-w-7xl mx-auto px-4 text-center text-slate-600 text-xs font-mono tracking-[0.2em]">
             ANO_HUB // QUANTUM RESEARCH DIVISION
         </div>
     </footer>
-
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="../assets/js/layout-loader.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             lucide.createIcons();
@@ -336,14 +326,5 @@
             updateLoad(); // Init
         });
     </script>
-        </div>
-
-        <div class="mt-20 pt-8 border-t-2 border-black flex justify-between items-end">
-            <div class="text-xs font-mono">ANOHUB INTELLIGENCE GRID</div>
-            <div class="text-xs font-mono">AUTH_SIG: __________________</div>
-        </div>
-    </main>
-    <div id="protocol-footer-placeholder"></div>
-    <script src="../assets/js/layout-loader.js"></script>
 </body>
 </html>

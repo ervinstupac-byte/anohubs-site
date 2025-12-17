@@ -8,27 +8,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Roboto+Mono:wght@300;400&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        tailwind.config = { theme: { extend: { colors: { 'h-gold': '#FFB800', 'h-cyan': '#06b6d4', 'h-red': '#ef4444' } } } }
+        tailwind.config = { theme: { extend: { colors: { 'h-gold': '#FFB800', 'h-cyan': '#06b6d4', 'h-red': '#ef4444', 'h-green': '#10b981', 'h-purple': '#8b5cf6', 'h-orange': '#f97316' }, fontFamily: { divine: ['Oswald', 'sans-serif'], mono: ['Roboto Mono', 'monospace'] } } } }
     </script>
     <style>
-        /* Print-like styles for the content */
-        .protocol-content table { width: 100%; border-collapse: collapse; margin-bottom: 1rem; border: 1px solid #ddd; }
-        .protocol-content th, .protocol-content td { border: 1px solid #ccc; padding: 8px; font-family: 'Roboto Mono', monospace; font-size: 0.85rem; }
-        .protocol-content th { background-color: #f3f4f6; font-weight: bold; }
-        .protocol-content h1, .protocol-content h2 { font-family: 'Oswald', sans-serif; margin-bottom: 10px; }
+        body { background-color: #020617; color: #cbd5e1; }
+        .scada-panel { background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(8px); }
+        .field { background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.15); color: #FFB800; font-family: 'Roboto Mono', monospace; padding: 4px 8px; width: 100%; outline: none; transition: all 0.3s; }
+        .field:focus { border-color: #06b6d4; box-shadow: 0 0 10px rgba(6, 182, 212, 0.2); }
     </style>
 </head>
-<body class="bg-[#0f172a] text-slate-300 overflow-x-hidden">
+<body class="overflow-x-hidden">
     <div id="protocol-header-placeholder"></div>
-    <main class="relative w-full md:w-[210mm] min-h-[297mm] mx-auto my-12 bg-white text-black shadow-[0_0_50px_rgba(0,0,0,0.5)] p-[15mm] md:p-[20mm] overflow-hidden">
-    
-        <div class="absolute top-0 right-0 p-6 opacity-30 pointer-events-none">
-            <span class="font-mono text-xs uppercase tracking-[0.2em] border border-black px-2 py-1">OFFICIAL RECORD</span>
-        </div>
-        <div class="protocol-content">
-            <div class="divine-grid"></div>
-
-    <header class="fixed w-full z-50 border-b border-white/10 bg-black/90 backdrop-blur-md h-16 flex items-center justify-between px-6">
+    <div class="divine-grid fixed inset-0 z-[-1] opacity-20 pointer-events-none" style="background-image: linear-gradient(rgba(6, 182, 212, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(6, 182, 212, 0.05) 1px, transparent 1px); background-size: 40px 40px;"></div>
+<header class="fixed w-full z-50 border-b border-white/10 bg-black/90 backdrop-blur-md h-16 flex items-center justify-between px-6">
         <div class="flex items-center gap-3">
             <a href="../index.html" class="flex items-center gap-3 group">
                 <div class="w-8 h-8 border border-white/30 flex items-center justify-center text-white font-divine group-hover:border-h-gold group-hover:text-h-gold transition bg-black">A</div>
@@ -48,8 +40,7 @@
             </div>
         </div>
     </header>
-
-    <div class="pt-24 pb-12 px-4 max-w-7xl mx-auto grid lg:grid-cols-12 gap-8 relative z-10">
+<div class="pt-24 pb-12 px-4 max-w-7xl mx-auto grid lg:grid-cols-12 gap-8 relative z-10">
 
         <aside class="hidden lg:block lg:col-span-3">
             <div class="sticky top-24 space-y-6">
@@ -213,119 +204,13 @@
 
         </main>
     </div>
-
-    <footer class="border-t border-slate-800 bg-black py-8 mt-auto">
+<footer class="border-t border-slate-800 bg-black py-8 mt-auto">
         <div class="max-w-7xl mx-auto px-4 text-center text-slate-600 text-xs font-mono tracking-[0.2em]">
             ANO_HUB // COMPLIANCE DIVISION // TUV NORD AUDITED
         </div>
     </footer>
-
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-    
-    <script>
-        // Make resolve global
-        function resolveNCR(btn) {
-            const originalText = btn.innerText;
-            btn.innerText = "VERIFYING...";
-            btn.classList.add('animate-pulse');
-            btn.disabled = true;
-            
-            setTimeout(() => {
-                btn.classList.remove('animate-pulse', 'border-h-red', 'text-h-red', 'hover:bg-h-red', 'border-h-amber', 'text-h-amber', 'hover:bg-h-amber');
-                btn.classList.add('bg-h-green', 'text-black', 'border-h-green');
-                btn.innerText = "CLOSED";
-                
-                // Stamp effect logic would go here visually, but color change is enough for now
-                const parent = btn.parentElement;
-                parent.style.opacity = "0.5";
-                parent.style.borderColor = "#10b981"; // Green border
-            }, 1500);
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            lucide.createIcons();
-
-            // === RADAR CHART LOGIC ===
-            const inQ = document.getElementById('in-q');
-            const inS = document.getElementById('in-s');
-            const inA = document.getElementById('in-a');
-            const inE = document.getElementById('in-e');
-            
-            const valQ = document.getElementById('val-q');
-            const valS = document.getElementById('val-s');
-            const valA = document.getElementById('val-a');
-            const valE = document.getElementById('val-e');
-            
-            const poly = document.getElementById('radar-poly');
-            const ptQ = document.getElementById('pt-q');
-            const ptS = document.getElementById('pt-s');
-            const ptA = document.getElementById('pt-a');
-            const ptE = document.getElementById('pt-e');
-            
-            const score = document.getElementById('total-score');
-            const led = document.getElementById('audit-led');
-            const status = document.getElementById('audit-status');
-            const readyScore = document.getElementById('ready-score');
-
-            function updateRadar() {
-                const q = parseInt(inQ.value);
-                const s = parseInt(inS.value);
-                const a = parseInt(inA.value);
-                const e = parseInt(inE.value);
-
-                valQ.innerText = q + "%";
-                valS.innerText = s + "%";
-                valA.innerText = a + "%";
-                valE.innerText = e + "%";
-
-                // Map 0-100 to Radar Coords (Center 50,50, Radius 40)
-                // Top (Q): x=50, y=50 - (q/100)*40
-                const yQ = 50 - (q/100)*40;
-                // Right (S): x=50 + (s/100)*40, y=50
-                const xS = 50 + (s/100)*40;
-                // Bottom (A): x=50, y=50 + (a/100)*40
-                const yA = 50 + (a/100)*40;
-                // Left (E): x=50 - (e/100)*40, y=50
-                const xE = 50 - (e/100)*40;
-
-                poly.setAttribute('points', `50,${yQ} ${xS},50 50,${yA} ${xE},50`);
-                
-                // Move Points
-                ptQ.setAttribute('cy', yQ);
-                ptS.setAttribute('cx', xS);
-                ptA.setAttribute('cy', yA);
-                ptE.setAttribute('cx', xE);
-
-                // Total Score
-                const avg = Math.round((q + s + a + e) / 4);
-                score.innerText = avg + "%";
-                if(readyScore) readyScore.innerText = avg + "%";
-
-                if (avg > 90) {
-                    score.className = "text-4xl font-mono text-h-green font-bold";
-                    led.className = "w-3 h-3 bg-h-green rounded-full shadow-[0_0_10px_#10b981]";
-                    status.innerText = "STATUS: CERTIFICATION READY";
-                    status.className = "font-mono text-xs text-h-green font-bold";
-                } else {
-                    score.className = "text-4xl font-mono text-white font-bold";
-                    led.className = "w-3 h-3 bg-h-amber rounded-full animate-pulse";
-                    status.innerText = "STATUS: GAPS DETECTED";
-                    status.className = "font-mono text-xs text-white";
-                }
-            }
-
-            [inQ, inS, inA, inE].forEach(el => el.addEventListener('input', updateRadar));
-            updateRadar();
-        });
-    </script>
-        </div>
-
-        <div class="mt-20 pt-8 border-t-2 border-black flex justify-between items-end">
-            <div class="text-xs font-mono">ANOHUB INTELLIGENCE GRID</div>
-            <div class="text-xs font-mono">AUTH_SIG: __________________</div>
-        </div>
-    </main>
-    <div id="protocol-footer-placeholder"></div>
     <script src="../assets/js/layout-loader.js"></script>
+    <script>document.addEventListener('DOMContentLoaded', () => { lucide.createIcons(); });</script>
 </body>
 </html>
