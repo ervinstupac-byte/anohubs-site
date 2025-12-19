@@ -3,58 +3,69 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title data-i18n="protocol_page.title">AnoHUB | PROTOCOL SYSTEM</title>
+    <meta name="description" content="The central nervous system of AnoHUB operations. Access specific engineering protocols and methodology modules.">
 
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Roboto+Mono:wght@300;400;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Roboto+Mono:wght@300;400;700&family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap"
         rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Icons -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-    <link rel="stylesheet" href="assets/css/preloader.css">
+    <script src="https://cdn.tailwindcss.com"></script>
 
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: { mono: ['Roboto Mono', 'monospace'], header: ['Oswald', 'sans-serif'] },
-                    colors: { 'h-gold': '#FFB800', 'h-cyan': '#06b6d4' }
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                        header: ['Oswald', 'sans-serif']
+                    },
+                    colors: {
+                        'h-cyan': '#06b6d4',
+                        'h-green': '#10b981',
+                        'h-red': '#ef4444',
+                        'h-yellow': '#facc15',
+                        'h-gold': '#FFB800',
+                        'h-purple': '#8b5cf6',
+                        'h-dark': '#020617',
+                        'h-panel': '#0f172a',
+                        'h-border': '#1e293b',
+                        'h-cta': '#f59e0b',
+                        'hydro-charcoal': '#111827',
+                        'hydro-primary': '#22d3ee'
+                    },
+                    animation: {
+                        'spin-slow': 'spin 60s linear infinite',
+                        'reverse-spin': 'reverseSpin 60s linear infinite',
+                    },
+                    keyframes: {
+                        reverseSpin: {
+                            from: { transform: 'rotate(360deg)' },
+                            to: { transform: 'rotate(0deg)' }
+                        }
+                    }
                 }
             }
         }
     </script>
+
     <style>
         body {
             background-color: #020617;
             color: white;
-            overflow: hidden;
-            height: 100vh;
+            overflow-x: hidden; /* Prevent horizontal scroll */
             margin: 0;
+            font-family: 'Inter', sans-serif;
         }
 
-        /* === KEYFRAMES === */
-        @keyframes spin-orbit {
-            from {
-                transform: rotate(0deg);
-            }
-
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        @keyframes counter-spin {
-            from {
-                transform: rotate(360deg);
-            }
-
-            to {
-                transform: rotate(0deg);
-            }
-        }
-
-        /* === MATRIX BACKGROUND === */
+        /* MATRIX BACKGROUND */
         .matrix-bg {
             position: fixed;
             inset: 0;
@@ -75,30 +86,37 @@
             opacity: 0.3;
         }
 
-        /* === SYSTEM CORE === */
-        #solar-system {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 1000px;
-            height: 1000px;
+        /* SYSTEM CORE (Solar System) */
+        #solar-system-container {
+            position: relative;
+            height: 100vh;
+            width: 100vw;
             display: flex;
             justify-content: center;
             align-items: center;
-            pointer-events: none;
-            /* Let clicks pass to planets */
+            overflow: hidden;
+            perspective: 1000px; /* Add depth for 3D effect */
         }
 
-        .core-sun-wrapper {
+        #galaxy {
             position: absolute;
-            pointer-events: auto;
-            z-index: 20;
+            width: 800px; /* Base size */
+            height: 800px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+             /* Scale down on mobile, tilt for 3D effect */
+            transform: scale(0.6) rotateX(60deg); 
+            transform-style: preserve-3d; /* Essential for 3D children */
+        }
+
+        @media (min-width: 768px) {
+            #galaxy { transform: scale(1) rotateX(60deg); }
         }
 
         .core-sun {
-            width: 140px;
-            height: 140px;
+            width: 120px;
+            height: 120px;
             border: 2px solid #FFB800;
             border-radius: 50%;
             display: flex;
@@ -106,190 +124,275 @@
             align-items: center;
             font-family: 'Oswald', sans-serif;
             font-weight: 700;
-            font-size: 60px;
+            font-size: 40px;
             color: #FFB800;
             box-shadow: 0 0 60px rgba(255, 184, 0, 0.2), inset 0 0 20px rgba(255, 184, 0, 0.1);
-            background: rgba(0, 0, 0, 0.8);
-            transition: all 0.5s;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 20;
             text-decoration: none;
+            transition: all 0.3s ease;
+            /* Counter-rotate to face user despite galaxy tilt */
+            transform: rotateX(-60deg); 
+            transform-style: preserve-3d;
         }
 
-        /* PLANET STYLES (Dynamic) */
-        /* 1. CONTAINER - MUST PASS CLICKS THROUGH */
-        .universe-container,
-        #galaxy,
-        .orbit-container {
-            pointer-events: none !important;
-            z-index: 10;
+        .core-sun:hover {
+            box-shadow: 0 0 80px rgba(255, 184, 0, 0.4), inset 0 0 30px rgba(255, 184, 0, 0.2);
+            transform: rotateX(-60deg) scale(1.05); /* Keep rotation during hover scale */
+            color: white;
+            border-color: white;
         }
 
-        /* 2. PLANET LINKS - MUST BE CLICKABLE */
+        /* ORBITS */
+        .orbit-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 1px dashed rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            pointer-events: none;
+            /* No need for extra transform here as parent #galaxy is tilted */
+        }
+
+        .rotator {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            transform-style: preserve-3d;
+            /* Animation handled by JS/Tailwind classes */
+        }
+
+        /* PLANETS */
         .planet-link {
             position: absolute;
-            /* Force a real clickable area */
-            width: 120px;
-            height: 80px;
-            /* Center the hit-box */
-            transform-style: preserve-3d;
-            /* AGGRESSIVE CLICK FIXES: */
-            pointer-events: auto !important;
-            z-index: 9999 !important;
-            /* Put on top of EVERYTHING */
-            cursor: pointer;
-
-            /* Visual alignment */
+            width: 40px;
+            height: 40px;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            text-decoration: none;
-        }
-
-        /* 3. ENSURE SUN IS CLICKABLE */
-        .sun,
-        .core-sun {
-            pointer-events: auto !important;
-            z-index: 9999 !important;
             cursor: pointer;
+            z-index: 30;
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
         }
 
         .planet-content {
-            /* Critical: Counter-rotate to keep text upright relative to the screen */
-            animation: spin-orbit 120s linear infinite reverse;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            transform-origin: center center;
-            width: 120px;
-            /* Fixed width for stability */
+             /* Counter-rotation to keep text upright relative to the screen */
+             /* IMPORTANT: Must counter BOTH the orbit rotation AND the galaxy tilt */
+             /* This is tricky in CSS alone, often requires JS update or complex transforms */
+             transform: rotateX(-60deg); /* Counter the galaxy tilt initially */
         }
 
-        /* Dynamic animation speeds will be applied via JS */
-
         .planet-core {
-            width: 14px;
-            height: 14px;
+            width: 12px;
+            height: 12px;
             background: #020617;
             border: 2px solid;
             border-radius: 50%;
-            box-shadow: 0 0 15px currentColor;
+            box-shadow: 0 0 10px currentColor;
             transition: all 0.3s ease;
         }
 
         .planet-label {
-            margin-top: 8px;
-            font-family: 'Roboto Mono', monospace;
+            position: absolute;
+            top: 20px;
+            font-family: 'JetBrains Mono', monospace;
             font-size: 10px;
             font-weight: bold;
             color: rgba(255, 255, 255, 0.6);
-            background: rgba(2, 6, 23, 0.8);
-            padding: 2px 8px;
+            background: rgba(2, 6, 23, 0.9);
+            padding: 2px 6px;
             border-radius: 4px;
             border: 1px solid rgba(255, 255, 255, 0.1);
             white-space: nowrap;
             transition: all 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            text-shadow: 0 0 5px black;
+            opacity: 0; /* Hidden by default to reduce clutter */
+            pointer-events: none;
+             /* Ensure label is legible */
         }
 
         .planet-link:hover .planet-core {
             transform: scale(1.5);
             background: white;
             border-color: white !important;
+            box-shadow: 0 0 20px white;
         }
 
         .planet-link:hover .planet-label {
-            color: white;
-            border-color: currentColor;
             opacity: 1;
-            transform: scale(1.1);
+            top: 25px;
+            border-color: currentColor;
+            color: white !important;
+            z-index: 40;
         }
 
-        /* === SEARCH UI === */
-        #search-ui {
-            position: fixed;
-            top: 120px;
+        /* SEARCH UI */
+        #search-container {
+            position: absolute;
+            top: 120px; /* Below header */
             left: 50%;
             transform: translateX(-50%);
-            z-index: 50;
-            width: 300px;
-            display: flex;
-            align-items: center;
-            border-bottom: 1px solid #FFB800;
+            z-index: 40;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
         }
 
         #search-input {
             width: 100%;
-            background: transparent;
-            border: none;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid #1e293b;
+            border-bottom: 2px solid #h-cyan;
             outline: none;
-            color: #FFB800;
-            font-family: 'Oswald', sans-serif;
-            font-size: 20px;
+            color: #h-cyan;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 16px;
             text-transform: uppercase;
-            letter-spacing: 2px;
             text-align: center;
-            padding: 10px;
+            padding: 12px 20px;
+            border-radius: 8px;
+            backdrop-filter: blur(4px);
+            transition: all 0.3s ease;
         }
 
-        /* === AI OVERLAY === */
-        #ai-takeover {
-            display: none;
+        #search-input:focus {
+            border-color: #06b6d4;
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.2);
+            background: rgba(0, 0, 0, 0.8);
         }
-
-        /* Hidden by default */
     </style>
 </head>
 
-<body>
-    <div id="global-header" class="fixed top-0 left-0 w-full z-[9999]"></div>
+<body class="antialiased">
+
+    <!-- 1. NAVIGATION -->
+    <header class="fixed top-0 left-0 w-full z-[9999] bg-black/80 backdrop-blur-md border-b border-white/10 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+             <!-- LOGO -->
+             <a href="index.html" class="flex items-center gap-3 group">
+                <div class="w-8 h-8 bg-h-cyan/20 border border-h-cyan flex items-center justify-center">
+                    <span class="font-bold text-h-cyan font-header">A</span>
+                </div>
+                <div class="hidden md:block">
+                    <span class="block text-lg font-black tracking-tighter text-white leading-none font-header">ANOHUBS</span>
+                    <span class="block text-[10px] font-mono text-slate-500 tracking-widest uppercase">Protocol System</span>
+                </div>
+            </a>
+            
+             <!-- DESKTOP MENU -->
+            <nav class="hidden lg:flex items-center gap-6 text-xs font-bold uppercase tracking-wider font-sans">
+                <a href="about-us-vision.html" class="text-slate-400 hover:text-white transition-colors duration-200">About</a>
+                <a href="capabilities.html" class="text-slate-400 hover:text-white transition-colors duration-200">Capabilities</a>
+                <a href="insights/" class="text-slate-400 hover:text-white transition-colors duration-200">Insights</a>
+                <a href="case-studies.html" class="text-slate-400 hover:text-white transition-colors duration-200">Case Studies</a>
+                <a href="gallery.html" class="text-slate-400 hover:text-white transition-colors duration-200">Gallery</a>
+                <a href="contact.html" class="px-5 py-2 bg-h-cta text-black rounded-full hover:bg-yellow-400 transition shadow-lg">Contact</a>
+            </nav>
+
+             <!-- MOBILE MENU BUTTON -->
+             <button id="mobile-menu-button" class="lg:hidden text-white">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
+        
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-black/95 border-b border-white/10 absolute w-full left-0 top-20 p-6 flex flex-col gap-4 shadow-2xl">
+             <a href="index.html" class="text-slate-300 py-2 border-b border-white/10">Home</a>
+             <a href="about-us-vision.html" class="text-slate-300 py-2 border-b border-white/10">About</a>
+             <a href="capabilities.html" class="text-slate-300 py-2 border-b border-white/10">Capabilities</a>
+             <a href="contact.html" class="text-h-cta font-bold py-2">Contact</a>
+        </div>
+    </header>
+
+    <!-- BACKGROUNDS -->
     <div class="matrix-bg"></div>
     <div class="stars"></div>
 
-    <div id="search-ui">
-        <input type="text" id="search-input" placeholder="INITIATE SEARCH..." autocomplete="off"
-            data-i18n="[placeholder]protocol_page.search_placeholder">
-    </div>
-
-    <div id="solar-system">
-        <div class="core-sun-wrapper">
-            <a href="index.html" class="core-sun">A</a>
+    <!-- MAIN INTERFACE -->
+    <main>
+        <div id="search-container">
+            <input type="text" id="search-input" placeholder="SEARCH PROTOCOLS..." autocomplete="off">
+            <div class="mt-2 text-[10px] text-slate-500 font-mono tracking-widest">
+                Type 'NDT', 'Alignment', or 'ISO' to filter nodes
+            </div>
         </div>
-        <!-- Rings Injected Here -->
-        <div id="galaxy"></div>
-    </div>
 
-    <!-- Scripts -->
-    <script src="assets/js/layout-loader.js"></script>
+        <div id="solar-system-container">
+            <div id="galaxy">
+                <!-- Core Sun -->
+                <a href="index.html" class="core-sun absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                    A
+                </a>
+                <!-- Orbits and Planets injected via JS -->
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER (Simplified for this page) -->
+    <footer class="fixed bottom-0 w-full bg-black/80 backdrop-blur-md border-t border-white/10 py-4 px-6 z-40">
+        <div class="max-w-7xl mx-auto flex justify-between items-center text-[10px] font-mono text-slate-500">
+            <div>
+                SYSTEM STATUS: <span class="text-h-green">ONLINE</span>
+            </div>
+            <div class="hidden md:block">
+                PROTOCOL VERSION 2.4.1
+            </div>
+            <div>
+                &copy; 2025 ANOHUBS INC.
+            </div>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
     <script>
+        lucide.createIcons();
+
+        // --- Mobile Menu Logic ---
+        const menuBtn = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (menuBtn && mobileMenu) {
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+
+        // --- SOLAR SYSTEM LOGIC ---
         const App = {
             modules: [
-                { id: '01', nameKey: 'core', link: 'protocol/anohub_protocol_v2.html', color: '#06b6d4' },
-                { id: '02', nameKey: 'ndt', link: 'protocol/anohub_methodology_v2.html', color: '#8b5cf6' },
-                { id: '03', nameKey: 'org', link: 'protocol/anohub_organization_v2.html', color: '#f97316' },
-                { id: '04', nameKey: 'synergy', link: 'protocol/anohub_synergy_v2.html', color: '#facc15' },
-                { id: '05', nameKey: 'alignment', link: 'protocol/anohub_alignment_v2.html', color: '#3b82f6' },
-                { id: '06', nameKey: 'predictive', link: 'protocol/anohub_predictive_v2.html', color: '#10b981' },
-                { id: '07', nameKey: 'fluid', link: 'protocol/anohub_fluid_v2.html', color: '#06b6d4' },
-                { id: '08', nameKey: 'flux', link: 'protocol/anohub_flux_v2.html', color: '#ff5722' },
-                { id: '09', nameKey: 'cost', link: 'protocol/anohub_cost_v2.html', color: '#10b981' },
-                { id: '10', nameKey: 'flood', link: 'protocol/anohub_flood_v2.html', color: '#3b82f6' },
-                { id: '11', nameKey: 'vib', link: 'protocol/anohub_vibration_v3.html', color: '#d946ef' },
-                { id: '12', nameKey: 'dam', link: 'protocol/anohub_dam_v2.html', color: '#78716c' },
-                { id: '13', nameKey: 'sat', link: 'protocol/anohub_sat_v2.html', color: '#06b6d4' },
-                { id: '14', nameKey: 'logs', link: 'protocol/anohub_scada_v2.html', color: '#f97316' },
-                { id: '15', nameKey: 'ovr', link: 'protocol/anohub_scada_override_v2.html', color: '#ef4444' },
-                { id: '16', nameKey: 'life', link: 'protocol/anohub_asset_v2.html', color: '#34d399' },
-                { id: '17', nameKey: 'iso', link: 'protocol/anohub_iso_v2.html', color: '#FFD700' },
-                { id: '18', nameKey: 'global', link: 'protocol/anohub_global_v2.html', color: '#3b82f6' },
-                { id: '19', nameKey: 'quantum', link: 'protocol/anohub_quantum_v2.html', color: '#a855f7' },
-                { id: '20', nameKey: 'thermal', link: 'protocol/anohub_thermal_v2.html', color: '#ef4444' },
-                { id: '21', nameKey: 'temp', link: 'protocol/anohub_core_v2.html', color: '#ff5722' },
-                { id: '22', nameKey: 'sync', link: 'protocol/anohub_sync_v2.html', color: '#facc15' },
-                { id: '23', nameKey: 'cavitation', link: 'protocol/anohub_cavitation_v2.html', color: '#06b6d4' },
-                { id: '99', nameKey: 'ai', link: '#', color: '#FFD700', isSpecial: true }
+                // Inner Ring (Core Ops)
+                { id: '01', nameKey: 'Core Protocol', link: 'protocol/anohub_protocol_v2.html', color: '#06b6d4', ring: 1 },
+                { id: '02', nameKey: 'NDT Analysis', link: 'protocol/anohub_methodology_v2.html', color: '#8b5cf6', ring: 1 },
+                { id: '03', nameKey: 'Org. Governance', link: 'protocol/anohub_organization_v2.html', color: '#f97316', ring: 1 },
+                { id: '04', nameKey: 'M-E Synergy', link: 'protocol/anohub_synergy_v2.html', color: '#facc15', ring: 1 },
+                
+                // Middle Ring (Diagnostics)
+                { id: '05', nameKey: 'Shaft Alignment', link: 'protocol/anohub_alignment_v2.html', color: '#3b82f6', ring: 2 },
+                { id: '06', nameKey: 'Predictive Maint.', link: 'protocol/anohub_predictive_v2.html', color: '#10b981', ring: 2 },
+                { id: '07', nameKey: 'Fluid Dynamics', link: 'protocol/anohub_fluid_v2.html', color: '#06b6d4', ring: 2 },
+                { id: '08', nameKey: 'Magnetic Flux', link: 'protocol/anohub_flux_v2.html', color: '#ff5722', ring: 2 },
+                { id: '09', nameKey: 'Cost Analysis', link: 'protocol/anohub_cost_v2.html', color: '#10b981', ring: 2 },
+                { id: '10', nameKey: 'Flood Control', link: 'protocol/anohub_flood_v2.html', color: '#3b82f6', ring: 2 },
+                
+                // Outer Ring (Specialized)
+                { id: '11', nameKey: 'Vibration', link: 'protocol/anohub_vibration_v3.html', color: '#d946ef', ring: 3 },
+                { id: '12', nameKey: 'Dam Safety', link: 'protocol/anohub_dam_v2.html', color: '#78716c', ring: 3 },
+                { id: '13', nameKey: 'Satellite Mon.', link: 'protocol/anohub_sat_v2.html', color: '#06b6d4', ring: 3 },
+                { id: '14', nameKey: 'SCADA Logs', link: 'protocol/anohub_scada_v2.html', color: '#f97316', ring: 3 },
+                { id: '15', nameKey: 'Manual Override', link: 'protocol/anohub_scada_override_v2.html', color: '#ef4444', ring: 3 },
+                { id: '16', nameKey: 'Asset Life', link: 'protocol/anohub_asset_v2.html', color: '#34d399', ring: 3 },
+                { id: '17', nameKey: 'ISO Standards', link: 'protocol/anohub_iso_v2.html', color: '#FFD700', ring: 3 },
+                { id: '18', nameKey: 'Global Supply', link: 'protocol/anohub_global_v2.html', color: '#3b82f6', ring: 3 },
+                { id: '23', nameKey: 'Cavitation', link: 'protocol/anohub_cavitation_v2.html', color: '#06b6d4', ring: 3 },
+                
+                // Special
+                { id: '99', nameKey: 'AI Core', link: '#', color: '#FFD700', ring: 1, isSpecial: true }
             ],
 
             init() {
@@ -298,83 +401,134 @@
             },
 
             buildSolarSystem() {
-                const system = document.getElementById('galaxy');
-                system.innerHTML = ''; // Clear previous content
-                // Kept sun separate in HTML structure to avoid duplication/style mismatch
+                const galaxy = document.getElementById('galaxy');
+                if(!galaxy) return;
 
-                const itemsPerRing = 8;
-                let currentRadius = 220;
-                let currentSpeed = 40;
-                for (let i = 0; i < this.modules.length; i += itemsPerRing) {
-                    const chunk = this.modules.slice(i, i + itemsPerRing);
+                // Define Ring Configurations
+                const rings = [
+                    { radius: 180, speed: 60, direction: 'normal' },   // Ring 1
+                    { radius: 300, speed: 90, direction: 'reverse' },  // Ring 2
+                    { radius: 420, speed: 120, direction: 'normal' }   // Ring 3
+                ];
 
-                    // Create Orbit Ring (Visual)
-                    const orbitRing = document.createElement('div');
-                    Object.assign(orbitRing.style, {
-                        position: 'absolute', top: '50%', left: '50%',
-                        width: `${currentRadius * 2}px`, height: `${currentRadius * 2}px`,
-                        border: '1px dashed rgba(255,255,255,0.1)', borderRadius: '50%',
-                        transform: 'translate(-50%, -50%)', pointerEvents: 'none'
-                    });
-                    system.appendChild(orbitRing);
-                    // Create Rotating Container for Planets
+                rings.forEach((config, index) => {
+                    const ringIndex = index + 1;
+                    const modulesInRing = this.modules.filter(m => m.ring === ringIndex);
+                    
+                    if (modulesInRing.length === 0) return;
+
+                    // 1. Draw Orbit Line
+                    const orbit = document.createElement('div');
+                    orbit.className = 'orbit-ring';
+                    orbit.style.width = `${config.radius * 2}px`;
+                    orbit.style.height = `${config.radius * 2}px`;
+                    galaxy.appendChild(orbit);
+
+                    // 2. Create Rotator Container
                     const rotator = document.createElement('div');
-                    Object.assign(rotator.style, {
-                        position: 'absolute', top: '50%', left: '50%', width: '0', height: '0',
-                        animation: `spin-orbit ${currentSpeed}s linear infinite`,
-                        transformStyle: 'preserve-3d',
-                        pointerEvents: 'none' // CRITICAL FIX
+                    rotator.className = 'rotator';
+                    // Inline animation for dynamic speed
+                    rotator.animate([
+                        { transform: 'translate(-50%, -50%) rotate(0deg)' },
+                        { transform: 'translate(-50%, -50%) rotate(360deg)' }
+                    ], {
+                        duration: config.speed * 1000,
+                        iterations: Infinity,
+                        direction: config.direction
                     });
-                    // Alternate direction
-                    if (i % 2 !== 0) rotator.style.animationDirection = 'reverse';
+                    
+                    galaxy.appendChild(rotator);
 
-                    system.appendChild(rotator);
-                    const step = (2 * Math.PI) / chunk.length;
-                    chunk.forEach((m, idx) => {
-                        const angle = step * idx;
-                        const x = Math.cos(angle) * currentRadius;
-                        const y = Math.sin(angle) * currentRadius;
-                        const link = document.createElement('a');
-                        link.className = 'planet-link';
-                        if (m.isSpecial) {
-                            link.href = "#"; link.onclick = (e) => { e.preventDefault(); App.deployAI(); };
-                        } else {
-                            link.href = m.link;
-                        }
+                    // 3. Place Planets
+                    const step = (2 * Math.PI) / modulesInRing.length;
+                    modulesInRing.forEach((mod, i) => {
+                        const angle = step * i;
+                        const x = Math.cos(angle) * config.radius;
+                        const y = Math.sin(angle) * config.radius;
 
-                        // Position the planet
-                        link.style.transform = `translate(${x}px, ${y}px)`;
-                        // Calculate Counter-Animation duration match
-                        const counterDir = (i % 2 !== 0) ? 'normal' : 'reverse'; // Opposite of parent
-                        link.innerHTML = `
-                        <div class="planet-content" style="animation: spin-orbit ${currentSpeed}s linear infinite ${counterDir}">
-                            <div class="planet-core" style="border-color: ${m.color}; box-shadow: 0 0 10px ${m.color}"></div>
-                            <div class="planet-label" style="border-color: rgba(255,255,255,0.1); color: ${m.color}" data-i18n="protocol_modules.${m.nameKey}">
-                                ${m.nameKey}
+                        const planet = document.createElement('a');
+                        planet.className = 'planet-link';
+                        planet.href = mod.link;
+                        planet.style.transform = `translate(${x}px, ${y}px)`; // Offset from center
+                        
+                        // Counter-rotate content to keep text upright
+                        const content = document.createElement('div');
+                        content.className = 'planet-content';
+                        
+                        // Counter-animation to handle orbit AND tilt
+                        // The galaxy is tilted by 60deg X.
+                        // We need the text to be flat to the screen.
+                        // This requires reversing the galaxy tilt (-60deg X) AND reversing the rotation.
+                        // Since CSS animations are additive, we just reverse the rotation in Z, 
+                        // and apply a static X rotation in CSS class 'planet-content'.
+                        
+                        content.animate([
+                            { transform: 'rotateX(-60deg) rotate(0deg)' },
+                            { transform: 'rotateX(-60deg) rotate(360deg)' } // Rotate opposite to parent? No, animate Z rotation
+                        ], {
+                            duration: config.speed * 1000,
+                            iterations: Infinity,
+                            // If parent rotates 0->360, child must rotate 360->0 to stay upright in Z?
+                            // Actually, just need to counter the orbit rotation.
+                            direction: config.direction === 'normal' ? 'reverse' : 'normal'
+                        });
+                        
+                        // Wait, animate() overrides the transform in CSS class.
+                        // We need to bake the -60deg X tilt into the keyframes.
+                        content.animate([
+                             { transform: 'rotate(0deg) rotateX(-60deg)' }, // Start
+                             { transform: 'rotate(-360deg) rotateX(-60deg)' } // End (counter-rotation)
+                        ], {
+                             duration: config.speed * 1000,
+                            iterations: Infinity,
+                            direction: config.direction === 'normal' ? 'normal' : 'reverse' // Logic check needed visually
+                        });
+                        
+                        // Simplified approach: Just target the inner content
+                        // Let's use the innerHTML structure
+                        content.innerHTML = `
+                            <div class="planet-core" style="border-color: ${mod.color}; box-shadow: 0 0 10px ${mod.color}"></div>
+                            <div class="planet-label" style="border-color: rgba(255,255,255,0.2); color: ${mod.color}">
+                                ${mod.nameKey}
                             </div>
-                        </div>
-                    `;
-                        rotator.appendChild(link);
+                        `;
+
+                        planet.appendChild(content);
+                        rotator.appendChild(planet);
                     });
-                    currentRadius += 140;
-                    currentSpeed += 30;
-                }
+                });
             },
 
             initSearch() {
                 const input = document.getElementById('search-input');
                 if (!input) return;
+
                 input.addEventListener('input', (e) => {
                     const val = e.target.value.toLowerCase().trim();
-                    const links = document.querySelectorAll('.planet-link');
-                    links.forEach(l => {
-                        const text = l.innerText.toLowerCase();
-                        if (val === "" || text.includes(val)) {
-                            l.style.opacity = '1';
-                            l.style.filter = 'none';
+                    const planets = document.querySelectorAll('.planet-link');
+
+                    planets.forEach(p => {
+                        const label = p.querySelector('.planet-label').innerText.toLowerCase();
+                        const core = p.querySelector('.planet-core');
+                        const lbl = p.querySelector('.planet-label');
+
+                        if (val === "") {
+                            // Reset
+                            p.style.opacity = '1';
+                            core.style.transform = 'scale(1)';
+                            lbl.style.opacity = '0'; // Hide label
+                        } else if (label.includes(val)) {
+                            // Match
+                            p.style.opacity = '1';
+                            core.style.transform = 'scale(2)';
+                            core.style.backgroundColor = 'white';
+                            lbl.style.opacity = '1'; // Show label
+                            lbl.style.top = '25px';
+                            lbl.style.zIndex = '50';
                         } else {
-                            l.style.opacity = '0.1';
-                            l.style.filter = 'grayscale(100%)';
+                            // No Match
+                            p.style.opacity = '0.1';
+                            lbl.style.opacity = '0';
                         }
                     });
                 });
@@ -384,5 +538,4 @@
         document.addEventListener('DOMContentLoaded', () => App.init());
     </script>
 </body>
-
 </html>

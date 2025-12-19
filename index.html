@@ -39,17 +39,24 @@
                         'h-dark': '#020617',
                         'h-panel': '#0f172a',
                         'h-border': '#1e293b',
-                        'h-cta': '#f59e0b'
+                        'h-cta': '#f59e0b',
+                        'hydro-charcoal': '#111827',
+                        'hydro-primary': '#22d3ee'
                     },
                     animation: {
                         'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
                         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                         'spin-slow': 'spin 12s linear infinite',
+                        'fade-in-down': 'fadeInDown 0.3s ease-out forwards'
                     },
                     keyframes: {
                         fadeInUp: {
                             '0%': { opacity: '0', transform: 'translateY(20px)' },
                             '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        fadeInDown: {
+                            '0%': { opacity: '0', transform: 'translateY(-10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
                         }
                     },
                     backgroundImage: {
@@ -71,7 +78,7 @@
             position: relative;
         }
 
-        /* TEXTURE OVERLAY - Reduced Opacity for readability */
+        /* TEXTURE OVERLAY */
         .noise-overlay {
             position: fixed;
             top: 0;
@@ -108,7 +115,7 @@
             height: 100dvh;
         }
 
-        /* SIMULATED VIDEO BACKGROUND (CSS) */
+        /* DYNAMIC BACKGROUND */
         .animated-gradient-bg {
             background: radial-gradient(circle at 50% 50%, #1e293b 0%, #020617 80%);
             position: relative;
@@ -135,7 +142,44 @@
             mask-image: linear-gradient(to bottom, transparent, 10%, black, 90%, transparent);
         }
 
-        /* CARD HOVER EFFECTS */
+        /* === ADVANCED ASSET CARDS (Synced with Turbines.html) === */
+        .asset-card {
+            position: relative;
+            height: 500px; /* Taller for impact */
+            border-radius: 1rem;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .asset-card:hover {
+            transform: translateY(-5px) scale(1.01);
+            border-color: var(--card-color);
+            box-shadow: 0 20px 50px -10px var(--card-shadow);
+        }
+
+        .asset-bg {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.7s ease;
+            filter: grayscale(100%) contrast(1.1);
+        }
+
+        .asset-card:hover .asset-bg {
+            transform: scale(1.1);
+            filter: grayscale(0%); /* Restore color on hover */
+        }
+
+        .asset-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, #020617 10%, rgba(2, 6, 23, 0.8) 50%, rgba(2, 6, 23, 0.2) 100%);
+            transition: background 0.5s ease;
+        }
+
+        /* CARD HOVER EFFECTS (General) */
         .tech-card {
             transition: all 0.3s ease;
         }
@@ -149,79 +193,121 @@
 <body class="antialiased font-sans" data-translation-source="home">
 
     <!-- 1. NAVIGATION -->
-    <nav class="fixed top-0 left-0 w-full z-[100] border-b border-white/10 bg-black/95 backdrop-blur-md transition-all duration-300" id="navbar">
-        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <div class="w-8 h-8 bg-h-cyan/20 border border-h-cyan flex items-center justify-center">
-                    <span class="font-bold text-h-cyan">A</span>
-                </div>
+    <header
+        class="fixed w-full z-50 top-0 border-b border-white/5 bg-[#020617]/90 backdrop-blur-md transition-all duration-300 shadow-lg"
+        id="navbar">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+
+            <!-- LOGO & BRANDING -->
+            <a href="index.html" class="flex items-center gap-3 group">
+                <img src="logo.svg" alt="AnoHUB"
+                    class="h-10 w-auto transition duration-300 group-hover:brightness-125 group-hover:drop-shadow-[0_0_10px_rgba(34,211,238,0.5)]">
                 <div class="hidden md:block">
-                    <span class="block text-lg font-black tracking-tighter text-white leading-none">ANOHUBS</span>
-                    <span class="block text-[10px] font-mono text-slate-500 tracking-widest uppercase">Hydro Intelligence</span>
+                    <span
+                        class="block text-lg font-black tracking-tighter text-white leading-none group-hover:text-[#22d3ee] transition">ANOHUBS</span>
+                    <span
+                        class="block text-[10px] font-mono text-slate-500 tracking-widest uppercase group-hover:text-white transition">Hydro
+                        Intelligence</span>
                 </div>
-            </div>
-            
-            <div class="hidden lg:flex items-center gap-6 text-xs font-bold uppercase tracking-wider">
-                <a href="about-us-vision.html" class="text-slate-400 hover:text-white transition-colors duration-200">About</a>
-                <a href="capabilities.html" class="text-slate-400 hover:text-white transition-colors duration-200">Capabilities</a>
-                <a href="insights/article-17-cultural-betrayal.html" class="text-slate-400 hover:text-white transition-colors duration-200">Insights</a>
-                <a href="case-studies.html" class="text-slate-400 hover:text-white transition-colors duration-200">Case Studies</a>
-                
+            </a>
+
+            <!-- DESKTOP MENU -->
+            <nav class="hidden lg:flex items-center gap-6 text-xs font-bold uppercase tracking-wider">
+                <a href="about-us-vision.html"
+                    class="text-slate-400 hover:text-white transition-colors duration-200">About</a>
+                <a href="capabilities.html"
+                    class="text-slate-400 hover:text-white transition-colors duration-200">Capabilities</a>
+
+                <a href="insights/"
+                    class="text-slate-400 hover:text-white transition-colors duration-200">Insights</a>
+                <a href="case-studies.html" class="text-slate-400 hover:text-white transition-colors duration-200">Case
+                    Studies</a>
+
                 <!-- APP LINK -->
-                <a href="anohub.html" target="_blank" class="text-[#4ade80] hover:text-white transition-colors duration-200 flex items-center gap-1">
-                    <i data-lucide="cpu" class="w-3 h-3"></i> ANO HUB
+                <a href="anohub.html" target="_blank"
+                    class="text-[#4ade80] hover:text-white transition-colors duration-200 flex items-center gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
+                        <path d="M3 9h18" />
+                        <path d="M9 21V9" />
+                    </svg>
+                    ANO HUB
                 </a>
 
                 <a href="gallery.html" class="text-slate-400 hover:text-white transition-colors duration-200">Gallery</a>
 
-                <!-- PROTOCOL BUTTON (Renamed for clarity) -->
+                <!-- PROTOCOL BUTTON -->
                 <a href="protocol.html" class="group relative inline-flex items-center gap-2 px-5 py-2 bg-[#22d3ee]/10 text-[#22d3ee] border border-[#22d3ee]/50 rounded-full hover:bg-[#22d3ee] hover:text-black transition-all duration-300">
                     <span>SERVICES</span>
                     <div class="w-1.5 h-1.5 bg-[#22d3ee] rounded-full animate-pulse group-hover:bg-black"></div>
                 </a>
 
                 <!-- CONTACT -->
-                <a href="contact.html" class="px-5 py-2 bg-[#f59e0b] text-black rounded-full hover:bg-yellow-400 transition shadow-lg shadow-orange-500/20 transform hover:scale-105">
+                <a href="contact.html"
+                    class="px-5 py-2 bg-[#f59e0b] text-black rounded-full hover:bg-yellow-400 transition shadow-lg shadow-orange-500/20 transform hover:scale-105">
                     GET A QUOTE
                 </a>
-            </div>
+            </nav>
 
-            <!-- Mobile Menu Button -->
-            <button class="lg:hidden text-white" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
-                <i data-lucide="menu"></i>
+            <!-- MOBILE MENU BUTTON -->
+            <button id="mobile-menu-button" class="lg:hidden text-white p-2 hover:bg-white/10 rounded transition"
+                aria-label="Toggle Menu">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    data-lucide="menu">
+                    <line x1="4" x2="20" y1="12" y2="12" />
+                    <line x1="4" x2="20" y1="6" y2="6" />
+                    <line x1="4" x2="20" y1="18" y2="18" />
+                </svg>
             </button>
         </div>
-        
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden lg:hidden bg-black/95 border-b border-white/10 absolute w-full left-0 top-20 p-6 flex flex-col gap-4 shadow-2xl">
-            <a href="about-us-vision.html" class="text-slate-300 hover:text-[#22d3ee] py-2 border-b border-[#1e293b]">About Us</a>
-            <a href="capabilities.html" class="text-slate-300 hover:text-[#22d3ee] py-2 border-b border-[#1e293b]">Capabilities</a>
-            <a href="insights/article-17-cultural-betrayal.html" class="text-slate-300 hover:text-[#22d3ee] py-2 border-b border-[#1e293b]">Insights</a>
-            <a href="case-studies.html" class="text-slate-300 hover:text-[#22d3ee] py-2 border-b border-[#1e293b]">Case Studies</a>
-            <a href="anohub.html" target="_blank" class="text-[#4ade80] font-bold py-2 border-b border-[#1e293b] flex items-center gap-2">
-                <i data-lucide="cpu" class="w-4 h-4"></i> ANO HUB APP
-            </a>
-            <a href="gallery.html" class="text-slate-300 hover:text-[#22d3ee] py-2 border-b border-[#1e293b]">Gallery</a>
-            <a href="protocol.html" class="text-[#22d3ee] font-bold py-3 border-b border-[#1e293b] flex items-center gap-2 bg-[#22d3ee]/5 px-2 rounded">
-                <i data-lucide="shield" class="w-4 h-4"></i> PROTOCOL SERVICES
-            </a>
-            <a href="contact.html" class="text-black bg-[#f59e0b] font-bold py-3 text-center rounded-lg hover:bg-yellow-400 transition mt-2">REQUEST AUDIT</a>
-        </div>
-    </nav>
 
-    <!-- HANGAR LOADER (Golden Thread Only) -->
+        <!-- MOBILE MENU OVERLAY -->
+        <div id="mobile-menu"
+            class="hidden lg:hidden absolute top-20 left-0 w-full bg-[#020617] border-b border-[#1e293b] p-6 flex flex-col gap-4 shadow-2xl border-t border-white/5 animate-fade-in-down">
+            <a href="about-us-vision.html"
+                class="text-slate-300 hover:text-[#22d3ee] py-2 border-b border-[#1e293b] text-lg font-medium">About Us</a>
+            <a href="capabilities.html"
+                class="text-slate-300 hover:text-[#22d3ee] py-2 border-b border-[#1e293b] text-lg font-medium">Capabilities</a>
+            <a href="insights/"
+                class="text-slate-300 hover:text-[#22d3ee] py-2 border-b border-[#1e293b] text-lg font-medium">Insights</a>
+            <a href="case-studies.html"
+                class="text-slate-300 hover:text-[#22d3ee] py-2 border-b border-[#1e293b] text-lg font-medium">Case
+                Studies</a>
+            <a href="anohub.html" target="_blank"
+                class="text-[#4ade80] font-bold py-2 border-b border-[#1e293b] text-lg flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
+                    <path d="M3 9h18" />
+                    <path d="M9 21V9" />
+                </svg>
+                ANO HUB APP
+            </a>
+            <a href="gallery.html"
+                class="text-slate-300 hover:text-[#22d3ee] py-2 border-b border-[#1e293b] text-lg font-medium">Gallery</a>
+            <a href="protocol.html"
+                class="text-[#22d3ee] font-bold py-3 border-b border-[#1e293b] text-lg flex items-center gap-2 bg-[#22d3ee]/5 px-2 rounded">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                </svg>
+                PROTOCOL
+            </a>
+            <a href="contact.html"
+                class="text-black bg-[#f59e0b] font-bold py-3 text-center rounded-lg text-lg hover:bg-yellow-400 transition mt-2">REQUEST AUDIT</a>
+        </div>
+    </header>
+
+    <!-- HANGAR LOADER (Optimized) -->
     <div id="hangar-loader" class="fixed inset-0 z-[10000] flex flex-col pointer-events-none bg-[#020617]">
-        <!-- Top Panel -->
         <div id="hangar-top"
             class="w-full h-1/2 bg-[#020617] border-b border-h-gold/30 relative transition-transform duration-1000 ease-[cubic-bezier(0.87,0,0.13,1)]">
         </div>
-        
-        <!-- The Golden Thread -->
         <div id="hangar-line"
             class="absolute top-1/2 left-0 w-full h-[1px] bg-h-gold shadow-[0_0_20px_#FFD700] z-50 transition-opacity duration-500">
         </div>
-        
-        <!-- Bottom Panel -->
         <div id="hangar-bottom"
             class="w-full h-1/2 bg-[#020617] border-t border-h-gold/30 relative transition-transform duration-1000 ease-[cubic-bezier(0.87,0,0.13,1)]">
         </div>
@@ -263,11 +349,11 @@
                 </h1>
 
                 <!-- Plain English Explanation added -->
-                <h2 class="text-xl md:text-2xl text-white font-bold mb-6 max-w-3xl">
+                <h2 class="text-xl md:text-2xl text-white font-bold mb-6 max-w-3xl border-l-4 border-h-cta pl-4">
                     Specialized Hydro-Mechanical Maintenance & Forensic Engineering
                 </h2>
 
-                <p class="max-w-xl text-lg text-slate-400 mb-8 leading-relaxed border-l-2 border-h-cyan/50 pl-6" data-i18n="hero.subtitle">
+                <p class="max-w-xl text-lg text-slate-400 mb-8 leading-relaxed pl-5" data-i18n="hero.subtitle">
                     We don't just generate reports. We turn wrenches, align shafts, and eliminate the root causes of
                     failure. ISO 9001 Certified Field Teams ready for deployment.
                 </p>
@@ -286,83 +372,80 @@
                 <!-- TRUST STRIP (NEW) -->
                 <div class="border-t border-white/10 pt-6">
                     <p class="text-[10px] font-mono text-slate-500 uppercase tracking-widest mb-4">Trusted Engineering Partner For:</p>
-                    <div class="flex gap-8 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
+                    <div class="flex gap-8 opacity-50 grayscale hover:grayscale-0 transition-all duration-500 flex-wrap">
                         <!-- Placeholders for Client Logos -->
-                        <div class="h-8 w-24 bg-white/10 rounded flex items-center justify-center text-[10px] text-white/50">UTILITY A</div>
-                        <div class="h-8 w-24 bg-white/10 rounded flex items-center justify-center text-[10px] text-white/50">GENCO B</div>
-                        <div class="h-8 w-24 bg-white/10 rounded flex items-center justify-center text-[10px] text-white/50">HYDRO C</div>
+                        <div class="h-10 px-4 bg-white/5 border border-white/10 rounded flex items-center justify-center text-[10px] text-white/70 font-mono tracking-widest">UTILITY CORP</div>
+                        <div class="h-10 px-4 bg-white/5 border border-white/10 rounded flex items-center justify-center text-[10px] text-white/70 font-mono tracking-widest">STATE ENERGY</div>
+                        <div class="h-10 px-4 bg-white/5 border border-white/10 rounded flex items-center justify-center text-[10px] text-white/70 font-mono tracking-widest">HYDRO GEN</div>
+                        <div class="h-10 px-4 bg-white/5 border border-white/10 rounded flex items-center justify-center text-[10px] text-white/70 font-mono tracking-widest">ALPINE POWER</div>
                     </div>
                 </div>
 
             </div>
         </section>
 
-        <!-- === 1.5. TURBINE SELECTOR SECTION === -->
-        <section class="relative z-10 w-full bg-black py-0 border-b border-white/10">
-            <div class="grid grid-cols-1 md:grid-cols-3 h-auto md:h-[400px]">
+        <!-- === 1.5. TURBINE SELECTOR SECTION (Advanced Cards) === -->
+        <section class="relative z-10 w-full bg-black py-24 border-b border-white/10">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-h-cyan font-mono text-xs tracking-widest uppercase mb-2">Asset Library</h2>
+                    <h3 class="text-3xl md:text-4xl font-bold text-white">Select Infrastructure</h3>
+                </div>
 
-                <!-- Francis -->
-                <a href="turbine-francis.html" class="group relative h-80 md:h-full w-full border-b md:border-b-0 md:border-r border-white/10 overflow-hidden flex items-end p-8 bg-zinc-900">
-                    <!-- Image Background -->
-                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0 opacity-60 group-hover:opacity-100" 
-                         style="background-image: url('assets/images/francis_srvcs.jpg');"></div>
-                    
-                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent"></div>
-                    
-                    <div class="relative z-10 w-full">
-                        <div class="text-6xl font-black text-white/5 group-hover:text-white/20 absolute -top-16 -left-0 transition-colors duration-500 transform translate-y-4 group-hover:translate-y-0">FR</div>
-                        <div class="flex justify-between items-end w-full">
-                            <h3 class="text-3xl font-bold text-white mb-1 group-hover:text-h-cyan transition">FRANCIS</h3>
-                            <i data-lucide="arrow-right" class="text-h-cyan opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300"></i>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+                    <!-- Francis Card -->
+                    <a href="turbine-francis.html" class="asset-card group block"
+                       style="--card-color: #06b6d4; --card-shadow: rgba(6, 182, 212, 0.3);">
+                        <div class="asset-bg" style="background-image: url('assets/images/francis_srvcs.jpg');"></div>
+                        <div class="asset-overlay"></div>
+                        <div class="absolute bottom-0 left-0 p-8 w-full">
+                            <div class="flex justify-between items-end border-b border-white/20 pb-4 mb-4">
+                                <h3 class="text-3xl font-black text-white group-hover:text-h-cyan transition">FRANCIS</h3>
+                                <span class="text-[10px] font-mono font-bold text-h-cyan bg-h-cyan/10 px-2 py-1 rounded">MIXED FLOW</span>
+                            </div>
+                            <p class="text-slate-300 text-sm mb-4 line-clamp-2">Vortex Rope Mitigation & RSI Analysis.</p>
+                            <div class="flex items-center text-xs font-bold text-white uppercase tracking-widest">
+                                <span>VIEW PROTOCOLS</span> <i data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-2 transition"></i>
+                            </div>
                         </div>
-                        <div class="h-0.5 w-0 bg-h-cyan group-hover:w-full transition-all duration-500 delay-100"></div>
-                        <p class="mt-2 text-xs text-slate-300 font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-200">
-                            Vortex Rope Mitigation & RSI Analysis.
-                        </p>
-                    </div>
-                </a>
+                    </a>
 
-                <!-- Kaplan -->
-                <a href="turbine-kaplan.html" class="group relative h-80 md:h-full w-full border-b md:border-b-0 md:border-r border-white/10 overflow-hidden flex items-end p-8 bg-zinc-900">
-                     <!-- Image Background -->
-                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0 opacity-60 group-hover:opacity-100" 
-                         style="background-image: url('assets/images/kaplan_srvcs.jpg');"></div>
-                     
-                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent"></div>
-                    
-                    <div class="relative z-10 w-full">
-                        <div class="text-6xl font-black text-white/5 group-hover:text-white/20 absolute -top-16 -left-0 transition-colors duration-500 transform translate-y-4 group-hover:translate-y-0">KA</div>
-                        <div class="flex justify-between items-end w-full">
-                            <h3 class="text-3xl font-bold text-white mb-1 group-hover:text-h-gold transition">KAPLAN</h3>
-                            <i data-lucide="arrow-right" class="text-h-gold opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300"></i>
+                    <!-- Kaplan Card -->
+                    <a href="turbine-kaplan.html" class="asset-card group block"
+                       style="--card-color: #10b981; --card-shadow: rgba(16, 185, 129, 0.3);">
+                        <div class="asset-bg" style="background-image: url('assets/images/kaplan_srvcs.jpg');"></div>
+                        <div class="asset-overlay"></div>
+                        <div class="absolute bottom-0 left-0 p-8 w-full">
+                            <div class="flex justify-between items-end border-b border-white/20 pb-4 mb-4">
+                                <h3 class="text-3xl font-black text-white group-hover:text-h-green transition">KAPLAN</h3>
+                                <span class="text-[10px] font-mono font-bold text-h-green bg-h-green/10 px-2 py-1 rounded">AXIAL FLOW</span>
+                            </div>
+                            <p class="text-slate-300 text-sm mb-4 line-clamp-2">Hub Oil Leak Repair & Cam Optimization.</p>
+                            <div class="flex items-center text-xs font-bold text-white uppercase tracking-widest">
+                                <span>VIEW PROTOCOLS</span> <i data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-2 transition"></i>
+                            </div>
                         </div>
-                        <div class="h-0.5 w-0 bg-h-gold group-hover:w-full transition-all duration-500 delay-100"></div>
-                         <p class="mt-2 text-xs text-slate-300 font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-200">
-                             Hub Oil Leak Repair & Cam Optimization.
-                         </p>
-                    </div>
-                </a>
+                    </a>
 
-                <!-- Pelton -->
-                <a href="turbine-pelton.html" class="group relative h-80 md:h-full w-full overflow-hidden flex items-end p-8 bg-zinc-900">
-                     <!-- Image Background -->
-                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0 opacity-60 group-hover:opacity-100" 
-                         style="background-image: url('assets/images/pelton_srvcs.jpg');"></div>
-
-                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent"></div>
-                    
-                    <div class="relative z-10 w-full">
-                        <div class="text-6xl font-black text-white/5 group-hover:text-white/20 absolute -top-16 -left-0 transition-colors duration-500 transform translate-y-4 group-hover:translate-y-0">PE</div>
-                        <div class="flex justify-between items-end w-full">
-                            <h3 class="text-3xl font-bold text-white mb-1 group-hover:text-h-red transition">PELTON</h3>
-                            <i data-lucide="arrow-right" class="text-h-red opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300"></i>
+                    <!-- Pelton Card -->
+                    <a href="turbine-pelton.html" class="asset-card group block"
+                       style="--card-color: #f59e0b; --card-shadow: rgba(245, 158, 11, 0.3);">
+                        <div class="asset-bg" style="background-image: url('assets/images/pelton_srvcs.jpg');"></div>
+                        <div class="asset-overlay"></div>
+                        <div class="absolute bottom-0 left-0 p-8 w-full">
+                            <div class="flex justify-between items-end border-b border-white/20 pb-4 mb-4">
+                                <h3 class="text-3xl font-black text-white group-hover:text-h-cta transition">PELTON</h3>
+                                <span class="text-[10px] font-mono font-bold text-h-cta bg-h-cta/10 px-2 py-1 rounded">IMPULSE</span>
+                            </div>
+                            <p class="text-slate-300 text-sm mb-4 line-clamp-2">Injector Alignment & Erosion Coating.</p>
+                            <div class="flex items-center text-xs font-bold text-white uppercase tracking-widest">
+                                <span>VIEW PROTOCOLS</span> <i data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-2 transition"></i>
+                            </div>
                         </div>
-                        <div class="h-0.5 w-0 bg-h-red group-hover:w-full transition-all duration-500 delay-100"></div>
-                         <p class="mt-2 text-xs text-slate-300 font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-200">
-                             Injector Alignment & Erosion Coating.
-                         </p>
-                    </div>
-                </a>
+                    </a>
+
+                </div>
             </div>
         </section>
 
@@ -514,56 +597,88 @@
         </section>
     </main>
 
-    <!-- FOOTER -->
-    <footer class="bg-black border-t border-white/10 pt-16 pb-8 px-6 md:px-20">
-        <div class="max-w-7xl mx-auto">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
-                <div class="col-span-1 md:col-span-2">
-                    <div class="flex items-center gap-2 mb-6">
-                        <div class="w-6 h-6 bg-h-cyan/20 border border-h-cyan flex items-center justify-center">
-                            <span class="font-bold text-xs text-h-cyan">A</span>
-                        </div>
-                        <span class="font-header font-bold text-lg tracking-wider text-white">ANOHUBS</span>
-                    </div>
-                    <p class="text-slate-500 text-sm leading-relaxed max-w-sm mb-6">
-                        Engineering immunity for the world's most critical hydro infrastructure. Neutralizing risk through data, physics, and unyielding standards.
-                    </p>
-                    <div class="flex gap-4">
-                        <a href="#" class="text-slate-500 hover:text-h-cyan transition"><i data-lucide="linkedin"></i></a>
-                        <a href="#" class="text-slate-500 hover:text-h-cyan transition"><i data-lucide="twitter"></i></a>
-                        <a href="#" class="text-slate-500 hover:text-h-cyan transition"><i data-lucide="mail"></i></a>
-                    </div>
-                </div>
-                
-                <div>
-                    <h4 class="text-white font-bold uppercase tracking-widest text-xs mb-6">Capabilities</h4>
-                    <ul class="space-y-4">
-                        <li><a href="#" class="text-slate-500 hover:text-h-cyan text-sm transition">Compliance Audits</a></li>
-                        <li><a href="#" class="text-slate-500 hover:text-h-cyan text-sm transition">Forensic Engineering</a></li>
-                        <li><a href="#" class="text-slate-500 hover:text-h-cyan text-sm transition">Predictive Maintenance</a></li>
-                        <li><a href="#" class="text-slate-500 hover:text-h-cyan text-sm transition">Life Extension</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h4 class="text-white font-bold uppercase tracking-widest text-xs mb-6">Legal</h4>
-                    <ul class="space-y-4">
-                        <li><a href="#" class="text-slate-500 hover:text-white text-sm transition">Privacy Protocol</a></li>
-                        <li><a href="#" class="text-slate-500 hover:text-white text-sm transition">Terms of Service</a></li>
-                        <li><a href="#" class="text-slate-500 hover:text-white text-sm transition">ISO Certificates</a></li>
-                    </ul>
-                </div>
+    <!-- MOBILE STICKY CTA (Samo na malim ekranima) - Standardized from _footer.html -->
+    <div
+        class="md:hidden fixed bottom-0 left-0 w-full z-[100] bg-hydro-charcoal/90 backdrop-blur-md border-t border-hydro-primary/20 p-4 pb-6 shadow-[0_-10px_40px_rgba(0,0,0,0.5)]">
+        <a href="contact.html"
+            class="block w-full text-center bg-hydro-primary hover:bg-cyan-400 text-hydro-charcoal py-3.5 rounded-full font-black uppercase tracking-widest shadow-[0_0_20px_rgba(34,211,238,0.4)] transition-all duration-300 transform active:scale-95 flex items-center justify-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-zap">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+            </svg>
+            INITIATE AUDIT
+        </a>
+    </div>
+
+    <!-- MAIN FOOTER - Standardized from _footer.html -->
+    <footer class="bg-black border-t border-slate-900 pt-16 pb-32 md:pb-16 text-center relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            <!-- Logo & Tagline -->
+            <div class="mb-10 flex flex-col items-center">
+                <a href="index.html#hero" class="group inline-block mb-4">
+                    <!-- Logo s efektom: grayscale dok se ne prijeđe mišem -->
+                    <img src="logo.svg" alt="Anohubs Logo"
+                        class="h-10 w-auto opacity-60 group-hover:opacity-100 transition duration-500 grayscale group-hover:grayscale-0">
+                </a>
+                <p class="text-slate-500 text-sm max-w-md mx-auto font-light leading-relaxed">
+                    Establishing the global standard for hydro integrity through forensic engineering and algorithmic
+                    governance.
+                </p>
             </div>
-            
-            <div class="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-                <div class="text-[10px] text-slate-600 font-mono">
-                    &copy; 2024 ANOHUBS. SYSTEM VERSION 2.4.1
-                </div>
-                <div class="flex items-center gap-2">
-                     <div class="w-1.5 h-1.5 rounded-full bg-h-green"></div>
-                     <span class="text-[10px] text-h-green font-mono uppercase">System Nominal</span>
-                </div>
+
+            <!-- Navigation Links -->
+            <nav
+                class="flex flex-wrap justify-center gap-x-8 gap-y-4 text-sm font-bold text-slate-400 mb-12 uppercase tracking-wider">
+                <a href="about-us-vision.html"
+                    class="hover:text-white hover:shadow-[0_2px_0_#22d3ee] transition-all duration-300 pb-1">About</a>
+                <a href="capabilities.html"
+                    class="hover:text-white hover:shadow-[0_2px_0_#22d3ee] transition-all duration-300 pb-1">Capabilities</a>
+                <a href="insights/"
+                    class="hover:text-white hover:shadow-[0_2px_0_#22d3ee] transition-all duration-300 pb-1">Insights</a>
+                <a href="case-studies.html"
+                    class="hover:text-white hover:shadow-[0_2px_0_#22d3ee] transition-all duration-300 pb-1">Case
+                    Studies</a>
+                <a href="gallery.html"
+                    class="hover:text-white hover:shadow-[0_2px_0_#22d3ee] transition-all duration-300 pb-1">Gallery</a>
+                <a href="protocol.html"
+                    class="text-hydro-primary hover:text-white hover:shadow-[0_2px_0_#22d3ee] transition-all duration-300 pb-1 flex items-center gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    </svg> Protocol
+                </a>
+                <a href="contact.html"
+                    class="hover:text-hydro-cta hover:shadow-[0_2px_0_#f59e0b] transition-all duration-300 pb-1">Contact</a>
+            </nav>
+
+            <!-- Tech Divider -->
+            <div class="h-px w-full max-w-xs mx-auto bg-gradient-to-r from-transparent via-slate-800 to-transparent mb-10">
             </div>
+
+            <!-- Legal & Copyright (System Style) -->
+            <div
+                class="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-8 text-[10px] md:text-xs font-mono text-slate-600">
+                <div class="flex gap-6">
+                    <a href="privacy-policy.html"
+                        class="hover:text-hydro-primary transition-colors duration-300 flex items-center gap-1">
+                        <span class="w-1 h-1 bg-slate-600 rounded-full"></span> PRIVACY_PROTOCOL
+                    </a>
+                    <a href="terms-of-use.html"
+                        class="hover:text-hydro-primary transition-colors duration-300 flex items-center gap-1">
+                        <span class="w-1 h-1 bg-slate-600 rounded-full"></span> TERMS_OF_ENGAGEMENT
+                    </a>
+                </div>
+
+                <span class="hidden md:inline text-slate-800">|</span>
+
+                <p class="flex items-center gap-2">
+                    &copy; <span id="year"></span> ANOHUBS INC. <span class="text-hydro-green hidden sm:inline">// ALL
+                        SYSTEMS SECURE</span>
+                </p>
+            </div>
+
         </div>
     </footer>
 
@@ -760,16 +875,32 @@
             
             // 2. Navbar Background Logic
             const navbar = document.getElementById('navbar');
+            // FIX: Changed ID to match ui_core.js expectation
+            const mobileBtn = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
             if (navbar) {
                 window.addEventListener('scroll', () => {
                     if (window.scrollY > 50) {
                         navbar.classList.add('shadow-lg');
-                        navbar.classList.replace('bg-black/80', 'bg-black/95');
+                        navbar.classList.replace('bg-black/95', 'bg-[#020617]/95'); // Matching _header style
                     } else {
                         navbar.classList.remove('shadow-lg');
-                        navbar.classList.replace('bg-black/95', 'bg-black/80');
+                        navbar.classList.replace('bg-[#020617]/95', 'bg-black/95');
                     }
                 });
+            }
+
+            if (mobileBtn && mobileMenu) {
+                mobileBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+
+            // Auto-Update Year Script
+            const yearEl = document.getElementById('year');
+            if (yearEl) {
+                yearEl.textContent = new Date().getFullYear();
             }
         });
     </script>
