@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Predictive Maintenance AI | AnoHUB Services | Anohubs | Hydro Turbine Maintenance & Forensic Engineering</title>
+    <meta name="description" content="Establishing the global standard for hydro integrity.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Roboto+Mono:wght@300;400;700&family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Icons & Styling -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                        header: ['Oswald', 'sans-serif']
+                    },
+                    colors: {
+                        'h-cyan': '#06b6d4',
+                        'h-green': '#10b981',
+                        'h-red': '#ef4444',
+                        'h-yellow': '#facc15',
+                        'h-gold': '#FFB800',
+                        'h-purple': '#8b5cf6',
+                        'h-dark': '#020617',
+                        'h-panel': '#0f172a',
+                        'h-border': '#1e293b',
+                        'h-cta': '#f59e0b',
+                        'hydro-charcoal': '#111827',
+                        'hydro-primary': '#22d3ee'
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'spin-slow': 'spin 12s linear infinite',
+                        'fade-in-down': 'fadeInDown 0.3s ease-out forwards'
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        fadeInDown: {
+                            '0%': { opacity: '0', transform: 'translateY(-10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        }
+                    },
+                    backgroundImage: {
+                        'grid-pattern': "linear-gradient(to right, #1e293b 1px, transparent 1px), linear-gradient(to bottom, #1e293b 1px, transparent 1px)",
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Extract from index.html styling */
+        html, body { background-color: #020617; color: #f8fafc; overflow-x: hidden; width: 100%; position: relative; }
+        .noise-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E"); pointer-events: none; z-index: 50; opacity: 0.2; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #020617; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #06b6d4; }
+        .grid-bg { background-size: 40px 40px; mask-image: linear-gradient(to bottom, transparent, 10%, black, 90%, transparent); }
+        .asset-card { position: relative; height: 500px; border-radius: 1rem; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.1); transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        .asset-card:hover { transform: translateY(-5px) scale(1.01); border-color: var(--card-color); box-shadow: 0 20px 50px -10px var(--card-shadow); }
+        .asset-bg { position: absolute; inset: 0; background-size: cover; background-position: center; transition: transform 0.7s ease; filter: grayscale(100%) contrast(1.1); }
+        .asset-card:hover .asset-bg { transform: scale(1.1); filter: grayscale(0%); }
+        .asset-overlay { position: absolute; inset: 0; background: linear-gradient(to top, #020617 10%, rgba(2, 6, 23, 0.8) 50%, rgba(2, 6, 23, 0.2) 100%); transition: background 0.5s ease; }
+        .tech-card { transition: all 0.3s ease; }
+        .tech-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px -10px rgba(6,182,212,0.2); }
+    </style>
+</head>
+
+<body class="antialiased font-sans">
+    <header class="fixed w-full z-50 top-0 border-b border-white/5 bg-[#020617]/90 backdrop-blur-md transition-all duration-300 shadow-lg" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+            <a href="/" class="flex items-center gap-3 group">
+                <img src="/assets/logo.svg" alt="AnoHUB" class="h-10 w-auto transition duration-300 group-hover:brightness-125">
+                <div class="hidden md:block">
+                    <span class="block text-lg font-black tracking-tighter text-white leading-none group-hover:text-[#22d3ee] transition">ANOHUBS</span>
+                    <span class="block text-[10px] font-mono text-slate-500 tracking-widest uppercase">Hydro Intelligence</span>
+                </div>
+            </a>
+            <nav class="hidden lg:flex items-center gap-6 text-xs font-bold uppercase tracking-wider">
+                <a href="/about-us-vision/" class="text-slate-400 hover:text-white transition">About</a>
+                <a href="/capabilities/" class="text-slate-400 hover:text-white transition">Capabilities</a>
+                <a href="/insights/" class="text-slate-400 hover:text-white transition">Insights</a>
+                <a href="/case-studies/" class="text-slate-400 hover:text-white transition">Case Studies</a>
+                <a href="/protocol/" class="px-5 py-2 bg-[#22d3ee]/10 text-[#22d3ee] border border-[#22d3ee]/50 rounded-full hover:bg-[#22d3ee] hover:text-black transition">SERVICES</a>
+                <a href="/contact/" class="px-5 py-2 bg-[#f59e0b] text-black rounded-full hover:bg-yellow-400 transition">GET A QUOTE</a>
+            </nav>
+            <button id="mobile-menu-button" class="lg:hidden text-white p-2 hover:bg-white/10 rounded transition">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
+        <div id="mobile-menu" class="hidden lg:hidden absolute top-20 left-0 w-full bg-[#020617] border-b border-[#1e293b] p-6 flex flex-col gap-4 animate-fade-in-down">
+            <a href="/about-us-vision/" class="text-slate-300 hover:text-[#22d3ee] py-2 border-b border-[#1e293b]">About Us</a>
+            <a href="/capabilities/" class="text-slate-300 hover:text-[#22d3ee] py-2 border-b border-[#1e293b]">Capabilities</a>
+            <a href="/insights/" class="text-slate-300 hover:text-[#22d3ee] py-2 border-b border-[#1e293b]">Insights</a>
+            <a href="/contact/" class="text-black bg-[#f59e0b] font-bold py-3 text-center rounded-lg mt-2">REQUEST AUDIT</a>
+        </div>
+    </header>
+
+    <div id="hangar-loader" class="fixed inset-0 z-[10000] flex flex-col pointer-events-none bg-[#020617]">
+        <div id="hangar-top" class="w-full h-1/2 bg-[#020617] border-b border-h-gold/30 transition-transform duration-1000"></div>
+        <div id="hangar-line" class="absolute top-1/2 left-0 w-full h-[1px] bg-h-gold shadow-[0_0_20px_#FFD700] z-50"></div>
+        <div id="hangar-bottom" class="w-full h-1/2 bg-[#020617] border-t border-h-gold/30 transition-transform duration-1000"></div>
+    </div>
+
+    <div class="noise-overlay"></div>
+
+    <main>
+        
+
+
+        <!-- === 1. HERO SECTION === -->
+        <section
+            class="relative w-full min-h-screen flex flex-col justify-center items-start px-6 md:px-20 pt-12 pb-20 border-b border-white/5">
+            
+            <!-- Dynamic Background -->
+            <div class="absolute inset-0 z-0 overflow-hidden w-full h-full animated-gradient-bg">
+                <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay"></div>
+                <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/20 to-[#020617] z-10"></div>
+                <div class="absolute inset-0 bg-[url('assets/images/services_digital.jpg')] bg-cover bg-center opacity-20 mix-blend-overlay filter grayscale"></div>
+            </div>
+
+            <div class="relative z-10 max-w-5xl pt-20">
+                <div
+                    class="inline-flex items-center gap-2 px-3 py-1 rounded border border-h-red/30 bg-h-red/10 text-h-red text-[10px] font-mono tracking-widest uppercase mb-6 animate-pulse">
+                    <div class="w-1.5 h-1.5 rounded-full bg-h-red"></div>
+                    <span>SYSTEM STATUS: PREDICTIVE ALGORITHMS ONLINE</span>
+                </div>
+                
+                <h1 class="text-6xl md:text-8xl lg:text-9xl font-black text-white tracking-tighter leading-[0.9] mb-4 animate-fade-in-up">
+                    <span class="block">PREDICTIVE</span>
+                    <span class="block text-transparent bg-clip-text bg-gradient-to-r from-h-red via-white to-h-red bg-[length:200%_auto] animate-gradient-x">INTELLIGENCE</span>
+                </h1>
+
+                <h2 class="text-xl md:text-2xl text-white font-bold mb-6 max-w-3xl border-l-4 border-h-red pl-4">
+                    AI-Driven Failure Forecasting & Pattern Recognition
+                </h2>
+
+                <p class="max-w-xl text-lg text-slate-400 mb-8 leading-relaxed pl-5">
+                    Stop fixing broken machines. Our AI models ingest SCADA, vibration, and thermal data to forecast component failure <strong>6 months in advance</strong>.
+                </p>
+                
+                <!-- KPI GRID -->
+                <div class="grid grid-cols-3 gap-4 mb-8 max-w-lg">
+                    <div class="kpi-box p-4 rounded-xl">
+                         <div class="text-h-red font-black text-2xl mb-1">6 Mo</div>
+                         <div class="text-[10px] text-slate-400 uppercase tracking-widest">Lead Time</div>
+                    </div>
+                    <div class="kpi-box p-4 rounded-xl">
+                         <div class="text-h-green font-black text-2xl mb-1">&lt;0.1%</div>
+                         <div class="text-[10px] text-slate-400 uppercase tracking-widest">False Positives</div>
+                    </div>
+                    <div class="kpi-box p-4 rounded-xl">
+                         <div class="text-white font-black text-2xl mb-1">ZERO</div>
+                         <div class="text-[10px] text-slate-400 uppercase tracking-widest">Downtime</div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-4 mb-12">
+                    <a href="#audit-form"
+                        class="group relative px-8 py-4 bg-h-red text-black font-bold uppercase tracking-widest overflow-hidden text-center hover:bg-white transition-all">
+                        <span class="relative z-10">DEPLOY AI MONITOR</span>
+                    </a>
+                </div>
+
+                <!-- TRUST STRIP -->
+                <div class="border-t border-white/10 pt-6">
+                    <p class="text-[10px] font-mono text-slate-500 uppercase tracking-widest mb-4">Predictive Partner For:</p>
+                    <div class="flex gap-8 opacity-50 grayscale hover:grayscale-0 transition-all duration-500 flex-wrap">
+                        <div class="h-8 px-4 bg-white/10 rounded flex items-center justify-center text-[10px] text-white/50 font-mono tracking-widest">FUTURE GRID</div>
+                        <div class="h-8 px-4 bg-white/10 rounded flex items-center justify-center text-[10px] text-white/50 font-mono tracking-widest">SMART HYDRO</div>
+                        <div class="h-8 px-4 bg-white/10 rounded flex items-center justify-center text-[10px] text-white/50 font-mono tracking-widest">DATA POWER</div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- === 2. THE PROBLEM === -->
+        <section class="py-24 bg-h-dark border-b border-h-border">
+            <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
+                <div class="order-2 lg:order-1">
+                    <div class="glass-card p-10 rounded-2xl border-l-4 border-l-h-red">
+                        <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                            <i data-lucide="alert-triangle" class="w-6 h-6 text-h-red"></i> The Reactive Trap
+                        </h2>
+                        <p class="text-slate-300 leading-relaxed mb-6 text-lg">
+                            Traditional "Run-to-Failure" and even "Scheduled Maintenance" strategies are obsolete. They either fix things too late (catastrophic cost) or too early (wasted budget).
+                        </p>
+                        <p class="text-slate-300 leading-relaxed text-lg border-l-2 border-slate-700 pl-4">
+                            <strong>Dynamic Risk</strong> requires dynamic response. Our algorithms listen to the "voice" of your turbine—the micro-vibrations and thermal shifts that precede failure by months.
+                        </p>
+                    </div>
+                </div>
+                <div class="order-1 lg:order-2 text-center lg:text-left">
+                    <h3 class="text-sm font-mono text-h-red uppercase tracking-widest mb-4">The Advantage</h3>
+                    <h2 class="text-5xl font-black text-white mb-6 leading-tight">See the Future. <br>Change It.</h2>
+                    <p class="text-slate-400 text-lg">Shift from "Firefighting" to "Mission Control". Predict component life with 95% accuracy.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- === 3. TECHNOLOGY GRID === -->
+        <section class="py-24 bg-h-panel relative border-b border-white/5 overflow-hidden">
+             <!-- Grid Background -->
+             <div class="absolute inset-0 bg-grid-pattern opacity-[0.03]"></div>
+
+            <div class="max-w-7xl mx-auto px-4 relative z-10">
+                <div class="text-center mb-20">
+                    <h2 class="text-3xl font-black text-white flex items-center justify-center gap-3">
+                        <i data-lucide="brain-circuit" class="w-8 h-8 text-h-red"></i> The Neural Core
+                    </h2>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="glass-card p-10 rounded-2xl relative group hover:bg-h-red/5 transition">
+                        <div
+                            class="absolute -top-6 left-8 bg-h-dark border border-h-red text-h-red font-black text-xl w-14 h-14 flex items-center justify-center rounded-full shadow-lg group-hover:scale-110 transition">
+                            01</div>
+                        <h3 class="text-2xl font-bold text-white mt-6 mb-4">Machine Learning</h3>
+                        <p class="text-sm text-slate-400 leading-relaxed mb-6">
+                            Models trained on 50+ years of global hydro failure data. We know what a cracked runner sounds like before it cracks.
+                        </p>
+                    </div>
+
+                    <div class="glass-card p-10 rounded-2xl relative group hover:bg-h-red/5 transition">
+                        <div
+                            class="absolute -top-6 left-8 bg-h-dark border border-h-red text-h-red font-black text-xl w-14 h-14 flex items-center justify-center rounded-full shadow-lg group-hover:scale-110 transition">
+                            02</div>
+                        <h3 class="text-2xl font-bold text-white mt-6 mb-4">IoT Sensor Grid</h3>
+                        <p class="text-sm text-slate-400 leading-relaxed mb-6">
+                            Non-intrusive wireless sensors deployed on bearings, shafts, and stators. Real-time data stream, encrypted and secure.
+                        </p>
+                    </div>
+
+                    <div class="glass-card p-10 rounded-2xl relative group hover:bg-h-red/5 transition">
+                        <div
+                            class="absolute -top-6 left-8 bg-h-dark border border-h-red text-h-red font-black text-xl w-14 h-14 flex items-center justify-center rounded-full shadow-lg group-hover:scale-110 transition">
+                            03</div>
+                        <h3 class="text-2xl font-bold text-white mt-6 mb-4">Pattern Recognition</h3>
+                        <p class="text-sm text-slate-400 leading-relaxed mb-6">
+                            Auto-correlation of thermal, vibrational, and acoustic signatures to filter out noise and identify true mechanical degradation.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- === 4. TIME-TO-FAILURE SIMULATOR === -->
+        <section class="py-24 bg-h-dark border-t border-h-border">
+            <div class="max-w-5xl mx-auto px-4">
+                <div class="glass-card p-10 md:p-14 rounded-3xl relative overflow-hidden bg-gradient-to-br from-h-red/5 to-transparent">
+                    <div class="relative z-10">
+                        <div class="flex justify-between items-center mb-8">
+                            <h2 class="text-3xl font-black text-white">Time-to-Failure Horizon</h2>
+                            <div class="bg-black/50 px-4 py-2 rounded border border-h-red/50 text-h-red font-mono font-bold animate-pulse text-xs">
+                                LIVE SIMULATION
+                            </div>
+                        </div>
+
+                        <div class="graph-container mb-8 relative">
+                             <!-- Grid Lines -->
+                             <div class="absolute inset-0" style="background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 20px 20px;"></div>
+                             
+                             <!-- The Graph SVG -->
+                             <svg width="100%" height="100%" viewBox="0 0 500 200" preserveAspectRatio="none" class="absolute inset-0">
+                                 <!-- Safe Zone -->
+                                 <rect x="0" y="100" width="500" height="100" fill="rgba(16, 185, 129, 0.1)" />
+                                 <!-- Warning Zone -->
+                                 <rect x="0" y="50" width="500" height="50" fill="rgba(250, 204, 21, 0.1)" />
+                                 <!-- Critical Zone -->
+                                 <rect x="0" y="0" width="500" height="50" fill="rgba(239, 68, 68, 0.1)" />
+                                 
+                                 <!-- Trend Line (Simulated) -->
+                                 <path d="M0,180 C100,175 200,160 300,140 S400,100 450,40" fill="none" stroke="#ef4444" stroke-width="3" vector-effect="non-scaling-stroke" class="graph-line" />
+                                 
+                                 <!-- Threshold Line -->
+                                 <line x1="0" y1="50" x2="500" y2="50" stroke="#facc15" stroke-width="1" stroke-dasharray="4" />
+                             </svg>
+
+                             <!-- Overlay Elements -->
+                             <div class="absolute top-2 right-4 text-xs text-h-red font-mono font-bold">CRITICAL THRESHOLD</div>
+                             <div class="absolute top-[28%] right-4 text-xs text-h-yellow font-mono">WARNING THRESHOLD</div>
+                             
+                             <!-- Current Time Marker (Interactive Slider controls this visually) -->
+                             <div id="time-marker" class="absolute top-0 bottom-0 w-0.5 bg-white shadow-[0_0_10px_white] transition-all duration-100" style="left: 0%;">
+                                 <div class="absolute -top-6 -left-8 bg-white text-black text-[10px] font-bold px-2 py-1 rounded">NOW</div>
+                             </div>
+                        </div>
+
+                        <div class="flex flex-col gap-2">
+                             <label class="text-xs font-mono text-slate-400">PROJECTED TIMELINE (MONTHS)</label>
+                             <input type="range" id="timeline-slider" min="0" max="100" value="0" class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer">
+                             <div class="flex justify-between text-[10px] text-slate-500 font-mono mt-1">
+                                 <span>TODAY</span>
+                                 <span>+3 MO</span>
+                                 <span>+6 MO (FAILURE)</span>
+                             </div>
+                        </div>
+                        
+                        <div id="status-readout" class="mt-6 p-4 bg-black/40 border border-white/10 rounded text-sm font-mono text-h-green">
+                            STATUS: NOMINAL OPERATIONS. NO ANOMALIES DETECTED.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- === 5. CTA FORM === -->
+        <section id="audit-form" class="py-32 bg-h-dark border-t border-h-border relative">
+            <div class="absolute top-0 right-0 w-1/2 h-full bg-h-red/5 blur-3xl pointer-events-none"></div>
+
+            <div class="max-w-4xl mx-auto px-4 relative z-10">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-black text-white mb-4">Initialize Predictive Pilot</h2>
+                    <p class="text-slate-400">Install sensors on 1 critical asset. Prove the value in 30 days.</p>
+                </div>
+
+                <div class="glass-card p-10 md:p-14 rounded-3xl border border-h-red/20 shadow-2xl bg-black/60">
+                    <form id="contactForm" action="https://formspree.io/f/xqaywlaq" method="POST" class="space-y-6">
+                        <input type="hidden" name="Service" value="Predictive Maintenance">
+
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <div>
+                                <label class="text-xs font-mono text-h-red uppercase ml-1 block mb-2 font-bold tracking-wider">Full Name</label>
+                                <input type="text" name="Full Name" required
+                                    class="w-full bg-black/50 border border-slate-700 rounded-lg p-4 text-white focus:border-h-red focus:ring-1 focus:ring-h-red outline-none transition">
+                            </div>
+                            <div>
+                                <label class="text-xs font-mono text-h-red uppercase ml-1 block mb-2 font-bold tracking-wider">Official
+                                    Email</label>
+                                <input type="email" name="Email" required
+                                    class="w-full bg-black/50 border border-slate-700 rounded-lg p-4 text-white focus:border-h-red focus:ring-1 focus:ring-h-red outline-none transition">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="text-xs font-mono text-h-red uppercase ml-1 block mb-2 font-bold tracking-wider">Asset
+                                Description</label>
+                            <textarea name="Message" rows="4" placeholder="Describe the critical asset for pilot..."
+                                class="w-full bg-black/50 border border-slate-700 rounded-lg p-4 text-white focus:border-h-red focus:ring-1 focus:ring-h-red outline-none transition"></textarea>
+                        </div>
+
+                        <button type="submit" 
+                            class="w-full bg-h-red hover:bg-white text-black font-black py-5 rounded-lg shadow-[0_0_30px_rgba(239,68,68,0.4)] transition uppercase tracking-widest text-lg transform hover:scale-[1.01]">
+                            DEPLOY SENSORS
+                        </button>
+                        <p id="formMessage" class="mt-4 text-center text-sm font-mono hidden"></p>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    
+
+<script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "Predictive Maintenance AI",
+      "provider": { "@type": "Organization", "name": "AnoHUB" },
+      "description": "AI-driven failure forecasting and condition monitoring for hydropower assets."
+    }
+    </script>
+
+
+
+
+    </main>
+
+    <footer class="bg-black border-t border-slate-900 pt-16 pb-16 text-center relative z-10">
+        <div class="max-w-7xl mx-auto px-4">
+            <img src="/assets/logo.svg" alt="Anohubs Logo" class="h-10 w-auto opacity-60 mx-auto mb-10 grayscale">
+            <nav class="flex flex-wrap justify-center gap-8 text-sm font-bold text-slate-400 mb-12 uppercase tracking-wider">
+                <a href="/about-us-vision/" class="hover:text-white">About</a>
+                <a href="/capabilities/" class="hover:text-white">Capabilities</a>
+                <a href="/insights/" class="hover:text-white">Insights</a>
+                <a href="/case-studies/" class="hover:text-white">Case Studies</a>
+                <a href="/protocol/" class="hover:text-white">Protocol</a>
+                <a href="/contact/" class="hover:text-white">Contact</a>
+            </nav>
+            <p class="text-[10px] font-mono text-slate-600">&copy; <span id="year"></span> ANOHUBS INC. <span class="text-hydro-green">// ALL SYSTEMS SECURE</span></p>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+        document.addEventListener("DOMContentLoaded", () => {
+            // Hangar Logic
+            const topPanel = document.getElementById('hangar-top');
+            const btmPanel = document.getElementById('hangar-bottom');
+            const line = document.getElementById('hangar-line');
+            const loader = document.getElementById('hangar-loader');
+
+            if (topPanel && btmPanel && line && loader) {
+                setTimeout(() => {
+                    line.style.boxShadow = "0 0 100px #FFB800";
+                    line.style.backgroundColor = "#FFB800";
+                    setTimeout(() => {
+                        topPanel.style.transform = "translateY(-100%)";
+                        btmPanel.style.transform = "translateY(100%)";
+                        line.style.opacity = "0";
+                        setTimeout(() => { loader.style.display = 'none'; }, 1000);
+                    }, 600);
+                }, 800);
+            }
+
+            // Year
+            const yearEl = document.getElementById('year');
+            if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+            // Mobile Menu
+            const mobileBtn = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (mobileBtn && mobileMenu) {
+                mobileBtn.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); });
+            }
+        });
+    </script>
+</body>
+</html>

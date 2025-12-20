@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>3D Flow Analysis: Full System Simulation | AnoHUB Intel | Anohubs | Hydro Turbine Maintenance & Forensic Engineering</title>
+    <meta name="description" content="Establishing the global standard for hydro integrity.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Roboto+Mono:wght@300;400;700&family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Icons & Styling -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                        header: ['Oswald', 'sans-serif']
+                    },
+                    colors: {
+                        'h-cyan': '#06b6d4',
+                        'h-green': '#10b981',
+                        'h-red': '#ef4444',
+                        'h-yellow': '#facc15',
+                        'h-gold': '#FFB800',
+                        'h-purple': '#8b5cf6',
+                        'h-dark': '#020617',
+                        'h-panel': '#0f172a',
+                        'h-border': '#1e293b',
+                        'h-cta': '#f59e0b',
+                        'hydro-charcoal': '#111827',
+                        'hydro-primary': '#22d3ee'
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'spin-slow': 'spin 12s linear infinite',
+                        'fade-in-down': 'fadeInDown 0.3s ease-out forwards'
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        fadeInDown: {
+                            '0%': { opacity: '0', transform: 'translateY(-10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        }
+                    },
+                    backgroundImage: {
+                        'grid-pattern': "linear-gradient(to right, #1e293b 1px, transparent 1px), linear-gradient(to bottom, #1e293b 1px, transparent 1px)",
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Extract from index.html styling */
+        html, body { background-color: #020617; color: #f8fafc; overflow-x: hidden; width: 100%; position: relative; }
+        .noise-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E"); pointer-events: none; z-index: 50; opacity: 0.2; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #020617; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #06b6d4; }
+        .grid-bg { background-size: 40px 40px; mask-image: linear-gradient(to bottom, transparent, 10%, black, 90%, transparent); }
+        .asset-card { position: relative; height: 500px; border-radius: 1rem; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.1); transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        .asset-card:hover { transform: translateY(-5px) scale(1.01); border-color: var(--card-color); box-shadow: 0 20px 50px -10px var(--card-shadow); }
+        .asset-bg { position: absolute; inset: 0; background-size: cover; background-position: center; transition: transform 0.7s ease; filter: grayscale(100%) contrast(1.1); }
+        .asset-card:hover .asset-bg { transform: scale(1.1); filter: grayscale(0%); }
+        .asset-overlay { position: absolute; inset: 0; background: linear-gradient(to top, #020617 10%, rgba(2, 6, 23, 0.8) 50%, rgba(2, 6, 23, 0.2) 100%); transition: background 0.5s ease; }
+        .tech-card { transition: all 0.3s ease; }
+        .tech-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px -10px rgba(6,182,212,0.2); }
+    </style>
+</head>
+
+<body class="antialiased font-sans">
+    <header class="fixed w-full z-50 top-0 border-b border-white/5 bg-[#020617]/90 backdrop-blur-md transition-all duration-300 shadow-lg" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+            <a href="/" class="flex items-center gap-3 group">
+                <img src="/assets/logo.svg" alt="AnoHUB" class="h-10 w-auto transition duration-300 group-hover:brightness-125">
+                <div class="hidden md:block">
+                    <span class="block text-lg font-black tracking-tighter text-white leading-none group-hover:text-[#22d3ee] transition">ANOHUBS</span>
+                    <span class="block text-[10px] font-mono text-slate-500 tracking-widest uppercase">Hydro Intelligence</span>
+                </div>
+            </a>
+            <nav class="hidden lg:flex items-center gap-6 text-xs font-bold uppercase tracking-wider">
+                <a href="/about-us-vision/" class="text-slate-400 hover:text-white transition">About</a>
+                <a href="/capabilities/" class="text-slate-400 hover:text-white transition">Capabilities</a>
+                <a href="/insights/" class="text-slate-400 hover:text-white transition">Insights</a>
+                <a href="/case-studies/" class="text-slate-400 hover:text-white transition">Case Studies</a>
+                <a href="/protocol/" class="px-5 py-2 bg-[#22d3ee]/10 text-[#22d3ee] border border-[#22d3ee]/50 rounded-full hover:bg-[#22d3ee] hover:text-black transition">SERVICES</a>
+                <a href="/contact/" class="px-5 py-2 bg-[#f59e0b] text-black rounded-full hover:bg-yellow-400 transition">GET A QUOTE</a>
+            </nav>
+            <button id="mobile-menu-button" class="lg:hidden text-white p-2 hover:bg-white/10 rounded transition">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
+        <div id="mobile-menu" class="hidden lg:hidden absolute top-20 left-0 w-full bg-[#020617] border-b border-[#1e293b] p-6 flex flex-col gap-4 animate-fade-in-down">
+            <a href="/about-us-vision/" class="text-slate-300 hover:text-[#22d3ee] py-2 border-b border-[#1e293b]">About Us</a>
+            <a href="/capabilities/" class="text-slate-300 hover:text-[#22d3ee] py-2 border-b border-[#1e293b]">Capabilities</a>
+            <a href="/insights/" class="text-slate-300 hover:text-[#22d3ee] py-2 border-b border-[#1e293b]">Insights</a>
+            <a href="/contact/" class="text-black bg-[#f59e0b] font-bold py-3 text-center rounded-lg mt-2">REQUEST AUDIT</a>
+        </div>
+    </header>
+
+    <div id="hangar-loader" class="fixed inset-0 z-[10000] flex flex-col pointer-events-none bg-[#020617]">
+        <div id="hangar-top" class="w-full h-1/2 bg-[#020617] border-b border-h-gold/30 transition-transform duration-1000"></div>
+        <div id="hangar-line" class="absolute top-1/2 left-0 w-full h-[1px] bg-h-gold shadow-[0_0_20px_#FFD700] z-50"></div>
+        <div id="hangar-bottom" class="w-full h-1/2 bg-[#020617] border-t border-h-gold/30 transition-transform duration-1000"></div>
+    </div>
+
+    <div class="noise-overlay"></div>
+
+    <main>
+        
+
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-12 gap-12">
+
+            <article class="lg:col-span-8">
+                <header class="mb-12 border-b border-h-border pb-8">
+                    <div class="flex items-center gap-4 mb-6 text-xs font-mono">
+                        <span class="px-3 py-1 rounded bg-h-cyan/10 text-h-cyan border border-h-cyan/20">CFD
+                            SIMULATION</span>
+                        <span class="text-slate-500" data-i18n="article14.doc_id">DOC ID: INS-014</span>
+                        <span class="text-slate-500">7 MIN READ</span>
+                    </div>
+                    <h1 class="text-4xl md:text-5xl font-black text-white mb-6 leading-tight"
+                        data-i18n="article14.title">
+                        3D Flow Analysis: The Necessity of <span class="text-h-cyan">Full System Simulation</span>
+                    </h1>
+                    <p class="text-xl text-slate-400 leading-relaxed" data-i18n="article14.subtitle">
+                        Analysis proving why traditional 1D flow modeling is obsolete for ultra-high-head pump-turbine
+                        systems (above 700 m).
+                    </p>
+                </header>
+
+                <div
+                    class="article-body text-slate-300 prose prose-invert prose-lg max-w-none prose-h2:text-white prose-h3:text-h-cyan prose-a:text-h-cyan prose-blockquote:border-h-cta">
+                    <img src="../assets/images/cfd_full_system_analysis_main.png" alt="3D CFD simulation"
+                        class="article-img">
+
+                    <p class="article-intro">
+                        Severe pressure pulsations caused by complex flow fields in pumped-storage power stations
+                        significantly threaten operational safety. This analysis demonstrates why a <strong>fully
+                            three-dimensional simulation coupling the pipeline and the pump-turbine unit</strong> is
+                        essential.
+                    </p>
+
+                    <h2>1. The Critical Flaw of 1D Modeling</h2>
+                    <p>Current simulation practices often use 1D models. Our comprehensive 3D analysis reveals a
+                        fundamental flaw in this approach:</p>
+
+                    <blockquote onclick="navigator.clipboard.writeText(this.innerText)">
+                        The study reveals a strong <strong>bidirectional coupling</strong> between the flow in the long
+                        outlet pipe and the internal flow within the pump-turbine unit.
+                    </blockquote>
+
+                    <h2>2. Results and the Propagation of Pulsations</h2>
+                    <p>The detailed analysis of pressure pulsations reveals how instability spreads throughout the
+                        system:</p>
+                    <ul>
+                        <li><strong>Near Impeller:</strong> Pressure pulsations are most intense here, dominated by
+                            high-frequency components.</li>
+                        <li><strong>Downstream Attenuation:</strong> Amplitude decreases downstream.</li>
+                    </ul>
+
+                    <div class="mt-8 p-6 bg-h-panel border border-h-border rounded-xl border-l-4 border-l-h-cyan">
+                        <h4 class="text-white font-bold mb-2">Upgrade Your Modeling</h4>
+                        <p class="text-sm mb-4">Integrate full 3D CFD analysis into your operational strategy.</p>
+                        <a href="/../contact/"
+                            class="inline-block bg-h-cyan hover:bg-cyan-400 text-black font-bold py-2 px-6 rounded text-xs uppercase tracking-wider transition shadow-lg">
+                            REQUEST ADVANCED AUDIT
+                        </a>
+                    </div>
+                </div>
+
+                <div
+                    class="mt-16 pt-8 border-t border-h-border flex flex-col md:flex-row justify-between items-center gap-4">
+                    <div class="text-xs font-mono text-slate-500">TAGS: #CFD #FluidDynamics #Simulation #RiskMitigation
+                    </div>
+                    <div class="flex gap-4">
+                        <button onclick="shareArticle()"
+                            class="text-slate-400 hover:text-white transition group relative" title="Share Article"><svg
+                                xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
+                                <polyline points="16 6 12 2 8 6" />
+                                <line x1="12" x2="12" y1="2" y2="15" />
+                            </svg></button>
+                        <button onclick="copyLink(this)"
+                            class="text-slate-400 hover:text-white transition group relative" title="Copy Link"><svg
+                                xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+                                <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+                            </svg></button>
+                    </div>
+                </div>
+            </article>
+
+            <aside class="lg:col-span-4 space-y-8">
+                <div class="scada-panel p-6 rounded-xl border-t-2 border-h-cyan sticky-sidebar">
+                    <div class="flex items-center gap-4 mb-4">
+                        <img src="../assets/images/ervin_stupac_portrait.jpg" alt="Ervin Stupac"
+                            class="w-16 h-16 rounded-full border-2 border-slate-600 object-cover">
+                        <div>
+                            <h4 class="text-white font-bold">Ervin Stupac</h4>
+                            <p class="text-xs text-h-cyan font-mono">LEAD ARCHITECT</p>
+                        </div>
+                    </div>
+                    <p class="text-sm text-slate-400 mb-4">Specializing in forensic engineering and hydromechanical
+                        optimization.</p>
+                    <a href="/../contact/"
+                        class="block w-full text-center py-2 rounded border border-slate-600 hover:border-white text-xs font-bold text-white transition uppercase">Request
+                        Consultation</a>
+                </div>
+
+                <div class="bg-h-panel border border-h-border rounded-xl p-6">
+                    <h4 class="text-xs font-mono text-slate-500 uppercase mb-4 tracking-widest">Related Briefs</h4>
+                    <div class="space-y-4">
+                        <a href="/article-11-digital-twin/" class="block group">
+                            <h5 class="text-white font-bold text-sm group-hover:text-h-cyan transition">Digital Twin
+                                Implementation</h5>
+                            <p class="text-xs text-slate-500 mt-1">Technology Deep Dive</p>
+                        </a>
+                        <div class="h-px bg-slate-800"></div>
+                        <a href="/article-15-scada-ceo-gap/" class="block group">
+                            <h5 class="text-white font-bold text-sm group-hover:text-h-cyan transition">Bridging the
+                                SCADA-CEO Gap</h5>
+                            <p class="text-xs text-slate-500 mt-1">Governance</p>
+                        </a>
+                        <div class="h-px bg-slate-800"></div>
+                        <a href="/article-4-dach-leadership/" class="block group">
+                            <h5 class="text-white font-bold text-sm group-hover:text-h-cyan transition">The DACH
+                                Strategy</h5>
+                            <p class="text-xs text-slate-500 mt-1">Leadership</p>
+                        </a>
+                    </div>
+                </div>
+
+                <div
+                    class="bg-gradient-to-br from-h-cyan/20 to-transparent border border-h-cyan/40 p-6 rounded-xl text-center">
+                    <h4 class="text-white font-bold mb-2">See It In Action</h4>
+                    <p class="text-xs text-slate-300 mb-4">Explore our Predictive AI capabilities.</p>
+                    <a href="/../services-predictive/"
+                        class="inline-block bg-h-cyan hover:bg-cyan-400 text-black font-bold py-2 px-6 rounded text-xs uppercase tracking-wider transition shadow-lg">
+                        View Predictive Module
+                    </a>
+                </div>
+            </aside>
+        </div>
+    
+
+<script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "headline": "3D Flow Analysis: Full System Simulation",
+      "datePublished": "2025-06-10",
+      "author": { "@type": "Person", "name": "Ervin Stupac" },
+      "publisher": { "@type": "Organization", "name": "AnoHUB" }
+    }
+    </script>
+<script>
+        window.onscroll = function () {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            let scrolled = (winScroll / height) * 100;
+            document.getElementById("reading-progress").style.width = scrolled + "%";
+        };
+        function shareArticle() {
+            if (navigator.share) { navigator.share({ title: document.title, url: window.location.href }); }
+            else { copyLink(document.querySelector('button[title="Copy Link"]')); }
+        }
+        function copyLink(btn) {
+            navigator.clipboard.writeText(window.location.href);
+            alert("Link copied!");
+        }
+    </script>
+
+
+
+
+    </main>
+
+    <footer class="bg-black border-t border-slate-900 pt-16 pb-16 text-center relative z-10">
+        <div class="max-w-7xl mx-auto px-4">
+            <img src="/assets/logo.svg" alt="Anohubs Logo" class="h-10 w-auto opacity-60 mx-auto mb-10 grayscale">
+            <nav class="flex flex-wrap justify-center gap-8 text-sm font-bold text-slate-400 mb-12 uppercase tracking-wider">
+                <a href="/about-us-vision/" class="hover:text-white">About</a>
+                <a href="/capabilities/" class="hover:text-white">Capabilities</a>
+                <a href="/insights/" class="hover:text-white">Insights</a>
+                <a href="/case-studies/" class="hover:text-white">Case Studies</a>
+                <a href="/protocol/" class="hover:text-white">Protocol</a>
+                <a href="/contact/" class="hover:text-white">Contact</a>
+            </nav>
+            <p class="text-[10px] font-mono text-slate-600">&copy; <span id="year"></span> ANOHUBS INC. <span class="text-hydro-green">// ALL SYSTEMS SECURE</span></p>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+        document.addEventListener("DOMContentLoaded", () => {
+            // Hangar Logic
+            const topPanel = document.getElementById('hangar-top');
+            const btmPanel = document.getElementById('hangar-bottom');
+            const line = document.getElementById('hangar-line');
+            const loader = document.getElementById('hangar-loader');
+
+            if (topPanel && btmPanel && line && loader) {
+                setTimeout(() => {
+                    line.style.boxShadow = "0 0 100px #FFB800";
+                    line.style.backgroundColor = "#FFB800";
+                    setTimeout(() => {
+                        topPanel.style.transform = "translateY(-100%)";
+                        btmPanel.style.transform = "translateY(100%)";
+                        line.style.opacity = "0";
+                        setTimeout(() => { loader.style.display = 'none'; }, 1000);
+                    }, 600);
+                }, 800);
+            }
+
+            // Year
+            const yearEl = document.getElementById('year');
+            if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+            // Mobile Menu
+            const mobileBtn = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (mobileBtn && mobileMenu) {
+                mobileBtn.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,214 @@
+/* ========================================
+   ANOHUBS SITE PRELOADER
+   Full-screen loading overlay system
+   ======================================== */
+
+/* Preloader Container - Full Screen Black Overlay */
+#site-preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(135deg, #020617 0%, #0f172a 100%);
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+    pointer-events: none;
+}
+
+/* Fade out state */
+#site-preloader.fade-out {
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* Logo Container */
+.preloader-logo {
+    width: 120px;
+    height: 120px;
+    position: relative;
+    margin-bottom: 32px;
+}
+
+/* Rotating Technical Ring */
+.preloader-ring {
+    position: absolute;
+    inset: 0;
+    border: 3px solid transparent;
+    border-top-color: #06b6d4;
+    border-right-color: #06b6d4;
+    border-radius: 50%;
+    animation: spin 1.5s linear infinite;
+}
+
+.preloader-ring:nth-child(2) {
+    border-top-color: #10b981;
+    border-left-color: #10b981;
+    animation-duration: 2s;
+    animation-direction: reverse;
+    opacity: 0.6;
+}
+
+.preloader-ring:nth-child(3) {
+    border-top-color: #f59e0b;
+    border-bottom-color: #f59e0b;
+    animation-duration: 2.5s;
+    opacity: 0.4;
+}
+
+/* Center Logo Icon */
+.preloader-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, #06b6d4, #10b981);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+    box-shadow: 0 0 30px rgba(6, 182, 212, 0.5);
+}
+
+/* Loading Bar Container */
+.preloader-bar-container {
+    width: 280px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+/* Animated Loading Bar */
+.preloader-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #06b6d4, #10b981, #f59e0b);
+    background-size: 200% 100%;
+    border-radius: 2px;
+    animation: loading-sweep 2s ease-in-out infinite;
+    box-shadow: 0 0 20px rgba(6, 182, 212, 0.6);
+}
+
+/* Loading Text */
+.preloader-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #94a3b8;
+    animation: text-pulse 2s ease-in-out infinite;
+}
+
+/* Technical Grid Background Pattern */
+.preloader-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(6, 182, 212, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(6, 182, 212, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    opacity: 0.5;
+    animation: grid-shift 20s linear infinite;
+}
+
+/* Animations */
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: translate(-50%, -50%) scale(1.1);
+        opacity: 0.8;
+    }
+}
+
+@keyframes loading-sweep {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+@keyframes text-pulse {
+
+    0%,
+    100% {
+        opacity: 0.6;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+@keyframes grid-shift {
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: 40px 40px;
+    }
+}
+
+/* Mobile Optimization */
+@media (max-width: 768px) {
+    .preloader-logo {
+        width: 90px;
+        height: 90px;
+    }
+
+    .preloader-icon {
+        width: 36px;
+        height: 36px;
+    }
+
+    .preloader-bar-container {
+        width: 220px;
+    }
+
+    .preloader-text {
+        font-size: 10px;
+    }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+
+    #site-preloader,
+    .preloader-ring,
+    .preloader-icon,
+    .preloader-bar,
+    .preloader-text,
+    .preloader-grid {
+        animation: none;
+    }
+
+    .preloader-ring {
+        opacity: 0.5;
+    }
+}
