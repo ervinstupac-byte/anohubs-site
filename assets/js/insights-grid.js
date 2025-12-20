@@ -138,7 +138,7 @@ const insightsData = [
         "category": "culture",
         "icon": "📄",
         "key": "manifesto",
-        "date": "2025-08-25",
+        "date": "2025-11-17",
         "content_file": "/insights/article-17-cultural-betrayal/"
     }
 ];
