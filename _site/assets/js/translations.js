@@ -11,12 +11,8 @@ const i18n = {
     // 2. Load JSON
     async loadTranslations(lang) {
         try {
-            // Check if we are in a subfolder
-            const basePath = window.location.pathname.includes('/insights/') ||
-                window.location.pathname.includes('/protocol/') ||
-                window.location.pathname.includes('/case-studies/') ? '../' : '';
-
-            const response = await fetch(`${basePath}assets/i18n/${lang}.json`);
+            // Eleventy paths are robust with absolute URLs
+            const response = await fetch(`/assets/i18n/${lang}.json`);
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             this.translations = await response.json();
             console.log(`[i18n] Loaded ${lang} data:`, this.translations);

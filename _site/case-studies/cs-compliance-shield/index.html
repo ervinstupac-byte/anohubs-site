@@ -97,30 +97,36 @@
                 </div>
             </a>
             <nav class="hidden lg:flex items-center gap-6 text-xs font-bold uppercase tracking-wider">
-                <a href="/about-us-vision/" class="text-slate-400 hover:text-white transition">About</a>
-                <a href="/capabilities/" class="text-slate-400 hover:text-white transition">Capabilities</a>
-                <a href="/insights/" class="text-slate-400 hover:text-white transition">Insights</a>
-                <a href="/case-studies/" class="text-slate-400 hover:text-white transition">Case Studies</a>
-                <a href="/protocol/" class="px-5 py-2 bg-[#22d3ee]/10 text-[#22d3ee] border border-[#22d3ee]/50 rounded-full hover:bg-[#22d3ee] hover:text-black transition">SERVICES</a>
-                <a href="/contact/" class="px-5 py-2 bg-[#f59e0b] text-black rounded-full hover:bg-yellow-400 transition">GET A QUOTE</a>
+                <a href="/about-us-vision/" class="text-slate-400 hover:text-white transition" data-i18n="nav.about">About</a>
+                <a href="/capabilities/" class="text-slate-400 hover:text-white transition" data-i18n="nav.capabilities">Capabilities</a>
+                <a href="/insights/" class="text-slate-400 hover:text-white transition" data-i18n="nav.insights">Insights</a>
+                <a href="/case-studies/" class="text-slate-400 hover:text-white transition" data-i18n="nav.case_studies">Case Studies</a>
+                <a href="/protocol/" class="px-5 py-2 bg-[#22d3ee]/10 text-[#22d3ee] border border-[#22d3ee]/50 rounded-full hover:bg-[#22d3ee] hover:text-black transition" data-i18n="nav.services">SERVICES</a>
+                <a href="/contact/" class="px-5 py-2 bg-[#f59e0b] text-black rounded-full hover:bg-yellow-400 transition" data-i18n="nav.quote">GET A QUOTE</a>
+                <div class="flex items-center gap-3 border-l border-white/10 pl-6 ml-2 font-mono text-[10px]">
+                    <button onclick="changeLanguage('en')" class="lang-btn hover:text-h-cyan transition" data-lang="en">EN</button>
+                    <span class="opacity-20 text-white/20">|</span>
+                    <button onclick="changeLanguage('bs')" class="lang-btn hover:text-h-cyan transition" data-lang="bs">BS</button>
+                </div>
             </nav>
             <button id="mobile-menu-button" class="lg:hidden text-white p-2 hover:bg-white/10 rounded transition">
                 <i data-lucide="menu"></i>
             </button>
         </div>
         <div id="mobile-menu" class="hidden lg:hidden absolute top-20 left-0 w-full bg-[#020617] border-b border-[#1e293b] p-6 flex flex-col gap-4 animate-fade-in-down">
-            <a href="/about-us-vision/" class="text-slate-300 hover:text-[#22d3ee] py-2 border-b border-[#1e293b]">About Us</a>
-            <a href="/capabilities/" class="text-slate-300 hover:text-[#22d3ee] py-2 border-b border-[#1e293b]">Capabilities</a>
-            <a href="/insights/" class="text-slate-300 hover:text-[#22d3ee] py-2 border-b border-[#1e293b]">Insights</a>
-            <a href="/contact/" class="text-black bg-[#f59e0b] font-bold py-3 text-center rounded-lg mt-2">REQUEST AUDIT</a>
+            <a href="/about-us-vision/" class="text-slate-300 hover:text-[#22d3ee] py-2 border-b border-[#1e293b]" data-i18n="nav.about">About Us</a>
+            <a href="/capabilities/" class="text-slate-300 hover:text-[#22d3ee] py-2 border-b border-[#1e293b]" data-i18n="nav.capabilities">Capabilities</a>
+            <a href="/insights/" class="text-slate-300 hover:text-[#22d3ee] py-2 border-b border-[#1e293b]" data-i18n="nav.insights">Insights</a>
+            <a href="/contact/" class="text-black bg-[#f59e0b] font-bold py-3 text-center rounded-lg mt-2" data-i18n="nav.quote_audit">REQUEST AUDIT</a>
+            <div class="flex justify-center gap-6 pt-4 border-t border-[#1e293b] font-mono text-[10px]">
+                <button onclick="changeLanguage('en')" class="lang-btn text-slate-400" data-lang="en">ENGLISH</button>
+                <div class="text-white/10">|</div>
+                <button onclick="changeLanguage('bs')" class="lang-btn text-slate-400" data-lang="bs">BOSANSKI</button>
+            </div>
         </div>
     </header>
 
-    <div id="hangar-loader" class="fixed inset-0 z-[10000] flex flex-col pointer-events-none bg-[#020617]">
-        <div id="hangar-top" class="w-full h-1/2 bg-[#020617] border-b border-h-gold/30 transition-transform duration-1000"></div>
-        <div id="hangar-line" class="absolute top-1/2 left-0 w-full h-[1px] bg-h-gold shadow-[0_0_20px_#FFD700] z-50"></div>
-        <div id="hangar-bottom" class="w-full h-1/2 bg-[#020617] border-t border-h-gold/30 transition-transform duration-1000"></div>
-    </div>
+
 
     <div class="noise-overlay"></div>
 
@@ -366,24 +372,7 @@
     <script>
         lucide.createIcons();
         document.addEventListener("DOMContentLoaded", () => {
-            // Hangar Logic
-            const topPanel = document.getElementById('hangar-top');
-            const btmPanel = document.getElementById('hangar-bottom');
-            const line = document.getElementById('hangar-line');
-            const loader = document.getElementById('hangar-loader');
 
-            if (topPanel && btmPanel && line && loader) {
-                setTimeout(() => {
-                    line.style.boxShadow = "0 0 100px #FFB800";
-                    line.style.backgroundColor = "#FFB800";
-                    setTimeout(() => {
-                        topPanel.style.transform = "translateY(-100%)";
-                        btmPanel.style.transform = "translateY(100%)";
-                        line.style.opacity = "0";
-                        setTimeout(() => { loader.style.display = 'none'; }, 1000);
-                    }, 600);
-                }, 800);
-            }
 
             // Year
             const yearEl = document.getElementById('year');
@@ -397,5 +386,6 @@
             }
         });
     </script>
+    <script src="/assets/js/translations.js"></script>
 </body>
 </html>
