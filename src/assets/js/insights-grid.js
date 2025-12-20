@@ -124,6 +124,22 @@ const insightsData = [
         "key": "scada_gap",
         "date": "2025-09-01",
         "content_file": "/insights/article-15-scada-ceo-gap/"
+    },
+    {
+        "id": "module16",
+        "category": "tech",
+        "icon": "🤖",
+        "key": "ai_paradox",
+        "date": "2025-08-28",
+        "content_file": "/insights/article-16-ai-paradox/"
+    },
+    {
+        "id": "module17",
+        "category": "culture",
+        "icon": "📄",
+        "key": "manifesto",
+        "date": "2025-08-25",
+        "content_file": "/insights/article-17-cultural-betrayal/"
     }
 ];
 

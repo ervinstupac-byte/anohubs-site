@@ -9,8 +9,7 @@ const insightsData = [
         "id": "module1",
         "category": "tech",
         "icon": "🌊",
-        "title": "Engineering Immunity: Neutralizing 48% Dynamic Risk",
-        "subtitle": "The Strategic Pivot from Execution Gap to Asset Integrity.",
+        "key": "immunity",
         "date": "2025-11-14",
         "content_file": "/insights/article-1-engineering-immunity/"
     },
@@ -18,8 +17,7 @@ const insightsData = [
         "id": "module2",
         "category": "finance",
         "icon": "💰",
-        "title": "The True Cost of Low Bid: The CapEx vs. LCC Catastrophe",
-        "subtitle": "Why chasing the cheapest contract guarantees financial failure.",
+        "key": "hidden_cost",
         "date": "2025-11-07",
         "content_file": "/insights/article-2-low-bid/"
     },
@@ -27,8 +25,7 @@ const insightsData = [
         "id": "module3",
         "category": "tech",
         "icon": "❄️",
-        "title": "Winter Challenges & M-E Synergy",
-        "subtitle": "Extreme Conditions and Electro-Mechanical Stress.",
+        "key": "winter_ops",
         "date": "2025-10-30",
         "content_file": "/insights/article-3-winter-challenges/"
     },
@@ -36,8 +33,7 @@ const insightsData = [
         "id": "module4",
         "category": "culture",
         "icon": "🛡️",
-        "title": "Precision Leadership: DACH Region",
-        "subtitle": "How Precision Reclaims Leadership and secures asset value.",
+        "key": "dach_insights",
         "date": "2025-10-25",
         "content_file": "/insights/article-4-dach-leadership/"
     },
@@ -45,8 +41,7 @@ const insightsData = [
         "id": "module5",
         "category": "culture",
         "icon": "🤝",
-        "title": "The Human Sensor",
-        "subtitle": "Why Ethics and Experience Guarantee Precision.",
+        "key": "human_sensor",
         "date": "2025-10-20",
         "content_file": "/insights/article-5-human-sensor/"
     },
@@ -54,8 +49,7 @@ const insightsData = [
         "id": "module6",
         "category": "finance",
         "icon": "💣",
-        "title": "Hidden Costs & Ticking Bombs",
-        "subtitle": "Systematic Review of Mechanical Maintenance Risks.",
+        "key": "ticking_bomb",
         "date": "2025-10-15",
         "content_file": "/insights/article-6-ticking-bomb/"
     },
@@ -63,8 +57,7 @@ const insightsData = [
         "id": "module7",
         "category": "finance",
         "icon": "🏰",
-        "title": "Your Hydropower Plant as a Fortress",
-        "subtitle": "How to Take Control of Maintenance and Profit.",
+        "key": "fortress",
         "date": "2025-10-10",
         "content_file": "/insights/article-7-fortress-maintenance/"
     },
@@ -72,8 +65,7 @@ const insightsData = [
         "id": "module8",
         "category": "culture",
         "icon": "🌱",
-        "title": "Beyond the Kilowatt-Hour",
-        "subtitle": "The Symbiosis Standard for Sustainable Hydropower.",
+        "key": "symbiosis",
         "date": "2025-10-05",
         "content_file": "/insights/article-8-symbiosis-standard/"
     },
@@ -81,8 +73,7 @@ const insightsData = [
         "id": "module9",
         "category": "fluid",
         "icon": "🌍",
-        "title": "A Holistic View",
-        "subtitle": "The River's Condition as an Operational Indicator.",
+        "key": "holistic",
         "date": "2025-09-30",
         "content_file": "/insights/article-9-holistic-view/"
     },
@@ -90,8 +81,7 @@ const insightsData = [
         "id": "module10",
         "category": "tech",
         "icon": "🌡️",
-        "title": "The 'Check Engine Light' of Your Turbine",
-        "subtitle": "5 Symptoms You Should Never Ignore.",
+        "key": "check_engine",
         "date": "2025-09-25",
         "content_file": "/insights/article-10-check-engine-light/"
     },
@@ -99,8 +89,7 @@ const insightsData = [
         "id": "module11",
         "category": "tech",
         "icon": "💻",
-        "title": "From Reactive to Predictive",
-        "subtitle": "The Digital Twin’s Role in Hydropower Maintenance.",
+        "key": "digital_twin",
         "date": "2025-09-20",
         "content_file": "/insights/article-11-digital-twin/"
     },
@@ -108,8 +97,7 @@ const insightsData = [
         "id": "module12",
         "category": "tech",
         "icon": "🔌",
-        "title": "M-E Synergy: The Holistic Audit",
-        "subtitle": "Protection Against Electro-Mechanical Failures.",
+        "key": "me_synergy",
         "date": "2025-09-15",
         "content_file": "/insights/article-12-me-synergy-audit/"
     },
@@ -117,8 +105,7 @@ const insightsData = [
         "id": "module13",
         "category": "fluid",
         "icon": "⏳",
-        "title": "The Unseen Threat: Sediment and Silt",
-        "subtitle": "Eroding Profits, Endangering Assets.",
+        "key": "sediment",
         "date": "2025-09-10",
         "content_file": "/insights/article-13-sediment-silt/"
     },
@@ -126,8 +113,7 @@ const insightsData = [
         "id": "module14",
         "category": "fluid",
         "icon": "🔬",
-        "title": "3D Flow Analysis: Ultra-High Head Risk",
-        "subtitle": "The Necessity of Full System Simulation (CFD).",
+        "key": "cfd_analysis",
         "date": "2025-09-05",
         "content_file": "/insights/article-14-3d-flow-analysis/"
     },
@@ -135,21 +121,38 @@ const insightsData = [
         "id": "module15",
         "category": "finance",
         "icon": "📈",
-        "title": "The SCADA-to-CEO Gap",
-        "subtitle": "Bridging Data and Strategic Budgeting via HHI.",
+        "key": "scada_gap",
         "date": "2025-09-01",
         "content_file": "/insights/article-15-scada-ceo-gap/"
+    },
+    {
+        "id": "module16",
+        "category": "tech",
+        "icon": "🤖",
+        "key": "ai_paradox",
+        "date": "2025-08-28",
+        "content_file": "/insights/article-16-ai-paradox/"
+    },
+    {
+        "id": "module17",
+        "category": "culture",
+        "icon": "📄",
+        "key": "manifesto",
+        "date": "2025-08-25",
+        "content_file": "/insights/article-17-cultural-betrayal/"
     }
 ];
 
 // 2. FUNKCIJA ZA KREIRANJE KARTICE
 function createInsightCard(insight) {
+    const locale = (localStorage.getItem('selectedLanguage') === 'bs') ? 'bs-BA' : 'en-US';
     const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-    const formattedDate = new Date(insight.date).toLocaleDateString('en-US', dateOptions);
+    const formattedDate = new Date(insight.date).toLocaleDateString(locale, dateOptions);
 
-    // FIX: Dodana klasa 'is-visible' da se osigura prikazivanje
-    // Uklonjena klasa 'zoom-in' da se izbjegne konflikt sa CSS-om ako JS za animacije kasni
-    // Umjesto toga koristimo jednostavniju tranziciju
+    const getT = (k) => window.getTrans ? window.getTrans(k) : k;
+    const title = getT(`articles_list.${insight.key}.title`);
+    const desc = getT(`articles_list.${insight.key}.desc`);
+    const readMore = getT('insights_page.read_more') || 'Read Article →';
 
     return `
         <a href="${insight.content_file}" class="block transform hover:scale-[1.02] transition-all duration-500 opacity-0 animate-fadeIn">
@@ -158,10 +161,10 @@ function createInsightCard(insight) {
                     <span class="text-4xl" role="img" aria-label="Icon">${insight.icon}</span>
                     <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">${formattedDate}</span>
                 </div>
-                <h2 class="text-xl font-extrabold text-gray-900 mb-2">${insight.title}</h2>
-                <p class="text-slate-600 text-sm flex-grow">${insight.subtitle}</p>
+                <h2 class="text-xl font-extrabold text-gray-900 mb-2">${title}</h2>
+                <p class="text-slate-600 text-sm flex-grow">${desc}</p>
                 <span class="mt-4 inline-flex items-center text-hydro-primary font-semibold text-sm">
-                    Read Article →
+                    ${readMore}
                 </span>
             </div>
         </a>
@@ -217,26 +220,32 @@ document.addEventListener('DOMContentLoaded', () => {
     // Prvo renderovanje
     renderGrid('all');
 
+    window.addEventListener('languageChanged', () => {
+        renderGrid(window.currentFilter || 'all');
+    });
+
     // Filter dugmad
-    const filterButtons = document.querySelectorAll('.topic-button');
+    const filterButtons = document.querySelectorAll('.topic-button, .filter-btn');
     filterButtons.forEach(btn => {
         btn.addEventListener('click', () => {
-            // Reset active klase
-            filterButtons.forEach(b => {
-                b.classList.remove('active');
-                b.classList.remove('bg-hydro-primary/10');
-                b.classList.remove('border-hydro-primary');
-                b.classList.remove('text-hydro-primary');
-            });
-
-            // Set active klasa
-            btn.classList.add('active');
-            btn.classList.add('bg-hydro-primary/10');
-            btn.classList.add('border-hydro-primary');
-            btn.classList.add('text-hydro-primary');
-
-            const category = btn.getAttribute('data-topic');
-            renderGrid(category);
+            const category = btn.getAttribute('data-topic') || (btn.onclick ? null : 'all');
+            // filterInsights is called via onclick in HTML
         });
     });
 });
+
+// Exposed globally for index.html
+window.filterInsights = function (category) {
+    window.currentFilter = category;
+
+    // Update active state of buttons
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        if (btn.getAttribute('onclick')?.includes(`'${category}'`)) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    });
+
+    renderGrid(category);
+};

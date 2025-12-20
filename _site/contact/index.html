@@ -80,9 +80,47 @@
         .asset-overlay { position: absolute; inset: 0; background: linear-gradient(to top, #020617 10%, rgba(2, 6, 23, 0.8) 50%, rgba(2, 6, 23, 0.2) 100%); transition: background 0.5s ease; }
         .tech-card { transition: all 0.3s ease; }
         .tech-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px -10px rgba(6,182,212,0.2); }
+
+        /* Unified CTA Buttons */
+        .btn-primary { 
+            display: inline-flex; items-center; justify-content; center;
+            padding: 1rem 2rem; background-color: #FFB800; color: black; 
+            font-weight: 900; text-transform: uppercase; letter-spacing: 0.1em;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); border-radius: 0.25rem;
+            box-shadow: 0 0 20px rgba(255, 184, 0, 0.2);
+        }
+        .btn-primary:hover { 
+            background-color: white; transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(255, 184, 0, 0.4);
+        }
+
+        .btn-outline {
+            display: inline-flex; items-center; justify-content; center;
+            padding: 1rem 2rem; border: 1px solid rgba(255, 255, 255, 0.2); color: white;
+            font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;
+            transition: all 0.3s ease; border-radius: 0.25rem; backdrop-filter: blur(4px);
+        }
+        .btn-outline:hover {
+            background-color: rgba(255, 255, 255, 0.1); border-color: white;
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            display: inline-flex; items-center; justify-content; center;
+            padding: 1rem 2rem; background-color: #ef4444; color: black;
+            font-weight: 900; text-transform: uppercase; letter-spacing: 0.1em;
+            transition: all 0.3s ease; border-radius: 0.25rem;
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.2);
+        }
+        .btn-danger:hover {
+            background-color: white; transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(239, 68, 68, 0.4);
+        }
+
+        .btn-hero-xl {
+            padding: 1.25rem 3rem; font-size: 1.125rem;
+        }
     </style>
-    <!-- Vercel Speed Insights -->
-    <script defer src="/_vercel/insights/script.js"></script>
 </head>
 
 <body class="antialiased font-sans">
@@ -132,108 +170,154 @@
 
     <main>
         
-<!-- Main Container needs pointer-events-auto to capture clicks -->
-<div
-    class="w-full max-w-5xl bg-black/60 backdrop-blur-xl border border-white/10 p-8 md:p-12 shadow-[0_0_50px_rgba(0,0,0,0.5)] flex flex-col md:flex-row gap-12 items-start pointer-events-auto relative z-20">
+<!-- === CONTACT HERO / FORM SECTION === -->
+<section class="min-h-screen flex items-center justify-center py-32 px-4 relative overflow-hidden">
 
-    <div class="w-full md:w-1/3 space-y-8 relative z-20">
-        <div>
-            <div
-                class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-red-500/20 bg-red-900/10 text-[10px] font-mono text-h-red mb-6 animate-pulse">
-                <span class="w-1.5 h-1.5 bg-h-red rounded-full"></span>
-                <span data-i18n="contact_page.form.status_closed">SYSTEM STATUS: PRE-LAUNCH // NO
-                    SOLICITATION</span>
-            </div>
-            <h1 class="text-4xl md:text-5xl font-black text-white mb-2 font-header">
-                <span class="text-h-gold" data-i18n="contact_page.header.initiate">INITIATE</span><br>
-                <span data-i18n="contact_page.header.protocol">PROTOCOL</span>
-            </h1>
-            <p class="text-slate-400 text-sm italic border-l-2 border-h-red pl-2 max-w-sm"
-                data-i18n="contact_page.header.warning">
-                ACCESS LIMITED: We are currently in PRE-LAUNCH phase. Commercial inquiries are auto-rejected by
-                protocol. Only critical engineering anomalies are being processed.
-            </p>
+    <!-- Background Design Elements -->
+    <div class="absolute inset-0 z-0">
+        <div class="absolute inset-0 bg-grid-pattern opacity-[0.03]"></div>
+        <div
+            class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-gradient-to-b from-h-cyan/5 via-transparent to-h-red/5">
         </div>
 
-        <div class="space-y-4 font-mono text-sm">
-            <a href="mailto:info@anohubs.com"
-                class="flex items-center gap-4 text-slate-300 hover:text-white transition-colors group">
-                <div
-                    class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-h-cyan group-hover:bg-h-cyan/20 transition-colors">
-                    <i data-lucide="mail"></i>
-                </div>
-                <span>info@anohubs.com</span>
-            </a>
+        <!-- Animated Glows -->
+        <div class="absolute top-1/4 -left-20 w-96 h-96 bg-h-cyan/10 rounded-full blur-[120px] animate-pulse"></div>
+        <div class="absolute bottom-1/4 -right-20 w-96 h-96 bg-h-gold/10 rounded-full blur-[120px] animate-pulse-slow"
+            style="animation-delay: 2s;"></div>
+    </div>
 
-            <a href="tel:+436601234567"
-                class="flex items-center gap-4 text-slate-300 hover:text-white transition-colors group">
-                <div
-                    class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-h-gold group-hover:bg-h-gold/20 transition-colors">
-                    <i data-lucide="phone"></i>
-                </div>
-                <span>+43 (0) 660 123 4567</span>
-            </a>
+    <!-- Main Container - Centered with mx-auto -->
+    <div
+        class="w-full max-w-5xl bg-black/40 backdrop-blur-2xl border border-white/10 p-8 md:p-16 rounded-3xl shadow-[0_0_100px_rgba(0,0,0,0.8)] flex flex-col md:flex-row gap-16 items-start pointer-events-auto relative z-20 mx-auto animate-fade-in-up">
 
-            <a href="https://www.google.com/maps/search/Sarajevo" target="_blank" rel="noopener noreferrer"
-                class="flex items-center gap-4 text-slate-300 hover:text-white transition-colors group">
+        <!-- Column 1: Info & Context -->
+        <div class="w-full md:w-5/12 space-y-10 relative z-20">
+            <div>
                 <div
-                    class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-h-green group-hover:bg-h-green/20 transition-colors">
-                    <i data-lucide="map-pin"></i>
+                    class="inline-flex items-center gap-2 px-3 py-1 rounded border border-h-red/30 bg-h-red/10 text-[10px] font-mono text-h-red mb-8 tracking-widest uppercase">
+                    <div class="w-1.5 h-1.5 rounded-full bg-h-red animate-pulse"></div>
+                    <span data-i18n="contact_page.form.status_closed">SYSTEM STATUS: PRE-LAUNCH // NO
+                        SOLICITATION</span>
                 </div>
-                <span data-i18n="contact_page.info.location">Sarajevo (HQ) / Vienna (EU Base)</span>
-            </a>
+
+                <h1 class="text-5xl md:text-7xl font-black text-white mb-6 font-header tracking-tighter leading-none">
+                    <span class="text-h-gold block" data-i18n="contact_page.header.initiate">INITIATE</span>
+                    <span data-i18n="contact_page.header.protocol">PROTOCOL</span>
+                </h1>
+
+                <p class="text-slate-400 text-base leading-relaxed border-l-2 border-h-red pl-6 py-2"
+                    data-i18n="contact_page.header.warning">
+                    ACCESS LIMITED: We are currently in PRE-LAUNCH phase. Commercial inquiries are auto-rejected by
+                    protocol. Only critical engineering anomalies are being processed.
+                </p>
+            </div>
+
+            <div class="space-y-6">
+                <a href="mailto:info@anohubs.com"
+                    class="flex items-center gap-5 text-slate-300 hover:text-white transition-all group">
+                    <div
+                        class="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-h-cyan group-hover:bg-h-cyan/20 group-hover:border-h-cyan/30 transition-all">
+                        <i data-lucide="mail" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <p class="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Secure Email</p>
+                        <span class="text-sm font-bold">info@anohubs.com</span>
+                    </div>
+                </a>
+
+                <a href="tel:+436601234567"
+                    class="flex items-center gap-5 text-slate-300 hover:text-white transition-all group">
+                    <div
+                        class="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-h-gold group-hover:bg-h-gold/20 group-hover:border-h-gold/30 transition-all">
+                        <i data-lucide="phone" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <p class="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Direct Line</p>
+                        <span class="text-sm font-bold">+43 (0) 660 123 4567</span>
+                    </div>
+                </a>
+
+                <a href="https://www.google.com/maps/search/Sarajevo" target="_blank" rel="noopener noreferrer"
+                    class="flex items-center gap-5 text-slate-300 hover:text-white transition-all group">
+                    <div
+                        class="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-h-green group-hover:bg-h-green/20 group-hover:border-h-green/30 transition-all">
+                        <i data-lucide="map-pin" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <p class="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Base Operations</p>
+                        <span class="text-sm font-bold" data-i18n="contact_page.info.location">Sarajevo (HQ) / Vienna
+                            (EU Base)</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Column 2: The Transmission Form -->
+        <div class="w-full md:w-7/12">
+            <div class="bg-white/5 border border-white/10 p-8 md:p-10 rounded-2xl">
+                <form id="contactForm" action="https://formspree.io/f/xqaywlaq" method="POST"
+                    class="space-y-6 relative z-30">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label for="full_name"
+                                class="text-[10px] uppercase tracking-widest text-slate-500 font-bold ml-1"
+                                data-i18n="contact_page.form.label_identity">Identity</label>
+                            <input type="text" id="full_name" name="full_name" placeholder="Full Name"
+                                data-i18n="contact_page.form.ph_name"
+                                class="w-full bg-black/40 border border-white/10 rounded-lg p-4 text-white focus:border-h-gold focus:ring-1 focus:ring-h-gold outline-none transition-all text-sm tech-input">
+                        </div>
+                        <div class="space-y-2">
+                            <label for="company_name"
+                                class="text-[10px] uppercase tracking-widest text-slate-500 font-bold ml-1"
+                                data-i18n="contact_page.form.label_org">Organization</label>
+                            <input type="text" id="company_name" name="company_name" placeholder="Company Name"
+                                data-i18n="contact_page.form.ph_company"
+                                class="w-full bg-black/40 border border-white/10 rounded-lg p-4 text-white focus:border-h-gold focus:outline-none transition-all text-sm tech-input">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label for="email_addr"
+                                class="text-[10px] uppercase tracking-widest text-slate-500 font-bold ml-1"
+                                data-i18n="contact_page.form.label_comms">Comms</label>
+                            <input type="email" id="email_addr" name="email_addr" placeholder="Email Address"
+                                data-i18n="contact_page.form.ph_email"
+                                class="w-full bg-black/40 border border-white/10 rounded-lg p-4 text-white focus:border-h-cyan focus:outline-none transition-all text-sm tech-input">
+                        </div>
+                        <div class="space-y-2">
+                            <label for="phone_num"
+                                class="text-[10px] uppercase tracking-widest text-slate-500 font-bold ml-1"
+                                data-i18n="contact_page.form.label_phone">Direct Line</label>
+                            <input type="tel" id="phone_num" name="phone_num" placeholder="+387..."
+                                data-i18n="contact_page.form.ph_phone"
+                                class="w-full bg-black/40 border border-white/10 rounded-lg p-4 text-white focus:border-h-cyan focus:outline-none transition-all text-sm tech-input">
+                        </div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label for="message_body"
+                            class="text-[10px] uppercase tracking-widest text-slate-500 font-bold ml-1"
+                            data-i18n="contact_page.form.label_briefing">Briefing</label>
+                        <textarea id="message_body" name="message_body" rows="4"
+                            placeholder="Describe the mechanical anomaly..." data-i18n="contact_page.form.ph_message"
+                            class="w-full bg-black/40 border border-white/10 rounded-lg p-4 text-white focus:border-h-red focus:outline-none transition-all text-sm resize-none tech-input"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-primary w-full group py-5 relative overflow-hidden">
+                        <span class="relative z-10 flex items-center justify-center gap-3">
+                            <span data-i18n="contact_page.form.btn_transmit">TRANSMIT DATA</span>
+                            <i data-lucide="arrow-right"
+                                class="w-5 h-5 group-hover:translate-x-2 transition-transform"></i>
+                        </span>
+                    </button>
+
+                    <p id="formMessage" class="mt-6 text-center text-xs font-mono font-bold tracking-widest hidden"></p>
+                </form>
+            </div>
         </div>
     </div>
-    <div class="w-full md:w-2/3">
-        <form id="contactForm" action="https://formspree.io/f/xqaywlaq" method="POST" class="space-y-4 relative z-30">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="space-y-1">
-                    <label for="full_name" class="text-[10px] uppercase tracking-widest text-slate-500"
-                        data-i18n="contact_page.form.label_identity">Identity</label>
-                    <input type="text" id="full_name" name="full_name" placeholder="Full Name"
-                        data-i18n="contact_page.form.ph_name"
-                        class="w-full bg-white/5 border border-white/10 p-3 text-white focus:border-h-gold focus:outline-none transition-colors text-sm tech-input pointer-events-auto">
-                </div>
-                <div class="space-y-1">
-                    <label for="company_name" class="text-[10px] uppercase tracking-widest text-slate-500"
-                        data-i18n="contact_page.form.label_org">Organization</label>
-                    <input type="text" id="company_name" name="company_name" placeholder="Company Name"
-                        data-i18n="contact_page.form.ph_company"
-                        class="w-full bg-white/5 border border-white/10 p-3 text-white focus:border-h-gold focus:outline-none transition-colors text-sm tech-input pointer-events-auto">
-                </div>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="space-y-1">
-                    <label for="email_addr" class="text-[10px] uppercase tracking-widest text-slate-500"
-                        data-i18n="contact_page.form.label_comms">Comms</label>
-                    <input type="email" id="email_addr" name="email_addr" placeholder="Email Address"
-                        data-i18n="contact_page.form.ph_email"
-                        class="w-full bg-white/5 border border-white/10 p-3 text-white focus:border-h-cyan focus:outline-none transition-colors text-sm tech-input pointer-events-auto">
-                </div>
-                <div class="space-y-1">
-                    <label for="phone_num" class="text-[10px] uppercase tracking-widest text-slate-500"
-                        data-i18n="contact_page.form.label_phone">Direct Line</label>
-                    <input type="tel" id="phone_num" name="phone_num" placeholder="+387..."
-                        data-i18n="contact_page.form.ph_phone"
-                        class="w-full bg-white/5 border border-white/10 p-3 text-white focus:border-h-cyan focus:outline-none transition-colors text-sm tech-input pointer-events-auto">
-                </div>
-            </div>
-            <div class="space-y-1">
-                <label for="message_body" class="text-[10px] uppercase tracking-widest text-slate-500"
-                    data-i18n="contact_page.form.label_briefing">Briefing</label>
-                <textarea id="message_body" name="message_body" rows="3"
-                    placeholder="Describe the mechanical anomaly..." data-i18n="contact_page.form.ph_message"
-                    class="w-full bg-white/5 border border-white/10 p-3 text-white focus:border-h-red focus:outline-none transition-colors text-sm resize-none tech-input pointer-events-auto"></textarea>
-            </div>
-            <button type="submit"
-                class="group w-full bg-h-gold hover:bg-white text-black font-bold py-3 px-6 transition-all flex items-center justify-center gap-2 pointer-events-auto relative z-40">
-                <span data-i18n="contact_page.form.btn_transmit">TRANSMIT DATA</span>
-                <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
-            </button>
-            <p id="formMessage" class="mt-4 text-center text-xs font-mono hidden"></p>
-        </form>
-    </div>
-</div>
+</section>
 
 <script>
     document.getElementById('contactForm')?.addEventListener('submit', async function (e) {
@@ -241,33 +325,38 @@
         const form = e.target;
         const msg = document.getElementById('formMessage');
         const btn = form.querySelector('button[type="submit"]');
-        const btnText = btn.querySelector('span');
+        const btnContent = btn.querySelector('span');
+        const originalText = btnContent.innerHTML;
 
         msg.classList.remove('hidden', 'text-h-red', 'text-h-green');
-        msg.textContent = window.getTrans ? window.getTrans('contact_page.form.btn_sending') : 'ENCRYPTING...';
+        btnContent.innerHTML = window.getTrans ? window.getTrans('contact_page.form.btn_sending') : 'ENCRYPTING...';
         btn.disabled = true;
+        btn.classList.add('opacity-70', 'cursor-not-allowed');
 
         try {
+            const formData = new FormData(form);
             const response = await fetch(form.action, {
                 method: 'POST',
-                body: new FormData(form),
+                body: formData,
                 headers: { 'Accept': 'application/json' }
             });
 
             if (response.ok) {
                 msg.textContent = window.getTrans ? window.getTrans('contact_page.form.btn_sent') : 'DATA TRANSMITTED';
-                msg.classList.add('text-h-green');
+                msg.classList.add('text-h-green', 'block');
                 form.reset();
             } else {
                 throw new Error();
             }
         } catch (error) {
-            msg.textContent = window.getTrans ? window.getTrans('contact_page.form.msg_error') : 'TRANSMISSION ERROR. PLEASE RETRY.';
-            msg.classList.add('text-h-red');
+            msg.textContent = window.getTrans ? window.getTrans('contact_page.form.msg_error') : 'TRANSMISSION ERROR';
+            msg.classList.add('text-h-red', 'block');
         } finally {
             setTimeout(() => {
                 msg.classList.add('hidden');
+                btnContent.innerHTML = originalText;
                 btn.disabled = false;
+                btn.classList.remove('opacity-70', 'cursor-not-allowed');
             }, 5000);
         }
     });
