@@ -1,0 +1,326 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="case_study_hydraulic_hammer_mitigation.page_title">MISSION: Hydraulic Defense | AnoHUB Case Study
+    </title>
+    <meta name="description"
+        content="Case Study: Mitigating severe water hammer effects in a high-pressure penstock through precision governor re-calibration."
+        data-i18n="case_study_hydraulic_hammer_mitigation.description">
+
+    <!-- 1. FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+
+    <!-- 2. TAILWIND -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace']
+                    },
+                    colors: {
+                        'h-cyan': '#06b6d4',
+                        'h-green': '#10b981',
+                        'h-red': '#ef4444',
+                        'h-yellow': '#facc15',
+                        'h-dark': '#020617',
+                        'h-panel': '#0f172a',
+                        'h-border': '#1e293b',
+                        'h-cta': '#f59e0b' /* Amber for Transients/Warning */
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #020617;
+            color: #cbd5e1;
+            overflow-x: hidden;
+        }
+
+        /* Tech Background */
+        .tech-bg {
+            background-image:
+                linear-gradient(rgba(245, 158, 11, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(245, 158, 11, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        /* Mission Stamp */
+        .mission-stamp {
+            border: 2px solid #f59e0b;
+            color: #f59e0b;
+            padding: 0.5rem 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: inline-block;
+            transform: rotate(-5deg);
+            opacity: 0.8;
+        }
+
+        /* Glass Panel */
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid #1e293b;
+        }
+    </style>
+    <link rel="stylesheet" href="../assets/css/preloader.css">
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon-16x16.png">
+    <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+    <link rel="manifest" href="../assets/site.webmanifest">
+</head>
+
+<body class="antialiased selection:bg-h-cta selection:text-black"
+    data-translation-source="case_study_hydraulic_hammer_mitigation">
+    <noscript>
+        <div style="border: 1px solid #ef4444; padding: 20px;">
+            <h1 style="color: #ef4444; font-size: 24px; margin-bottom: 10px;">SYSTEM ERROR: SCRIPT BLOCKED</h1>
+            <p>The AnoHUB Protocol requires JavaScript to function.<br>Please enable scripts to access the interface.
+            </p>
+        </div>
+    </noscript>
+
+    <div class="tech-bg"></div>
+
+    <!-- NAV -->
+    <div id="global-header"></div>
+
+    
+        <div class="max-w-6xl mx-auto px-4">
+
+            <!-- MISSION HEADER -->
+            <div class="grid lg:grid-cols-12 gap-12 mb-20">
+                <div class="lg:col-span-8">
+                    <div class="flex items-center gap-4 mb-6">
+                        <span
+                            class="px-3 py-1 rounded bg-h-cta/10 text-h-cta border border-h-cta/20 text-xs font-mono font-bold">TRANSIENT
+                            CONTROL</span>
+                        <span class="text-slate-500 text-xs font-mono">DATE: APR 2025</span>
+                    </div>
+                    <h1 class="text-4xl md:text-6xl font-black text-white mb-6 leading-tight">
+                        Pressure Pulse Control: <br> Eliminating <span class="text-h-cta">Hydraulic Hammer</span>
+                    </h1>
+                    <p class="text-xl text-slate-400 leading-relaxed border-l-4 border-h-cta pl-6">
+                        <strong>The Mission:</strong> A high-head pumped storage unit faced catastrophic pressure spikes
+                        during load rejections. Our objective: Recalibrate the governor logic to safely dissipate
+                        transient energy.
+                    </p>
+                </div>
+                <div class="lg:col-span-4 flex items-center justify-center lg:justify-end">
+                    <div class="mission-stamp p-4 text-center">
+                        MISSION STATUS:<br>
+                        <span class="text-2xl">STABILIZED</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- EXECUTION DATA -->
+            <div class="grid md:grid-cols-3 gap-6 mb-20">
+                <!-- Metric 1 -->
+                <div class="glass-panel p-6 rounded-xl border-t-4 border-t-h-cta text-center">
+                    <div class="text-xs font-mono text-slate-500 uppercase mb-2">Surge Reduction</div>
+                    <div class="text-5xl font-black text-white mb-2">-40%</div>
+                    <p class="text-xs text-h-cta">Peak Pressure Drop</p>
+                </div>
+                <!-- Metric 2 -->
+                <div class="glass-panel p-6 rounded-xl border-t-4 border-t-h-cta text-center">
+                    <div class="text-xs font-mono text-slate-500 uppercase mb-2">Safety Validation</div>
+                    <div class="text-5xl font-black text-white mb-2">100%</div>
+                    <p class="text-xs text-h-cta">Within Design Limits</p>
+                </div>
+                <!-- Metric 3 -->
+                <div class="glass-panel p-6 rounded-xl border-t-4 border-t-h-cta text-center">
+                    <div class="text-xs font-mono text-slate-500 uppercase mb-2">Hammer Incidents</div>
+                    <div class="text-5xl font-black text-white mb-2">0</div>
+                    <p class="text-xs text-h-cta">Since Implementation</p>
+                </div>
+            </div>
+
+            <!-- DETAILED REPORT -->
+            <div class="grid lg:grid-cols-12 gap-12">
+
+                <!-- Left: Narrative -->
+                <div class="lg:col-span-8 space-y-12 text-slate-300">
+
+                    <section>
+                        <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-3">
+                            <span
+                                class="bg-h-red/20 text-h-red w-8 h-8 flex items-center justify-center rounded text-sm font-mono">01</span>
+                            The Threat Vector
+                        </h2>
+                        <p>
+                            A high-head pumped storage unit (600m+) suffered catastrophic pressure spikes during
+                            emergency trips and load rejections. These pressure transients (water hammer) threatened the
+                            structural integrity of the penstock and increased vibration across the entire powerhouse,
+                            leading to major safety concerns and regulatory non-compliance.
+                        </p>
+                        <div class="bg-h-red/5 border border-h-red/20 p-4 rounded-lg mt-4">
+                            <p class="text-sm text-h-red font-mono">
+                                > RISK DETECTED: PENSTOCK RUPTURE THREAT<br>
+                                > CAUSE: INCORRECT GOVERNOR CLOSING LAW
+                            </p>
+                        </div>
+                    </section>
+
+                    <section>
+                        <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-3">
+                            <span
+                                class="bg-h-cta/20 text-h-cta w-8 h-8 flex items-center justify-center rounded text-sm font-mono">02</span>
+                            Tactical Execution
+                        </h2>
+                        <p>We deployed the <strong>AnoHUB Transient Protocol</strong> to remodel the system dynamics:
+                        </p>
+
+                        <ul class="space-y-4 mt-6">
+                            <li class="flex gap-4">
+                                <div class="mt-1"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" class="text-h-cta">
+                                        <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+                                    </svg></div>
+                                <div>
+                                    <strong class="text-white block">Transient 3D Simulation</strong>
+                                    Conducted a high-fidelity dynamic simulation of the entire water conveyance system
+                                    to map pressure wave propagation and reflection points, identifying the resonance
+                                    frequencies.
+                                </div>
+                            </li>
+                            <li class="flex gap-4">
+                                <div class="mt-1"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" class="text-h-cta">
+                                        <line x1="4" x2="20" y1="12" y2="12" />
+                                        <line x1="4" x2="20" y1="6" y2="6" />
+                                        <line x1="4" x2="20" y1="18" y2="18" />
+                                        <circle cx="15" cy="6" r="2" />
+                                        <circle cx="9" cy="12" r="2" />
+                                        <circle cx="15" cy="18" r="2" />
+                                    </svg></div>
+                                <div>
+                                    <strong class="text-white block">Governor Recalibration</strong>
+                                    Implemented a new, multi-stage closing law (slow-fast-slow) derived from the
+                                    simulation. This allowed the unit to absorb transient energy gradually without
+                                    stalling or over-speeding.
+                                </div>
+                            </li>
+                            <li class="flex gap-4">
+                                <div class="mt-1"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" class="text-h-cta">
+                                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                                        <path d="m9 12 2 2 4-4" />
+                                    </svg></div>
+                                <div>
+                                    <strong class="text-white block">Safety Validation</strong>
+                                    Verified the final pressure surge against international safety standards and the
+                                    penstock's original design limits during live load rejection tests on site.
+                                </div>
+                            </li>
+                        </ul>
+                    </section>
+
+                </div>
+
+                <!-- Right: Sticky Context -->
+                <aside class="lg:col-span-4 space-y-6">
+                    <div class="glass-panel p-6 rounded-xl border-t-2 border-h-cta sticky top-24">
+                        <h3 class="text-white font-bold mb-4 uppercase tracking-widest text-sm">Deployed Service</h3>
+
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-3 text-sm text-slate-400">
+                                <div class="bg-h-dark p-2 rounded text-h-cta"><svg xmlns="http://www.w3.org/2000/svg"
+                                        width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="4" x2="20" y1="12" y2="12" />
+                                        <line x1="4" x2="20" y1="6" y2="6" />
+                                        <line x1="4" x2="20" y1="18" y2="18" />
+                                        <circle cx="15" cy="6" r="2" />
+                                        <circle cx="9" cy="12" r="2" />
+                                        <circle cx="15" cy="18" r="2" />
+                                    </svg></div>
+                                <span>Governor Tuning</span>
+                            </div>
+                            <div class="flex items-center gap-3 text-sm text-slate-400">
+                                <div class="bg-h-dark p-2 rounded text-h-cta"><svg xmlns="http://www.w3.org/2000/svg"
+                                        width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="10" />
+                                        <line x1="12" x2="12" y1="8" y2="12" />
+                                        <line x1="12" x2="12.01" y1="16" y2="16" />
+                                    </svg></div>
+                                <span>Valve Testing</span>
+                            </div>
+                        </div>
+
+                        <div class="mt-8 pt-6 border-t border-slate-700">
+                            <p class="text-xs text-slate-500 mb-4">Experiencing pipe vibrations?</p>
+                            <a href="/../contact/"
+                                class="block w-full text-center bg-h-cta hover:bg-yellow-500 text-black font-bold py-3 rounded uppercase tracking-wider text-xs transition">
+                                Request Transient Analysis
+                            </a>
+                        </div>
+                    </div>
+                </aside>
+
+            </div>
+
+            <!-- FOOTER NAV -->
+            <div class="mt-24 pt-8 border-t border-slate-800 flex justify-between items-center">
+                <a href="/cs-francis-misalignment/"
+                    class="text-slate-500 hover:text-white text-sm flex items-center gap-2 transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m15 18-6-6 6-6" />
+                    </svg>
+                    Back to Francis
+                </a>
+                <a href="/cs-kaplan-optimization/"
+                    class="text-h-cta hover:text-white text-sm flex items-center gap-2 transition">
+                    Next Mission: Kaplan Opt.
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m9 18 6-6-6-6" />
+                    </svg>
+                </a>
+            </div>
+
+        </div>
+    
+
+    <div id="global-footer"></div>
+
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+
+    <!-- Component Loader -->
+    
+</body>
+
+</html>
+
+

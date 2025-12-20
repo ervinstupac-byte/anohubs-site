@@ -1,0 +1,140 @@
+﻿---
+title: "AnoHUB | M-E SYNERGY // MODULE 04"
+---
+
+
+            
+            <section id="threat" class="relative scada-panel p-8 overflow-hidden group">
+                <div class="absolute inset-0 bg-voltage-gradient opacity-10 pointer-events-none"></div>
+                <div class="relative z-10 grid md:grid-cols-2 gap-8">
+                    <div>
+                        <div class="flex gap-2 mb-4">
+                            <span class="bg-h-gold/10 text-h-gold px-2 py-0.5 text-[10px] font-mono font-bold border border-h-gold/30">M-E SYNERGY</span>
+                            <span class="text-slate-500 font-mono text-[10px]">DOC-ELEC-012 | REV 3.0</span>
+                        </div>
+                        <h1 class="text-4xl font-divine text-white mb-4 tracking-tight">
+                            The Electro-Erosion <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-h-gold to-h-red">Threat Vector</span>
+                        </h1>
+                        <p class="text-slate-300 leading-relaxed text-sm border-l border-slate-700 pl-4 font-light">
+                            Shaft voltages as low as <span class="text-white font-bold">1.0V</span> cause <span class="text-h-gold">Electrical Discharge Machining (EDM)</span> in bearings. The oil film breaks down, micro-arcs pit the white metal, and mechanical failure follows within 6 months.
+                        </p>
+                    </div>
+
+                    <div class="bg-black border border-slate-700 rounded-lg relative overflow-hidden h-48 flex items-center shadow-inner">
+                        <div class="absolute inset-0 scope-grid opacity-20"></div>
+                        <div class="absolute top-1/2 left-0 w-full h-px bg-slate-600/50"></div>
+                        
+                        <svg class="w-full h-full" viewBox="0 0 200 100" preserveAspectRatio="none">
+                            <path d="M0,50 L20,50 L22,20 L24,80 L26,50 L50,50 L52,10 L54,90 L56,50 L100,50 L102,5 L104,95 L106,50 L150,50 L152,30 L154,70 L156,50 L200,50" 
+                                  fill="none" stroke="#FFD700" stroke-width="2" vector-effect="non-scaling-stroke"
+                                  class="animate-dash" stroke-dasharray="200" />
+                        </svg>
+                        
+                        <div class="absolute top-2 right-2 font-mono text-[10px] text-h-gold">CH1: SHAFT POTENTIAL</div>
+                        <div class="absolute bottom-2 left-2 font-mono text-[10px] text-slate-500">TIMEBASE: 5ms/div</div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="diagnostics">
+                <div class="flex items-center gap-3 mb-6 border-b border-slate-800 pb-2">
+                    <span class="text-h-gold font-mono">02 //</span>
+                    <h3 class="text-xl font-divine text-white">Diagnostic Protocol: "Ghost Vibrations"</h3>
+                </div>
+                
+                <div class="scada-panel p-6">
+                    <div class="grid md:grid-cols-2 gap-8">
+                        
+                        <div>
+                            <p class="text-sm text-slate-400 mb-6">
+                                How to distinguish mechanical unbalance from magnetic pull? <br>
+                                <span class="text-white">Toggle the spectrum analyzer below to compare signatures.</span>
+                            </p>
+                            
+                            <div class="space-y-3">
+                                <button id="btn-mech" class="w-full text-left px-4 py-3 rounded bg-slate-900 border border-slate-700 hover:border-h-cyan transition group active-mode">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-xs font-bold text-white group-hover:text-h-cyan uppercase">Mechanical Fault</span>
+                                        <span class="text-[10px] font-mono text-slate-500">1x RPM Dominant</span>
+                                    </div>
+                                </button>
+                                <button id="btn-elec" class="w-full text-left px-4 py-3 rounded bg-slate-900 border border-transparent hover:border-h-gold transition group">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-xs font-bold text-white group-hover:text-h-gold uppercase">Electrical Fault</span>
+                                        <span class="text-[10px] font-mono text-slate-500">2x Line Freq Dominant</span>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="relative bg-black border border-slate-700 rounded-lg h-64 p-4 flex items-end pb-8">
+                            <div class="absolute left-2 top-2 bottom-8 w-px bg-slate-700"></div>
+                            <div class="absolute left-0 top-2 text-[9px] text-slate-600 font-mono">AMP</div>
+                            <div class="absolute left-2 bottom-6 right-2 h-px bg-slate-700"></div>
+                            <div class="absolute right-2 bottom-2 text-[9px] text-slate-600 font-mono">FREQ (Hz)</div>
+
+                            <div id="spectrum-container" class="w-full h-full flex items-end justify-around px-4 gap-1">
+                                </div>
+                            
+                            <div id="diagnosis-text" class="absolute top-4 right-4 text-xs font-mono text-h-cyan bg-black/80 px-2 py-1 border border-h-cyan rounded">
+                                DIAGNOSIS: UNBALANCE
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <section id="mitigation">
+                <div class="flex items-center gap-3 mb-6 border-b border-slate-800 pb-2">
+                    <span class="text-h-gold font-mono">03 //</span>
+                    <h3 class="text-xl font-divine text-white">Mitigation Strategy Simulator</h3>
+                </div>
+
+                <div class="scada-panel p-8 border-t-4 border-t-h-gold relative overflow-hidden">
+                    <div class="relative z-10 grid md:grid-cols-2 gap-12 items-center">
+                        
+                        <div class="space-y-6">
+                            <h4 class="font-bold text-white">Activate Counter-Measures</h4>
+                            <p class="text-xs text-slate-400">Deploy solutions to bring Shaft Voltage below 1.0V.</p>
+
+                            <div class="flex items-center justify-between bg-slate-900 p-4 rounded border border-slate-700">
+                                <div>
+                                    <div class="text-sm font-bold text-white">Grounding Brushes</div>
+                                    <div class="text-[10px] text-slate-500">Ag-C Passive Bleed</div>
+                                </div>
+                                <input type="checkbox" id="toggle-brush">
+                            </div>
+
+                            <div class="flex items-center justify-between bg-slate-900 p-4 rounded border border-slate-700">
+                                <div>
+                                    <div class="text-sm font-bold text-white">Insulated Bearing</div>
+                                    <div class="text-[10px] text-slate-500">Ceramic Break</div>
+                                </div>
+                                <input type="checkbox" id="toggle-insulation">
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col items-center justify-center">
+                            <div class="relative w-48 h-48 flex items-center justify-center border-4 border-slate-700 rounded-full bg-slate-900 shadow-[inset_0_0_20px_rgba(0,0,0,0.5)]">
+                                <div class="text-center">
+                                    <div class="text-[10px] text-slate-500 uppercase tracking-widest">Shaft Potential</div>
+                                    <div id="sim-voltage" class="text-5xl font-black text-h-red transition-all duration-500">1.80</div>
+                                    <div class="text-sm text-slate-400">Volts</div>
+                                </div>
+                                <div id="sim-ring" class="absolute inset-0 border-4 border-h-red rounded-full opacity-50 animate-pulse"></div>
+                            </div>
+                            <div id="sim-verdict" class="mt-6 text-xs font-bold text-h-red bg-h-red/10 px-4 py-2 rounded border border-h-red uppercase tracking-wider">
+                                DANGER: EDM IMMINENT
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+        
+
+
+
+

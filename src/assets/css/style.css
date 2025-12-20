@@ -1,0 +1,209 @@
+/* === ANTI-FOUC (Flash of Unstyled Content) === */
+html {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease-in;
+}
+
+html.wf-active {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* === NO-SCRIPT SAFETY NET === */
+noscript {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    background: #020617;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+    font-family: sans-serif;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom Styles */
+@layer base {
+    :root {
+        --color-primary-cyan: #06B6D4;
+        --color-background-primary: #0A0A0A;
+        --color-background-secondary: #0F172A;
+        --color-warning-yellow: #FACC15;
+        --color-danger-red: #DC2626;
+        --font-size-h1: clamp(3rem, 7vw + 1rem, 5.5rem);
+    }
+
+    body {
+        font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        overflow-x: hidden;
+    }
+}
+
+.font-mono {
+    font-family: 'JetBrains Mono', monospace;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+    background: #020617;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #1e293b;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #06b6d4;
+}
+
+/* Base styles needed for active link behavior */
+.nav-link {
+    transition: color 0.3s ease;
+}
+
+.bg-grid-pattern {
+    background-image: linear-gradient(to right, rgba(6, 182, 212, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(6, 182, 212, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+}
+
+
+/* === SCADA BOOT SEQUENCE === */
+#hydro-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #020617;
+    /* h-dark */
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 10%;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    color: #06b6d4;
+    transition: opacity 0.5s ease-out;
+    /* Ensure it handles mouse events while visible */
+    pointer-events: all;
+}
+
+/* When fade out is triggered */
+#hydro-loader.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.boot-log {
+    font-size: 12px;
+    line-height: 1.8;
+    opacity: 0;
+    animation: logFade 0.2s forwards;
+    margin: 2px 0;
+}
+
+@keyframes logFade {
+    to {
+        opacity: 1;
+    }
+}
+
+/* RADAR BLIP ACTIVE LINK INDICATOR */
+nav a {
+    position: relative;
+}
+
+/* The blip itself - hidden by default */
+nav a::before {
+    content: '';
+    position: absolute;
+    left: -12px;
+    top: 50%;
+    transform: translateY(-50%) scale(0);
+    width: 6px;
+    height: 6px;
+    background-color: #06b6d4;
+    border-radius: 50%;
+    opacity: 0;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 8px #06b6d4;
+}
+
+/* The active state that shows the blip */
+nav a.active-link::before {
+    transform: translateY(-50%) scale(1);
+    opacity: 1;
+    animation: pulse-blip 2s infinite;
+}
+
+@keyframes pulse-blip {
+    0% {
+        box-shadow: 0 0 0 0 rgba(6, 182, 212, 0.7);
+    }
+
+    70% {
+        box-shadow: 0 0 0 6px rgba(6, 182, 212, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(6, 182, 212, 0);
+    }
+}
+
+/* === PRINT STYLES === */
+@media print {
+
+    #global-header,
+    #global-footer,
+    .no-print,
+    .noise-overlay,
+    .video-overlay {
+        display: none !important;
+    }
+
+    body {
+        background: white !important;
+        color: black !important;
+    }
+
+    .prose {
+        color: black !important;
+    }
+
+    .prose h1,
+    .prose h2,
+    .prose h3,
+    .prose h4,
+    .prose strong {
+        color: black !important;
+    }
+
+    .bg-h-dark,
+    .bg-h-panel {
+        background: white !important;
+    }
+
+    .text-white,
+    .text-slate-200,
+    .text-slate-300,
+    .text-slate-400 {
+        color: black !important;
+    }
+
+    a {
+        text-decoration: underline;
+        color: black !important;
+    }
+}

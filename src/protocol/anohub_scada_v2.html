@@ -1,0 +1,117 @@
+﻿---
+title: "AnoHub Protocol | Secure Document"
+---
+
+
+            
+            <section id="architecture" class="relative scada-panel p-8 overflow-hidden group">
+                <div class="relative z-10">
+                    <div class="flex gap-2 mb-4">
+                        <span class="bg-h-gold/10 text-h-gold px-2 py-0.5 text-[10px] font-mono font-bold border border-h-gold/30">CYBER SECURITY</span>
+                        <span class="text-slate-500 font-mono text-[10px]">DOC-SEC-015 | REV 9.0</span>
+                    </div>
+                    <h1 class="text-5xl font-divine text-white mb-6 tracking-tight">
+                        Supervisory Control <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-h-gold to-yellow-200">& Data Acquisition</span>
+                    </h1>
+                    <p class="text-slate-300 leading-relaxed text-lg border-l border-slate-700 pl-6 max-w-3xl font-light">
+                        SCADA is the brain of the hydro plant. If the brain is compromised, the physical assets become weapons. We utilize <strong>Air-Gapped</strong> architecture and <strong>Unidirectional Gateways (Data Diodes)</strong> to ensure physics cannot be hacked.
+                    </p>
+                </div>
+            </section>
+
+            <section id="airgap">
+                <div class="flex items-center gap-3 mb-6 border-b border-slate-800 pb-2">
+                    <span class="text-h-gold font-mono">02 //</span>
+                    <h3 class="text-2xl font-divine text-white">Network Topology (The Air Gap)</h3>
+                </div>
+
+                <div class="scada-panel p-8 relative overflow-hidden">
+                    <div class="grid md:grid-cols-3 gap-8 items-center">
+                        
+                        <div class="text-center p-4 bg-slate-900/50 border border-slate-700 rounded">
+                            <div class="text-h-red font-bold mb-2">IT NETWORK</div>
+                            <div class="text-[10px] text-slate-500 font-mono mb-4">INTERNET / OFFICE</div>
+                            <svg data-lucide="globe" class="w-12 h-12 text-slate-600 mx-auto"></svg>
+                        </div>
+
+                        <div class="relative flex flex-col items-center justify-center">
+                            <div class="absolute w-full h-1 bg-slate-800 top-1/2 z-0"></div>
+                            
+                            <div id="data-flow" class="absolute w-full h-1 top-1/2 z-0 flex justify-center opacity-0 transition-opacity duration-300">
+                                <div class="w-2 h-2 bg-h-gold rounded-full animate-ping absolute left-0"></div>
+                                <div class="w-2 h-2 bg-h-gold rounded-full animate-ping absolute right-0"></div>
+                            </div>
+
+                            <div class="z-10 bg-black border-2 border-h-gold p-4 rounded-full cursor-pointer hover:scale-110 transition" id="diode-switch">
+                                <svg data-lucide="shield-check" class="w-8 h-8 text-h-gold" id="lock-icon"></svg>
+                            </div>
+                            <div class="mt-16 text-center">
+                                <div class="text-[10px] font-mono text-h-gold">DATA DIODE</div>
+                                <div class="text-[9px] text-slate-500">ONE-WAY UPLINK</div>
+                            </div>
+                        </div>
+
+                        <div class="text-center p-4 bg-slate-900/50 border border-slate-700 rounded">
+                            <div class="text-h-green font-bold mb-2">OT NETWORK</div>
+                            <div class="text-[10px] text-slate-500 font-mono mb-4">TURBINE CONTROLLERS</div>
+                            <svg data-lucide="cpu" class="w-12 h-12 text-h-green mx-auto"></svg>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 bg-black border border-slate-800 p-4 font-mono text-[10px] h-32 overflow-hidden relative">
+                        <div class="absolute top-2 right-2 text-h-gold animate-pulse">IDS ACTIVE</div>
+                        <div id="packet-log" class="space-y-1 text-slate-400">
+                            </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="override">
+                <div class="flex items-center gap-3 mb-6 border-b border-slate-800 pb-2">
+                    <span class="text-h-gold font-mono">03 //</span>
+                    <h3 class="text-xl font-bold text-white">PLC Logic Override (God Mode)</h3>
+                </div>
+
+                <div class="scada-panel p-8 border-t-4 border-t-h-red">
+                    <div class="flex justify-between items-start mb-8">
+                        <div>
+                            <h4 class="font-bold text-white">Wicket Gate Control</h4>
+                            <p class="text-xs text-slate-400">Manual override of automated governor logic. <span class="text-h-red">EXTREME CAUTION REQUIRED.</span></p>
+                        </div>
+                        
+                        <label class="flex items-center cursor-pointer gap-3">
+                            <span class="text-xs font-bold text-slate-400 uppercase" id="mode-label">AUTO MODE</span>
+                            <div class="relative">
+                                <input type="checkbox" id="mode-toggle" class="sr-only">
+                                <div class="w-10 h-4 bg-slate-700 rounded-full shadow-inner"></div>
+                                <div class="dot absolute w-6 h-6 bg-slate-400 rounded-full shadow -left-1 -top-1 transition"></div>
+                            </div>
+                        </label>
+                    </div>
+
+                    <div class="relative opacity-50 pointer-events-none transition-all duration-300" id="manual-controls">
+                        <div class="flex justify-between mb-2">
+                            <label class="text-xs font-bold text-white uppercase">Gate Opening</label>
+                            <span class="text-xs font-mono text-h-red" id="gate-val">0%</span>
+                        </div>
+                        <input type="range" id="gate-slider" min="0" max="100" value="0" class="w-full">
+                        
+                        <div id="lockout-msg" class="absolute inset-0 flex items-center justify-center bg-black/80 text-xs font-mono text-h-green border border-h-green/20">
+                            <svg data-lucide="lock" class="w-4 h-4 mr-2"></svg> LOGIC LOCKED BY PLC
+                        </div>
+                    </div>
+
+                    <div class="mt-6 p-4 bg-h-red/10 border border-h-red rounded hidden" id="danger-alert">
+                        <div class="flex items-center gap-2 text-h-red font-bold text-xs animate-pulse">
+                            <svg data-lucide="alert-triangle" class="w-4 h-4"></svg> WARNING: MANUAL OVERRIDE ACTIVE
+                        </div>
+                        <p class="text-[10px] text-slate-300 mt-1 font-mono">Safety interlocks bypassed. Operator assumes full liability.</p>
+                    </div>
+                </div>
+            </section>
+
+        
+
+
+
+

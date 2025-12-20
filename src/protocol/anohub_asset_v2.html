@@ -1,0 +1,161 @@
+﻿---
+title: "AnoHub Protocol | Secure Document"
+---
+
+
+            
+            <section id="overview" class="relative scada-panel p-8 overflow-hidden group">
+                <div class="relative z-10">
+                    <div class="flex gap-2 mb-4">
+                        <span class="bg-h-emerald/10 text-h-emerald px-2 py-0.5 text-[10px] font-mono font-bold border border-h-emerald/30">ASSET MANAGEMENT</span>
+                        <span class="text-slate-500 font-mono text-[10px]">DOC-LIFE-016 | REV 6.0</span>
+                    </div>
+                    <h1 class="text-5xl font-divine text-white mb-6 tracking-tight">
+                        The Immortal <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-h-emerald to-cyan-300">Machine</span>
+                    </h1>
+                    <p class="text-slate-300 leading-relaxed text-lg border-l border-slate-700 pl-6 max-w-3xl font-light">
+                        A hydroelectric turbine is not a disposable asset. With correct metallurgy and monitoring, it can outlive the civilization that built it. This module tracks the <strong class="text-white">Health Index (HI)</strong> and calculates the exact moment for refurbishment to reset the clock.
+                    </p>
+                </div>
+            </section>
+
+            <section id="bathtub">
+                <div class="flex items-center gap-3 mb-6 border-b border-slate-800 pb-2">
+                    <span class="text-h-emerald font-mono">02 //</span>
+                    <h3 class="text-2xl font-divine text-white">The Bathtub Curve (Probability of Failure)</h3>
+                </div>
+
+                <div class="scada-panel p-0 border-t-4 border-t-h-emerald overflow-hidden">
+                    <div class="bg-black p-4 flex justify-between items-center border-b border-slate-700">
+                        <div class="flex items-center gap-3">
+                            <div class="w-3 h-3 bg-h-green rounded-full" id="life-led"></div>
+                            <span class="font-mono text-xs text-white" id="life-stage">STAGE: USEFUL LIFE</span>
+                        </div>
+                        <div class="font-mono text-[10px] text-slate-500">MODEL: WEIBULL DIST.</div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2">
+                        
+                        <div class="p-8 bg-black relative flex items-center justify-center border-r border-slate-800 min-h-[350px]">
+                            <svg class="w-full h-full" viewBox="0 0 300 200" preserveAspectRatio="none">
+                                <line x1="0" y1="190" x2="300" y2="190" stroke="#333" stroke-width="2" />
+                                <line x1="10" y1="0" x2="10" y2="200" stroke="#333" stroke-width="2" />
+                                
+                                <path d="M10,20 Q 40,150 80,150 L 220,150 Q 260,150 290,10" 
+                                      fill="none" stroke="#10b981" stroke-width="3" class="curve-path" />
+                                
+                                <line id="year-line" x1="10" y1="0" x2="10" y2="200" stroke="white" stroke-width="1" stroke-dasharray="4 4" />
+                                <circle id="year-dot" cx="10" cy="20" r="5" fill="#FFD700" />
+                            </svg>
+                            
+                            <div class="absolute bottom-2 right-2 font-mono text-xs text-slate-500">TIME (YEARS)</div>
+                            <div class="absolute top-2 left-2 font-mono text-xs text-slate-500">FAILURE RATE</div>
+                        </div>
+
+                        <div class="p-8 space-y-8 bg-black/80">
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <label class="text-xs font-bold text-white uppercase tracking-widest">Asset Age</label>
+                                    <span class="text-xs font-mono text-h-emerald" id="val-year">Year 0</span>
+                                </div>
+                                <input type="range" id="in-year" min="0" max="60" step="1" value="0" class="w-full">
+                                <div class="flex justify-between text-[10px] text-slate-600 mt-1">
+                                    <span>COMMISSIONING</span>
+                                    <span>END OF LIFE</span>
+                                </div>
+                            </div>
+
+                            <div class="bg-slate-900 p-4 rounded border border-slate-700">
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-[10px] text-slate-500 uppercase">Failure Probability</span>
+                                    <span class="text-lg font-mono text-white font-bold" id="prob-val">HIGH</span>
+                                </div>
+                                <div class="w-full h-1 bg-slate-800 rounded overflow-hidden">
+                                    <div id="prob-bar" class="h-full bg-h-red w-[80%] transition-all duration-300"></div>
+                                </div>
+                            </div>
+
+                            <div class="text-xs text-slate-400 leading-relaxed border-l-2 border-h-emerald pl-3" id="stage-desc">
+                                <strong class="text-white">Infant Mortality:</strong> High risk of manufacturing defects, installation errors, or material flaws. Burn-in period required.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="matrix">
+                <div class="flex items-center gap-3 mb-6 border-b border-slate-800 pb-2">
+                    <span class="text-h-emerald font-mono">03 //</span>
+                    <h3 class="text-xl font-bold text-white">Health Index Matrix (CNA/CBI)</h3>
+                </div>
+
+                <div class="scada-panel p-8 flex flex-col md:flex-row gap-12 items-center">
+                    
+                    <div class="relative">
+                        <div class="text-[10px] text-center text-slate-500 mb-2">PROBABILITY OF FAILURE (PoF)</div>
+                        <div class="flex">
+                            <div class="text-[10px] text-slate-500 [writing-mode:vertical-lr] rotate-180 mr-2 text-center">CONSEQUENCE (CoF)</div>
+                            <div class="grid grid-cols-5 gap-1" id="risk-grid">
+                                </div>
+                        </div>
+                    </div>
+
+                    <div class="flex-1 space-y-6 w-full">
+                        <div class="flex justify-between p-4 bg-slate-900 border border-slate-700 rounded">
+                            <div>
+                                <div class="text-xs text-slate-400">Condition Score</div>
+                                <input type="number" id="in-cond" min="1" max="5" value="2" class="bg-black border border-slate-600 text-white w-16 text-center mt-1">
+                            </div>
+                            <div class="text-right">
+                                <div class="text-xs text-slate-400">Criticality</div>
+                                <input type="number" id="in-crit" min="1" max="5" value="3" class="bg-black border border-slate-600 text-white w-16 text-center mt-1">
+                            </div>
+                        </div>
+
+                        <div class="text-center">
+                            <div class="text-[10px] text-slate-500 uppercase">Risk Priority Number (RPN)</div>
+                            <div class="text-5xl font-divine text-white mb-2" id="val-rpn">6</div>
+                            <div class="text-xs font-bold text-h-emerald px-4 py-1 bg-h-emerald/10 border border-h-emerald rounded inline-block" id="risk-label">ACCEPTABLE</div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <section id="lazarus" class="pb-12">
+                <div class="flex items-center gap-3 mb-6 border-b border-slate-800 pb-2">
+                    <span class="text-h-emerald font-mono">04 //</span>
+                    <h3 class="text-xl font-bold text-white">The "Lazarus" Protocol (Refurbishment)</h3>
+                </div>
+
+                <div class="scada-panel p-8 text-center">
+                    <p class="text-sm text-slate-400 mb-6">
+                        When Asset Health drops below critical levels, we inject CAPEX to reset the clock.
+                    </p>
+                    
+                    <div class="flex justify-center items-center gap-8 mb-8">
+                        <div class="text-right">
+                            <div class="text-[10px] text-slate-500">CURRENT AGE</div>
+                            <div class="text-2xl font-mono text-white" id="current-age">42 YRS</div>
+                        </div>
+                        <div class="text-3xl text-h-emerald">â†’</div>
+                        <div class="text-left">
+                            <div class="text-[10px] text-slate-500">POST-REFURB</div>
+                            <div class="text-2xl font-mono text-h-emerald font-bold">0 YRS</div>
+                        </div>
+                    </div>
+
+                    <button id="capex-btn" class="group relative inline-flex items-center justify-center px-12 py-4 overflow-hidden font-mono font-medium tracking-tighter text-white bg-gray-800 rounded-lg group border border-slate-600 hover:border-h-emerald transition-all duration-300">
+                        <span class="absolute w-0 h-0 transition-all duration-500 ease-out bg-h-emerald rounded-full group-hover:w-56 group-hover:h-56 opacity-20"></span>
+                        <span class="relative flex items-center gap-3 text-lg font-bold">
+                            <svg data-lucide="refresh-cw" class="w-5 h-5"></svg> INJECT CAPEX ($5M)
+                        </span>
+                    </button>
+                </div>
+            </section>
+
+        
+
+
+
+

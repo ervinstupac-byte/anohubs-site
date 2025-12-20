@@ -1,0 +1,104 @@
+﻿---
+title: "AnoHub Protocol | Secure Document"
+---
+
+
+            
+            <section id="overview" class="relative scada-panel p-8 overflow-hidden group">
+                <div class="relative z-10">
+                    <div class="flex gap-2 mb-4">
+                        <span class="bg-h-magma/10 text-h-magma px-2 py-0.5 text-[10px] font-mono font-bold border border-h-magma/30">FERROMAGNETICS</span>
+                        <span class="text-slate-500 font-mono text-[10px]">DOC-CORE-021 | REV 1.0</span>
+                    </div>
+                    <h1 class="text-5xl font-divine text-white mb-6 tracking-tight">
+                        The Iron <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-h-magma to-orange-500">Heartbeat</span>
+                    </h1>
+                    <p class="text-slate-300 leading-relaxed text-lg border-l border-slate-700 pl-6 max-w-3xl font-light">
+                        The stator core is built of 200,000 sheets of 0.5mm silicon steel. If the insulation between these sheets fails, <strong class="text-white">Eddy Currents</strong> circulate freely, creating localized melting points (Hotspots) that can destroy the generator in seconds.
+                    </p>
+                </div>
+                <div class="absolute top-0 right-0 w-64 h-64 bg-h-magma/5 blur-[80px] rounded-full pointer-events-none"></div>
+            </section>
+
+            <section id="flux">
+                <div class="flex items-center gap-3 mb-6 border-b border-slate-800 pb-2">
+                    <span class="text-h-magma font-mono">02 //</span>
+                    <h3 class="text-2xl font-divine text-white">Hysteresis & Flux Density</h3>
+                </div>
+
+                <div class="scada-panel p-0 border-t-4 border-t-h-magma overflow-hidden">
+                    <div class="grid md:grid-cols-2">
+                        
+                        <div class="bg-black p-8 relative flex items-center justify-center border-r border-slate-800 min-h-[350px]">
+                            <div class="relative w-48 h-64 lamination-stack border border-slate-700 rounded flex items-center justify-center overflow-hidden transition-all duration-1000" id="core-stack">
+                                <div id="hotspot-visual" class="absolute w-20 h-20 rounded-full hotspot-core"></div>
+                            </div>
+                            
+                            <div class="absolute top-4 left-4 font-mono text-[10px] text-slate-500">STACK HEIGHT: 2.4m</div>
+                            <div class="absolute bottom-4 right-4 font-mono text-[10px] text-h-magma" id="temp-display">CORE TEMP: 65Â°C</div>
+                        </div>
+
+                        <div class="p-8 space-y-8 bg-black/90">
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <label class="text-xs font-bold text-white uppercase tracking-widest">Magnetic Flux (B)</label>
+                                    <span class="text-xs font-mono text-h-magma" id="val-flux">1.0 Tesla</span>
+                                </div>
+                                <input type="range" id="in-flux" min="0.5" max="1.8" step="0.1" value="1.0" class="w-full">
+                                <div class="flex justify-between text-[10px] text-slate-600 mt-1">
+                                    <span>IDLE</span>
+                                    <span>SATURATION</span>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <label class="text-xs font-bold text-white uppercase tracking-widest">Radial Vent Flow</label>
+                                    <span class="text-xs font-mono text-h-cyan" id="val-air">100 %</span>
+                                </div>
+                                <input type="range" id="in-air" min="0" max="100" step="10" value="100" class="w-full">
+                            </div>
+
+                            <div class="p-4 bg-slate-900 border border-slate-700 rounded text-xs font-mono text-slate-400">
+                                <div class="flex justify-between mb-1"><span>Eddy Current Loss:</span> <span class="text-white" id="val-loss">12 kW</span></div>
+                                <div class="flex justify-between"><span>Core Saturation:</span> <span class="text-h-magma" id="val-sat">NORMAL</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="elcid">
+                <div class="flex items-center gap-3 mb-6 border-b border-slate-800 pb-2">
+                    <span class="text-h-orange font-mono">03 //</span>
+                    <h3 class="text-xl font-bold text-white">Inter-Laminar Fault Simulation (EL CID)</h3>
+                </div>
+
+                <div class="scada-panel p-8 relative overflow-hidden">
+                    <div class="flex flex-col items-center justify-center text-center gap-6">
+                        
+                        <p class="text-sm text-slate-400 max-w-lg">
+                            A failure in the varnish insulation between just TWO sheets of steel creates a shorted turn. The induced voltage drives massive current through the fault.
+                        </p>
+
+                        <button id="fault-btn" class="px-10 py-4 bg-black border-2 border-h-magma text-h-magma hover:bg-h-magma hover:text-black font-bold font-mono tracking-[0.2em] transition-all duration-300 shadow-[0_0_20px_rgba(255,87,34,0.2)]">
+                            TRIGGER LAMINATION SHORT
+                        </button>
+
+                        <div id="alert-box" class="hidden w-full p-4 bg-h-magma/20 border border-h-magma rounded animate-pulse">
+                            <div class="flex items-center justify-center gap-3 text-h-magma font-bold text-lg">
+                                <svg data-lucide="flame" class="w-6 h-6"></svg>
+                                CORE MELTDOWN IMMINENT
+                            </div>
+                            <p class="text-xs text-white mt-2 font-mono">TEMP RISE: +400Â°C/sec // EMERGENCY TRIP REQUIRED</p>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+        
+
+
+
+

@@ -1,0 +1,169 @@
+﻿---
+title: "AnoHub Protocol | Secure Document"
+---
+
+
+            
+            <section id="executive" class="relative scada-panel p-8 overflow-hidden group">
+                <div class="relative z-10">
+                    <div class="flex gap-2 mb-4">
+                        <span class="bg-h-gold/10 text-h-gold px-2 py-0.5 text-[10px] font-mono font-bold border border-h-gold/30">CRITICAL PROTOCOL</span>
+                        <span class="text-slate-500 font-mono text-[10px]">DOC-FIN-003 | REV 3.1</span>
+                    </div>
+                    <h1 class="text-4xl font-divine text-white mb-6 tracking-tight">
+                        LCC & Procurement <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-h-gold to-yellow-200">Integrity Veto</span>
+                    </h1>
+                    <p class="text-slate-300 leading-relaxed text-lg border-l border-slate-700 pl-4 max-w-3xl font-light">
+                        The <strong>"Low Bid" Veto</strong> is a mandatory governance mechanism. It empowers engineering leads to reject the lowest CAPEX bid if the calculated 
+                        <span class="text-h-gold font-bold">Life Cycle Cost (LCC)</span> exceeds the average by >15%. We model the hidden cost of efficiency degradation over 20 years.
+                    </p>
+                </div>
+            </section>
+
+            <section id="chemistry">
+                <div class="flex items-center gap-3 mb-6 border-b border-slate-800 pb-2">
+                    <span class="text-h-gold font-mono">02 //</span>
+                    <h3 class="text-xl font-divine text-white">Hydro-Specific Material Matrix</h3>
+                </div>
+                
+                <div class="scada-panel p-1 overflow-hidden">
+                    <table class="w-full text-left text-sm font-mono">
+                        <thead class="bg-black text-slate-400 text-xs uppercase">
+                            <tr>
+                                <th class="p-4">Component Interface</th>
+                                <th class="p-4">Specific Alloy Requirement</th>
+                                <th class="p-4">Hydro Risk Factor</th>
+                                <th class="p-4 text-right">Protocol</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-800 text-slate-300">
+                            <tr class="hover:bg-white/5 transition">
+                                <td class="p-4 font-bold text-white">Runner / Discharge Ring</td>
+                                <td class="p-4"><span class="text-h-gold">13Cr-4Ni (Martensitic)</span><br><span class="text-slate-500 text-xs">vs 304L (Austenitic)</span></td>
+                                <td class="p-4 text-xs"><span class="text-h-red font-bold">GALVANIC + EROSION</span><br>High velocity silt erosion risk.</td>
+                                <td class="p-4 text-right"><span class="px-2 py-1 bg-h-gold/10 text-h-gold border border-h-gold/30 rounded text-[10px]">COATING REQ</span></td>
+                            </tr>
+                            <tr class="hover:bg-white/5 transition">
+                                <td class="p-4 font-bold text-white">Guide Vanes / Bushings</td>
+                                <td class="p-4"><span class="text-h-gold">X5CrNi13-4</span><br><span class="text-slate-500 text-xs">vs Self-lubricating Bronze</span></td>
+                                <td class="p-4 text-xs"><span class="text-h-green font-bold">SAFE PAIRING</span><br>Standard operation.</td>
+                                <td class="p-4 text-right"><span class="px-2 py-1 bg-h-green/10 text-h-green border border-h-green/30 rounded text-[10px]">APPROVED</span></td>
+                            </tr>
+                            <tr class="hover:bg-white/5 transition bg-h-red/5">
+                                <td class="p-4 font-bold text-white">Penstock / Valve Seat</td>
+                                <td class="p-4"><span class="text-white">Carbon Steel</span><br><span class="text-h-red text-xs">vs Brass/Copper</span></td>
+                                <td class="p-4 text-xs"><span class="text-h-red font-bold">CRITICAL FAILURE</span><br>Rapid galvanic corrosion.</td>
+                                <td class="p-4 text-right"><span class="px-2 py-1 bg-h-red/10 text-h-red border border-h-red/30 rounded text-[10px] font-bold">VETO</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="calculator">
+                <div class="flex items-center gap-3 mb-6 border-b border-slate-800 pb-2">
+                    <span class="text-h-gold font-mono">03 //</span>
+                    <h3 class="text-xl font-divine text-white">The "Iceberg" TCO Engine</h3>
+                </div>
+
+                <div class="scada-panel p-8 border-t-4 border-t-h-gold relative overflow-hidden">
+                    <div class="grid lg:grid-cols-3 gap-8">
+                        
+                        <div class="space-y-6">
+                            <h4 class="font-bold text-white mb-4">Bidder Parameters</h4>
+                            <div>
+                                <div class="flex justify-between mb-2"><label class="text-xs font-bold text-h-gold uppercase tracking-widest">Bid CAPEX ($)</label><span id="val-capex" class="text-xs font-mono text-white">$850,000</span></div>
+                                <input type="range" id="in-capex" min="500000" max="1500000" step="10000" value="850000">
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-2"><label class="text-xs font-bold text-h-gold uppercase tracking-widest">Guaranteed Efficiency</label><span id="val-eff" class="text-xs font-mono text-white">93.0%</span></div>
+                                <input type="range" id="in-eff" min="90" max="96" step="0.1" value="93.0">
+                                <div class="text-[10px] text-h-red mt-1 font-mono" id="eff-warn">Gap to Baseline (94.5%): -1.5%</div>
+                            </div>
+                            <div class="space-y-3 pt-4 border-t border-slate-700">
+                                <label class="text-xs font-bold text-slate-400 uppercase">Material Quality</label>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <button id="mat-std" class="p-2 border border-h-gold bg-h-gold/10 text-center text-xs text-white font-bold rounded">13Cr-4Ni</button>
+                                    <button id="mat-low" class="p-2 border border-slate-600 bg-slate-800 text-center text-xs text-slate-400 rounded hover:border-white">Carbon Steel</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="lg:col-span-2 space-y-6">
+                            <div class="bg-black/40 border border-slate-700 rounded p-4 h-64 relative flex flex-col">
+                                <div class="flex justify-between items-center mb-4">
+                                    <span class="text-[10px] font-mono text-slate-500 uppercase">Cumulative Cost (20 Years)</span>
+                                    <div class="flex gap-4 text-[10px] font-mono">
+                                        <span class="text-slate-500">--- Baseline</span>
+                                        <span class="text-h-gold">___ Bidder</span>
+                                    </div>
+                                </div>
+                                <div class="flex-grow relative w-full h-full">
+                                    <svg id="chart-svg" class="w-full h-full overflow-visible" preserveAspectRatio="none">
+                                        <line x1="0" y1="100%" x2="100%" y2="100%" stroke="#334155" stroke-width="1" />
+                                        <line x1="0" y1="0" x2="0" y2="100%" stroke="#334155" stroke-width="1" />
+                                        <path id="path-baseline" fill="none" stroke="#64748b" stroke-width="2" stroke-dasharray="4 4" />
+                                        <path id="path-bid" fill="none" stroke="#FFD700" stroke-width="3" />
+                                        <circle id="breakeven-point" r="4" fill="#ef4444" class="opacity-0" />
+                                        <text id="breakeven-text" x="0" y="0" fill="#ef4444" font-size="10" font-family="monospace" class="opacity-0">CROSSOVER</text>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-3 gap-4">
+                                <div class="scada-panel p-3 border-l-2 border-l-slate-500">
+                                    <div class="text-[10px] text-slate-500 uppercase">Capex</div>
+                                    <div class="text-lg font-mono text-white" id="res-capex">$850k</div>
+                                </div>
+                                <div class="scada-panel p-3 border-l-2 border-l-h-red">
+                                    <div class="text-[10px] text-slate-500 uppercase">Eff. Loss (NPV)</div>
+                                    <div class="text-lg font-mono text-h-red" id="res-loss">$1.2M</div>
+                                </div>
+                                <div id="verdict-panel" class="scada-panel p-3 flex flex-col justify-center items-center bg-h-red/10 border border-h-red">
+                                    <div class="text-sm font-black text-h-red animate-pulse" id="verdict-text">VETO BID</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="standards" class="pb-8">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="p-2 bg-h-gold/10 rounded border border-h-gold/20 text-h-gold"><svg data-lucide="book-open-check" class="w-6 h-6"></svg></div>
+                    <h2 class="text-2xl font-bold text-white">4. Veto Checklist (Standards)</h2>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-4">
+                    <div class="scada-panel p-5 hover:border-h-gold transition group cursor-default">
+                        <div class="flex justify-between items-start mb-3">
+                            <h4 class="text-h-gold font-bold group-hover:text-white transition">IEC 60193</h4>
+                            <svg data-lucide="external-link" class="w-4 h-4 text-slate-600 group-hover:text-h-gold opacity-0 group-hover:opacity-100 transition"></svg>
+                        </div>
+                        <p class="text-xs text-slate-400 leading-relaxed mb-4">Hydraulic turbines, storage pumps and pump-turbines - Model acceptance tests.</p>
+                        <div class="text-[10px] font-mono bg-slate-800 text-slate-300 inline-block px-2 py-1 rounded border border-slate-700">MANDATORY >10MW</div>
+                    </div>
+                    <div class="scada-panel p-5 hover:border-h-gold transition group cursor-default">
+                        <div class="flex justify-between items-start mb-3">
+                            <h4 class="text-h-gold font-bold group-hover:text-white transition">ASTM A743</h4>
+                            <svg data-lucide="external-link" class="w-4 h-4 text-slate-600 group-hover:text-h-gold opacity-0 group-hover:opacity-100 transition"></svg>
+                        </div>
+                        <p class="text-xs text-slate-400 leading-relaxed mb-4">Standard Specification for Castings, Iron-Chromium, Iron-Chromium-Nickel.</p>
+                        <div class="text-[10px] font-mono bg-slate-800 text-slate-300 inline-block px-2 py-1 rounded border border-slate-700">MATERIAL CERT</div>
+                    </div>
+                    <div class="scada-panel p-5 hover:border-h-gold transition group cursor-default">
+                        <div class="flex justify-between items-start mb-3">
+                            <h4 class="text-h-gold font-bold group-hover:text-white transition">ISO 1940-1</h4>
+                            <svg data-lucide="external-link" class="w-4 h-4 text-slate-600 group-hover:text-h-gold opacity-0 group-hover:opacity-100 transition"></svg>
+                        </div>
+                        <p class="text-xs text-slate-400 leading-relaxed mb-4">Mechanical vibration â€” Balance quality requirements for rotors.</p>
+                        <div class="text-[10px] font-mono bg-slate-800 text-slate-300 inline-block px-2 py-1 rounded border border-slate-700">CLASS G 6.3</div>
+                    </div>
+                </div>
+            </section>
+
+        
+
+
+
+

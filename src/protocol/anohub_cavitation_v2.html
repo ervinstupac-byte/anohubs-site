@@ -1,0 +1,108 @@
+﻿---
+title: "AnoHub Protocol | Secure Document"
+---
+
+
+            
+            <section id="physics" class="relative scada-panel p-8 overflow-hidden group">
+                <div class="relative z-10">
+                    <div class="flex gap-2 mb-4">
+                        <span class="bg-h-cyan/10 text-h-cyan px-2 py-0.5 text-[10px] font-mono font-bold border border-h-cyan/30">DEEP DIVE DIAGNOSTICS</span>
+                        <span class="text-slate-500 font-mono text-[10px]">DOC-CAV-07.1</span>
+                    </div>
+                    <h1 class="text-5xl font-divine text-white mb-6 tracking-tight">
+                        Micro-Jet <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-h-cyan to-white">Implosion</span>
+                    </h1>
+                    <p class="text-slate-300 leading-relaxed text-lg border-l border-slate-700 pl-6 max-w-3xl font-light">
+                        When local pressure drops below vapor pressure ($P_v$), water boils at ambient temperature. The subsequent bubble collapse is violent: <strong class="text-white">100,000 PSI</strong> micro-jets impact the runner blades, tearing metal atom by atom.
+                    </p>
+                </div>
+                
+                <div class="absolute right-10 top-10 w-40 h-40 opacity-20">
+                    <div class="w-full h-full rounded-full bg-bubble-grad animate-implode"></div>
+                </div>
+            </section>
+
+            <section id="acoustic">
+                <div class="flex items-center gap-3 mb-6 border-b border-slate-800 pb-2">
+                    <span class="text-h-cyan font-mono">02 //</span>
+                    <h3 class="text-2xl font-divine text-white">Acoustic Emission (AE) Spectrum</h3>
+                </div>
+
+                <div class="scada-panel p-8 border-t-4 border-t-h-cyan">
+                    <div class="grid md:grid-cols-2 gap-12 items-center">
+                        
+                        <div class="space-y-8">
+                            <div class="space-y-2">
+                                <div class="flex justify-between">
+                                    <label class="text-xs font-bold text-white uppercase">Suction Pressure ($H_s$)</label>
+                                    <span class="text-xs font-mono text-h-cyan" id="val-pressure">-2.0 m</span>
+                                </div>
+                                <input type="range" id="in-pressure" min="-10" max="5" step="0.5" value="-2" class="w-full">
+                                <div class="flex justify-between text-[10px] text-slate-600">
+                                    <span>VACUUM</span>
+                                    <span>PRESSURIZED</span>
+                                </div>
+                            </div>
+
+                            <div class="bg-slate-900 p-4 rounded border border-slate-700">
+                                <div class="text-[10px] text-slate-500 uppercase mb-1">Thoma Sigma ($\sigma$)</div>
+                                <div class="text-4xl font-mono text-white font-bold" id="val-sigma">0.12</div>
+                                <div class="text-xs mt-2" id="sigma-status">MARGINAL</div>
+                            </div>
+                        </div>
+
+                        <div class="relative h-64 bg-black border border-slate-700 rounded overflow-hidden flex items-center justify-center">
+                            <div class="absolute top-2 left-2 text-[9px] text-h-cyan font-mono">SENSOR: AE-01 (MHz Band)</div>
+                            
+                            <svg class="absolute inset-0 w-full h-full opacity-30" preserveAspectRatio="none">
+                                <path d="M0,128 Q50,20 100,128 T200,128 T300,128 T400,128" stroke="#334155" fill="none" stroke-width="2"/>
+                            </svg>
+
+                            <canvas id="noise-canvas" class="absolute inset-0 w-full h-full"></canvas>
+                            
+                            <div id="cavitation-alert" class="absolute inset-0 bg-h-red/20 flex items-center justify-center hidden animate-pulse">
+                                <div class="bg-black border border-h-red text-h-red px-4 py-2 font-bold font-mono text-sm">CAVITATION DETECTED</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="erosion">
+                <div class="flex items-center gap-3 mb-6 border-b border-slate-800 pb-2">
+                    <span class="text-h-cyan font-mono">03 //</span>
+                    <h3 class="text-xl font-bold text-white">Material Erosion Rate</h3>
+                </div>
+
+                <div class="scada-panel p-6">
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="text-sm text-slate-400">Estimated mass loss based on current operating point ($P_{op}$) vs Best Efficiency Point ($P_{bep}$).</div>
+                        <div class="text-xs font-mono text-h-gold bg-h-gold/10 px-2 py-1 rounded border border-h-gold/20">MATERIAL: 13Cr-4Ni</div>
+                    </div>
+
+                    <div class="relative h-12 bg-slate-900 rounded-full border border-slate-700 overflow-hidden">
+                        <div id="erosion-bar" class="h-full bg-gradient-to-r from-h-green via-h-yellow to-h-red w-0 transition-all duration-500 relative">
+                            <div class="absolute right-0 top-0 bottom-0 w-px bg-white shadow-[0_0_10px_white]"></div>
+                        </div>
+                        
+                        <div class="absolute top-0 bottom-0 left-[20%] w-px bg-slate-600 border-l border-dashed border-slate-500"></div>
+                        <div class="absolute top-1 left-[21%] text-[8px] text-slate-500">ACCEPTABLE</div>
+                        
+                        <div class="absolute top-0 bottom-0 left-[80%] w-px bg-slate-600 border-l border-dashed border-slate-500"></div>
+                        <div class="absolute top-1 left-[81%] text-[8px] text-h-red">CRITICAL</div>
+                    </div>
+                    
+                    <div class="flex justify-between mt-2 font-mono text-xs">
+                        <span class="text-h-green">0 kg/yr</span>
+                        <span class="text-white font-bold" id="erosion-val">0.05 kg/yr</span>
+                        <span class="text-h-red">5.0 kg/yr</span>
+                    </div>
+                </div>
+            </section>
+
+        
+
+
+
+

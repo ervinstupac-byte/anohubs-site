@@ -1,0 +1,204 @@
+﻿---
+title: "AnoHub Protocol | Precision Alignment"
+---
+
+
+
+            <!-- HEADER -->
+            <section id="identification" class="relative scada-panel p-8 overflow-hidden group">
+                <div class="absolute top-0 right-0 p-4 opacity-10">
+                    <svg viewBox="0 0 100 100" class="w-32 h-32 text-h-cyan fill-current">
+                        <path d="M50 0L100 50L50 100L0 50Z" />
+                    </svg>
+                </div>
+                <div class="relative z-10">
+                    <div class="flex gap-2 mb-4">
+                        <span
+                            class="bg-h-cyan/10 text-h-cyan px-2 py-0.5 text-[10px] font-mono font-bold border border-h-cyan/30">ISO
+                            10816-5</span>
+                        <span class="text-slate-500 font-mono text-[10px]">DOC-ALIGN-05 | REV 4.0</span>
+                    </div>
+                    <h1 class="text-4xl font-divine text-white mb-6 tracking-tight">
+                        Precision Shaft <br /><span
+                            class="text-transparent bg-clip-text bg-gradient-to-r from-h-cyan to-blue-400">Alignment
+                            Protocol</span>
+                    </h1>
+
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 border-t border-slate-700 pt-6">
+                        <div>
+                            <label class="text-[9px] uppercase font-bold text-slate-500">Plant / Facility</label>
+                            <input type="text" class="field font-bold" value="HE ORLJANI">
+                        </div>
+                        <div>
+                            <label class="text-[9px] uppercase font-bold text-slate-500">Unit ID</label>
+                            <input type="text" class="field font-bold" value="G1 - KAPLAN">
+                        </div>
+                        <div>
+                            <label class="text-[9px] uppercase font-bold text-slate-500">Job Order</label>
+                            <input type="text" class="field" value="WO-25-884">
+                        </div>
+                        <div>
+                            <label class="text-[9px] uppercase font-bold text-slate-500">Date</label>
+                            <input type="date" id="date-now" class="field text-slate-400">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 02 SHAFT ANALYSIS -->
+            <section id="alignment">
+                <div class="flex items-center gap-3 mb-6 border-b border-slate-800 pb-2">
+                    <span class="text-h-cyan font-mono">02 //</span>
+                    <h3 class="text-xl font-divine text-white">Shaft Alignment Analysis (Rim/Face)</h3>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-6 h-auto md:h-[400px]">
+                    <!-- Controls -->
+                    <div
+                        class="md:col-span-4 flex flex-col justify-between scada-panel p-6 border-l-2 border-l-slate-600">
+                        <div>
+                            <div
+                                class="text-[10px] font-bold bg-h-cyan/20 text-h-cyan px-2 py-1 mb-4 inline-block border border-h-cyan/30">
+                                THERMAL TARGETS</div>
+                            <div class="grid grid-cols-2 gap-4 mb-6">
+                                <div>
+                                    <label class="text-[9px] text-slate-400 block mb-1">V-Offset (mm)</label>
+                                    <input type="number" id="t-off" class="field text-h-cyan font-bold" value="0.15">
+                                </div>
+                                <div>
+                                    <label class="text-[9px] text-slate-400 block mb-1">Slope (mm/m)</label>
+                                    <input type="number" id="t-slope" class="field text-h-cyan font-bold" value="0.02">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div
+                                class="text-[10px] font-bold bg-white/10 text-white px-2 py-1 mb-4 inline-block border border-white/20">
+                                CORRECTIONS (SHIMS)</div>
+                            <div class="space-y-4">
+                                <div>
+                                    <div class="flex justify-between items-center mb-1">
+                                        <label class="text-[10px] font-mono font-bold text-slate-400">FRONT FOOT</label>
+                                        <input type="number" id="s-front" class="field w-20 text-right" value="0.15"
+                                            step="0.01">
+                                    </div>
+                                    <input type="range" id="r-front"
+                                        class="w-full h-1 bg-slate-700 appearance-none rounded-full cursor-pointer"
+                                        min="-1" max="1" step="0.01" value="0.15">
+                                </div>
+
+                                <div>
+                                    <div class="flex justify-between items-center mb-1">
+                                        <label class="text-[10px] font-mono font-bold text-slate-400">BACK FOOT</label>
+                                        <input type="number" id="s-back" class="field w-20 text-right" value="0.25"
+                                            step="0.01">
+                                    </div>
+                                    <input type="range" id="r-back"
+                                        class="w-full h-1 bg-slate-700 appearance-none rounded-full cursor-pointer"
+                                        min="-1" max="1" step="0.01" value="0.25">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 pt-4 border-t border-slate-700">
+                            <div class="flex justify-between text-xs font-bold mb-1 text-slate-300">
+                                <span>FINAL OFFSET:</span>
+                                <span id="res-off" class="font-mono">0.00</span>
+                            </div>
+                            <div class="flex justify-between text-xs font-bold text-slate-300">
+                                <span>FINAL ANGLE:</span>
+                                <span id="res-ang" class="font-mono">0.00</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Visualizer -->
+                    <div class="md:col-span-8 bg-black/40 border border-slate-700 relative overflow-hidden rounded-lg">
+                        <div class="absolute inset-0 scada-grid opacity-20"
+                            style="background-image: linear-gradient(#334155 1px, transparent 1px), linear-gradient(90deg, #334155 1px, transparent 1px); background-size: 20px 20px;">
+                        </div>
+
+                        <div class="absolute top-3 left-3 text-[9px] font-mono text-slate-500">VERTICAL PLANE PLOT
+                            [1:100]</div>
+                        <div class="absolute bottom-3 right-3 text-[9px] font-mono text-slate-500">X-AXIS: SHAFT LENGTH
+                        </div>
+
+                        <!-- Center Line -->
+                        <div class="absolute top-1/2 left-0 w-full h-[1px] bg-slate-600 z-0"></div>
+                        <!-- Tolerance Band -->
+                        <div
+                            class="absolute top-1/2 left-0 w-full h-[40px] -mt-[20px] bg-green-500/5 border-y border-green-500/30 z-0 pointer-events-none">
+                        </div>
+
+                        <svg viewBox="0 0 400 200" class="w-full h-full absolute inset-0 z-10"
+                            preserveAspectRatio="none">
+                            <!-- Couplings Ghosts -->
+                            <path d="M50 80 L100 80 L100 120 L50 120 Z" fill="none" stroke="#475569" stroke-width="1"
+                                stroke-dasharray="4 4" />
+                            <path d="M250 70 L350 70 L350 130 L250 130 Z" fill="none" stroke="#475569" stroke-width="1"
+                                stroke-dasharray="4 4" />
+
+                            <!-- Key Line -->
+                            <line id="plot-line" x1="0" y1="100" x2="400" y2="100" stroke="#06b6d4" stroke-width="2" />
+                            <circle id="plot-point" cx="200" cy="100" r="4" fill="#06b6d4" stroke="white"
+                                stroke-width="1" />
+                        </svg>
+
+                        <div id="plot-stamp"
+                            class="absolute top-4 right-4 border border-green-500 bg-green-500/10 text-green-500 px-4 py-2 font-divine text-xl tracking-widest transform rotate-[-5deg] opacity-0 transition-opacity shadow-[0_0_20px_rgba(16,185,129,0.2)]">
+                            PASSED
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 03 THRUST EQUALIZATION -->
+            <section id="thrust">
+                <div class="flex items-center gap-3 mb-6 border-b border-slate-800 pb-2">
+                    <span class="text-h-cyan font-mono">03 //</span>
+                    <h3 class="text-xl font-divine text-white">Thrust Bearing Equalization</h3>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+                    <div class="md:col-span-8 scada-panel p-1 overflow-hidden">
+                        <table class="w-full text-left text-xs font-mono">
+                            <thead class="bg-black/50 text-slate-400 text-[10px] uppercase">
+                                <tr>
+                                    <th class="p-3 border-b border-slate-700">Pad ID</th>
+                                    <th class="p-3 border-b border-slate-700 text-center">Pressure (MPa)</th>
+                                    <th class="p-3 border-b border-slate-700 text-center">Deviation (%)</th>
+                                    <th class="p-3 border-b border-slate-700 text-center">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="thrust-rows" class="divide-y divide-slate-800 text-slate-300">
+                                <!-- JS Injection -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div
+                        class="md:col-span-4 scada-panel p-6 flex flex-col justify-center items-center text-center border-t-2 border-t-h-cyan bg-h-cyan/5">
+                        <div class="text-[10px] uppercase font-bold text-h-cyan mb-2 tracking-widest">Max Deviation
+                        </div>
+                        <div id="thrust-max-dev" class="text-5xl font-mono font-bold text-white mb-4">0.0%</div>
+                        <div id="thrust-status-text"
+                            class="text-xs font-bold px-4 py-2 text-black bg-slate-600 rounded shadow-lg uppercase tracking-wider">
+                            CALCULATING</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- REMARKS -->
+            <section class="pb-8">
+                <h3 class="text-xs font-bold uppercase mb-2 text-slate-400">04 // Engineer's Remarks</h3>
+                <textarea
+                    class="w-full h-24 bg-black/50 border border-slate-700 p-4 text-xs font-mono text-white resize-none focus:border-h-cyan outline-none transition"
+                    placeholder="Enter session notes..."></textarea>
+            </section>
+
+        
+
+
+
+

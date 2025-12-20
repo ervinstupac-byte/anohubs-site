@@ -1,0 +1,146 @@
+﻿---
+title: "AnoHub Protocol | Secure Document"
+---
+
+
+            
+            <section id="overview" class="relative scada-panel p-8 overflow-hidden group">
+                <div class="relative z-10">
+                    <div class="flex gap-2 mb-4">
+                        <span class="bg-h-purple/10 text-h-purple px-2 py-0.5 text-[10px] font-mono font-bold border border-h-purple/30">ADVANCED COMPUTING</span>
+                        <span class="text-slate-500 font-mono text-[10px]">DOC-QUAN-019 | REV 1.0</span>
+                    </div>
+                    <h1 class="text-5xl font-divine text-white mb-6 tracking-tight">
+                        Optimization Beyond <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-h-purple to-cyan-400">Classical Limits</span>
+                    </h1>
+                    <p class="text-slate-300 leading-relaxed text-lg border-l border-slate-700 pl-6 max-w-3xl font-light">
+                        Classical PID loops cannot solve the NP-hard problem of multi-unit load distribution in real-time. We utilize <strong class="text-white">Quantum Annealing</strong> to find the global energy minimum instantly, balancing wear, cavitation, and profit across 12 turbines simultaneously.
+                    </p>
+                </div>
+                <div class="absolute right-0 top-0 w-96 h-96 bg-h-purple/10 blur-[120px] pointer-events-none"></div>
+            </section>
+
+            <section id="bloch">
+                <div class="flex items-center gap-3 mb-6 border-b border-slate-800 pb-2">
+                    <span class="text-h-purple font-mono">02 //</span>
+                    <h3 class="text-2xl font-divine text-white">Coherence Monitor (Bloch Sphere)</h3>
+                </div>
+
+                <div class="scada-panel p-0 border-t-4 border-t-h-purple overflow-hidden">
+                    <div class="grid md:grid-cols-2">
+                        
+                        <div class="bg-black p-10 flex items-center justify-center border-r border-slate-800 relative overflow-hidden">
+                            <div class="absolute inset-0 bg-quantum-gradient opacity-20"></div>
+                            
+                            <div class="relative w-64 h-64 rounded-full border border-slate-700 flex items-center justify-center">
+                                <div class="absolute inset-0 border border-slate-800 rounded-full transform rotate-x-60"></div>
+                                <div class="absolute inset-0 border border-slate-800 rounded-full transform rotate-y-60"></div>
+                                
+                                <div class="atom-core animate-pulse-fast"></div>
+                                
+                                <div class="electron animate-orbit"></div>
+                                <div class="electron animate-orbit" style="animation-duration: 4s; animation-direction: reverse; background: #a855f7; box-shadow: 0 0 10px #a855f7;"></div>
+                            </div>
+
+                            <div class="absolute bottom-4 text-center font-mono text-[10px]">
+                                <div class="text-slate-500">SUPERPOSITION STATE</div>
+                                <div class="text-white" id="state-val">|ÏˆâŸ© = 0.7|0âŸ© + 0.7|1âŸ©</div>
+                            </div>
+                        </div>
+
+                        <div class="p-8 space-y-8 bg-black/90">
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <label class="text-xs font-bold text-white uppercase tracking-widest">System Temperature</label>
+                                    <span class="text-xs font-mono text-h-purple" id="val-temp">15 mK</span>
+                                </div>
+                                <input type="range" id="in-temp" min="10" max="500" step="10" value="15" class="w-full">
+                                <div class="flex justify-between text-[10px] text-slate-600 mt-1">
+                                    <span>ABSOLUTE ZERO</span>
+                                    <span>DECOHERENCE</span>
+                                </div>
+                            </div>
+
+                            <div class="bg-slate-900 p-4 rounded border border-slate-700">
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-[10px] text-slate-500 uppercase">Qubit Fidelity</span>
+                                    <span class="text-lg font-mono text-white font-bold" id="val-fidelity">99.99%</span>
+                                </div>
+                                <div class="w-full h-1 bg-slate-800 rounded overflow-hidden">
+                                    <div id="fidelity-bar" class="h-full bg-h-purple w-[99%] transition-all duration-300"></div>
+                                </div>
+                            </div>
+
+                            <div class="text-xs text-slate-400 leading-relaxed border-l-2 border-h-purple pl-3" id="coherence-msg">
+                                <strong class="text-white">Status:</strong> System running at near-zero Kelvin. Quantum tunneling enabled.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="optimizer">
+                <div class="flex items-center gap-3 mb-6 border-b border-slate-800 pb-2">
+                    <span class="text-h-cyan font-mono">03 //</span>
+                    <h3 class="text-xl font-bold text-white">Multi-Unit Optimization Engine</h3>
+                </div>
+
+                <div class="scada-panel p-8 relative overflow-hidden">
+                    <div class="grid md:grid-cols-2 gap-12 items-start">
+                        
+                        <div class="space-y-6">
+                            <h4 class="font-bold text-white">Plant Demand Setpoint</h4>
+                            
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <label class="text-xs text-slate-400 uppercase">Total Load Req.</label>
+                                    <span class="text-lg font-mono text-white font-bold" id="val-load">250 MW</span>
+                                </div>
+                                <input type="range" id="in-load" min="0" max="400" step="10" value="250" class="w-full accent-h-cyan">
+                            </div>
+
+                            <div class="flex gap-2">
+                                <button id="btn-classic" class="flex-1 py-3 border border-slate-600 text-slate-400 hover:text-white text-xs font-bold rounded uppercase">Classic PID</button>
+                                <button id="btn-quantum" class="flex-1 py-3 border border-h-purple text-h-purple bg-h-purple/10 font-bold text-xs rounded uppercase shadow-[0_0_15px_rgba(168,85,247,0.3)]">Quantum Algo</button>
+                            </div>
+
+                            <div class="flex justify-between items-center p-3 bg-slate-900 border border-slate-700 rounded">
+                                <span class="text-xs text-slate-400">Projected Efficiency Gain</span>
+                                <span class="text-sm font-mono text-h-green font-bold" id="eff-gain">+2.4%</span>
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-[10px] text-slate-500 uppercase">
+                                <span>Unit 1</span> <span>Unit 2</span> <span>Unit 3</span> <span>Unit 4</span>
+                            </div>
+                            <div class="flex items-end h-48 gap-4 bg-black/50 border border-slate-800 p-4 rounded">
+                                <div class="flex-1 bg-slate-800 relative group transition-all duration-500" id="bar-u1" style="height: 60%">
+                                    <div class="absolute bottom-0 w-full bg-h-cyan opacity-50 h-full transition-all duration-500" id="fill-u1"></div>
+                                    <span class="absolute -top-6 w-full text-center text-[10px] text-white font-mono" id="txt-u1">60</span>
+                                </div>
+                                <div class="flex-1 bg-slate-800 relative group transition-all duration-500" id="bar-u2" style="height: 60%">
+                                    <div class="absolute bottom-0 w-full bg-h-cyan opacity-50 h-full transition-all duration-500" id="fill-u2"></div>
+                                    <span class="absolute -top-6 w-full text-center text-[10px] text-white font-mono" id="txt-u2">60</span>
+                                </div>
+                                <div class="flex-1 bg-slate-800 relative group transition-all duration-500" id="bar-u3" style="height: 60%">
+                                    <div class="absolute bottom-0 w-full bg-h-cyan opacity-50 h-full transition-all duration-500" id="fill-u3"></div>
+                                    <span class="absolute -top-6 w-full text-center text-[10px] text-white font-mono" id="txt-u3">60</span>
+                                </div>
+                                <div class="flex-1 bg-slate-800 relative group transition-all duration-500" id="bar-u4" style="height: 70%">
+                                    <div class="absolute bottom-0 w-full bg-h-cyan opacity-50 h-full transition-all duration-500" id="fill-u4"></div>
+                                    <span class="absolute -top-6 w-full text-center text-[10px] text-white font-mono" id="txt-u4">70</span>
+                                </div>
+                            </div>
+                            <div class="text-center text-[10px] text-slate-500 font-mono" id="algo-status">MODE: QUANTUM ANNEALING (OPTIMIZED)</div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+        
+
+
+
+

@@ -1,0 +1,135 @@
+﻿---
+title: "AnoHub Protocol | Secure Document"
+---
+
+
+            
+            <section id="overview" class="relative scada-panel p-8 overflow-hidden group">
+                <div class="relative z-10">
+                    <div class="flex gap-2 mb-4">
+                        <span class="bg-h-mag/10 text-h-mag px-2 py-0.5 text-[10px] font-mono font-bold border border-h-mag/30">ELECTROMAGNETICS</span>
+                        <span class="text-slate-500 font-mono text-[10px]">DOC-FLUX-008 | REV 2.0</span>
+                    </div>
+                    <h1 class="text-5xl font-divine text-white mb-6 tracking-tight">
+                        The Invisible <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-h-mag to-purple-400">Magnetic Grip</span>
+                    </h1>
+                    <p class="text-slate-300 leading-relaxed text-lg border-l border-slate-700 pl-6 max-w-3xl font-light">
+                        A generator rotor is held in place not just by bearings, but by massive magnetic forces. If the <strong>Air Gap</strong> becomes asymmetrical, the <strong>Unbalanced Magnetic Pull (UMP)</strong> can rip the machine from its foundation.
+                    </p>
+                </div>
+                <div class="absolute right-0 top-0 w-96 h-96 bg-h-mag/5 blur-[100px] pointer-events-none"></div>
+            </section>
+
+            <section id="airgap">
+                <div class="flex items-center gap-3 mb-6 border-b border-slate-800 pb-2">
+                    <span class="text-h-mag font-mono">02 //</span>
+                    <h3 class="text-2xl font-divine text-white">Dynamic Air Gap Monitor</h3>
+                </div>
+
+                <div class="scada-panel p-0 border-t-4 border-t-h-mag overflow-hidden">
+                    <div class="bg-black p-4 flex justify-between items-center border-b border-slate-700">
+                        <div class="flex items-center gap-3">
+                            <div class="w-3 h-3 bg-h-green rounded-full" id="gap-led"></div>
+                            <span class="font-mono text-xs text-white" id="gap-text">STATUS: CENTERED</span>
+                        </div>
+                        <div class="font-mono text-[10px] text-slate-500">SENSOR: CAPACITIVE ARRAY</div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2">
+                        
+                        <div class="p-8 bg-black relative flex items-center justify-center border-r border-slate-800 min-h-[350px]">
+                            <div class="absolute w-64 h-64 rounded-full border-4 border-slate-700 border-dashed"></div>
+                            
+                            <div id="rotor-visual" class="relative w-52 h-52 rounded-full border-2 border-h-mag bg-h-mag/10 flex items-center justify-center transition-all duration-300 ease-out">
+                                <div class="w-2 h-2 bg-white rounded-full"></div> <div class="absolute w-full h-[1px] bg-gradient-to-r from-transparent to-h-mag top-1/2 animate-spin-slow origin-center"></div>
+                            </div>
+
+                            <div class="absolute top-2 font-mono text-[10px] text-slate-500">GAP A: <span id="gap-a">14.0</span>mm</div>
+                            <div class="absolute bottom-2 font-mono text-[10px] text-slate-500">GAP C: <span id="gap-c">14.0</span>mm</div>
+                        </div>
+
+                        <div class="p-8 space-y-8 bg-black/80">
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <label class="text-xs font-bold text-white uppercase tracking-widest">Rotor Eccentricity</label>
+                                    <span class="text-xs font-mono text-h-mag" id="ecc-val">0 %</span>
+                                </div>
+                                <input type="range" id="in-ecc" min="0" max="30" step="1" value="0" class="w-full">
+                                <div class="flex justify-between text-[10px] text-slate-600 mt-1">
+                                    <span>PERFECT CENTER</span>
+                                    <span>CRITICAL OFFSET</span>
+                                </div>
+                            </div>
+
+                            <div class="bg-slate-900 p-4 rounded border border-slate-700">
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-[10px] text-slate-500 uppercase">Calculated UMP Force</span>
+                                    <span class="text-lg font-mono text-white font-bold" id="ump-val">0 kN</span>
+                                </div>
+                                <div class="w-full h-1 bg-slate-800 rounded overflow-hidden">
+                                    <div id="ump-bar" class="h-full bg-h-mag w-0 transition-all duration-300"></div>
+                                </div>
+                            </div>
+
+                            <div class="text-xs text-slate-400 leading-relaxed border-l-2 border-h-mag pl-3">
+                                <strong class="text-white">The Danger:</strong> As the rotor moves closer to one side, magnetic attraction increases inversely to the square of the gap distance. This creates a runaway "pull-over" effect.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="shorts">
+                <div class="flex items-center gap-3 mb-6 border-b border-slate-800 pb-2">
+                    <span class="text-h-mag font-mono">03 //</span>
+                    <h3 class="text-2xl font-divine text-white">Flux Profile (Inter-Turn Shorts)</h3>
+                </div>
+
+                <div class="scada-panel p-8 relative overflow-hidden">
+                    <div class="grid md:grid-cols-2 gap-12 items-center">
+                        
+                        <div class="h-64 bg-black/50 border border-slate-700 rounded flex items-end justify-between px-8 pb-0 pt-8 relative">
+                            <div class="absolute top-2 left-2 text-[10px] font-mono text-slate-500">MAGNETIC FLUX DENSITY (Tesla)</div>
+                            
+                            <div class="w-1/5 bg-h-cyan/20 border border-h-cyan h-[90%] relative group pole-bar" id="pole-1">
+                                <div class="absolute bottom-full w-full text-center text-[10px] text-h-cyan mb-1">N1</div>
+                            </div>
+                            <div class="w-1/5 bg-h-cyan/20 border border-h-cyan h-[90%] relative group pole-bar" id="pole-2">
+                                <div class="absolute bottom-full w-full text-center text-[10px] text-h-cyan mb-1">S1</div>
+                                <div id="sparks" class="absolute inset-0 hidden">
+                                    <div class="absolute top-1/2 left-1/2 w-4 h-4 bg-white rounded-full animate-ping"></div>
+                                </div>
+                            </div>
+                            <div class="w-1/5 bg-h-cyan/20 border border-h-cyan h-[90%] relative group pole-bar" id="pole-3">
+                                <div class="absolute bottom-full w-full text-center text-[10px] text-h-cyan mb-1">N2</div>
+                            </div>
+                            <div class="w-1/5 bg-h-cyan/20 border border-h-cyan h-[90%] relative group pole-bar" id="pole-4">
+                                <div class="absolute bottom-full w-full text-center text-[10px] text-h-cyan mb-1">S2</div>
+                            </div>
+                            
+                            <div class="absolute bottom-0 w-full h-px bg-slate-600"></div>
+                        </div>
+
+                        <div class="space-y-6">
+                            <h4 class="font-bold text-white">Simulate Failure</h4>
+                            <p class="text-xs text-slate-400">Shorting turns in a pole reduces its magnetic strength, creating thermal hotspots and vibration.</p>
+
+                            <button id="btn-short" class="w-full py-4 border border-h-red text-h-red hover:bg-h-red hover:text-black font-bold font-mono text-xs tracking-widest transition uppercase rounded">
+                                TRIGGER SHORT CIRCUIT (POLE S1)
+                            </button>
+
+                            <div class="bg-slate-900 p-4 rounded flex justify-between items-center">
+                                <span class="text-xs text-slate-500">Vibration Amplitude (1x)</span>
+                                <span class="font-mono text-white font-bold" id="vib-val">0.05 mm/s</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+        
+
+
+
+

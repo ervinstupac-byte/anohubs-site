@@ -1,0 +1,131 @@
+﻿---
+title: "AnoHub Protocol | Secure Document"
+---
+
+
+            
+            <section id="physics" class="relative scada-panel p-8 overflow-hidden group">
+                <div class="relative z-10">
+                    <div class="flex gap-2 mb-4">
+                        <span class="bg-h-vib/10 text-h-vib px-2 py-0.5 text-[10px] font-mono font-bold border border-h-vib/30">DYNAMIC STABILITY</span>
+                        <span class="text-slate-500 font-mono text-[10px]">DOC-VIB-011 | REV 1.0</span>
+                    </div>
+                    <h1 class="text-5xl font-divine text-white mb-6 tracking-tight">
+                        Harmonic <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-h-vib to-purple-400">Cancellation</span>
+                    </h1>
+                    <p class="text-slate-300 leading-relaxed text-lg border-l border-slate-700 pl-6 max-w-3xl font-light">
+                        A 400-ton rotor is never perfectly balanced. We move beyond simple monitoring. We implement <strong class="text-white">Active Magnetic Bearings</strong> that inject anti-phase force vectors to neutralize vibration at the source.
+                    </p>
+                </div>
+            </section>
+
+            <section id="orbit">
+                <div class="flex items-center gap-3 mb-6 border-b border-slate-800 pb-2">
+                    <span class="text-h-vib font-mono">02 //</span>
+                    <h3 class="text-2xl font-divine text-white">Shaft Orbit Analysis (Lissajous)</h3>
+                </div>
+
+                <div class="scada-panel p-0 border-t-4 border-t-h-vib overflow-hidden">
+                    <div class="bg-black p-4 flex justify-between items-center border-b border-slate-700">
+                        <div class="flex items-center gap-3">
+                            <div class="w-3 h-3 bg-h-green rounded-full" id="orbit-led"></div>
+                            <span class="font-mono text-xs text-white" id="orbit-status">STATUS: OPTIMAL</span>
+                        </div>
+                        <div class="font-mono text-[10px] text-slate-500">SENSOR: PROXIMITY X/Y</div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2">
+                        
+                        <div class="bg-black relative flex items-center justify-center border-r border-slate-800 min-h-[350px]">
+                            <div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:20px_20px]"></div>
+                            
+                            <div class="absolute w-64 h-64 rounded-full border-2 border-slate-700 border-dashed"></div>
+                            
+                            <div id="orbit-trace" class="orbit-trace w-4 h-4 bg-h-vib/20 animate-orbit">
+                                <div class="w-1 h-1 bg-white rounded-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
+                            </div>
+                            
+                            <div class="absolute w-full h-px bg-slate-800"></div>
+                            <div class="absolute h-full w-px bg-slate-800"></div>
+                        </div>
+
+                        <div class="p-8 space-y-8 bg-black/80">
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <label class="text-xs font-bold text-white uppercase tracking-widest">Mass Unbalance</label>
+                                    <span class="text-xs font-mono text-h-vib" id="val-unbalance">0 g</span>
+                                </div>
+                                <input type="range" id="in-unbalance" min="0" max="100" step="1" value="0" class="w-full">
+                            </div>
+
+                            <div class="bg-slate-900 p-4 rounded border border-slate-700">
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-[10px] text-slate-500 uppercase">Peak Displacement (Smax)</span>
+                                    <span class="text-lg font-mono text-white font-bold" id="val-smax">10 Âµm</span>
+                                </div>
+                                <div class="w-full h-1 bg-slate-800 rounded overflow-hidden">
+                                    <div id="smax-bar" class="h-full bg-h-green w-[5%] transition-all duration-300"></div>
+                                </div>
+                                <div class="text-[9px] text-right mt-1 text-slate-500">ISO LIMIT: 250 Âµm</div>
+                            </div>
+                            
+                            <button id="balance-btn" class="w-full py-3 border border-h-green text-h-green hover:bg-h-green hover:text-black font-bold text-xs tracking-widest uppercase rounded transition opacity-50 cursor-not-allowed" disabled>
+                                AUTO-BALANCE DEPLOYED
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="damping">
+                <div class="flex items-center gap-3 mb-6 border-b border-slate-800 pb-2">
+                    <span class="text-h-vib font-mono">03 //</span>
+                    <h3 class="text-xl font-bold text-white">Active Magnetic Damping</h3>
+                </div>
+
+                <div class="scada-panel p-8 relative overflow-hidden">
+                    <div class="grid md:grid-cols-2 gap-12 items-center">
+                        
+                        <div class="relative h-48 bg-black border border-slate-700 rounded overflow-hidden">
+                            <div class="absolute inset-0 flex items-center justify-center text-xs font-mono text-slate-600 z-0">VIBRATION WAVEFORM</div>
+                            
+                            <div class="absolute top-0 left-0 h-full w-[200%] flex items-center animate-wave" id="wave-noise">
+                                <svg width="100%" height="100%" preserveAspectRatio="none" class="opacity-60">
+                                    <path d="M0,50 Q25,0 50,50 T100,50 T150,50 T200,50 T250,50 T300,50" stroke="#d946ef" stroke-width="2" fill="none" id="wave-path" />
+                                </svg>
+                            </div>
+
+                            <div class="absolute top-0 left-0 h-full w-[200%] flex items-center animate-wave opacity-0 transition-opacity duration-1000" id="wave-counter">
+                                <svg width="100%" height="100%" preserveAspectRatio="none">
+                                    <path d="M0,50 Q25,100 50,50 T100,50 T150,50 T200,50 T250,50 T300,50" stroke="#10b981" stroke-width="2" fill="none" />
+                                </svg>
+                            </div>
+                            
+                            <div class="absolute top-1/2 left-0 w-full h-0.5 bg-white opacity-0 transition-opacity duration-1000" id="wave-flat"></div>
+                        </div>
+
+                        <div class="space-y-6">
+                            <h4 class="font-bold text-white">Counter-Phase Injection</h4>
+                            <p class="text-xs text-slate-400">
+                                By injecting a magnetic force exactly 180Â° out of phase, we reduce mechanical amplitude to near zero.
+                            </p>
+
+                            <button id="damp-btn" class="w-full py-4 border border-white text-white hover:bg-white hover:text-black font-bold font-mono text-sm tracking-widest transition uppercase rounded shadow-[0_0_20px_rgba(255,255,255,0.1)]">
+                                ACTIVATE DAMPING
+                            </button>
+
+                            <div class="flex justify-between text-xs font-mono border-t border-slate-700 pt-2">
+                                <span class="text-slate-500">Reduction Efficiency</span>
+                                <span class="text-h-green font-bold" id="damp-eff">0%</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+        
+
+
+
+

@@ -1,0 +1,77 @@
+﻿---
+title: "ANO_HUB // TERMINAL_ACCESS"
+---
+
+
+
+<script type="module">
+        import { supabase } from './assets/js/db.js';
+        // --- 1. GRID LOGIC ---
+        const freqInput = document.getElementById('freq-input');
+        const btnSync = document.getElementById('btn-sync');
+        const gridStatus = document.getElementById('grid-status');
+        async function loadGrid() {
+            const { data } = await supabase.from('system_status').select('*').eq('id', 'main_grid').single();
+            if (data) {
+                freqInput.value = data.frequency;
+                gridStatus.innerText = `CURRENT_DB_VAL: ${data.frequency} Hz`;
+            }
+        }
+
+        btnSync.addEventListener('click', async () => {
+            btnSync.innerText = 'SYNCING...';
+            const val = parseFloat(freqInput.value);
+            const { error } = await supabase.from('system_status').update({ frequency: val }).eq('id', 'main_grid');
+
+            if (!error) {
+                btnSync.innerText = 'SYNC_COMPLETE';
+                gridStatus.innerText = `UPDATED: ${val} Hz`;
+                setTimeout(() => btnSync.innerText = 'SYNC_NETWORK', 2000);
+            } else {
+                alert('ERROR: ' + error.message);
+            }
+        });
+        // --- 2. MISSION LOGIC ---
+        document.getElementById('mission-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const { error } = await supabase.from('missions').insert([{
+                case_id: document.getElementById('m-id').value,
+                turbine_type: document.getElementById('m-type').value,
+                title: document.getElementById('m-title').value,
+                threat: document.getElementById('m-threat').value,
+                result: document.getElementById('m-result').value
+            }]);
+
+            if (!error) {
+                alert('MISSION LOGGED SUCCESSFULLY');
+                e.target.reset();
+            } else {
+                alert('WRITE ERROR: ' + error.message);
+            }
+        });
+        // --- 3. INBOX LOGIC ---
+        async function loadInbox() {
+            const { data, error } = await supabase.from('inquiries').select('*').order('created_at', { ascending: false }).limit(10);
+            const list = document.getElementById('inbox-list');
+            list.innerHTML = '';
+
+            if (data) {
+                data.forEach(msg => {
+                    list.innerHTML += `
+                    <div class="border-b border-green-800/30 pb-2 mb-2">
+                        <span class="text-white font-bold">[${new Date(msg.created_at).toLocaleDateString()}]</span> 
+                        <span class="text-h-gold">${msg.full_name}</span> (${msg.company}): 
+                        <span class="text-slate-400">"${msg.message}"</span>
+                        <div class="text-[10px] text-green-700">${msg.email} | ${msg.phone}</div>
+                    </div>
+                `;
+                });
+            }
+        }
+        // INIT
+        loadGrid();
+        loadInbox();
+    </script>
+
+
+

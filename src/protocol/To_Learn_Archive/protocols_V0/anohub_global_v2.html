@@ -1,0 +1,103 @@
+﻿---
+title: "AnoHUB | GLOBAL GRID LINK // MODULE 18"
+---
+
+
+            
+            <section id="overview" class="relative scada-panel p-8 overflow-hidden group">
+                <div class="relative z-10">
+                    <div class="flex gap-2 mb-4">
+                        <span class="bg-h-blue/10 text-h-blue px-2 py-0.5 text-[10px] font-mono font-bold border border-h-blue/30">MACRO GRID</span>
+                        <span class="text-slate-500 font-mono text-[10px]">DOC-GRID-018 | REV 1.4</span>
+                    </div>
+                    <h1 class="text-5xl font-divine text-white mb-6 tracking-tight">
+                        Planetary <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-h-blue to-cyan-200">Synchronization</span>
+                    </h1>
+                    <p class="text-slate-300 leading-relaxed text-lg border-l border-slate-700 pl-6 max-w-3xl font-light">
+                        AnoHUB is not an island. We are a critical node in the continental Super-Grid. This module governs <strong class="text-white">HVDC Interconnections</strong> and provides <strong class="text-h-gold">Synthetic Inertia</strong> to stabilize the grid against frequency collapse.
+                    </p>
+                </div>
+            </section>
+
+            <section id="map">
+                <div class="flex items-center gap-3 mb-6 border-b border-slate-800 pb-2">
+                    <span class="text-h-blue font-mono">02 //</span>
+                    <h3 class="text-2xl font-divine text-white">Active Node Topology</h3>
+                </div>
+
+                <div class="scada-panel p-0 border-t-4 border-t-h-blue overflow-hidden relative h-[400px] bg-black">
+                    <div class="absolute inset-0 bg-world-map bg-cover bg-center opacity-20 pointer-events-none grayscale"></div>
+                    <div class="absolute inset-0 bg-grid-pattern opacity-20 pointer-events-none"></div>
+
+                    <div id="node-layer" class="absolute inset-0">
+                        <div class="map-node bg-h-green" style="top: 40%; left: 50%;" title="AnoHUB Core"></div>
+                        <div class="absolute top-40 left-1/2 w-32 h-[1px] bg-h-green/30 -rotate-12 origin-left"></div>
+                    </div>
+
+                    <div id="node-info" class="absolute bottom-4 left-4 bg-slate-900/90 border border-h-blue p-4 rounded w-64 backdrop-blur hidden">
+                        <h4 class="text-h-blue font-bold text-sm mb-1" id="node-name">NODE NAME</h4>
+                        <div class="text-[10px] font-mono text-slate-400 space-y-1">
+                            <div class="flex justify-between"><span>OUTPUT:</span> <span class="text-white" id="node-mw">-- MW</span></div>
+                            <div class="flex justify-between"><span>STATUS:</span> <span class="text-h-green" id="node-status">ONLINE</span></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="frequency">
+                <div class="flex items-center gap-3 mb-6 border-b border-slate-800 pb-2">
+                    <span class="text-h-gold font-mono">03 //</span>
+                    <h3 class="text-xl font-bold text-white">Frequency Response (Synthetic Inertia)</h3>
+                </div>
+
+                <div class="scada-panel p-8 relative overflow-hidden border-t-4 border-t-h-gold">
+                    <div class="grid md:grid-cols-3 gap-8">
+                        
+                        <div class="md:col-span-2 bg-black border border-slate-700 rounded h-64 relative overflow-hidden">
+                            <div class="absolute top-2 left-2 text-[9px] text-slate-500">GRID FREQUENCY (Hz)</div>
+                            <div class="absolute top-1/2 left-0 w-full h-px bg-slate-600 border-t border-dashed border-slate-500"></div> <svg class="absolute inset-0 w-full h-full" preserveAspectRatio="none">
+                                <path id="freq-path" d="" fill="none" stroke="#FFD700" stroke-width="2" class="freq-line" />
+                                <linearGradient id="grad-gold" x1="0" x2="0" y1="0" y2="1">
+                                    <stop offset="0%" stop-color="rgba(255, 215, 0, 0.2)" />
+                                    <stop offset="100%" stop-color="rgba(255, 215, 0, 0)" />
+                                </linearGradient>
+                                <path id="freq-fill" d="" fill="url(#grad-gold)" stroke="none" />
+                            </svg>
+
+                            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
+                                <div class="text-6xl font-black text-white tracking-tighter" id="big-freq">50.00</div>
+                                <div class="text-xs font-bold text-h-gold bg-black/50 px-2 rounded">Hz</div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-6 bg-black/50 p-4 rounded border border-slate-800">
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <label class="text-xs font-bold text-white uppercase">Droop Control</label>
+                                    <span class="text-xs font-mono text-h-blue" id="val-droop">4 %</span>
+                                </div>
+                                <input type="range" id="in-droop" min="0" max="10" step="0.5" value="4" class="w-full accent-h-blue">
+                            </div>
+
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <label class="text-xs font-bold text-white uppercase">Load Injection</label>
+                                    <span class="text-xs font-mono text-h-red" id="val-load">0 MW</span>
+                                </div>
+                                <input type="range" id="in-load" min="-500" max="500" step="10" value="0" class="w-full accent-h-red">
+                            </div>
+
+                            <button id="boost-btn" class="w-full py-4 bg-h-gold/10 border border-h-gold text-h-gold hover:bg-h-gold hover:text-black font-bold font-mono text-xs rounded transition shadow-[0_0_15px_rgba(255,215,0,0.2)]">
+                                INJECT INERTIA
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+        
+
+
+
+

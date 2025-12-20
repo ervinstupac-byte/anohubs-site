@@ -1,0 +1,133 @@
+﻿---
+title: "AnoHUB | TURBINE SYNCHRONIZATION // MODULE 06"
+---
+
+
+            
+            <section id="overview" class="relative scada-panel p-8 overflow-hidden group">
+                <div class="relative z-10">
+                    <div class="flex gap-2 mb-4">
+                        <span class="bg-h-gold/10 text-h-gold px-2 py-0.5 text-[10px] font-mono font-bold border border-h-gold/30">CRITICAL OPERATION</span>
+                        <span class="text-slate-500 font-mono text-[10px]">DOC-SYNC-006 | REV 1.0</span>
+                    </div>
+                    <h1 class="text-5xl font-divine text-white mb-6 tracking-tight">
+                        The Divine <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-h-gold to-yellow-200">Handshake</span>
+                    </h1>
+                    <p class="text-slate-300 leading-relaxed text-lg border-l border-slate-700 pl-6 max-w-3xl font-light">
+                        Synchronization is the moment a 400-ton rotating mass locks magnetically with the continental grid. Voltage, Frequency, and Phase Angle must match perfectly. A mismatch results in catastrophic torque shear.
+                    </p>
+                    
+                    <div class="mt-8 tech-box p-6 rounded text-sm font-mono text-slate-300 bg-black/40">
+                         <h3 class="text-h-gold font-bold mb-2 flex items-center gap-2">
+                            <svg data-lucide="triangle-alert" class="w-4 h-4"></svg> SAFETY INTERLOCK
+                        </h3>
+                        <p>
+                            Breaker closure is inhibited if Phase Angle > <span class="text-white font-bold bg-h-gold/20 px-1">5Â°</span> or Frequency Slip > <span class="text-white font-bold bg-h-gold/20 px-1">0.15 Hz</span>.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="synchroscope">
+                <div class="flex items-center gap-3 mb-6 border-b border-slate-800 pb-2">
+                    <span class="text-h-gold font-mono">02 //</span>
+                    <h3 class="text-2xl font-divine text-white">Active Synchroscope</h3>
+                </div>
+
+                <div class="scada-panel p-0 border-t-4 border-t-h-gold overflow-hidden">
+                    <div class="bg-black p-4 flex justify-between items-center border-b border-slate-700">
+                        <div class="flex items-center gap-3">
+                            <div class="w-3 h-3 bg-h-red rounded-full animate-pulse" id="sync-led"></div>
+                            <span class="font-mono text-xs text-white" id="sync-text">STATUS: UNSYNCHRONIZED</span>
+                        </div>
+                        <div class="font-mono text-[10px] text-slate-500">MODE: MANUAL</div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2">
+                        
+                        <div class="p-10 bg-black relative flex items-center justify-center border-r border-slate-800 min-h-[350px]">
+                            <div class="absolute w-64 h-64 rounded-full border-2 border-slate-800"></div>
+                            <div class="absolute top-4 text-[10px] text-h-gold font-bold">12</div>
+                            <div class="absolute bottom-4 text-[10px] text-slate-600 font-bold">6</div>
+                            <div class="absolute left-4 text-[10px] text-slate-600 font-bold">9</div>
+                            <div class="absolute right-4 text-[10px] text-slate-600 font-bold">3</div>
+                            
+                            <div class="absolute top-0 w-2 h-4 bg-h-green/50 blur-sm"></div>
+
+                            <div id="needle-container" class="relative w-full h-full flex items-center justify-center">
+                                <div id="needle" class="w-1 h-28 bg-h-red shadow-[0_0_15px_#ef4444] origin-bottom absolute top-8 rounded-full"></div>
+                                <div class="w-4 h-4 bg-slate-500 rounded-full absolute z-10 border-2 border-black"></div>
+                            </div>
+
+                            <div class="absolute bottom-10 font-mono text-xs text-center">
+                                <div class="text-slate-500">PHASE DIFF</div>
+                                <div id="phase-val" class="text-white font-bold">--Â°</div>
+                            </div>
+                        </div>
+
+                        <div class="p-8 space-y-8 bg-black/80">
+                            
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <label class="text-xs font-bold text-white uppercase tracking-widest">Generator Frequency</label>
+                                    <span class="text-xs font-mono text-h-gold" id="freq-val">49.50 Hz</span>
+                                </div>
+                                <input type="range" id="in-freq" min="49.00" max="51.00" step="0.01" value="49.50" class="w-full">
+                                <div class="flex justify-between text-[10px] text-slate-600 mt-1">
+                                    <span>SLOW</span>
+                                    <span>TARGET: 50.00</span>
+                                    <span>FAST</span>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <label class="text-xs font-bold text-white uppercase tracking-widest">Generator Voltage</label>
+                                    <span class="text-xs font-mono text-h-gold" id="volt-val">10.50 kV</span>
+                                </div>
+                                <input type="range" id="in-volt" min="10.00" max="12.00" step="0.05" value="10.50" class="w-full">
+                                <div class="flex justify-between text-[10px] text-slate-600 mt-1">
+                                    <span>LOW</span>
+                                    <span>TARGET: 11.00</span>
+                                    <span>HIGH</span>
+                                </div>
+                            </div>
+
+                            <div class="bg-slate-900 p-4 rounded border border-slate-700 grid grid-cols-2 gap-4 text-center">
+                                <div>
+                                    <div class="text-[9px] text-slate-500 uppercase">Slip (Hz)</div>
+                                    <div id="slip-val" class="text-lg font-mono text-white">-0.50</div>
+                                </div>
+                                <div>
+                                    <div class="text-[9px] text-slate-500 uppercase">Delta U (kV)</div>
+                                    <div id="du-val" class="text-lg font-mono text-white">-0.50</div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="breaker" class="pb-12">
+                <div class="scada-panel p-8 text-center">
+                    <p class="text-sm text-slate-400 mb-6">
+                        Wait for the needle to align at 12 o'clock (0Â°) and parameters to match.
+                    </p>
+                    
+                    <button id="sync-btn" class="group relative inline-flex items-center justify-center px-12 py-4 overflow-hidden font-mono font-medium tracking-tighter text-white bg-gray-800 rounded-lg group border border-slate-600 hover:border-h-gold transition-all duration-300">
+                        <span class="absolute w-0 h-0 transition-all duration-500 ease-out bg-h-gold rounded-full group-hover:w-56 group-hover:h-56 opacity-10"></span>
+                        <span class="relative flex items-center gap-3 text-lg font-bold" id="btn-text">
+                            <svg data-lucide="power" class="w-6 h-6"></svg> CLOSE BREAKER 52G
+                        </span>
+                    </button>
+
+                    <div id="sync-message" class="mt-4 text-xs font-mono h-4"></div>
+                </div>
+            </section>
+
+        
+
+
+
+
