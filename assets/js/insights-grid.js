@@ -144,7 +144,7 @@ const insightsData = [
 ];
 
 // 2. FUNKCIJA ZA KREIRANJE KARTICE
-function createInsightCard(insight) {
+function createInsightCard(insight, isFeatured = false) {
     const locale = (localStorage.getItem('selectedLanguage') === 'bs') ? 'bs-BA' : 'en-US';
     const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
     const formattedDate = new Date(insight.date).toLocaleDateString(locale, dateOptions);
@@ -154,18 +154,48 @@ function createInsightCard(insight) {
     const desc = getT(`articles_list.${insight.key}.desc`);
     const readMore = getT('insights_page.read_more') || 'Read Article →';
 
+    if (isFeatured) {
+        return `
+            <div class="featured-insight-card relative overflow-hidden rounded-3xl border border-white/10 bg-[#0A0F1E] group shadow-2xl">
+                <div class="absolute inset-0 bg-gradient-to-r from-h-cyan/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
+                <div class="relative z-10 grid md:grid-cols-2 gap-0">
+                    <div class="p-8 md:p-12 flex flex-col justify-center">
+                        <div class="flex items-center gap-4 mb-6">
+                            <span class="px-3 py-1 bg-h-cyan/10 border border-h-cyan/20 text-h-cyan text-[10px] font-mono font-bold tracking-widest rounded-full uppercase">Latest Intelligence</span>
+                            <span class="text-xs font-mono text-slate-500">${formattedDate}</span>
+                        </div>
+                        <h2 class="text-3xl md:text-5xl font-black text-white mb-6 leading-tight tracking-tighter">${title}</h2>
+                        <p class="text-slate-400 text-lg mb-8 leading-relaxed line-clamp-3">${desc}</p>
+                        <a href="${insight.content_file}" class="inline-flex items-center gap-3 text-white font-bold uppercase tracking-widest hover:text-h-cyan transition-colors group/link">
+                            ${readMore} <i data-lucide="arrow-right" class="w-5 h-5 group-hover/link:translate-x-2 transition-transform text-h-cyan"></i>
+                        </a>
+                    </div>
+                    <div class="relative h-64 md:h-auto overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-l from-[#0A0F1E] via-transparent to-transparent z-10 md:block hidden"></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#0A0F1E] via-transparent to-transparent z-10 md:hidden block"></div>
+                        <span class="absolute inset-0 flex items-center justify-center text-[15rem] opacity-[0.03] select-none pointer-events-none transition-transform duration-1000 group-hover:scale-110">${insight.icon}</span>
+                        <div class="w-full h-full flex items-center justify-center p-12">
+                             <div class="w-32 h-32 md:w-48 md:h-48 rounded-full bg-h-cyan/20 blur-3xl animate-pulse"></div>
+                             <span class="absolute text-8xl md:text-9xl transform -rotate-12 group-hover:rotate-0 transition-transform duration-700">${insight.icon}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
     return `
         <a href="${insight.content_file}" class="block transform hover:scale-[1.02] transition-all duration-500 opacity-0 animate-fadeIn">
-            <div class="bg-white border border-slate-200 hover:border-hydro-primary rounded-xl shadow-lg h-full p-6 flex flex-col">
-                <div class="flex items-center space-x-4 mb-4">
-                    <span class="text-4xl" role="img" aria-label="Icon">${insight.icon}</span>
-                    <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">${formattedDate}</span>
+            <div class="bg-[#0f172a]/50 backdrop-blur-sm border border-white/5 hover:border-h-cyan/30 rounded-xl shadow-xl h-full p-8 flex flex-col group">
+                <div class="flex items-center justify-between mb-6">
+                    <span class="text-4xl transform group-hover:rotate-12 transition-transform duration-500" role="img" aria-label="Icon">${insight.icon}</span>
+                    <span class="text-[10px] font-mono font-bold text-slate-500 uppercase tracking-widest border-b border-white/5 pb-1">${formattedDate}</span>
                 </div>
-                <h2 class="text-xl font-extrabold text-gray-900 mb-2">${title}</h2>
-                <p class="text-slate-600 text-sm flex-grow">${desc}</p>
-                <span class="mt-4 inline-flex items-center text-hydro-primary font-semibold text-sm">
-                    ${readMore}
-                </span>
+                <h2 class="text-xl font-bold text-white mb-4 group-hover:text-h-cyan transition-colors">${title}</h2>
+                <p class="text-slate-400 text-sm leading-relaxed flex-grow line-clamp-3">${desc}</p>
+                <div class="mt-6 flex items-center text-xs font-bold text-slate-500 uppercase tracking-widest group-hover:text-white transition-colors">
+                    ${readMore.replace('→', '')} <i data-lucide="chevron-right" class="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform"></i>
+                </div>
             </div>
         </a>
     `;
@@ -173,20 +203,32 @@ function createInsightCard(insight) {
 
 // 3. FUNKCIJA ZA RENDEROWANJE
 function renderGrid(filterCategory = 'all') {
-    const container = document.getElementById('insights-archive-grid');
+    const gridContainer = document.getElementById('insights-archive-grid');
+    const featuredContainer = document.getElementById('featured-container');
 
-    if (!container) {
+    if (!gridContainer) {
         console.error("Greška: Kontejner #insights-archive-grid nije pronađen!");
         return;
     }
 
-    let htmlContent = '';
+    // Sort data: newest first
+    const sortedData = [...insightsData].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+    // Handle Featured Article (always the newest one from the 'all' set, or newest in category)
+    if (featuredContainer && filterCategory === 'all') {
+        featuredContainer.innerHTML = createInsightCard(sortedData[0], true);
+    } else if (featuredContainer) {
+        // Clear featured if filtering? Or keep it? The prompt says "zadnji napisani mora biti izrazen u gornjoj sekciji"
+        // Let's hide it if filtered to keep it clean, but the prompt says it should be there.
+        featuredContainer.innerHTML = '';
+    }
 
     // Filtriranje
     const filteredData = filterCategory === 'all'
-        ? insightsData
-        : insightsData.filter(item => item.category === filterCategory);
+        ? sortedData.slice(1) // Remove latest from grid if featured (to avoid duplication)
+        : sortedData.filter(item => item.category === filterCategory);
 
+    let htmlContent = '';
     if (filteredData.length === 0) {
         htmlContent = '<div class="col-span-full text-center text-slate-400 py-10"><p>No insights found for this category.</p></div>';
     } else {
@@ -195,21 +237,20 @@ function renderGrid(filterCategory = 'all') {
         });
     }
 
-    container.innerHTML = htmlContent;
+    gridContainer.innerHTML = htmlContent;
 
-    // FIX: Prisilno dodavanje vidljivosti nakon ubacivanja u DOM
-    // Ovo rješava problem "praznog ekrana"
+    // FIX: Prisilno dodavanje vidljivosti
     setTimeout(() => {
-        const cards = container.querySelectorAll('a');
+        const cards = gridContainer.querySelectorAll('a');
         cards.forEach((card, index) => {
             setTimeout(() => {
                 card.classList.remove('opacity-0');
                 card.classList.add('opacity-100');
-            }, index * 100); // Kaskadno pojavljivanje
+            }, index * 100);
         });
     }, 50);
 
-    // Ponovno pokretanje Lucide ikona
+    // Initialise icons
     if (typeof lucide !== 'undefined') {
         lucide.createIcons();
     }
@@ -217,21 +258,46 @@ function renderGrid(filterCategory = 'all') {
 
 // 4. INICIJALIZACIJA
 document.addEventListener('DOMContentLoaded', () => {
-    // Prvo renderovanje
+    // Initial render
     renderGrid('all');
 
     window.addEventListener('languageChanged', () => {
         renderGrid(window.currentFilter || 'all');
     });
 
-    // Filter dugmad
-    const filterButtons = document.querySelectorAll('.topic-button, .filter-btn');
-    filterButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const category = btn.getAttribute('data-topic') || (btn.onclick ? null : 'all');
-            // filterInsights is called via onclick in HTML
+    // Search input
+    const searchInput = document.getElementById('search-input');
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            const gridContainer = document.getElementById('insights-archive-grid');
+            const featuredContainer = document.getElementById('featured-container');
+
+            if (term === '') {
+                renderGrid(window.currentFilter || 'all');
+                return;
+            }
+
+            // Hide featured on search to avoid confusion
+            if (featuredContainer) featuredContainer.innerHTML = '';
+
+            const sortedData = [...insightsData].sort((a, b) => new Date(b.date) - new Date(a.date));
+            const filtered = sortedData.filter(item => {
+                const getT = (k) => window.getTrans ? window.getTrans(k) : k;
+                const title = getT(`articles_list.${item.key}.title`).toLowerCase();
+                const desc = getT(`articles_list.${item.key}.desc`).toLowerCase();
+                return title.includes(term) || desc.includes(term);
+            });
+
+            let htmlContent = '';
+            filtered.forEach(insight => htmlContent += createInsightCard(insight));
+            gridContainer.innerHTML = htmlContent || '<div class="col-span-full text-center text-slate-400 py-10"><p>No results found for your search.</p></div>';
+
+            // Show cards
+            gridContainer.querySelectorAll('a').forEach(a => a.classList.replace('opacity-0', 'opacity-100'));
+            if (typeof lucide !== 'undefined') lucide.createIcons();
         });
-    });
+    }
 });
 
 // Exposed globally for index.html
