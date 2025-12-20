@@ -39,7 +39,7 @@ function handleAnswer(questionId, answerValue) {
     if (nextDiv) {
         nextDiv.style.display = 'block';
         // Dodajemo malu animaciju pojave za sljedeće pitanje
-        nextDiv.classList.add('fade-in-up', 'is-visible'); 
+        nextDiv.classList.add('fade-in-up', 'is-visible');
     } else {
         showResults();
     }
@@ -82,25 +82,25 @@ function showResults() {
                 <p class="text-lg text-slate-200 leading-relaxed">${message}</p>
             </div>
 
-            <a href="contact.html" class="inline-flex items-center justify-center px-8 py-4 bg-white text-hydro-charcoal font-bold rounded-full shadow-xl hover:bg-hydro-primary hover:text-white transition transform hover:scale-105">
+            <a href="/contact/" class="inline-flex items-center justify-center px-8 py-4 bg-white text-hydro-charcoal font-bold rounded-full shadow-xl hover:bg-hydro-primary hover:text-white transition transform hover:scale-105">
                 Discuss Results with an Expert &rarr;
             </a>
             <p class="mt-4 text-xs text-slate-500">Confidential & Free Initial Consultation</p>
         </div>
     `;
-    
+
     resultDiv.style.display = 'block';
 }
 
 // Inicijalizacija dugmeta "Start"
 document.addEventListener('DOMContentLoaded', () => {
     const startBtn = document.getElementById('assessment-start-btn');
-    
+
     if (startBtn) {
         startBtn.addEventListener('click', () => {
             const startScreen = document.getElementById('assessment-start');
             const q1 = document.getElementById('question-1');
-            
+
             if (startScreen) startScreen.style.display = 'none';
             if (q1) {
                 q1.style.display = 'block';
