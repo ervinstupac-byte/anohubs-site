@@ -1,27 +1,10 @@
 {
-    "version": 2,
-    "builds": [
+    "cleanUrls": true,
+    "trailingSlash": true,
+    "rewrites": [
         {
-            "src": "package.json",
-            "use": "@vercel/static-build",
-            "config": {
-                "distDir": "_site"
-            }
-        }
-    ],
-    "routes": [
-        {
-            "handle": "filesystem"
-        },
-        {
-            "src": "/(.*)",
-            "dest": "/$1/index.html",
-            "status": 200,
-            "continue": true
-        },
-        {
-            "src": "/(.*)",
-            "dest": "/index.html"
+            "source": "/(.*)",
+            "destination": "/$1"
         }
     ]
 }
