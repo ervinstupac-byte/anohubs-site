@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title> | Anohubs | Hydro Turbine Maintenance & Forensic Engineering</title>
+    <title>AnoHUB Protocol | Central Command | Anohubs | Hydro Turbine Maintenance & Forensic Engineering</title>
     <meta name="description" content="The central nervous system of AnoHUB operations. Access specific engineering protocols and methodology modules.">
 
     <!-- Google Fonts -->
@@ -87,10 +87,11 @@
     <header class="fixed w-full z-50 top-0 border-b border-white/5 bg-[#020617]/90 backdrop-blur-md transition-all duration-300 shadow-lg" id="navbar">
         <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
             <a href="/" class="flex items-center gap-3 group">
-                <img src="/assets/logo.svg" alt="AnoHUB" class="h-10 w-auto transition duration-300 group-hover:brightness-125">
-                <div class="hidden md:block">
-                    <span class="block text-lg font-black tracking-tighter text-white leading-none group-hover:text-[#22d3ee] transition">ANOHUBS</span>
-                    <span class="block text-[10px] font-mono text-slate-500 tracking-widest uppercase">Hydro Intelligence</span>
+                <img src="/assets/images/logo.svg" alt="AnoHUB" class="h-10 w-auto transition duration-300 group-hover:brightness-125">
+                <div class="pointer-events-auto">
+                    <h1 class="text-4xl font-divine text-white tracking-[0.2em] drop-shadow-lg group-hover:text-h-gold transition">AnoHUB</h1>
+                    <div class="h-0.5 w-16 bg-h-gold mt-2 group-hover:w-32 transition-all duration-500"></div>
+                    <p class="text-[10px] font-mono text-h-gold mt-1">PROTOCOL INTERFACE v30.0</p>
                 </div>
             </a>
             <nav class="hidden lg:flex items-center gap-6 text-xs font-bold uppercase tracking-wider">
@@ -123,34 +124,184 @@
 
     <main>
         
+<style>
+    .universe-container {
+        height: 70vh;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        perspective: 1500px;
+        overflow: hidden;
+        position: relative;
+        background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
+    }
 
-        <div id="search-container">
-            <input type="text" id="search-input" placeholder="SEARCH PROTOCOLS..." autocomplete="off">
-            <div class="mt-2 text-[10px] text-slate-500 font-mono tracking-widest">
-                Type 'NDT', 'Alignment', or 'ISO' to filter nodes
-            </div>
+    #galaxy {
+        position: relative;
+        width: 0;
+        height: 0;
+        transform-style: preserve-3d;
+        /* Animation spin-orbit defined in global or utility */
+        animation: spin-orbit 80s linear infinite;
+        pointer-events: none;
+    }
+
+    .universe-container:hover #galaxy {
+        animation-play-state: paused;
+    }
+
+    @keyframes spin-orbit {
+        from {
+            transform: rotateX(75deg) rotateZ(0deg);
+        }
+
+        to {
+            transform: rotateX(75deg) rotateZ(360deg);
+        }
+    }
+
+    .orbit-ring {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 50%;
+        transform-style: preserve-3d;
+        pointer-events: none;
+    }
+
+    .planet-link {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 40px;
+        height: 40px;
+        margin-left: -20px;
+        margin-top: -20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transform-style: preserve-3d;
+        cursor: pointer;
+        text-decoration: none;
+        pointer-events: auto !important;
+        z-index: 100;
+    }
+
+    .planet-body {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: #000;
+        border: 2px solid;
+        box-shadow: 0 0 15px currentColor;
+        transition: all 0.3s ease;
+    }
+
+    .planet-label {
+        position: absolute;
+        top: 24px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 10px;
+        font-weight: bold;
+        color: #aaa;
+        background: rgba(0, 0, 0, 0.8);
+        padding: 2px 6px;
+        border-radius: 4px;
+        border: 1px solid #333;
+        white-space: nowrap;
+        opacity: 0.6;
+        transition: all 0.3s;
+        pointer-events: none;
+    }
+
+    .planet-link:hover .planet-body {
+        transform: scale(2.5);
+        background: white;
+        box-shadow: 0 0 50px white;
+        border-color: white !important;
+    }
+
+    .planet-link:hover .planet-label {
+        opacity: 1;
+        transform: translateX(-50%) scale(1.2);
+        border-color: #FFB800;
+        color: #FFB800;
+        background: black;
+        z-index: 200;
+    }
+
+    .core-sun {
+        position: absolute;
+        width: 80px;
+        height: 80px;
+        background: radial-gradient(circle, #fff 10%, #FFB800 100%);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        box-shadow: 0 0 80px rgba(255, 184, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Oswald', sans-serif;
+        font-weight: 900;
+        color: black;
+        font-size: 24px;
+        z-index: 50;
+        pointer-events: auto;
+    }
+
+    .module-card {
+        background: rgba(15, 23, 42, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(4px);
+        transition: all 0.3s ease;
+    }
+
+    .module-card:hover {
+        transform: translateY(-5px);
+        border-color: var(--hover-color);
+        box-shadow: 0 0 30px var(--hover-glow);
+    }
+</style>
+
+<section class="universe-container pt-20">
+    <div id="galaxy">
+        <!-- Core Sun -->
+        <a href="/" class="core-sun">A</a>
+
+        <!-- Orbit Rings -->
+        <div class="orbit-ring w-[350px] h-[350px]"></div>
+        <div class="orbit-ring w-[550px] h-[550px]"></div>
+        <div class="orbit-ring w-[750px] h-[750px]"></div>
+    </div>
+</section>
+
+<section class="py-24 px-6 relative z-10">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="text-h-gold font-mono text-xs tracking-widest uppercase mb-4">Central Index</h2>
+            <h1 class="text-4xl md:text-6xl font-black text-white uppercase tracking-tight">Protocol Matrix</h1>
         </div>
 
-        <div id="solar-system-container">
-            <div id="galaxy">
-                <!-- Core Sun -->
-                <a href="/index/" class="core-sun absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                    A
-                </a>
-                <!-- Orbits and Planets injected via JS -->
-            </div>
+        <div id="modules-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <!-- Injected via JS -->
         </div>
-    
+    </div>
+</section>
 
+<canvas id="matrix-canvas" class="fixed inset-0 pointer-events-none opacity-20 z-0"></canvas>
 
-
-
+<script src="/assets/js/protocol-galaxy.js"></script>
 
     </main>
 
     <footer class="bg-black border-t border-slate-900 pt-16 pb-16 text-center relative z-10">
         <div class="max-w-7xl mx-auto px-4">
-            <img src="/assets/logo.svg" alt="Anohubs Logo" class="h-10 w-auto opacity-60 mx-auto mb-10 grayscale">
+            <img src="/assets/images/logo.svg" alt="Anohubs Logo" class="h-10 w-auto opacity-60 mx-auto mb-10 grayscale">
             <nav class="flex flex-wrap justify-center gap-8 text-sm font-bold text-slate-400 mb-12 uppercase tracking-wider">
                 <a href="/about-us-vision/" class="hover:text-white">About</a>
                 <a href="/capabilities/" class="hover:text-white">Capabilities</a>
@@ -158,6 +309,11 @@
                 <a href="/case-studies/" class="hover:text-white">Case Studies</a>
                 <a href="/protocol/" class="hover:text-white">Protocol</a>
                 <a href="/contact/" class="hover:text-white">Contact</a>
+            </nav>
+            <nav class="flex flex-wrap justify-center gap-6 text-[10px] font-mono text-slate-500 mb-8 uppercase tracking-widest">
+                <a href="/privacy-policy/" class="hover:text-h-cyan transition">Privacy Policy</a>
+                <span class="opacity-20">/</span>
+                <a href="/terms-of-use/" class="hover:text-h-cyan transition">Terms of Use</a>
             </nav>
             <p class="text-[10px] font-mono text-slate-600">&copy; <span id="year"></span> ANOHUBS INC. <span class="text-hydro-green">// ALL SYSTEMS SECURE</span></p>
         </div>

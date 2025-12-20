@@ -1,12 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
-    
+
     // === DATA: THE 12 MISSION FILES ===
     const casesData = [
         {
             id: '001',
             title: 'Compliance Shield',
             type: 'finance',
-            file: 'cs-compliance-shield.html',
+            file: '/case-studies/cs-compliance-shield/',
             risk: 'Regulatory Fines',
             outcome: '€200k Saved',
             color: 'text-h-green',
@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
             id: '002',
             title: 'Digital Protocol ROI',
             type: 'finance',
-            file: 'cs-digital-protocol-roi.html',
+            file: '/case-studies/cs-digital-protocol-roi/',
             risk: 'Budget Bloat',
             outcome: '25% Labor Cut',
             color: 'text-h-blue',
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
             id: '003',
             title: 'Fish Passage Opt.',
             type: 'kaplan',
-            file: 'cs-fish-passage-optimization.html',
+            file: '/case-studies/cs-fish-passage-optimization/',
             risk: 'License Revocation',
             outcome: '100% Compliance',
             color: 'text-h-green',
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
             id: '004',
             title: 'Forensic NDT Fatigue',
             type: 'francis',
-            file: 'cs-forensic-ndt-fatigue.html',
+            file: '/case-studies/cs-forensic-ndt-fatigue/',
             risk: 'Blade Separation',
             outcome: 'Fatigue Arrested',
             color: 'text-h-purple',
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
             id: '005',
             title: 'Francis Misalignment',
             type: 'francis',
-            file: 'cs-francis-misalignment.html',
+            file: '/case-studies/cs-francis-misalignment/',
             risk: 'Bearing Failure',
             outcome: '99.1% Uptime',
             color: 'text-h-cyan',
@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
             id: '006',
             title: 'Hydraulic Hammer',
             type: 'pelton',
-            file: 'cs-hydraulic-hammer-mitigation.html',
+            file: '/case-studies/cs-hydraulic-hammer-mitigation/',
             risk: 'Penstock Rupture',
             outcome: '-40% Surge',
             color: 'text-h-cta',
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
             id: '007',
             title: 'Kaplan Optimization',
             type: 'kaplan',
-            file: 'cs-kaplan-optimization.html',
+            file: '/case-studies/cs-kaplan-optimization/',
             risk: 'Efficiency Loss',
             outcome: '+3.1% Output',
             color: 'text-h-green',
@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
             id: '008',
             title: 'LCC Procurement Audit',
             type: 'finance',
-            file: 'cs-lcc-procurement-audit.html',
+            file: '/case-studies/cs-lcc-procurement-audit/',
             risk: 'Low-Bid Failure',
             outcome: '18% LCC Savings',
             color: 'text-h-blue',
@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
             id: '009',
             title: 'M-E Synergy Erosion',
             type: 'pelton',
-            file: 'cs-me-synergy-erosion.html',
+            file: '/case-studies/cs-me-synergy-erosion/',
             risk: 'Electro-Erosion',
             outcome: 'Shaft Voltage 0V',
             color: 'text-h-yellow',
@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
             id: '010',
             title: 'Pelton Abrasion',
             type: 'pelton',
-            file: 'cs-pelton-abrasion.html',
+            file: '/case-studies/cs-pelton-abrasion/',
             risk: 'Bucket Wear',
             outcome: '5yr Life Ext.',
             color: 'text-h-cta',
@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
             id: '011',
             title: 'Predictive Maint. ROI',
             type: 'finance',
-            file: 'cs-predictive-maintenance-roi.html',
+            file: '/case-studies/cs-predictive-maintenance-roi/',
             risk: 'Unplanned Outage',
             outcome: 'Zero Downtime',
             color: 'text-h-green',
@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
             id: '012',
             title: 'Shaft Stability',
             type: 'francis',
-            file: 'cs-shaft-system-stability.html',
+            file: '/case-studies/cs-shaft-system-stability/',
             risk: 'Vibration Trip',
             outcome: '-85% Amplitude',
             color: 'text-h-cta',
@@ -126,15 +126,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // === RENDER LOGIC ===
     const grid = document.getElementById('cases-grid');
-    
+
     // Check if grid exists to avoid errors on other pages
-    if(!grid) return;
+    if (!grid) return;
 
     function renderCases(filterType) {
         grid.innerHTML = '';
         const filtered = filterType === 'all' ? casesData : casesData.filter(c => c.type === filterType);
-        
-        if(filtered.length === 0) {
+
+        if (filtered.length === 0) {
             grid.innerHTML = '<div class="col-span-full text-center py-20 text-slate-500 font-mono border border-dashed border-slate-800 rounded-xl">NO MISSIONS FOUND IN THIS SECTOR.</div>';
             return;
         }
@@ -142,10 +142,10 @@ document.addEventListener('DOMContentLoaded', () => {
         filtered.forEach((item, index) => {
             const delay = index * 100; // Stagger animation
             const card = document.createElement('a');
-            card.href = `case-studies/${item.file}`;
+            card.href = `${item.file}`;
             card.className = `dossier-card rounded-xl p-6 group block ${item.borderClass} animate-[fadeInUp_0.5s_ease-out]`;
             card.style.animationDelay = `${delay}ms`;
-            
+
             card.innerHTML = `
                 <div class="flex justify-between items-start mb-6">
                     <div>
@@ -190,11 +190,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // === SEARCH LOGIC ===
     const searchInput = document.getElementById('search-input');
-    if(searchInput) {
+    if (searchInput) {
         searchInput.addEventListener('input', (e) => {
             const term = e.target.value.toLowerCase();
             const cards = document.querySelectorAll('.dossier-card');
-            
+
             cards.forEach(card => {
                 const text = card.innerText.toLowerCase();
                 if (text.includes(term)) {

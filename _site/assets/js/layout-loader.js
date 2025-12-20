@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 4. Conditional Preloader (Fixes Issue #3)
     // Only run on Index or Protocol main page
-    if (page === "index.html" || page === "" || page === "protocol.html") {
+    if (page === "index.html" || page === "" || page === "/" || page === "protocol.html" || page === "protocol") {
         if (typeof runBootSequence === "function") runBootSequence();
     }
 });
