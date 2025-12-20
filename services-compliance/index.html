@@ -80,6 +80,46 @@
         .asset-overlay { position: absolute; inset: 0; background: linear-gradient(to top, #020617 10%, rgba(2, 6, 23, 0.8) 50%, rgba(2, 6, 23, 0.2) 100%); transition: background 0.5s ease; }
         .tech-card { transition: all 0.3s ease; }
         .tech-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px -10px rgba(6,182,212,0.2); }
+
+        /* Unified CTA Buttons */
+        .btn-primary { 
+            display: inline-flex; items-center; justify-content; center;
+            padding: 1rem 2rem; background-color: #FFB800; color: black; 
+            font-weight: 900; text-transform: uppercase; letter-spacing: 0.1em;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); border-radius: 0.25rem;
+            box-shadow: 0 0 20px rgba(255, 184, 0, 0.2);
+        }
+        .btn-primary:hover { 
+            background-color: white; transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(255, 184, 0, 0.4);
+        }
+
+        .btn-outline {
+            display: inline-flex; items-center; justify-content; center;
+            padding: 1rem 2rem; border: 1px solid rgba(255, 255, 255, 0.2); color: white;
+            font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;
+            transition: all 0.3s ease; border-radius: 0.25rem; backdrop-filter: blur(4px);
+        }
+        .btn-outline:hover {
+            background-color: rgba(255, 255, 255, 0.1); border-color: white;
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            display: inline-flex; items-center; justify-content; center;
+            padding: 1rem 2rem; background-color: #ef4444; color: black;
+            font-weight: 900; text-transform: uppercase; letter-spacing: 0.1em;
+            transition: all 0.3s ease; border-radius: 0.25rem;
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.2);
+        }
+        .btn-danger:hover {
+            background-color: white; transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(239, 68, 68, 0.4);
+        }
+
+        .btn-hero-xl {
+            padding: 1.25rem 3rem; font-size: 1.125rem;
+        }
     </style>
     <!-- Vercel Speed Insights -->
     <script defer src="/_vercel/insights/script.js"></script>
@@ -97,30 +137,36 @@
                 </div>
             </a>
             <nav class="hidden lg:flex items-center gap-6 text-xs font-bold uppercase tracking-wider">
-                <a href="/about-us-vision/" class="text-slate-400 hover:text-white transition">About</a>
-                <a href="/capabilities/" class="text-slate-400 hover:text-white transition">Capabilities</a>
-                <a href="/insights/" class="text-slate-400 hover:text-white transition">Insights</a>
-                <a href="/case-studies/" class="text-slate-400 hover:text-white transition">Case Studies</a>
-                <a href="/protocol/" class="px-5 py-2 bg-[#22d3ee]/10 text-[#22d3ee] border border-[#22d3ee]/50 rounded-full hover:bg-[#22d3ee] hover:text-black transition">SERVICES</a>
-                <a href="/contact/" class="px-5 py-2 bg-[#f59e0b] text-black rounded-full hover:bg-yellow-400 transition">GET A QUOTE</a>
+                <a href="/about-us-vision/" class="text-slate-400 hover:text-white transition" data-i18n="nav.about">About</a>
+                <a href="/capabilities/" class="text-slate-400 hover:text-white transition" data-i18n="nav.capabilities">Capabilities</a>
+                <a href="/insights/" class="text-slate-400 hover:text-white transition" data-i18n="nav.insights">Insights</a>
+                <a href="/case-studies/" class="text-slate-400 hover:text-white transition" data-i18n="nav.case_studies">Case Studies</a>
+                <a href="/protocol/" class="px-5 py-2 bg-[#22d3ee]/10 text-[#22d3ee] border border-[#22d3ee]/50 rounded-full hover:bg-[#22d3ee] hover:text-black transition" data-i18n="nav.services">SERVICES</a>
+                <a href="/contact/" class="px-5 py-2 bg-[#f59e0b] text-black rounded-full hover:bg-yellow-400 transition" data-i18n="nav.quote">GET A QUOTE</a>
+                <div class="flex items-center gap-3 border-l border-white/10 pl-6 ml-2 font-mono text-[10px]">
+                    <button onclick="changeLanguage('en')" class="lang-btn hover:text-h-cyan transition" data-lang="en">EN</button>
+                    <span class="opacity-20 text-white/20">|</span>
+                    <button onclick="changeLanguage('bs')" class="lang-btn hover:text-h-cyan transition" data-lang="bs">BS</button>
+                </div>
             </nav>
             <button id="mobile-menu-button" class="lg:hidden text-white p-2 hover:bg-white/10 rounded transition">
                 <i data-lucide="menu"></i>
             </button>
         </div>
         <div id="mobile-menu" class="hidden lg:hidden absolute top-20 left-0 w-full bg-[#020617] border-b border-[#1e293b] p-6 flex flex-col gap-4 animate-fade-in-down">
-            <a href="/about-us-vision/" class="text-slate-300 hover:text-[#22d3ee] py-2 border-b border-[#1e293b]">About Us</a>
-            <a href="/capabilities/" class="text-slate-300 hover:text-[#22d3ee] py-2 border-b border-[#1e293b]">Capabilities</a>
-            <a href="/insights/" class="text-slate-300 hover:text-[#22d3ee] py-2 border-b border-[#1e293b]">Insights</a>
-            <a href="/contact/" class="text-black bg-[#f59e0b] font-bold py-3 text-center rounded-lg mt-2">REQUEST AUDIT</a>
+            <a href="/about-us-vision/" class="text-slate-300 hover:text-[#22d3ee] py-2 border-b border-[#1e293b]" data-i18n="nav.about">About Us</a>
+            <a href="/capabilities/" class="text-slate-300 hover:text-[#22d3ee] py-2 border-b border-[#1e293b]" data-i18n="nav.capabilities">Capabilities</a>
+            <a href="/insights/" class="text-slate-300 hover:text-[#22d3ee] py-2 border-b border-[#1e293b]" data-i18n="nav.insights">Insights</a>
+            <a href="/contact/" class="text-black bg-[#f59e0b] font-bold py-3 text-center rounded-lg mt-2" data-i18n="nav.quote_audit">REQUEST AUDIT</a>
+            <div class="flex justify-center gap-6 pt-4 border-t border-[#1e293b] font-mono text-[10px]">
+                <button onclick="changeLanguage('en')" class="lang-btn text-slate-400" data-lang="en">ENGLISH</button>
+                <div class="text-white/10">|</div>
+                <button onclick="changeLanguage('bs')" class="lang-btn text-slate-400" data-lang="bs">BOSANSKI</button>
+            </div>
         </div>
     </header>
 
-    <div id="hangar-loader" class="fixed inset-0 z-[10000] flex flex-col pointer-events-none bg-[#020617]">
-        <div id="hangar-top" class="w-full h-1/2 bg-[#020617] border-b border-h-gold/30 transition-transform duration-1000"></div>
-        <div id="hangar-line" class="absolute top-1/2 left-0 w-full h-[1px] bg-h-gold shadow-[0_0_20px_#FFD700] z-50"></div>
-        <div id="hangar-bottom" class="w-full h-1/2 bg-[#020617] border-t border-h-gold/30 transition-transform duration-1000"></div>
-    </div>
+
 
     <div class="noise-overlay"></div>
 
@@ -144,35 +190,37 @@
         <div
             class="inline-flex items-center gap-2 px-3 py-1 rounded border border-h-purple/30 bg-h-purple/10 text-h-purple text-[10px] font-mono tracking-widest uppercase mb-6 animate-pulse">
             <div class="w-1.5 h-1.5 rounded-full bg-h-purple"></div>
-            <span>SYSTEM STATUS: COMPLIANCE FIREWALL ACTIVE</span>
+            <span data-i18n="service_compliance.hero.status">SYSTEM STATUS: COMPLIANCE FIREWALL ACTIVE</span>
         </div>
 
         <h1
             class="text-6xl md:text-8xl lg:text-9xl font-black text-white tracking-tighter leading-[0.9] mb-4 animate-fade-in-up">
-            <span class="block">REGULATORY</span>
+            <span class="block" data-i18n="service_compliance.hero.title">REGULATORY</span>
             <span
-                class="block text-transparent bg-clip-text bg-gradient-to-r from-h-purple via-white to-h-purple bg-[length:200%_auto] animate-gradient-x">DEFENSE</span>
+                class="block text-transparent bg-clip-text bg-gradient-to-r from-h-purple via-white to-h-purple bg-[length:200%_auto] animate-gradient-x"
+                data-i18n="service_compliance.hero.subtitle">DEFENSE</span>
         </h1>
 
-        <h2 class="text-xl md:text-2xl text-white font-bold mb-6 max-w-3xl border-l-4 border-h-purple pl-4">
+        <h2 class="text-xl md:text-2xl text-white font-bold mb-6 max-w-3xl border-l-4 border-h-purple pl-4"
+            data-i18n="service_compliance.hero.tagline">
             Automated Reporting & Forensic Audit Protection
         </h2>
 
-        <p class="max-w-xl text-lg text-slate-400 mb-8 leading-relaxed pl-5">
-            We provide the irrefutable data needed to secure your operating license. Don't just pass the audit�dominate
+        <p class="max-w-xl text-lg text-slate-400 mb-8 leading-relaxed pl-5" data-i18n="service_compliance.hero.desc">
+            We provide the irrefutable data needed to secure your operating license. Don't just pass the audit—dominate
             it.
         </p>
 
         <div class="flex flex-col sm:flex-row gap-4 mb-12">
-            <a href="#audit-form"
-                class="group relative px-8 py-4 bg-h-purple text-black font-bold uppercase tracking-widest overflow-hidden text-center hover:bg-white transition-all">
-                <span class="relative z-10">SECURE MY LICENSE</span>
+            <a href="#audit-form" class="btn-primary">
+                <span data-i18n="service_compliance.hero.btn">SECURE MY LICENSE</span>
             </a>
         </div>
 
         <!-- TRUST STRIP -->
         <div class="border-t border-white/10 pt-6">
-            <p class="text-[10px] font-mono text-slate-500 uppercase tracking-widest mb-4">Compliance Partner For:</p>
+            <p class="text-[10px] font-mono text-slate-500 uppercase tracking-widest mb-4"
+                data-i18n="service_compliance.trust.label">Compliance Partner For:</p>
             <div class="flex gap-8 opacity-50 grayscale hover:grayscale-0 transition-all duration-500 flex-wrap">
                 <div
                     class="h-8 px-4 bg-white/10 rounded flex items-center justify-center text-[10px] text-white/50 font-mono tracking-widest">
@@ -194,14 +242,17 @@
     <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
         <div class="order-2 lg:order-1">
             <div class="glass-card p-10 rounded-2xl border-l-4 border-l-h-purple">
-                <h2 class="text-3xl font-bold text-white mb-6 flex items-center gap-3">
+                <h2 class="text-3xl font-bold text-white mb-6 flex items-center gap-3"
+                    data-i18n="service_compliance.problem.card_title">
                     <i data-lucide="scale" class="w-8 h-8 text-h-purple"></i> The Legal Minefield
                 </h2>
-                <p class="text-slate-300 leading-relaxed mb-6 text-lg">
+                <p class="text-slate-300 leading-relaxed mb-6 text-lg"
+                    data-i18n="[html]service_compliance.problem.card_p1">
                     Compliance is an act of <strong>integrity</strong>. In the modern energy sector, a single
                     missing report or unverifiable maintenance log can lead to license revocation.
                 </p>
-                <p class="text-slate-300 leading-relaxed text-lg border-l-2 border-slate-700 pl-4">
+                <p class="text-slate-300 leading-relaxed text-lg border-l-2 border-slate-700 pl-4"
+                    data-i18n="[html]service_compliance.problem.card_p2">
                     The "Organizational Execution Gap" creates data silos where critical safety proofs are lost. We
                     don't just ensure boxes are ticked; we provide the verifiable documentation needed to defend
                     your assets in court.
@@ -209,10 +260,13 @@
             </div>
         </div>
         <div class="order-1 lg:order-2 text-center lg:text-left">
-            <h3 class="text-sm font-mono text-h-purple uppercase tracking-widest mb-4">The Solution</h3>
-            <h2 class="text-5xl md:text-6xl font-black text-white mb-6 leading-tight">Audit-Ready at <br><span
-                    class="text-slate-500">Any Moment.</span></h2>
-            <p class="text-slate-400 text-lg max-w-lg">Stop scrambling before inspections. Our system maintains a
+            <h3 class="text-sm font-mono text-h-purple uppercase tracking-widest mb-4"
+                data-i18n="service_compliance.problem.label">The Solution</h3>
+            <h2 class="text-5xl md:text-6xl font-black text-white mb-6 leading-tight"
+                data-i18n="service_compliance.problem.title">Audit-Ready at <br><span class="text-slate-500">Any
+                    Moment.</span></h2>
+            <p class="text-slate-400 text-lg max-w-lg" data-i18n="service_compliance.problem.desc">Stop scrambling
+                before inspections. Our system maintains a
                 perpetual state of readiness.</p>
         </div>
     </div>
@@ -225,7 +279,8 @@
 
     <div class="max-w-7xl mx-auto px-6 relative z-10">
         <div class="text-center mb-24">
-            <h2 class="text-4xl font-black text-white flex items-center justify-center gap-4">
+            <h2 class="text-4xl font-black text-white flex items-center justify-center gap-4"
+                data-i18n="service_compliance.protocol.title">
                 <i data-lucide="shield-check" class="w-10 h-10 text-h-purple"></i> The Assurance Protocol
             </h2>
         </div>
@@ -234,15 +289,20 @@
 
             <div class="space-y-8">
                 <div class="glass-card p-8 rounded-xl hover:bg-h-purple/5 transition text-right group">
-                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-h-purple transition">Automated Logging
+                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-h-purple transition"
+                        data-i18n="service_compliance.protocol.card1_title">Automated Logging
                     </h3>
-                    <p class="text-sm text-slate-400 leading-relaxed">Real-time ingestion of operational data. Every
+                    <p class="text-sm text-slate-400 leading-relaxed"
+                        data-i18n="service_compliance.protocol.card1_desc">Real-time ingestion of operational data.
+                        Every
                         vibration spike is timestamped and immutable.</p>
                 </div>
                 <div class="glass-card p-8 rounded-xl hover:bg-h-purple/5 transition text-right group">
-                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-h-purple transition">Forensic Proof
+                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-h-purple transition"
+                        data-i18n="service_compliance.protocol.card2_title">Forensic Proof
                     </h3>
-                    <p class="text-sm text-slate-400 leading-relaxed">NDT data linked to asset IDs, providing
+                    <p class="text-sm text-slate-400 leading-relaxed"
+                        data-i18n="service_compliance.protocol.card2_desc">NDT data linked to asset IDs, providing
                         irrefutable evidence of condition history.</p>
                 </div>
             </div>
@@ -263,15 +323,21 @@
 
             <div class="space-y-8">
                 <div class="glass-card p-8 rounded-xl hover:bg-h-purple/5 transition group">
-                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-h-purple transition">Digital
+                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-h-purple transition"
+                        data-i18n="service_compliance.protocol.card3_title">Digital
                         Integration</h3>
-                    <p class="text-sm text-slate-400 leading-relaxed">Reports formatted for EU/Global regulatory bodies
+                    <p class="text-sm text-slate-400 leading-relaxed"
+                        data-i18n="service_compliance.protocol.card3_desc">Reports formatted for EU/Global regulatory
+                        bodies
                         automatically. Zero manual entry errors.</p>
                 </div>
                 <div class="glass-card p-8 rounded-xl hover:bg-h-purple/5 transition group">
-                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-h-purple transition">Data Security
+                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-h-purple transition"
+                        data-i18n="service_compliance.protocol.card4_title">Data Security
                     </h3>
-                    <p class="text-sm text-slate-400 leading-relaxed">Encrypted storage of all asset health records.
+                    <p class="text-sm text-slate-400 leading-relaxed"
+                        data-i18n="service_compliance.protocol.card4_desc">Encrypted storage of all asset health
+                        records.
                         GDPR compliant and ISO 27001 ready.</p>
                 </div>
             </div>
@@ -289,7 +355,8 @@
                     class="w-80 h-80 text-h-purple"></i></div>
 
             <div class="relative z-10">
-                <h2 class="text-4xl font-black text-white mb-12">AnoHUB Defense Service</h2>
+                <h2 class="text-4xl font-black text-white mb-12" data-i18n="service_compliance.defense.title">AnoHUB
+                    Defense Service</h2>
                 <div class="grid md:grid-cols-2 gap-16">
                     <div class="flex gap-6 group">
                         <div
@@ -297,9 +364,10 @@
                             <i data-lucide="users" class="w-8 h-8 text-h-purple"></i>
                         </div>
                         <div>
-                            <h4 class="text-white font-bold text-2xl mb-3 group-hover:text-h-purple transition">Audit
+                            <h4 class="text-white font-bold text-2xl mb-3 group-hover:text-h-purple transition"
+                                data-i18n="service_compliance.defense.card1_title">Audit
                                 Defense Team</h4>
-                            <p class="text-slate-400 leading-relaxed">
+                            <p class="text-slate-400 leading-relaxed" data-i18n="service_compliance.defense.card1_desc">
                                 We stand physically by your side during inspections. We speak the language of the
                                 auditors and provide data on demand, defusing potential non-compliance findings
                                 instantly.
@@ -312,9 +380,10 @@
                             <i data-lucide="file-check" class="w-8 h-8 text-h-purple"></i>
                         </div>
                         <div>
-                            <h4 class="text-white font-bold text-2xl mb-3 group-hover:text-h-purple transition">Legal
+                            <h4 class="text-white font-bold text-2xl mb-3 group-hover:text-h-purple transition"
+                                data-i18n="service_compliance.defense.card2_title">Legal
                                 Support Briefs</h4>
-                            <p class="text-slate-400 leading-relaxed">
+                            <p class="text-slate-400 leading-relaxed" data-i18n="service_compliance.defense.card2_desc">
                                 Technical briefs generated for your legal team within 24 hours of an incident,
                                 protecting you from liability with hard engineering evidence.
                             </p>
@@ -332,8 +401,10 @@
 
     <div class="max-w-4xl mx-auto px-6 relative z-10">
         <div class="text-center mb-16">
-            <h2 class="text-4xl font-black text-white mb-6">Is Your License Secure?</h2>
-            <p class="text-xl text-slate-400">Don't wait for the inspector. Verify your compliance status first.</p>
+            <h2 class="text-4xl font-black text-white mb-6" data-i18n="service_compliance.cta.title">Is Your License
+                Secure?</h2>
+            <p class="text-xl text-slate-400" data-i18n="service_compliance.cta.subtitle">Don't wait for the inspector.
+                Verify your compliance status first.</p>
         </div>
 
         <div class="glass-card p-10 md:p-14 rounded-3xl border border-h-purple/20 shadow-2xl bg-black/60">
@@ -343,14 +414,16 @@
                 <div class="grid md:grid-cols-2 gap-8">
                     <div>
                         <label
-                            class="text-xs font-mono text-h-purple uppercase ml-1 block mb-2 font-bold tracking-wider">Full
+                            class="text-xs font-mono text-h-purple uppercase ml-1 block mb-2 font-bold tracking-wider"
+                            data-i18n="service_compliance.cta.form.name">Full
                             Name</label>
                         <input type="text" name="Full Name" required
                             class="w-full bg-black/50 border border-slate-700 rounded-lg p-4 text-white focus:border-h-purple focus:ring-1 focus:ring-h-purple outline-none transition">
                     </div>
                     <div>
                         <label
-                            class="text-xs font-mono text-h-purple uppercase ml-1 block mb-2 font-bold tracking-wider">Official
+                            class="text-xs font-mono text-h-purple uppercase ml-1 block mb-2 font-bold tracking-wider"
+                            data-i18n="service_compliance.cta.form.email">Official
                             Email</label>
                         <input type="email" name="Email" required
                             class="w-full bg-black/50 border border-slate-700 rounded-lg p-4 text-white focus:border-h-purple focus:ring-1 focus:ring-h-purple outline-none transition">
@@ -358,16 +431,17 @@
                 </div>
 
                 <div>
-                    <label
-                        class="text-xs font-mono text-h-purple uppercase ml-1 block mb-2 font-bold tracking-wider">Compliance
+                    <label class="text-xs font-mono text-h-purple uppercase ml-1 block mb-2 font-bold tracking-wider"
+                        data-i18n="service_compliance.cta.form.challenge">Compliance
                         Challenge</label>
                     <textarea name="Message" rows="4" placeholder="Describe the audit or regulatory issue..."
+                        data-i18n="[placeholder]service_compliance.cta.form.ph_challenge"
                         class="w-full bg-black/50 border border-slate-700 rounded-lg p-4 text-white focus:border-h-purple focus:ring-1 focus:ring-h-purple outline-none transition"></textarea>
                 </div>
 
                 <button type="submit"
-                    class="w-full bg-h-purple hover:bg-white text-black font-black py-5 rounded-lg shadow-[0_0_30px_rgba(139,92,246,0.3)] transition uppercase tracking-widest text-lg transform hover:scale-[1.01]">
-                    SECURE COMPLIANCE
+                    class="btn-primary w-full shadow-[0_0_30px_rgba(139,92,246,0.3)] text-lg transform hover:scale-[1.01]">
+                    <span data-i18n="service_compliance.cta.form.btn">SECURE COMPLIANCE</span>
                 </button>
                 <p id="formMessage" class="mt-4 text-center text-sm font-mono hidden"></p>
             </form>
@@ -386,8 +460,6 @@
       "description": "Automated regulatory reporting and audit defense for hydropower assets."
     }
     </script>
-
-
     </main>
 
     <footer class="bg-black border-t border-slate-900 pt-16 pb-16 text-center relative z-10">
@@ -413,24 +485,7 @@
     <script>
         lucide.createIcons();
         document.addEventListener("DOMContentLoaded", () => {
-            // Hangar Logic
-            const topPanel = document.getElementById('hangar-top');
-            const btmPanel = document.getElementById('hangar-bottom');
-            const line = document.getElementById('hangar-line');
-            const loader = document.getElementById('hangar-loader');
 
-            if (topPanel && btmPanel && line && loader) {
-                setTimeout(() => {
-                    line.style.boxShadow = "0 0 100px #FFB800";
-                    line.style.backgroundColor = "#FFB800";
-                    setTimeout(() => {
-                        topPanel.style.transform = "translateY(-100%)";
-                        btmPanel.style.transform = "translateY(100%)";
-                        line.style.opacity = "0";
-                        setTimeout(() => { loader.style.display = 'none'; }, 1000);
-                    }, 600);
-                }, 800);
-            }
 
             // Year
             const yearEl = document.getElementById('year');
@@ -444,5 +499,6 @@
             }
         });
     </script>
+    <script src="/assets/js/translations.js"></script>
 </body>
 </html>

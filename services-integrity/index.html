@@ -80,6 +80,46 @@
         .asset-overlay { position: absolute; inset: 0; background: linear-gradient(to top, #020617 10%, rgba(2, 6, 23, 0.8) 50%, rgba(2, 6, 23, 0.2) 100%); transition: background 0.5s ease; }
         .tech-card { transition: all 0.3s ease; }
         .tech-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px -10px rgba(6,182,212,0.2); }
+
+        /* Unified CTA Buttons */
+        .btn-primary { 
+            display: inline-flex; items-center; justify-content; center;
+            padding: 1rem 2rem; background-color: #FFB800; color: black; 
+            font-weight: 900; text-transform: uppercase; letter-spacing: 0.1em;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); border-radius: 0.25rem;
+            box-shadow: 0 0 20px rgba(255, 184, 0, 0.2);
+        }
+        .btn-primary:hover { 
+            background-color: white; transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(255, 184, 0, 0.4);
+        }
+
+        .btn-outline {
+            display: inline-flex; items-center; justify-content; center;
+            padding: 1rem 2rem; border: 1px solid rgba(255, 255, 255, 0.2); color: white;
+            font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;
+            transition: all 0.3s ease; border-radius: 0.25rem; backdrop-filter: blur(4px);
+        }
+        .btn-outline:hover {
+            background-color: rgba(255, 255, 255, 0.1); border-color: white;
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            display: inline-flex; items-center; justify-content; center;
+            padding: 1rem 2rem; background-color: #ef4444; color: black;
+            font-weight: 900; text-transform: uppercase; letter-spacing: 0.1em;
+            transition: all 0.3s ease; border-radius: 0.25rem;
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.2);
+        }
+        .btn-danger:hover {
+            background-color: white; transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(239, 68, 68, 0.4);
+        }
+
+        .btn-hero-xl {
+            padding: 1.25rem 3rem; font-size: 1.125rem;
+        }
     </style>
     <!-- Vercel Speed Insights -->
     <script defer src="/_vercel/insights/script.js"></script>
@@ -97,30 +137,36 @@
                 </div>
             </a>
             <nav class="hidden lg:flex items-center gap-6 text-xs font-bold uppercase tracking-wider">
-                <a href="/about-us-vision/" class="text-slate-400 hover:text-white transition">About</a>
-                <a href="/capabilities/" class="text-slate-400 hover:text-white transition">Capabilities</a>
-                <a href="/insights/" class="text-slate-400 hover:text-white transition">Insights</a>
-                <a href="/case-studies/" class="text-slate-400 hover:text-white transition">Case Studies</a>
-                <a href="/protocol/" class="px-5 py-2 bg-[#22d3ee]/10 text-[#22d3ee] border border-[#22d3ee]/50 rounded-full hover:bg-[#22d3ee] hover:text-black transition">SERVICES</a>
-                <a href="/contact/" class="px-5 py-2 bg-[#f59e0b] text-black rounded-full hover:bg-yellow-400 transition">GET A QUOTE</a>
+                <a href="/about-us-vision/" class="text-slate-400 hover:text-white transition" data-i18n="nav.about">About</a>
+                <a href="/capabilities/" class="text-slate-400 hover:text-white transition" data-i18n="nav.capabilities">Capabilities</a>
+                <a href="/insights/" class="text-slate-400 hover:text-white transition" data-i18n="nav.insights">Insights</a>
+                <a href="/case-studies/" class="text-slate-400 hover:text-white transition" data-i18n="nav.case_studies">Case Studies</a>
+                <a href="/protocol/" class="px-5 py-2 bg-[#22d3ee]/10 text-[#22d3ee] border border-[#22d3ee]/50 rounded-full hover:bg-[#22d3ee] hover:text-black transition" data-i18n="nav.services">SERVICES</a>
+                <a href="/contact/" class="px-5 py-2 bg-[#f59e0b] text-black rounded-full hover:bg-yellow-400 transition" data-i18n="nav.quote">GET A QUOTE</a>
+                <div class="flex items-center gap-3 border-l border-white/10 pl-6 ml-2 font-mono text-[10px]">
+                    <button onclick="changeLanguage('en')" class="lang-btn hover:text-h-cyan transition" data-lang="en">EN</button>
+                    <span class="opacity-20 text-white/20">|</span>
+                    <button onclick="changeLanguage('bs')" class="lang-btn hover:text-h-cyan transition" data-lang="bs">BS</button>
+                </div>
             </nav>
             <button id="mobile-menu-button" class="lg:hidden text-white p-2 hover:bg-white/10 rounded transition">
                 <i data-lucide="menu"></i>
             </button>
         </div>
         <div id="mobile-menu" class="hidden lg:hidden absolute top-20 left-0 w-full bg-[#020617] border-b border-[#1e293b] p-6 flex flex-col gap-4 animate-fade-in-down">
-            <a href="/about-us-vision/" class="text-slate-300 hover:text-[#22d3ee] py-2 border-b border-[#1e293b]">About Us</a>
-            <a href="/capabilities/" class="text-slate-300 hover:text-[#22d3ee] py-2 border-b border-[#1e293b]">Capabilities</a>
-            <a href="/insights/" class="text-slate-300 hover:text-[#22d3ee] py-2 border-b border-[#1e293b]">Insights</a>
-            <a href="/contact/" class="text-black bg-[#f59e0b] font-bold py-3 text-center rounded-lg mt-2">REQUEST AUDIT</a>
+            <a href="/about-us-vision/" class="text-slate-300 hover:text-[#22d3ee] py-2 border-b border-[#1e293b]" data-i18n="nav.about">About Us</a>
+            <a href="/capabilities/" class="text-slate-300 hover:text-[#22d3ee] py-2 border-b border-[#1e293b]" data-i18n="nav.capabilities">Capabilities</a>
+            <a href="/insights/" class="text-slate-300 hover:text-[#22d3ee] py-2 border-b border-[#1e293b]" data-i18n="nav.insights">Insights</a>
+            <a href="/contact/" class="text-black bg-[#f59e0b] font-bold py-3 text-center rounded-lg mt-2" data-i18n="nav.quote_audit">REQUEST AUDIT</a>
+            <div class="flex justify-center gap-6 pt-4 border-t border-[#1e293b] font-mono text-[10px]">
+                <button onclick="changeLanguage('en')" class="lang-btn text-slate-400" data-lang="en">ENGLISH</button>
+                <div class="text-white/10">|</div>
+                <button onclick="changeLanguage('bs')" class="lang-btn text-slate-400" data-lang="bs">BOSANSKI</button>
+            </div>
         </div>
     </header>
 
-    <div id="hangar-loader" class="fixed inset-0 z-[10000] flex flex-col pointer-events-none bg-[#020617]">
-        <div id="hangar-top" class="w-full h-1/2 bg-[#020617] border-b border-h-gold/30 transition-transform duration-1000"></div>
-        <div id="hangar-line" class="absolute top-1/2 left-0 w-full h-[1px] bg-h-gold shadow-[0_0_20px_#FFD700] z-50"></div>
-        <div id="hangar-bottom" class="w-full h-1/2 bg-[#020617] border-t border-h-gold/30 transition-transform duration-1000"></div>
-    </div>
+
 
     <div class="noise-overlay"></div>
 
@@ -143,35 +189,37 @@
         <div
             class="inline-flex items-center gap-2 px-3 py-1 rounded border border-h-cyan/30 bg-h-cyan/10 text-h-cyan text-[10px] font-mono tracking-widest uppercase mb-6 animate-pulse">
             <div class="w-1.5 h-1.5 rounded-full bg-h-cyan"></div>
-            <span>SYSTEM STATUS: INTEGRITY SCAN ACTIVE</span>
+            <span data-i18n="service_integrity.hero.status">SYSTEM STATUS: INTEGRITY SCAN ACTIVE</span>
         </div>
 
         <h1
             class="text-6xl md:text-8xl lg:text-9xl font-black text-white tracking-tighter leading-[0.9] mb-4 animate-fade-in-up">
-            <span class="block">SYSTEMIC</span>
+            <span class="block" data-i18n="service_integrity.hero.title">SYSTEMIC</span>
             <span
-                class="block text-transparent bg-clip-text bg-gradient-to-r from-h-cyan via-white to-h-cyan bg-[length:200%_auto] animate-gradient-x">INTEGRITY</span>
+                class="block text-transparent bg-clip-text bg-gradient-to-r from-h-cyan via-white to-h-cyan bg-[length:200%_auto] animate-gradient-x"
+                data-i18n="service_integrity.hero.subtitle">INTEGRITY</span>
         </h1>
 
-        <h2 class="text-xl md:text-2xl text-white font-bold mb-6 max-w-3xl border-l-4 border-h-cyan pl-4">
+        <h2 class="text-xl md:text-2xl text-white font-bold mb-6 max-w-3xl border-l-4 border-h-cyan pl-4"
+            data-i18n="service_integrity.hero.tagline">
             Advanced Forensic Auditing & 3D Metrology
         </h2>
 
-        <p class="max-w-xl text-lg text-slate-400 mb-8 leading-relaxed pl-5">
+        <p class="max-w-xl text-lg text-slate-400 mb-8 leading-relaxed pl-5" data-i18n="service_integrity.hero.desc">
             Holistic examination of hydropower systems using FEA, NDT, and 3D Metrology protocols to ensure zero-defect
             structural integrity.
         </p>
 
         <div class="flex flex-col sm:flex-row gap-4 mb-12">
-            <a href="#audit-form"
-                class="group relative px-8 py-4 bg-h-cyan text-black font-bold uppercase tracking-widest overflow-hidden text-center hover:bg-white transition-all">
-                <span class="relative z-10">DEPLOY FIELD TEAM</span>
+            <a href="#audit-form" class="btn-primary">
+                <span data-i18n="service_integrity.hero.btn">DEPLOY FIELD TEAM</span>
             </a>
         </div>
 
         <!-- TRUST STRIP -->
         <div class="border-t border-white/10 pt-6">
-            <p class="text-[10px] font-mono text-slate-500 uppercase tracking-widest mb-4">Integrity Partner For:</p>
+            <p class="text-[10px] font-mono text-slate-500 uppercase tracking-widest mb-4"
+                data-i18n="service_integrity.trust.label">Integrity Partner For:</p>
             <div class="flex gap-8 opacity-50 grayscale hover:grayscale-0 transition-all duration-500 flex-wrap">
                 <div
                     class="h-8 px-4 bg-white/10 rounded flex items-center justify-center text-[10px] text-white/50 font-mono tracking-widest">
@@ -193,25 +241,30 @@
     <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
         <div class="order-2 lg:order-1">
             <div class="glass-card p-10 rounded-2xl border-l-4 border-l-h-cyan">
-                <h2 class="text-3xl font-bold text-white mb-6 flex items-center gap-3">
+                <h2 class="text-3xl font-bold text-white mb-6 flex items-center gap-3"
+                    data-i18n="service_integrity.problem.card_title">
                     <i data-lucide="layers" class="w-8 h-8 text-h-cyan"></i> The Hidden 48%
                 </h2>
-                <p class="text-slate-300 text-lg leading-relaxed mb-6">
+                <p class="text-slate-300 text-lg leading-relaxed mb-6"
+                    data-i18n="[html]service_integrity.problem.card_p1">
                     Standard visual inspections miss <strong>48% of critical failure modes</strong>. Micro-cracks in
                     runner blades, shaft misalignment of just 0.07mm, or foundation voids cannot be seen with the
                     naked eye.
                 </p>
-                <p class="text-slate-300 text-lg leading-relaxed border-l-2 border-slate-700 pl-4">
+                <p class="text-slate-300 text-lg leading-relaxed border-l-2 border-slate-700 pl-4"
+                    data-i18n="[html]service_integrity.problem.card_p2">
                     The <strong>Organizational Execution Gap</strong> creates blind spots where design intent and
                     field reality diverge. We bridge that gap with forensic data.
                 </p>
             </div>
         </div>
         <div class="order-1 lg:order-2 text-center lg:text-left">
-            <h3 class="text-h-cyan font-mono text-sm mb-2 uppercase tracking-widest">The Threat</h3>
-            <h2 class="text-5xl md:text-6xl font-black text-white mb-6 leading-tight">What You Can't See <br><span
-                    class="text-slate-500">Will Stop You.</span></h2>
-            <p class="text-slate-400 text-lg leading-relaxed max-w-lg">
+            <h3 class="text-h-cyan font-mono text-sm mb-2 uppercase tracking-widest"
+                data-i18n="service_integrity.problem.label">The Threat</h3>
+            <h2 class="text-5xl md:text-6xl font-black text-white mb-6 leading-tight"
+                data-i18n="service_integrity.problem.title">What You Can't See <br><span class="text-slate-500">Will
+                    Stop You.</span></h2>
+            <p class="text-slate-400 text-lg leading-relaxed max-w-lg" data-i18n="service_integrity.problem.desc">
                 Surface-level audits are a liability. True integrity lies beneath the metal. We use technology to
                 see through the steel.
             </p>
@@ -226,7 +279,8 @@
 
     <div class="max-w-7xl mx-auto px-6 relative z-10">
         <div class="text-center mb-16">
-            <h2 class="text-4xl font-black text-white flex items-center justify-center gap-4">
+            <h2 class="text-4xl font-black text-white flex items-center justify-center gap-4"
+                data-i18n="service_integrity.tech.title">
                 <i data-lucide="scan-line" class="w-10 h-10 text-h-cyan"></i> Deep Scan Technology
             </h2>
         </div>
@@ -237,9 +291,10 @@
                     class="bg-h-dark p-4 rounded-full w-fit mb-6 border border-h-cyan text-h-cyan group-hover:scale-110 transition">
                     <i data-lucide="box-select" class="w-8 h-8"></i>
                 </div>
-                <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-h-cyan transition">3D Laser Metrology
+                <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-h-cyan transition"
+                    data-i18n="service_integrity.tech.card1.title">3D Laser Metrology
                 </h3>
-                <p class="text-sm text-slate-400 leading-relaxed">
+                <p class="text-sm text-slate-400 leading-relaxed" data-i18n="service_integrity.tech.card1.desc">
                     We create a sub-millimeter digital twin of your turbine. This reveals deviations from the OEM
                     design (0.05mm tolerance) that cause flow inefficiency.
                 </p>
@@ -250,8 +305,9 @@
                     class="bg-h-dark p-4 rounded-full w-fit mb-6 border border-h-cyan text-h-cyan group-hover:scale-110 transition">
                     <i data-lucide="activity" class="w-8 h-8"></i>
                 </div>
-                <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-h-cyan transition">Advanced NDT</h3>
-                <p class="text-sm text-slate-400 leading-relaxed">
+                <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-h-cyan transition"
+                    data-i18n="service_integrity.tech.card2.title">Advanced NDT</h3>
+                <p class="text-sm text-slate-400 leading-relaxed" data-i18n="service_integrity.tech.card2.desc">
                     Phased Array Ultrasonic Testing (PAUT) allows us to "see" inside welds and castings, detecting
                     fatigue cracks before they propagate to failure.
                 </p>
@@ -262,8 +318,9 @@
                     class="bg-h-dark p-4 rounded-full w-fit mb-6 border border-h-cyan text-h-cyan group-hover:scale-110 transition">
                     <i data-lucide="cpu" class="w-8 h-8"></i>
                 </div>
-                <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-h-cyan transition">FEA Simulation</h3>
-                <p class="text-sm text-slate-400 leading-relaxed">
+                <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-h-cyan transition"
+                    data-i18n="service_integrity.tech.card3.title">FEA Simulation</h3>
+                <p class="text-sm text-slate-400 leading-relaxed" data-i18n="service_integrity.tech.card3.desc">
                     Finite Element Analysis. We apply digital stress loads to your asset's digital twin to predict
                     exactly where and when it will break under surge conditions.
                 </p>
@@ -280,8 +337,9 @@
 
             <div class="flex flex-col md:flex-row items-center gap-16 relative z-10">
                 <div class="md:w-1/2">
-                    <h3 class="text-3xl font-black text-white mb-6">Live Digital Twin</h3>
-                    <p class="text-slate-400 text-lg leading-relaxed mb-8">
+                    <h3 class="text-3xl font-black text-white mb-6" data-i18n="service_integrity.twin.title">Live
+                        Digital Twin</h3>
+                    <p class="text-slate-400 text-lg leading-relaxed mb-8" data-i18n="service_integrity.twin.desc">
                         Our audits generate a live, interactive model. Click on a component to see its stress
                         rating, material composition, and remaining lifespan.
                     </p>
@@ -290,12 +348,13 @@
                         <div
                             class="flex items-center gap-4 text-xs font-mono text-white bg-black/40 px-4 py-3 rounded border border-white/5">
                             <span class="w-2 h-2 rounded-full bg-h-red animate-pulse-fast"></span>
-                            <span>STRESS HOTSPOT DETECTED: RUNNER HUB</span>
+                            <span data-i18n="service_integrity.twin.status_hotspot">STRESS HOTSPOT DETECTED: RUNNER
+                                HUB</span>
                         </div>
                         <div
                             class="flex items-center gap-4 text-xs font-mono text-white bg-black/40 px-4 py-3 rounded border border-white/5">
                             <span class="w-2 h-2 rounded-full bg-h-green"></span>
-                            <span>STRUCTURAL INTEGRITY: 98.4%</span>
+                            <span data-i18n="service_integrity.twin.status_integrity">STRUCTURAL INTEGRITY: 98.4%</span>
                         </div>
                     </div>
                 </div>
@@ -309,7 +368,7 @@
                         <i data-lucide="fan" class="w-48 h-48 text-h-cyan opacity-80"></i>
                         <div class="absolute top-12 right-16 w-4 h-4 bg-h-red rounded-full animate-ping"></div>
                         <div class="absolute top-12 right-16 w-4 h-4 bg-h-red/50 rounded-full border border-h-red cursor-pointer"
-                            title="Crack Detected"></div>
+                            data-i18n="[title]service_integrity.twin.marker_title" title="Crack Detected"></div>
                     </div>
                 </div>
             </div>
@@ -321,7 +380,8 @@
 <section class="py-24 bg-h-panel border-t border-h-border">
     <div class="max-w-6xl mx-auto px-6">
         <div class="text-center mb-16">
-            <h2 class="text-3xl font-black text-white">Execution Protocols</h2>
+            <h2 class="text-3xl font-black text-white" data-i18n="service_integrity.protocols.title">Execution Protocols
+            </h2>
         </div>
 
         <div class="grid md:grid-cols-2 gap-8 text-left">
@@ -331,9 +391,11 @@
                         class="w-8 h-8"></i>
                 </div>
                 <div>
-                    <h4 class="text-white font-bold text-xl mb-3 group-hover:text-h-cyan transition">Forensic Field
+                    <h4 class="text-white font-bold text-xl mb-3 group-hover:text-h-cyan transition"
+                        data-i18n="service_integrity.protocols.card1_title">Forensic Field
                         Team</h4>
-                    <p class="text-sm text-slate-400 leading-relaxed">Deploying ISO-certified NDT Level 3 engineers
+                    <p class="text-sm text-slate-400 leading-relaxed"
+                        data-i18n="service_integrity.protocols.card1_desc">Deploying ISO-certified NDT Level 3 engineers
                         to your site within 48 hours of an anomaly detection.</p>
                 </div>
             </div>
@@ -343,9 +405,11 @@
                         class="w-8 h-8"></i>
                 </div>
                 <div>
-                    <h4 class="text-white font-bold text-xl mb-3 group-hover:text-h-cyan transition">Repair
+                    <h4 class="text-white font-bold text-xl mb-3 group-hover:text-h-cyan transition"
+                        data-i18n="service_integrity.protocols.card2_title">Repair
                         Supervision</h4>
-                    <p class="text-sm text-slate-400 leading-relaxed">We oversee third-party contractors to ensure
+                    <p class="text-sm text-slate-400 leading-relaxed"
+                        data-i18n="service_integrity.protocols.card2_desc">We oversee third-party contractors to ensure
                         welding and grinding meet the 0.05mm precision standard.</p>
                 </div>
             </div>
@@ -359,8 +423,10 @@
 
     <div class="max-w-4xl mx-auto px-6 relative z-10">
         <div class="text-center mb-16">
-            <h2 class="text-4xl font-black text-white mb-6">Initialize Forensic Audit</h2>
-            <p class="text-xl text-slate-400">Deploy our Level 3 NDT engineers to your site.</p>
+            <h2 class="text-4xl font-black text-white mb-6" data-i18n="service_integrity.cta.title">Initialize Forensic
+                Audit</h2>
+            <p class="text-xl text-slate-400" data-i18n="service_integrity.cta.subtitle">Deploy our Level 3 NDT
+                engineers to your site.</p>
         </div>
 
         <div class="glass-card p-10 md:p-14 rounded-3xl border border-h-cyan/20 shadow-2xl bg-black/60">
@@ -369,15 +435,15 @@
 
                 <div class="grid md:grid-cols-2 gap-8">
                     <div>
-                        <label
-                            class="text-xs font-mono text-h-cyan uppercase ml-1 block mb-2 font-bold tracking-wider">Full
+                        <label class="text-xs font-mono text-h-cyan uppercase ml-1 block mb-2 font-bold tracking-wider"
+                            data-i18n="service_integrity.cta.form.name">Full
                             Name</label>
                         <input type="text" name="Full Name" required
                             class="w-full bg-black/50 border border-slate-700 rounded-lg p-4 text-white focus:border-h-cyan focus:ring-1 focus:ring-h-cyan outline-none transition">
                     </div>
                     <div>
-                        <label
-                            class="text-xs font-mono text-h-cyan uppercase ml-1 block mb-2 font-bold tracking-wider">Official
+                        <label class="text-xs font-mono text-h-cyan uppercase ml-1 block mb-2 font-bold tracking-wider"
+                            data-i18n="service_integrity.cta.form.email">Official
                             Email</label>
                         <input type="email" name="Email" required
                             class="w-full bg-black/50 border border-slate-700 rounded-lg p-4 text-white focus:border-h-cyan focus:ring-1 focus:ring-h-cyan outline-none transition">
@@ -385,16 +451,17 @@
                 </div>
 
                 <div>
-                    <label
-                        class="text-xs font-mono text-h-cyan uppercase ml-1 block mb-2 font-bold tracking-wider">Asset
+                    <label class="text-xs font-mono text-h-cyan uppercase ml-1 block mb-2 font-bold tracking-wider"
+                        data-i18n="service_integrity.cta.form.asset">Asset
                         Description</label>
                     <textarea name="Message" rows="4" placeholder="Describe the turbine or component..."
+                        data-i18n="[placeholder]service_integrity.cta.form.ph_asset"
                         class="w-full bg-black/50 border border-slate-700 rounded-lg p-4 text-white focus:border-h-cyan focus:ring-1 focus:ring-h-cyan outline-none transition"></textarea>
                 </div>
 
                 <button type="submit"
-                    class="w-full bg-h-cyan hover:bg-cyan-400 text-black font-black py-5 rounded-lg shadow-[0_0_20px_rgba(6,182,212,0.4)] transition uppercase tracking-widest text-lg transform hover:scale-[1.01]">
-                    DEPLOY AUDIT TEAM
+                    class="btn-primary w-full shadow-[0_0_20px_rgba(6,182,212,0.4)] text-lg transform hover:scale-[1.01]">
+                    <span data-i18n="service_integrity.cta.form.btn">DEPLOY AUDIT TEAM</span>
                 </button>
                 <p id="formMessage" class="mt-4 text-center text-sm font-mono hidden"></p>
             </form>
@@ -413,8 +480,6 @@
       "description": "Advanced forensic auditing for hydropower assets using 3D Metrology and NDT."
     }
     </script>
-
-
     </main>
 
     <footer class="bg-black border-t border-slate-900 pt-16 pb-16 text-center relative z-10">
@@ -440,24 +505,7 @@
     <script>
         lucide.createIcons();
         document.addEventListener("DOMContentLoaded", () => {
-            // Hangar Logic
-            const topPanel = document.getElementById('hangar-top');
-            const btmPanel = document.getElementById('hangar-bottom');
-            const line = document.getElementById('hangar-line');
-            const loader = document.getElementById('hangar-loader');
 
-            if (topPanel && btmPanel && line && loader) {
-                setTimeout(() => {
-                    line.style.boxShadow = "0 0 100px #FFB800";
-                    line.style.backgroundColor = "#FFB800";
-                    setTimeout(() => {
-                        topPanel.style.transform = "translateY(-100%)";
-                        btmPanel.style.transform = "translateY(100%)";
-                        line.style.opacity = "0";
-                        setTimeout(() => { loader.style.display = 'none'; }, 1000);
-                    }, 600);
-                }, 800);
-            }
 
             // Year
             const yearEl = document.getElementById('year');
@@ -471,5 +519,6 @@
             }
         });
     </script>
+    <script src="/assets/js/translations.js"></script>
 </body>
 </html>

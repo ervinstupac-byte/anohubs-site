@@ -80,6 +80,46 @@
         .asset-overlay { position: absolute; inset: 0; background: linear-gradient(to top, #020617 10%, rgba(2, 6, 23, 0.8) 50%, rgba(2, 6, 23, 0.2) 100%); transition: background 0.5s ease; }
         .tech-card { transition: all 0.3s ease; }
         .tech-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px -10px rgba(6,182,212,0.2); }
+
+        /* Unified CTA Buttons */
+        .btn-primary { 
+            display: inline-flex; items-center; justify-content; center;
+            padding: 1rem 2rem; background-color: #FFB800; color: black; 
+            font-weight: 900; text-transform: uppercase; letter-spacing: 0.1em;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); border-radius: 0.25rem;
+            box-shadow: 0 0 20px rgba(255, 184, 0, 0.2);
+        }
+        .btn-primary:hover { 
+            background-color: white; transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(255, 184, 0, 0.4);
+        }
+
+        .btn-outline {
+            display: inline-flex; items-center; justify-content; center;
+            padding: 1rem 2rem; border: 1px solid rgba(255, 255, 255, 0.2); color: white;
+            font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;
+            transition: all 0.3s ease; border-radius: 0.25rem; backdrop-filter: blur(4px);
+        }
+        .btn-outline:hover {
+            background-color: rgba(255, 255, 255, 0.1); border-color: white;
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            display: inline-flex; items-center; justify-content; center;
+            padding: 1rem 2rem; background-color: #ef4444; color: black;
+            font-weight: 900; text-transform: uppercase; letter-spacing: 0.1em;
+            transition: all 0.3s ease; border-radius: 0.25rem;
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.2);
+        }
+        .btn-danger:hover {
+            background-color: white; transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(239, 68, 68, 0.4);
+        }
+
+        .btn-hero-xl {
+            padding: 1.25rem 3rem; font-size: 1.125rem;
+        }
     </style>
     <!-- Vercel Speed Insights -->
     <script defer src="/_vercel/insights/script.js"></script>
@@ -97,30 +137,36 @@
                 </div>
             </a>
             <nav class="hidden lg:flex items-center gap-6 text-xs font-bold uppercase tracking-wider">
-                <a href="/about-us-vision/" class="text-slate-400 hover:text-white transition">About</a>
-                <a href="/capabilities/" class="text-slate-400 hover:text-white transition">Capabilities</a>
-                <a href="/insights/" class="text-slate-400 hover:text-white transition">Insights</a>
-                <a href="/case-studies/" class="text-slate-400 hover:text-white transition">Case Studies</a>
-                <a href="/protocol/" class="px-5 py-2 bg-[#22d3ee]/10 text-[#22d3ee] border border-[#22d3ee]/50 rounded-full hover:bg-[#22d3ee] hover:text-black transition">SERVICES</a>
-                <a href="/contact/" class="px-5 py-2 bg-[#f59e0b] text-black rounded-full hover:bg-yellow-400 transition">GET A QUOTE</a>
+                <a href="/about-us-vision/" class="text-slate-400 hover:text-white transition" data-i18n="nav.about">About</a>
+                <a href="/capabilities/" class="text-slate-400 hover:text-white transition" data-i18n="nav.capabilities">Capabilities</a>
+                <a href="/insights/" class="text-slate-400 hover:text-white transition" data-i18n="nav.insights">Insights</a>
+                <a href="/case-studies/" class="text-slate-400 hover:text-white transition" data-i18n="nav.case_studies">Case Studies</a>
+                <a href="/protocol/" class="px-5 py-2 bg-[#22d3ee]/10 text-[#22d3ee] border border-[#22d3ee]/50 rounded-full hover:bg-[#22d3ee] hover:text-black transition" data-i18n="nav.services">SERVICES</a>
+                <a href="/contact/" class="px-5 py-2 bg-[#f59e0b] text-black rounded-full hover:bg-yellow-400 transition" data-i18n="nav.quote">GET A QUOTE</a>
+                <div class="flex items-center gap-3 border-l border-white/10 pl-6 ml-2 font-mono text-[10px]">
+                    <button onclick="changeLanguage('en')" class="lang-btn hover:text-h-cyan transition" data-lang="en">EN</button>
+                    <span class="opacity-20 text-white/20">|</span>
+                    <button onclick="changeLanguage('bs')" class="lang-btn hover:text-h-cyan transition" data-lang="bs">BS</button>
+                </div>
             </nav>
             <button id="mobile-menu-button" class="lg:hidden text-white p-2 hover:bg-white/10 rounded transition">
                 <i data-lucide="menu"></i>
             </button>
         </div>
         <div id="mobile-menu" class="hidden lg:hidden absolute top-20 left-0 w-full bg-[#020617] border-b border-[#1e293b] p-6 flex flex-col gap-4 animate-fade-in-down">
-            <a href="/about-us-vision/" class="text-slate-300 hover:text-[#22d3ee] py-2 border-b border-[#1e293b]">About Us</a>
-            <a href="/capabilities/" class="text-slate-300 hover:text-[#22d3ee] py-2 border-b border-[#1e293b]">Capabilities</a>
-            <a href="/insights/" class="text-slate-300 hover:text-[#22d3ee] py-2 border-b border-[#1e293b]">Insights</a>
-            <a href="/contact/" class="text-black bg-[#f59e0b] font-bold py-3 text-center rounded-lg mt-2">REQUEST AUDIT</a>
+            <a href="/about-us-vision/" class="text-slate-300 hover:text-[#22d3ee] py-2 border-b border-[#1e293b]" data-i18n="nav.about">About Us</a>
+            <a href="/capabilities/" class="text-slate-300 hover:text-[#22d3ee] py-2 border-b border-[#1e293b]" data-i18n="nav.capabilities">Capabilities</a>
+            <a href="/insights/" class="text-slate-300 hover:text-[#22d3ee] py-2 border-b border-[#1e293b]" data-i18n="nav.insights">Insights</a>
+            <a href="/contact/" class="text-black bg-[#f59e0b] font-bold py-3 text-center rounded-lg mt-2" data-i18n="nav.quote_audit">REQUEST AUDIT</a>
+            <div class="flex justify-center gap-6 pt-4 border-t border-[#1e293b] font-mono text-[10px]">
+                <button onclick="changeLanguage('en')" class="lang-btn text-slate-400" data-lang="en">ENGLISH</button>
+                <div class="text-white/10">|</div>
+                <button onclick="changeLanguage('bs')" class="lang-btn text-slate-400" data-lang="bs">BOSANSKI</button>
+            </div>
         </div>
     </header>
 
-    <div id="hangar-loader" class="fixed inset-0 z-[10000] flex flex-col pointer-events-none bg-[#020617]">
-        <div id="hangar-top" class="w-full h-1/2 bg-[#020617] border-b border-h-gold/30 transition-transform duration-1000"></div>
-        <div id="hangar-line" class="absolute top-1/2 left-0 w-full h-[1px] bg-h-gold shadow-[0_0_20px_#FFD700] z-50"></div>
-        <div id="hangar-bottom" class="w-full h-1/2 bg-[#020617] border-t border-h-gold/30 transition-transform duration-1000"></div>
-    </div>
+
 
     <div class="noise-overlay"></div>
 
@@ -153,7 +199,8 @@
         <!-- TRUST STRIP -->
         <div class="animate-fade-in-up opacity-0 border-t border-white/10 pt-6 mt-8 max-w-2xl mx-auto"
             style="animation-delay: 0.4s;">
-            <p class="text-[10px] font-mono text-slate-300 uppercase tracking-widest mb-4">Deployed At:</p>
+            <p class="text-[10px] font-mono text-slate-300 uppercase tracking-widest mb-4"
+                data-i18n="capabilities_page.hero.deployed_at">Deployed At:</p>
             <div
                 class="flex justify-center gap-4 flex-wrap opacity-70 grayscale hover:grayscale-0 transition-all duration-500">
                 <div
@@ -170,14 +217,10 @@
 
         <div class="flex flex-wrap justify-center gap-4 animate-fade-in-up opacity-0 mt-12"
             style="animation-delay: 0.6s;">
-            <a href="#assets"
-                class="px-8 py-4 border border-white/30 text-white font-bold rounded hover:bg-white hover:text-black transition uppercase tracking-widest backdrop-blur-sm"
-                data-i18n="capabilities_page.hero.btn_asset">
+            <a href="#assets" class="btn-outline btn-hero-xl" data-i18n="capabilities_page.hero.btn_asset">
                 Select Asset
             </a>
-            <a href="#field-ops"
-                class="px-8 py-4 bg-h-cta text-black font-black rounded hover:bg-yellow-400 transition uppercase tracking-widest shadow-lg hover:shadow-h-cta/50"
-                data-i18n="capabilities_page.hero.btn_field">
+            <a href="#field-ops" class="btn-primary btn-hero-xl" data-i18n="capabilities_page.hero.btn_field">
                 Field Operations
             </a>
         </div>
@@ -202,11 +245,13 @@
                 <div class="asset-overlay"></div>
                 <div class="absolute bottom-0 left-0 p-8 w-full">
                     <div class="flex justify-between items-end border-b border-white/20 pb-4 mb-4">
-                        <h3 class="text-3xl font-black text-white group-hover:text-h-cyan transition">FRANCIS</h3>
+                        <h3 class="text-3xl font-black text-white group-hover:text-h-cyan transition"
+                            data-i18n="turbine_francis.title">FRANCIS</h3>
                         <span class="text-[10px] font-mono font-bold text-h-cyan bg-h-cyan/10 px-2 py-1 rounded"
                             data-i18n="capabilities_page.assets.mixed_flow">MIXED FLOW</span>
                     </div>
-                    <p class="text-slate-300 text-sm mb-4 line-clamp-2">Vortex Rope Mitigation & RSI Analysis.</p>
+                    <p class="text-slate-300 text-sm mb-4 line-clamp-2"
+                        data-i18n="capabilities_page.assets.francis_desc">Vortex Rope Mitigation & RSI Analysis.</p>
                     <div class="flex items-center text-xs font-bold text-white uppercase tracking-widest">
                         <span data-i18n="capabilities_page.assets.protocols_link">Protocols</span> <i
                             data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-2 transition"></i>
@@ -221,11 +266,13 @@
                 <div class="asset-overlay"></div>
                 <div class="absolute bottom-0 left-0 p-8 w-full">
                     <div class="flex justify-between items-end border-b border-white/20 pb-4 mb-4">
-                        <h3 class="text-3xl font-black text-white group-hover:text-h-green transition">KAPLAN</h3>
+                        <h3 class="text-3xl font-black text-white group-hover:text-h-green transition"
+                            data-i18n="turbine_kaplan.title">KAPLAN</h3>
                         <span class="text-[10px] font-mono font-bold text-h-green bg-h-green/10 px-2 py-1 rounded"
                             data-i18n="capabilities_page.assets.axial_flow">AXIAL FLOW</span>
                     </div>
-                    <p class="text-slate-300 text-sm mb-4 line-clamp-2">Hub Oil Leak Repair & Cam Optimization.</p>
+                    <p class="text-slate-300 text-sm mb-4 line-clamp-2"
+                        data-i18n="capabilities_page.assets.kaplan_desc">Hub Oil Leak Repair & Cam Optimization.</p>
                     <div class="flex items-center text-xs font-bold text-white uppercase tracking-widest">
                         <span data-i18n="capabilities_page.assets.protocols_link">Protocols</span> <i
                             data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-2 transition"></i>
@@ -240,11 +287,13 @@
                 <div class="asset-overlay"></div>
                 <div class="absolute bottom-0 left-0 p-8 w-full">
                     <div class="flex justify-between items-end border-b border-white/20 pb-4 mb-4">
-                        <h3 class="text-3xl font-black text-white group-hover:text-h-cta transition">PELTON</h3>
+                        <h3 class="text-3xl font-black text-white group-hover:text-h-cta transition"
+                            data-i18n="turbine_pelton.title">PELTON</h3>
                         <span class="text-[10px] font-mono font-bold text-h-cta bg-h-cta/10 px-2 py-1 rounded"
                             data-i18n="capabilities_page.assets.impulse">IMPULSE</span>
                     </div>
-                    <p class="text-slate-300 text-sm mb-4 line-clamp-2">Injector Alignment & Erosion Coating.</p>
+                    <p class="text-slate-300 text-sm mb-4 line-clamp-2"
+                        data-i18n="capabilities_page.assets.pelton_desc">Injector Alignment & Erosion Coating.</p>
                     <div class="flex items-center text-xs font-bold text-white uppercase tracking-widest">
                         <span data-i18n="capabilities_page.assets.protocols_link">Protocols</span> <i
                             data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-2 transition"></i>
@@ -277,10 +326,10 @@
                 <p class="text-sm text-slate-400 mb-6" data-i18n="capabilities_page.field_ops.card_mech.desc">
                     Complete disassembly, refurbishment, and reassembly.</p>
                 <ul class="service-list">
-                    <li>Turbine & Generator Alignment</li>
-                    <li>Bearing Scraping & Fitting</li>
-                    <li>Bolt Torquing & Tensioning</li>
-                    <li>Hydraulic Unit Piping</li>
+                    <li data-i18n="capabilities_page.field_ops.card_mech.li1">Turbine & Generator Alignment</li>
+                    <li data-i18n="capabilities_page.field_ops.card_mech.li2">Bearing Scraping & Fitting</li>
+                    <li data-i18n="capabilities_page.field_ops.card_mech.li3">Bolt Torquing & Tensioning</li>
+                    <li data-i18n="capabilities_page.field_ops.card_mech.li4">Hydraulic Unit Piping</li>
                 </ul>
             </div>
 
@@ -291,10 +340,10 @@
                 <p class="text-sm text-slate-400 mb-6" data-i18n="capabilities_page.field_ops.card_mach.desc">
                     Precision metalworking without dismantling.</p>
                 <ul class="service-list">
-                    <li>Flange Facing & Turning</li>
-                    <li>Line Boring (Stay Vanes)</li>
-                    <li>Journal Repair</li>
-                    <li>Milling & Drilling</li>
+                    <li data-i18n="capabilities_page.field_ops.card_mach.li1">Flange Facing & Turning</li>
+                    <li data-i18n="capabilities_page.field_ops.card_mach.li2">Line Boring (Stay Vanes)</li>
+                    <li data-i18n="capabilities_page.field_ops.card_mach.li3">Journal Repair</li>
+                    <li data-i18n="capabilities_page.field_ops.card_mach.li4">Milling & Drilling</li>
                 </ul>
             </div>
 
@@ -305,10 +354,10 @@
                 <p class="text-sm text-slate-400 mb-6" data-i18n="capabilities_page.field_ops.card_weld.desc">
                     Cavitation repair and surface hardening.</p>
                 <ul class="service-list">
-                    <li>Runner Blade Overlay</li>
-                    <li>Crack Gouging & Repair</li>
-                    <li>Ceramic Coating Application</li>
-                    <li>NDT (Dye Pen/Ultrasonic)</li>
+                    <li data-i18n="capabilities_page.field_ops.card_weld.li1">Runner Blade Overlay</li>
+                    <li data-i18n="capabilities_page.field_ops.card_weld.li2">Crack Gouging & Repair</li>
+                    <li data-i18n="capabilities_page.field_ops.card_weld.li3">Ceramic Coating Application</li>
+                    <li data-i18n="capabilities_page.field_ops.card_weld.li4">NDT (Dye Pen/Ultrasonic)</li>
                 </ul>
             </div>
 
@@ -319,10 +368,10 @@
                 <p class="text-sm text-slate-400 mb-6" data-i18n="capabilities_page.field_ops.card_site.desc">
                     The essential tasks others ignore.</p>
                 <ul class="service-list">
-                    <li>Oil Filtration & Analysis</li>
-                    <li>Industrial Cleaning (Dry Ice)</li>
-                    <li>Scaffolding & Rigging</li>
-                    <li>Waste Management</li>
+                    <li data-i18n="capabilities_page.field_ops.card_site.li1">Oil Filtration & Analysis</li>
+                    <li data-i18n="capabilities_page.field_ops.card_site.li2">Industrial Cleaning (Dry Ice)</li>
+                    <li data-i18n="capabilities_page.field_ops.card_site.li3">Scaffolding & Rigging</li>
+                    <li data-i18n="capabilities_page.field_ops.card_site.li4">Waste Management</li>
                 </ul>
             </div>
 
@@ -333,10 +382,10 @@
                 <p class="text-sm text-slate-400 mb-6" data-i18n="capabilities_page.field_ops.card_hse.desc">
                     Ensuring safety and protocol compliance.</p>
                 <ul class="service-list">
-                    <li>Site Management</li>
-                    <li>HSE Safety Coordination</li>
-                    <li>Schedule & QA/QC Tracking</li>
-                    <li>Documentation (Daily Logs)</li>
+                    <li data-i18n="capabilities_page.field_ops.card_hse.li1">Site Management</li>
+                    <li data-i18n="capabilities_page.field_ops.card_hse.li2">HSE Safety Coordination</li>
+                    <li data-i18n="capabilities_page.field_ops.card_hse.li3">Schedule & QA/QC Tracking</li>
+                    <li data-i18n="capabilities_page.field_ops.card_hse.li4">Documentation (Daily Logs)</li>
                 </ul>
             </div>
 
@@ -347,10 +396,10 @@
                 <p class="text-sm text-slate-400 mb-6" data-i18n="capabilities_page.field_ops.card_supply.desc">
                     Getting the right part to the remote site.</p>
                 <ul class="service-list">
-                    <li>Reverse Engineering Parts</li>
-                    <li>Seal & Gasket Manufacturing</li>
-                    <li>Heavy Transport Logistics</li>
-                    <li>Consumables Supply</li>
+                    <li data-i18n="capabilities_page.field_ops.card_supply.li1">Reverse Engineering Parts</li>
+                    <li data-i18n="capabilities_page.field_ops.card_supply.li2">Seal & Gasket Manufacturing</li>
+                    <li data-i18n="capabilities_page.field_ops.card_supply.li3">Heavy Transport Logistics</li>
+                    <li data-i18n="capabilities_page.field_ops.card_supply.li4">Consumables Supply</li>
                 </ul>
             </div>
 
@@ -413,9 +462,7 @@
             team, or just a welder?</h2>
         <p class="text-slate-300 mb-10 text-lg" data-i18n="capabilities_page.cta.text">We adapt to your outage
             scope. From turnkey rehabilitation to emergency spot repair.</p>
-        <a href="/contact/"
-            class="inline-flex items-center justify-center px-12 py-5 bg-white text-black font-black rounded-lg hover:bg-slate-200 transition shadow-lg uppercase tracking-widest"
-            data-i18n="capabilities_page.cta.btn">
+        <a href="/contact/" class="btn-primary" data-i18n="capabilities_page.cta.btn">
             Request Service Quote
         </a>
     </div>
@@ -432,8 +479,6 @@
       "provider": { "@type": "Organization", "name": "AnoHUB" }
     }
     </script>
-
-
     </main>
 
     <footer class="bg-black border-t border-slate-900 pt-16 pb-16 text-center relative z-10">
@@ -459,24 +504,7 @@
     <script>
         lucide.createIcons();
         document.addEventListener("DOMContentLoaded", () => {
-            // Hangar Logic
-            const topPanel = document.getElementById('hangar-top');
-            const btmPanel = document.getElementById('hangar-bottom');
-            const line = document.getElementById('hangar-line');
-            const loader = document.getElementById('hangar-loader');
 
-            if (topPanel && btmPanel && line && loader) {
-                setTimeout(() => {
-                    line.style.boxShadow = "0 0 100px #FFB800";
-                    line.style.backgroundColor = "#FFB800";
-                    setTimeout(() => {
-                        topPanel.style.transform = "translateY(-100%)";
-                        btmPanel.style.transform = "translateY(100%)";
-                        line.style.opacity = "0";
-                        setTimeout(() => { loader.style.display = 'none'; }, 1000);
-                    }, 600);
-                }, 800);
-            }
 
             // Year
             const yearEl = document.getElementById('year');
@@ -490,5 +518,6 @@
             }
         });
     </script>
+    <script src="/assets/js/translations.js"></script>
 </body>
 </html>
