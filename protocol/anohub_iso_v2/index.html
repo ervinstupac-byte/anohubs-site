@@ -120,6 +120,15 @@
         .btn-hero-xl {
             padding: 1.25rem 3rem; font-size: 1.125rem;
         }
+
+        /* SMART HEADER STYLES */
+        header {
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            will-change: transform;
+        }
+        .header-hidden {
+            transform: translateY(-100%);
+        }
     </style>
 </head>
 
@@ -329,6 +338,49 @@
             if (mobileBtn && mobileMenu) {
                 mobileBtn.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); });
             }
+
+            // --- SMART HEADER LOGIC ---
+            const header = document.getElementById('navbar');
+            let hideTimeout;
+            const HIDE_DELAY = 3000;
+
+            function showHeader() {
+                header.classList.remove('header-hidden');
+                resetHideTimer();
+            }
+
+            function maybeHideHeader() {
+                // Check if we should actually hide
+                const isHovered = header.matches(':hover');
+                const isMenuOpen = mobileMenu && !mobileMenu.classList.contains('hidden');
+
+                if (isHovered || isMenuOpen) {
+                    // Postpone hide if user is busy
+                    resetHideTimer();
+                    return;
+                }
+                header.classList.add('header-hidden');
+            }
+
+            function resetHideTimer() {
+                clearTimeout(hideTimeout);
+                hideTimeout = setTimeout(maybeHideHeader, HIDE_DELAY);
+            }
+
+            // Show on mouse move near top
+            document.addEventListener('mousemove', (e) => {
+                if (e.clientY < 50) {
+                    showHeader();
+                }
+            });
+
+            // Interaction listeners
+            document.addEventListener('click', showHeader);
+            document.addEventListener('keydown', showHeader);
+            document.addEventListener('scroll', showHeader);
+
+            // Initial timer
+            resetHideTimer();
         });
     </script>
     <script src="/assets/js/translations.js"></script>
