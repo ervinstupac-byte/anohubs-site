@@ -198,241 +198,233 @@
 
     <main>
         <!DOCTYPE html>
-<html lang="bs">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOP: Zahvat i Upravljanje Nanosom</title>
+    <title>SOP: INTAKE & SEDIMENT MANAGEMENT</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        /* Shared Architecture from Francis_Horizontal.html */
-        :root {
-            --primary-color: #003366;
-            --secondary-color: #0066cc;
-            --accent-color: #d9534f;
-            --warning-color: #f0ad4e;
-            --bg-color: #f4f7f6;
-            --text-color: #333;
-            --border-color: #dde;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
 
         body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--bg-color);
-            margin: 0;
-            padding: 20px;
+            font-family: 'JetBrains Mono', monospace;
+            background-color: #0c0a09;
+            /* Industrial Dark Mode */
+            color: #d6d3d1;
         }
 
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: #fff;
-            padding: 40px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
+        .procedure-card {
+            background: #1c1917;
+            border: 1px solid #292524;
+            padding: 24px;
+            margin-bottom: 16px;
+            border-left: 4px solid #44403c;
         }
 
-        header {
-            border-bottom: 3px solid var(--primary-color);
-            padding-bottom: 20px;
-            margin-bottom: 30px;
-            text-align: center;
+        .procedure-card.critical {
+            border-left-color: #dc2626;
+            background: #2a1210;
         }
 
-        h1 {
-            margin: 0;
-            color: var(--primary-color);
-            font-size: 28px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        h2 {
-            color: var(--secondary-color);
-            font-size: 18px;
-            margin-top: 5px;
-            font-weight: 400;
-        }
-
-        .section-title {
-            background-color: var(--primary-color);
-            color: #fff;
-            padding: 10px 15px;
-            margin-top: 40px;
-            border-radius: 4px;
-            font-size: 1.2em;
+        .step-num {
+            color: #3b82f6;
             font-weight: bold;
-            display: flex;
+            margin-right: 8px;
+        }
+
+        .btn-return {
+            display: inline-flex;
             align-items: center;
-        }
-
-        .section-title::before {
-            content: "►";
-            margin-right: 10px;
-            font-size: 0.8em;
-        }
-
-        h3 {
-            color: var(--primary-color);
-            border-left: 4px solid var(--secondary-color);
-            padding-left: 10px;
-            margin-top: 25px;
-        }
-
-        .module {
-            border: 1px solid var(--border-color);
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 4px;
-            background-color: #fafafa;
-        }
-
-        .critical {
-            border-left: 5px solid var(--accent-color);
-            background-color: #fff5f5;
-        }
-
-        .technical {
-            border-left: 5px solid var(--secondary-color);
-            background-color: #f0f7ff;
-        }
-
-        .diagnostic {
-            border-left: 5px solid var(--warning-color);
-            background-color: #fdf8e4;
-        }
-
-        ul,
-        ol {
-            padding-left: 20px;
-        }
-
-        li {
-            margin-bottom: 8px;
-        }
-
-        .back-btn {
-            display: inline-block;
-            margin-top: 30px;
-            text-decoration: none;
-            color: var(--secondary-color);
+            gap: 8px;
+            background: #1c1917;
+            border: 1px solid #44403c;
+            color: #78716c;
+            padding: 8px 16px;
+            font-size: 12px;
+            text-transform: uppercase;
             font-weight: bold;
-            border: 1px solid var(--secondary-color);
-            padding: 10px 20px;
             border-radius: 4px;
-            transition: all 0.3s;
+            transition: all 0.2s;
         }
 
-        .back-btn:hover {
-            background-color: var(--secondary-color);
-            color: #fff;
-        }
-
-        .visual-aid {
-            border: 2px dashed #ccc;
-            padding: 15px;
-            margin: 10px 0;
-            background: #fff;
-            text-align: center;
-            color: #666;
-            font-size: 0.9em;
+        .btn-return:hover {
+            border-color: #3b82f6;
+            color: white;
         }
     </style>
 </head>
 
-<body>
+<body class="p-6 md:p-12 max-w-4xl mx-auto">
 
-    <div class="container">
+    <!-- Header -->
+    <header class="mb-10 pb-6 border-b border-stone-800 flex justify-between items-start">
+        <div>
+            <div class="flex items-center gap-2 mb-2">
+                <span
+                    class="px-2 py-1 rounded bg-blue-900/30 text-blue-400 text-[10px] font-bold border border-blue-900 uppercase">SOP-OPS-001</span>
+                <span class="text-[10px] text-stone-500 uppercase font-bold">REV 3.1</span>
+            </div>
+            <h1 class="text-3xl font-bold text-white mb-2" data-i18n="title">INTAKE & SEDIMENT MANAGEMENT</h1>
+            <p class="text-stone-500 text-sm" data-i18n="subtitle">Maximizing Head & Minimizing Abrasion</p>
+        </div>
 
-        <header>
-            <h1>Kritični SOP: Zahvat i Upravljanje Nanosom</h1>
-            <h2>Maksimiziranje Pada i Minimiziranje Erozije</h2>
-        </header>
+        <!-- Standard Return Button -->
+        <a href="Francis_Horizontal_Dashboard.html" class="btn-return">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i> <span data-i18n="return">Back to Dashboard</span>
+        </a>
+    </header>
 
-        <!-- INTRO MODULE -->
-        <div class="module critical">
-            <h3>⚠️ UBICA PRIHODA: SMEĆE I NANOS</h3>
-            <p><strong>Logika:</strong> Svaki list, grana ili plastična kesa na rešetki stvara otpor protoku.</p>
-            <ul>
-                <li><strong>Gubitak Pada ($\Delta H$):</strong> Gubitak Pada = Izgubljena Snaga. Pad od 1 metra zbog
-                    blokirane rešetke je čisti finansijski gubitak.</li>
-                <li><strong>Pravilo Čistoće:</strong> Čist zahvat je prva linija odbrane. Ako smeće prođe
-                    rešetku, uništava zaptivače GUV-a i blokira sprovodne lopatice.</li>
+    <!-- Content -->
+    <div class="space-y-6">
+
+        <!-- STEP 1 -->
+        <div class="procedure-card critical">
+            <h3 class="text-white font-bold mb-2" data-i18n="s1_title"><span class="step-num">01</span> ⚠️ REVENUE
+                KILLER: TRASH & DEBRIS</h3>
+            <p class="text-sm text-stone-400 mb-2" data-i18n="s1_p1"><strong>Logic:</strong> Every leaf, branch, or
+                plastic bag on the rack creates flow resistance.</p>
+            <ul class="list-disc pl-5 text-sm text-stone-400 space-y-2">
+                <li data-i18n="s1_li1"><strong>Head Loss ($\Delta H$):</strong> Head Loss = Lost Power. A 1-meter drop
+                    due to a blocked rack is pure financial loss.</li>
+                <li data-i18n="s1_li2"><strong>Cleanliness Rule:</strong> A clean intake is the first line of defense.
+                    If trash passes the rack, it destroys MIV seals and blocks guide vanes.</li>
             </ul>
         </div>
 
-        <div class="section-title">SOP 1: Protokoli Zahvatne Rešetke</div>
-        <div class="module technical">
-            <p>Zahvatna rešetka su pluća hidro sistema. Ona moraju slobodno disati.</p>
-
-            <h3>1.1 Okidač za Čišćenje</h3>
-            <ul>
-                <li><strong>Nadzor:</strong> Pratite senzor diferencijalnog pritiska (ili razliku nivoa vode)
-                    između rijeke i ulaznog kanala.</li>
-                <li><strong>Limit Akcije:</strong> Započnite čišćenje kada razlika pređe <strong>20 cm
-                        (0.2m)</strong>.</li>
-                <li><strong>Metoda:</strong> Koristite automatsku čistilicu ili ručno čišćenje. Osigurajte da je otpad
-                    uklonjen sa
-                    platforme, a ne gurnut nazad u vodu.</li>
+        <!-- STEP 2 -->
+        <div class="procedure-card">
+            <h3 class="text-white font-bold mb-2" data-i18n="s2_title"><span class="step-num">02</span> CLEANING TRIGGER
+            </h3>
+            <p class="text-sm text-stone-400 mb-2" data-i18n="s2_p1">The intake rack is the lungs of the hydro system.
+                It must breathe freely.</p>
+            <ul class="list-disc pl-5 text-sm text-stone-400 space-y-2">
+                <li data-i18n="s2_li1"><strong>Monitoring:</strong> Watch the differential pressure sensor (or water
+                    level difference) between river and intake channel.</li>
+                <li data-i18n="s2_li2"><strong>Action Limit:</strong> Initiate cleaning when difference exceeds
+                    <strong>20 cm (0.2m)</strong>.</li>
+                <li data-i18n="s2_li3"><strong>Method:</strong> Use automatic cleaner or manual rake. Ensure debris is
+                    removed from platform, not pushed back into water.</li>
             </ul>
         </div>
 
-        <div class="section-title">SOP 2: Upravljanje Taložnicom (Pjeskolovom)</div>
-        <div class="module technical">
-            <p>Naše rijeke nose puno nanosa. Taložnica je dizajnirana da izdvoji abrazivne čestice prije nego stignu do
-                turbine.</p>
+        <!-- STEP 3 -->
+        <div class="procedure-card">
+            <h3 class="text-white font-bold mb-2" data-i18n="s3_title"><span class="step-num">03</span> SEDIMENT THREAT
+                & FLUSHING</h3>
+            <p class="text-sm text-stone-400 mb-2" data-i18n="s3_p1">If the settling basin fills, coarse sand enters the
+                penstock acting as an abrasive.</p>
 
-            <h3>2.1 Sinergijska Prijetnja</h3>
-            <ul>
-                <li><strong>Mehanizam:</strong> Ako se bazen napuni, grubi pijesak ulazi u tlačni cjevovod.</li>
-                <li><strong>Šteta:</strong> Pijesak djeluje kao abraziv, skidajući oksidni sloj sa radnog
-                    kola/sprovodnih
-                    lopatica. Ovo ubrzava <strong>Kavitaciju</strong> pružajući grubu površinu za formiranje mjehurića
-                    (Sinergija).</li>
+            <h4 class="text-stone-300 font-bold mt-4 mb-2" data-i18n="s3_sub1">Synergistic Threat</h4>
+            <ul class="list-disc pl-5 text-sm text-stone-400 space-y-2">
+                <li data-i18n="s3_li1"><strong>Mechanism:</strong> Sand strips the oxide layer off the runner/guide
+                    vanes.</li>
+                <li data-i18n="s3_li2"><strong>Damage:</strong> This accelerates <strong>Cavitation</strong> by
+                    providing a rough surface for bubble formation.</li>
             </ul>
 
-            <h3>2.2 Procedura Ispiranja</h3>
-            <ol>
-                <li><strong>Inspekcija:</strong> Provjeravajte nivo mulja sedmično (ili dnevno tokom velikih voda).</li>
-                <li><strong>Izvršenje:</strong> Otvorite temeljne ispuste za ispiranje kako bi se nagomilani sediment
-                    vratio u rijeku.
+            <h4 class="text-stone-300 font-bold mt-4 mb-2" data-i18n="s3_sub2">Flushing Procedure</h4>
+            <ol class="list-decimal pl-5 text-sm text-stone-400 space-y-2">
+                <li data-i18n="s3_oli1"><strong>Inspection:</strong> Check silt level weekly (daily during high water).
                 </li>
-                <li><strong>Verifikacija:</strong> Osigurajte da je tunel za ispiranje čist i da se tok vraća u turbinu
-                    tek
-                    nakon što je voda u bazenu vizuelno bistrija.</li>
+                <li data-i18n="s3_oli2"><strong>Execution:</strong> Open bottom outlets to flush accumulated sediment
+                    back to river.</li>
+                <li data-i18n="s3_oli3"><strong>Verification:</strong> Ensure flushing tunnel is clear and flow returns
+                    to turbine only after basin water is visually clearer.</li>
             </ol>
         </div>
 
-        <div class="section-title">SOP 3: Zaštita Nizvodno</div>
-        <div class="module diagnostic">
-            <p>Ono što se desi na zahvatu odlučuje o sudbini mašinske hale.</p>
-            <ul>
-                <li><strong>Zaptivači GUV-a:</strong> Veliki komadi koji prođu slomljenu rešetku zaglaviće se u
-                    zaptivaču GUV-a, sprečavajući zatvaranje.</li>
-                <li><strong>Sprovodne Lopatice:</strong> Kamenje i granje mogu zaglaviti lopatice, uzrokujući lom
-                    sigurnosnih čivija i
-                    hitna zaustavljanja.</li>
-            </ul>
-            <div class="visual-aid">
-                Pravilo: "Ako ga vidiš da pluta na zahvatu, čućeš ga kako melje u turbini."
-            </div>
-        </div>
-
-        <div class="section-title">Kontrolna Lista</div>
-        <div class="module">
-            <ul>
-                <li><strong>Dnevno:</strong> Provjeri diferencijal na Rešetki. Čisti ako je > 20cm.</li>
-                <li><strong>Sedmično:</strong> Isperi Taložnicu (Pjeskolov).</li>
-                <li><strong>Poslije Oluje:</strong> Hitna inspekcija Rešetke zbog velikog nanosa.</li>
+        <!-- CHECKLIST -->
+        <div class="procedure-card">
+            <h3 class="text-white font-bold mb-2" data-i18n="cl_title">OPERATOR CHECKLIST</h3>
+            <ul class="list-disc pl-5 text-sm text-stone-400 space-y-2">
+                <li data-i18n="cl_1"><strong>Daily:</strong> Check Rack Differential. Clean if > 20cm.</li>
+                <li data-i18n="cl_2"><strong>Weekly:</strong> Flush Settling Basin (Sand Trap).</li>
+                <li data-i18n="cl_3"><strong>Post-Storm:</strong> Emergency Rack Inspect due to heavy debris.</li>
             </ul>
         </div>
-
-        <a href="Francis_Horizontal_Dashboard.html" class="back-btn">← Povratak u Operativni Centar</a>
 
     </div>
 
+    <!-- Hidden Translation Data -->
+    <script>
+        lucide.createIcons();
+        const ml = localStorage.getItem('anohub_lang_pref') || 'en';
+
+        const i18n = {
+            en: {
+                title: "INTAKE & SEDIMENT MANAGEMENT",
+                subtitle: "Maximizing Head & Minimizing Abrasion",
+                return: "Back to Dashboard",
+
+                s1_title: "01 REVENUE KILLER: TRASH & DEBRIS",
+                s1_p1: "Logic: Every leaf, branch, or plastic bag on the rack creates flow resistance.",
+                s1_li1: "Head Loss (dH): Head Loss = Lost Power. A 1-meter drop due to a blocked rack is pure financial loss.",
+                s1_li2: "Cleanliness Rule: A clean intake is the first line of defense. If trash passes the rack, it destroys MIV seals and blocks guide vanes.",
+
+                s2_title: "02 CLEANING TRIGGER",
+                s2_p1: "The intake rack is the lungs of the hydro system. It must breathe freely.",
+                s2_li1: "Monitoring: Watch the differential pressure sensor (or water level difference) between river and intake channel.",
+                s2_li2: "Action Limit: Initiate cleaning when difference exceeds 20 cm (0.2m).",
+                s2_li3: "Method: Use automatic cleaner or manual rake. Ensure debris is removed from platform, not pushed back into water.",
+
+                s3_title: "03 SEDIMENT THREAT & FLUSHING",
+                s3_p1: "If the settling basin fills, coarse sand enters the penstock acting as an abrasive.",
+                s3_sub1: "Synergistic Threat",
+                s3_li1: "Mechanism: Sand strips the oxide layer off the runner/guide vanes.",
+                s3_li2: "Damage: This accelerates Cavitation by providing a rough surface for bubble formation.",
+                s3_sub2: "Flushing Procedure",
+                s3_oli1: "Inspection: Check silt level weekly (daily during high water).",
+                s3_oli2: "Execution: Open bottom outlets to flush accumulated sediment back to river.",
+                s3_oli3: "Verification: Ensure flushing tunnel is clear and flow returns to turbine only after basin water is visually clearer.",
+
+                cl_title: "OPERATOR CHECKLIST",
+                cl_1: "Daily: Check Rack Differential. Clean if > 20cm.",
+                cl_2: "Weekly: Flush Settling Basin (Sand Trap).",
+                cl_3: "Post-Storm: Emergency Rack Inspect due to heavy debris."
+            },
+            bs: {
+                title: "ZAHVAT I UPRAVLJANJE NANOSOM",
+                subtitle: "Maksimiziranje Pada i Minimiziranje Erozije",
+                return: "Povratak na Kontrolnu Tablu",
+
+                s1_title: "01 UBICA PRIHODA: SMEĆE I NANOS",
+                s1_p1: "Logika: Svaki list, grana ili plastična kesa na rešetki stvara otpor protoku.",
+                s1_li1: "Gubitak Pada (dH): Gubitak Pada = Izgubljena Snaga. Pad od 1 metra zbog blokirane rešetke je čisti finansijski gubitak.",
+                s1_li2: "Pravilo Čistoće: Čist zahvat je prva linija odbrane. Ako smeće prođe rešetku, uništava zaptivače GUV-a i blokira sprovodne lopatice.",
+
+                s2_title: "02 OKIDAČ ZA ČIŠĆENJE",
+                s2_p1: "Zahvatna rešetka su pluća hidro sistema. Ona moraju slobodno disati.",
+                s2_li1: "Nadzor: Pratite senzor diferencijalnog pritiska (ili razliku nivoa vode) između rijeke i ulaznog kanala.",
+                s2_li2: "Limit Akcije: Započnite čišćenje kada razlika pređe 20 cm (0.2m).",
+                s2_li3: "Metoda: Koristite automatsku čistilicu ili ručno čišćenje. Osigurajte da je otpad uklonjen sa platforme, a ne gurnut nazad u vodu.",
+
+                s3_title: "03 PRIJETNJA NANOSA I ISPIRANJE",
+                s3_p1: "Ako se taložnica napuni, grubi pijesak ulazi u tlačni cjevovod djelujući kao abraziv.",
+                s3_sub1: "Sinergijska Prijetnja",
+                s3_li1: "Mehanizam: Pijesak skida oksidni sloj sa radnog kola/sprovodnih lopatica.",
+                s3_li2: "Šteta: Ovo ubrzava Kavitaciju pružajući grubu površinu za formiranje mjehurića.",
+                s3_sub2: "Procedura Ispiranja",
+                s3_oli1: "Inspekcija: Provjeravajte nivo mulja sedmično (ili dnevno tokom velikih voda).",
+                s3_oli2: "Izvršenje: Otvorite temeljne ispuste za ispiranje kako bi se nagomilani sediment vratio u rijeku.",
+                s3_oli3: "Verifikacija: Osigurajte da je tunel za ispiranje čist i da se tok vraća u turbinu tek nakon što je voda u bazenu vizuelno bistrija.",
+
+                cl_title: "KONTROLNA LISTA OPERATERA",
+                cl_1: "Dnevno: Provjeri diferencijal na Rešetki. Čisti ako je > 20cm.",
+                cl_2: "Sedmično: Isperi Taložnicu (Pjeskolov).",
+                cl_3: "Poslije Oluje: Hitna inspekcija Rešetke zbog velikog nanosa."
+            }
+        };
+
+        if (ml === 'bs') {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (i18n.bs[key]) el.innerText = i18n.bs[key];
+            });
+        }
+    </script>
 </body>
 
 </html>

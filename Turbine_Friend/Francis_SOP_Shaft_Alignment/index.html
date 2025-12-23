@@ -198,12 +198,12 @@
 
     <main>
         <!DOCTYPE html>
-<html lang="bs">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOP: Centriranje Osovina (Alignment)</title>
+    <title>SOP: SHAFT ALIGNMENT</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
@@ -212,22 +212,68 @@
         body {
             font-family: 'JetBrains Mono', monospace;
             background-color: #0c0a09;
-            color: #a8a29e;
+            /* Industrial Dark Mode */
+            color: #d6d3d1;
         }
 
-        .tech-border {
+        .procedure-card {
+            background: #1c1917;
             border: 1px solid #292524;
+            padding: 24px;
+            margin-bottom: 16px;
+            border-left: 4px solid #44403c;
         }
 
-        .section-card {
+        .procedure-card.critical {
+            border-left-color: #dc2626;
+            background: #2a1210;
+        }
+
+        .step-num {
+            color: #3b82f6;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .btn-return {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
             background: #1c1917;
             border: 1px solid #44403c;
+            color: #78716c;
+            padding: 8px 16px;
+            font-size: 12px;
+            text-transform: uppercase;
+            font-weight: bold;
+            border-radius: 4px;
             transition: all 0.2s;
         }
 
-        .section-card:hover {
-            border-color: #d97706;
-            transform: translateY(-2px);
+        .btn-return:hover {
+            border-color: #3b82f6;
+            color: white;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: #000;
+            border: 1px solid #334155;
+            font-size: 0.8rem;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            border-bottom: 1px solid #334155;
+            text-align: left;
+        }
+
+        th {
+            background: #1e293b;
+            color: #94a3b8;
         }
     </style>
 </head>
@@ -235,123 +281,173 @@
 <body class="p-6 md:p-12 max-w-5xl mx-auto">
 
     <!-- Header -->
-    <header class="flex justify-between items-center mb-10 border-b border-stone-800 pb-6">
+    <header class="mb-10 pb-6 border-b border-stone-800 flex justify-between items-start">
         <div>
-            <h1 class="text-3xl font-bold text-amber-500 flex items-center gap-3">
-                <i data-lucide="crosshair"></i> CENTRIRANJE OSOVINA
-            </h1>
-            <p class="text-stone-500 font-mono text-xs mt-1">Baca (Run-Out), Zazor & Termalni Rast</p>
+            <div class="flex items-center gap-2 mb-2">
+                <span
+                    class="px-2 py-1 rounded bg-blue-900/30 text-blue-400 text-[10px] font-bold border border-blue-900 uppercase">SOP-MECH-005</span>
+                <span class="text-[10px] text-stone-500 uppercase font-bold">REV 2.3</span>
+            </div>
+            <h1 class="text-3xl font-bold text-white mb-2" data-i18n="title">SHAFT ALIGNMENT</h1>
+            <p class="text-stone-500 text-sm" data-i18n="subtitle">Run-Out, Clearance & Thermal Growth</p>
         </div>
-        <a href="Francis_Horizontal_Dashboard.html"
-            class="text-xs text-stone-500 hover:text-white transition flex items-center gap-1">
-            <i data-lucide="layout-dashboard"></i> OPERATIVNI CENTAR
+
+        <a href="Francis_Horizontal_Dashboard.html" class="btn-return">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i> <span data-i18n="return">Back to Dashboard</span>
         </a>
     </header>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <!-- 1. Run Out Limits -->
+    <div class="procedure-card">
+        <h3 class="text-white font-bold mb-4 flex items-center gap-2" data-i18n="s1_title">
+            <i data-lucide="rotate-cw" class="w-4 h-4 text-amber-500"></i> RUN-OUT (TIR)
+        </h3>
 
-        <!-- Run-Out Limits -->
-        <div class="section-card p-6 rounded">
-            <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                <i data-lucide="rotate-cw"></i> BACA (TIR)
-            </h2>
-
-            <div class="overflow-hidden rounded border border-stone-800 mb-4">
-                <table class="w-full text-left text-sm text-stone-400">
-                    <thead class="bg-stone-900 text-stone-200 text-xs uppercase">
-                        <tr>
-                            <th class="p-2">Lokacija</th>
-                            <th class="p-2">Limit (mm)</th>
-                            <th class="p-2">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-stone-800 bg-black/20">
-                        <tr>
-                            <td class="p-2">Vodeći Ležaj Turbine</td>
-                            <td class="p-2 font-mono">0.05</td>
-                            <td class="p-2 text-green-500">OK (0.03)</td>
-                        </tr>
-                        <tr>
-                            <td class="p-2">Prirubnica Spojnice</td>
-                            <td class="p-2 font-mono">0.03</td>
-                            <td class="p-2 text-green-500">OK (0.02)</td>
-                        </tr>
-                        <tr>
-                            <td class="p-2">Generator NDE (Zadnja strana)</td>
-                            <td class="p-2 font-mono">0.05</td>
-                            <td class="p-2 text-yellow-500">UPOZORENJE (0.045)</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <p class="text-[10px] text-stone-500">
-                <strong>Metoda:</strong> Komparater na površini vratila (sporo okretanje).
-            </p>
+        <div class="overflow-x-auto mb-4">
+            <table>
+                <thead>
+                    <tr>
+                        <th data-i18n="th_loc">Location</th>
+                        <th data-i18n="th_lim">Limit (mm)</th>
+                        <th data-i18n="th_stat">Status</th>
+                    </tr>
+                </thead>
+                <tbody class="text-stone-300">
+                    <tr>
+                        <td data-i18n="td_gn_guide">Turbine Guide Bearing</td>
+                        <td class="font-mono">0.05</td>
+                        <td class="text-green-500">OK (0.03)</td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="td_flng">Coupling Flange</td>
+                        <td class="font-mono">0.03</td>
+                        <td class="text-green-500">OK (0.02)</td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="td_nde">Generator NDE (Rear)</td>
+                        <td class="font-mono">0.05</td>
+                        <td class="text-yellow-500" data-i18n="warn">WARNING (0.045)</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-
-        <!-- Laser Alignment -->
-        <div class="section-card p-6 rounded">
-            <div class="flex justify-between items-start mb-4">
-                <h2 class="text-xl font-bold text-white flex items-center gap-2">
-                    <i data-lucide="zap"></i> LASERSKO CENTRIRANJE
-                </h2>
-                <span
-                    class="text-xs font-bold bg-amber-900/30 text-amber-500 px-2 py-1 rounded border border-amber-800">REQ:
-                    6-Mj</span>
-            </div>
-
-            <div class="bg-stone-900 p-3 rounded border border-stone-800 text-sm space-y-2">
-                <div class="flex justify-between">
-                    <span class="text-stone-400">Vertikalni Odstup (Offset)</span>
-                    <span class="text-white">+0.12mm</span>
-                </div>
-                <div class="flex justify-between">
-                    <span class="text-stone-400">Horizontalni Odstup</span>
-                    <span class="text-white">-0.05mm</span>
-                </div>
-            </div>
-
-            <div class="mt-4 p-3 bg-stone-800 rounded border border-amber-500/20">
-                <strong class="text-xs text-amber-400 block mb-1">CILJ TERMALNOG RASTA</strong>
-                <p class="text-[10px] text-stone-400">Postavi Generator 0.15mm NIŽE od Turbine kada je hladan. Generator
-                    raste
-                    tokom rada zbog toplote.</p>
-            </div>
-        </div>
-
+        <p class="text-[10px] text-stone-500" data-i18n="s1_method"><strong>Method:</strong> Dial indicator on shaft
+            surface (slow rotation).</p>
     </div>
 
-    <!-- Soft Foot Check -->
-    <div class="mt-8 section-card p-6 rounded">
-        <h2 class="text-lg font-bold text-stone-300 mb-2 flex items-center gap-2">
-            <i data-lucide="footprints"></i> PROVJERA MEKE STOPE (SOFT FOOT)
-        </h2>
-        <p class="text-sm text-stone-400 mb-4">Osigurati da sve 4 stope generatora leže ravno na pločama.</p>
+    <!-- 2. Laser Alignment -->
+    <div class="procedure-card">
+        <div class="flex justify-between items-start mb-4">
+            <h3 class="text-white font-bold flex items-center gap-2" data-i18n="s2_title">
+                <i data-lucide="zap" class="w-4 h-4 text-amber-500"></i> LASER ALIGNMENT
+            </h3>
+            <span class="text-xs font-bold bg-amber-900/30 text-amber-500 px-2 py-1 rounded border border-amber-800"
+                data-i18n="req">REQ: 6-Mo</span>
+        </div>
 
-        <div class="flex items-center gap-4 text-xs font-mono">
-            <div class="flex-1 bg-stone-900 p-2 rounded text-center border border-stone-700">
-                <span class="block text-stone-500 mb-1">Ugao 1</span>
+        <div class="bg-stone-900 p-3 rounded border border-stone-800 text-sm space-y-2">
+            <div class="flex justify-between">
+                <span class="text-stone-400" data-i18n="offs_v">Vertical Offset</span>
+                <span class="text-white">+0.12mm</span>
+            </div>
+            <div class="flex justify-between">
+                <span class="text-stone-400" data-i18n="offs_h">Horizontal Offset</span>
+                <span class="text-white">-0.05mm</span>
+            </div>
+        </div>
+
+        <div class="mt-4 p-3 bg-stone-800 rounded border border-amber-500/20">
+            <strong class="text-xs text-amber-400 block mb-1" data-i18n="tg_t">THERMAL GROWTH TARGET</strong>
+            <p class="text-[10px] text-stone-400" data-i18n="tg_d">Set Generator 0.15mm LOWER than Turbine when cold.
+                Generator grows during operation due to heat.</p>
+        </div>
+    </div>
+
+    <!-- 3. Soft Foot -->
+    <div class="procedure-card">
+        <h3 class="text-stone-300 font-bold mb-2 flex items-center gap-2" data-i18n="s3_title">
+            <i data-lucide="footprints" class="w-4 h-4"></i> SOFT FOOT CHECK
+        </h3>
+        <p class="text-sm text-stone-400 mb-4" data-i18n="s3_desc">Ensure all 4 generator feet sit flat on sole plates.
+        </p>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs font-mono">
+            <div class="bg-stone-900 p-2 rounded text-center border border-stone-700">
+                <span class="block text-stone-500 mb-1" data-i18n="c1">Corner 1</span>
                 <span class="text-green-500">0.02mm</span>
             </div>
-            <div class="flex-1 bg-stone-900 p-2 rounded text-center border border-stone-700">
-                <span class="block text-stone-500 mb-1">Ugao 2</span>
+            <div class="bg-stone-900 p-2 rounded text-center border border-stone-700">
+                <span class="block text-stone-500 mb-1" data-i18n="c2">Corner 2</span>
                 <span class="text-green-500">0.01mm</span>
             </div>
-            <div class="flex-1 bg-stone-900 p-2 rounded text-center border border-stone-700">
-                <span class="block text-stone-500 mb-1">Ugao 3</span>
+            <div class="bg-stone-900 p-2 rounded text-center border border-stone-700">
+                <span class="block text-stone-500 mb-1" data-i18n="c3">Corner 3</span>
                 <span class="text-green-500">0.02mm</span>
             </div>
-            <div class="flex-1 bg-stone-900 p-2 rounded text-center border border-stone-700">
-                <span class="block text-stone-500 mb-1">Ugao 4</span>
+            <div class="bg-stone-900 p-2 rounded text-center border border-stone-700">
+                <span class="block text-stone-500 mb-1" data-i18n="c4">Corner 4</span>
                 <span class="text-red-500 font-bold">0.08mm</span>
             </div>
         </div>
-        <p class="text-[10px] text-red-400 mt-2 text-right">Akcija: Podloži (Shim) Ugao 4.</p>
+        <p class="text-[10px] text-red-400 mt-2 text-right" data-i18n="act">Action: Shim Corner 4.</p>
     </div>
 
+    <!-- Hidden Translation Data -->
     <script>
         lucide.createIcons();
+        const ml = localStorage.getItem('anohub_lang_pref') || 'en';
+
+        const i18n = {
+            en: {
+                title: "SHAFT ALIGNMENT",
+                subtitle: "Run-Out, Clearance & Thermal Growth",
+                return: "Back to Dashboard",
+
+                s1_title: "RUN-OUT (TIR)",
+                th_loc: "Location", th_lim: "Limit (mm)", th_stat: "Status",
+                td_gn_guide: "Turbine Guide Bearing", warn: "WARNING (0.045)",
+                td_flng: "Coupling Flange",
+                td_nde: "Generator NDE (Rear)",
+                s1_method: "Method: Dial indicator on shaft surface (slow rotation).",
+
+                s2_title: "LASER ALIGNMENT", req: "REQ: 6-Mo",
+                offs_v: "Vertical Offset", offs_h: "Horizontal Offset",
+                tg_t: "THERMAL GROWTH TARGET", tg_d: "Set Generator 0.15mm LOWER than Turbine when cold. Generator grows during operation due to heat.",
+
+                s3_title: "SOFT FOOT CHECK",
+                s3_desc: "Ensure all 4 generator feet sit flat on sole plates.",
+                c1: "Corner 1", c2: "Corner 2", c3: "Corner 3", c4: "Corner 4",
+                act: "Action: Shim Corner 4."
+            },
+            bs: {
+                title: "CENTRIRANJE OSOVINA",
+                subtitle: "Baca (Run-Out), Zazor & Termalni Rast",
+                return: "Povratak na Kontrolnu Tablu",
+
+                s1_title: "BACA (TIR)",
+                th_loc: "Lokacija", th_lim: "Limit (mm)", th_stat: "Status",
+                td_gn_guide: "Vodeći Ležaj Turbine", warn: "UPOZORENJE (0.045)",
+                td_flng: "Prirubnica Spojnice",
+                td_nde: "Generator NDE (Zadnja strana)",
+                s1_method: "Metoda: Komparater na površini vratila (sporo okretanje).",
+
+                s2_title: "LASERSKO CENTRIRANJE", req: "REQ: 6-Mj",
+                offs_v: "Vertikalni Odstup (Offset)", offs_h: "Horizontalni Odstup",
+                tg_t: "CILJ TERMALNOG RASTA", tg_d: "Postavi Generator 0.15mm NIŽE od Turbine kada je hladan. Generator raste tokom rada zbog toplote.",
+
+                s3_title: "PROVJERA MEKE STOPE (SOFT FOOT)",
+                s3_desc: "Osigurati da sve 4 stope generatora leže ravno na pločama.",
+                c1: "Ugao 1", c2: "Ugao 2", c3: "Ugao 3", c4: "Ugao 4",
+                act: "Akcija: Podloži (Shim) Ugao 4."
+            }
+        };
+
+        if (ml === 'bs') {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (i18n.bs[key]) el.innerText = i18n.bs[key];
+            });
+        }
     </script>
 </body>
 
