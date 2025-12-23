@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOP: Braking & Sump Systems</title>
+    <style>
+        /* Shared Architecture from Francis_Horizontal.html */
+        :root {
+            --primary-color: #003366;
+            --secondary-color: #0066cc;
+            --accent-color: #d9534f;
+            --warning-color: #f0ad4e;
+            --bg-color: #f4f7f6;
+            --text-color: #333;
+            --border-color: #dde;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 40px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        header {
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+            color: var(--primary-color);
+            font-size: 28px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h2 {
+            color: var(--secondary-color);
+            font-size: 18px;
+            margin-top: 5px;
+            font-weight: 400;
+        }
+
+        .section-title {
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 10px 15px;
+            margin-top: 40px;
+            border-radius: 4px;
+            font-size: 1.2em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title::before {
+            content: "►";
+            margin-right: 10px;
+            font-size: 0.8em;
+        }
+
+        h3 {
+            color: var(--primary-color);
+            border-left: 4px solid var(--secondary-color);
+            padding-left: 10px;
+            margin-top: 25px;
+        }
+
+        .module {
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            background-color: #fafafa;
+        }
+
+        .critical {
+            border-left: 5px solid var(--accent-color);
+            background-color: #fff5f5;
+        }
+
+        .technical {
+            border-left: 5px solid var(--secondary-color);
+            background-color: #f0f7ff;
+        }
+
+        .diagnostic {
+            border-left: 5px solid var(--warning-color);
+            background-color: #fdf8e4;
+        }
+
+        ul,
+        ol {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 30px;
+            text-decoration: none;
+            color: var(--secondary-color);
+            font-weight: bold;
+            border: 1px solid var(--secondary-color);
+            padding: 10px 20px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            background-color: var(--secondary-color);
+            color: #fff;
+        }
+
+        .visual-aid {
+            border: 2px dashed #ccc;
+            padding: 15px;
+            margin: 10px 0;
+            background: #fff;
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <header>
+            <h1>Critical SOP: Braking & Sump Systems</h1>
+            <h2>Auxiliary Support & Flood Prevention</h2>
+        </header>
+
+        <!-- INTRO MODULE -->
+        <div class="module critical">
+            <h3>⚠️ BRAKING SAFETY</h3>
+            <p><strong>Context:</strong> Sleeve bearings rely on a hydrodynamic oil wedge. This wedge collapses at low
+                RPM.</p>
+            <ul>
+                <li><strong>The Danger:</strong> If the unit spins slowly for too long (> 5 mins) without stopping, the
+                    shaft wipes the bearing metal.</li>
+                <li><strong>Rule:</strong> Brakes MUST separate the pad from the disc automatically at > 15% RPM to
+                    prevent fire, but MUST engage firm at < 20-30% RPM to arrest rotation quickly.</li>
+            </ul>
+        </div>
+
+        <div class="section-title">SOP 1: Braking Logic</div>
+        <div class="module technical">
+            <p>Controlled arrest of the 5-ton rotating mass.</p>
+
+            <h3>1.1 Engagement Speed</h3>
+            <ul>
+                <li><strong>Set Point:</strong> Brakes should deploy automatically when speed drops to
+                    <strong>20-30%</strong> of rated RPM.</li>
+                <li><strong>Too Early:</strong> Pad burning / Disc warping.</li>
+                <li><strong>Too Late:</strong> Bearing damage due to low-speed rotation without oil film.</li>
+            </ul>
+
+            <h3>1.2 Pad Maintenance</h3>
+            <ul>
+                <li><strong>Dust:</strong> Brake dust is conductive (mixed with metal). Vacuum it out after every 50
+                    stops.</li>
+                <li><strong>Thickness:</strong> Replace pads when wear indicator is reached (typically < 5mm remaining
+                        material).</li>
+            </ul>
+        </div>
+
+        <div class="section-title">SOP 2: Machine Hall Sump Logic</div>
+        <div class="module critical">
+            <p>The sump is the last line of defense against flooding.</p>
+
+            <h3>2.1 Alarm Levels</h3>
+            <ul>
+                <li><strong>Level 1 (Start Pump):</strong> Pump 1 ON.</li>
+                <li><strong>Level 2 (High Level):</strong> Pump 2 ON + SCADA Alarm.</li>
+                <li><strong>Level 3 (Flood/Emergency):</strong> ESD (Emergency Shut Down) + Siren.</li>
+                <li><strong>Logic:</strong> If the sump fills faster than 2 pumps can clear, there is a major hydraulic
+                    rupture (MIV seal or Burst pipe). The unit must stop to reduce system pressure.</li>
+            </ul>
+        </div>
+
+        <div class="section-title">Summary Checklist</div>
+        <div class="module">
+            <ul>
+                <li><strong>Weekly:</strong> Test Sump Pump float switches (lift manually).</li>
+                <li><strong>Monthly:</strong> Clean Brake Dust from caliper area.</li>
+                <li><strong>Annually:</strong> Inspect Brake Pad thickness.</li>
+            </ul>
+        </div>
+
+        <a href="./Francis_Horizontal.html" class="back-btn">← Return to Master Manual</a>
+
+    </div>
+
+</body>
+
+</html>

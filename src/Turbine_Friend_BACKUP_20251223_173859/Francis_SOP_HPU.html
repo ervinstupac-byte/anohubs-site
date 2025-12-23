@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="bs">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOP: HPU & Azotni Sistemi</title>
+    <style>
+        /* Shared Architecture from Francis_Horizontal.html */
+        :root {
+            --primary-color: #003366;
+            --secondary-color: #0066cc;
+            --accent-color: #d9534f;
+            --warning-color: #f0ad4e;
+            --bg-color: #f4f7f6;
+            --text-color: #333;
+            --border-color: #dde;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 40px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        header {
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+            color: var(--primary-color);
+            font-size: 28px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h2 {
+            color: var(--secondary-color);
+            font-size: 18px;
+            margin-top: 5px;
+            font-weight: 400;
+        }
+
+        .section-title {
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 10px 15px;
+            margin-top: 40px;
+            border-radius: 4px;
+            font-size: 1.2em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title::before {
+            content: "►";
+            margin-right: 10px;
+            font-size: 0.8em;
+        }
+
+        h3 {
+            color: var(--primary-color);
+            border-left: 4px solid var(--secondary-color);
+            padding-left: 10px;
+            margin-top: 25px;
+        }
+
+        .module {
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            background-color: #fafafa;
+        }
+
+        .critical {
+            border-left: 5px solid var(--accent-color);
+            background-color: #fff5f5;
+        }
+
+        .technical {
+            border-left: 5px solid var(--secondary-color);
+            background-color: #f0f7ff;
+        }
+
+        .diagnostic {
+            border-left: 5px solid var(--warning-color);
+            background-color: #fdf8e4;
+        }
+
+        ul,
+        ol {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 30px;
+            text-decoration: none;
+            color: var(--secondary-color);
+            font-weight: bold;
+            border: 1px solid var(--secondary-color);
+            padding: 10px 20px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            background-color: var(--secondary-color);
+            color: #fff;
+        }
+
+        .formula-box {
+            background: #000;
+            color: #0f0;
+            font-family: 'Courier New', monospace;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <header>
+            <h1>Kritični SOP: HPU & Azotni Sistemi</h1>
+            <h2>Ref: 1.3 MW Francis Agregati | Higijena Pritiska & ESD Protokol</h2>
+        </header>
+
+        <!-- SAFETY MODULE -->
+        <div class="module critical">
+            <h3>⚠️ OPASNOST VISOKOG PRITISKA</h3>
+            <p><strong>OPASNOST:</strong> Hidraulično ulje na 100+ bara je smrtonosno.</p>
+            <ul>
+                <li><strong>De-Energizacija:</strong> Prije bilo kakvog rastavljanja HPU-a, otvorite ručne kuglaste
+                    ventile da drenažu Akumulatora nazad u rezervoar. Manometar mora pokazivati 0 bara.</li>
+                <li><strong>Rizik Ubrizgavanja:</strong> Nikada ne koristite ruke za provjeru curenja. Curenje pod
+                    pritiskom
+                    može ubrizgati ulje u krvotok.</li>
+            </ul>
+        </div>
+
+        <div class="section-title">SOP 1: Protokol Azotnih Akumulatora</div>
+        <div class="module technical">
+            <p>Akumulatori su "Baterija" sigurnosnog sistema. Omogućavaju zatvaranje GUV-a čak i ako
+                struja (pumpe) zakaže.</p>
+
+            <h3>1.1 ESD Verifikacija Energije (Kvartalno)</h3>
+            <p><strong>Cilj:</strong> Osigurati dovoljno pohranjene energije za Hitno Zaustavljanje (ESD).</p>
+            <ol>
+                <li><strong>Izolacija i Drenaža:</strong> Izolujte jednu bateriju akumulatora. Drenirajte stranu ulja u
+                    rezervoar.</li>
+                <li><strong>Spojite Kit:</strong> Priključite komplet za punjenje azota na gornji ventil mijeha.</li>
+                <li><strong>Izmjeri Pred-Punjenje (P0):</strong>
+                    <ul>
+                        <li>P0 treba biti cca. <strong>90% Minimalnog Radnog Pritiska (Pmin)</strong>.</li>
+                        <li><em>Primjer:</em> Ako GUV treba 80 bara za zatvaranje, P0 treba biti ~72 bara.</li>
+                    </ul>
+                </li>
+                <li><strong>Kriterij Prolaza:</strong> Pritisak > 90% Ciljanog.</li>
+                <li><strong>Kriterij Pada:</strong> Mijeh je prazan ili kolabirao. Odmah dopuniti.</li>
+            </ol>
+            <div class="module diagnostic">
+                <strong>💡 Tehnička Bilješka:</strong> Ako azot zahtijeva često dopunjavanje, gumeni mijeh je vjerovatno
+                porozan i treba zamjenu.
+            </div>
+        </div>
+
+        <div class="section-title">SOP 2: Standardi Higijene Ulja</div>
+        <div class="module technical">
+            <p>Mulj je neprijatelj hidrauličke preciznosti. "Stiction" (Statičko Trenje) u ventilima uzrokuje trzavo
+                kretanje
+                GUV-a.</p>
+
+            <h3>2.1 ISO Protokol Čistoće</h3>
+            <ul>
+                <li><strong>Tip Ulja:</strong> Koristite samo visokokvalitetno <strong>L-HL</strong> ili
+                    <strong>L-HM</strong>
+                    hidraulično ulje (ISO VG 46/68).</li>
+                <li><strong>Ciljana Čistoća:</strong> održavati <strong>ISO 4406 18/16/13</strong> ili bolje.</li>
+                <li><strong>Uzorkovanje:</strong> Uzimajte uzorke iz srednje zone rezervoara (ne talog sa dna) godišnje.
+                </li>
+            </ul>
+
+            <h3>2.2 Zamjena Filtera Visokog Pritiska</h3>
+            <ol>
+                <li>Provjerite "Indikator Začepljenja" na kućištu tlačnog filtera dnevno.</li>
+                <li><strong>Crvena Zastavica = Stop & Zamijeni.</strong> Ne premoštavajte (bypass).</li>
+                <li><strong>Procedura:</strong>
+                    <ul>
+                        <li>Prebacite na dupleks standby filter (ako postoji) ili ugasite HPU.</li>
+                        <li>Odzračite pritisak. Odvrnite čašu.</li>
+                        <li>Instalirajte novi uložak (Ne čistite jednokratne elemente).</li>
+                        <li>Provjerite stanje O-ringa.</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+
+        <div class="section-title">SOP 3: Hidraulički Udar & Vrijeme Hoda</div>
+        <div class="module critical">
+            <p>Prljavo ulje dovodi do lijepljenja ventila. Ako ventil zaglavi pa naglo otpusti, GUV se može naglo
+                zatvoriti.
+            </p>
+
+            <h3>3.1 Žukovski Jednačina (Hidraulički Udar)</h3>
+            <div class="formula-box">
+                ΔP = ρ · c · Δv
+            </div>
+            <ul>
+                <li><strong>ΔP:</strong> Porast Pritiska ("Udar").</li>
+                <li><strong>ρ (Rho):</strong> Gustoća vode.</li>
+                <li><strong>c:</strong> Brzina zvuka u vodi (~1200 m/s).</li>
+                <li><strong>Δv:</strong> Promjena brzine (Zaustavljanje vode).</li>
+            </ul>
+
+            <h3>3.2 Veza sa Higijenom</h3>
+            <p><strong>Scenario:</strong> Mulj uzrokuje da proporcionalni ventil zaglavi. GUV se ne pomjera 5
+                sekundi, zatim pukne (zatvori) za 1 sekundu.</p>
+            <ul>
+                <li><strong>Rezultat:</strong> $\Delta v$ postaje trenutan. $\Delta P$ skače na 50+ bara.</li>
+                <li><strong>Posljedica:</strong> Pucanje cjevovoda ili lom spirale.</li>
+                <li><strong>Prevencija:</strong> Čisto ulje osigurava glatku, linearnu aktuaciju (npr. kontrolisano
+                    zatvaranje od 40 sekundi).</li>
+            </ul>
+        </div>
+
+        <div class="section-title">Kontrolna Lista</div>
+        <div class="module">
+            <ul>
+                <li><strong>Kvartalno:</strong> Provjeri Pred-Punjenje Azota.</li>
+                <li><strong>Dnevno:</strong> Provjeri Indikatore Začepljenja Filtera.</li>
+                <li><strong>Godišnje:</strong> Lab analiza L-HM Ulja (ISO 4406).</li>
+                <li><strong>Sigurnost:</strong> Nikada ne radite na presuriziranim akumulatorima.</li>
+            </ul>
+        </div>
+
+        <a href="Francis_Horizontal_Dashboard.html" class="back-btn">← Povratak u Operativni Centar</a>
+
+    </div>
+
+</body>
+
+</html>

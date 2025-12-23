@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="bs">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOP: Upravljanje Hidrauličnim Fluidom</title>
+    <style>
+        /* Shared Architecture from Francis_Horizontal.html */
+        :root {
+            --primary-color: #003366;
+            --secondary-color: #0066cc;
+            --accent-color: #d9534f;
+            --warning-color: #f0ad4e;
+            --bg-color: #f4f7f6;
+            --text-color: #333;
+            --border-color: #dde;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 40px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        header {
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+            color: var(--primary-color);
+            font-size: 28px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h2 {
+            color: var(--secondary-color);
+            font-size: 18px;
+            margin-top: 5px;
+            font-weight: 400;
+        }
+
+        .section-title {
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 10px 15px;
+            margin-top: 40px;
+            border-radius: 4px;
+            font-size: 1.2em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title::before {
+            content: "►";
+            margin-right: 10px;
+            font-size: 0.8em;
+        }
+
+        h3 {
+            color: var(--primary-color);
+            border-left: 4px solid var(--secondary-color);
+            padding-left: 10px;
+            margin-top: 25px;
+        }
+
+        .module {
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            background-color: #fafafa;
+        }
+
+        .critical {
+            border-left: 5px solid var(--accent-color);
+            background-color: #fff5f5;
+        }
+
+        .technical {
+            border-left: 5px solid var(--secondary-color);
+            background-color: #f0f7ff;
+        }
+
+        .diagnostic {
+            border-left: 5px solid var(--warning-color);
+            background-color: #fdf8e4;
+        }
+
+        ul,
+        ol {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.95em;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: #fff;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 30px;
+            text-decoration: none;
+            color: var(--secondary-color);
+            font-weight: bold;
+            border: 1px solid var(--secondary-color);
+            padding: 10px 20px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            background-color: var(--secondary-color);
+            color: #fff;
+        }
+
+        .formula-box {
+            background: #000;
+            color: #0f0;
+            font-family: 'Courier New', monospace;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <header>
+            <h1>Kritični SOP: Upravljanje Hidrauličnim Fluidom</h1>
+            <h2>Viskozitet, Temperatura & Higijenski Standardi</h2>
+        </header>
+
+        <!-- INTRO MODULE -->
+        <div class="module critical">
+            <h3>⚠️ PRIJETNJA OD MULJA (SILT)</h3>
+            <p><strong>Mehanizam:</strong> Mikročestice (kvarc/mulj) suspendovane u ulju djeluju kao brusni papir na
+                klipove
+                ventila.</p>
+            <ul>
+                <li><strong>Posljedica:</strong> "Stiction" (Statičko Trenje). Ventil blokira, zatim naglo popusti.
+                </li>
+                <li><strong>Opasnost:</strong> Ovo nepredvidivo kretanje uništava logiku vremena zatvaranja, vodeći do
+                    <strong>Hidrauličnog Udara</strong>.
+                </li>
+            </ul>
+            <div class="formula-box">
+                Rizik: P = ρ · c · Δv (Brza Δv = Pucanje Cijevi)
+            </div>
+        </div>
+
+        <div class="section-title">SOP 1: Standardi Specifikacije Fluida</div>
+        <div class="module technical">
+            <p>Nije svako hidraulično ulje isto. Morate upariti fluid sa pritiskom sistema.</p>
+
+            <h3>1.1 Izbor Viskoziteta & Klase</h3>
+            <ul>
+                <li><strong>Uloga:</strong> Ulje mora prenositi snagu, podmazivati pokretne dijelove i odvoditi toplotu.
+                </li>
+                <li><strong>Pravilo Odabira:</strong>
+                    <ul>
+                        <li><strong>Pritisak &le; 12.5 MPa:</strong> Koristi <strong>L-HL</strong> (Zaštita od
+                            oksidacije i hrđe).</li>
+                        <li><strong>Pritisak > 12.5 MPa:</strong> Koristi <strong>L-HM</strong> (Anti-wear aditivi
+                            obavezni).</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="section-title">SOP 2: Protokol Higijene & Filtracije</div>
+        <div class="module technical">
+            <p>Sistem filtracije (bubrežna petlja) ili visokokvalitetni potisni filteri su jedina odbrana od mulja.</p>
+
+            <h3>2.1 Mjesečna Provjera Filtera</h3>
+            <ol>
+                <li><strong>Inspekcija:</strong> Provjeri indikator "Diferencijalnog Pritiska" (Delta-P) na kućištu
+                    filtera.</li>
+                <li><strong>Okidač:</strong> Ako indikator uđe u <strong>CRVENU zonu</strong> (tipično > 3-5 bar
+                    pad), element je zasićen.</li>
+                <li><strong>Akcija:</strong> Zamijeni odmah. Ne čisti jednokratne elemente.</li>
+            </ol>
+
+            <h3>2.2 Godišnja Laboratorijska Analiza (ISO 4406)</h3>
+            <ul>
+                <li><strong>Uzorak:</strong> Uzmi 100ml iz sredine rezervoara (toplo ulje).</li>
+                <li><strong>Analiziraj Za:</strong>
+                    <ol>
+                        <li><strong>Broj Čestica:</strong> Cilj ISO 18/16/13.</li>
+                        <li><strong>Sadržaj Vode:</strong> Max 500 ppm.</li>
+                        <li><strong>TAN (Ukupni Kiselinski Broj):</strong> Provjera oksidacije.</li>
+                    </ol>
+                </li>
+            </ul>
+        </div>
+
+        <div class="section-title">SOP 3: Radni Prozor Temperature</div>
+        <div class="module diagnostic">
+            <p>Viskozitet ulja se mijenja sa toplotom. Prevruće = prerijetko (curenje). Prehladno = pregusto
+                (kavitacija/usporenost).
+            </p>
+            <ul>
+                <li><strong>Zlatni Prozor:</strong> Održavaj temperaturu ležajeva i rezervoara između <strong>18°C i
+                        60°C</strong>.</li>
+                <li><strong>Hladni Start:</strong> Ako je temp &lt; 15°C, koristi grijače rezervoara prije starta pumpi.
+                </li>
+                <li><strong>Pregrijavanje:</strong> Ako je temp > 60°C, ulje degradira brzo (oksidacija se udvostručuje
+                    svakih 10°C).
+                    Provjeri protok rashladne vode.</li>
+            </ul>
+        </div>
+
+        <div class="section-title">Tabela Tehničke Revizije</div>
+        <div class="module">
+            <p>Koristi ovu tabelu za redovne obilaske.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Parametar</th>
+                        <th>Frekvencija</th>
+                        <th>Metoda / Akcija</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Nivo Ulja</strong></td>
+                        <td>Dnevno</td>
+                        <td>Provjeri staklo. Dopuni ako je ispod sredine.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Status Filtera</strong></td>
+                        <td>Mjesečno</td>
+                        <td>Provjeri Delta-P indikator. Zamijeni ako je Crven.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Kontaminacija Vode</strong></td>
+                        <td>Godišnje</td>
+                        <td>Lab Analiza ili "Crackle Test" na vrućoj ploči.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Temperatura</strong></td>
+                        <td>Dnevno</td>
+                        <td>Bilježi temp HPU & Ležajeva. Cilj: 18°C - 60°C.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <a href="Francis_Horizontal_Dashboard.html" class="back-btn">← Povratak u Operativni Centar</a>
+
+    </div>
+
+</body>
+
+</html>

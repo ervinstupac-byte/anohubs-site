@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOP: MIV & DISTRIBUTOR INTEGRITY</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background-color: #0c0a09;
+            /* Industrial Dark Mode */
+            color: #d6d3d1;
+        }
+
+        .procedure-card {
+            background: #1c1917;
+            border: 1px solid #292524;
+            padding: 24px;
+            margin-bottom: 16px;
+            border-left: 4px solid #44403c;
+        }
+
+        .procedure-card.critical {
+            border-left-color: #dc2626;
+            background: #2a1210;
+        }
+
+        .step-num {
+            color: #3b82f6;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .btn-return {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #1c1917;
+            border: 1px solid #44403c;
+            color: #78716c;
+            padding: 8px 16px;
+            font-size: 12px;
+            text-transform: uppercase;
+            font-weight: bold;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .btn-return:hover {
+            border-color: #3b82f6;
+            color: white;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: #000;
+            border: 1px solid #334155;
+            font-size: 0.8rem;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            border-bottom: 1px solid #334155;
+            text-align: left;
+        }
+
+        th {
+            background: #1e293b;
+            color: #94a3b8;
+        }
+    </style>
+</head>
+
+<body class="p-6 md:p-12 max-w-5xl mx-auto">
+
+    <!-- Header -->
+    <header class="mb-10 pb-6 border-b border-stone-800 flex justify-between items-start">
+        <div>
+            <div class="flex items-center gap-2 mb-2">
+                <span
+                    class="px-2 py-1 rounded bg-blue-900/30 text-blue-400 text-[10px] font-bold border border-blue-900 uppercase">SOP-MIV-01</span>
+                <span class="text-[10px] text-stone-500 uppercase font-bold">REV 2.0</span>
+            </div>
+            <h1 class="text-3xl font-bold text-white mb-2" data-i18n="title">MIV & DISTRIBUTOR INTEGRITY</h1>
+            <p class="text-stone-500 text-sm" data-i18n="subtitle">Main Inlet Valve & Guide Vane Synchronization</p>
+        </div>
+
+        <a href="Francis_Horizontal_Dashboard.html" class="btn-return">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i> <span data-i18n="return">Back to Dashboard</span>
+        </a>
+    </header>
+
+    <!-- CRITICAL ALERT -->
+    <div class="procedure-card critical">
+        <h3 class="text-red-500 font-bold mb-2 flex items-center gap-2" data-i18n="crit_title">
+            <i data-lucide="alert-triangle"></i> CRITICAL INTERLOCK
+        </h3>
+        <p class="text-sm text-stone-400" data-i18n="crit_desc">
+            This module is directly tied to the Mission Control Startup Sequence. Any failure here prevents unit start.
+        </p>
+    </div>
+
+    <!-- 1. MIV Calibration -->
+    <div class="procedure-card">
+        <h3 class="text-white font-bold mb-4 flex items-center gap-2" data-i18n="s1_title">
+            <i data-lucide="compass"></i> 1. MIV ANGULAR CALIBRATION
+        </h3>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-stone-900 p-4 rounded border border-stone-700">
+                <strong class="text-cyan-400 block mb-2" data-i18n="s1_sub1">The 0% Mechanical Zero</strong>
+                <p class="text-xs text-stone-500 mb-2" data-i18n="s1_p1">The limit switch must engage when seat contact
+                    is even.</p>
+                <div class="bg-black p-2 font-mono text-xs text-green-400 border border-stone-800">
+                    Test: Leakage < 5 L/min </div>
+                </div>
+
+                <div class="bg-stone-900 p-4 rounded border border-stone-700">
+                    <strong class="text-cyan-400 block mb-2" data-i18n="s1_sub2">The 80° Open Position</strong>
+                    <p class="text-xs text-stone-500 mb-2" data-i18n="s1_p2">Disc must align perfectly with flow to
+                        minimize vortex shedding.</p>
+                    <div class="bg-black p-2 font-mono text-xs text-green-400 border border-stone-800">
+                        Tolerance: 80.0° ± 0.5°
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. Distributor Sync -->
+        <div class="procedure-card">
+            <h3 class="text-white font-bold mb-4 flex items-center gap-2" data-i18n="s2_title">
+                <i data-lucide="refresh-cw"></i> 2. DISTRIBUTOR SYNCHRONICITY
+            </h3>
+            <p class="text-sm text-stone-400 mb-4" data-i18n="s2_desc">
+                The 20 Guide Vanes must move in unison. A single lagging vane creates a "jet" effect that can destroy
+                runner blades.
+            </p>
+
+            <ul class="space-y-3">
+                <li class="flex gap-3 text-sm text-stone-400">
+                    <span class="step-num">01</span>
+                    <div>
+                        <strong class="text-white" data-i18n="st1_t">Lock Out Unit:</strong>
+                        <span data-i18n="st1_d">De-energize HPU Oil Pressure totally.</span>
+                    </div>
+                </li>
+                <li class="flex gap-3 text-sm text-stone-400">
+                    <span class="step-num">02</span>
+                    <div>
+                        <strong class="text-white" data-i18n="st2_t">Feeler Gauge Test:</strong>
+                        <span data-i18n="st2_d">At 0% (Squeeze), verify 0.05mm gauge cannot pass between ANY vane
+                            seal.</span>
+                    </div>
+                </li>
+                <li class="flex gap-3 text-sm text-stone-400">
+                    <span class="step-num">03</span>
+                    <div>
+                        <strong class="text-white" data-i18n="st3_t">Linkage Measurement:</strong>
+                        <span data-i18n="st3_d">Measure Regulating Ring pin to Vane lever arm. All 20 must match
+                            ±1.0mm.</span>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="mt-4 bg-red-900/20 border border-red-500/50 p-3 rounded text-xs text-red-200 flex gap-2">
+                <i data-lucide="flame" class="w-4 h-4"></i>
+                <span data-i18n="cav_risk">
+                    <strong>CAVITATION RISK:</strong> If Vane #5 is open 2° more than others, it directs a high-velocity
+                    jet at the runner, causing pitting within 500 hours.
+                </span>
+            </div>
+        </div>
+
+        <!-- 3. Cylinder & Hose Tables -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="procedure-card">
+                <h3 class="text-white font-bold mb-2" data-i18n="t1_title">3. CYLINDER AUDIT</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th data-i18n="th_comp">Component</th>
+                            <th data-i18n="th_check">Check</th>
+                            <th data-i18n="th_freq">Freq</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-stone-300">
+                        <tr>
+                            <td>Wiper Seal</td>
+                            <td>Visual (Weeping)</td>
+                            <td>Monthly</td>
+                        </tr>
+                        <tr>
+                            <td>Welds</td>
+                            <td>NDT (Dye Pen)</td>
+                            <td>Yearly</td>
+                        </tr>
+                        <tr>
+                            <td>Transducer</td>
+                            <td>4-20mA Calib</td>
+                            <td>6-Mo</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="procedure-card">
+                <h3 class="text-white font-bold mb-2" data-i18n="t2_title">4. HOSE LIFECYCLE</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th data-i18n="th_tag">Tag ID</th>
+                            <th data-i18n="th_exp">Exp Date</th>
+                            <th data-i18n="th_stat">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-stone-300">
+                        <tr>
+                            <td>HOSE-MIV-01</td>
+                            <td>Jan 2025</td>
+                            <td class="text-red-500 font-bold animate-pulse">CRITICAL</td>
+                        </tr>
+                        <tr>
+                            <td>HOSE-MIV-02</td>
+                            <td>Jan 2025</td>
+                            <td class="text-red-500 font-bold animate-pulse">CRITICAL</td>
+                        </tr>
+                        <tr>
+                            <td>HOSE-HPU-05</td>
+                            <td>Jun 2027</td>
+                            <td class="text-green-500 font-bold">OK</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Hidden Translation Data -->
+        <script>
+            lucide.createIcons();
+            const ml = localStorage.getItem('anohub_lang_pref') || 'en';
+
+            const i18n = {
+                en: {
+                    title: "MIV & DISTRIBUTOR INTEGRITY",
+                    subtitle: "Main Inlet Valve & Guide Vane Synchronization",
+                    return: "Back to Dashboard",
+                    crit_title: "CRITICAL INTERLOCK",
+                    crit_desc: "This module is directly tied to the Mission Control Startup Sequence. Any failure here prevents unit start.",
+
+                    s1_title: "1. MIV ANGULAR CALIBRATION",
+                    s1_sub1: "The 0% Mechanical Zero",
+                    s1_p1: "The limit switch must engage when seat contact is even.",
+                    s1_sub2: "The 80° Open Position",
+                    s1_p2: "Disc must align perfectly with flow to minimize vortex shedding.",
+
+                    s2_title: "2. DISTRIBUTOR SYNCHRONICITY",
+                    s2_desc: "The 20 Guide Vanes must move in unison. A single lagging vane creates a 'jet' effect that can destroy runner blades.",
+                    st1_t: "Lock Out Unit:",
+                    st1_d: "De-energize HPU Oil Pressure totally.",
+                    st2_t: "Feeler Gauge Test:",
+                    st2_d: "At 0% (Squeeze), verify 0.05mm gauge cannot pass between ANY vane seal.",
+                    st3_t: "Linkage Measurement:",
+                    st3_d: "Measure Regulating Ring pin to Vane lever arm. All 20 must match ±1.0mm.",
+                    cav_risk: "CAVITATION RISK: If Vane #5 is open 2° more than others, it directs a high-velocity jet at the runner, causing pitting within 500 hours.",
+
+                    t1_title: "3. CYLINDER AUDIT",
+                    th_comp: "Component", th_check: "Check", th_freq: "Freq",
+
+                    t2_title: "4. HOSE LIFECYCLE",
+                    th_tag: "Tag ID", th_exp: "Exp Date", th_stat: "Status"
+                },
+                bs: {
+                    title: "INTEGRITET GUV-A I DISTRIBUTORA",
+                    subtitle: "Glavni Ulazni Ventil & Sinhronizacija Sprovodnih Lopatica",
+                    return: "Povratak na Kontrolnu Tablu",
+                    crit_title: "KRITIČNA BLOKADA (INTERLOCK)",
+                    crit_desc: "Ovaj modul je direktno vezan za Startnu Sekvencu. Bilo kakav kvar ovdje sprečava start jedinice.",
+
+                    s1_title: "1. GUV UGAONA KALIBRACIJA",
+                    s1_sub1: "0% Mehanička Nula",
+                    s1_p1: "Krajnji prekidač mora reagovati kad je kontakt sjedišta ravnomjeran.",
+                    s1_sub2: "Pozicija 80° Otvoreno",
+                    s1_p2: "Disk poravnat sa tokom radi minimiziranja vrtloženja.",
+
+                    s2_title: "2. SINHRONICITET DISTRIBUTORA",
+                    s2_desc: "20 Lopatica se mora kretati unisono. Jedna koja kasni stvara 'mlaz' efekat koji uništava radno kolo.",
+                    st1_t: "Zaključaj Jedinicu:",
+                    st1_d: "Potpuno rastereti HPU pritisak ulja.",
+                    st2_t: "Test Listićima:",
+                    st2_d: "Na 0% (Stisak), 0.05mm listić ne smije proći nigdje.",
+                    st3_t: "Mjerenje Polužja:",
+                    st3_d: "Izmjeri pin na Regulacionom Prstenu do ruke lopatice. Svi moraju biti ±1.0mm.",
+                    cav_risk: "RIZIK KAVITACIJE: Ako je lopatica #5 otvorena 2° više, usmjerava brzi mlaz na kolo, uzrokujući piting za 500 sati.",
+
+                    t1_title: "3. AUDIT CILINDARA",
+                    th_comp: "Komponenta", th_check: "Provjera", th_freq: "Frekv",
+
+                    t2_title: "4. CRIJEVA I CIJEVI",
+                    th_tag: "Oznaka", th_exp: "Ističe", th_stat: "Status"
+                }
+            };
+
+            if (ml === 'bs') {
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (i18n.bs[key]) el.innerText = i18n.bs[key];
+                });
+            }
+        </script>
+</body>
+
+</html>

@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOP: Thermal Mapping & IR Diagnostics</title>
+    <style>
+        /* Heat-Map Theme - Black/Neon Orange/Red */
+        :root {
+            --primary-color: #FF4500;
+            --secondary-color: #FF6347;
+            --accent-color: #FFA500;
+            --warning-color: #DC143C;
+            --bg-color: #0a0a0a;
+            --text-color: #FFE4B5;
+            --border-color: #FF4500;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #1a0a00, #0a0a0a);
+            padding: 40px;
+            box-shadow: 0 4px 30px rgba(255, 69, 0, 0.3);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        header {
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(255, 69, 0, 0.2), rgba(255, 99, 71, 0.1));
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        h1 {
+            margin: 0;
+            color: var(--primary-color);
+            font-size: 28px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(255, 69, 0, 0.8);
+        }
+
+        h2 {
+            color: var(--accent-color);
+            font-size: 18px;
+            margin-top: 5px;
+            font-weight: 400;
+        }
+
+        .section-title {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: #fff;
+            padding: 10px 15px;
+            margin-top: 40px;
+            border-radius: 4px;
+            font-size: 1.2em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 0 15px rgba(255, 69, 0, 0.5);
+        }
+
+        .section-title::before {
+            content: "🌡️";
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        h3 {
+            color: var(--accent-color);
+            border-left: 4px solid var(--primary-color);
+            padding-left: 10px;
+            margin-top: 25px;
+        }
+
+        .module {
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            background: rgba(255, 69, 0, 0.05);
+        }
+
+        .critical {
+            border-left: 5px solid var(--warning-color);
+            background: rgba(220, 20, 60, 0.1);
+        }
+
+        .thermal-point {
+            border-left: 5px solid var(--accent-color);
+            background: rgba(255, 165, 0, 0.05);
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 4px;
+        }
+
+        .point-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .point-label {
+            background: var(--primary-color);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .temp-range {
+            background: linear-gradient(90deg, #00FF00 0%, #FFFF00 33%, #FF8C00 66%, #FF0000 100%);
+            height: 30px;
+            border-radius: 4px;
+            position: relative;
+            margin: 10px 0;
+        }
+
+        .temp-marker {
+            position: absolute;
+            top: -5px;
+            width: 3px;
+            height: 40px;
+            background: white;
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+        }
+
+        ul,
+        ol {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 30px;
+            text-decoration: none;
+            color: var(--accent-color);
+            font-weight: bold;
+            border: 1px solid var(--accent-color);
+            padding: 10px 20px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            background-color: var(--accent-color);
+            color: #000;
+            box-shadow: 0 0 15px rgba(255, 165, 0, 0.8);
+        }
+
+        strong {
+            font-weight: 600;
+            color: var(--accent-color);
+        }
+
+        .thermal-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .thermal-table th,
+        .thermal-table td {
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            text-align: left;
+        }
+
+        .thermal-table th {
+            background: var(--primary-color);
+            color: #fff;
+        }
+
+        .thermal-table tr:nth-child(even) {
+            background: rgba(255, 69, 0, 0.05);
+        }
+
+        .emissivity-box {
+            background: linear-gradient(135deg, rgba(255, 99, 71, 0.2), rgba(255, 165, 0, 0.1));
+            padding: 15px;
+            border-left: 4px solid var(--accent-color);
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .heat-scale {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5px;
+            font-size: 0.8em;
+            color: var(--text-color);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>🌡️ THERMAL MAPPING & IR DIAGNOSTICS</h1>
+            <h2>The Infrared Eyes of Predictive Maintenance</h2>
+            <p style="color: var(--accent-color); font-size: 0.9em; margin-top: 10px;">Using infrared signatures to
+                detect friction and electrical resistance before failure</p>
+        </header>
+
+        <div class="module critical">
+            <h3>⚠️ IR THERMOGRAPHY SAFETY</h3>
+            <p><strong>STOP. READ THIS FIRST.</strong></p>
+            <ul>
+                <li><strong>Electrical Safety:</strong> Never point IR camera at high-voltage equipment while energized
+                    without proper PPE and training.</li>
+                <li><strong>Arc Flash Risk:</strong> Maintain safe distances from exposed electrical connections (NFPA
+                    70E guidelines).</li>
+                <li><strong>Reflective Surfaces:</strong> Be aware that shiny metal surfaces reflect IR radiation from
+                    other hot sources, giving false readings.</li>
+            </ul>
+        </div>
+
+        <div class="section-title">The Thermal Grid: Critical Inspection Points</div>
+        <p>For horizontal Francis turbines, four primary thermal inspection points provide comprehensive health
+            monitoring.</p>
+
+        <!-- POINT A -->
+        <div class="thermal-point">
+            <div class="point-header">
+                <span class="point-label">POINT A</span>
+                <h3 style="margin: 0;">Bearings (Turbine & Generator)</h3>
+            </div>
+            <p><strong>Target Temperature:</strong>
+                < 60°C (< 140°F)</p>
+
+                    <div class="temp-range">
+                        <div class="temp-marker" style="left: 60%;"></div>
+                    </div>
+                    <div class="heat-scale">
+                        <span>20°C (Normal)</span>
+                        <span>40°C (OK)</span>
+                        <span>60°C (Limit)</span>
+                        <span>80°C (Critical)</span>
+                    </div>
+
+                    <h4 style="color: var(--accent-color);">What to Look For:</h4>
+                    <ul>
+                        <li><strong>Uniform Temperature:</strong> Bearing housing should have even temperature
+                            distribution around circumference.</li>
+                        <li><strong>Hot Spots:</strong> Localized high temperature indicates misalignment, insufficient
+                            lubrication, or bearing damage.</li>
+                        <li><strong>Temperature Gradient:</strong> Sharp temperature rise from ambient to bearing = poor
+                            heat dissipation (cooling water issue).</li>
+                    </ul>
+
+                    <h4 style="color: var(--warning-color);">Abnormal Thermal Signatures:</h4>
+                    <ul>
+                        <li><strong>> 65°C:</strong> Misalignment or vibration-induced friction. Check shaft run-out →
+                            <a href="./Francis_SOP_Precision.html" style="color: var(--accent-color);">Alignment SOP</a>
+                        </li>
+                        <li><strong>Asymmetric Heat:</strong> One side hotter = tilted bearing or uneven load. Inspect
+                            bearing clearances.</li>
+                        <li><strong>> 70°C:</strong> Oil aeration or degraded lubricant. Perform oil analysis → <a
+                                href="./Francis_SOP_Oil.html" style="color: var(--accent-color);">Oil Hygiene SOP</a>
+                        </li>
+                        <li><strong>> 80°C:</strong> CRITICAL - Stop unit immediately. Bearing failure imminent → <a
+                                href="./Francis_SOP_Bearings.html" style="color: var(--accent-color);">Bearings SOP</a>
+                        </li>
+                    </ul>
+        </div>
+
+        <!-- POINT B -->
+        <div class="thermal-point">
+            <div class="point-header">
+                <span class="point-label">POINT B</span>
+                <h3 style="margin: 0;">Generator Stator Housing</h3>
+            </div>
+            <p><strong>Target Temperature:</strong>
+                < 85°C (< 185°F) - varies by insulation class</p>
+
+                    <h4 style="color: var(--accent-color);">What to Look For:</h4>
+                    <ul>
+                        <li><strong>Uniform Heat Distribution:</strong> Stator should have relatively even temperature
+                            across its length.</li>
+                        <li><strong>Hot Spots:</strong> Localized high temperatures indicate insulation breakdown,
+                            shorted turns, or blocked cooling ducts.</li>
+                        <li><strong>Cooling Efficiency:</strong> Temperature should drop near cooling fan locations if
+                            air-cooled.</li>
+                    </ul>
+
+                    <h4 style="color: var(--warning-color);">Abnormal Thermal Signatures:</h4>
+                    <ul>
+                        <li><strong>Localized Hot Spot (> 95°C):</strong> Insulation breakdown or shorted winding.
+                            Perform insulation resistance test → <a href="./Francis_SOP_Elec_Health.html"
+                                style="color: var(--accent-color);">Electrical Health SOP</a></li>
+                        <li><strong>Blocked Ventilation Pattern:</strong> High temperature in specific section = blocked
+                            cooling duct. Inspect and clean ventilation system.</li>
+                        <li><strong>Asymmetric Heating:</strong> Three-phase imbalance. Check phase currents and
+                            voltages.</li>
+                        <li><strong>> 100°C (for Class F insulation):</strong> CRITICAL - Reduce load or stop unit to
+                            prevent insulation damage.</li>
+                    </ul>
+
+                    <div class="module">
+                        <strong>💡 Insulation Class Reference:</strong>
+                        <ul>
+                            <li>Class B: 130°C maximum</li>
+                            <li>Class F: 155°C maximum</li>
+                            <li>Class H: 180°C maximum</li>
+                        </ul>
+                        <p style="color: var(--warning-color); margin-top: 10px;">Note: These are <em>insulation</em>
+                            ratings. Practical operating limits are 15-20°C lower to ensure lifespan.</p>
+                    </div>
+        </div>
+
+        <!-- POINT C -->
+        <div class="thermal-point">
+            <div class="point-header">
+                <span class="point-label">POINT C</span>
+                <h3 style="margin: 0;">Electrical Terminal Box</h3>
+            </div>
+            <p><strong>Target Temperature:</strong>
+                < 50°C above ambient (typically < 70°C total)</p>
+
+                    <h4 style="color: var(--accent-color);">What to Look For:</h4>
+                    <ul>
+                        <li><strong>Connection Points:</strong> Scan all cable lugs, bus bars, and terminal connections.
+                        </li>
+                        <li><strong>Current Balance:</strong> All three phases should have similar temperatures (within
+                            ±5°C).</li>
+                        <li><strong>Oxidation Detection:</strong> High resistance at connections due to oxidation causes
+                            heating.</li>
+                    </ul>
+
+                    <h4 style="color: var(--warning-color);">Abnormal Thermal Signatures:</h4>
+                    <ul>
+                        <li><strong>Hot Lug (> 80°C):</strong> Loose bolt or oxidized connection. The "vibration effect"
+                            - vibration loosens bolts over time.
+                            <br><em>Action: De-energize, re-torque all connections, clean oxidation with contact
+                                cleaner.</em>
+                        </li>
+                        <li><strong>Phase Imbalance (> 10°C difference):</strong> Unequal current distribution or loose
+                            connection on hot phase.</li>
+                        <li><strong>> 100°C at any connection:</strong> CRITICAL - Immediate risk of arcing or fire.
+                            Shut down and repair.</li>
+                        <li><strong>Heat Pattern on Cable:</strong> If heat extends along cable from termination, cable
+                            itself may be undersized or damaged.</li>
+                    </ul>
+
+                    <div class="module">
+                        <strong>💡 The Vibration Effect:</strong>
+                        <p>Continuous generator vibration (even within acceptable limits) gradually loosens electrical
+                            connections. Thermal imaging detects this before catastrophic failure. Re-torque all
+                            terminal box connections annually.</p>
+                    </div>
+        </div>
+
+        <!-- POINT D -->
+        <div class="thermal-point">
+            <div class="point-header">
+                <span class="point-label">POINT D</span>
+                <h3 style="margin: 0;">HPU Solenoids & Pumps</h3>
+            </div>
+            <p><strong>Target Temperature:</strong> Solenoids < 55°C, Pumps < 65°C</p>
+
+                    <h4 style="color: var(--accent-color);">What to Look For:</h4>
+                    <ul>
+                        <li><strong>Solenoid Coils:</strong> Should be warm (40-50°C) when energized, cool when
+                            de-energized.</li>
+                        <li><strong>Pump Casing:</strong> Gradual temperature rise from inlet to outlet is normal
+                            (energy conversion).</li>
+                        <li><strong>Valve Bodies:</strong> Internal leakage ("stiction") manifests as localized heating.
+                        </li>
+                    </ul>
+
+                    <h4 style="color: var(--warning-color);">Abnormal Thermal Signatures:</h4>
+                    <ul>
+                        <li><strong>Solenoid > 70°C:</strong> Internal leakage in valve causing continuous current draw.
+                            Replace valve → <a href="./Francis_SOP_HPU.html" style="color: var(--accent-color);">HPU
+                                SOP</a></li>
+                        <li><strong>Pump Casing > 75°C:</strong> Pump wear, cavitation, or bearing damage. Check pump
+                            performance curve.</li>
+                        <li><strong>Hot Spot on Valve Body:</strong> Internal "stiction" - spool valve stuck or binding.
+                            Indicates contamination in hydraulic oil → <a href="./Francis_SOP_Oil.html"
+                                style="color: var(--accent-color);">Oil Hygiene SOP</a></li>
+                        <li><strong>Asymmetric Heating on Manifold:</strong> Flow imbalance or blockage in manifold
+                            passages.</li>
+                    </ul>
+        </div>
+
+        <div class="section-title">IR Thermography Standards</div>
+        <div class="module">
+            <h3>Emissivity (ε) Settings - Critical for Accuracy</h3>
+            <p><strong>What is Emissivity?</strong> The ratio of IR radiation emitted by a surface compared to a perfect
+                black body (ε = 1.0). Different materials emit different amounts of IR at the same temperature.</p>
+
+            <div class="emissivity-box">
+                <h4 style="color: var(--primary-color);">Common Turbine Materials & Emissivity Values:</h4>
+                <table class="thermal-table">
+                    <tr>
+                        <th>Material / Surface</th>
+                        <th>Emissivity (ε)</th>
+                        <th>Application</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Polished Stainless Steel</strong></td>
+                        <td>0.15 - 0.25</td>
+                        <td>Shaft, runner (bare metal)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Oxidized Steel</strong></td>
+                        <td>0.75 - 0.85</td>
+                        <td>Bearing housing (natural patina)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Painted Surfaces (Matte)</strong></td>
+                        <td>0.90 - 0.95</td>
+                        <td>Generator housing, HPU</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Electrical Insulation</strong></td>
+                        <td>0.85 - 0.90</td>
+                        <td>Cable, terminal box</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Copper (Oxidized)</strong></td>
+                        <td>0.60 - 0.70</td>
+                        <td>Bus bars, electrical connections</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Aluminum (Polished)</strong></td>
+                        <td>0.05 - 0.10</td>
+                        <td>Heat sinks, reflectors</td>
+                    </tr>
+                </table>
+            </div>
+
+            <h3>How to Set Emissivity on IR Camera</h3>
+            <ol>
+                <li><strong>Identify Surface Material:</strong> Know what you're measuring (painted metal vs. bare
+                    shaft).</li>
+                <li><strong>Consult Table Above:</strong> Select appropriate emissivity value.</li>
+                <li><strong>Camera Settings:</strong> Access emissivity menu on IR camera (usually "ε" or "Emis"
+                    setting).</li>
+                <li><strong>Verify with Contact Thermometer:</strong> For critical measurements, verify IR reading
+                    against a contact thermometer.</li>
+            </ol>
+
+            <div class="module critical">
+                <strong>⚠️ WARNING:</strong> Incorrect emissivity can cause 10-30°C error in temperature reading. Always
+                adjust for surface type. Shiny metal surfaces require lower ε settings!
+            </div>
+
+            <h3>Practical Tip: The Black Tape Method</h3>
+            <p>For shiny surfaces where emissivity is unknown:</p>
+            <ol>
+                <li>Apply a small piece of electrical (black) tape to the surface.</li>
+                <li>Wait 5 minutes for thermal equilibrium.</li>
+                <li>Set camera emissivity to 0.95 (tape's emissivity).</li>
+                <li>Measure tape temperature.</li>
+                <li>Adjust emissivity until bare metal reads same as tape.</li>
+            </ol>
+        </div>
+
+        <div class="section-title">Baseline vs. Trend Analysis</div>
+        <div class="module">
+            <h3>Establishing Baseline Temperatures</h3>
+            <p><strong>When to Record Baseline:</strong></p>
+            <ul>
+                <li>During commissioning or after major overhaul</li>
+                <li>At normal operating load (typically 80-100% rated power)</li>
+                <li>After unit has reached thermal steady-state (minimum 2 hours of operation)</li>
+                <li>Under typical ambient conditions (note ambient temperature)</li>
+            </ul>
+
+            <h3>Baseline Recording Procedure</h3>
+            <ol>
+                <li><strong>Create Thermal Map:</strong> Sketch unit layout and mark all inspection points (A-D).</li>
+                <li><strong>Document Conditions:</strong> Record load (MW), ambient temp, cooling water temp, operating
+                    hours.</li>
+                <li><strong>Systematic Scan:</strong> Follow same path each time (clockwise from front).</li>
+                <li><strong>Capture Images:</strong> Save thermal images with clear labels (e.g.,
+                    "Turbine_Bearing_DE_Baseline_2025-01-15").</li>
+                <li><strong>Log Data:</strong> Create spreadsheet with Point ID, Temperature, Load, Date.</li>
+            </ol>
+
+            <h3>Trend Analysis (6-Month Inspection)</h3>
+            <p><strong>How to Identify Abnormal Heat:</strong></p>
+            <ul>
+                <li><strong>Compare to Baseline:</strong> Temperature increase > 10°C from baseline = investigate.</li>
+                <li><strong>Compare to Adjacent Similar Components:</strong> If one bearing is 15°C hotter than
+                    identical bearing on other side = problem.</li>
+                <li><strong>Track Over Time:</strong> Gradual temperature rise (5°C per year) indicates degradation in
+                    progress.</li>
+                <li><strong>Normalize for Ambient:</strong> Adjust for ambient temperature changes (rule of thumb: +1°C
+                    component temp per +1°C ambient).</li>
+            </ul>
+
+            <div class="module">
+                <strong>💡 Example Trend Analysis:</strong>
+                <p><strong>Turbine Bearing (Point A):</strong></p>
+                <ul>
+                    <li>Jan 2024 Baseline: 48°C @ 5.0 MW, Ambient 22°C</li>
+                    <li>Jul 2024: 52°C @ 5.0 MW, Ambient 28°C → (+4°C component, +6°C ambient) = Normal</li>
+                    <li>Jan 2025: 62°C @ 5.0 MW, Ambient 23°C → (+14°C from baseline) = ABNORMAL - Inspect bearing</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="section-title">Environmental Bias - Seasonal Thermal Shifts</div>
+    <div class="module critical">
+        <h3>🌧️ Wet Season Thermal Adjustments</h3>
+        <p><strong>Context:</strong> High silt load (> 500 NTU) and cooler water temperatures affect thermal readings.
+        </p>
+
+        <h4 style="color: var(--accent-color);">Thermal Behavior Changes:</h4>
+        <ul>
+            <li><strong>cooling Efficiency Drops (Point A):</strong>
+                <br>Silt clogs bearing cooler tubes → Heat transfer efficiency decreases.
+                <br><strong>Symptom:</strong> Bearing temp rises despite cooler river water.
+                <br><strong>Action:</strong> If bearing temp rises > 5°C above baseline in wet season, check cooling
+                water flow immediately.
+            </li>
+            <li><strong>False "Cool" Readings:</strong>
+                <br>Water splashing on turbine bearing housing (common in floods) cools surface skin.
+                <br><strong>Risk:</strong> Internal bearing is hot, but housing looks cool on IR.
+                <br><strong>Action:</strong> Measure temp at shielded location or oil outlet pipe.
+            </li>
+            <li><strong>Generator Heating (Point B):</strong>
+                <br>High humidity reduces air cooling efficiency.
+                <br><strong>Action:</strong> Expect 3-5°C higher stator interaction temps.
+            </li>
+        </ul>
+
+        <p style="margin-top: 15px;"><strong>💡 Strategic Link:</strong> See <a href="./Francis_SOP_MIM.html"
+                style="color: var(--accent-color); font-weight: bold;">Maintenance Intensity Matrix</a> for seasonal
+            priority shifts.</p>
+    </div>
+
+    <div class="section-title">Inspection Schedule & Reporting</div>
+    <div class="module">
+        <ul>
+            <li><strong>Monthly:</strong> Quick scan of all four points during routine rounds.</li>
+            <li><strong>Bi-Annual:</strong> Full thermal survey with image capture and trend analysis.</li>
+            <li><strong>After Load Changes:</strong> Scan after unit returns to service from extended outage.</li>
+            <li><strong>Emergency:</strong> Immediate thermal scan if abnormal vibration, noise, or smell detected.
+            </li>
+        </ul>
+
+        <h3>Reporting Template</h3>
+        <table class="thermal-table">
+            <tr>
+                <th>Point</th>
+                <th>Location</th>
+                <th>Current Temp</th>
+                <th>Baseline Temp</th>
+                <th>ΔT</th>
+                <th>Status</th>
+            </tr>
+            <tr>
+                <td>A1</td>
+                <td>Turbine Bearing DE</td>
+                <td>52°C</td>
+                <td>48°C</td>
+                <td>+4°C</td>
+                <td style="color: #00FF00;">✓ Normal</td>
+            </tr>
+            <tr>
+                <td>A2</td>
+                <td>Generator Bearing DE</td>
+                <td>67°C</td>
+                <td>55°C</td>
+                <td>+12°C</td>
+                <td style="color: var(--warning-color);">⚠ Investigate</td>
+            </tr>
+        </table>
+    </div>
+
+    <a href="./Francis_Horizontal.html" class="back-btn">← Return to Master Manual</a>
+
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOP: Vortex Control & Draft Tube Dynamics</title>
+    <style>
+        /* Shared Architecture from Francis_Horizontal.html */
+        :root {
+            --primary-color: #003366;
+            --secondary-color: #0066cc;
+            --accent-color: #d9534f;
+            --warning-color: #f0ad4e;
+            --bg-color: #f4f7f6;
+            --text-color: #333;
+            --border-color: #dde;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 40px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        header {
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+            color: var(--primary-color);
+            font-size: 28px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h2 {
+            color: var(--secondary-color);
+            font-size: 18px;
+            margin-top: 5px;
+            font-weight: 400;
+        }
+
+        .section-title {
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 10px 15px;
+            margin-top: 40px;
+            border-radius: 4px;
+            font-size: 1.2em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title::before {
+            content: "►";
+            margin-right: 10px;
+            font-size: 0.8em;
+        }
+
+        h3 {
+            color: var(--primary-color);
+            border-left: 4px solid var(--secondary-color);
+            padding-left: 10px;
+            margin-top: 25px;
+        }
+
+        .module {
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            background-color: #fafafa;
+        }
+
+        .critical {
+            border-left: 5px solid var(--accent-color);
+            background-color: #fff5f5;
+        }
+
+        .technical {
+            border-left: 5px solid var(--secondary-color);
+            background-color: #f0f7ff;
+        }
+
+        .diagnostic {
+            border-left: 5px solid var(--warning-color);
+            background-color: #fdf8e4;
+        }
+
+        ul,
+        ol {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 30px;
+            text-decoration: none;
+            color: var(--secondary-color);
+            font-weight: bold;
+            border: 1px solid var(--secondary-color);
+            padding: 10px 20px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            background-color: var(--secondary-color);
+            color: #fff;
+        }
+
+        .visual-aid {
+            border: 2px dashed #ccc;
+            padding: 15px;
+            margin: 10px 0;
+            background: #fff;
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .physics-box {
+            background: #f0f7ff;
+            border-left: 4px solid #0066cc;
+            padding: 12px;
+            margin: 15px 0;
+            font-style: italic;
+        }
+
+        .avoid-zone {
+            background: #fff5f5;
+            border-left: 4px solid #d9534f;
+            padding: 12px;
+            margin: 15px 0;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <header>
+            <h1>Advanced SOP: Vortex Control & Draft Tube Dynamics</h1>
+            <h2>The "Forgotten" Fluid Dynamics - Managing Spiral Vortex & Surging</h2>
+        </header>
+
+        <!-- INTRO MODULE -->
+        <div class="module critical">
+            <h3>⚠️ THE SHAKING POWERHOUSE</h3>
+            <p><strong>Context:</strong> At specific load points (typically 40-60% power), a spiral vortex rope forms in
+                the draft tube downstream of the runner. This is not a minor vibration - it can shake the entire
+                powerhouse structure.</p>
+            <ul>
+                <li><strong>The Risk:</strong> Operators often dismiss this as "just noise" or "normal operation," but
+                    prolonged exposure causes:
+                    <ul>
+                        <li>Fatigue cracks in draft tube liner concrete</li>
+                        <li>Bearing damage from cyclic loading</li>
+                        <li>Floor bolt loosening in turbine mounting</li>
+                    </ul>
+                </li>
+                <li><strong>Economic Impact:</strong> If ignored, vortex-induced fatigue can reduce turbine lifespan by
+                    30-40%, requiring major refurbishment.</li>
+            </ul>
+        </div>
+
+        <div class="section-title">SOP 1: The Physics of Vortex Rope Formation</div>
+        <div class="module technical">
+            <p>Understanding the mechanism allows intelligent countermeasures instead of reactive firefighting.</p>
+
+            <h3>1.1 Fluid Dynamics Simplified</h3>
+            <p>When the Francis runner operates at partial load, water exits the runner with residual swirl (tangential
+                velocity). This swirl continues into the draft tube, creating a helical vortex rope that rotates and
+                pulsates.</p>
+
+            <div class="physics-box">
+                <strong>Key Physics:</strong> The vortex rope has a natural frequency (typically 0.2-0.4 × runner
+                rotation frequency). If this frequency matches the structural resonance of the draft tube or powerhouse,
+                violent vibrations occur.
+            </div>
+
+            <h3>1.2 Vortex Rope Characteristics</h3>
+            <ul>
+                <li><strong>Appearance:</strong> If draft tube has sight glass, visible as a rotating "snake" of
+                    low-pressure vapor.</li>
+                <li><strong>Frequency:</strong> Calculate expected vortex frequency:
+                    <ul>
+                        <li>Runner speed: 600 RPM (Unit 1) = 10 Hz</li>
+                        <li>Vortex frequency: 0.2-0.4 × 10 Hz = <strong>2-4 Hz</strong></li>
+                    </ul>
+                </li>
+                <li><strong>Audible Signal:</strong> Low-frequency "thumping" or "whumping" sound at 2-4 Hz interval
+                    (count: 1-Mississippi, 2-Mississippi rhythm).</li>
+                <li><strong>Vibration Sensors:</strong> SCADA accelerometers will show peak at 2-4 Hz when vortex is
+                    active.</li>
+            </ul>
+        </div>
+
+        <div class="section-title">SOP 2: Identifying "Rough Running Zones"</div>
+        <div class="module diagnostic">
+            <p><strong>Objective:</strong> Map the specific load points where vortex induces unacceptable vibration,
+                then avoid operating in those zones.</p>
+
+            <h3>2.1 Load-Shifting Diagnostic Procedure</h3>
+            <ol>
+                <li><strong>Test Setup:</strong> Install temporary vibration accelerometer on draft tube wall (or use
+                    existing SCADA sensors).</li>
+                <li><strong>Load Sweep:</strong> Incrementally adjust power output from 20% to 100% in 5% steps.</li>
+                <li><strong>Dwell Time:</strong> Hold each load for 3 minutes to allow vortex to stabilize.</li>
+                <li><strong>Data Recording:</strong> For each load point, record:
+                    <ul>
+                        <li>Vibration amplitude (mm/s RMS)</li>
+                        <li>Dominant frequency (Hz)</li>
+                        <li>Audible noise level (subjective: Low/Medium/High)</li>
+                    </ul>
+                </li>
+                <li><strong>Threshold Criteria:</strong>
+                    <ul>
+                        <li><strong>Safe:</strong>
+                            <2.0 mm/s vibration</li>
+                        <li><strong>Warning:</strong> 2.0-4.0 mm/s (avoid continuous operation)</li>
+                        <li><strong>Critical:</strong> >4.0 mm/s (AVOID - damage accumulates rapidly)</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <div class="avoid-zone">
+                <strong>TYPICAL ROUGH RUNNING ZONES FOR FRANCIS TURBINES:</strong><br>
+                • 35-50% load (low head conditions)<br>
+                • 55-65% load (medium head, high swirl)<br>
+                <br>
+                <strong>OPERATOR RULE:</strong> If grid demand requires operation in rough zone, limit continuous run
+                time to <2 hours. Request load adjustment from dispatcher if possible. </div>
+
+                    <h3>2.2 Creating the "Forbidden Zone" Chart</h3>
+                    <p>After completing load sweep, create a visual chart posted in control room:</p>
+                    <ul>
+                        <li>X-axis: Power output (0-100%)</li>
+                        <li>Y-axis: Vibration level (mm/s)</li>
+                        <li>Color zones: Green (safe), Yellow (warning), Red (avoid)</li>
+                    </ul>
+                    <div class="visual-aid">
+                        [CHART PLACEHOLDER: Load vs. Vibration with color-coded zones]
+                    </div>
+            </div>
+
+            <div class="section-title">SOP 3: Air Injection Optimization</div>
+            <div class="module technical">
+                <p>Air admission is not just "venting" - it's a precision tool to disrupt vortex coherence.</p>
+
+                <h3>3.1 The Mechanism: Vortex Rope Breakup</h3>
+                <p><strong>Physics:</strong> Injecting air into the draft tube creates buoyant bubbles that interfere
+                    with the vortex rope's rotational coherence. The rope becomes unstable and breaks into smaller, less
+                    energetic eddies.</p>
+
+                <h3>3.2 Tuning the Air Admission Valve</h3>
+                <p><strong>Context for Unit 1:</strong> Air admission valve is already installed (ref: DFT Air Admission
+                    SOP), but may not be optimized for vortex suppression.</p>
+
+                <ol>
+                    <li><strong>Baseline:</strong> Operate unit at known "rough running" load (e.g., 45% power) with air
+                        valve CLOSED. Record vibration level.</li>
+                    <li><strong>Incremental Opening:</strong> Open air valve in 10% increments (10%, 20%, 30%... up to
+                        100%).</li>
+                    <li><strong>Observation:</strong> At each increment, allow 2 minutes for flow stabilization, then
+                        record vibration.</li>
+                    <li><strong>Optimal Setting:</strong> The valve opening that produces <strong>minimum
+                            vibration</strong> is the "sweet spot" for this specific load point.</li>
+                    <li><strong>Warning:</strong> Excessive air injection (>70% valve open) can create secondary noise
+                        and reduce efficiency slightly (~0.5-1%). Balance vibration reduction vs. efficiency loss.</li>
+                </ol>
+
+                <div class="physics-box">
+                    <strong>Low-Head Operations:</strong> During monsoon season when river level is high (reducing net
+                    head), vortex intensity increases. Air injection requirements may double compared to dry season.
+                    Re-tune air valve seasonally.
+                </div>
+
+                <h3>3.3 Air Compressor Capacity Check</h3>
+                <p>Ensure the air supply compressor can sustain the required flow rate:</p>
+                <ul>
+                    <li><strong>Typical Demand:</strong> 50-100 Nm³/h at 2-3 bar gauge pressure</li>
+                    <li><strong>Verification:</strong> Monitor compressor pressure during peak air injection. If
+                        pressure drops below 1.5 bar, compressor is undersized.</li>
+                    <li><strong>Upgrade Path:</strong> If existing compressor insufficient, add secondary unit or
+                        increase tank capacity buffer.</li>
+                </ul>
+            </div>
+
+            <div class="section-title">SOP 4: Acoustic Diagnostic</div>
+            <div class="module diagnostic">
+                <p>Operators can identify vortex issues by <strong>sound</strong> even without instrumentation.</p>
+
+                <h3>4.1 The "Thumping" Signature</h3>
+                <ul>
+                    <li><strong>Frequency:</strong> Low-frequency rhythmic thumping at 2-4 beats per second (120-240 BPM
+                        if thinking in music terms).</li>
+                    <li><strong>Location:</strong> Loudest near draft tube elbow or tailrace exit.</li>
+                    <li><strong>Character:</strong> "Whump-whump-whump" - not a high-pitched whine or grinding. Feels
+                        like a slow heartbeat.</li>
+                </ul>
+
+                <h3>4.2 Differential Diagnosis</h3>
+                <table border="1" cellpadding="8" style="width:100%; margin-top:15px; border-collapse: collapse;">
+                    <tr style="background-color: #f0f7ff;">
+                        <th>Sound</th>
+                        <th>Likely Cause</th>
+                        <th>Action</th>
+                    </tr>
+                    <tr>
+                        <td>Low-frequency thumping (2-4 Hz)</td>
+                        <td>Draft tube vortex rope</td>
+                        <td>Shift load or increase air injection</td>
+                    </tr>
+                    <tr>
+                        <td>High-frequency whine (>100 Hz)</td>
+                        <td>Bearing issue or cavitation</td>
+                        <td>Refer to Bearings/Cavitation SOP</td>
+                    </tr>
+                    <tr>
+                        <td>Grinding/scraping</td>
+                        <td>Mechanical contact (runner/casing)</td>
+                        <td>STOP UNIT - Inspect clearances</td>
+                    </tr>
+                    <tr>
+                        <td>Intermittent banging</td>
+                        <td>Loose component or debris impact</td>
+                        <td>STOP UNIT - Inspect intake/runner</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="section-title">Summary Checklist</div>
+            <div class="module">
+                <ul>
+                    <li><strong>Quarterly:</strong> Perform load sweep to verify "rough running zones" chart is still
+                        accurate (river head changes seasonally).</li>
+                    <li><strong>Monthly:</strong> Test air admission valve for proper operation and optimal setting at
+                        typical loads.</li>
+                    <li><strong>Daily:</strong> During shift handover, report any new vibrations or unusual sounds to
+                        incoming operator.</li>
+                    <li><strong>On Overhaul:</strong> Inspect draft tube liner for fatigue cracks induced by long-term
+                        vortex exposure.</li>
+                </ul>
+            </div>
+
+            <a href="./Francis_Horizontal.html" class="back-btn">← Return to Master Manual</a>
+
+        </div>
+
+</body>
+
+</html>

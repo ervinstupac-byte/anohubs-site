@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="bs">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOP: Glavni Ležajevi & Sistem Hlađenja</title>
+    <style>
+        /* Shared Architecture from Francis_Horizontal.html */
+        :root {
+            --primary-color: #003366;
+            --secondary-color: #0066cc;
+            --accent-color: #d9534f;
+            --warning-color: #f0ad4e;
+            --bg-color: #f4f7f6;
+            --text-color: #333;
+            --border-color: #dde;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 40px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        header {
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+            color: var(--primary-color);
+            font-size: 28px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h2 {
+            color: var(--secondary-color);
+            font-size: 18px;
+            margin-top: 5px;
+            font-weight: 400;
+        }
+
+        .section-title {
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 10px 15px;
+            margin-top: 40px;
+            border-radius: 4px;
+            font-size: 1.2em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title::before {
+            content: "►";
+            margin-right: 10px;
+            font-size: 0.8em;
+        }
+
+        h3 {
+            color: var(--primary-color);
+            border-left: 4px solid var(--secondary-color);
+            padding-left: 10px;
+            margin-top: 25px;
+        }
+
+        .module {
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            background-color: #fafafa;
+        }
+
+        .critical {
+            border-left: 5px solid var(--accent-color);
+            background-color: #fff5f5;
+        }
+
+        .technical {
+            border-left: 5px solid var(--secondary-color);
+            background-color: #f0f7ff;
+        }
+
+        .diagnostic {
+            border-left: 5px solid var(--warning-color);
+            background-color: #fdf8e4;
+        }
+
+        ul,
+        ol {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 30px;
+            text-decoration: none;
+            color: var(--secondary-color);
+            font-weight: bold;
+            border: 1px solid var(--secondary-color);
+            padding: 10px 20px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            background-color: var(--secondary-color);
+            color: #fff;
+        }
+
+        .visual-aid {
+            border: 2px dashed #ccc;
+            padding: 15px;
+            margin: 10px 0;
+            background: #fff;
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <header>
+            <h1>Kritični SOP: Glavni Ležajevi & Hlađenje</h1>
+            <h2>Termalna Zaštita & Logika Razmjene Topline</h2>
+        </header>
+
+        <!-- INTRO MODULE -->
+        <div class="module critical">
+            <h3>⚠️ ULJNI FILM JE LEŽAJ</h3>
+            <p><strong>Kontekst:</strong> Teška rotirajuća masa turbine/generatora pluta na mikroskopskom filmu
+                ulja.</p>
+            <ul>
+                <li><strong>Opasnost:</strong> Ako se ulje pregrije (> 60°C), viskozitet pada. Rijetko ulje ne može
+                    nositi vratilo.</li>
+                <li><strong>Rezultat:</strong> Dodir metala o metal, katastrofalno brisanje (topljenje) babita, i
+                    dugotrajni zastoj.</li>
+            </ul>
+        </div>
+
+        <div class="section-title">SOP 1: Logika Rashladne Vode</div>
+        <div class="module technical">
+            <p>Toplota se uklanja iz ulja sistemom rashladne vode. U rijekama sa puno mulja, ovo je primarna
+                tačka kvara.</p>
+
+            <h3>1.1 Filtracija Zahvata</h3>
+            <ol>
+                <li><strong>Provjera:</strong> Pregledajte mrežaste filtere na linijama rashladne vode dnevno.</li>
+                <li><strong>Čišćenje:</strong> Ako je diferencijalni pritisak visok, uklonite i oribajte mrežicu. Mulj
+                    blokira
+                    protok.</li>
+            </ol>
+
+            <h3>1.2 "Povratno Ispiranje" Izmjenjivača</h3>
+            <p>Mulj se nakuplja unutar cijevi izmjenjivača toplote, djelujući kao izolator.</p>
+            <ul>
+                <li><strong>Protokol:</strong> Zatvorite ulazne/izlazne ventile. Otvorite bajpas ventile za "Povratno
+                    Ispiranje"
+                    kako bi obrnuli smjer toka na 5 minuta. Ovo izbacuje nataloženi sediment.</li>
+                <li><strong>Verifikacija:</strong> Provjerite vodu na ispustu. Treba preći iz blatnjave u bistru.</li>
+            </ul>
+        </div>
+
+        <div class="section-title">SOP 2: Nadzor Stanja Ulja</div>
+        <div class="module diagnostic">
+            <p>Ulje vam govori vizuelno.</p>
+
+            <h3>2.1 Kontaminacija Vodom</h3>
+            <ul>
+                <li><strong>Simptom:</strong> Ulje u kontrolnom staklu izgleda "Mliječno" ili mutno.</li>
+                <li><strong>Uzrok:</strong> Rashladna voda ulazi u uljnu komoru (Kvar zaptivača ili curenje
+                    izmjenjivača).</li>
+                <li><strong>Akcija:</strong> HITNO ZAUSTAVLJANJE. Centrifugirajte ulje ili zamijenite. 0.1% vode
+                    smanjuje život
+                    ležaja za 50%.</li>
+            </ul>
+
+            <h3>2.2 Korelacija Vibracija</h3>
+            <p><strong>Napomena:</strong> Visoka temperatura je simptom, a ne bolest.</p>
+            <ul>
+                <li>Ako je hlađenje savršeno a temperatura raste: <strong>Provjeri Saosnost (Run-Out)</strong>.</li>
+                <li>Trenje vratila stvara višak toplote koju hladnjak ne može ukloniti.</li>
+            </ul>
+        </div>
+
+        <div class="section-title">SOP 3: Temperaturni Limiti</div>
+        <div class="module critical">
+            <table>
+                <tr>
+                    <th>Stanje</th>
+                    <th>Temp Opseg</th>
+                    <th>Akcija</th>
+                </tr>
+                <tr>
+                    <td><strong>Normalno</strong></td>
+                    <td>18°C - 55°C</td>
+                    <td>Nadzor.</td>
+                </tr>
+                <tr>
+                    <td><strong>Alarm</strong></td>
+                    <td>60°C</td>
+                    <td>Provjeri Hlađenje & Nivo Ulja. Čišćenje filtera.</td>
+                </tr>
+                <tr>
+                    <td><strong>Trip (Isključenje)</strong></td>
+                    <td>70°C</td>
+                    <td><strong>HITNO ZAUSTAVLJANJE.</strong> Ne restartuj bez inspekcije.</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section-title">Kontrolna Lista</div>
+        <div class="module">
+            <ul>
+                <li><strong>Dnevno:</strong> Očisti filtere rashladne vode.</li>
+                <li><strong>Sedmično:</strong> "Povratno isperi" izmjenjivače toplote.</li>
+                <li><strong>Na Alarm:</strong> Odmah provjeri "Mliječno" ulje.</li>
+            </ul>
+        </div>
+
+        <a href="Francis_Horizontal_Dashboard.html" class="back-btn">← Povratak u Operativni Centar</a>
+
+    </div>
+
+</body>
+
+</html>

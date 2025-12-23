@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOP: Hidden Guardians - Critical Overlooked Components</title>
+    <style>
+        /* Shared Architecture from Francis_Horizontal.html */
+        :root {
+            --primary-color: #003366;
+            --secondary-color: #0066cc;
+            --accent-color: #d9534f;
+            --warning-color: #f0ad4e;
+            --bg-color: #f4f7f6;
+            --text-color: #333;
+            --border-color: #dde;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 40px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        header {
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+            color: var(--primary-color);
+            font-size: 28px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h2 {
+            color: var(--secondary-color);
+            font-size: 18px;
+            margin-top: 5px;
+            font-weight: 400;
+        }
+
+        .section-title {
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 10px 15px;
+            margin-top: 40px;
+            border-radius: 4px;
+            font-size: 1.2em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title::before {
+            content: "►";
+            margin-right: 10px;
+            font-size: 0.8em;
+        }
+
+        h3 {
+            color: var(--primary-color);
+            border-left: 4px solid var(--secondary-color);
+            padding-left: 10px;
+            margin-top: 25px;
+        }
+
+        .module {
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            background-color: #fafafa;
+        }
+
+        .critical {
+            border-left: 5px solid var(--accent-color);
+            background-color: #fff5f5;
+        }
+
+        .technical {
+            border-left: 5px solid var(--secondary-color);
+            background-color: #f0f7ff;
+        }
+
+        .diagnostic {
+            border-left: 5px solid var(--warning-color);
+            background-color: #fdf8e4;
+        }
+
+        ul,
+        ol {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 30px;
+            text-decoration: none;
+            color: var(--secondary-color);
+            font-weight: bold;
+            border: 1px solid var(--secondary-color);
+            padding: 10px 20px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            background-color: var(--secondary-color);
+            color: #fff;
+        }
+
+        .visual-aid {
+            border: 2px dashed #ccc;
+            padding: 15px;
+            margin: 10px 0;
+            background: #fff;
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .torque-spec {
+            background: #f0f7ff;
+            border-left: 4px solid #0066cc;
+            padding: 12px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        table th {
+            background: var(--primary-color);
+            color: white;
+            padding: 10px;
+            text-align: left;
+        }
+
+        table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+
+        table tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        /* === PRINT CSS === */
+        @media print {
+            body {
+                background: white;
+                color: black;
+                font-size: 11pt;
+            }
+
+            .container {
+                max-width: 100%;
+                box-shadow: none;
+                padding: 20px;
+            }
+
+            header {
+                border-bottom: 2px solid black;
+            }
+
+            .section-title {
+                background: white !important;
+                color: black !important;
+                border: 2px solid black;
+            }
+
+            .module {
+                page-break-inside: avoid;
+            }
+
+            .back-btn {
+                display: none;
+            }
+
+            table {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <header>
+            <h1>Critical SOP: Hidden Guardians</h1>
+            <h2>The Often-Ignored Components That Prevent Catastrophic Failure</h2>
+        </header>
+
+        <!-- INTRO MODULE -->
+        <div class="module critical">
+            <h3>⚠️ THE SILENT PROTECTORS</h3>
+            <p><strong>Context:</strong> While operators focus on visible components (bearings, coupling, guide vanes),
+                several "hidden" components work silently to prevent catastrophic failure. These are rarely inspected
+                until failure occurs.</p>
+            <ul>
+                <li><strong>Why "Hidden":</strong> Located inside sealed assemblies, underwater, or in rarely-accessed
+                    areas.</li>
+                <li><strong>The Risk:</strong> Failure of these components can cause sudden, severe damage that takes
+                    months to repair.</li>
+                <li><strong>Inspection Frequency:</strong> Often skipped during routine maintenance due to access
+                    difficulty.</li>
+            </ul>
+        </div>
+
+        <div class="section-title">SOP 1: Nose Cone Integrity</div>
+        <div class="module technical">
+            <p>The runner nose cone reduces turbulence at the draft tube exit. If bolts loosen, the cone shifts,
+                creating massive vibration and hydraulic imbalance.</p>
+
+            <h3>1.1 The Failure Mechanism</h3>
+            <p><strong>Physics:</strong> Water exits the runner at high velocity (~15-20 m/s) and must smoothly
+                transition into the draft tube. The nose cone shapes this flow.</p>
+            <p><strong>If Loose:</strong> Cone wobbles during rotation, creating asymmetric flow → vibration → bolt
+                fatigue → cone detachment → catastrophic runner imbalance.</p>
+
+            <h3>1.2 Inspection Requirements</h3>
+            <p><strong>Access:</strong> Unit must be shut down, draft tube dewatered, access via tailrace hatch.</p>
+            <ol>
+                <li><strong>Visual Check:</strong> Inspect nose cone for cracks or deformation (especially around bolt
+                    holes).</li>
+                <li><strong>Bolt Torque Verification:</strong> Using torque wrench, verify each bolt maintains specified
+                    torque.</li>
+                <li><strong>Loctite Presence:</strong> Check for blue residue indicating Loctite was properly applied.
+                </li>
+            </ol>
+
+            <div class="torque-spec">
+                <strong>NOSE CONE BOLT SPECIFICATIONS:</strong><br>
+                Bolt Size: M16 or M20 (varies by manufacturer)<br>
+                Torque: 180-220 Nm (check manufacturer manual)<br>
+                Thread Locker: Loctite 243 (blue, medium strength)<br>
+                Inspection Frequency: Every major overhaul (3-5 years)
+            </div>
+
+            <h3>1.3 Re-torquing Procedure</h3>
+            <ol>
+                <li>Clean bolt threads with wire brush</li>
+                <li>Apply fresh Loctite 243</li>
+                <li>Torque in star pattern (like wheel lugs) to prevent cone warping</li>
+                <li>Wait 24 hours for Loctite to cure before refilling draft tube</li>
+            </ol>
+        </div>
+
+        <div class="section-title">SOP 2: Vacuum Breaker (Snifter) Valve</div>
+        <div class="module technical">
+            <p>The vacuum breaker valve is mounted on the turbine head cover. During load rejection, it must open
+                rapidly to admit air and prevent destructive vacuum collapse.</p>
+
+            <h3>2.1 The Critical Function</h3>
+            <p><strong>Load Rejection Scenario:</strong> When grid trips, guide vanes slam closed in 3-5 seconds. Water
+                column decelerates, creating vacuum (negative pressure) in the spiral casing.</p>
+            <p><strong>Without Vacuum Breaker:</strong> Vacuum can reach -0.8 to -0.9 bar, creating massive suction
+                force that:</p>
+            <ul>
+                <li>Implodes head cover (catastrophic structural failure)</li>
+                <li>Damages spiral casing liner</li>
+                <li>Causes violent water hammer on restart</li>
+            </ul>
+
+            <h3>2.2 Test Procedure</h3>
+            <p><strong>Functional Test (Annual):</strong></p>
+            <ol>
+                <li><strong>Locate Valve:</strong> Typically 6-12" diameter valve on top of head cover with
+                    counterweight or spring mechanism.</li>
+                <li><strong>Manual Actuation:</strong> Lift disc by hand (unit stopped). Should move freely with minimal
+                    force.</li>
+                <li><strong>Seating Test:</strong> Release disc - should drop and seat with audible "clunk".</li>
+                <li><strong>Seal Check:</strong> With unit filled but stopped, valve should be airtight (no hissing
+                    sound).</li>
+            </ol>
+
+            <h3>2.3 Common Failures</h3>
+            <table>
+                <tr>
+                    <th>Symptom</th>
+                    <th>Cause</th>
+                    <th>Remedy</th>
+                </tr>
+                <tr>
+                    <td>Valve stuck closed</td>
+                    <td>Corrosion on hinge pin</td>
+                    <td>Disassemble, wire-brush, lubricate with anti-seize</td>
+                </tr>
+                <tr>
+                    <td>Slow opening</td>
+                    <td>Weak counterweight spring</td>
+                    <td>Replace spring or add weight to counterweight arm</td>
+                </tr>
+                <tr>
+                    <td>Air leakage during operation</td>
+                    <td>Worn rubber seat</td>
+                    <td>Replace rubber gasket (standard NBR material)</td>
+                </tr>
+            </table>
+
+            <div class="torque-spec">
+                <strong>CRITICAL:</strong> Vacuum breaker MUST actuate within 2-3 seconds of pressure drop. Test during
+                scheduled shutdown by partially closing guide vanes and monitoring vacuum gauge.
+            </div>
+        </div>
+
+        <div class="section-title">SOP 3: Spiral Case Silt Drainage</div>
+        <div class="module technical">
+            <p><strong>Problem:</strong> Silt-laden water enters the spiral casing during operation. Heaviest particles
+                settle at the bottom, accumulating over months.</p>
+
+            <h3>3.1 The Accumulation Mechanism</h3>
+            <p>Francis turbines have high-velocity flow (15-25 m/s) that keeps most silt suspended. However, at the
+                spiral casing's lowest point (6 o'clock position), flow velocity drops slightly, allowing silt to
+                settle.</p>
+            <p><strong>Consequences of Buildup:</strong></p>
+            <ul>
+                <li>Reduced effective casing volume → efficiency loss (~1-2%)</li>
+                <li>Uneven flow distribution to guide vanes → vibration</li>
+                <li>Silt hardens into concrete-like deposits if left >6 months</li>
+            </ul>
+
+            <h3>3.2 Weekly Flushing Procedure</h3>
+            <ol>
+                <li><strong>Locate Drain Valve:</strong> Bottom of spiral casing, typically 3-4" ball valve or gate
+                    valve.</li>
+                <li><strong>Safety:</strong> Unit can remain running during flushing (low flow only, <30% load
+                        recommended).</li>
+                <li><strong>Open Drain:</strong> Crack valve open slowly. Initial discharge will be thick, muddy water.
+                </li>
+                <li><strong>Flush Duration:</strong> Continue until water runs clear (typically 30-60 seconds).</li>
+                <li><strong>Close Valve:</strong> Ensure valve seats tightly (no dripping).</li>
+                <li><strong>Log Entry:</strong> Record silt volume estimate and water clarity in maintenance log.</li>
+            </ol>
+
+            <div class="diagnostic">
+                <strong>MONSOON SEASON PROTOCOL:</strong> During Jun-Sep when river silt is highest (>3000 ppm),
+                increase flushing frequency to twice weekly or daily if sediment load is critical.
+            </div>
+
+            <h3>3.3 Hardened Deposit Removal</h3>
+            <p><strong>If Valve Won't Drain (indicating blockage):</strong></p>
+            <ol>
+                <li>Shut down unit and drain spiral casing</li>
+                <li>Access spiral casing via inspection manway</li>
+                <li>Manually remove hardened silt using shovel and wire brush</li>
+                <li>Flush with high-pressure water before refilling</li>
+            </ol>
+        </div>
+
+        <div class="section-title">SOP 4: Runner Hub Pressure Relief Channels</div>
+        <div class="module technical">
+            <p>The runner hub has small (5-10mm) pressure relief holes that balance pressure behind the runner. These
+                are critical for thrust bearing protection (ref: Thrust Balance SOP).</p>
+
+            <h3>4.1 Inspection During Overhaul</h3>
+            <p><strong>Access:</strong> Only accessible when runner is lifted out for overhaul.</p>
+            <ol>
+                <li><strong>Locate Holes:</strong> Typically 4-8 radial holes drilled through runner hub from back side.
+                </li>
+                <li><strong>Visual Inspection:</strong> Use flashlight and mirror to inspect each hole for silt
+                    blockage.</li>
+                <li><strong>Wire Probe Test:</strong> Insert 5mm diameter wire probe through full depth of each hole to
+                    verify clearance.</li>
+                <li><strong>Water Flush:</strong> Use garden hose to flush each hole from both directions.</li>
+            </ol>
+
+            <h3>4.2 Clearing Procedure</h3>
+            <p><strong>For Partially Blocked Holes:</strong></p>
+            <ul>
+                <li>Drill wire brush (5mm diameter) on cordless drill - carefully clean hole without damaging walls</li>
+                <li>High-pressure water flush (100-150 bar)</li>
+                <li>Verify clearance with gauge wire</li>
+            </ul>
+
+            <p><strong>For Fully Blocked Holes:</strong></p>
+            <ul>
+                <li>DO NOT attempt to re-drill - risk of off-center hole damaging runner balance</li>
+                <li>Use carbide-tipped punch to break through blockage</li>
+                <li>Flush extensively after clearing</li>
+            </ul>
+
+            <div class="critical">
+                <strong>WARNING:</strong> If >50% of pressure relief holes are blocked, thrust bearing load can triple
+                (ref: Thrust Balance SOP). This is a critical hidden failure mode - do not skip this inspection during
+                overhaul.
+            </div>
+        </div>
+
+        <div class="section-title">Summary Checklist</div>
+        <div class="module">
+            <ul>
+                <li><strong>Every Major Overhaul (3-5 years):</strong> Nose cone bolt torque verification + Loctite
+                    re-application</li>
+                <li><strong>Annually:</strong> Vacuum breaker functional test (manual actuation + seal check)</li>
+                <li><strong>Weekly:</strong> Spiral case silt drainage (30-60 second flush)</li>
+                <li><strong>During Runner Removal:</strong> Hub pressure relief channel inspection and clearing</li>
+            </ul>
+        </div>
+
+        <a href="./Francis_Horizontal.html" class="back-btn">← Return to Master Manual</a>
+
+    </div>
+
+</body>
+
+</html>

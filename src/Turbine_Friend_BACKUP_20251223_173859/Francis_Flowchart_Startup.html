@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOP: Unit Startup Sequence Flowchart</title>
+    <style>
+        /* Digital Flowchart Theme */
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #1e293b;
+            --step-bg: #f8fafc;
+            --success-color: #22c55e;
+            --error-color: #ef4444;
+            --connector-color: #94a3b8;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.5;
+            color: var(--text-color);
+            background-color: #f1f5f9;
+            margin: 0;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 50px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        h1 {
+            color: #0f172a;
+            margin: 0;
+        }
+
+        .flow-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .step-box {
+            background: white;
+            border: 2px solid #3b82f6;
+            padding: 20px;
+            border-radius: 8px;
+            width: 300px;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            box-shadow: 0 4px 6px rgba(59, 130, 246, 0.1);
+        }
+
+        .step-box.decision {
+            border-color: #f59e0b;
+            /* Amber */
+            transform: skewX(-10deg);
+        }
+
+        .step-box.decision>* {
+            transform: skewX(10deg);
+        }
+
+        .step-box.action {
+            border-color: #3b82f6;
+            /* Blue */
+        }
+
+        .step-box.check {
+            border-color: #8b5cf6;
+            /* Purple */
+        }
+
+        .connector {
+            height: 40px;
+            width: 2px;
+            background: #cbd5e1;
+            margin: -2px 0;
+        }
+
+        .arrow {
+            width: 0;
+            height: 0;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 8px solid #cbd5e1;
+            margin-bottom: 5px;
+        }
+
+        .go-no-go {
+            display: flex;
+            gap: 20px;
+            margin-top: 10px;
+            font-size: 0.8em;
+            justify-content: center;
+        }
+
+        .go {
+            color: var(--success-color);
+            font-weight: bold;
+        }
+
+        .no-go {
+            color: var(--error-color);
+            font-weight: bold;
+        }
+
+        .start-circle {
+            width: 60px;
+            height: 60px;
+            background: #22c55e;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(34, 197, 94, 0.3);
+        }
+
+        .end-circle {
+            width: 60px;
+            height: 60px;
+            background: #3b82f6;
+            /* Blue for running */
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .step-number {
+            background: #e2e8f0;
+            font-size: 0.8em;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>STARTUP LOGIC GATE</h1>
+            <p>Sequence of Operations (SOP) Decision Tree</p>
+        </header>
+
+        <div style="display:flex; flex-direction:column; align-items:center;">
+
+            <div class="start-circle">START</div>
+            <div class="connector"></div>
+            <div class="arrow"></div>
+
+            <!-- Step 1 -->
+            <div class="step-box check">
+                <span class="step-number">STEP 1</span>
+                <strong>Verify HPU Health</strong>
+                <p style="font-size:0.9em; margin:5px 0;">Is Oil Pressure > 120 Bar?<br>Is Nitrogen Level OK?</p>
+                <div class="go-no-go">
+                    <span class="go">YES ↓</span>
+                    <span class="no-go">NO → STOP</span>
+                </div>
+            </div>
+
+            <div class="connector"></div>
+            <div class="arrow"></div>
+
+            <!-- Step 2 -->
+            <div class="step-box check">
+                <span class="step-number">STEP 2</span>
+                <strong>Distributor Status</strong>
+                <p style="font-size:0.9em; margin:5px 0;">Are Guide Vanes at ABSOLUTE 0%?<br>(Verify "Squeeze" Pressure)
+                </p>
+                <div class="go-no-go">
+                    <span class="go">YES ↓</span>
+                    <span class="no-go">NO → STOP (Leak Risk)</span>
+                </div>
+            </div>
+
+            <div class="connector"></div>
+            <div class="arrow"></div>
+
+            <!-- Step 3 -->
+            <div class="step-box action">
+                <span class="step-number">STEP 3</span>
+                <strong>Open Bypass Valve</strong>
+                <p style="font-size:0.9em; margin:5px 0;">Command Bypass OPEN.<br>Wait for Spiral Case to fill.</p>
+            </div>
+
+            <div class="connector"></div>
+            <div class="arrow"></div>
+
+            <!-- Step 4 -->
+            <div class="step-box decision">
+                <span class="step-number">STEP 4</span>
+                <strong>Pressure Equalization</strong>
+                <p style="font-size:0.9em; margin:5px 0;">Is P_penstock - P_spiral < 1 Bar?</p>
+                        <div class="go-no-go">
+                            <span class="go">YES (Equalized) ↓</span>
+                            <span class="no-go">NO (Leak) → ABORT startup</span>
+                        </div>
+            </div>
+
+            <div class="connector"></div>
+            <div class="arrow"></div>
+
+            <!-- Step 5 -->
+            <div class="step-box action">
+                <span class="step-number">STEP 5</span>
+                <strong>Command MIV OPEN</strong>
+                <p style="font-size:0.9em; margin:5px 0;">Monitor Limit Switches.<br>Verify physical arm movement.</p>
+            </div>
+
+            <div class="connector"></div>
+            <div class="arrow"></div>
+
+            <!-- Step 6 -->
+            <div class="step-box action">
+                <span class="step-number">STEP 6</span>
+                <strong>Initiate Speed-No-Load (SNL)</strong>
+                <p style="font-size:0.9em; margin:5px 0;">Release Brakes.<br>PID ramps vanes to Start position.</p>
+            </div>
+
+            <div class="connector"></div>
+            <div class="arrow"></div>
+
+            <div class="end-circle">RUN</div>
+
+        </div>
+
+        <div style="text-align:center; margin-top:40px;">
+            <a href="./Francis_Horizontal.html" style="color: #64748b; text-decoration:none; font-weight:bold;">← BACK
+                TO DASHBOARD</a>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOP: PENSTOCK INTEGRITY</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background-color: #0c0a09;
+            /* Industrial Dark Mode */
+            color: #d6d3d1;
+        }
+
+        .procedure-card {
+            background: #1c1917;
+            border: 1px solid #292524;
+            padding: 24px;
+            margin-bottom: 16px;
+            border-left: 4px solid #44403c;
+        }
+
+        .procedure-card.critical {
+            border-left-color: #dc2626;
+            background: #2a1210;
+        }
+
+        .step-num {
+            color: #3b82f6;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .btn-return {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #1c1917;
+            border: 1px solid #44403c;
+            color: #78716c;
+            padding: 8px 16px;
+            font-size: 12px;
+            text-transform: uppercase;
+            font-weight: bold;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .btn-return:hover {
+            border-color: #3b82f6;
+            color: white;
+        }
+    </style>
+</head>
+
+<body class="p-6 md:p-12 max-w-4xl mx-auto">
+
+    <!-- Header -->
+    <header class="mb-10 pb-6 border-b border-stone-800 flex justify-between items-start">
+        <div>
+            <div class="flex items-center gap-2 mb-2">
+                <span
+                    class="px-2 py-1 rounded bg-blue-900/30 text-blue-400 text-[10px] font-bold border border-blue-900 uppercase">SOP-MECH-002</span>
+                <span class="text-[10px] text-stone-500 uppercase font-bold">REV 2.4</span>
+            </div>
+            <h1 class="text-3xl font-bold text-white mb-2" data-i18n="title">PENSTOCK INTEGRITY PROTOCOL</h1>
+            <p class="text-stone-500 text-sm" data-i18n="subtitle">Pressure Pipe, Anchor Blocks & Expansion Joints</p>
+        </div>
+
+        <!-- Standard Return Button -->
+        <a href="Francis_Horizontal_Dashboard.html" class="btn-return">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i> <span data-i18n="return">Back to Dashboard</span>
+        </a>
+    </header>
+
+    <!-- Content -->
+    <div class="space-y-6">
+
+        <!-- Step 1: UT Checks -->
+        <div class="procedure-card">
+            <h3 class="text-white font-bold mb-4 flex items-center gap-2" data-i18n="s1_title">
+                <i data-lucide="scan-line" class="w-4 h-4 text-cyan-500"></i> WALL THICKNESS (UT)
+            </h3>
+
+            <div class="space-y-4 text-sm">
+                <!-- Section A -->
+                <div class="bg-stone-900 p-3 rounded border border-stone-800">
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="text-stone-400" data-i18n="sec_a">Section A (Intake)</span>
+                        <span class="text-white font-mono">12.4mm</span>
+                    </div>
+                    <div class="w-full bg-stone-800 h-1.5 rounded-full overflow-hidden">
+                        <div class="bg-green-500 h-full w-[95%]"></div>
+                    </div>
+                </div>
+                <!-- Section B -->
+                <div class="bg-stone-900 p-3 rounded border border-stone-800">
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="text-stone-400" data-i18n="sec_b">Section B (Elbow)</span>
+                        <span class="text-yellow-500 font-mono">11.8mm</span>
+                    </div>
+                    <div class="w-full bg-stone-800 h-1.5 rounded-full overflow-hidden">
+                        <div class="bg-yellow-500 h-full w-[90%]"></div>
+                    </div>
+                    <p class="text-[10px] text-yellow-600 mt-1" data-i18n="sec_b_note">Erosion Hotspot: Inspect
+                        Annually.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 2: Expansion Joint -->
+        <div class="procedure-card">
+            <div class="flex justify-between items-start mb-4">
+                <h3 class="text-white font-bold flex items-center gap-2" data-i18n="s2_title">
+                    <i data-lucide="move-horizontal" class="w-4 h-4 text-amber-500"></i> EXPANSION JOINT
+                </h3>
+                <span class="text-xs font-bold bg-green-900/30 text-green-400 px-2 py-1 rounded border border-green-800"
+                    data-i18n="status_seal">NO LEAKAGE</span>
+            </div>
+
+            <div class="bg-stone-900 p-3 rounded border border-stone-800 text-sm space-y-2">
+                <div class="flex justify-between">
+                    <span class="text-stone-400" data-i18n="shift_summer">Displacement (Summer)</span>
+                    <span class="text-white">+12mm</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-stone-400" data-i18n="shift_winter">Displacement (Winter)</span>
+                    <span class="text-white">-8mm</span>
+                </div>
+            </div>
+
+            <div class="mt-4 p-3 bg-stone-800 rounded">
+                <strong class="text-xs text-stone-300 block mb-1" data-i18n="maint_title">MAINTENANCE</strong>
+                <p class="text-[10px] text-stone-500" data-i18n="maint_desc">
+                    Inject sealing grease (Graphite) if weeping occurs. Do not overtighten packing bolts (risk of
+                    seizure).
+                </p>
+            </div>
+        </div>
+
+        <!-- Step 3: Anchor Blocks -->
+        <div class="procedure-card critical">
+            <h3 class="text-red-500 font-bold mb-2 flex items-center gap-2" data-i18n="s3_title">
+                <i data-lucide="anchor"></i> ANCHOR BLOCK STABILITY
+            </h3>
+            <p class="text-sm text-stone-400 mb-4" data-i18n="s3_desc">Critical structural check after Hydraulic Hammer
+                events (Code: M-04-ANC).</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                <div class="p-3 bg-black rounded border border-stone-800">
+                    <strong class="text-white block mb-1" data-i18n="chk1_t">Visual Crack Check</strong>
+                    <span class="text-stone-500" data-i18n="chk1_d">Inspect concrete for new cracks > 1mm.</span>
+                </div>
+                <div class="p-3 bg-black rounded border border-stone-800">
+                    <strong class="text-white block mb-1" data-i18n="chk2_t">Support Shift</strong>
+                    <span class="text-stone-500" data-i18n="chk2_d">Check alignment markers on sliding supports.</span>
+                </div>
+                <div class="p-3 bg-black rounded border border-stone-800">
+                    <strong class="text-white block mb-1" data-i18n="chk3_t">Drainage</strong>
+                    <span class="text-stone-500" data-i18n="chk3_d">Ensure block weep holes are clear to prevent
+                        uplift.</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Hidden Translation Data -->
+    <script>
+        lucide.createIcons();
+        const ml = localStorage.getItem('anohub_lang_pref') || 'en';
+
+        const i18n = {
+            en: {
+                title: "PENSTOCK INTEGRITY PROTOCOL",
+                subtitle: "Pressure Pipe, Anchor Blocks & Expansion Joints",
+                return: "Back to Dashboard",
+
+                s1_title: "WALL THICKNESS (UT)",
+                sec_a: "Section A (Intake)",
+                sec_b: "Section B (Elbow)",
+                sec_b_note: "Erosion Hotspot: Inspect Annually.",
+
+                s2_title: "EXPANSION JOINT",
+                status_seal: "NO LEAKAGE",
+                shift_summer: "Displacement (Summer)",
+                shift_winter: "Displacement (Winter)",
+                maint_title: "MAINTENANCE",
+                maint_desc: "Inject sealing grease (Graphite) if weeping occurs. Do not overtighten packing bolts (risk of seizure).",
+
+                s3_title: "ANCHOR BLOCK STABILITY",
+                s3_desc: "Critical structural check after Hydraulic Hammer events (Code: M-04-ANC).",
+                chk1_t: "Visual Crack Check",
+                chk1_d: "Inspect concrete for new cracks > 1mm.",
+                chk2_t: "Support Shift",
+                chk2_d: "Check alignment markers on sliding supports.",
+                chk3_t: "Drainage",
+                chk3_d: "Ensure block weep holes are clear to prevent uplift."
+            },
+            bs: {
+                title: "INTEGRITET TLAČNOG CJEVOVODA",
+                subtitle: "Tlačni Cjevovod, Anker Blokovi & Kompenzatori",
+                return: "Povratak na Kontrolnu Tablu",
+
+                s1_title: "DEBLJINA ZIDA (UT)",
+                sec_a: "Sekcija A (Zahvat)",
+                sec_b: "Sekcija B (Koljeno)",
+                sec_b_note: "Vruća Tačka Erozije: Provjeriti godišnje.",
+
+                s2_title: "KOMPENZATOR (DILATACIJA)",
+                status_seal: "BEZ CURENJA",
+                shift_summer: "Pomjeranje (Ljeto)",
+                shift_winter: "Pomjeranje (Zima)",
+                maint_title: "ODRŽAVANJE",
+                maint_desc: "Ubrizgati zaptivnu mast (Grafitnu) ako se pojavi vlaženje. Ne preitezati vijke pletenice (rizik od zaribavanja).",
+
+                s3_title: "STABILNOST ANKER BLOKA",
+                s3_desc: "Kritična strukturna provjera nakon događaja Hidrauličkog Udara (KOD: M-04-ANC).",
+                chk1_t: "Vizuelna Provjera Pukotina",
+                chk1_d: "Provjeriti beton na nove pukotine > 1mm.",
+                chk2_t: "Pomjeranje Oslonaca",
+                chk2_d: "Provjeriti markere na kliznim osloncima.",
+                chk3_t: "Drenaža",
+                chk3_d: "Osigurati da su drenažni otvori bloka čisti za sprečavanje uzgona."
+            }
+        };
+
+        if (ml === 'bs') {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (i18n.bs[key]) el.innerText = i18n.bs[key];
+            });
+        }
+    </script>
+</body>
+
+</html>
