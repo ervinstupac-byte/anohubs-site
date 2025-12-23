@@ -12,14 +12,14 @@
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://anohubs.com/Turbine_Friend/Francis_Horizontal/">
+    <meta property="og:url" content="https://anohubs.com/Turbine_Friend/Francis_SOP_Elec_Health/">
     <meta property="og:title" content="AnoHUB | Engineering Immunity Protocol">
     <meta property="og:description" content="Global standard for hydro asset integrity. 15+ years of field forensic engineering.">
     <meta property="og:image" content="https://anohubs.com/assets/images/holy_t_trinity.jpg">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://anohubs.com/Turbine_Friend/Francis_Horizontal/">
+    <meta property="twitter:url" content="https://anohubs.com/Turbine_Friend/Francis_SOP_Elec_Health/">
     <meta property="twitter:title" content="AnoHUB | Engineering Immunity Protocol">
     <meta property="twitter:description" content="Global standard for hydro asset integrity. 15+ years of field forensic engineering.">
     <meta property="twitter:image" content="https://anohubs.com/assets/images/holy_t_trinity.jpg">
@@ -199,24 +199,18 @@
     <main>
         <!DOCTYPE html>
 <html lang="en">
-<!-- (Content same as above, but tool call corrected to set IsArtifact: false) -->
-<!-- Wait, the user wants me to create a file in the workspace, not an artifact. -->
-<!-- I mistakenly set IsArtifact: true in the previous call. -->
-<!-- I will correct this now. -->
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Holistic O&M Master Manual: Horizontal Francis Turbines</title>
+    <title>SOP: Generator Electrical Health & Thermal Protection</title>
     <style>
+        /* Electrical/Amber Theme */
         :root {
-            --primary-color: #003366;
-            /* Deep Hydro Blue */
-            --secondary-color: #0066cc;
-            --accent-color: #d9534f;
-            /* Safety Red */
-            --warning-color: #f0ad4e;
-            /* Diagnostic Orange */
+            --primary-color: #f59e0b;
+            --secondary-color: #d97706;
+            --accent-color: #dc2626;
+            --warning-color: #fbbf24;
             --bg-color: #f4f7f6;
             --text-color: #333;
             --border-color: #dde;
@@ -282,12 +276,11 @@
 
         h3 {
             color: var(--primary-color);
-            border-left: 4px solid var(--secondary-color);
+            border-left: 4px solid var(--primary-color);
             padding-left: 10px;
             margin-top: 25px;
         }
 
-        /* Modules */
         .module {
             border: 1px solid var(--border-color);
             padding: 15px;
@@ -302,17 +295,17 @@
         }
 
         .technical {
-            border-left: 5px solid var(--secondary-color);
-            background-color: #f0f7ff;
+            border-left: 5px solid var(--primary-color);
+            background-color: #fffbf0;
         }
 
         .diagnostic {
             border-left: 5px solid var(--warning-color);
-            background-color: #fdf8e4;
+            background-color: #fef3c7;
         }
 
-        /* Lists and Tables */
-        ul {
+        ul,
+        ol {
             padding-left: 20px;
         }
 
@@ -320,36 +313,88 @@
             margin-bottom: 8px;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            font-size: 0.95em;
+        .back-btn {
+            display: inline-block;
+            margin-top: 30px;
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: bold;
+            border: 1px solid var(--primary-color);
+            padding: 10px 20px;
+            border-radius: 4px;
+            transition: all 0.3s;
         }
 
-        th,
-        td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: left;
-        }
-
-        th {
+        .back-btn:hover {
             background-color: var(--primary-color);
             color: #fff;
         }
 
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
+        .temp-table {
+            background: #fffbf0;
+            border-left: 4px solid var(--primary-color);
+            padding: 12px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
         }
 
-        footer {
-            margin-top: 50px;
-            text-align: center;
-            font-size: 0.8em;
-            color: #666;
-            border-top: 1px solid #ddd;
-            padding-top: 20px;
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        table th {
+            background: var(--primary-color);
+            color: white;
+            padding: 10px;
+            text-align: left;
+        }
+
+        table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+
+        table tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        /* === PRINT CSS === */
+        @media print {
+            body {
+                background: white;
+                color: black;
+                font-size: 11pt;
+            }
+
+            .container {
+                max-width: 100%;
+                box-shadow: none;
+                padding: 20px;
+            }
+
+            header {
+                border-bottom: 2px solid black;
+            }
+
+            .section-title {
+                background: white !important;
+                color: black !important;
+                border: 2px solid black;
+            }
+
+            .module {
+                page-break-inside: avoid;
+            }
+
+            .back-btn {
+                display: none;
+            }
+
+            table {
+                page-break-inside: avoid;
+            }
         }
     </style>
 </head>
@@ -359,369 +404,220 @@
     <div class="container">
 
         <header>
-            <h1>Holistic O&M Master Manual</h1>
-            <h2>System: Horizontal Francis Turbines (< 5MW)</h2>
-                    <p><strong>Mission:</strong> Operational Recovery, Precision Alignment, and Revenue Protection</p>
+            <h1>Generator Electrical Health & Thermal Protection</h1>
+            <h2>Insulation Integrity, Corona Discharge & Heater-Breaker Logic</h2>
         </header>
 
-        <div class="section-title">1. Powerhouse Governance & Safety Intelligence</div>
+        <!-- INTRO MODULE -->
         <div class="module critical">
-            <h3>1.1 The Non-Negotiable Safety Mandates</h3>
-            <p>Safety in a hydropower plant is not just about PPE; it is about mechanical isolation logic.</p>
+            <h3>⚠️ THE INVISIBLE DEGRADATION</h3>
+            <p><strong>Context:</strong> Generator windings operate at high voltage (typically 6.6-11 kV for 1.3 MW
+                units). Insulation degradation is gradual and invisible until catastrophic failure occurs.</p>
             <ul>
-                <li><strong>The Mechanical Safety Pin:</strong> This is the ultimate barrier. [cite_start]Whenever the
-                    unit is stopped, in standby, or under maintenance, the mechanical safety pin MUST be inserted into
-                    the Main Inlet Valve (MIV)[cite: 7, 434].</li>
-                <li><strong>The "Clean-First" Rule:</strong> Fault detection is impossible if equipment is buried in
-                    grime. [cite_start]Operators must prioritize clearing mud, silt, and debris from the powerhouse
-                    floor and turbine pit before inspections begin[cite: 9, 435].</li>
-                <li><strong>Interactive Training:</strong> Personnel must raise hands for questions during training to
-                    ensure absolute comprehension of high-pressure hydraulic logic.</li>
+                <li><strong>The Risk:</strong> Insulation breakdown causes turn-to-turn short circuits → localized
+                    overheating → slot discharge → total winding failure.</li>
+                <li><strong>Repair Cost:</strong> Re-winding a generator stator costs $50,000-$150,000 and requires 3-6
+                    months downtime.</li>
+                <li><strong>Prevention:</strong> Early detection through visual inspection, thermal monitoring, and
+                    proper moisture control.</li>
             </ul>
         </div>
 
-        <div class="section-title">2. The Hydraulic Path: Intake to Tailrace</div>
-        <p>Managing the energy flow to prevent catastrophic pressure failures.
-            <br><br>
-            <a href="./Francis_SOP_Intake.html"
-                style="display: inline-block; background-color: var(--primary-color); color: white; padding: 10px 15px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.9em; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
-                🌊 [LAUNCH INTAKE & SILT MANAGEMENT SOP]
-            </a>
-        </p>
-
+        <div class="section-title">SOP 1: Corona & Slot Discharge Detection</div>
         <div class="module technical">
-            <h3>2.1 Main Inlet Valve (MIV) Dynamics</h3>
-            <ul>
-                <li><strong>Pressure Equalization (Bypass):</strong> Always utilize the bypass system to equalize
-                    pressure on both sides of the MIV before opening. [cite_start]Opening under differential pressure
-                    destroys seals and causes mechanical shock[cite: 16, 441].</li>
-                <li><strong>Emergency Shut Down (ESD):</strong> The MIV utilizes counterweights for fail-safe gravity
-                    closure during power loss.</li>
-                <li><strong>Stroke Timing & Water Hammer:</strong> Measure opening/closing times 2 to 4 times per year.
-                    [cite_start]Hydraulic valves are sensitive to oil particles; incorrect timing causes dangerous
-                    "Water Hammer" effects ($P = \rho cv$)[cite: 19, 443].</li>
-            </ul>
-        </div>
+            <p>Corona discharge occurs when electrical field stress exceeds air's dielectric strength, ionizing the air
+                and creating ozone.</p>
 
-        <div class="module">
-            <h3>2.2 Runner Integrity: The "Money Machine"</h3>
-            <p>Plant efficiency depends on blade surface integrity. In silt-heavy environments, distinct wear patterns
-                emerge.</p>
+            <h3>1.1 The "Ozone Smell Test"</h3>
+            <p><strong>Physics:</strong> High-voltage corona produces ozone (O₃), which has a distinctive sharp,
+                chlorine-like smell detectable at very low concentrations (~0.01 ppm).</p>
+            <p><strong>Procedure:</strong></p>
+            <ol>
+                <li><strong>Generator Running:</strong> Unit at >70% load (higher voltage = more pronounced corona)</li>
+                <li><strong>Access:</strong> Approach air outlets from generator cooling fans</li>
+                <li><strong>Sniff Test:</strong> Distinctive ozone smell indicates active corona discharge</li>
+                <li><strong>Location:</strong> If ozone detected, shutdown and inspect to locate source</li>
+            </ol>
+
+            <h3>1.2 Visual Inspection for "White Powder"</h3>
+            <p><strong>Corona Byproduct:</strong> Prolonged corona discharge breaks down insulation materials, creating
+                a white/gray powdery residue (ozone-degraded resin).</p>
+
+            <div class="diagnostic">
+                <strong>INSPECTION PROCEDURE (During Shutdown):</strong><br>
+                1. Remove generator end covers to access stator windings<br>
+                2. Use flashlight to inspect slot exits and end-winding connections<br>
+                3. Look for white powder accumulation (especially in corners/crevices)<br>
+                4. Check for darkened/charred insulation (indicates arcing)
+            </div>
+
+            <h3>1.3 Common Corona Sources</h3>
             <table>
-                <thead>
-                    <tr>
-                        <th>Wear Type</th>
-                        <th>Visual Signature</th>
-                        <th>Root Cause</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Cavitation</strong></td>
-                        <td>Sharp, "Swiss Cheese" pitted holes.</td>
-                        <td>[cite_start]Rapid pressure changes / Vapor bubble collapse[cite: 29, 454].</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Erosion</strong></td>
-                        <td>Smooth, "Sandblasted" surfaces.</td>
-                        <td>[cite_start]Abrasive silt or sand in the water[cite: 31, 455].</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Synergy</strong></td>
-                        <td colspan="2">[cite_start]These often occur simultaneously, destroying metal much faster than
-                            either would alone[cite: 32, 456].</td>
-                    </tr>
-                </tbody>
-            </table>
-            <p><em>Note: Maintain draft tube air venting valves to mitigate vibrations and adjust for cavitation
-                    effects.</em>
-                <br><br>
-                <a href="./Francis_SOP_DFT.html"
-                    style="display: inline-block; background-color: var(--secondary-color); color: white; padding: 10px 15px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.9em; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
-                    🌀 [LAUNCH DFT AIR VENTING & VIBRATION SOP]
-                </a>
-            </p>
-            <p style="margin-top: 10px;">
-                <a href="./Francis_SOP_DFT_Tailrace.html"
-                    style="display: inline-block; background-color: var(--primary-color); color: white; padding: 10px 15px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.9em; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
-                    🌊 [LAUNCH DRAFT TUBE & TAILRACE MAINTENANCE SOP]
-                </a>
-                <a href="./Francis_SOP_Welding.html"
-                    style="display: inline-block; background-color: var(--warning-color); color: white; padding: 10px 15px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.9em; box-shadow: 0 2px 4px rgba(0,0,0,0.2); margin-left: 10px;">
-                    🔥 [LAUNCH CAVITATION REPAIR WELDING SOP]
-                </a>
-            </p>
-            <p style="margin-top: 10px;">
-                <a href="./Francis_SOP_Cathodic.html"
-                    style="display: inline-block; background-color: #008B8B; color: white; padding: 10px 15px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.9em; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
-                    ⚛ [LAUNCH CATHODIC PROTECTION SYSTEM SOP]
-                </a>
-            </p>
-        </div>
-
-        <div class="section-title">3. Mechanical Precision (Horizontal Specifics)</div>
-        <p>Horizontal units are prone to gravity-induced sag and foundation settling, affecting shaft alignment.</p>
-
-        <div class="module technical">
-            <h3>3.1 The 6-Month Alignment Rule</h3>
-            <p>Concrete foundations undergo micro-movements that can shift the unit's center line.</p>
-            <ul>
-                <li><strong>Labyrinth Gaps:</strong> [cite_start]Measure Runner and Labyrinth Gaps every 6 months using
-                    feeler gauges (0.05mm - 1.00mm)[cite: 25, 450].</li>
-                <li><strong>Run-Out Check:</strong> Verify shaft "Run-Out" (balancing) every 6 months to prevent
-                    vibrations that destroy sleeve bearings. Target: &lt; 0.05mm[cite: 27, 451].
-                    <br><br>
-                    <a href="./Francis_SOP_Coupling.html"
-                        style="display: inline-block; background-color: var(--secondary-color); color: white; padding: 10px 15px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.9em; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
-                        🔩 [LAUNCH COUPLING & SHAFT ALIGNMENT SOP]
-                    </a>
-                </li>
-                <li><strong>Bolt Integrity:</strong> [cite_start]Periodically re-tighten all generator bolts using
-                    <strong>Loctite (middle strength/blue)</strong> while simultaneously adjusting runner
-                    alignment[cite: 47, 465].
-                    <br><br>
-                    <a href="./Francis_SOP_Precision.html"
-                        style="display: inline-block; background-color: var(--secondary-color); color: white; padding: 10px 15px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.9em; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
-                        🛠️ [LAUNCH ALIGNMENT & GAP SOP]
-                    </a>
-                    <a href="./Francis_SOP_Generator.html"
-                        style="display: inline-block; background-color: var(--primary-color); color: white; padding: 10px 15px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.9em; box-shadow: 0 2px 4px rgba(0,0,0,0.2); margin-left: 10px;">
-                        ⚡ [LAUNCH GENERATOR ELECTRICAL & BRUSH MAINTENANCE SOP]
-                    </a>
-                </li>
-                <li><strong>Foundation Stability:</strong> Foundation integrity is critical for maintaining alignment
-                    and preventing vibration-induced failures.
-                    <br><br>
-                    <a href="./Francis_SOP_Foundation.html"
-                        style="display: inline-block; background-color: #78350F; color: white; padding: 10px 15px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.9em; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
-                        🔨 [LAUNCH FOUNDATION INTEGRITY SOP]
-                    </a>
-                </li>
-            </ul>
-        </div>
-
-        <div class="module">
-            <h3>3.2 Distributor & Guide Vane Synchronization</h3>
-            <ul>
-                <li><strong>L-Metal Tool:</strong> [cite_start]Fabricate a custom "L-metal piece" to mark and verify the
-                    original position of all 20 guide vanes for visual confirmation[cite: 37, 459].</li>
-                <li><strong>Cylinder Maintenance:</strong> [cite_start]Keep distributor cylinders clean to prevent seal
-                    scoring and hydraulic failure[cite: 40, 461].
-                    <br><br>
-                    <a href="./Francis_SOP_Linkage.html"
-                        style="display: inline-block; background-color: var(--secondary-color); color: white; padding: 10px 15px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.9em; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
-                        ⚙️ [LAUNCH GOVERNOR & LINKAGE MAINTENANCE SOP]
-                    </a>
-                    <a href="./Francis_SOP_Governor_PID.html"
-                        style="display: inline-block; background-color: #1E3A8A; color: white; padding: 10px 15px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.9em; box-shadow: 0 2px 4px rgba(0,0,0,0.2); margin-left: 10px;">
-                        ⚙ [LAUNCH GOVERNOR PID TUNING SOP]
-                    </a>
-                </li>
-            </ul>
-        </div>
-
-        <div class="section-title">4. Auxiliary Systems: Sealing & Power</div>
-        <div style="margin-top: 15px; margin-bottom: 20px;">
-            <a href="./Francis_SOP_Instrumentation.html"
-                style="display: inline-block; background-color: var(--secondary-color); color: white; padding: 8px 12px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.9em; margin-right: 10px;">
-                📊 [LAUNCH INSTRUMENTATION & SENSOR SOP]
-            </a>
-            <a href="./Francis_SOP_Auxiliary.html"
-                style="display: inline-block; background-color: var(--secondary-color); color: white; padding: 8px 12px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.9em;">
-                ⚓ [LAUNCH BRAKING & SUMP SOP]
-            </a>
-        </div>
-
-        <div class="module">
-            <h3>4.1 Shaft Sealing Strategy</h3>
-            <p>Horizontal units rely heavily on the shaft seal to prevent powerhouse flooding.</p>
-            <ul>
-                <li><strong>Monitoring:</strong> Check leakage pipes daily. [cite_start]A sudden increase indicates the
-                    seal housing must be opened[cite: 42, 462].</li>
-                <li><strong>Staggered Installation:</strong> [cite_start]When replacing packing, ensure the "cuts" in
-                    the packing rings are staggered (not aligned, e.g., 90&deg; offset) to prevent a direct leak
-                    path[cite: 96, 214]. <a href="./Francis_SOP_Recovery.html"
-                        style="color: var(--accent-color); font-weight: bold; text-decoration: none;">[VIEW REPAIR
-                        SOP]</a></li>
-            </ul>
-        </div>
-
-        <div class="module">
-            <h3>4.2 Hydraulic Power Unit (HPU) & Lubrication</h3>
-            <ul>
-                <li><strong>Nitrogen Energy:</strong> [cite_start]Regularly inspect nitrogen storage levels in
-                    accumulators to ensure enough energy is stored for emergency valve closure (ESD)[cite: 51, 467].
-                    <br><br>
-                    <a href="./Francis_SOP_HPU.html"
-                        style="display: inline-block; background-color: var(--warning-color); color: white; padding: 10px 15px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.9em; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
-                        ⚡ [LAUNCH HPU & NITROGEN SOP]
-                    </a>
-                </li>
-                <li><strong>Oil Hygiene:</strong> Change hydraulic oil filters at scheduled intervals to prevent silt
-                    buildup in control valves.
-                    <br><br>
-                    <a href="./Francis_SOP_Oil.html"
-                        style="display: inline-block; background-color: var(--warning-color); color: white; padding: 10px 15px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.9em; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
-                        🛢️ [LAUNCH OIL HYGIENE & FILTRATION SOP]
-                    </a>
-                </li>
-                <li><strong>Bearing Temp:</strong> [cite_start]Monitor sleeve bearing temperatures constantly (Target
-                    ~18°C - 60°C) as they are highly sensitive to lubrication quality[cite: 50, 466].
-                    <br><br>
-                    <a href="./Francis_SOP_Bearings.html"
-                        style="display: inline-block; background-color: var(--warning-color); color: white; padding: 10px 15px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.9em; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
-                        🌡️ [LAUNCH MAIN BEARING & COOLING WATER SOP]
-                    </a>
-                </li>
-            </ul>
-        </div>
-
-        <div class="section-title">5. Strategic Maintenance Schedule</div>
-        <table>
-            <thead>
                 <tr>
-                    <th>Frequency</th>
-                    <th>Focus Area</th>
-                    <th>Critical Action Items</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><strong>Daily</strong></td>
-                    <td>Sensory & Safety</td>
-                    <td>Log temperatures; Check seal leakage (L/min); [cite_start]Clean powerhouse[cite: 385].</td>
+                    <th>Location</th>
+                    <th>Cause</th>
+                    <th>Remedy</th>
                 </tr>
                 <tr>
-                    <td><strong>Monthly</strong></td>
-                    <td>Lubrication</td>
-                    <td>Full cycle test of central greasing; [cite_start]Check filters for differential pressure[cite:
-                        393].</td>
+                    <td>Slot exits</td>
+                    <td>Sharp edge on slot liner</td>
+                    <td>Apply corona-resistant tape (3M 2210) to sharp edges</td>
                 </tr>
                 <tr>
-                    <td><strong>Bi-Annual</strong></td>
-                    <td>Precision & Structure</td>
-                    <td><strong>Measure Labyrinth Gaps; Check Shaft Run-Out;</strong> Re-tighten bolts with
-                        Loctite[cite: 406].</td>
+                    <td>End-winding connections</td>
+                    <td>Loose connection creating air gap</td>
+                    <td>Re-tighten bolts, clean contact surfaces</td>
                 </tr>
                 <tr>
-                    <td><strong>Annual</strong></td>
-                    <td>Deep Inspection</td>
-                    <td>Drain penstock; Deep clean runner; Replace MIV O-Rings; [cite_start]Oil analysis[cite: 413].<br>
-                        <strong>Calibrate all Pressure/Temp Transducers; Inspect Brake Pad Thickness.</strong>
-                    </td>
+                    <td>Wedge slots</td>
+                    <td>Slot wedge not seated properly</td>
+                    <td>Remove and re-seat wedge with proper compression</td>
                 </tr>
-            </tbody>
-        </table>
-
-        <div class="section-title">6. Diagnostic Troubleshooting Matrix</div>
-        <div class="module diagnostic">
-            <p>Use objective logic to identify root causes based on observed symptoms.</p>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Symptom / Alarm</th>
-                        <th>Potential Root Cause</th>
-                        <th>Required Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>High Bearing Temperature</strong><br>(> 65°C)</td>
-                        <td>1. Low oil level or flow.<br>2. Dirty/Degraded Oil.<br>3. Misalignment (Vibration
-                            friction).<br>4. Clogged cooling water filters.<br>5. Heat exchanger scaling.
-                        </td>
-                        <td>1. Check oil sight glass & pump.<br>2. Analyze oil for viscosity/water.<br>3. Stop unit &
-                            check Shaft Run-Out. <br>4. Perform back-flush of cooling system and verify water flow
-                            rate.<br><strong>Action:</strong> Refer to Oil Hygiene & Bearing SOPs.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>High Vibration</strong><br>(> 2.5 mm/s ISO 10816)</td>
-                        <td>1. Runner Imbalance (Erosion).<br>2. Loose Foundation Bolts.<br>3. Cavitation (Draft Tube).
-                        </td>
-                        <td>1. Check Run-Out with dial indicator.<br>2. Re-tighten bolts with Loctite.<br>3. Check/Clean
-                            Air Venting Valves. <br><strong>Action:</strong> Inspect Draft Tube Air Venting valves for
-                            blockages or stuck plungers.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Shaft Seal Leakage</strong><br>(Continuous Spray)</td>
-                        <td>1. Worn Packing/Rings.<br>2. "Aligned" packing cuts.<br>3. Shaft sleeve scoring.</td>
-                        <td>1. Tighten gland follower evenly.<br>2. Replace (stagger cuts).<br>3. Inspect sleeve for
-                            deep scratches.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>MIV "Water Hammer"</strong><br>(Loud Bang on Close)</td>
-                        <td>1. Closing time too fast.<br>2. Valve "stiction" due to silt.</td>
-                        <td>1. Adjust throttle valve on HPU.<br>2. Clean/Replace HPU oil filters immediately.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Low Power Output (MW)</strong><br>(Calculated vs Actual)</td>
-                        <td>1. Clogged Trash Rack (High Head Loss).<br>2. Low Net Head.<br>3. Guide Vane Blockage.</td>
-                        <td>1. Inspect Intake for debris and verify Silt Basin flushing schedule.<br>2. Check Trash Rack
-                            Differential Pressure.<br>3. Inspect Distributor.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Unstable Power Output / Hunting</strong><br>(Frequency Swing)</td>
-                        <td>1. Mechanical play in linkage pins.<br>2. Lack of lubrication (Stiction).<br>3. Grid
-                            Frequency Instability.</td>
-                        <td>1. Inspect all 20 linkage pins for wear and verify grease distribution.<br>2. Perform "Swing
-                            Test" (Friction Audit).<br>3. Check Governor P-I-D settings.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Excessive Sparking at Brushes</strong><br>(Visible Arcing)</td>
-                        <td>1. Stuck brushes (Carbon dust).<br>2. Uneven spring pressure.<br>3. Slip ring eccentricity.
-                        </td>
-                        <td>1. Clean brush rigging and verify spring tension as per Generator SOP.<br>2. Resurface slip
-                            rings if necessary.</td>
-                    </tr>
-                </tbody>
+                <tr>
+                    <td>Cable entries</td>
+                    <td>Moisture ingress degrading insulation</td>
+                    <td>Seal cable entry with epoxy, verify heaters functional</td>
+                </tr>
             </table>
         </div>
 
-        <div class="section-title">7. Mandatory Tooling & Spares "Survival Kit"</div>
-        <p>A holistic manual works only if the site is equipped to perform the tasks.</p>
-
+        <div class="section-title">SOP 2: Heater-Breaker Interlock Logic</div>
         <div class="module technical">
-            <h3>7.1 Precision Measurement Tools</h3>
-            <p>[cite_start]Required to perform the "6-Month Alignment Rule" [cite: 363-366].</p>
-            <ul>
-                <li><strong>Intake Management:</strong> Trash Rack Rakes & Differential Pressure Gauges.</li>
-                <li><strong>Dial Indicator (with Magnetic Base):</strong> Range 0-10mm, Precision 0.01mm. (For Run-Out).
-                </li>
-                <li><strong>Feeler Gauge Set:</strong> Range 0.05mm - 1.00mm. (For Labyrinth Gaps).</li>
-                <li><strong>L-Metal Tool:</strong> Custom fabricated profile for checking Guide Vane Synchronization.
-                </li>
-            </ul>
+            <p><strong>Critical Requirement:</strong> Generator space heaters MUST activate automatically when main
+                breaker opens to prevent condensation damage.</p>
+
+            <h3>2.1 The Moisture Threat</h3>
+            <p><strong>Physics:</strong> When generator stops, windings cool. If ambient humidity is high (>70%),
+                moisture condenses on cold windings, degrading insulation resistance.</p>
+            <p><strong>Space Heater Function:</strong> Maintains winding temperature 5-10°C above ambient → prevents
+                condensation → preserves insulation integrity.</p>
+
+            <h3>2.2 Interlock Verification Test</h3>
+            <ol>
+                <li><strong>Unit Running:</strong> Generator at normal load, space heaters OFF (locked out by breaker
+                    auxiliary contact)</li>
+                <li><strong>Trip Breaker:</strong> Manually open main breaker</li>
+                <li><strong>Immediate Check:</strong> Space heater pilot light should illuminate within 5 seconds</li>
+                <li><strong>Temperature Verification:</strong> After 30 minutes, measure winding temperature - should be
+                    rising</li>
+            </ol>
+
+            <div class="critical">
+                <strong>FAILURE CONSEQUENCE:</strong> If heaters fail to activate and generator sits idle for >48 hours
+                in humid conditions, insulation resistance can drop from >100 MΩ to <1 MΩ → UNSAFE TO RESTART without
+                    drying process. </div>
+
+                    <h3>2.3 Heater System Maintenance</h3>
+                    <ul>
+                        <li><strong>Monthly:</strong> Verify heater pilot light illuminates when unit stopped</li>
+                        <li><strong>Quarterly:</strong> Measure heater current draw (compare to nameplate - should be
+                            within 10%)</li>
+                        <li><strong>Annually:</strong> Test auxiliary contact continuity on main breaker</li>
+                        <li><strong>After Extended Outage (>1 week):</strong> Measure insulation resistance before
+                            restart (Megger test)</li>
+                    </ul>
+            </div>
+
+            <div class="section-title">SOP 3: Winding Thermal Limits</div>
+            <div class="module technical">
+                <p>Generator windings use Class F or Class B insulation. Each class has specific temperature limits that
+                    must not be exceeded.</p>
+
+                <h3>3.1 Insulation Class Reference Table</h3>
+                <table>
+                    <tr>
+                        <th>Insulation Class</th>
+                        <th>Continuous Limit</th>
+                        <th>Hot Spot Limit</th>
+                        <th>Emergency (2hr)</th>
+                    </tr>
+                    <tr>
+                        <td>Class B</td>
+                        <td>130°C</td>
+                        <td>145°C</td>
+                        <td>155°C</td>
+                    </tr>
+                    <tr>
+                        <td>Class F</td>
+                        <td>155°C</td>
+                        <td>170°C</td>
+                        <td>180°C</td>
+                    </tr>
+                </table>
+
+                <div class="temp-table">
+                    <strong>TYPICAL 1.3 MW GENERATOR SPECIFICATION:</strong><br>
+                    Insulation Class: F (verify on nameplate)<br>
+                    Rated Stator Temp (RTD): 155°C continuous<br>
+                    Alarm Setpoint: 165°C (10°C below hot spot limit)<br>
+                    Trip Setpoint: 175°C (5°C margin to emergency limit)<br>
+                    Ambient Temperature: Assume 40°C for calculations
+                </div>
+
+                <h3>3.2 Temperature Rise Budget</h3>
+                <p><strong>Engineering Calculation:</strong></p>
+                <ul>
+                    <li>Ambient: 40°C (typical powerhouse environment)</li>
+                    <li>Allowable Rise: 155°C - 40°C = <strong>115°C</strong></li>
+                    <li>At rated load (1.3 MW), temperature rise should be ~100-110°C</li>
+                    <li>If rise exceeds 115°C at rated load → cooling system issue or overload</li>
+                </ul>
+
+                <h3>3.3 RTD Sensor Verification</h3>
+                <p><strong>Annual Test:</strong></p>
+                <ol>
+                    <li>Compare all stator RTD readings at standstill (should be within 2-3°C of each other)</li>
+                    <li>Compare RTD reading to handheld IR thermometer measurement on accessible winding</li>
+                    <li>If RTD reads >5°C different → sensor drift → replace RTD</li>
+                </ol>
+            </div>
+
+            <div class="section-title">SOP 4: Moisture Control & Megger Testing</div>
+            <div class="module diagnostic">
+                <p><strong>Objective:</strong> Verify insulation resistance before startup after extended outage or
+                    suspected moisture ingress.</p>
+
+                <h3>4.1 Megger Test Procedure</h3>
+                <ol>
+                    <li><strong>Disconnect Generator:</strong> Open main breaker AND disconnect excitation circuit</li>
+                    <li><strong>Ground Resistance Check:</strong> Verify proper ground connection (< 1Ω to station
+                            ground)</li>
+                    <li><strong>Megger Setup:</strong>
+                        <ul>
+                            <li>Test voltage: 500V DC (for 6.6 kV generator) or 1000V DC (for 11 kV generator)</li>
+                            <li>Connect positive to phase A, negative to ground</li>
+                        </ul>
+                    </li>
+                    <li><strong>1-Minute Test:</strong> Apply voltage for 60 seconds, record final resistance value</li>
+                    <li><strong>Repeat:</strong> Test Phases B and C independently</li>
+                </ol>
+
+                <h3>4.2 Acceptance Criteria</h3>
+                <div class="temp-table">
+                    <strong>INSULATION RESISTANCE LIMITS:</strong><br>
+                    PASS: > 100 MΩ (excellent condition, safe to start)<br>
+                    WARNING: 10-100 MΩ (marginal - operate heaters 24hr, re-test)<br>
+                    FAIL: < 10 MΩ (moisture contamination - DO NOT START)<br>
+                        <br>
+                        <strong>If FAIL:</strong> Run space heaters continuously for 48-72 hours, re-test daily until
+                        >100 MΩ achieved.
+                </div>
+            </div>
+
+            <div class="section-title">Summary Checklist</div>
+            <div class="module">
+                <ul>
+                    <li><strong>Weekly (during operation):</strong> Ozone smell test at generator air outlets</li>
+                    <li><strong>Monthly:</strong> Verify heater-breaker interlock functional</li>
+                    <li><strong>Quarterly:</strong> Visual inspection for white powder (corona byproduct)</li>
+                    <li><strong>Annually:</strong> RTD sensor calibration verification, heater current draw test</li>
+                    <li><strong>After extended shutdown (>1 week):</strong> Megger test before restart</li>
+                </ul>
+            </div>
+
+            <a href="./Francis_Horizontal.html" class="back-btn">← Return to Master Manual</a>
+
         </div>
-
-        <div class="module">
-            <h3>7.2 Critical Consumables & Spares</h3>
-            <ul>
-                <li><strong>Chemical Locking:</strong> [cite_start]Loctite 243 (Blue/Middle Strength) for vibration
-                    resistance[cite: 370].</li>
-                <li><strong>Sealing:</strong> Spare Shaft Packing Rings (Carbon/Teflon) & MIV O-Ring Kit.</li>
-                <li><strong>Hydraulics:</strong> Replacement High-Pressure Filter Cartridges for HPU.</li>
-                <li><strong>Linkage:</strong> High-temperature Water-resistant Grease & Spare Linkage Pins/Bushings.
-                </li>
-                <li><strong>Cooling:</strong> Spare Heat Exchanger Gaskets & Replacement Cooling Water Filter Mesh.
-                </li>
-                <li><strong>Generator:</strong> Replacement Carbon Brush Set & Insulation Resistance Tester (Megger).
-                </li>
-            </ul>
-        </div>
-
-        <div class="module critical">
-            <h3>Management Note: The Business Case</h3>
-            <p>Neglecting basic tools and training leads to massive revenue loss through extended downtime.
-                [cite_start]Hydropower requires a 24/7 mindset—operators must know how the machine "breathes" 365 days a
-                year[cite: 69, 307].</p>
-        </div>
-
-        <footer>
-            <p><strong>Horizontal Francis Turbine Master Manual</strong> | Expert Author: Ervin Stupac</p>
-            <p>Based on Site Specifics for Units < 5MW | System Recovery Protocol</p>
-        </footer>
-
-    </div>
 
 </body>
 

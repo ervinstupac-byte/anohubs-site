@@ -12,14 +12,14 @@
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://anohubs.com/Turbine_Friend/Francis_Horizontal/">
+    <meta property="og:url" content="https://anohubs.com/Turbine_Friend/Francis_SOP_Governor_PID/">
     <meta property="og:title" content="AnoHUB | Engineering Immunity Protocol">
     <meta property="og:description" content="Global standard for hydro asset integrity. 15+ years of field forensic engineering.">
     <meta property="og:image" content="https://anohubs.com/assets/images/holy_t_trinity.jpg">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://anohubs.com/Turbine_Friend/Francis_Horizontal/">
+    <meta property="twitter:url" content="https://anohubs.com/Turbine_Friend/Francis_SOP_Governor_PID/">
     <meta property="twitter:title" content="AnoHUB | Engineering Immunity Protocol">
     <meta property="twitter:description" content="Global standard for hydro asset integrity. 15+ years of field forensic engineering.">
     <meta property="twitter:image" content="https://anohubs.com/assets/images/holy_t_trinity.jpg">
@@ -199,27 +199,21 @@
     <main>
         <!DOCTYPE html>
 <html lang="en">
-<!-- (Content same as above, but tool call corrected to set IsArtifact: false) -->
-<!-- Wait, the user wants me to create a file in the workspace, not an artifact. -->
-<!-- I mistakenly set IsArtifact: true in the previous call. -->
-<!-- I will correct this now. -->
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Holistic O&M Master Manual: Horizontal Francis Turbines</title>
+    <title>SOP: Governor PID Tuning</title>
     <style>
+        /* Control Systems Theme - Blue/Orange */
         :root {
-            --primary-color: #003366;
-            /* Deep Hydro Blue */
-            --secondary-color: #0066cc;
-            --accent-color: #d9534f;
-            /* Safety Red */
-            --warning-color: #f0ad4e;
-            /* Diagnostic Orange */
+            --primary-color: #1E3A8A;
+            --secondary-color: #3B82F6;
+            --accent-color: #F97316;
+            --warning-color: #EF4444;
             --bg-color: #f4f7f6;
             --text-color: #333;
-            --border-color: #dde;
+            --border-color: #BFDBFE;
         }
 
         body {
@@ -236,7 +230,7 @@
             margin: 0 auto;
             background: #fff;
             padding: 40px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 15px rgba(30, 58, 138, 0.15);
             border-radius: 8px;
         }
 
@@ -263,7 +257,7 @@
         }
 
         .section-title {
-            background-color: var(--primary-color);
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: #fff;
             padding: 10px 15px;
             margin-top: 40px;
@@ -275,19 +269,18 @@
         }
 
         .section-title::before {
-            content: "►";
+            content: "⚙";
             margin-right: 10px;
-            font-size: 0.8em;
+            font-size: 1.2em;
         }
 
         h3 {
             color: var(--primary-color);
-            border-left: 4px solid var(--secondary-color);
+            border-left: 4px solid var(--accent-color);
             padding-left: 10px;
             margin-top: 25px;
         }
 
-        /* Modules */
         .module {
             border: 1px solid var(--border-color);
             padding: 15px;
@@ -297,22 +290,22 @@
         }
 
         .critical {
-            border-left: 5px solid var(--accent-color);
-            background-color: #fff5f5;
+            border-left: 5px solid var(--warning-color);
+            background-color: #FEF2F2;
         }
 
         .technical {
             border-left: 5px solid var(--secondary-color);
-            background-color: #f0f7ff;
+            background-color: #EFF6FF;
         }
 
-        .diagnostic {
-            border-left: 5px solid var(--warning-color);
-            background-color: #fdf8e4;
+        .control {
+            border-left: 5px solid var(--accent-color);
+            background-color: #FFF7ED;
         }
 
-        /* Lists and Tables */
-        ul {
+        ul,
+        ol {
             padding-left: 20px;
         }
 
@@ -320,36 +313,67 @@
             margin-bottom: 8px;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            font-size: 0.95em;
+        .back-btn {
+            display: inline-block;
+            margin-top: 30px;
+            text-decoration: none;
+            color: var(--secondary-color);
+            font-weight: bold;
+            border: 1px solid var(--secondary-color);
+            padding: 10px 20px;
+            border-radius: 4px;
+            transition: all 0.3s;
         }
 
-        th,
-        td {
-            border: 1px solid #ddd;
-            padding: 12px;
+        .back-btn:hover {
+            background-color: var(--secondary-color);
+            color: #fff;
+        }
+
+        strong {
+            font-weight: 600;
+        }
+
+        .visual-aid {
+            border: 2px dashed var(--accent-color);
+            padding: 15px;
+            margin: 10px 0;
+            background: #fff;
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .formula {
+            background: linear-gradient(135deg, #EFF6FF, #FFF7ED);
+            padding: 15px;
+            border-left: 4px solid var(--accent-color);
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1em;
+            text-align: center;
+        }
+
+        .pid-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        .pid-table th,
+        .pid-table td {
+            border: 1px solid var(--border-color);
+            padding: 10px;
             text-align: left;
         }
 
-        th {
+        .pid-table th {
             background-color: var(--primary-color);
             color: #fff;
         }
 
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-
-        footer {
-            margin-top: 50px;
-            text-align: center;
-            font-size: 0.8em;
-            color: #666;
-            border-top: 1px solid #ddd;
-            padding-top: 20px;
+        .pid-table tr:nth-child(even) {
+            background-color: #F9FAFB;
         }
     </style>
 </head>
@@ -359,367 +383,257 @@
     <div class="container">
 
         <header>
-            <h1>Holistic O&M Master Manual</h1>
-            <h2>System: Horizontal Francis Turbines (< 5MW)</h2>
-                    <p><strong>Mission:</strong> Operational Recovery, Precision Alignment, and Revenue Protection</p>
+            <h1>⚙ Governor PID Tuning</h1>
+            <h2>Proportional-Integral-Derivative Control System</h2>
         </header>
 
-        <div class="section-title">1. Powerhouse Governance & Safety Intelligence</div>
+        <!-- SAFETY MODULE -->
         <div class="module critical">
-            <h3>1.1 The Non-Negotiable Safety Mandates</h3>
-            <p>Safety in a hydropower plant is not just about PPE; it is about mechanical isolation logic.</p>
+            <h3>⚠️ MANDATORY SAFETY PROTOCOL</h3>
+            <p><strong>STOP. READ THIS FIRST.</strong></p>
             <ul>
-                <li><strong>The Mechanical Safety Pin:</strong> This is the ultimate barrier. [cite_start]Whenever the
-                    unit is stopped, in standby, or under maintenance, the mechanical safety pin MUST be inserted into
-                    the Main Inlet Valve (MIV)[cite: 7, 434].</li>
-                <li><strong>The "Clean-First" Rule:</strong> Fault detection is impossible if equipment is buried in
-                    grime. [cite_start]Operators must prioritize clearing mud, silt, and debris from the powerhouse
-                    floor and turbine pit before inspections begin[cite: 9, 435].</li>
-                <li><strong>Interactive Training:</strong> Personnel must raise hands for questions during training to
-                    ensure absolute comprehension of high-pressure hydraulic logic.</li>
+                <li><strong>Grid Synchronization:</strong> Never adjust PID parameters while the unit is synchronized to
+                    the grid without approval from the grid operator.</li>
+                <li><strong>Load Stability:</strong> Perform tuning tests at stable load conditions (avoid rapid load
+                    changes during testing).</li>
+                <li><strong>Emergency Stop:</strong> Ensure the emergency stop button is accessible and functional
+                    before beginning tests.</li>
+                <li><strong>Communication:</strong> Notify the control room before initiating step response tests.</li>
             </ul>
         </div>
 
-        <div class="section-title">2. The Hydraulic Path: Intake to Tailrace</div>
-        <p>Managing the energy flow to prevent catastrophic pressure failures.
-            <br><br>
-            <a href="./Francis_SOP_Intake.html"
-                style="display: inline-block; background-color: var(--primary-color); color: white; padding: 10px 15px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.9em; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
-                🌊 [LAUNCH INTAKE & SILT MANAGEMENT SOP]
-            </a>
-        </p>
-
+        <div class="section-title">PID Fundamentals: The Three Controllers</div>
         <div class="module technical">
-            <h3>2.1 Main Inlet Valve (MIV) Dynamics</h3>
-            <ul>
-                <li><strong>Pressure Equalization (Bypass):</strong> Always utilize the bypass system to equalize
-                    pressure on both sides of the MIV before opening. [cite_start]Opening under differential pressure
-                    destroys seals and causes mechanical shock[cite: 16, 441].</li>
-                <li><strong>Emergency Shut Down (ESD):</strong> The MIV utilizes counterweights for fail-safe gravity
-                    closure during power loss.</li>
-                <li><strong>Stroke Timing & Water Hammer:</strong> Measure opening/closing times 2 to 4 times per year.
-                    [cite_start]Hydraulic valves are sensitive to oil particles; incorrect timing causes dangerous
-                    "Water Hammer" effects ($P = \rho cv$)[cite: 19, 443].</li>
-            </ul>
+            <p>The governor controls the position of the 20 guide vanes to maintain constant turbine speed (typically
+                500 RPM for a 12-pole generator at 50 Hz).</p>
+
+            <h3>The Control Loop</h3>
+            <div class="formula">
+                Speed Error = Target Speed - Actual Speed<br>
+                Control Output = (P × Error) + (I × ∫Error dt) + (D × dError/dt)
+            </div>
+
+            <h3>Proportional (P): The Immediate Response</h3>
+            <div class="module control">
+                <p><strong>What it does:</strong> Responds proportionally to the current speed error.</p>
+                <ul>
+                    <li><strong>High P:</strong> Fast response, but can cause overshoot and oscillation.</li>
+                    <li><strong>Low P:</strong> Slow response, but stable.</li>
+                    <li><strong>Typical Range:</strong> 2.0 - 6.0 (dimensionless gain)</li>
+                </ul>
+                <p><strong>💡 Simple Analogy:</strong> Like a driver who steers harder the further off-course they are.
+                </p>
+            </div>
+
+            <h3>Integral (I): The Steady-State Corrector</h3>
+            <div class="module control">
+                <p><strong>What it does:</strong> Eliminates steady-state error by accumulating error over time.</p>
+                <ul>
+                    <li><strong>High I:</strong> Fast elimination of offset, but can cause "wind-up" and instability.
+                    </li>
+                    <li><strong>Low I:</strong> Slow correction, but prevents overshoot.</li>
+                    <li><strong>Typical Range:</strong> 0.5 - 2.0 seconds (integration time)</li>
+                </ul>
+                <p><strong>💡 Simple Analogy:</strong> Like a driver who remembers how long they've been off-course and
+                    corrects accordingly.</p>
+            </div>
+
+            <h3>Derivative (D): The Predictive Damper</h3>
+            <div class="module control">
+                <p><strong>What it does:</strong> Predicts future error based on the rate of change and applies damping.
+                </p>
+                <ul>
+                    <li><strong>High D:</strong> Strong damping, but sensitive to noise (can cause jitter).</li>
+                    <li><strong>Low D:</strong> Less damping, smoother response.</li>
+                    <li><strong>Typical Range:</strong> 0.1 - 0.5 seconds (derivative time)</li>
+                </ul>
+                <p><strong>💡 Simple Analogy:</strong> Like a driver who anticipates a turn and starts steering before
+                    reaching it.</p>
+            </div>
         </div>
 
-        <div class="module">
-            <h3>2.2 Runner Integrity: The "Money Machine"</h3>
-            <p>Plant efficiency depends on blade surface integrity. In silt-heavy environments, distinct wear patterns
-                emerge.</p>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Wear Type</th>
-                        <th>Visual Signature</th>
-                        <th>Root Cause</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Cavitation</strong></td>
-                        <td>Sharp, "Swiss Cheese" pitted holes.</td>
-                        <td>[cite_start]Rapid pressure changes / Vapor bubble collapse[cite: 29, 454].</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Erosion</strong></td>
-                        <td>Smooth, "Sandblasted" surfaces.</td>
-                        <td>[cite_start]Abrasive silt or sand in the water[cite: 31, 455].</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Synergy</strong></td>
-                        <td colspan="2">[cite_start]These often occur simultaneously, destroying metal much faster than
-                            either would alone[cite: 32, 456].</td>
-                    </tr>
-                </tbody>
+        <div class="section-title">Dead-Band Analysis</div>
+        <div class="module technical">
+            <h3>What is Dead-Band?</h3>
+            <p>The <strong>dead-band</strong> is a small speed range (e.g., ±0.1 RPM) where the governor
+                <em>ignores</em> speed deviations and does not move the guide vanes.</p>
+
+            <h3>Why It Exists</h3>
+            <ul>
+                <li><strong>Prevent Wear:</strong> Constant micro-adjustments cause excessive wear on the servomotor,
+                    linkage pins, and guide vane bearings.</li>
+                <li><strong>Reduce Hunting:</strong> Without a dead-band, the governor would continuously "hunt" for the
+                    exact setpoint, causing oscillations.</li>
+                <li><strong>Noise Immunity:</strong> Filters out small speed fluctuations caused by grid noise or sensor
+                    jitter.</li>
+            </ul>
+
+            <h3>Dead-Band Configuration</h3>
+            <table class="pid-table">
+                <tr>
+                    <th>Parameter</th>
+                    <th>Typical Value</th>
+                    <th>Effect if Too Large</th>
+                    <th>Effect if Too Small</th>
+                </tr>
+                <tr>
+                    <td>Dead-Band</td>
+                    <td>±0.05 - 0.15 RPM</td>
+                    <td>Slow response to load changes</td>
+                    <td>Excessive wear, hunting</td>
+                </tr>
             </table>
-            <p><em>Note: Maintain draft tube air venting valves to mitigate vibrations and adjust for cavitation
-                    effects.</em>
-                <br><br>
-                <a href="./Francis_SOP_DFT.html"
-                    style="display: inline-block; background-color: var(--secondary-color); color: white; padding: 10px 15px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.9em; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
-                    🌀 [LAUNCH DFT AIR VENTING & VIBRATION SOP]
-                </a>
-            </p>
-            <p style="margin-top: 10px;">
-                <a href="./Francis_SOP_DFT_Tailrace.html"
-                    style="display: inline-block; background-color: var(--primary-color); color: white; padding: 10px 15px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.9em; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
-                    🌊 [LAUNCH DRAFT TUBE & TAILRACE MAINTENANCE SOP]
-                </a>
-                <a href="./Francis_SOP_Welding.html"
-                    style="display: inline-block; background-color: var(--warning-color); color: white; padding: 10px 15px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.9em; box-shadow: 0 2px 4px rgba(0,0,0,0.2); margin-left: 10px;">
-                    🔥 [LAUNCH CAVITATION REPAIR WELDING SOP]
-                </a>
-            </p>
-            <p style="margin-top: 10px;">
-                <a href="./Francis_SOP_Cathodic.html"
-                    style="display: inline-block; background-color: #008B8B; color: white; padding: 10px 15px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.9em; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
-                    ⚛ [LAUNCH CATHODIC PROTECTION SYSTEM SOP]
-                </a>
-            </p>
+
+            <div class="module critical">
+                <strong>💡 Tech Note:</strong> The dead-band we found during the linkage inspection (mechanical "play"
+                in the pins) is a <em>physical</em> dead-band caused by wear. This is different from the
+                <em>electronic</em> dead-band in the governor software. Both must be minimized.
+            </div>
         </div>
 
-        <div class="section-title">3. Mechanical Precision (Horizontal Specifics)</div>
-        <p>Horizontal units are prone to gravity-induced sag and foundation settling, affecting shaft alignment.</p>
-
+        <div class="section-title">The Stability Test: Step Response</div>
         <div class="module technical">
-            <h3>3.1 The 6-Month Alignment Rule</h3>
-            <p>Concrete foundations undergo micro-movements that can shift the unit's center line.</p>
-            <ul>
-                <li><strong>Labyrinth Gaps:</strong> [cite_start]Measure Runner and Labyrinth Gaps every 6 months using
-                    feeler gauges (0.05mm - 1.00mm)[cite: 25, 450].</li>
-                <li><strong>Run-Out Check:</strong> Verify shaft "Run-Out" (balancing) every 6 months to prevent
-                    vibrations that destroy sleeve bearings. Target: &lt; 0.05mm[cite: 27, 451].
-                    <br><br>
-                    <a href="./Francis_SOP_Coupling.html"
-                        style="display: inline-block; background-color: var(--secondary-color); color: white; padding: 10px 15px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.9em; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
-                        🔩 [LAUNCH COUPLING & SHAFT ALIGNMENT SOP]
-                    </a>
-                </li>
-                <li><strong>Bolt Integrity:</strong> [cite_start]Periodically re-tighten all generator bolts using
-                    <strong>Loctite (middle strength/blue)</strong> while simultaneously adjusting runner
-                    alignment[cite: 47, 465].
-                    <br><br>
-                    <a href="./Francis_SOP_Precision.html"
-                        style="display: inline-block; background-color: var(--secondary-color); color: white; padding: 10px 15px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.9em; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
-                        🛠️ [LAUNCH ALIGNMENT & GAP SOP]
-                    </a>
-                    <a href="./Francis_SOP_Generator.html"
-                        style="display: inline-block; background-color: var(--primary-color); color: white; padding: 10px 15px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.9em; box-shadow: 0 2px 4px rgba(0,0,0,0.2); margin-left: 10px;">
-                        ⚡ [LAUNCH GENERATOR ELECTRICAL & BRUSH MAINTENANCE SOP]
-                    </a>
-                </li>
-                <li><strong>Foundation Stability:</strong> Foundation integrity is critical for maintaining alignment
-                    and preventing vibration-induced failures.
-                    <br><br>
-                    <a href="./Francis_SOP_Foundation.html"
-                        style="display: inline-block; background-color: #78350F; color: white; padding: 10px 15px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.9em; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
-                        🔨 [LAUNCH FOUNDATION INTEGRITY SOP]
-                    </a>
-                </li>
-            </ul>
-        </div>
+            <h3>What is a Step Response Test?</h3>
+            <p>A controlled test where the load is suddenly changed by a fixed amount (typically 10% of rated power) to
+                observe how the governor reacts.</p>
 
-        <div class="module">
-            <h3>3.2 Distributor & Guide Vane Synchronization</h3>
-            <ul>
-                <li><strong>L-Metal Tool:</strong> [cite_start]Fabricate a custom "L-metal piece" to mark and verify the
-                    original position of all 20 guide vanes for visual confirmation[cite: 37, 459].</li>
-                <li><strong>Cylinder Maintenance:</strong> [cite_start]Keep distributor cylinders clean to prevent seal
-                    scoring and hydraulic failure[cite: 40, 461].
-                    <br><br>
-                    <a href="./Francis_SOP_Linkage.html"
-                        style="display: inline-block; background-color: var(--secondary-color); color: white; padding: 10px 15px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.9em; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
-                        ⚙️ [LAUNCH GOVERNOR & LINKAGE MAINTENANCE SOP]
-                    </a>
-                    <a href="./Francis_SOP_Governor_PID.html"
-                        style="display: inline-block; background-color: #1E3A8A; color: white; padding: 10px 15px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.9em; box-shadow: 0 2px 4px rgba(0,0,0,0.2); margin-left: 10px;">
-                        ⚙ [LAUNCH GOVERNOR PID TUNING SOP]
-                    </a>
-                </li>
-            </ul>
-        </div>
+            <h3>Test Procedure</h3>
+            <ol>
+                <li><strong>Initial Conditions:</strong> Unit synchronized to grid, stable load (e.g., 5.0 MW).</li>
+                <li><strong>Record Baseline:</strong> Monitor speed, guide vane position, and power output for 2
+                    minutes.</li>
+                <li><strong>Apply Step Change:</strong> Increase load setpoint by 10% (e.g., 5.0 MW → 5.5 MW).</li>
+                <li><strong>Observe Response:</strong> Record speed and vane position for 5 minutes.</li>
+                <li><strong>Analyze:</strong> Measure overshoot, settling time, and oscillation frequency.</li>
+            </ol>
 
-        <div class="section-title">4. Auxiliary Systems: Sealing & Power</div>
-        <div style="margin-top: 15px; margin-bottom: 20px;">
-            <a href="./Francis_SOP_Instrumentation.html"
-                style="display: inline-block; background-color: var(--secondary-color); color: white; padding: 8px 12px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.9em; margin-right: 10px;">
-                📊 [LAUNCH INSTRUMENTATION & SENSOR SOP]
-            </a>
-            <a href="./Francis_SOP_Auxiliary.html"
-                style="display: inline-block; background-color: var(--secondary-color); color: white; padding: 8px 12px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.9em;">
-                ⚓ [LAUNCH BRAKING & SUMP SOP]
-            </a>
-        </div>
-
-        <div class="module">
-            <h3>4.1 Shaft Sealing Strategy</h3>
-            <p>Horizontal units rely heavily on the shaft seal to prevent powerhouse flooding.</p>
-            <ul>
-                <li><strong>Monitoring:</strong> Check leakage pipes daily. [cite_start]A sudden increase indicates the
-                    seal housing must be opened[cite: 42, 462].</li>
-                <li><strong>Staggered Installation:</strong> [cite_start]When replacing packing, ensure the "cuts" in
-                    the packing rings are staggered (not aligned, e.g., 90&deg; offset) to prevent a direct leak
-                    path[cite: 96, 214]. <a href="./Francis_SOP_Recovery.html"
-                        style="color: var(--accent-color); font-weight: bold; text-decoration: none;">[VIEW REPAIR
-                        SOP]</a></li>
-            </ul>
-        </div>
-
-        <div class="module">
-            <h3>4.2 Hydraulic Power Unit (HPU) & Lubrication</h3>
-            <ul>
-                <li><strong>Nitrogen Energy:</strong> [cite_start]Regularly inspect nitrogen storage levels in
-                    accumulators to ensure enough energy is stored for emergency valve closure (ESD)[cite: 51, 467].
-                    <br><br>
-                    <a href="./Francis_SOP_HPU.html"
-                        style="display: inline-block; background-color: var(--warning-color); color: white; padding: 10px 15px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.9em; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
-                        ⚡ [LAUNCH HPU & NITROGEN SOP]
-                    </a>
-                </li>
-                <li><strong>Oil Hygiene:</strong> Change hydraulic oil filters at scheduled intervals to prevent silt
-                    buildup in control valves.
-                    <br><br>
-                    <a href="./Francis_SOP_Oil.html"
-                        style="display: inline-block; background-color: var(--warning-color); color: white; padding: 10px 15px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.9em; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
-                        🛢️ [LAUNCH OIL HYGIENE & FILTRATION SOP]
-                    </a>
-                </li>
-                <li><strong>Bearing Temp:</strong> [cite_start]Monitor sleeve bearing temperatures constantly (Target
-                    ~18°C - 60°C) as they are highly sensitive to lubrication quality[cite: 50, 466].
-                    <br><br>
-                    <a href="./Francis_SOP_Bearings.html"
-                        style="display: inline-block; background-color: var(--warning-color); color: white; padding: 10px 15px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.9em; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
-                        🌡️ [LAUNCH MAIN BEARING & COOLING WATER SOP]
-                    </a>
-                </li>
-            </ul>
-        </div>
-
-        <div class="section-title">5. Strategic Maintenance Schedule</div>
-        <table>
-            <thead>
+            <h3>Ideal Response Characteristics</h3>
+            <table class="pid-table">
                 <tr>
-                    <th>Frequency</th>
-                    <th>Focus Area</th>
-                    <th>Critical Action Items</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><strong>Daily</strong></td>
-                    <td>Sensory & Safety</td>
-                    <td>Log temperatures; Check seal leakage (L/min); [cite_start]Clean powerhouse[cite: 385].</td>
+                    <th>Metric</th>
+                    <th>Target Value</th>
+                    <th>Interpretation</th>
                 </tr>
                 <tr>
-                    <td><strong>Monthly</strong></td>
-                    <td>Lubrication</td>
-                    <td>Full cycle test of central greasing; [cite_start]Check filters for differential pressure[cite:
-                        393].</td>
+                    <td>Overshoot</td>
+                    <td>
+                        < 5%</td>
+                    <td>Speed should not exceed setpoint by more than 5%</td>
                 </tr>
                 <tr>
-                    <td><strong>Bi-Annual</strong></td>
-                    <td>Precision & Structure</td>
-                    <td><strong>Measure Labyrinth Gaps; Check Shaft Run-Out;</strong> Re-tighten bolts with
-                        Loctite[cite: 406].</td>
+                    <td>Settling Time</td>
+                    <td>
+                        < 10 seconds</td>
+                    <td>Time to stabilize within ±1% of setpoint</td>
                 </tr>
                 <tr>
-                    <td><strong>Annual</strong></td>
-                    <td>Deep Inspection</td>
-                    <td>Drain penstock; Deep clean runner; Replace MIV O-Rings; [cite_start]Oil analysis[cite: 413].<br>
-                        <strong>Calibrate all Pressure/Temp Transducers; Inspect Brake Pad Thickness.</strong>
-                    </td>
+                    <td>Oscillations</td>
+                    <td>
+                        < 2 cycles</td>
+                    <td>Should dampen quickly without sustained hunting</td>
                 </tr>
-            </tbody>
-        </table>
-
-        <div class="section-title">6. Diagnostic Troubleshooting Matrix</div>
-        <div class="module diagnostic">
-            <p>Use objective logic to identify root causes based on observed symptoms.</p>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Symptom / Alarm</th>
-                        <th>Potential Root Cause</th>
-                        <th>Required Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>High Bearing Temperature</strong><br>(> 65°C)</td>
-                        <td>1. Low oil level or flow.<br>2. Dirty/Degraded Oil.<br>3. Misalignment (Vibration
-                            friction).<br>4. Clogged cooling water filters.<br>5. Heat exchanger scaling.
-                        </td>
-                        <td>1. Check oil sight glass & pump.<br>2. Analyze oil for viscosity/water.<br>3. Stop unit &
-                            check Shaft Run-Out. <br>4. Perform back-flush of cooling system and verify water flow
-                            rate.<br><strong>Action:</strong> Refer to Oil Hygiene & Bearing SOPs.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>High Vibration</strong><br>(> 2.5 mm/s ISO 10816)</td>
-                        <td>1. Runner Imbalance (Erosion).<br>2. Loose Foundation Bolts.<br>3. Cavitation (Draft Tube).
-                        </td>
-                        <td>1. Check Run-Out with dial indicator.<br>2. Re-tighten bolts with Loctite.<br>3. Check/Clean
-                            Air Venting Valves. <br><strong>Action:</strong> Inspect Draft Tube Air Venting valves for
-                            blockages or stuck plungers.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Shaft Seal Leakage</strong><br>(Continuous Spray)</td>
-                        <td>1. Worn Packing/Rings.<br>2. "Aligned" packing cuts.<br>3. Shaft sleeve scoring.</td>
-                        <td>1. Tighten gland follower evenly.<br>2. Replace (stagger cuts).<br>3. Inspect sleeve for
-                            deep scratches.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>MIV "Water Hammer"</strong><br>(Loud Bang on Close)</td>
-                        <td>1. Closing time too fast.<br>2. Valve "stiction" due to silt.</td>
-                        <td>1. Adjust throttle valve on HPU.<br>2. Clean/Replace HPU oil filters immediately.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Low Power Output (MW)</strong><br>(Calculated vs Actual)</td>
-                        <td>1. Clogged Trash Rack (High Head Loss).<br>2. Low Net Head.<br>3. Guide Vane Blockage.</td>
-                        <td>1. Inspect Intake for debris and verify Silt Basin flushing schedule.<br>2. Check Trash Rack
-                            Differential Pressure.<br>3. Inspect Distributor.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Unstable Power Output / Hunting</strong><br>(Frequency Swing)</td>
-                        <td>1. Mechanical play in linkage pins.<br>2. Lack of lubrication (Stiction).<br>3. Grid
-                            Frequency Instability.</td>
-                        <td>1. Inspect all 20 linkage pins for wear and verify grease distribution.<br>2. Perform "Swing
-                            Test" (Friction Audit).<br>3. Check Governor P-I-D settings.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Excessive Sparking at Brushes</strong><br>(Visible Arcing)</td>
-                        <td>1. Stuck brushes (Carbon dust).<br>2. Uneven spring pressure.<br>3. Slip ring eccentricity.
-                        </td>
-                        <td>1. Clean brush rigging and verify spring tension as per Generator SOP.<br>2. Resurface slip
-                            rings if necessary.</td>
-                    </tr>
-                </tbody>
             </table>
+
+            <div class="visual-aid">
+                [Visualization: Step Response Graph - Time vs. Speed/Power]<br>
+                Ideal: Quick rise → Small overshoot → Fast settling<br>
+                Poor: Slow rise OR Large overshoot OR Sustained oscillations
+            </div>
         </div>
 
-        <div class="section-title">7. Mandatory Tooling & Spares "Survival Kit"</div>
-        <p>A holistic manual works only if the site is equipped to perform the tasks.</p>
-
+        <div class="section-title">Anti-Hunting Logic: Diagnosis & Correction</div>
         <div class="module technical">
-            <h3>7.1 Precision Measurement Tools</h3>
-            <p>[cite_start]Required to perform the "6-Month Alignment Rule" [cite: 363-366].</p>
+            <h3>What is Governor Hunting?</h3>
+            <p><strong>Hunting</strong> is a continuous oscillation of the guide vanes around the setpoint, causing
+                speed and power to fluctuate.</p>
+
+            <h3>Symptoms</h3>
             <ul>
-                <li><strong>Intake Management:</strong> Trash Rack Rakes & Differential Pressure Gauges.</li>
-                <li><strong>Dial Indicator (with Magnetic Base):</strong> Range 0-10mm, Precision 0.01mm. (For Run-Out).
-                </li>
-                <li><strong>Feeler Gauge Set:</strong> Range 0.05mm - 1.00mm. (For Labyrinth Gaps).</li>
-                <li><strong>L-Metal Tool:</strong> Custom fabricated profile for checking Guide Vane Synchronization.
-                </li>
+                <li>Speed oscillates ±0.2 - 0.5 RPM at a regular frequency (e.g., every 3-5 seconds).</li>
+                <li>Guide vane position oscillates ±1-2% continuously.</li>
+                <li>Audible "clicking" or "tapping" from the servomotor or linkage.</li>
+                <li>Increased wear on linkage pins and bushings.</li>
             </ul>
+
+            <h3>Root Causes</h3>
+            <div class="module control">
+                <h4>1. Mechanical Play (Linkage Backlash)</h4>
+                <p>This is the issue we identified during the pin inspection:</p>
+                <ul>
+                    <li><strong>Worn Pins:</strong> Clearance > 0.5 mm between pin and bushing.</li>
+                    <li><strong>Loose Connections:</strong> Bolts not torqued to specification.</li>
+                    <li><strong>Effect:</strong> The servomotor moves, but the guide vanes don't respond immediately,
+                        causing a delayed feedback loop.</li>
+                </ul>
+                <p><strong>Solution:</strong> Replace worn pins and bushings, re-torque all linkage bolts.</p>
+
+                <h4>2. Excessive Integral Gain (I)</h4>
+                <ul>
+                    <li><strong>Cause:</strong> I value too high, causing "integral wind-up".</li>
+                    <li><strong>Effect:</strong> The controller over-corrects, causing oscillations.</li>
+                </ul>
+                <p><strong>Solution:</strong> Reduce I gain by 20-30% and re-test.</p>
+
+                <h4>3. Insufficient Derivative Damping (D)</h4>
+                <ul>
+                    <li><strong>Cause:</strong> D value too low, insufficient damping of oscillations.</li>
+                    <li><strong>Effect:</strong> System overshoots and oscillates.</li>
+                </ul>
+                <p><strong>Solution:</strong> Increase D gain by 10-20% and re-test.</p>
+
+                <h4>4. Dead-Band Too Small</h4>
+                <ul>
+                    <li><strong>Cause:</strong> Dead-band < 0.05 RPM.</li>
+                    <li><strong>Effect:</strong> Governor responds to noise, causing continuous micro-adjustments.</li>
+                </ul>
+                <p><strong>Solution:</strong> Increase dead-band to 0.10 - 0.15 RPM.</p>
+            </div>
+
+            <h3>Diagnostic Procedure</h3>
+            <ol>
+                <li><strong>Mechanical Inspection:</strong> Check all linkage pins for play (target < 0.2 mm
+                        clearance).</li>
+                <li><strong>Monitor Oscillation Frequency:</strong> Fast oscillations (< 2 sec)=mechanical issue. Slow
+                        oscillations (> 5 sec) = PID tuning issue.</li>
+                <li><strong>Isolate Cause:</strong> Temporarily increase dead-band to 0.3 RPM. If hunting stops, the
+                    issue is PID tuning. If hunting continues, the issue is mechanical.</li>
+            </ol>
         </div>
 
+        <div class="section-title">PID Tuning Workflow</div>
+        <div class="module technical">
+            <h3>Step-by-Step Tuning Process</h3>
+            <ol>
+                <li><strong>Start with Conservative Values:</strong> P=3.0, I=1.0, D=0.2, Dead-Band=0.10 RPM.</li>
+                <li><strong>Perform Step Response Test:</strong> Apply 10% load change, record response.</li>
+                <li><strong>Adjust P:</strong> If response is too slow, increase P by 0.5. If overshoot is excessive,
+                    decrease P by 0.5.</li>
+                <li><strong>Adjust I:</strong> If steady-state error persists, increase I by 0.2. If hunting occurs,
+                    decrease I by 0.2.</li>
+                <li><strong>Adjust D:</strong> If oscillations are poorly damped, increase D by 0.1. If response is
+                    jittery, decrease D by 0.05.</li>
+                <li><strong>Iterate:</strong> Repeat steps 2-5 until optimal response is achieved.</li>
+                <li><strong>Document:</strong> Record final PID values and step response graphs in the unit logbook.
+                </li>
+            </ol>
+
+            <div class="formula">
+                Tuning Goal: Fast Response + Minimal Overshoot + No Hunting
+            </div>
+        </div>
+
+        <div class="section-title">Materials & Tools Checklist</div>
         <div class="module">
-            <h3>7.2 Critical Consumables & Spares</h3>
             <ul>
-                <li><strong>Chemical Locking:</strong> [cite_start]Loctite 243 (Blue/Middle Strength) for vibration
-                    resistance[cite: 370].</li>
-                <li><strong>Sealing:</strong> Spare Shaft Packing Rings (Carbon/Teflon) & MIV O-Ring Kit.</li>
-                <li><strong>Hydraulics:</strong> Replacement High-Pressure Filter Cartridges for HPU.</li>
-                <li><strong>Linkage:</strong> High-temperature Water-resistant Grease & Spare Linkage Pins/Bushings.
-                </li>
-                <li><strong>Cooling:</strong> Spare Heat Exchanger Gaskets & Replacement Cooling Water Filter Mesh.
-                </li>
-                <li><strong>Generator:</strong> Replacement Carbon Brush Set & Insulation Resistance Tester (Megger).
-                </li>
+                <li><strong>Software:</strong> Governor HMI access (password-protected).</li>
+                <li><strong>Monitoring:</strong> SCADA system with speed, power, and vane position trending.</li>
+                <li><strong>Documentation:</strong> Step response recording software, unit logbook.</li>
+                <li><strong>Mechanical Tools:</strong> Calipers (for measuring linkage play), torque wrench.</li>
+                <li><strong>Safety:</strong> Communication radio, emergency stop access.</li>
             </ul>
         </div>
 
-        <div class="module critical">
-            <h3>Management Note: The Business Case</h3>
-            <p>Neglecting basic tools and training leads to massive revenue loss through extended downtime.
-                [cite_start]Hydropower requires a 24/7 mindset—operators must know how the machine "breathes" 365 days a
-                year[cite: 69, 307].</p>
-        </div>
-
-        <footer>
-            <p><strong>Horizontal Francis Turbine Master Manual</strong> | Expert Author: Ervin Stupac</p>
-            <p>Based on Site Specifics for Units < 5MW | System Recovery Protocol</p>
-        </footer>
+        <a href="./Francis_Horizontal.html" class="back-btn">← Return to Master Manual</a>
 
     </div>
 
