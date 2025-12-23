@@ -12,14 +12,14 @@
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://anohubs.com/Turbine_Friend/Francis_SOP_Acoustics/">
+    <meta property="og:url" content="https://anohubs.com/Turbine_Friend/Francis_SOP_Gov_Logic/">
     <meta property="og:title" content="AnoHUB | Engineering Immunity Protocol">
     <meta property="og:description" content="Global standard for hydro asset integrity. 15+ years of field forensic engineering.">
     <meta property="og:image" content="https://anohubs.com/assets/images/holy_t_trinity.jpg">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://anohubs.com/Turbine_Friend/Francis_SOP_Acoustics/">
+    <meta property="twitter:url" content="https://anohubs.com/Turbine_Friend/Francis_SOP_Gov_Logic/">
     <meta property="twitter:title" content="AnoHUB | Engineering Immunity Protocol">
     <meta property="twitter:description" content="Global standard for hydro asset integrity. 15+ years of field forensic engineering.">
     <meta property="twitter:image" content="https://anohubs.com/assets/images/holy_t_trinity.jpg">
@@ -203,21 +203,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOP: Acoustic Diagnostics</title>
+    <title>SOP: Governor Response & Frequency Logic</title>
     <style>
-        /* Dark/Sonar Theme - Deep Purple/Black */
+        /* Logic/Digital Theme - Dark Blue with Matrix Green */
         :root {
-            --primary-color: #4C1D95;
-            --secondary-color: #6D28D9;
-            --accent-color: #A78BFA;
-            --warning-color: #F59E0B;
-            --bg-color: #0f0f1e;
-            --text-color: #E9D5FF;
-            --border-color: #4C1D95;
+            --primary-color: #00FF00;
+            --secondary-color: #00CC00;
+            --accent-color: #33FF33;
+            --warning-color: #FFFF00;
+            --bg-color: #000033;
+            --text-color: #E0FFE0;
+            --border-color: #00FF00;
         }
 
         body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Courier New', 'Consolas', monospace;
             line-height: 1.6;
             color: var(--text-color);
             background-color: var(--bg-color);
@@ -228,9 +228,9 @@
         .container {
             max-width: 1000px;
             margin: 0 auto;
-            background: linear-gradient(135deg, #1a1a2e, #0f0f1e);
+            background: linear-gradient(135deg, #001a33, #000033);
             padding: 40px;
-            box-shadow: 0 4px 30px rgba(109, 40, 217, 0.3);
+            box-shadow: 0 4px 30px rgba(0, 255, 0, 0.3);
             border-radius: 8px;
             border: 1px solid var(--border-color);
         }
@@ -240,18 +240,19 @@
             padding-bottom: 20px;
             margin-bottom: 30px;
             text-align: center;
-            background: linear-gradient(135deg, rgba(76, 29, 149, 0.3), rgba(109, 40, 217, 0.1));
+            background: linear-gradient(135deg, rgba(0, 255, 0, 0.1), rgba(0, 204, 0, 0.05));
             padding: 20px;
             border-radius: 8px;
         }
 
         h1 {
             margin: 0;
-            color: var(--accent-color);
+            color: var(--primary-color);
             font-size: 28px;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: 0 0 10px rgba(167, 139, 250, 0.5);
+            letter-spacing: 3px;
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.8);
+            font-family: 'Courier New', monospace;
         }
 
         h2 {
@@ -263,7 +264,7 @@
 
         .section-title {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: #fff;
+            color: #000;
             padding: 10px 15px;
             margin-top: 40px;
             border-radius: 4px;
@@ -271,18 +272,18 @@
             font-weight: bold;
             display: flex;
             align-items: center;
-            box-shadow: 0 0 15px rgba(109, 40, 217, 0.4);
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
         }
 
         .section-title::before {
-            content: "🔊";
+            content: "⚡";
             margin-right: 10px;
             font-size: 1.2em;
         }
 
         h3 {
             color: var(--accent-color);
-            border-left: 4px solid var(--secondary-color);
+            border-left: 4px solid var(--primary-color);
             padding-left: 10px;
             margin-top: 25px;
         }
@@ -292,36 +293,20 @@
             padding: 15px;
             margin: 15px 0;
             border-radius: 4px;
-            background: rgba(76, 29, 149, 0.1);
+            background: rgba(0, 255, 0, 0.02);
         }
 
         .critical {
             border-left: 5px solid var(--warning-color);
-            background: rgba(245, 158, 11, 0.05);
+            background: rgba(255, 255, 0, 0.05);
         }
 
-        .zone {
+        .logic-box {
             border-left: 5px solid var(--accent-color);
-            background: rgba(167, 139, 250, 0.05);
+            background: rgba(51, 255, 51, 0.03);
             margin: 20px 0;
             padding: 15px;
             border-radius: 4px;
-        }
-
-        .zone-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-
-        .zone-label {
-            background: var(--secondary-color);
-            color: white;
-            padding: 4px 12px;
-            border-radius: 4px;
-            font-weight: bold;
-            font-size: 0.9em;
         }
 
         ul,
@@ -337,17 +322,18 @@
             display: inline-block;
             margin-top: 30px;
             text-decoration: none;
-            color: var(--accent-color);
+            color: var(--primary-color);
             font-weight: bold;
-            border: 1px solid var(--accent-color);
+            border: 1px solid var(--primary-color);
             padding: 10px 20px;
             border-radius: 4px;
             transition: all 0.3s;
         }
 
         .back-btn:hover {
-            background-color: var(--accent-color);
+            background-color: var(--primary-color);
             color: #000;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.8);
         }
 
         strong {
@@ -355,35 +341,37 @@
             color: var(--accent-color);
         }
 
-        .sound-table {
+        .logic-table {
             width: 100%;
             border-collapse: collapse;
             margin: 15px 0;
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.5);
         }
 
-        .sound-table th,
-        .sound-table td {
+        .logic-table th,
+        .logic-table td {
             border: 1px solid var(--border-color);
             padding: 10px;
             text-align: left;
         }
 
-        .sound-table th {
+        .logic-table th {
             background: var(--primary-color);
-            color: #fff;
+            color: #000;
+            font-weight: bold;
         }
 
-        .sound-table tr:nth-child(even) {
-            background: rgba(76, 29, 149, 0.1);
+        .logic-table tr:nth-child(even) {
+            background: rgba(0, 255, 0, 0.02);
         }
 
-        .frequency-box {
-            background: linear-gradient(135deg, rgba(109, 40, 217, 0.2), rgba(167, 139, 250, 0.1));
+        .formula-box {
+            background: linear-gradient(135deg, rgba(0, 204, 0, 0.1), rgba(51, 255, 51, 0.05));
             padding: 15px;
             border-left: 4px solid var(--accent-color);
             margin: 15px 0;
             border-radius: 4px;
+            font-family: 'Courier New', monospace;
         }
     </style>
 </head>
@@ -391,360 +379,339 @@
 <body>
     <div class="container">
         <header>
-            <h1>🔊 Acoustic Diagnostics</h1>
-            <h2>The Sensory Analysis Protocol</h2>
-            <p style="color: var(--accent-color); font-size: 0.9em; margin-top: 10px;">Using sound signatures to
-                identify internal failures before sensor triggers</p>
+            <h1>⚡ GOVERNOR RESPONSE & FREQUENCY LOGIC</h1>
+            <h2>The Frequency Brain of the Plant</h2>
+            <p style="color: var(--accent-color); font-size: 0.9em; margin-top: 10px;">Understanding grid stability,
+                droop settings, and response time tuning for 1.3 MW units</p>
         </header>
 
         <div class="module critical">
-            <h3>⚠️ LISTENING SAFETY PROTOCOL</h3>
-            <p><strong>STOP. READ THIS FIRST.</strong></p>
+            <h3>⚠️ CRITICAL SAFETY WARNING</h3>
+            <p><strong>GRID SYNCHRONIZATION RISK</strong></p>
             <ul>
-                <li><strong>Hearing Protection:</strong> Always wear hearing protection when unit is operating. Remove
-                    briefly only for diagnostic listening at safe locations.</li>
-                <li><strong>Safe Zones:</strong> Never listen from locations with rotating machinery exposure. Use
-                    designated listening posts only.</li>
-                <li><strong>Baseline Recording:</strong> Record "healthy" sounds during commissioning for future
-                    comparison.</li>
+                <li><strong>Never Adjust Droop While Synchronized:</strong> Changing droop settings under load can cause
+                    instantaneous load shift and trip.</li>
+                <li><strong>Island Mode Transition:</strong> Manual intervention required before disconnecting from
+                    Rwanda grid. Auto-switchover NOT enabled.</li>
+                <li><strong>Communication Protocol:</strong> Coordinate with grid operator before any governor logic
+                    changes during parallel operation.</li>
             </ul>
         </div>
 
-        <div class="section-title">The Acoustic Map: Four Technical Zones</div>
-        <p>Turbine sound analysis is divided into four distinct zones, each with characteristic acoustic signatures.</p>
+        <div class="section-title">Frequency Regulation Fundamentals</div>
 
-        <!-- ZONE A -->
-        <div class="zone">
-            <div class="zone-header">
-                <span class="zone-label">ZONE A</span>
-                <h3 style="margin: 0;">Intake & Spiral Case</h3>
-            </div>
-            <p><strong>Location:</strong> Upstream of the runner, from trash rack through MIV to spiral case entry.</p>
+        <h3>Your Role in Grid Stability - 1.3 MW Units</h3>
+        <p>The two 1.3 MW Francis units contribute to Rwanda National Grid frequency regulation through proportional
+            load sharing.</p>
 
-            <h4 style="color: var(--accent-color);">Normal Sounds:</h4>
-            <ul>
-                <li><strong>"Smooth Rush":</strong> Steady water flow sound, like a large river - indicates clean flow
-                    path.</li>
-                <li><strong>"Soft Hiss":</strong> Minor turbulence at spiral case entry - normal at high flow rates.
-                </li>
-            </ul>
-
-            <h4 style="color: var(--warning-color);">Abnormal Sounds:</h4>
-            <ul>
-                <li><strong>"Clunk" or "Bang":</strong> Large debris hitting MIV or trash rack.
-                    <br><em>Action: Inspect intake, check trash rack for blockage → <a href="./Francis_SOP_Intake.html"
-                            style="color: var(--accent-color);">Francis_SOP_Intake.html</a></em>
-                </li>
-                <li><strong>"Whistling" or "Screaming":</strong> Partially closed MIV causing high-velocity jet.
-                    <br><em>Action: Check MIV position sensor and servomotor.</em>
-                </li>
-                <li><strong>"Gurgling":</strong> Air entrainment in spiral case.
-                    <br><em>Action: Check upstream water level, inspect MIV seals.</em>
-                </li>
-            </ul>
-        </div>
-
-        <!-- ZONE B -->
-        <div class="zone">
-            <div class="zone-header">
-                <span class="zone-label">ZONE B</span>
-                <h3 style="margin: 0;">Runner & Guide Vanes</h3>
-            </div>
-            <p><strong>Location:</strong> The heart of energy conversion—guide vanes, runner blades, and immediate
-                vicinity.</p>
-
-            <h4 style="color: var(--accent-color);">Normal Sounds:</h4>
-            <ul>
-                <li><strong>"Deep Hum":</strong> Rotational frequency (8.3 Hz for 500 RPM) - indicates smooth operation.
-                </li>
-                <li><strong>"Blade Passage Tone":</strong> Number of runner blades × rotational frequency (e.g., 13
-                    blades × 8.3 Hz = 108 Hz).</li>
-            </ul>
-
-            <h4 style="color: var(--warning-color);">Abnormal Sounds:</h4>
-            <ul>
-                <li><strong>"Rock-Crushing" or "Gravel-Dropping":</strong> Continuous, violent sound - classic
-                    cavitation signature.
-                    <br><em>Action: Immediate inspection required → <a href="./Francis_SOP_Welding.html"
-                            style="color: var(--accent-color);">Francis_SOP_Welding.html</a></em>
-                </li>
-                <li><strong>"Rattling" or "Clattering":</strong> Loose runner bolts, damaged blades, or foreign object
-                    trapped.
-                    <br><em>Action: Stop unit, perform internal inspection.</em>
-                </li>
-                <li><strong>"Grinding" or "Scraping":</strong> Runner contact with labyrinth seal or casing.
-                    <br><em>Action: Check shaft alignment and labyrinth gaps → <a href="./Francis_SOP_Precision.html"
-                            style="color: var(--accent-color);">Francis_SOP_Precision.html</a></em>
-                </li>
-                <li><strong>"Popping" (irregular):</strong> Guide vane linkage play or mechanical backlash.
-                    <br><em>Action: Inspect linkage pins → <a href="./Francis_SOP_Linkage.html"
-                            style="color: var(--accent-color);">Francis_SOP_Linkage.html</a></em>
-                </li>
-            </ul>
-        </div>
-
-        <!-- ZONE C -->
-        <div class="zone">
-            <div class="zone-header">
-                <span class="zone-label">ZONE C</span>
-                <h3 style="margin: 0;">Draft Tube</h3>
-            </div>
-            <p><strong>Location:</strong> Downstream of runner, from draft tube cone to tailrace exit.</p>
-
-            <h4 style="color: var(--accent-color);">Normal Sounds:</h4>
-            <ul>
-                <li><strong>"Muffled Roar":</strong> Turbulent water exiting into tailrace - normal at full load.</li>
-            </ul>
-
-            <h4 style="color: var(--warning-color);">Abnormal Sounds:</h4>
-            <ul>
-                <li><strong>"Thumping" or "Pulsing" (0.2-2 Hz):</strong> Low-frequency vortex rope formation.
-                    <br><em>Action: Part-load operation issue. Check air admission → <a href="./Francis_SOP_DFT.html"
-                            style="color: var(--accent-color);">Francis_SOP_DFT.html</a> or <a
-                            href="./Francis_SOP_Vortex_Control.html"
-                            style="color: var(--accent-color);">Francis_SOP_Vortex_Control.html</a></em>
-                </li>
-                <li><strong>"Surging" (irregular pulsations):</strong> Draft tube pressure oscillations causing
-                    whole-unit vibration.
-                    <br><em>Action: Adjust load or install air admission valve.</em>
-                </li>
-            </ul>
-        </div>
-
-        <!-- ZONE D -->
-        <div class="zone">
-            <div class="zone-header">
-                <span class="zone-label">ZONE D</span>
-                <h3 style="margin: 0;">Bearings & Generator</h3>
-            </div>
-            <p><strong>Location:</strong> All rotating mechanical components outside the water path.</p>
-
-            <h4 style="color: var(--accent-color);">Normal Sounds:</h4>
-            <ul>
-                <li><strong>"Smooth Whirr":</strong> Bearing oil film and shaft rotation - barely audible.</li>
-                <li><strong>"Electrical Hum" (50/60 Hz):</strong> Generator magnetic field - consistent tone.</li>
-            </ul>
-
-            <h4 style="color: var(--warning-color);">Abnormal Sounds:</h4>
-            <ul>
-                <li><strong>"High-Pitched Squeal" (metallic):</strong> Oil-film collapse, bearing contact with shaft.
-                    <br><em>Action: STOP UNIT IMMEDIATELY. Inspect bearing → <a href="./Francis_SOP_Bearings.html"
-                            style="color: var(--accent-color);">Francis_SOP_Bearings.html</a></em>
-                </li>
-                <li><strong>"Rumbling" or "Grinding":</strong> Bearing degradation, damaged rolling elements.
-                    <br><em>Action: Check bearing temperature, plan replacement.</em>
-                </li>
-                <li><strong>"Crackling" or "Popping" (electrical):</strong> Brush sparking, insulation breakdown.
-                    <br><em>Action: Inspect brushes → <a href="./Francis_SOP_Generator.html"
-                            style="color: var(--accent-color);">Francis_SOP_Generator.html</a> or <a
-                            href="./Francis_SOP_Elec_Health.html"
-                            style="color: var(--accent-color);">Francis_SOP_Elec_Health.html</a></em>
-                </li>
-                <li><strong>"Varying Hum" (frequency modulation):</strong> Rotor eccentricity or magnetic imbalance.
-                    <br><em>Action: Perform run-out check, inspect air gap uniformity.</em>
-                </li>
-            </ul>
-        </div>
-
-        <div class="section-title">Acoustic Fingerprinting Techniques</div>
         <div class="module">
-            <h3>Tool Selection</h3>
+            <h4 style="color: var(--primary-color);">Grid Frequency Basics</h4>
             <ul>
-                <li><strong>Industrial Stethoscope:</strong> Best for bearing diagnostics. Place probe on bearing
-                    housing to isolate internal sounds.</li>
-                <li><strong>Metal Rod Method:</strong> Use a 30-50 cm steel rod. Place one end on the component, hold
-                    the other end to your ear (with hearing protection removed briefly). Acts as acoustic waveguide.
-                </li>
-                <li><strong>Sound Level Meter:</strong> For quantitative analysis. Record dB levels at fixed locations
-                    for trend analysis.</li>
-                <li><strong>Smartphone Apps:</strong> Basic spectrum analyzers (FFT) can identify frequency peaks.</li>
+                <li><strong>Nominal Frequency:</strong> 50.00 Hz (Rwanda grid standard)</li>
+                <li><strong>Operating Tolerance:</strong> 49.8 - 50.2 Hz (±0.2 Hz)</li>
+                <li><strong>Emergency Tolerance:</strong> 49.5 - 50.5 Hz (±0.5 Hz)</li>
+                <li><strong>Load Rejection:</strong> If frequency > 50.5 Hz → Auto-disconnect to prevent overspeed</li>
             </ul>
 
-            <h3>Listening Technique</h3>
-            <ol>
-                <li><strong>Establish Baseline:</strong> Record sounds during commissioning or after major overhaul at
-                    various loads (25%, 50%, 75%, 100%).</li>
-                <li><strong>Systematic Approach:</strong> Listen at the same locations during each inspection (e.g.,
-                    turbine bearing, generator DE/NDE, spiral case access points).</li>
-                <li><strong>Load Variation:</strong> Change load incrementally (±10%) while listening. Abnormal sounds
-                    often change with load.</li>
-                <li><strong>Document:</strong> Use voice recorder to capture sounds. Note load, temperature, and
-                    vibration levels at time of recording.</li>
-            </ol>
+            <h4 style="color: var(--primary-color);">Frequency-Load Relationship</h4>
+            <p><strong>System Response:</strong></p>
+            <ul>
+                <li>Grid frequency <strong>drops</strong> (< 50 Hz) → System needs MORE power → Your governor OPENS
+                        guide vanes → Your MW increases</li>
+                <li>Grid frequency <strong>rises</strong> (> 50 Hz) → System has TOO MUCH power → Your governor CLOSES
+                    guide vanes → Your MW decreases</li>
+            </ul>
         </div>
 
-        <div class="section-title">Frequency Recognition</div>
-        <div class="frequency-box">
-            <h3>Broadband vs. Discrete Tones</h3>
-            <p><strong>Broadband Noise:</strong> Wide frequency range with no distinct peaks. Sounds like "white noise"
-                or "rushing water."</p>
+        <div class="section-title">Droop Settings - The 4-6% Rule</div>
+
+        <div class="formula-box">
+            <h3>What is Droop?</h3>
+            <p><strong>Definition:</strong> The percentage frequency change required for the governor to move from 0% to
+                100% power output.</p>
+
+            <p style="margin-top: 15px;"><strong>Formula:</strong></p>
+            <p style="font-size: 1.1em; color: var(--primary-color);">Droop (%) = (Δf / f_nominal) × 100</p>
+
+            <p style="margin-top: 10px;">Where:</p>
             <ul>
-                <li><strong>Cause:</strong> General turbulence, water flow, random vibration.</li>
-                <li><strong>Significance:</strong> Normal at most operating conditions. Increase indicates flow path
-                    blockage or roughness.</li>
+                <li>Δf = Frequency change from no-load to full-load (Hz)</li>
+                <li>f_nominal = 50 Hz</li>
             </ul>
 
-            <p style="margin-top: 15px;"><strong>Discrete Tones:</strong> Narrow frequency peaks that stand out from
-                background noise.</p>
+            <p style="margin-top: 15px;"><strong>Example for 4% Droop:</strong></p>
             <ul>
-                <li><strong>Cause:</strong> Specific mechanical or hydraulic phenomenon with periodic nature.</li>
-                <li><strong>Examples:</strong>
+                <li>Δf = 0.04 × 50 = 2.0 Hz</li>
+                <li>At 50.0 Hz → Unit runs at rated MW (1.3 MW)</li>
+                <li>At 48.0 Hz → Unit tries to deliver maximum power (governor fully open)</li>
+                <li>At 52.0 Hz → Unit tries to deliver zero power (governor fully closed)</li>
+            </ul>
+        </div>
+
+        <div class="module">
+            <h3>Why Droop is Critical for Load Sharing</h3>
+            <p><strong>Problem Without Droop (0% Droop = Isochronous Mode):</strong></p>
+            <ul>
+                <li>Governor tries to maintain EXACTLY 50.00 Hz</li>
+                <li>With two units in parallel, both fight to control frequency</li>
+                <li>Result: "Governor fighting" - units oscillate wildly between overload and underload</li>
+                <li><strong>⚠️ THIS MODE IS ONLY FOR ISLAND OPERATION (ONE UNIT ONLY)</strong></li>
+            </ul>
+
+            <p style="margin-top: 15px;"><strong>Solution: Proportional Droop (4-6%):</strong></p>
+            <ul>
+                <li>Each unit responds proportionally to frequency deviation</li>
+                <li>Load is naturally shared based on unit size and droop setting</li>
+                <li>Both units can run in parallel without fighting</li>
+            </ul>
+
+            <h4 style="color: var(--warning-color);">⚠️ Critical Rule for Your 1.3 MW Units:</h4>
+            <table class="logic-table">
+                <tr>
+                    <th>Operating Mode</th>
+                    <th>Droop Setting</th>
+                    <th>Reason</th>
+                </tr>
+                <tr>
+                    <td><strong>Parallel with Rwanda Grid</strong></td>
+                    <td>4-6%</td>
+                    <td>Allows stable load sharing with other grid generators</td>
+                </tr>
+                <tr>
+                    <td><strong>Parallel with Each Other (Unit 1 + Unit 2)</strong></td>
+                    <td>4-6% (SAME on both)</td>
+                    <td>Equal droop = equal load sharing between units</td>
+                </tr>
+                <tr>
+                    <td><strong>Island Mode (Emergency)</strong></td>
+                    <td>0% (Isochronous)</td>
+                    <td>ONE unit controls frequency exactly (other unit OFF)</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section-title">The Vortex Correlation - Rough Running Zones</div>
+
+        <div class="logic-box">
+            <h3>How Draft Tube Vortex Affects Frequency Stability</h3>
+            <p><strong>Physical Mechanism:</strong></p>
+            <ol>
+                <li>At part-load (40-70% MW), draft tube vortex rope forms → Low-frequency pulsing (0.2-2 Hz)</li>
+                <li>Vortex causes cyclic pressure fluctuations in draft tube</li>
+                <li>Pressure fluctuations translate to torque pulsations on runner</li>
+                <li>Torque pulsations cause shaft speed oscillations (±0.1 Hz)</li>
+                <li>Governor "sees" frequency oscillate → Tries to correct → Guide vanes move erratically</li>
+                <li><strong>Result: "Hunting" behavior even with perfect PID settings</strong></li>
+            </ol>
+
+            <h4 style="color: var(--primary-color);">Rough Running Zone Map</h4>
+            <table class="logic-table">
+                <tr>
+                    <th>Load Range (MW)</th>
+                    <th>% of Rated</th>
+                    <th>Vortex Status</th>
+                    <th>Governor Behavior</th>
+                </tr>
+                <tr>
+                    <td>0 - 0.5 MW</td>
+                    <td>0 - 40%</td>
+                    <td><strong>Strong vortex</strong></td>
+                    <td>Severe hunting - AVOID</td>
+                </tr>
+                <tr>
+                    <td>0.5 - 0.9 MW</td>
+                    <td>40 - 70%</td>
+                    <td>Moderate vortex</td>
+                    <td>Acceptable with air admission</td>
+                </tr>
+                <tr>
+                    <td>0.9 - 1.3 MW</td>
+                    <td>70 - 100%</td>
+                    <td>No vortex</td>
+                    <td>Stable operation</td>
+                </tr>
+            </table>
+
+            <h4 style="color: var(--accent-color);">Mitigation Strategy:</h4>
+            <ul>
+                <li><strong>Air Admission Valve:</strong> Inject compressed air into draft tube cone → Breaks up vortex
+                    rope → Reduces pulsations</li>
+                <li><strong>Optimal Air Flow:</strong> 1-2% of water flow (approx 0.5-1.0 m³/s air)</li>
+                <li><strong>Cross-Reference:</strong> See <a href="./Francis_SOP_Vortex_Control.html"
+                        style="color: var(--accent-color); font-weight: bold;">Vortex Control SOP</a> and <a
+                        href="./Francis_SOP_DFT.html" style="color: var(--accent-color); font-weight: bold;">Draft Tube
+                        Air Admission SOP</a></li>
+            </ul>
+        </div>
+
+        <div class="section-title">Response Time Tuning - Dead-Time Analysis</div>
+
+        <div class="module">
+            <h3>Understanding Dead-Time</h3>
+            <p><strong>Definition:</strong> The time delay between a frequency shift detection and the start of guide
+                vane movement.</p>
+
+            <p><strong>Components of Dead-Time:</strong></p>
+            <ol>
+                <li><strong>Sensor Lag:</strong> Frequency sensor averaging time (typical: 100-200 ms)</li>
+                <li><strong>Governor Processing:</strong> PID calculation time (typical: 50-100 ms)</li>
+                <li><strong>Hydraulic Lag:</strong> Oil pressure buildup in servomotor (typical: 200-500 ms)</li>
+                <li><strong>Mechanical Backlash:</strong> Play in linkage pins before actual movement (typical: 50-100
+                    ms)</li>
+            </ol>
+
+            <p style="margin-top: 15px;"><strong>Total Dead-Time:</strong> Typically 400-900 ms for your units.</p>
+
+            <h4 style="color: var(--primary-color);">How to Measure Dead-Time:</h4>
+            <ol>
+                <li>With unit running at 1.0 MW, 50.0 Hz (stable)</li>
+                <li>Command a manual load change: Increase setpoint by 0.1 MW</li>
+                <li>Using oscilloscope or SCADA trending:
                     <ul>
-                        <li>Rotational frequency (8.3 Hz for 500 RPM) → Shaft imbalance</li>
-                        <li>Blade passage frequency (13 blades × 8.3 Hz = 108 Hz) → Runner blade issues</li>
-                        <li>Vortex shedding frequency (0.2-2 Hz) → Draft tube vortex rope</li>
-                        <li>High-frequency squeal (> 1000 Hz) → Bearing failure</li>
+                        <li>Channel 1: Frequency signal (Hz)</li>
+                        <li>Channel 2: Guide vane position (%)</li>
                     </ul>
                 </li>
-                <li><strong>Significance:</strong> Discrete tones indicate specific failure modes. Always investigate.
-                </li>
+                <li>Trigger on frequency drop event</li>
+                <li>Measure time from frequency drop start to first guide vane movement</li>
+            </ol>
+
+            <h4 style="color: var(--warning-color);">Target Dead-Time:</h4>
+            <ul>
+                <li><strong>Good:</strong>
+                    < 500 ms (responsive system)</li>
+                <li><strong>Acceptable:</strong> 500-800 ms (typical for mechanical governors)</li>
+                <li><strong>Poor:</strong> > 800 ms (investigate oil aeration, linkage play) → See <a
+                        href="./Francis_SOP_Oil_Health.html" style="color: var(--accent-color); font-weight: bold;">Oil
+                        Health SOP</a></li>
             </ul>
         </div>
 
-        <div class="module">
-            <h3>Frequency Calculation Guide</h3>
-            <div class="frequency-box">
-                <p><strong>Rotational Frequency (Hz):</strong> RPM ÷ 60</p>
-                <p style="margin-top: 10px;"><strong>Blade Passage Frequency (Hz):</strong> (Number of Blades) × (RPM ÷
-                    60)</p>
-                <p style="margin-top: 10px;"><strong>Example for 500 RPM, 13-blade runner:</strong></p>
-                <ul>
-                    <li>Rotational: 500 ÷ 60 = 8.33 Hz</li>
-                    <li>Blade Passage: 13 × 8.33 = 108.3 Hz</li>
-                </ul>
-            </div>
+        <div class="section-title">Island Mode vs. Parallel Operation</div>
+
+        <div class="logic-box">
+            <h3>Critical Logic Differences</h3>
+
+            <h4 style="color: var(--primary-color);">Parallel Operation (Normal)</h4>
+            <p><strong>Configuration:</strong> Units connected to Rwanda national grid OR both 1.3 MW units synchronized
+                together.</p>
+
+            <table class="logic-table">
+                <tr>
+                    <th>Parameter</th>
+                    <th>Setting</th>
+                    <th>Reason</th>
+                </tr>
+                <tr>
+                    <td><strong>Droop</strong></td>
+                    <td>4-6%</td>
+                    <td>Proportional load sharing</td>
+                </tr>
+                <tr>
+                    <td><strong>Governor Mode</strong></td>
+                    <td>Speed Droop</td>
+                    <td>Follow grid frequency</td>
+                </tr>
+                <tr>
+                    <td><strong>Dead-Band</strong></td>
+                    <td>±0.05 Hz</td>
+                    <td>Prevent excessive vane movement</td>
+                </tr>
+                <tr>
+                    <td><strong>Auto Load Control</strong></td>
+                    <td>Disabled</td>
+                    <td>Grid controls load via frequency</td>
+                </tr>
+            </table>
+
+            <h4 style="color: var(--warning-color);">Island Mode (Emergency Only)</h4>
+            <p><strong>Configuration:</strong> One unit powering isolated local load ONLY. Other unit OFF. Grid
+                disconnected.</p>
+
+            <table class="logic-table">
+                <tr>
+                    <th>Parameter</th>
+                    <th>Setting</th>
+                    <th>Reason</th>
+                </tr>
+                <tr>
+                    <td><strong>Droop</strong></td>
+                    <td>0% (Isochronous)</td>
+                    <td>Maintain exact 50.00 Hz</td>
+                </tr>
+                <tr>
+                    <td><strong>Governor Mode</strong></td>
+                    <td>Speed Control</td>
+                    <td>Unit IS the frequency reference</td>
+                </tr>
+                <tr>
+                    <td><strong>Dead-Band</strong></td>
+                    <td>±0.01 Hz</td>
+                    <td>Tight frequency control needed</td>
+                </tr>
+                <tr>
+                    <td><strong>Auto Load Control</strong></td>
+                    <td>Enabled</td>
+                    <td>Match load to generation capacity</td>
+                </tr>
+            </table>
+
+            <h4 style="color: var(--accent-color);">Transition Procedure (Grid → Island)</h4>
+            <p><strong>⚠️ MANUAL PROCEDURE REQUIRED - NO AUTO-SWITCHOVER</strong></p>
+            <ol>
+                <li><strong>Open main circuit breaker</strong> to disconnect from Rwanda grid</li>
+                <li><strong>Stop Unit 2</strong> if both units are running (only ONE unit in island mode)</li>
+                <li><strong>Set Unit 1 governor to Isochronous (0% droop)</strong></li>
+                <li><strong>Enable Auto Load Control</strong></li>
+                <li><strong>Reduce local load</strong> to match unit capacity (max 1.3 MW)</li>
+                <li><strong>Monitor frequency:</strong> Should stabilize at 50.00 ± 0.05 Hz within 30 seconds</li>
+            </ol>
+
+            <p style="color: var(--warning-color); margin-top: 15px;"><strong>⚠️ Risk:</strong> If local load exceeds
+                1.3 MW in island mode, unit will overload and trip on frequency drop (< 49.0 Hz). Load shedding MUST be
+                    performed before transition.</p>
         </div>
 
-        <div class="section-title">Action Logic: Sound → SOP Mapping</div>
-        <table class="sound-table">
-            <thead>
-                <tr>
-                    <th>Acoustic Signature</th>
-                    <th>Zone</th>
-                    <th>Likely Cause</th>
-                    <th>Immediate Action</th>
-                    <th>SOP Reference</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>"Rock-Crushing" / "Gravel"</td>
-                    <td>B</td>
-                    <td>Cavitation</td>
-                    <td>Inspect runner blades</td>
-                    <td><a href="./Francis_SOP_Welding.html" style="color: var(--accent-color);">Welding SOP</a></td>
-                </tr>
-                <tr>
-                    <td>"Thumping" (0.2-2 Hz)</td>
-                    <td>C</td>
-                    <td>Vortex Rope</td>
-                    <td>Check air admission</td>
-                    <td><a href="./Francis_SOP_Vortex_Control.html" style="color: var(--accent-color);">Vortex SOP</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>"High-Pitched Squeal"</td>
-                    <td>D</td>
-                    <td>Bearing Failure</td>
-                    <td>STOP UNIT</td>
-                    <td><a href="./Francis_SOP_Bearings.html" style="color: var(--accent-color);">Bearings SOP</a></td>
-                </tr>
-                <tr>
-                    <td>"Grinding" / "Scraping"</td>
-                    <td>B</td>
-                    <td>Shaft Misalignment</td>
-                    <td>Check labyrinth gaps</td>
-                    <td><a href="./Francis_SOP_Precision.html" style="color: var(--accent-color);">Alignment SOP</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>"Clunk" / "Bang"</td>
-                    <td>A</td>
-                    <td>Debris Impact</td>
-                    <td>Inspect intake</td>
-                    <td><a href="./Francis_SOP_Intake.html" style="color: var(--accent-color);">Intake SOP</a></td>
-                </tr>
-                <tr>
-                    <td>"Whistling" (high velocity)</td>
-                    <td>A</td>
-                    <td>Valve Position Error</td>
-                    <td>Check MIV position</td>
-                    <td><a href="./Francis_SOP_HPU.html" style="color: var(--accent-color);">HPU SOP</a></td>
-                </tr>
-                <tr>
-                    <td>"Popping" (irregular)</td>
-                    <td>B</td>
-                    <td>Linkage Play</td>
-                    <td>Inspect pins</td>
-                    <td><a href="./Francis_SOP_Linkage.html" style="color: var(--accent-color);">Linkage SOP</a></td>
-                </tr>
-                <tr>
-                    <td>"Electrical Crackling"</td>
-                    <td>D</td>
-                    <td>Brush Sparking</td>
-                    <td>Inspect brushes</td>
-                    <td><a href="./Francis_SOP_Generator.html" style="color: var(--accent-color);">Generator SOP</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>"Rumbling" (continuous)</td>
-                    <td>D</td>
-                    <td>Bearing Degradation</td>
-                    <td>Monitor temperature</td>
-                    <td><a href="./Francis_SOP_Bearings.html" style="color: var(--accent-color);">Bearings SOP</a></td>
-                </tr>
-                <tr>
-                    <td>"Varying Hum" (modulated)</td>
-                    <td>D</td>
-                    <td>Magnetic Imbalance</td>
-                    <td>Check air gap</td>
-                    <td><a href="./Francis_SOP_Generator.html" style="color: var(--accent-color);">Generator SOP</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td><strong>"Pump Whining" (High Freq)</strong></td>
-                    <td>D (HPU)</td>
-                    <td>Oil Aeration in HPU</td>
-                    <td>Check oil level, inspect suction leaks</td>
-                    <td><a href="./Francis_SOP_Oil_Health.html" style="color: var(--accent-color);">Oil Health SOP</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td><strong>"Hydraulic Hissing"</strong></td>
-                    <td>D (Governor)</td>
-                    <td>Internal Leakage - Pilot Valves</td>
-                    <td>Perform dry-out procedure</td>
-                    <td><a href="./Francis_SOP_Oil_Health.html" style="color: var(--accent-color);">Oil Health SOP</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td><strong>"Low-Freq Pulsing" (0.2-0.4 Hz)</strong></td>
-                    <td>C</td>
-                    <td>Vortex Rope (Draft Tube)</td>
-                    <td>Activate air admission valve</td>
-                    <td><a href="./Francis_SOP_Vortex_Control.html" style="color: var(--accent-color);">Vortex SOP</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td><strong>"Relay Clicking" (Rapid)</strong></td>
-                    <td>D (Governor)</td>
-                    <td>Governor Hunting - PID Instability</td>
-                    <td>Check PID settings, linkage play</td>
-                    <td><a href="./Francis_SOP_Gov_Logic.html" style="color: var(--accent-color);">Governor Logic
-                            SOP</a></td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="section-title">Diagnostic Procedures</div>
 
-        <div class="section-title">Inspection Schedule</div>
         <div class="module">
-            <ul>
-                <li><strong>Daily:</strong> Listen during routine rounds. Note any new sounds.</li>
-                <li><strong>Weekly:</strong> Systematic zone-by-zone acoustic inspection using stethoscope.</li>
-                <li><strong>Monthly:</strong> Record sounds at standard load points for trending.</li>
-                <li><strong>After Load Changes:</strong> Listen for 5 minutes after significant load change (> 20%).
+            <h3>Governor Response Test (Step Response)</h3>
+            <p><strong>Purpose:</strong> Verify governor response time and stability.</p>
+
+            <ol>
+                <li>Run unit at 1.0 MW (75% load), stable frequency 50.0 Hz</li>
+                <li>Command 10% step change: Increase setpoint to 1.1 MW</li>
+                <li>Record:
+                    <ul>
+                        <li>Time to first response (dead-time)</li>
+                        <li>Time to reach new setpoint (settling time)</li>
+                        <li>Overshoot (if any)</li>
+                    </ul>
                 </li>
-                <li><strong>After Maintenance:</strong> Establish new baseline after any turbine work.</li>
+            </ol>
+
+            <h4 style="color: var(--accent-color);">Acceptance Criteria:</h4>
+            <ul>
+                <li><strong>Dead-Time:</strong>
+                    < 500 ms</li>
+                <li><strong>Settling Time:</strong>
+                    < 10 seconds</li>
+                <li><strong>Overshoot:</strong>
+                    < 5% of step size (< 0.05 MW for 0.1 MW step)</li>
+            </ul>
+
+            <h3>Frequency Stability Test</h3>
+            <ol>
+                <li>Run unit synchronized to grid at 1.2 MW for 1 hour</li>
+                <li>Record frequency every 1 minute</li>
+                <li>Calculate standard deviation (σ) of frequency</li>
+            </ol>
+
+            <h4 style="color: var(--accent-color);">Acceptance:</h4>
+            <ul>
+                <li><strong>Good:</strong> σ < 0.02 Hz (very stable)</li>
+                <li><strong>Acceptable:</strong> σ < 0.05 Hz</li>
+                <li><strong>Poor:</strong> σ > 0.05 Hz → Investigate hunting, vortex, or oil aeration issues</li>
             </ul>
         </div>
 
