@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOP: Oil Health & Aeration Diagnostics</title>
+    <style>
+        /* Fluid/Scientific Theme - Amber and White */
+        :root {
+            --primary-color: #FF8C00;
+            --secondary-color: #FFA500;
+            --accent-color: #FFD700;
+            --warning-color: #DC143C;
+            --bg-color: #1a1a1a;
+            --text-color: #FFF8DC;
+            --border-color: #FF8C00;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #2a1a00, #1a1a1a);
+            padding: 40px;
+            box-shadow: 0 4px 30px rgba(255, 140, 0, 0.3);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        header {
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(255, 140, 0, 0.2), rgba(255, 165, 0, 0.1));
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        h1 {
+            margin: 0;
+            color: var(--accent-color);
+            font-size: 28px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        h2 {
+            color: var(--secondary-color);
+            font-size: 18px;
+            margin-top: 5px;
+            font-weight: 400;
+        }
+
+        .section-title {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: #000;
+            padding: 10px 15px;
+            margin-top: 40px;
+            border-radius: 4px;
+            font-size: 1.2em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 0 15px rgba(255, 140, 0, 0.4);
+        }
+
+        .section-title::before {
+            content: "🧪";
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        h3 {
+            color: var(--accent-color);
+            border-left: 4px solid var(--primary-color);
+            padding-left: 10px;
+            margin-top: 25px;
+        }
+
+        .module {
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            background: rgba(255, 140, 0, 0.05);
+        }
+
+        .critical {
+            border-left: 5px solid var(--warning-color);
+            background: rgba(220, 20, 60, 0.1);
+        }
+
+        .diagnostic-box {
+            border-left: 5px solid var(--accent-color);
+            background: rgba(255, 215, 0, 0.05);
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 4px;
+        }
+
+        ul,
+        ol {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 30px;
+            text-decoration: none;
+            color: var(--accent-color);
+            font-weight: bold;
+            border: 1px solid var(--accent-color);
+            padding: 10px 20px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            background-color: var(--accent-color);
+            color: #000;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+        }
+
+        strong {
+            font-weight: 600;
+            color: var(--accent-color);
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            text-align: left;
+        }
+
+        .comparison-table th {
+            background: var(--primary-color);
+            color: #000;
+            font-weight: bold;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: rgba(255, 140, 0, 0.05);
+        }
+
+        .fluid-visual {
+            background: linear-gradient(135deg, rgba(255, 165, 0, 0.2), rgba(255, 215, 0, 0.1));
+            padding: 15px;
+            border-left: 4px solid var(--accent-color);
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>🧪 OIL HEALTH & AERATION DIAGNOSTICS</h1>
+            <h2>Fluid Chemistry of Hydraulic Systems</h2>
+            <p style="color: var(--accent-color); font-size: 0.9em; margin-top: 10px;">Understanding foam, aeration, and
+                contamination in HPU oil systems</p>
+        </header>
+
+        <div class="module critical">
+            <h3>⚠️ SAFETY PROTOCOL</h3>
+            <p><strong>STOP. READ THIS FIRST.</strong></p>
+            <ul>
+                <li><strong>Pressure Release:</strong> Depressurize HPU system before opening any oil circuits (nitrogen
+                    accumulator risk).</li>
+                <li><strong>Hot Oil:</strong> Operating temperature can reach 55-65°C. Wear protective gloves when
+                    handling components.</li>
+                <li><strong>Fire Risk:</strong> Hydraulic oil is flammable. Keep ignition sources away during inspection
+                    or sampling.</li>
+            </ul>
+        </div>
+
+        <div class="section-title">The Foaming Phenomenon</div>
+
+        <h3>Surface Foam vs. Entrained Air (Aeration)</h3>
+        <p>Two distinct conditions affect hydraulic oil, each with different causes and consequences:</p>
+
+        <table class="comparison-table">
+            <tr>
+                <th>Characteristic</th>
+                <th>Surface Foam</th>
+                <th>Entrained Air (Aeration)</th>
+            </tr>
+            <tr>
+                <td><strong>Appearance</strong></td>
+                <td>Large bubbles on oil surface<br>Visible in sight glass</td>
+                <td>Milky, cloudy oil throughout<br>Microscopic bubbles</td>
+            </tr>
+            <tr>
+                <td><strong>Location</strong></td>
+                <td>Oil reservoir surface only</td>
+                <td>Distributed throughout oil volume</td>
+            </tr>
+            <tr>
+                <td><strong>Primary Cause</strong></td>
+                <td>Contamination (water, detergent)<br>Excessive pump suction speed</td>
+                <td>Low oil level<br>Leaks in suction line<br>Vortex formation</td>
+            </tr>
+            <tr>
+                <td><strong>Effect on System</strong></td>
+                <td>Reservoir level fluctuation<br>Cosmetic issue mostly</td>
+                <td><strong>Reduces bulk modulus</strong><br>Governor becomes "spongy"<br>Erratic response</td>
+            </tr>
+            <tr>
+                <td><strong>Severity</strong></td>
+                <td>Moderate</td>
+                <td><strong>CRITICAL</strong></td>
+            </tr>
+        </table>
+
+        <div class="module">
+            <h3>The Bulk Modulus Problem</h3>
+            <p><strong>What is Bulk Modulus?</strong> The "stiffness" of hydraulic oil under pressure. Pure oil has high
+                bulk modulus (fast, precise response). Oil with air bubbles has low bulk modulus (slow, "spongy" feel).
+            </p>
+
+            <p><strong>Impact on Governor:</strong></p>
+            <ul>
+                <li><strong>Normal Oil:</strong> Governor commands → Immediate guide vane movement (< 0.5 sec)</li>
+                <li><strong>Aerated Oil:</strong> Governor commands → Delayed, erratic movement (1-2 sec lag) →
+                    Frequency hunting</li>
+            </ul>
+
+            <p style="color: var(--warning-color); margin-top: 15px;"><strong>⚠️ Critical Effect:</strong> Aeration is
+                the #1 cause of "soft" governor response and frequency instability in your 1.3 MW units.</p>
+        </div>
+
+        <div class="section-title">Symptom Mapping & Root Causes</div>
+
+        <div class="diagnostic-box">
+            <h3>Foaming - Visual & Causes</h3>
+            <p><strong>Symptom:</strong> Large bubbles (> 1 mm) on oil surface, rapid formation and collapse.</p>
+
+            <h4 style="color: var(--primary-color);">Root Causes:</h4>
+            <ol>
+                <li><strong>Water Contamination:</strong> Even 0.1% water can cause severe foaming.
+                    <br><em>Test: Karl Fischer moisture test. Target: < 200 ppm water.</em>
+                </li>
+                <li><strong>Detergent/Soap Contamination:</strong> From improper cleaning of reservoir.
+                    <br><em>Action: Drain, flush with clean oil, refill with fresh oil.</em>
+                </li>
+                <li><strong>Excessive Pump Suction Speed:</strong> Creates turbulence at oil surface.
+                    <br><em>Check: Pump inlet velocity should be < 1.2 m/s.</em>
+                </li>
+                <li><strong>Degraded Antifoam Additives:</strong> Oil past service life (> 5 years).
+                    <br><em>Action: Complete oil change.</em>
+                </li>
+            </ol>
+
+            <h4 style="color: var(--warning-color);">Diagnostic Procedure:</h4>
+            <ol>
+                <li>Observe sight glass with unit running. Note bubble size and persistence.</li>
+                <li>If large, persistent foam present → Sample oil for water content (Karl Fischer test).</li>
+                <li>If water > 500 ppm → Drain and refill reservoir.</li>
+                <li>If water < 500 ppm but foaming persists → Check pump suction design for vortex formation.</li>
+            </ol>
+        </div>
+
+        <div class="diagnostic-box">
+            <h3>Aeration - Visual & Causes</h3>
+            <p><strong>Symptom:</strong> Milky, cloudy appearance throughout oil volume. Oil looks "whipped" or
+                "emulsified".</p>
+
+            <h4 style="color: var(--primary-color);">Root Causes:</h4>
+            <ol>
+                <li><strong>Low Oil Level:</strong> Pump suction draws surface vortex, entraining air.
+                    <br><em>Check: Maintain oil level at 75-85% of sight glass height.</em>
+                </li>
+                <li><strong>Suction Line Leaks:</strong> Air ingress through loose fittings or cracked hose.
+                    <br><em>Test: Pressurize suction line with shop air, spray with soapy water to find leaks.</em>
+                </li>
+                <li><strong>Failed Shaft Seal:</strong> Pump shaft seal allows air in on suction stroke.
+                    <br><em>Symptom: Oil foaming rhythmically with pump strokes.</em>
+                </li>
+                <li><strong>Vortex Formation at Suction:</strong> Improper baffle placement in reservoir.
+                    <br><em>Solution: Install anti-vortex plate at suction inlet.</em>
+                </li>
+            </ol>
+
+            <h4 style="color: var(--warning-color);">Diagnostic Procedure:</h4>
+            <ol>
+                <li>Check oil level immediately. If low, refill and observe if cloudiness clears in 10-15 min.</li>
+                <li>If level is OK, inspect all suction line fittings for tightness.</li>
+                <li>Perform "Leak Test": Isolate suction line, pressurize to 0.5 bar, spray fittings with soapy water.
+                </li>
+                <li>If no external leaks found → Suspect pump shaft seal. Listen for rhythmic "whining" sound (see
+                    Acoustic Link below).</li>
+            </ol>
+        </div>
+
+        <div class="section-title">Visual Diagnostic - HPU Sight Glass Interpretation</div>
+
+        <div class="fluid-visual">
+            <h3>What to Look For in the Sight Glass</h3>
+
+            <h4 style="color: var(--accent-color);">Normal Oil</h4>
+            <ul>
+                <li><strong>Color:</strong> Clear amber/golden (ISO VG 46 hydraulic oil)</li>
+                <li><strong>Transparency:</strong> Can see through to opposite side of sight glass</li>
+                <li><strong>Bubbles:</strong> Few or none; any present should rise quickly and dissipate</li>
+                <li><strong>Sediment:</strong> None visible at bottom of sight glass</li>
+            </ul>
+
+            <h4 style="color: var(--warning-color);">Abnormal Conditions</h4>
+            <table class="comparison-table">
+                <tr>
+                    <th>Visual Appearance</th>
+                    <th>Diagnosis</th>
+                    <th>Action</th>
+                </tr>
+                <tr>
+                    <td><strong>Milky white throughout</strong></td>
+                    <td>Aeration (entrained air)</td>
+                    <td>Check oil level, inspect for leaks</td>
+                </tr>
+                <tr>
+                    <td><strong>Large bubbles on surface only</strong></td>
+                    <td>Surface foaming</td>
+                    <td>Test for water contamination</td>
+                </tr>
+                <tr>
+                    <td><strong>Dark brown/black color</strong></td>
+                    <td>Oil oxidation/degradation</td>
+                    <td>Perform oil analysis, plan oil change</td>
+                </tr>
+                <tr>
+                    <td><strong>Metallic particles visible</strong></td>
+                    <td>Pump or valve wear</td>
+                    <td>Drain oil, inspect pump internals</td>
+                </tr>
+                <tr>
+                    <td><strong>Water droplets (separate layer)</strong></td>
+                    <td>Free water contamination</td>
+                    <td>Drain water, check for ingress source</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section-title">Acoustic Link - Sound Signatures</div>
+        <div class="module">
+            <h3>Cross-Reference to Acoustics SOP</h3>
+            <p>Oil aeration and foaming produce distinctive sounds detectable during acoustic inspection:</p>
+
+            <ul>
+                <li><strong>Pump "Whining" or "Cavitation" Sound (High Frequency):</strong> Primary signature of
+                    aeration.
+                    <br><em>Indicates: Air bubbles collapsing in pump, creating high-pitched noise.</em>
+                    <br><strong>Action:</strong> See <a href="./Francis_SOP_Acoustics.html"
+                        style="color: var(--accent-color); font-weight: bold;">Acoustic Diagnostics SOP - Zone D
+                        (HPU)</a>
+                </li>
+                <li><strong>Hydraulic "Hissing" (Continuous):</strong> Internal leakage in pilot valves or main
+                    distribution valves.
+                    <br><em>Indicates: High-pressure oil bypassing internal seals.</em>
+                </li>
+                <li><strong>"Gurgling" in Reservoir:</strong> Oil returning with entrained air, degassing in tank.
+                    <br><em>Indicates: System-wide aeration, likely suction-side leak.</em>
+                </li>
+            </ul>
+
+            <p style="margin-top: 15px;"><strong>💡 Diagnostic Tip:</strong> Always perform acoustic scan of HPU pump
+                and reservoir when investigating governor response issues. Aeration sounds often precede visual
+                symptoms.</p>
+        </div>
+
+        <div class="section-title">Governor Leak Detection - The "Dry-Out" Procedure</div>
+
+        <div class="module">
+            <h3>Identifying Internal Leaks in Governor Valves</h3>
+            <p><strong>Purpose:</strong> Determine if oil is leaking internally between pilot valve and main
+                distribution valve, causing sluggish response.</p>
+
+            <h4 style="color: var(--accent-color);">Procedure Steps:</h4>
+            <ol>
+                <li><strong>Isolate System:</strong> Close main isolation valve to governor. Relieve pressure (nitrogen
+                    accumulator bleed).</li>
+                <li><strong>Visual Pre-Check:</strong> Inspect all external connections for oil seepage. Wipe dry and
+                    mark with chalk.</li>
+                <li><strong>Dry-Out Test:</strong>
+                    <ul>
+                        <li>Remove oil from valve housings using compressed air (low pressure, 2-3 bar).</li>
+                        <li>Let system sit for 30 minutes.</li>
+                        <li>Re-inspect marked areas for new oil presence.</li>
+                    </ul>
+                </li>
+                <li><strong>Leak Classification:</strong>
+                    <ul>
+                        <li><strong>Pilot Valve Leak:</strong> Oil appears around pilot valve spool housing → Replace
+                            pilot valve seals.</li>
+                        <li><strong>Main Distribution Valve Leak:</strong> Oil appears at main valve body → Rebuild main
+                            valve.</li>
+                        <li><strong>External Fitting Leak:</strong> Oil at threaded connections → Re-torque with Loctite
+                            577.</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h4 style="color: var(--warning-color);">Critical Leak Locations</h4>
+            <table class="comparison-table">
+                <tr>
+                    <th>Location</th>
+                    <th>Symptom</th>
+                    <th>Impact</th>
+                </tr>
+                <tr>
+                    <td>Pilot valve spool</td>
+                    <td>Slow guide vane response</td>
+                    <td>Frequency hunting, poor regulation</td>
+                </tr>
+                <tr>
+                    <td>Main distribution valve</td>
+                    <td>Guide vanes "drift" when stationary</td>
+                    <td>Load instability, MW fluctuation</td>
+                </tr>
+                <tr>
+                    <td>Accumulator piston seal</td>
+                    <td>Pressure decay over 24 hours</td>
+                    <td>Loss of fast response capability</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section-title">Maintenance Schedule & Oil Analysis</div>
+        <div class="module">
+            <ul>
+                <li><strong>Daily:</strong> Visual check of HPU sight glass for cloudiness or bubbles.</li>
+                <li><strong>Weekly:</strong> Check oil level, top up if below 75% of sight glass.</li>
+                <li><strong>Monthly:</strong> Acoustic scan of HPU pump for cavitation/whining sounds.</li>
+                <li><strong>Quarterly:</strong> Oil analysis (viscosity, water content, particle count).</li>
+                <li><strong>Annual:</strong> Complete oil change if any of the following:
+                    <ul>
+                        <li>Water content > 500 ppm</li>
+                        <li>Viscosity change > 10% from ISO VG 46</li>
+                        <li>Particle contamination > ISO 18/16/13</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3>Oil Sampling Procedure</h3>
+            <ol>
+                <li>Run unit for 30 minutes to reach operating temperature (50-60°C).</li>
+                <li>Sample from mid-depth of reservoir (not surface, not bottom) using clean syringe.</li>
+                <li>Fill sample bottle, label with date, unit ID, operating hours.</li>
+                <li>Send to lab for analysis: viscosity @ 40°C, water content (Karl Fischer), particle count (ISO 4406).
+                </li>
+            </ol>
+        </div>
+
+        <a href="./Francis_Horizontal.html" class="back-btn">← Return to Master Manual</a>
+
+    </div>
+</body>
+
+</html>
