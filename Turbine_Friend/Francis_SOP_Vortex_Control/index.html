@@ -12,14 +12,14 @@
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://anohubs.com/Turbine_Friend/Francis_SOP_Linkage/">
+    <meta property="og:url" content="https://anohubs.com/Turbine_Friend/Francis_SOP_Vortex_Control/">
     <meta property="og:title" content="AnoHUB | Engineering Immunity Protocol">
     <meta property="og:description" content="Global standard for hydro asset integrity. 15+ years of field forensic engineering.">
     <meta property="og:image" content="https://anohubs.com/assets/images/holy_t_trinity.jpg">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://anohubs.com/Turbine_Friend/Francis_SOP_Linkage/">
+    <meta property="twitter:url" content="https://anohubs.com/Turbine_Friend/Francis_SOP_Vortex_Control/">
     <meta property="twitter:title" content="AnoHUB | Engineering Immunity Protocol">
     <meta property="twitter:description" content="Global standard for hydro asset integrity. 15+ years of field forensic engineering.">
     <meta property="twitter:image" content="https://anohubs.com/assets/images/holy_t_trinity.jpg">
@@ -203,7 +203,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOP: Governor & Vane Linkage</title>
+    <title>SOP: Vortex Control & Draft Tube Dynamics</title>
     <style>
         /* Shared Architecture from Francis_Horizontal.html */
         :root {
@@ -340,57 +340,20 @@
             font-size: 0.9em;
         }
 
-        /* === PRINT CSS FOR PDF EXPORT === */
-        @media print {
-            body {
-                background: white;
-                color: black;
-                font-size: 11pt;
-                line-height: 1.4;
-            }
+        .physics-box {
+            background: #f0f7ff;
+            border-left: 4px solid #0066cc;
+            padding: 12px;
+            margin: 15px 0;
+            font-style: italic;
+        }
 
-            .container {
-                max-width: 100%;
-                box-shadow: none;
-                border: none;
-                padding: 20px;
-            }
-
-            header {
-                border-bottom: 2px solid black;
-                page-break-after: avoid;
-            }
-
-            .section-title {
-                background: white !important;
-                color: black !important;
-                border: 2px solid black;
-                page-break-after: avoid;
-            }
-
-            .module {
-                page-break-inside: avoid;
-                border: 1px solid #333;
-            }
-
-            .back-btn {
-                display: none;
-                /* Hide navigation in print */
-            }
-
-            /* Ensure tables don't break across pages */
-            table {
-                page-break-inside: avoid;
-            }
-
-            /* Add page numbers */
-            @page {
-                margin: 2cm;
-
-                @bottom-right {
-                    content: "Page " counter(page) " of " counter(pages);
-                }
-            }
+        .avoid-zone {
+            background: #fff5f5;
+            border-left: 4px solid #d9534f;
+            padding: 12px;
+            margin: 15px 0;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -400,90 +363,213 @@
     <div class="container">
 
         <header>
-            <h1>Critical SOP: Governor & Guide Vane Linkage</h1>
-            <h2>Mechanical Synchronization & Transmission</h2>
+            <h1>Advanced SOP: Vortex Control & Draft Tube Dynamics</h1>
+            <h2>The "Forgotten" Fluid Dynamics - Managing Spiral Vortex & Surging</h2>
         </header>
 
         <!-- INTRO MODULE -->
         <div class="module critical">
-            <h3>⚠️ THE COST OF BACKLASH</h3>
-            <p><strong>Context:</strong> The hydraulic piston (Servomotor) pushes the Regulating Ring, which rotates all
-                20 guide vanes simultaneously to control water flow.</p>
+            <h3>⚠️ THE SHAKING POWERHOUSE</h3>
+            <p><strong>Context:</strong> At specific load points (typically 40-60% power), a spiral vortex rope forms in
+                the draft tube downstream of the runner. This is not a minor vibration - it can shake the entire
+                powerhouse structure.</p>
             <ul>
-                <li><strong>The Risk:</strong> If the linkage pins have "play" (wear), the vanes will flutter.</li>
-                <li><strong>Equation:</strong> 1mm of pin wear = ~5% loss in vane synchronization. This leads to
-                    efficiency loss and hunting.</li>
+                <li><strong>The Risk:</strong> Operators often dismiss this as "just noise" or "normal operation," but
+                    prolonged exposure causes:
+                    <ul>
+                        <li>Fatigue cracks in draft tube liner concrete</li>
+                        <li>Bearing damage from cyclic loading</li>
+                        <li>Floor bolt loosening in turbine mounting</li>
+                    </ul>
+                </li>
+                <li><strong>Economic Impact:</strong> If ignored, vortex-induced fatigue can reduce turbine lifespan by
+                    30-40%, requiring major refurbishment.</li>
             </ul>
         </div>
 
-        <div class="section-title">SOP 1: Linkage Logic & Inspection</div>
+        <div class="section-title">SOP 1: The Physics of Vortex Rope Formation</div>
         <div class="module technical">
-            <p>The system is a chain. A chain is only as strong as its weakest link (pin).</p>
+            <p>Understanding the mechanism allows intelligent countermeasures instead of reactive firefighting.</p>
 
-            <h3>1.1 Transmission Path</h3>
-            <p>Servomotor → Regulating Ring → Linkage Arms (20x) → Guide Vane Stems.</p>
+            <h3>1.1 Fluid Dynamics Simplified</h3>
+            <p>When the Francis runner operates at partial load, water exits the runner with residual swirl (tangential
+                velocity). This swirl continues into the draft tube, creating a helical vortex rope that rotates and
+                pulsates.</p>
 
-            <h3>1.2 Bushing & Pin Check</h3>
-            <ol>
-                <li><strong>Static Check:</strong> With the unit stopped and pressure released, grab each linkage arm by
-                    hand.</li>
-                <li><strong>Push/Pull:</strong> Attempt to wiggle the arm.</li>
-                <li><strong>Result:</strong>
+            <div class="physics-box">
+                <strong>Key Physics:</strong> The vortex rope has a natural frequency (typically 0.2-0.4 × runner
+                rotation frequency). If this frequency matches the structural resonance of the draft tube or powerhouse,
+                violent vibrations occur.
+            </div>
+
+            <h3>1.2 Vortex Rope Characteristics</h3>
+            <ul>
+                <li><strong>Appearance:</strong> If draft tube has sight glass, visible as a rotating "snake" of
+                    low-pressure vapor.</li>
+                <li><strong>Frequency:</strong> Calculate expected vortex frequency:
                     <ul>
-                        <li><strong>Pass:</strong> Zero palpable movement. Solid.</li>
-                        <li><strong>Fail:</strong> "Clicking" sound or visible movement. Replace bushing immediately.
-                        </li>
+                        <li>Runner speed: 600 RPM (Unit 1) = 10 Hz</li>
+                        <li>Vortex frequency: 0.2-0.4 × 10 Hz = <strong>2-4 Hz</strong></li>
+                    </ul>
+                </li>
+                <li><strong>Audible Signal:</strong> Low-frequency "thumping" or "whumping" sound at 2-4 Hz interval
+                    (count: 1-Mississippi, 2-Mississippi rhythm).</li>
+                <li><strong>Vibration Sensors:</strong> SCADA accelerometers will show peak at 2-4 Hz when vortex is
+                    active.</li>
+            </ul>
+        </div>
+
+        <div class="section-title">SOP 2: Identifying "Rough Running Zones"</div>
+        <div class="module diagnostic">
+            <p><strong>Objective:</strong> Map the specific load points where vortex induces unacceptable vibration,
+                then avoid operating in those zones.</p>
+
+            <h3>2.1 Load-Shifting Diagnostic Procedure</h3>
+            <ol>
+                <li><strong>Test Setup:</strong> Install temporary vibration accelerometer on draft tube wall (or use
+                    existing SCADA sensors).</li>
+                <li><strong>Load Sweep:</strong> Incrementally adjust power output from 20% to 100% in 5% steps.</li>
+                <li><strong>Dwell Time:</strong> Hold each load for 3 minutes to allow vortex to stabilize.</li>
+                <li><strong>Data Recording:</strong> For each load point, record:
+                    <ul>
+                        <li>Vibration amplitude (mm/s RMS)</li>
+                        <li>Dominant frequency (Hz)</li>
+                        <li>Audible noise level (subjective: Low/Medium/High)</li>
+                    </ul>
+                </li>
+                <li><strong>Threshold Criteria:</strong>
+                    <ul>
+                        <li><strong>Safe:</strong>
+                            <2.0 mm/s vibration</li>
+                        <li><strong>Warning:</strong> 2.0-4.0 mm/s (avoid continuous operation)</li>
+                        <li><strong>Critical:</strong> >4.0 mm/s (AVOID - damage accumulates rapidly)</li>
                     </ul>
                 </li>
             </ol>
-        </div>
 
-        <div class="section-title">SOP 2: Lubrication Audit</div>
-        <div class="module technical">
-            <p>Friction causes the governor to "hunt" (unstable power). Grease is the stabilizer.</p>
+            <div class="avoid-zone">
+                <strong>TYPICAL ROUGH RUNNING ZONES FOR FRANCIS TURBINES:</strong><br>
+                • 35-50% load (low head conditions)<br>
+                • 55-65% load (medium head, high swirl)<br>
+                <br>
+                <strong>OPERATOR RULE:</strong> If grid demand requires operation in rough zone, limit continuous run
+                time to <2 hours. Request load adjustment from dispatcher if possible. </div>
 
-            <h3>2.1 Central Greasing System</h3>
-            <ul>
-                <li><strong>Audit:</strong> Verify the central pump is building pressure (typically 150-200 bar).</li>
-                <li><strong>Visual Confirmation:</strong> Inspect all 20 guide vane stems. You should see a
-                    <strong>fresh collar of grease</strong> purging from the seals.
-                </li>
-                <li><strong>Blockage:</strong> If one bearing is dry while others purge, the dosage valve is blocked.
-                    Clear it manually.</li>
-            </ul>
-        </div>
-
-        <div class="section-title">SOP 3: The Friction "Swing Test"</div>
-        <div class="module diagnostic">
-            <p>This test confirms the entire mechanism "floats" freely.</p>
-
-            <h3>3.1 Procedure</h3>
-            <ol>
-                <li><strong>Safety:</strong> Unit stopped. MIV Closed. <strong>Mechanical Safety Pin REMOVED</strong>
-                    (Control risk!).</li>
-                <li><strong>Disconnect:</strong> Uncouple the servomotor piston from the regulating ring.</li>
-                <li><strong>Manual Swing:</strong> Two technicians should be able to push the regulating ring by hand
-                    from 0% to 100% open.</li>
-                <li><strong>Criteria:</strong> Movement must be smooth. No "binding", "hard spots", or "jumping".</li>
-            </ol>
-            <div class="visual-aid">
-                Diagnosis: If the ring binds at a specific spot, a guide vane is bent or a debris rock is lodged in the
-                casing.
+                    <h3>2.2 Creating the "Forbidden Zone" Chart</h3>
+                    <p>After completing load sweep, create a visual chart posted in control room:</p>
+                    <ul>
+                        <li>X-axis: Power output (0-100%)</li>
+                        <li>Y-axis: Vibration level (mm/s)</li>
+                        <li>Color zones: Green (safe), Yellow (warning), Red (avoid)</li>
+                    </ul>
+                    <div class="visual-aid">
+                        [CHART PLACEHOLDER: Load vs. Vibration with color-coded zones]
+                    </div>
             </div>
+
+            <div class="section-title">SOP 3: Air Injection Optimization</div>
+            <div class="module technical">
+                <p>Air admission is not just "venting" - it's a precision tool to disrupt vortex coherence.</p>
+
+                <h3>3.1 The Mechanism: Vortex Rope Breakup</h3>
+                <p><strong>Physics:</strong> Injecting air into the draft tube creates buoyant bubbles that interfere
+                    with the vortex rope's rotational coherence. The rope becomes unstable and breaks into smaller, less
+                    energetic eddies.</p>
+
+                <h3>3.2 Tuning the Air Admission Valve</h3>
+                <p><strong>Context for Unit 1:</strong> Air admission valve is already installed (ref: DFT Air Admission
+                    SOP), but may not be optimized for vortex suppression.</p>
+
+                <ol>
+                    <li><strong>Baseline:</strong> Operate unit at known "rough running" load (e.g., 45% power) with air
+                        valve CLOSED. Record vibration level.</li>
+                    <li><strong>Incremental Opening:</strong> Open air valve in 10% increments (10%, 20%, 30%... up to
+                        100%).</li>
+                    <li><strong>Observation:</strong> At each increment, allow 2 minutes for flow stabilization, then
+                        record vibration.</li>
+                    <li><strong>Optimal Setting:</strong> The valve opening that produces <strong>minimum
+                            vibration</strong> is the "sweet spot" for this specific load point.</li>
+                    <li><strong>Warning:</strong> Excessive air injection (>70% valve open) can create secondary noise
+                        and reduce efficiency slightly (~0.5-1%). Balance vibration reduction vs. efficiency loss.</li>
+                </ol>
+
+                <div class="physics-box">
+                    <strong>Low-Head Operations:</strong> During monsoon season when river level is high (reducing net
+                    head), vortex intensity increases. Air injection requirements may double compared to dry season.
+                    Re-tune air valve seasonally.
+                </div>
+
+                <h3>3.3 Air Compressor Capacity Check</h3>
+                <p>Ensure the air supply compressor can sustain the required flow rate:</p>
+                <ul>
+                    <li><strong>Typical Demand:</strong> 50-100 Nm³/h at 2-3 bar gauge pressure</li>
+                    <li><strong>Verification:</strong> Monitor compressor pressure during peak air injection. If
+                        pressure drops below 1.5 bar, compressor is undersized.</li>
+                    <li><strong>Upgrade Path:</strong> If existing compressor insufficient, add secondary unit or
+                        increase tank capacity buffer.</li>
+                </ul>
+            </div>
+
+            <div class="section-title">SOP 4: Acoustic Diagnostic</div>
+            <div class="module diagnostic">
+                <p>Operators can identify vortex issues by <strong>sound</strong> even without instrumentation.</p>
+
+                <h3>4.1 The "Thumping" Signature</h3>
+                <ul>
+                    <li><strong>Frequency:</strong> Low-frequency rhythmic thumping at 2-4 beats per second (120-240 BPM
+                        if thinking in music terms).</li>
+                    <li><strong>Location:</strong> Loudest near draft tube elbow or tailrace exit.</li>
+                    <li><strong>Character:</strong> "Whump-whump-whump" - not a high-pitched whine or grinding. Feels
+                        like a slow heartbeat.</li>
+                </ul>
+
+                <h3>4.2 Differential Diagnosis</h3>
+                <table border="1" cellpadding="8" style="width:100%; margin-top:15px; border-collapse: collapse;">
+                    <tr style="background-color: #f0f7ff;">
+                        <th>Sound</th>
+                        <th>Likely Cause</th>
+                        <th>Action</th>
+                    </tr>
+                    <tr>
+                        <td>Low-frequency thumping (2-4 Hz)</td>
+                        <td>Draft tube vortex rope</td>
+                        <td>Shift load or increase air injection</td>
+                    </tr>
+                    <tr>
+                        <td>High-frequency whine (>100 Hz)</td>
+                        <td>Bearing issue or cavitation</td>
+                        <td>Refer to Bearings/Cavitation SOP</td>
+                    </tr>
+                    <tr>
+                        <td>Grinding/scraping</td>
+                        <td>Mechanical contact (runner/casing)</td>
+                        <td>STOP UNIT - Inspect clearances</td>
+                    </tr>
+                    <tr>
+                        <td>Intermittent banging</td>
+                        <td>Loose component or debris impact</td>
+                        <td>STOP UNIT - Inspect intake/runner</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="section-title">Summary Checklist</div>
+            <div class="module">
+                <ul>
+                    <li><strong>Quarterly:</strong> Perform load sweep to verify "rough running zones" chart is still
+                        accurate (river head changes seasonally).</li>
+                    <li><strong>Monthly:</strong> Test air admission valve for proper operation and optimal setting at
+                        typical loads.</li>
+                    <li><strong>Daily:</strong> During shift handover, report any new vibrations or unusual sounds to
+                        incoming operator.</li>
+                    <li><strong>On Overhaul:</strong> Inspect draft tube liner for fatigue cracks induced by long-term
+                        vortex exposure.</li>
+                </ul>
+            </div>
+
+            <a href="./Francis_Horizontal.html" class="back-btn">← Return to Master Manual</a>
+
         </div>
-
-        <div class="section-title">Summary Checklist</div>
-        <div class="module">
-            <ul>
-                <li><strong>Monthly:</strong> Check for "Grease Collars" on all 20 vanes.</li>
-                <li><strong>Annually:</strong> Perform Manual "Swing Test" to check friction.</li>
-                <li><strong>On Overhaul:</strong> Replace all shear pins and bushings if > 0.1mm play detected.</li>
-            </ul>
-        </div>
-
-        <a href="./Francis_Horizontal.html" class="back-btn">← Return to Master Manual</a>
-
-    </div>
 
 </body>
 

@@ -12,14 +12,14 @@
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://anohubs.com/Turbine_Friend/Francis_SOP_Linkage/">
+    <meta property="og:url" content="https://anohubs.com/Turbine_Friend/Francis_SOP_Thrust_Balance/">
     <meta property="og:title" content="AnoHUB | Engineering Immunity Protocol">
     <meta property="og:description" content="Global standard for hydro asset integrity. 15+ years of field forensic engineering.">
     <meta property="og:image" content="https://anohubs.com/assets/images/holy_t_trinity.jpg">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://anohubs.com/Turbine_Friend/Francis_SOP_Linkage/">
+    <meta property="twitter:url" content="https://anohubs.com/Turbine_Friend/Francis_SOP_Thrust_Balance/">
     <meta property="twitter:title" content="AnoHUB | Engineering Immunity Protocol">
     <meta property="twitter:description" content="Global standard for hydro asset integrity. 15+ years of field forensic engineering.">
     <meta property="twitter:image" content="https://anohubs.com/assets/images/holy_t_trinity.jpg">
@@ -203,7 +203,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOP: Governor & Vane Linkage</title>
+    <title>SOP: Thrust Bearing & Hydraulic Balance</title>
     <style>
         /* Shared Architecture from Francis_Horizontal.html */
         :root {
@@ -340,57 +340,20 @@
             font-size: 0.9em;
         }
 
-        /* === PRINT CSS FOR PDF EXPORT === */
-        @media print {
-            body {
-                background: white;
-                color: black;
-                font-size: 11pt;
-                line-height: 1.4;
-            }
+        .force-calc {
+            background: #f0f7ff;
+            border-left: 4px solid #0066cc;
+            padding: 12px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+        }
 
-            .container {
-                max-width: 100%;
-                box-shadow: none;
-                border: none;
-                padding: 20px;
-            }
-
-            header {
-                border-bottom: 2px solid black;
-                page-break-after: avoid;
-            }
-
-            .section-title {
-                background: white !important;
-                color: black !important;
-                border: 2px solid black;
-                page-break-after: avoid;
-            }
-
-            .module {
-                page-break-inside: avoid;
-                border: 1px solid #333;
-            }
-
-            .back-btn {
-                display: none;
-                /* Hide navigation in print */
-            }
-
-            /* Ensure tables don't break across pages */
-            table {
-                page-break-inside: avoid;
-            }
-
-            /* Add page numbers */
-            @page {
-                margin: 2cm;
-
-                @bottom-right {
-                    content: "Page " counter(page) " of " counter(pages);
-                }
-            }
+        .silt-warning {
+            background: #fdf8e4;
+            border-left: 4px solid #f0ad4e;
+            padding: 12px;
+            margin: 15px 0;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -400,84 +363,200 @@
     <div class="container">
 
         <header>
-            <h1>Critical SOP: Governor & Guide Vane Linkage</h1>
-            <h2>Mechanical Synchronization & Transmission</h2>
+            <h1>Advanced SOP: Thrust Bearing & Hydraulic Balance</h1>
+            <h2>The "Forgotten" Balance - Axial Thrust Management & Balance Holes</h2>
         </header>
 
         <!-- INTRO MODULE -->
         <div class="module critical">
-            <h3>⚠️ THE COST OF BACKLASH</h3>
-            <p><strong>Context:</strong> The hydraulic piston (Servomotor) pushes the Regulating Ring, which rotates all
-                20 guide vanes simultaneously to control water flow.</p>
+            <h3>⚠️ THE SILENT KILLER</h3>
+            <p><strong>Context:</strong> While the main bearings carry the turbine's weight (radial load), the thrust
+                bearing handles the massive <strong>axial</strong> (horizontal) force created by water pressure pushing
+                on the back of the runner.</p>
             <ul>
-                <li><strong>The Risk:</strong> If the linkage pins have "play" (wear), the vanes will flutter.</li>
-                <li><strong>Equation:</strong> 1mm of pin wear = ~5% loss in vane synchronization. This leads to
-                    efficiency loss and hunting.</li>
+                <li><strong>The Risk:</strong> If the "balance holes" in the runner hub become clogged with silt, water
+                    pressure behind the runner increases dramatically, potentially <strong>tripling</strong> the thrust
+                    bearing load.</li>
+                <li><strong>Why It's Forgotten:</strong> Thrust bearing temperature rise is gradual, so operators don't
+                    notice until Babbitt metal has already started to fail.</li>
+                <li><strong>Silt-Heavy River Context:</strong> Unit 1's river carries significant silt, especially
+                    during monsoon season. Balance holes are highly susceptible to blockage.</li>
             </ul>
         </div>
 
-        <div class="section-title">SOP 1: Linkage Logic & Inspection</div>
+        <div class="section-title">SOP 1: Hydraulic Thrust Logic</div>
         <div class="module technical">
-            <p>The system is a chain. A chain is only as strong as its weakest link (pin).</p>
+            <p>Understanding the forces allows predictive detection, not just reactive repairs.</p>
 
-            <h3>1.1 Transmission Path</h3>
-            <p>Servomotor → Regulating Ring → Linkage Arms (20x) → Guide Vane Stems.</p>
+            <h3>1.1 The Physics of Axial Thrust</h3>
+            <p>Water enters the turbine at high pressure and exits at low pressure (draft tube). This pressure
+                differential acts on the runner surfaces, creating a net force pushing the runner
+                <strong>downstream</strong> (toward the generator).</p>
 
-            <h3>1.2 Bushing & Pin Check</h3>
+            <div class="force-calc">
+                <strong>SIMPLIFIED FORCE CALCULATION:</strong><br>
+                Effective Runner Area: ~1.5 m² (back side)<br>
+                Upstream Pressure: 15 bar (150 m head)<br>
+                Downstream Pressure: 0.2 bar (draft tube)<br>
+                <br>
+                Net Thrust = (15 - 0.2) bar × 1.5 m² = <strong>~220 kN</strong> (22 metric tons of force!)<br>
+                <br>
+                <em>Note: This is a massive force that continuously pushes on the thrust bearing pads.</em>
+            </div>
+
+            <h3>1.2 The Balance Hole System</h3>
+            <p><strong>Design Intent:</strong> Balance holes (typically 4-8 holes drilled through the runner hub) allow
+                high-pressure water to equalize on both sides of the runner, reducing net axial thrust.</p>
+            <p><strong>When Functioning Properly:</strong> Balance holes reduce thrust by 50-70%, bringing the load from
+                220 kN down to ~80-100 kN.</p>
+            <p><strong>When Clogged:</strong> No pressure equalization occurs. Full 220 kN load applied to thrust
+                bearing → rapid temperature rise → Babbitt metal failure within hours.</p>
+        </div>
+
+        <div class="section-title">SOP 2: Balance Hole Inspection Procedure</div>
+        <div class="module technical">
+            <p><strong>Criticality:</strong> Due to silt-heavy river conditions, balance hole inspection must be
+                performed during <strong>every major overhaul</strong> and suspected whenever thrust bearing temperature
+                increases without explanation.</p>
+
+            <h3>2.1 Access Requirements</h3>
+            <ul>
+                <li><strong>Unit Status:</strong> Complete shutdown, MIV closed, draft tube dewatered.</li>
+                <li><strong>Safety:</strong> Confined space entry protocol for draft tube access (gas monitor,
+                    ventilation, safety harness).</li>
+                <li><strong>Tools:</strong> High-pressure water lance, borescope camera, wire brushes, flashlight.</li>
+            </ul>
+
+            <h3>2.2 Visual Inspection</h3>
             <ol>
-                <li><strong>Static Check:</strong> With the unit stopped and pressure released, grab each linkage arm by
-                    hand.</li>
-                <li><strong>Push/Pull:</strong> Attempt to wiggle the arm.</li>
-                <li><strong>Result:</strong>
+                <li><strong>Access via Draft Tube:</strong> Enter draft tube from tailrace side. Navigate to runner hub
+                    area.</li>
+                <li><strong>Locate Balance Holes:</strong> Typically 6-12mm diameter holes drilled radially through
+                    runner hub (usually 4-8 holes spaced evenly around circumference).</li>
+                <li><strong>Visual Check:</strong> With flashlight, inspect each hole opening:
                     <ul>
-                        <li><strong>Pass:</strong> Zero palpable movement. Solid.</li>
-                        <li><strong>Fail:</strong> "Clicking" sound or visible movement. Replace bushing immediately.
-                        </li>
+                        <li><strong>PASS:</strong> Hole is clear, you can see through to the other side or confirm depth
+                            with wire probe.</li>
+                        <li><strong>FAIL:</strong> Hole is partially or fully blocked with silt, debris, or mineral
+                            deposits.</li>
                     </ul>
                 </li>
             </ol>
-        </div>
 
-        <div class="section-title">SOP 2: Lubrication Audit</div>
-        <div class="module technical">
-            <p>Friction causes the governor to "hunt" (unstable power). Grease is the stabilizer.</p>
-
-            <h3>2.1 Central Greasing System</h3>
-            <ul>
-                <li><strong>Audit:</strong> Verify the central pump is building pressure (typically 150-200 bar).</li>
-                <li><strong>Visual Confirmation:</strong> Inspect all 20 guide vane stems. You should see a
-                    <strong>fresh collar of grease</strong> purging from the seals.
-                </li>
-                <li><strong>Blockage:</strong> If one bearing is dry while others purge, the dosage valve is blocked.
-                    Clear it manually.</li>
-            </ul>
-        </div>
-
-        <div class="section-title">SOP 3: The Friction "Swing Test"</div>
-        <div class="module diagnostic">
-            <p>This test confirms the entire mechanism "floats" freely.</p>
-
-            <h3>3.1 Procedure</h3>
+            <h3>2.3 Cleaning Procedure</h3>
             <ol>
-                <li><strong>Safety:</strong> Unit stopped. MIV Closed. <strong>Mechanical Safety Pin REMOVED</strong>
-                    (Control risk!).</li>
-                <li><strong>Disconnect:</strong> Uncouple the servomotor piston from the regulating ring.</li>
-                <li><strong>Manual Swing:</strong> Two technicians should be able to push the regulating ring by hand
-                    from 0% to 100% open.</li>
-                <li><strong>Criteria:</strong> Movement must be smooth. No "binding", "hard spots", or "jumping".</li>
+                <li><strong>Mechanical Cleaning:</strong> Use wire brush or flexible shaft drill to dislodge s silt
+                    deposits.</li>
+                <li><strong>High-Pressure Water:</strong> Flush each hole with water lance (100-150 bar) to clear
+                    remaining debris.</li>
+                <li><strong>Verification:</strong> Insert wire gauge (6mm diameter) through full length of hole to
+                    confirm complete clearance.</li>
+                <li><strong>Documentation:</strong> Record condition of each hole in maintenance log (% blockage
+                    estimate before cleaning).</li>
             </ol>
-            <div class="visual-aid">
-                Diagnosis: If the ring binds at a specific spot, a guide vane is bent or a debris rock is lodged in the
-                casing.
+
+            <div class="silt-warning">
+                <strong>SILT-HEAVY RIVER PROTOCOL:</strong> During monsoon season (June-September), silt concentration
+                triples. If unit operates continuously during this period, plan for balance hole inspection at end of
+                season (October) as preventive maintenance, not just reactive.
             </div>
+        </div>
+
+        <div class="section-title">SOP 3: Thrust Pad Inspection</div>
+        <div class="module diagnostic">
+            <p>The thrust bearing uses Babbitt metal pads that ride on an oil film. If the thrust load exceeds design
+                limits (due to clogged balance holes), the oil film breaks down and metal-to-metal contact occurs.</p>
+
+            <h3>3.1 Oil Analysis - The "Flakes" Test</h3>
+            <p><strong>Diagnostic Principle:</strong> Failing Babbitt metal sheds microscopic metallic flakes into the
+                bearing oil. These flakes are visible proof of bearing distress.</p>
+
+            <ol>
+                <li><strong>Sample Collection:</strong> Draw oil sample from thrust bearing sump (50ml minimum in clean
+                    glass bottle).</li>
+                <li><strong>Visual Inspection:</strong> Hold bottle to light source. Swirl gently.
+                    <ul>
+                        <li><strong>PASS (Healthy):</strong> Oil is translucent amber, no particulates visible.</li>
+                        <li><strong>WARNING:</strong> Fine metallic "shimmer" visible when swirled - early stage wear.
+                        </li>
+                        <li><strong>CRITICAL:</strong> Visible metallic flakes settling to bottom - active Babbitt
+                            degradation.</li>
+                    </ul>
+                </li>
+                <li><strong>Laboratory Analysis:</strong> If flakes detected, send sample for spectrographic analysis to
+                    quantify metal concentration (ppm).</li>
+            </ol>
+
+            <h3>3.2 Thrust Pad Visual Inspection (During Overhaul)</h3>
+            <p><strong>Access:</strong> Requires disassembly of thrust bearing housing (major work, typically during
+                scheduled outage).</p>
+            <ul>
+                <li><strong>Healthy Babbitt:</strong> Smooth silver surface, uniform thickness, no scoring or pitting.
+                </li>
+                <li><strong>Early Wear:</strong> Surface discoloration (darkening), minor scoring lines parallel to
+                    rotation.</li>
+                <li><strong>Advanced Failure:</strong> Deep gouges, missing Babbitt chunks, exposed steel backing.</li>
+            </ul>
+
+            <div class="visual-aid">
+                [PHOTO REFERENCE: Healthy vs. Failed Babbitt Metal Surface]<br>
+                Recommended: Create visual reference chart posted in workshop for technician training.
+            </div>
+        </div>
+
+        <div class="section-title">SOP 4: Thrust Bearing Temperature Monitoring</div>
+        <div class="module diagnostic">
+            <p>Continuous monitoring provides early warning before catastrophic failure.</p>
+
+            <h3>4.1 Normal Operating Range</h3>
+            <div class="force-calc">
+                <strong>THRUST BEARING TEMPERATURE LIMITS:</strong><br>
+                Normal: 40-50°C (healthy bearing, clean balance holes)<br>
+                Warning: 50-60°C (increased load or marginal lubrication)<br>
+                Critical: >60°C (STOP UNIT - inspect balance holes and oil quality)<br>
+                Emergency: >70°C (Immediate shutdown - bearing failure imminent)
+            </div>
+
+            <h3>4.2 Diagnostic Correlation</h3>
+            <p>Temperature rise patterns can indicate root cause:</p>
+            <ul>
+                <li><strong>Gradual rise over days/weeks:</strong> Balance holes slowly clogging with silt → Plan
+                    cleaning during next scheduled outage.</li>
+                <li><strong>Sudden spike (hours):</strong> Balance hole(s) suddenly blocked by debris strike → Emergency
+                    inspection required.</li>
+                <li><strong>Temperature rise with vibration increase:</strong> Possible misalignment creating unbalanced
+                    thrust → Check shaft alignment (ref: Precision SOP).</li>
+            </ul>
+
+            <h3>4.3 SCADA Integration</h3>
+            <ul>
+                <li><strong>Alarm Setpoints:</strong> Configure SCADA to alarm at 55°C (warning) and 65°C (critical).
+                </li>
+                <li><strong>Trend Monitoring:</strong> Review thrust bearing temperature trend weekly. Gradual upward
+                    trend over months indicates balance hole degradation even if absolute temperature still acceptable.
+                </li>
+            </ul>
         </div>
 
         <div class="section-title">Summary Checklist</div>
         <div class="module">
+            <h3>Preventive Maintenance Schedule</h3>
             <ul>
-                <li><strong>Monthly:</strong> Check for "Grease Collars" on all 20 vanes.</li>
-                <li><strong>Annually:</strong> Perform Manual "Swing Test" to check friction.</li>
-                <li><strong>On Overhaul:</strong> Replace all shear pins and bushings if > 0.1mm play detected.</li>
+                <li><strong>Monthly:</strong> Collect oil sample from thrust bearing, visual flake inspection.</li>
+                <li><strong>Quarterly:</strong> Review thrust bearing temperature trends (SCADA data).</li>
+                <li><strong>Annually:</strong> Balance hole inspection and cleaning (mandatory for silt-heavy river
+                    conditions).</li>
+                <li><strong>Every Major Overhaul (3-5 years):</strong> Disassemble thrust bearing, inspect Babbitt pads
+                    for wear, replace if >30% degraded.</li>
+            </ul>
+
+            <h3>Emergency Response Protocol</h3>
+            <ul>
+                <li><strong>If thrust temperature >65°C:</strong> Reduce load immediately, prepare for shutdown.</li>
+                <li><strong>If metallic flakes detected in oil:</strong> Plan emergency outage within 2 weeks maximum.
+                </li>
+                <li><strong>If temperature >70°C:</strong> STOP UNIT - Do not restart until root cause identified and
+                    corrected.</li>
             </ul>
         </div>
 

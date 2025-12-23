@@ -12,14 +12,14 @@
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://anohubs.com/Turbine_Friend/Francis_SOP_Linkage/">
+    <meta property="og:url" content="https://anohubs.com/Turbine_Friend/Francis_Emergency_Protocols/">
     <meta property="og:title" content="AnoHUB | Engineering Immunity Protocol">
     <meta property="og:description" content="Global standard for hydro asset integrity. 15+ years of field forensic engineering.">
     <meta property="og:image" content="https://anohubs.com/assets/images/holy_t_trinity.jpg">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://anohubs.com/Turbine_Friend/Francis_SOP_Linkage/">
+    <meta property="twitter:url" content="https://anohubs.com/Turbine_Friend/Francis_Emergency_Protocols/">
     <meta property="twitter:title" content="AnoHUB | Engineering Immunity Protocol">
     <meta property="twitter:description" content="Global standard for hydro asset integrity. 15+ years of field forensic engineering.">
     <meta property="twitter:image" content="https://anohubs.com/assets/images/holy_t_trinity.jpg">
@@ -203,14 +203,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOP: Governor & Vane Linkage</title>
+    <title>EMERGENCY PROTOCOLS - Francis Turbine</title>
     <style>
-        /* Shared Architecture from Francis_Horizontal.html */
+        /* Emergency Red Theme */
         :root {
-            --primary-color: #003366;
-            --secondary-color: #0066cc;
-            --accent-color: #d9534f;
-            --warning-color: #f0ad4e;
+            --emergency-color: #dc2626;
+            --warning-color: #f59e0b;
+            --critical-color: #991b1b;
             --bg-color: #f4f7f6;
             --text-color: #333;
             --border-color: #dde;
@@ -232,165 +231,166 @@
             padding: 40px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
+            border: 3px solid var(--emergency-color);
         }
 
         header {
-            border-bottom: 3px solid var(--primary-color);
-            padding-bottom: 20px;
-            margin-bottom: 30px;
+            background: linear-gradient(135deg, var(--critical-color), var(--emergency-color));
+            color: white;
+            padding: 30px;
+            margin: -40px -40px 30px -40px;
+            border-radius: 8px 8px 0 0;
             text-align: center;
         }
 
         h1 {
             margin: 0;
-            color: var(--primary-color);
-            font-size: 28px;
+            font-size: 32px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         h2 {
-            color: var(--secondary-color);
-            font-size: 18px;
-            margin-top: 5px;
+            font-size: 14px;
+            margin-top: 10px;
             font-weight: 400;
+            opacity: 0.9;
+        }
+
+        .emergency-notice {
+            background: #fee2e2;
+            border: 2px solid var(--emergency-color);
+            border-left: 6px solid var(--emergency-color);
+            padding: 20px;
+            margin: 20px 0;
+            font-weight: bold;
+            font-size: 1.1em;
         }
 
         .section-title {
-            background-color: var(--primary-color);
+            background-color: var(--emergency-color);
             color: #fff;
-            padding: 10px 15px;
+            padding: 12px 20px;
             margin-top: 40px;
             border-radius: 4px;
-            font-size: 1.2em;
+            font-size: 1.3em;
             font-weight: bold;
             display: flex;
             align-items: center;
+            box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
         }
 
         .section-title::before {
-            content: "►";
-            margin-right: 10px;
-            font-size: 0.8em;
+            content: "⚠";
+            margin-right: 12px;
+            font-size: 1.2em;
         }
 
         h3 {
-            color: var(--primary-color);
-            border-left: 4px solid var(--secondary-color);
-            padding-left: 10px;
+            color: var(--emergency-color);
+            border-left: 4px solid var(--emergency-color);
+            padding-left: 12px;
             margin-top: 25px;
+            font-size: 1.1em;
         }
 
-        .module {
-            border: 1px solid var(--border-color);
+        .protocol {
+            border: 2px solid var(--emergency-color);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 6px;
+            background: linear-gradient(to right, #fef2f2, #fff);
+        }
+
+        .immediate-action {
+            background: #fee2e2;
+            border-left: 6px solid var(--critical-color);
             padding: 15px;
             margin: 15px 0;
-            border-radius: 4px;
-            background-color: #fafafa;
+            font-weight: bold;
         }
 
-        .critical {
-            border-left: 5px solid var(--accent-color);
-            background-color: #fff5f5;
+        .step-list {
+            counter-reset: step-counter;
+            list-style: none;
+            padding-left: 0;
         }
 
-        .technical {
-            border-left: 5px solid var(--secondary-color);
-            background-color: #f0f7ff;
+        .step-list li {
+            counter-increment: step-counter;
+            margin: 15px 0;
+            padding: 12px;
+            background: #f9fafb;
+            border-left: 4px solid var(--emergency-color);
+            position: relative;
+            padding-left: 50px;
         }
 
-        .diagnostic {
-            border-left: 5px solid var(--warning-color);
-            background-color: #fdf8e4;
+        .step-list li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--emergency-color);
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
         }
 
-        ul,
-        ol {
-            padding-left: 20px;
-        }
-
-        li {
-            margin-bottom: 8px;
+        .timing-box {
+            background: #fef3c7;
+            border-left: 4px solid var(--warning-color);
+            padding: 12px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
         }
 
         .back-btn {
             display: inline-block;
-            margin-top: 30px;
+            margin-top: 40px;
             text-decoration: none;
-            color: var(--secondary-color);
+            color: white;
+            background: var(--emergency-color);
             font-weight: bold;
-            border: 1px solid var(--secondary-color);
-            padding: 10px 20px;
+            padding: 12px 24px;
             border-radius: 4px;
             transition: all 0.3s;
+            box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
         }
 
         .back-btn:hover {
-            background-color: var(--secondary-color);
-            color: #fff;
+            background: var(--critical-color);
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.5);
         }
 
-        .visual-aid {
-            border: 2px dashed #ccc;
-            padding: 15px;
-            margin: 10px 0;
-            background: #fff;
-            text-align: center;
-            color: #666;
-            font-size: 0.9em;
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
         }
 
-        /* === PRINT CSS FOR PDF EXPORT === */
-        @media print {
-            body {
-                background: white;
-                color: black;
-                font-size: 11pt;
-                line-height: 1.4;
-            }
+        table th {
+            background: var(--emergency-color);
+            color: white;
+            padding: 10px;
+            text-align: left;
+        }
 
-            .container {
-                max-width: 100%;
-                box-shadow: none;
-                border: none;
-                padding: 20px;
-            }
+        table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
 
-            header {
-                border-bottom: 2px solid black;
-                page-break-after: avoid;
-            }
-
-            .section-title {
-                background: white !important;
-                color: black !important;
-                border: 2px solid black;
-                page-break-after: avoid;
-            }
-
-            .module {
-                page-break-inside: avoid;
-                border: 1px solid #333;
-            }
-
-            .back-btn {
-                display: none;
-                /* Hide navigation in print */
-            }
-
-            /* Ensure tables don't break across pages */
-            table {
-                page-break-inside: avoid;
-            }
-
-            /* Add page numbers */
-            @page {
-                margin: 2cm;
-
-                @bottom-right {
-                    content: "Page " counter(page) " of " counter(pages);
-                }
-            }
+        table tr:nth-child(even) {
+            background: #f9fafb;
         }
     </style>
 </head>
@@ -400,86 +400,311 @@
     <div class="container">
 
         <header>
-            <h1>Critical SOP: Governor & Guide Vane Linkage</h1>
-            <h2>Mechanical Synchronization & Transmission</h2>
+            <h1>⚠ EMERGENCY PROTOCOLS ⚠</h1>
+            <h2>FRANCIS HORIZONTAL TURBINE - CRITICAL RESPONSE PROCEDURES</h2>
         </header>
 
-        <!-- INTRO MODULE -->
-        <div class="module critical">
-            <h3>⚠️ THE COST OF BACKLASH</h3>
-            <p><strong>Context:</strong> The hydraulic piston (Servomotor) pushes the Regulating Ring, which rotates all
-                20 guide vanes simultaneously to control water flow.</p>
+        <div class="emergency-notice">
+            🚨 THIS DOCUMENT CONTAINS TIME-CRITICAL PROCEDURES. FAMILIARIZE YOURSELF WITH ALL PROTOCOLS BEFORE EMERGENCY
+            OCCURS. RESPONSE TIME MEASURED IN SECONDS, NOT MINUTES.
+        </div>
+
+        <!-- PROTOCOL 1: LOAD REJECTION -->
+        <div class="section-title">PROTOCOL 1: Load Rejection & Overspeed</div>
+        <div class="protocol">
+            <h3>Scenario: Grid Trip - Unit Goes to Overspeed</h3>
+            <p><strong>Context:</strong> If the electrical grid disconnects suddenly (breaker trip, line fault), the
+                turbine loses its electrical load instantly. The runner, which was spinning at rated speed (600 RPM),
+                suddenly has no resistance and begins to accelerate (overspeed).</p>
+
+            <div class="immediate-action">
+                <strong>IMMEDIATE DANGER:</strong> If overspeed exceeds 120% rated speed (~720 RPM), centrifugal forces
+                can cause catastrophic runner failure (blade separation). Governor MUST close guide vanes within 3-5
+                seconds.
+            </div>
+
+            <h3>Automatic Response Sequence</h3>
+            <ol class="step-list">
+                <li><strong>Grid Relay Detects Disconnect:</strong> Loss of voltage or frequency deviation triggers
+                    emergency closure signal to governor.</li>
+                <li><strong>Governor Commands "Full Close":</strong> HPU drives servomotor to close all 20 guide vanes
+                    to minimum flow position.</li>
+                <li><strong>Overspeed Protection:</strong> If speed reaches 110% rated, emergency overspeed trip
+                    activates mechanical brake (if equipped).</li>
+                <li><strong>Unit Coasts Down:</strong> With flow stopped, runner decelerates naturally over 2-5 minutes
+                    depending on inertia.</li>
+            </ol>
+
+            <div class="timing-box">
+                <strong>CRITICAL TIMING:</strong><br>
+                0-2 sec: Grid disconnect detected → Governor signal sent<br>
+                2-5 sec: Guide vanes fully closed → Flow cut off<br>
+                5-10 sec: Speed peaks at ~105-110% → Begins deceleration<br>
+                2-5 min: Unit reaches full stop
+            </div>
+
+            <h3>Manual Intervention Protocol</h3>
+            <p><strong>IF AUTOMATIC GOVERNOR FAILS TO RESPOND:</strong></p>
+            <ol class="step-list">
+                <li><strong>Immediate Manual Override:</strong> Press "EMERGENCY CLOSE" button on control panel
+                    (bypasses all logic, drives HPU to full close).</li>
+                <li><strong>Monitor Overspeed:</strong> Watch tachometer - if speed exceeds 115%, activate EMERGENCY
+                    STOP (mechanical brake + MIV emergency closure).</li>
+                <li><strong>MIV Backup:</strong> If guide vanes fail to close and speed rising, manually trigger MIV
+                    closure using emergency release (gravity drop or counterweight system).</li>
+                <li><strong>Evacuation Protocol:</strong> If speed exceeds 120% rated and showing no sign of reduction,
+                    evacuate powerhouse immediately (runner failure risk).</li>
+            </ol>
+
+            <h3>Post-Event Inspection</h3>
             <ul>
-                <li><strong>The Risk:</strong> If the linkage pins have "play" (wear), the vanes will flutter.</li>
-                <li><strong>Equation:</strong> 1mm of pin wear = ~5% loss in vane synchronization. This leads to
-                    efficiency loss and hunting.</li>
+                <li>Inspect runner for cracks (focus on blade roots - highest stress during overspeed)</li>
+                <li>Check governor response time log in SCADA</li>
+                <li>Verify all guide vanes closed synchronously (check eccentric pins if uneven)</li>
             </ul>
         </div>
 
-        <div class="section-title">SOP 1: Linkage Logic & Inspection</div>
-        <div class="module technical">
-            <p>The system is a chain. A chain is only as strong as its weakest link (pin).</p>
+        <!-- PROTOCOL 2: SILT FLASH FLOOD -->
+        <div class="section-title">PROTOCOL 2: Silt Flash Flood</div>
+        <div class="protocol">
+            <h3>Scenario: River Silt Levels Exceed Design Limit</h3>
+            <p><strong>Context:</strong> During heavy monsoon or upstream landslide, river silt concentration can spike
+                from normal ~500 ppm to >5000 ppm. At these levels, silt acts as liquid sandpaper, eroding runner
+                blades, guide vanes, and bearing seals at an accelerated rate.</p>
 
-            <h3>1.1 Transmission Path</h3>
-            <p>Servomotor → Regulating Ring → Linkage Arms (20x) → Guide Vane Stems.</p>
+            <div class="immediate-action">
+                <strong>DAMAGE MECHANISM:</strong> Each hour of operation in high-silt conditions removes 0.1-0.5mm of
+                material from runner blade leading edges. This is equivalent to 6-12 months of normal wear. Runner can
+                become unserviceable in days.
+            </div>
 
-            <h3>1.2 Bushing & Pin Check</h3>
-            <ol>
-                <li><strong>Static Check:</strong> With the unit stopped and pressure released, grab each linkage arm by
-                    hand.</li>
-                <li><strong>Push/Pull:</strong> Attempt to wiggle the arm.</li>
-                <li><strong>Result:</strong>
-                    <ul>
-                        <li><strong>Pass:</strong> Zero palpable movement. Solid.</li>
-                        <li><strong>Fail:</strong> "Clicking" sound or visible movement. Replace bushing immediately.
-                        </li>
-                    </ul>
-                </li>
+            <h3>Silt Level Monitoring</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Silt Concentration</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>&lt; 1000 ppm</td>
+                        <td>NORMAL</td>
+                        <td>Continue operation</td>
+                    </tr>
+                    <tr>
+                        <td>1000-3000 ppm</td>
+                        <td>WARNING</td>
+                        <td>Increase monitoring frequency, prepare for shutdown</td>
+                    </tr>
+                    <tr>
+                        <td>3000-5000 ppm</td>
+                        <td>CRITICAL</td>
+                        <td>Reduce load to minimum, plan shutdown within 2 hours</td>
+                    </tr>
+                    <tr>
+                        <td>&gt; 5000 ppm</td>
+                        <td>EMERGENCY</td>
+                        <td>IMMEDIATE SHUTDOWN - Do not delay</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Emergency Shutdown Procedure</h3>
+            <ol class="step-list">
+                <li><strong>Notify Dispatcher:</strong> Inform grid operator of imminent shutdown (avoid grid
+                    instability).</li>
+                <li><strong>Reduce Load Gradually:</strong> Over 5-10 minutes, ramp down to minimum generation (prevents
+                    thermal shock to runner).</li>
+                <li><strong>Trip Unit:</strong> Open main breaker, allow governor to close guide vanes normally.</li>
+                <li><strong>Close MIV:</strong> After unit stopped, close Main Inlet Valve to prevent silt-laden water
+                    from pooling in spiral casing.</li>
+                <li><strong>Drain Spiral Casing (if possible):</strong> Use drain valves to remove silt-laden water
+                    before it settles and hardens.</li>
             </ol>
-        </div>
 
-        <div class="section-title">SOP 2: Lubrication Audit</div>
-        <div class="module technical">
-            <p>Friction causes the governor to "hunt" (unstable power). Grease is the stabilizer.</p>
-
-            <h3>2.1 Central Greasing System</h3>
+            <h3>Restart Criteria</h3>
+            <p><strong>DO NOT RESTART UNTIL:</strong></p>
             <ul>
-                <li><strong>Audit:</strong> Verify the central pump is building pressure (typically 150-200 bar).</li>
-                <li><strong>Visual Confirmation:</strong> Inspect all 20 guide vane stems. You should see a
-                    <strong>fresh collar of grease</strong> purging from the seals.
-                </li>
-                <li><strong>Blockage:</strong> If one bearing is dry while others purge, the dosage valve is blocked.
-                    Clear it manually.</li>
+                <li>River silt levels drop below 2000 ppm (verified by water sample analysis)</li>
+                <li>Intake trash racks cleaned and inspected</li>
+                <li>Spiral casing flushed if drainage was performed</li>
+                <li>Estimated silt flood duration passed (typically 12-48 hours after heavy rain stops)</li>
             </ul>
-        </div>
 
-        <div class="section-title">SOP 3: The Friction "Swing Test"</div>
-        <div class="module diagnostic">
-            <p>This test confirms the entire mechanism "floats" freely.</p>
-
-            <h3>3.1 Procedure</h3>
-            <ol>
-                <li><strong>Safety:</strong> Unit stopped. MIV Closed. <strong>Mechanical Safety Pin REMOVED</strong>
-                    (Control risk!).</li>
-                <li><strong>Disconnect:</strong> Uncouple the servomotor piston from the regulating ring.</li>
-                <li><strong>Manual Swing:</strong> Two technicians should be able to push the regulating ring by hand
-                    from 0% to 100% open.</li>
-                <li><strong>Criteria:</strong> Movement must be smooth. No "binding", "hard spots", or "jumping".</li>
-            </ol>
-            <div class="visual-aid">
-                Diagnosis: If the ring binds at a specific spot, a guide vane is bent or a debris rock is lodged in the
-                casing.
+            <div class="timing-box">
+                <strong>ECONOMIC DECISION:</strong> Shutting down for 24 hours costs ~$X in lost revenue. Replacing
+                eroded runner costs $XXX,XXX and 3-6 months downtime. Shutdown is ALWAYS the correct choice.
             </div>
         </div>
 
-        <div class="section-title">Summary Checklist</div>
-        <div class="module">
+        <!-- PROTOCOL 3: HPU POWER LOSS -->
+        <div class="section-title">PROTOCOL 3: HPU Power Loss - Manual MIV Closure</div>
+        <div class="protocol">
+            <h3>Scenario: Hydraulic Power Unit Fails During Operation</h3>
+            <p><strong>Context:</strong> The HPU provides pressurized oil to operate the guide vane servomotor and (in
+                some designs) the MIV. If HPU loses power or pump fails, there is NO hydraulic pressure to close valves.
+            </p>
+
+            <div class="immediate-action">
+                <strong>RISK:</strong> Without guide vane control, turbine operates in "runaway" mode - speed limited
+                only by water flow. If MIV cannot close manually, unit may need to run until upstream reservoir is
+                drained or penstock manually valved off.
+            </div>
+
+            <h3>Failure Detection</h3>
             <ul>
-                <li><strong>Monthly:</strong> Check for "Grease Collars" on all 20 vanes.</li>
-                <li><strong>Annually:</strong> Perform Manual "Swing Test" to check friction.</li>
-                <li><strong>On Overhaul:</strong> Replace all shear pins and bushings if > 0.1mm play detected.</li>
+                <li>HPU pressure gauge drops to zero</li>
+                <li>HPU motor overload trip or electrical fault alarm</li>
+                <li>Guide vanes fail to respond to governor commands</li>
+                <li>Unusual speed fluctuation (loss of governor control)</li>
+            </ul>
+
+            <h3>Manual MIV Closure Procedure</h3>
+            <p><strong>Design-Specific:</strong> MIV closure mechanism varies. Two common designs:</p>
+
+            <h3>Design A: Gravity/Counterweight System</h3>
+            <ol class="step-list">
+                <li><strong>Access MIV Control Station:</strong> Located near valve housing, typically in penstock
+                    gallery.</li>
+                <li><strong>Release Hydraulic Lock:</strong> Pull emergency release lever (red handle) - this vents
+                    hydraulic pressure holding valve open.</li>
+                <li><strong>Gravity Closure:</strong> Heavy MIV disc falls closed under its own weight + counterweight
+                    assistance. Closure time: 30-60 seconds.</li>
+                <li><strong>Verify Closure:</strong> Check position indicator shows "CLOSED". Listen for water flow -
+                    should cease.</li>
+                <li><strong>Manual Lock:</strong> Engage mechanical locking pin to prevent accidental reopening.</li>
+            </ol>
+
+            <h3>Design B: Manual Hand-Wheel System</h3>
+            <ol class="step-list">
+                <li><strong>Access Hand-Wheel:</strong> Typically on top of valve housing or via gearbox on side.</li>
+                <li><strong>Disengage Hydraulic Drive:</strong> Pull clutch lever to disconnect hydraulic actuator from
+                    valve stem.</li>
+                <li><strong>Manual Cranking:</strong> Turn hand-wheel clockwise (typically 50-100 full rotations for
+                    full closure). Requires 2-3 operators, 5-10 minutes of sustained effort.</li>
+                <li><strong>Mark Progress:</strong> Every 10 rotations, check position indicator to verify valve
+                    movement.</li>
+                <li><strong>Final Seating:</strong> Last 10% of closure requires higher torque - use cheater bar if
+                    needed (keep spares nearby).</li>
+            </ol>
+
+            <div class="timing-box">
+                <strong>CRITICAL WARNING:</strong> Never attempt to manually close MIV while unit is at high speed. Flow
+                forces can make valve impossible to move and may damage manual override mechanism. Always trip unit
+                electrically first if possible.
+            </div>
+
+            <h3>HPU Redundancy Check</h3>
+            <p><strong>Preventive Measure:</strong> During quarterly maintenance, test manual MIV override to ensure it
+                functions:</p>
+            <ul>
+                <li>Verify emergency release lever moves freely (not seized)</li>
+                <li>Test hand-wheel rotation (unit stopped, MIV at mid-position)</li>
+                <li>Check counterweights for corrosion or cable fraying</li>
             </ul>
         </div>
+
+        <!-- PROTOCOL 4: LINKAGE BREAKAGE -->
+        <div class="section-title">PROTOCOL 4: Linkage Failure - Mechanical Lockout</div>
+        <div class="protocol">
+            <h3>Scenario: Governor Linkage Shear Pin Breaks</h3>
+            <p><strong>Context:</strong> The linkage connecting the servomotor to the regulating ring uses deliberate
+                "shear pins" (sacrificial bolts designed to break at a specific load). If regulating ring jams (debris,
+                bent vane), the shear pin breaks to protect the servomotor from damage.</p>
+
+            <div class="immediate-action">
+                <strong>CONSEQUENCE:</strong> With shear pin broken, servomotor can stroke but regulating ring does NOT
+                move. Guide vanes frozen at last position. If frozen at high flow (>60% open), unit continues generating
+                but cannot modulate power.
+            </div>
+
+            <h3>Failure Symptoms</h3>
+            <ul>
+                <li>Governor commands position change but power output unchanged</li>
+                <li>Visual inspection: Servomotor piston extending/retracting but regulating ring stationary</li>
+                <li>Loud metallic "clunk" sound at moment of shear pin failure</li>
+                <li>HPU pressure normal (pin failure, not hydraulic issue)</li>
+            </ul>
+
+            <h3>Emergency Response - Mechanical Lock Installation</h3>
+            <p><strong>Objective:</strong> Prevent regulating ring from sudden uncontrolled movement if jam clears.</p>
+
+            <ol class="step-list">
+                <li><strong>Power Down Unit:</strong> Trip breaker, allow unit to coast to stop. DO NOT attempt repair
+                    while spinning.</li>
+                <li><strong>Release HPU Pressure:</strong> Vent hydraulic system to zero pressure (prevents servomotor
+                    from moving during repair).</li>
+                <li><strong>Access Regulating Ring:</strong> Remove inspection covers for linkage mechanism.</li>
+                <li><strong>Install Mechanical Lock Pin:</strong> Drive locking pin through pre-drilled holes in
+                    regulating ring and stationary housing (typically 25mm diameter steel pin, kept with emergency
+                    tools).</li>
+                <li><strong>Secondary Lock:</strong> Install redundant locking pin at 180° opposite position for safety.
+                </li>
+                <li><strong>Tag Out Servomotor:</strong> Red-tag HPU control panel: "LINKAGE FAILURE - DO NOT OPERATE".
+                </li>
+            </ol>
+
+            <h3>Root Cause Investigation</h3>
+            <p><strong>Before Replacing Shear Pin:</strong></p>
+            <ul>
+                <li>Manually rotate regulating ring through full travel (0-100%) - identify binding point</li>
+                <li>Inspect all 20 guide vane stems for bent condition or debris jam</li>
+                <li>Check for foreign object (rock, wood) lodged in spiral casing interfering with vane movement</li>
+                <li>Verify servomotor force did not exceed design limit (hydraulic pressure spike?)</li>
+            </ul>
+
+            <h3>Shear Pin Replacement</h3>
+            <div class="timing-box">
+                <strong>CRITICAL SPECIFICATION:</strong> Shear pins are calibrated to specific break force. NEVER
+                substitute with standard bolt. Using over-strength bolt defeats safety function and will destroy
+                servomotor if jam recurs.
+            </div>
+
+            <ol class="step-list">
+                <li>Clear jam / debris causing regulating ring binding</li>
+                <li>Remove broken shear pin remnants</li>
+                <li>Install OEM-specified shear pin (keep spares in stock)</li>
+                <li>Torque to spec (typically hand-tight only - pin designed to shear,not hold torque)</li>
+                <li>Remove mechanical lock pins</li>
+                <li>Test linkage by manually stroking servomotor (HPU at low pressure - 50 bar)</li>
+            </ol>
+        </div>
+
+        <!-- SUMMARY TABLE -->
+        <div class="section-title">Quick Reference Summary</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Emergency</th>
+                    <th>First Action (< 30 seconds)</th>
+                    <th>Critical Equipment</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Load Rejection</td>
+                    <td>Verify governor closes vanes / Manual override if fails</td>
+                    <td>Overspeed trip, Mechanical brake</td>
+                </tr>
+                <tr>
+                    <td>Silt Flash Flood</td>
+                    <td>Reduce load, notify dispatcher, prepare shutdown</td>
+                    <td>Silt sampler, Water quality analyzer</td>
+                </tr>
+                <tr>
+                    <td>HPU Power Loss</td>
+                    <td>Trip unit electrically, access manual MIV control</td>
+                    <td>MIV hand-wheel or emergency release</td>
+                </tr>
+                <tr>
+                    <td>Linkage Breakage</td>
+                    <td>Stop unit, vent pressure, install mechanical locks</td>
+                    <td>Locking pins (25mm), Replacement shear pins</td>
+                </tr>
+            </tbody>
+        </table>
 
         <a href="./Francis_Horizontal.html" class="back-btn">← Return to Master Manual</a>
 

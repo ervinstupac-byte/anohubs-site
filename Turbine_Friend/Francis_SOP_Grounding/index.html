@@ -12,14 +12,14 @@
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://anohubs.com/Turbine_Friend/Francis_SOP_Linkage/">
+    <meta property="og:url" content="https://anohubs.com/Turbine_Friend/Francis_SOP_Grounding/">
     <meta property="og:title" content="AnoHUB | Engineering Immunity Protocol">
     <meta property="og:description" content="Global standard for hydro asset integrity. 15+ years of field forensic engineering.">
     <meta property="og:image" content="https://anohubs.com/assets/images/holy_t_trinity.jpg">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://anohubs.com/Turbine_Friend/Francis_SOP_Linkage/">
+    <meta property="twitter:url" content="https://anohubs.com/Turbine_Friend/Francis_SOP_Grounding/">
     <meta property="twitter:title" content="AnoHUB | Engineering Immunity Protocol">
     <meta property="twitter:description" content="Global standard for hydro asset integrity. 15+ years of field forensic engineering.">
     <meta property="twitter:image" content="https://anohubs.com/assets/images/holy_t_trinity.jpg">
@@ -203,7 +203,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOP: Governor & Vane Linkage</title>
+    <title>SOP: Shaft Grounding & Electrolysis</title>
     <style>
         /* Shared Architecture from Francis_Horizontal.html */
         :root {
@@ -211,6 +211,7 @@
             --secondary-color: #0066cc;
             --accent-color: #d9534f;
             --warning-color: #f0ad4e;
+            --electrical-color: #f59e0b;
             --bg-color: #f4f7f6;
             --text-color: #333;
             --border-color: #dde;
@@ -235,7 +236,7 @@
         }
 
         header {
-            border-bottom: 3px solid var(--primary-color);
+            border-bottom: 3px solid var(--electrical-color);
             padding-bottom: 20px;
             margin-bottom: 30px;
             text-align: center;
@@ -243,7 +244,7 @@
 
         h1 {
             margin: 0;
-            color: var(--primary-color);
+            color: var(--electrical-color);
             font-size: 28px;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -257,7 +258,7 @@
         }
 
         .section-title {
-            background-color: var(--primary-color);
+            background-color: var(--electrical-color);
             color: #fff;
             padding: 10px 15px;
             margin-top: 40px;
@@ -276,7 +277,7 @@
 
         h3 {
             color: var(--primary-color);
-            border-left: 4px solid var(--secondary-color);
+            border-left: 4px solid var(--electrical-color);
             padding-left: 10px;
             margin-top: 25px;
         }
@@ -295,8 +296,8 @@
         }
 
         .technical {
-            border-left: 5px solid var(--secondary-color);
-            background-color: #f0f7ff;
+            border-left: 5px solid var(--electrical-color);
+            background-color: #fffbf0;
         }
 
         .diagnostic {
@@ -317,16 +318,16 @@
             display: inline-block;
             margin-top: 30px;
             text-decoration: none;
-            color: var(--secondary-color);
+            color: var(--electrical-color);
             font-weight: bold;
-            border: 1px solid var(--secondary-color);
+            border: 1px solid var(--electrical-color);
             padding: 10px 20px;
             border-radius: 4px;
             transition: all 0.3s;
         }
 
         .back-btn:hover {
-            background-color: var(--secondary-color);
+            background-color: var(--electrical-color);
             color: #fff;
         }
 
@@ -340,57 +341,20 @@
             font-size: 0.9em;
         }
 
-        /* === PRINT CSS FOR PDF EXPORT === */
-        @media print {
-            body {
-                background: white;
-                color: black;
-                font-size: 11pt;
-                line-height: 1.4;
-            }
+        .voltage-spec {
+            background: #fffbf0;
+            border-left: 4px solid #f59e0b;
+            padding: 12px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+        }
 
-            .container {
-                max-width: 100%;
-                box-shadow: none;
-                border: none;
-                padding: 20px;
-            }
-
-            header {
-                border-bottom: 2px solid black;
-                page-break-after: avoid;
-            }
-
-            .section-title {
-                background: white !important;
-                color: black !important;
-                border: 2px solid black;
-                page-break-after: avoid;
-            }
-
-            .module {
-                page-break-inside: avoid;
-                border: 1px solid #333;
-            }
-
-            .back-btn {
-                display: none;
-                /* Hide navigation in print */
-            }
-
-            /* Ensure tables don't break across pages */
-            table {
-                page-break-inside: avoid;
-            }
-
-            /* Add page numbers */
-            @page {
-                margin: 2cm;
-
-                @bottom-right {
-                    content: "Page " counter(page) " of " counter(pages);
-                }
-            }
+        .pitting-damage {
+            background: #fff5f5;
+            border: 2px solid #d9534f;
+            padding: 12px;
+            margin: 15px 0;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -400,84 +364,213 @@
     <div class="container">
 
         <header>
-            <h1>Critical SOP: Governor & Guide Vane Linkage</h1>
-            <h2>Mechanical Synchronization & Transmission</h2>
+            <h1>Critical SOP: Shaft Grounding & Electrolysis Protection</h1>
+            <h2>The "Silent Bearing Killer" - Preventing Electrical Pitting</h2>
         </header>
 
         <!-- INTRO MODULE -->
         <div class="module critical">
-            <h3>⚠️ THE COST OF BACKLASH</h3>
-            <p><strong>Context:</strong> The hydraulic piston (Servomotor) pushes the Regulating Ring, which rotates all
-                20 guide vanes simultaneously to control water flow.</p>
+            <h3>⚠️ THE INVISIBLE DESTROYER</h3>
+            <p><strong>Context:</strong> Magnetic imbalances in the generator induce electrical voltage on the rotating
+                shaft. Without proper grounding, this voltage arcs through the bearing oil film, creating thousands of
+                microscopic craters (pitting) in the Babbitt metal.</p>
             <ul>
-                <li><strong>The Risk:</strong> If the linkage pins have "play" (wear), the vanes will flutter.</li>
-                <li><strong>Equation:</strong> 1mm of pin wear = ~5% loss in vane synchronization. This leads to
-                    efficiency loss and hunting.</li>
+                <li><strong>Why It's Silent:</strong> Unlike mechanical wear that produces noise or heat, electrical
+                    pitting is nearly undetectable until the bearing suddenly fails catastrophically.</li>
+                <li><strong>The Mechanism:</strong> Each voltage arc is tiny (~millivolts), but occurs thousands of
+                    times per second, vaporizing microscopic amounts of bearing material.</li>
+                <li><strong>Economic Impact:</strong> A bearing that should last 10 years can fail in 18 months if shaft
+                    grounding is non-functional.</li>
             </ul>
         </div>
 
-        <div class="section-title">SOP 1: Linkage Logic & Inspection</div>
+        <div class="section-title">SOP 1: The Phenomenon - Shaft Voltage Generation</div>
         <div class="module technical">
-            <p>The system is a chain. A chain is only as strong as its weakest link (pin).</p>
+            <p>Understanding the root cause prevents treating symptoms instead of the disease.</p>
 
-            <h3>1.1 Transmission Path</h3>
-            <p>Servomotor → Regulating Ring → Linkage Arms (20x) → Guide Vane Stems.</p>
+            <h3>1.1 Generator Magnetic Asymmetry</h3>
+            <p>In a perfect generator, magnetic flux is perfectly balanced. In reality, manufacturing tolerances, rotor
+                eccentricity, and winding imperfections create <strong>flux asymmetry</strong>.</p>
+            <p><strong>Result:</strong> A small AC voltage (0.1-5V) is induced on the shaft, which rotates at generator
+                speed (typically 600-750 RPM for vertical Francis units).</p>
 
-            <h3>1.2 Bushing & Pin Check</h3>
+            <h3>1.2 The Arc Path</h3>
+            <p>Without grounding, the shaft voltage seeks the easiest path to ground. This path is through the bearing
+                oil film:</p>
             <ol>
-                <li><strong>Static Check:</strong> With the unit stopped and pressure released, grab each linkage arm by
-                    hand.</li>
-                <li><strong>Push/Pull:</strong> Attempt to wiggle the arm.</li>
-                <li><strong>Result:</strong>
+                <li><strong>Oil Film as Insulator:</strong> Thin oil film (~10-50 microns) acts as a weak dielectric.
+                </li>
+                <li><strong>Voltage Breakdown:</strong> When shaft voltage exceeds oil film breakdown voltage
+                    (~0.5-1.0V), an arc jumps from shaft → bearing → ground.</li>
+                <li><strong>Pitting Mechanism:</strong> Each arc vaporizes a microscopic amount of Babbitt metal,
+                    creating a "crater" ~1-10 microns deep.</li>
+                <li><strong>Cumulative Damage:</strong> Millions of arcs over months/years erode bearing surface,
+                    destroying oil film capability.</li>
+            </ol>
+
+            <div class="pitting-damage">
+                <strong>VISUAL SIGNATURE OF ELECTRICAL PITTING:</strong><br>
+                • Surface appears "frosted" or "etched" (vs. smooth mechanical wear)<br>
+                • Random crater distribution (vs. directional scoring from debris)<br>
+                • Often concentrated on load-bearing pads<br>
+                • Microscope reveals sharp-edged craters (vs. smooth gouges)
+            </div>
+        </div>
+
+        <div class="section-title">SOP 2: The Grounding Brush Inspection</div>
+        <div class="module technical">
+            <p><strong>Purpose:</strong> The shaft grounding brush provides a low-resistance path to ground, diverting
+                shaft voltage AWAY from bearings.</p>
+
+            <h3>2.1 Location & Design</h3>
+            <ul>
+                <li><strong>Typical Location:</strong> On turbine shaft between thrust bearing and generator coupling
+                    (accessible without major disassembly).</li>
+                <li><strong>Design:</strong> Carbon or copper-graphite brush (similar to generator brushes) mounted in
+                    spring-loaded holder, pressing against machined slip surface on shaft.</li>
+                <li><strong>Required Contact:</strong> Brush must maintain constant electrical contact even during shaft
+                    vibration.</li>
+            </ul>
+
+            <h3>2.2 Brush Wear Inspection</h3>
+            <ol>
+                <li><strong>Access:</strong> Locate brush housing (typically has inspection cover removable without unit
+                    shutdown).</li>
+                <li><strong>Visual Check:</strong> Inspect brush length:
                     <ul>
-                        <li><strong>Pass:</strong> Zero palpable movement. Solid.</li>
-                        <li><strong>Fail:</strong> "Clicking" sound or visible movement. Replace bushing immediately.
+                        <li><strong>New Brush:</strong> 40-50mm length (varies by manufacturer)</li>
+                        <li><strong>Service Limit:</strong> 15-20mm remaining (below this, spring tension inadequate)
                         </li>
+                        <li><strong>Critical:</strong>
+                            <10mm remaining → Replace immediately</li>
                     </ul>
                 </li>
-            </ol>
-        </div>
-
-        <div class="section-title">SOP 2: Lubrication Audit</div>
-        <div class="module technical">
-            <p>Friction causes the governor to "hunt" (unstable power). Grease is the stabilizer.</p>
-
-            <h3>2.1 Central Greasing System</h3>
-            <ul>
-                <li><strong>Audit:</strong> Verify the central pump is building pressure (typically 150-200 bar).</li>
-                <li><strong>Visual Confirmation:</strong> Inspect all 20 guide vane stems. You should see a
-                    <strong>fresh collar of grease</strong> purging from the seals.
+                <li><strong>Surface Condition:</strong>
+                    <ul>
+                        <li><strong>Healthy:</strong> Smooth, even wear pattern across brush face</li>
+                        <li><strong>Problem:</strong> Uneven wear (brush cocked in holder) or cracking (poor material
+                            quality)</li>
+                    </ul>
                 </li>
-                <li><strong>Blockage:</strong> If one bearing is dry while others purge, the dosage valve is blocked.
-                    Clear it manually.</li>
-            </ul>
+                <li><strong>Spring Tension:</strong> Verify spring is not compressed to coil-bind. Should provide 2-5 kg
+                    force on brush.</li>
+            </ol>
         </div>
 
-        <div class="section-title">SOP 3: The Friction "Swing Test"</div>
-        <div class="module diagnostic">
-            <p>This test confirms the entire mechanism "floats" freely.</p>
+        <div class="section-title">SOP 3: Cleaning the Slip Surface</div>
+        <div class="module technical">
+            <p><strong>Critical:</strong> Even a perfect brush is useless if the shaft slip surface has high resistance
+                due to contamination.</p>
 
-            <h3>3.1 Procedure</h3>
+            <h3>3.1 Contamination Sources</h3>
+            <ul>
+                <li><strong>Silt Buildup:</strong> Airborne silt from powerhouse environment deposits on shaft
+                    (especially problematic for silt-heavy river units).</li>
+                <li><strong>Oil Film:</strong> Bearing oil mist settles on shaft, creating insulating layer.</li>
+                <li><strong>Oxidation:</strong> Shaft surface oxidizes if unit sits idle for extended periods (like Unit
+                    1's shutdown).</li>
+            </ul>
+
+            <h3>3.2 Cleaning Procedure</h3>
             <ol>
-                <li><strong>Safety:</strong> Unit stopped. MIV Closed. <strong>Mechanical Safety Pin REMOVED</strong>
-                    (Control risk!).</li>
-                <li><strong>Disconnect:</strong> Uncouple the servomotor piston from the regulating ring.</li>
-                <li><strong>Manual Swing:</strong> Two technicians should be able to push the regulating ring by hand
-                    from 0% to 100% open.</li>
-                <li><strong>Criteria:</strong> Movement must be smooth. No "binding", "hard spots", or "jumping".</li>
+                <li><strong>Safety:</strong> Unit must be fully stopped and locked out.</li>
+                <li><strong>Brush Removal:</strong> Retract or remove grounding brush to access slip surface.</li>
+                <li><strong>Initial Cleaning:</strong> Wipe slip surface with lint-free cloth dampened with electrical
+                    contact cleaner or isopropyl alcohol.</li>
+                <li><strong>Polishing:</strong> Use fine Scotch-Brite pad (equivalent to 600-grit) to gently polish
+                    surface, removing oxidation.</li>
+                <li><strong>Final Wipe:</strong> Clean again with alcohol-dampened cloth to remove polishing residue.
+                </li>
+                <li><strong>Inspection:</strong> Surface should be bright metal, no discoloration or pitting visible.
+                </li>
+                <li><strong>Reinstall Brush:</strong> Ensure brush seats properly on cleaned surface.</li>
             </ol>
-            <div class="visual-aid">
-                Diagnosis: If the ring binds at a specific spot, a guide vane is bent or a debris rock is lodged in the
-                casing.
+
+            <div class="voltage-spec">
+                <strong>POST-CLEANING VERIFICATION:</strong><br>
+                Measure contact resistance (brush-to-shaft): Should be <0.1 Ω<br>
+                    If >0.5 Ω, cleaning insufficient or brush worn.
             </div>
+        </div>
+
+        <div class="section-title">SOP 4: Voltage Measurement Protocol</div>
+        <div class="module diagnostic">
+            <p>Quantitative measurement provides objective proof of grounding effectiveness.</p>
+
+            <h3>4.1 Equipment Required</h3>
+            <ul>
+                <li><strong>True RMS Multimeter:</strong> Must measure AC+DC voltage accurately (cheap meters give false
+                    readings).</li>
+                <li><strong>Test Leads:</strong> High-quality with minimal contact resistance.</li>
+                <li><strong>Grounding Point:</strong> Verified earth ground (building steel, not painted surface).</li>
+            </ul>
+
+            <h3>4.2 Measurement Procedure</h3>
+            <ol>
+                <li><strong>Unit Running:</strong> Measurement must be taken during normal operation (shaft voltage only
+                    exists when generator is energized).</li>
+                <li><strong>Meter Setup:</strong> Set to AC voltage mode, auto-ranging or 5V scale.</li>
+                <li><strong>Probe Placement:</strong>
+                    <ul>
+                        <li><strong>Negative (Black):</strong> Attach to verified ground point</li>
+                        <li><strong>Positive (Red):</strong> Touch to exposed shaft surface (NOT the grounding brush -
+                            measure bypass current)</li>
+                    </ul>
+                </li>
+                <li><strong>Reading Interpretation:</strong>
+                    <div class="voltage-spec">
+                        <strong>SHAFT-TO-GROUND VOLTAGE LIMITS:</strong><br>
+                        Excellent: <0.2V (grounding highly effective)<br>
+                            Acceptable: 0.2-0.5V (grounding functional)<br>
+                            Warning: 0.5-1.0V (grounding marginal - inspect brush)<br>
+                            Critical: >1.0V (grounding ineffective - bearing damage occurring)
+                    </div>
+                </li>
+            </ol>
+
+            <h3>4.3 Troubleshooting High Shaft Voltage</h3>
+            <p>If measured voltage >0.5V:</p>
+            <ol>
+                <li><strong>Inspect Brush Contact:</strong> Remove brush, check for excessive wear or contamination.
+                </li>
+                <li><strong>Clean Slip Surface:</strong> Follow SOP 3 cleaning procedure.</li>
+                <li><strong>Check Brush Wiring:</strong> Verify grounding wire from brush holder to earth ground is
+                    intact (not corroded or broken).</li>
+                <li><strong>Measure Contact Resistance:</strong> Use ohmmeter to measure brush-to-shaft resistance.
+                    Should be <0.1Ω.< /li>
+                <li><strong>Re-test:</strong> After corrective actions, re-measure shaft voltage. If still high,
+                    generator rotor may need re-balancing (specialist work).</li>
+            </ol>
         </div>
 
         <div class="section-title">Summary Checklist</div>
         <div class="module">
+            <h3>Preventive Maintenance Schedule</h3>
             <ul>
-                <li><strong>Monthly:</strong> Check for "Grease Collars" on all 20 vanes.</li>
-                <li><strong>Annually:</strong> Perform Manual "Swing Test" to check friction.</li>
-                <li><strong>On Overhaul:</strong> Replace all shear pins and bushings if > 0.1mm play detected.</li>
+                <li><strong>Monthly:</strong> Visual inspection of grounding brush wear (through inspection window if
+                    available).</li>
+                <li><strong>Quarterly:</strong> Measure shaft-to-ground voltage during operation. Record in logbook.
+                </li>
+                <li><strong>Annually:</strong> Full grounding system inspection:
+                    <ul>
+                        <li>Remove and inspect brush for wear</li>
+                        <li>Clean slip surface</li>
+                        <li>Measure contact resistance</li>
+                        <li>Verify grounding wire integrity</li>
+                    </ul>
+                </li>
+                <li><strong>After Extended Shutdown (>1 month):</strong> Clean slip surface before restart (oxidation
+                    accumulates during idle periods).</li>
+            </ul>
+
+            <h3>Bearing Pitting Detection</h3>
+            <ul>
+                <li><strong>During Oil Analysis:</strong> High copper content in oil sample indicates Babbitt erosion →
+                    Check grounding.</li>
+                <li><strong>During Bearing Inspection:</strong> "Frosted" or "etched" bearing surface → Likely
+                    electrical pitting → Verify grounding before reassembly.</li>
+                <li><strong>Unexplained Bearing Failures:</strong> If bearing fails prematurely (<5 years) with no
+                        obvious mechanical cause → Investigate shaft grounding history.</li>
             </ul>
         </div>
 

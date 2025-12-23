@@ -12,14 +12,14 @@
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://anohubs.com/Turbine_Friend/Francis_SOP_Linkage/">
+    <meta property="og:url" content="https://anohubs.com/Turbine_Friend/Francis_SOP_Regulating_Ring/">
     <meta property="og:title" content="AnoHUB | Engineering Immunity Protocol">
     <meta property="og:description" content="Global standard for hydro asset integrity. 15+ years of field forensic engineering.">
     <meta property="og:image" content="https://anohubs.com/assets/images/holy_t_trinity.jpg">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://anohubs.com/Turbine_Friend/Francis_SOP_Linkage/">
+    <meta property="twitter:url" content="https://anohubs.com/Turbine_Friend/Francis_SOP_Regulating_Ring/">
     <meta property="twitter:title" content="AnoHUB | Engineering Immunity Protocol">
     <meta property="twitter:description" content="Global standard for hydro asset integrity. 15+ years of field forensic engineering.">
     <meta property="twitter:image" content="https://anohubs.com/assets/images/holy_t_trinity.jpg">
@@ -203,7 +203,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOP: Governor & Vane Linkage</title>
+    <title>SOP: Regulating Ring & Eccentric Pins</title>
     <style>
         /* Shared Architecture from Francis_Horizontal.html */
         :root {
@@ -340,57 +340,12 @@
             font-size: 0.9em;
         }
 
-        /* === PRINT CSS FOR PDF EXPORT === */
-        @media print {
-            body {
-                background: white;
-                color: black;
-                font-size: 11pt;
-                line-height: 1.4;
-            }
-
-            .container {
-                max-width: 100%;
-                box-shadow: none;
-                border: none;
-                padding: 20px;
-            }
-
-            header {
-                border-bottom: 2px solid black;
-                page-break-after: avoid;
-            }
-
-            .section-title {
-                background: white !important;
-                color: black !important;
-                border: 2px solid black;
-                page-break-after: avoid;
-            }
-
-            .module {
-                page-break-inside: avoid;
-                border: 1px solid #333;
-            }
-
-            .back-btn {
-                display: none;
-                /* Hide navigation in print */
-            }
-
-            /* Ensure tables don't break across pages */
-            table {
-                page-break-inside: avoid;
-            }
-
-            /* Add page numbers */
-            @page {
-                margin: 2cm;
-
-                @bottom-right {
-                    content: "Page " counter(page) " of " counter(pages);
-                }
-            }
+        .measurement-box {
+            background: #e8f4f8;
+            border-left: 4px solid #0066cc;
+            padding: 12px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
         }
     </style>
 </head>
@@ -400,84 +355,167 @@
     <div class="container">
 
         <header>
-            <h1>Critical SOP: Governor & Guide Vane Linkage</h1>
-            <h2>Mechanical Synchronization & Transmission</h2>
+            <h1>Advanced SOP: Regulating Ring & Eccentric Pins</h1>
+            <h2>The "Forgotten" Friction - Stiction Analysis & Vane Synchronization</h2>
         </header>
 
         <!-- INTRO MODULE -->
         <div class="module critical">
-            <h3>⚠️ THE COST OF BACKLASH</h3>
-            <p><strong>Context:</strong> The hydraulic piston (Servomotor) pushes the Regulating Ring, which rotates all
-                20 guide vanes simultaneously to control water flow.</p>
+            <h3>⚠️ THE HUNTING PROBLEM</h3>
+            <p><strong>Context:</strong> The regulating ring is the mechanical translator between the hydraulic
+                servomotor and all 20 guide vanes. It moves on rollers or slides, converting linear hydraulic force into
+                rotational motion.</p>
             <ul>
-                <li><strong>The Risk:</strong> If the linkage pins have "play" (wear), the vanes will flutter.</li>
-                <li><strong>Equation:</strong> 1mm of pin wear = ~5% loss in vane synchronization. This leads to
-                    efficiency loss and hunting.</li>
+                <li><strong>The Risk:</strong> If the ring's sliding surfaces are not perfectly lubricated, the governor
+                    will "hunt" (oscillate power output).</li>
+                <li><strong>Root Cause:</strong> Stiction (static friction) creates resistance that the HPU overcomes
+                    with pressure spikes, causing jerky movement instead of smooth modulation.</li>
+                <li><strong>Impact:</strong> Every oscillation causes wear on all 20 vanes simultaneously, accelerating
+                    bushing failure and creating unstable power delivery to the grid.</li>
             </ul>
         </div>
 
-        <div class="section-title">SOP 1: Linkage Logic & Inspection</div>
+        <div class="section-title">SOP 1: Friction Analysis - Measuring Stiction</div>
         <div class="module technical">
-            <p>The system is a chain. A chain is only as strong as its weakest link (pin).</p>
+            <p>Stiction is invisible but measurable through HPU pressure behavior during slow movement.</p>
 
-            <h3>1.1 Transmission Path</h3>
-            <p>Servomotor → Regulating Ring → Linkage Arms (20x) → Guide Vane Stems.</p>
+            <h3>1.1 The "Dry-Start" Risk</h3>
+            <p><strong>Critical Context for Unit 1:</strong> After the extended shutdown (seal replacement), the
+                regulating ring's sliding surfaces have been bone-dry for weeks. The lubricant film has evaporated or
+                drained away.</p>
+            <ul>
+                <li><strong>Consequence:</strong> The first HPU stroke after restart will encounter maximum stiction,
+                    potentially causing a violent "jump" that damages the linkage pins.</li>
+                <li><strong>Mandatory Pre-Start Action:</strong> Manual grease application to all sliding surfaces
+                    BEFORE energizing the HPU.</li>
+            </ul>
 
-            <h3>1.2 Bushing & Pin Check</h3>
+            <h3>1.2 Stiction Measurement Procedure</h3>
             <ol>
-                <li><strong>Static Check:</strong> With the unit stopped and pressure released, grab each linkage arm by
-                    hand.</li>
-                <li><strong>Push/Pull:</strong> Attempt to wiggle the arm.</li>
-                <li><strong>Result:</strong>
+                <li><strong>Instrumentation:</strong> Monitor HPU pressure gauge in real-time (analog or SCADA).</li>
+                <li><strong>Test Sequence:</strong> Command governor to move from 0% to 10% open at slowest possible
+                    speed (manual mode).</li>
+                <li><strong>Observe Pressure Profile:</strong>
                     <ul>
-                        <li><strong>Pass:</strong> Zero palpable movement. Solid.</li>
-                        <li><strong>Fail:</strong> "Clicking" sound or visible movement. Replace bushing immediately.
-                        </li>
+                        <li><strong>PASS (Smooth):</strong> Pressure rises gradually to ~140-150 bar and holds steady
+                            during movement.</li>
+                        <li><strong>FAIL (Stiction):</strong> Pressure spikes to 160-180 bar, then drops suddenly as
+                            ring "breaks free", creating a sawtooth pattern.</li>
                     </ul>
                 </li>
+                <li><strong>Diagnostic:</strong> If sawtooth pattern observed, the ring is experiencing stick-slip
+                    friction. Lubrication is inadequate.</li>
             </ol>
-        </div>
 
-        <div class="section-title">SOP 2: Lubrication Audit</div>
-        <div class="module technical">
-            <p>Friction causes the governor to "hunt" (unstable power). Grease is the stabilizer.</p>
-
-            <h3>2.1 Central Greasing System</h3>
-            <ul>
-                <li><strong>Audit:</strong> Verify the central pump is building pressure (typically 150-200 bar).</li>
-                <li><strong>Visual Confirmation:</strong> Inspect all 20 guide vane stems. You should see a
-                    <strong>fresh collar of grease</strong> purging from the seals.
-                </li>
-                <li><strong>Blockage:</strong> If one bearing is dry while others purge, the dosage valve is blocked.
-                    Clear it manually.</li>
-            </ul>
-        </div>
-
-        <div class="section-title">SOP 3: The Friction "Swing Test"</div>
-        <div class="module diagnostic">
-            <p>This test confirms the entire mechanism "floats" freely.</p>
-
-            <h3>3.1 Procedure</h3>
-            <ol>
-                <li><strong>Safety:</strong> Unit stopped. MIV Closed. <strong>Mechanical Safety Pin REMOVED</strong>
-                    (Control risk!).</li>
-                <li><strong>Disconnect:</strong> Uncouple the servomotor piston from the regulating ring.</li>
-                <li><strong>Manual Swing:</strong> Two technicians should be able to push the regulating ring by hand
-                    from 0% to 100% open.</li>
-                <li><strong>Criteria:</strong> Movement must be smooth. No "binding", "hard spots", or "jumping".</li>
-            </ol>
-            <div class="visual-aid">
-                Diagnosis: If the ring binds at a specific spot, a guide vane is bent or a debris rock is lodged in the
-                casing.
+            <div class="measurement-box">
+                <strong>ACCEPTABLE PRESSURE BEHAVIOR:</strong><br>
+                Nominal: 140-150 bar (steady)<br>
+                Warning: 155-165 bar (marginal lubrication)<br>
+                Critical: >165 bar or sawtooth pattern (insufficient lubrication - STOP and re-grease)
             </div>
+        </div>
+
+        <div class="section-title">SOP 2: Eccentric Pin Adjustment</div>
+        <div class="module technical">
+            <p>The eccentric pins on each guide vane arm allow fine-tuning of the vane's angular position. The goal: All
+                20 vanes must touch their mechanical stops <strong>simultaneously</strong>.</p>
+
+            <h3>2.1 The Synchronization Requirement</h3>
+            <p><strong>Physics:</strong> If vane #1 closes at 0° but vane #12 closes at 0.5°, the water flow
+                distribution becomes asymmetric, creating turbulence and reducing efficiency by ~2-3%.</p>
+            <p><strong>Mechanical Logic:</strong> Each vane arm has an eccentric bushing that can be rotated to adjust
+                the effective length of the linkage.</p>
+
+            <h3>2.2 Adjustment Procedure</h3>
+            <ol>
+                <li><strong>Safety Lockout:</strong> Unit stopped, MIV closed, hydraulic pressure released, mechanical
+                    safety pin installed.</li>
+                <li><strong>Command Position:</strong> Set governor to "Fully Closed" (0%) position using manual
+                    override.</li>
+                <li><strong>Visual Inspection:</strong> With flashlight, inspect each guide vane gap at the closed
+                    position.
+                    <ul>
+                        <li><strong>Target:</strong> All vanes should have identical clearance to the "stop" surface
+                            (typically cast into the turbine casing).</li>
+                        <li><strong>Feeler Gauge:</strong> Measure the gap. Target: ≤ 0.2mm variation between any two
+                            vanes.</li>
+                    </ul>
+                </li>
+                <li><strong>Eccentric Adjustment:</strong> For vanes not touching the stop:
+                    <ol type="a">
+                        <li>Loosen the lock nut on the eccentric pin.</li>
+                        <li>Rotate the eccentric bushing using a specialized wrench (typically 2-3° rotation = 0.5mm
+                            vane travel).</li>
+                        <li>Re-tighten lock nut to manufacturer torque specification (record in logbook).</li>
+                    </ol>
+                </li>
+                <li><strong>Verification:</strong> Repeat the "Fully Closed" command and re-measure all gaps. Iterate
+                    until all vanes synchronized within 0.2mm.</li>
+            </ol>
+
+            <div class="visual-aid">
+                [DIAGRAM PLACEHOLDER: Servomotor → Regulating Ring → 20x Linkage Arms with Eccentric Pins → Guide Vane
+                Stems]
+                <br><br>
+                <strong>Recommended Visual:</strong> Cross-section showing eccentric bushing rotation effect on vane
+                angle.
+            </div>
+        </div>
+
+        <div class="section-title">SOP 3: Pre-Start Lubrication Protocol</div>
+        <div class="module critical">
+            <p><strong>MANDATORY for Unit 1 Recovery:</strong> This protocol MUST be executed before the first HPU
+                stroke after extended shutdown.</p>
+
+            <h3>3.1 Manual Lubrication Procedure</h3>
+            <ol>
+                <li><strong>Access:</strong> Remove inspection cover for regulating ring chamber.</li>
+                <li><strong>Clean:</strong> Wipe all sliding surfaces with clean lint-free cloth to remove any debris or
+                    oxidation.</li>
+                <li><strong>Grease Application:</strong> Apply high-temperature water-resistant grease (same as used in
+                    central greasing system) to:
+                    <ul>
+                        <li>All roller contact surfaces</li>
+                        <li>Sliding guide tracks</li>
+                        <li>Eccentric pin bushings (all 20 vanes)</li>
+                    </ul>
+                </li>
+                <li><strong>Manual Movement:</strong> Manually rotate the regulating ring through its full range
+                    (0-100%) to distribute grease evenly. Movement should be smooth with no "dry" spots.</li>
+                <li><strong>Re-install Cover:</strong> Ensure no tools or rags left in mechanism chamber.</li>
+            </ol>
+        </div>
+
+        <div class="section-title">Diagnostic Troubleshooting</div>
+        <div class="module diagnostic">
+            <h3>Symptom: Power Output "Hunting" (±5% oscillation)</h3>
+            <ul>
+                <li><strong>Root Cause 1:</strong> Stiction in regulating ring → Check HPU pressure for sawtooth
+                    pattern.</li>
+                <li><strong>Root Cause 2:</strong> Poor vane synchronization → Verify eccentric pin adjustment using
+                    feeler gauge.</li>
+                <li><strong>Root Cause 3:</strong> Worn linkage bushings → Perform manual "wiggle test" on each vane arm
+                    (ref: Linkage SOP).</li>
+            </ul>
+
+            <h3>Symptom: High HPU Pressure (>165 bar during normal operation)</h3>
+            <ul>
+                <li><strong>Immediate Action:</strong> Stop unit, release pressure, manually lubricate ring.</li>
+                <li><strong>Investigation:</strong> Check central greasing system - verify pump is building pressure and
+                    all dosage valves are flowing.</li>
+            </ul>
         </div>
 
         <div class="section-title">Summary Checklist</div>
         <div class="module">
             <ul>
-                <li><strong>Monthly:</strong> Check for "Grease Collars" on all 20 vanes.</li>
-                <li><strong>Annually:</strong> Perform Manual "Swing Test" to check friction.</li>
-                <li><strong>On Overhaul:</strong> Replace all shear pins and bushings if > 0.1mm play detected.</li>
+                <li><strong>Before First Start After Shutdown:</strong> Manual greasing of regulating ring surfaces (SOP
+                    3).</li>
+                <li><strong>Monthly:</strong> Monitor HPU pressure during slow movement for stiction indicators.</li>
+                <li><strong>Annually:</strong> Eccentric pin adjustment verification (all 20 vanes synchronized within
+                    0.2mm).</li>
+                <li><strong>On Overhaul:</strong> Full disassembly and inspection of regulating ring roller bearings and
+                    sliding surfaces.</li>
             </ul>
         </div>
 
