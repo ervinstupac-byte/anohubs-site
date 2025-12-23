@@ -140,6 +140,59 @@
             color: #666;
             font-size: 0.9em;
         }
+
+        /* === PRINT CSS FOR PDF EXPORT === */
+        @media print {
+            body {
+                background: white;
+                color: black;
+                font-size: 11pt;
+                line-height: 1.4;
+            }
+
+            .container {
+                max-width: 100%;
+                box-shadow: none;
+                border: none;
+                padding: 20px;
+            }
+
+            header {
+                border-bottom: 2px solid black;
+                page-break-after: avoid;
+            }
+
+            .section-title {
+                background: white !important;
+                color: black !important;
+                border: 2px solid black;
+                page-break-after: avoid;
+            }
+
+            .module {
+                page-break-inside: avoid;
+                border: 1px solid #333;
+            }
+
+            .back-btn {
+                display: none;
+                /* Hide navigation in print */
+            }
+
+            /* Ensure tables don't break across pages */
+            table {
+                page-break-inside: avoid;
+            }
+
+            /* Add page numbers */
+            @page {
+                margin: 2cm;
+
+                @bottom-right {
+                    content: "Page " counter(page) " of " counter(pages);
+                }
+            }
+        }
     </style>
 </head>
 
@@ -194,7 +247,8 @@
             <ul>
                 <li><strong>Audit:</strong> Verify the central pump is building pressure (typically 150-200 bar).</li>
                 <li><strong>Visual Confirmation:</strong> Inspect all 20 guide vane stems. You should see a
-                    <strong>fresh collar of grease</strong> purging from the seals.</li>
+                    <strong>fresh collar of grease</strong> purging from the seals.
+                </li>
                 <li><strong>Blockage:</strong> If one bearing is dry while others purge, the dosage valve is blocked.
                     Clear it manually.</li>
             </ul>
