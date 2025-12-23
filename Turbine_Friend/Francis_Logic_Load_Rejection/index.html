@@ -203,7 +203,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOP: SOP PROCEDURE</title>
+    <title>SOP: LOAD REJECTION LOGIC</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
@@ -211,7 +211,7 @@
 
         body {
             font-family: 'JetBrains Mono', monospace;
-            background-color: #0c0a09; /* Industrial Dark Mode */
+            background-color: #0c0a09;
             color: #d6d3d1;
         }
 
@@ -228,10 +228,13 @@
             background: #2a1210;
         }
 
-        .step-num {
-            color: #3b82f6;
-            font-weight: bold;
-            margin-right: 8px;
+        .logic-step {
+            border-bottom: 1px solid #292524;
+            padding: 16px 0;
+        }
+
+        .logic-step:last-child {
+            border-bottom: none;
         }
 
         .btn-return {
@@ -256,60 +259,157 @@
     </style>
 </head>
 
-<body class="p-6 md:p-12 max-w-4xl mx-auto">
+<body class="p-6 md:p-12 max-w-5xl mx-auto">
 
     <!-- Header -->
     <header class="mb-10 pb-6 border-b border-stone-800 flex justify-between items-start">
         <div>
             <div class="flex items-center gap-2 mb-2">
-                <span class="px-2 py-1 rounded bg-blue-900/30 text-blue-400 text-[10px] font-bold border border-blue-900 uppercase">SOP-GEN-00X</span>
+                <span
+                    class="px-2 py-1 rounded bg-orange-900/30 text-orange-400 text-[10px] font-bold border border-orange-900 uppercase">SOP-LOGIC-003</span>
                 <span class="text-[10px] text-stone-500 uppercase font-bold">REV 3.0</span>
             </div>
-            <h1 class="text-3xl font-bold text-white mb-2" data-i18n="title">SOP PROCEDURE</h1>
-            <p class="text-stone-500 text-sm" data-i18n="subtitle">Standard Operation Protocol</p>
+            <h1 class="text-3xl font-bold text-white mb-2" data-i18n="title">LOAD REJECTION LOGIC</h1>
+            <p class="text-stone-500 text-sm" data-i18n="subtitle">Grid Loss Response & Transient Pressure Control</p>
         </div>
-        
-        <!-- Standard Return Button -->
+
         <a href="Francis_Horizontal_Dashboard.html" class="btn-return">
             <i data-lucide="arrow-left" class="w-4 h-4"></i> <span data-i18n="return">Back to Dashboard</span>
         </a>
     </header>
 
-    <!-- Content -->
-    <div class="space-y-6">
+    <!-- 1. Event Trigger -->
+    <div class="procedure-card critical">
+        <h3 class="text-red-500 font-bold mb-2 flex items-center gap-2">
+            <i data-lucide="zap-off"></i> <span data-i18n="t_title">TRIGGER (T=0s): GRID LOSS</span>
+        </h3>
+        <p class="text-sm text-stone-300 font-mono" data-i18n="t_desc">Breaker Open Signal (52G) confirmed. Frequency
+            oscillation detected.</p>
+    </div>
 
+    <!-- 2. Logic Sequence -->
+    <div class="procedure-card">
+        <div class="logic-step">
+            <div class="flex gap-4">
+                <div
+                    class="w-6 h-6 rounded-full bg-blue-900/50 text-blue-400 flex items-center justify-center text-[10px] font-bold">
+                    01</div>
+                <div>
+                    <strong class="text-white text-xs block" data-i18n="s1">GOVERNOR REACTION:</strong>
+                    <p class="text-[10px] text-stone-500" data-i18n="s1_desc">Immediate move to Speed-No-Load (SNL)
+                        position. Prevent runner overspeed (>130%).</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="logic-step">
+            <div class="flex gap-4">
+                <div
+                    class="w-6 h-6 rounded-full bg-blue-900/50 text-blue-400 flex items-center justify-center text-[10px] font-bold">
+                    02</div>
+                <div>
+                    <strong class="text-white text-xs block" data-i18n="s2">MIV 2-STAGE CLOSING:</strong>
+                    <p class="text-[10px] text-stone-500 mb-2" data-i18n="s2_desc">Activating Closing Law to prevent
+                        Penstock Burst.</p>
+                    <div
+                        class="bg-black/40 p-2 rounded border border-stone-800 flex justify-between text-[8px] font-mono">
+                        <span class="text-stone-500" data-i18n="p1">PHASE 1: 100-20% (FAST)</span>
+                        <span class="text-stone-500" data-i18n="p2">PHASE 2: 20-0% (CUSHION)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="logic-step">
+            <div class="flex gap-4">
+                <div
+                    class="w-6 h-6 rounded-full bg-blue-900/50 text-blue-400 flex items-center justify-center text-[10px] font-bold">
+                    03</div>
+                <div>
+                    <strong class="text-white text-xs block" data-i18n="s3">BRAKING LOGIC:</strong>
+                    <p class="text-[10px] text-stone-500" data-i18n="s3_desc">Wait for Speed < 20% Nominal. Energize
+                            mechanical brake solenoids.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Critical Interlock -->
+    <div class="procedure-card critical">
+        <h3 class="text-amber-500 font-bold mb-4 flex items-center gap-2" data-i18n="int_title">
+            <i data-lucide="git-pull-request-closed"></i> PRIORITY INTERLOCK: MIV STUCK
+        </h3>
+        <p class="text-[10px] text-stone-400 mb-4" data-i18n="int_desc">
+            IF MIV Angle remains > 5° after 180s (Logic timer expired):
+        </p>
+        <div class="p-3 bg-red-900/20 border border-red-600 rounded text-center">
+            <strong class="text-white text-xs uppercase animate-pulse" data-i18n="cmd">COMMAND DISTRIBUTOR LOCK (SQUEEZE
+                MODE)</strong>
+        </div>
     </div>
 
     <!-- Hidden Translation Data -->
     <script>
         lucide.createIcons();
-
-        // Check global lang preference
         const ml = localStorage.getItem('anohub_lang_pref') || 'en';
 
         const i18n = {
             en: {
-                title: "SOP PROCEDURE",
-                subtitle: "Standard Operation Protocol",
-                return: "Back to Dashboard"
+                title: "LOAD REJECTION LOGIC",
+                subtitle: "Grid Loss Response & Transient Pressure Control",
+                return: "Back to Dashboard",
+
+                t_title: "TRIGGER (T=0s): GRID LOSS",
+                t_desc: "Breaker Open Signal (52G) confirmed. Frequency oscillation detected.",
+
+                s1: "GOVERNOR REACTION:",
+                s1_desc: "Immediate move to Speed-No-Load (SNL) position. Prevent runner overspeed (>130%).",
+
+                s2: "MIV 2-STAGE CLOSING:",
+                s2_desc: "Activating Closing Law to prevent Penstock Burst.",
+                p1: "PHASE 1: 100-20% (FAST)", p2: "PHASE 2: 20-0% (CUSHION)",
+
+                s3: "BRAKING LOGIC:",
+                s3_desc: "Wait for Speed < 20% Nominal. Energize mechanical brake solenoids.",
+
+                int_title: "PRIORITY INTERLOCK: MIV STUCK",
+                int_desc: "IF MIV Angle remains > 5° after 180s (Logic timer expired):",
+                cmd: "COMMAND DISTRIBUTOR LOCK (SQUEEZE MODE)"
             },
             bs: {
-                title: "SOP PROCEDURE",
-                subtitle: "Standard Operation Protocol",
-                return: "Povratak na Kontrolnu Tablu"
+                title: "LOGIKA ISPADA TERETA",
+                subtitle: "Odgovor na Gubitak Mreže & Kontrola Prelaznih Pritisaka",
+                return: "Povratak na Kontrolnu Tablu",
+
+                t_title: "OKIDAČ (T=0s): GUBITAK MREŽE",
+                t_desc: "Signal otvorenog prekidača (52G) potvrđen. Detektovana oscilacija frekvencije.",
+
+                s1: "REAKCIJA REGULATORA:",
+                s1_desc: "Trenutni pomak u SNL poziciju. Spriječite pobjeg brzine (>130%).",
+
+                s2: "GUV ZATVARANJE (2 FAZE):",
+                s2_desc: "Aktiviranje zakona zatvaranja za sprečavanje pucanja cjevovoda.",
+                p1: "FAZA 1: 100-20% (BRZO)", p2: "FAZA 2: 20-0% (PRIGUŠENO)",
+
+                s3: "LOGIKA KOČENJA:",
+                s3_desc: "Čekaj brzinu < 20% nominalne. Napajanje špula mehaničkih kočnica.",
+
+                int_title: "KRITIČNA BLOKADA: GUV ZAGLAVLJEN",
+                int_desc: "AKO GUV ugao ostane > 5° nakon 180s (Tajmer istekao):",
+                cmd: "KOMANDA BLOKADE SPROVODNOG APARATA (SQUEEZE)"
             }
         };
 
-        if(ml === 'bs') {
+        if (ml === 'bs') {
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
-                if(i18n.bs[key]) el.innerText = i18n.bs[key];
+                if (i18n.bs[key]) el.innerText = i18n.bs[key];
             });
         }
     </script>
 </body>
-</html>
 
+</html>
     </main>
 
     <footer class="bg-black border-t border-white/5 pt-24 pb-12 relative z-10 overflow-hidden">

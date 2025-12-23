@@ -203,235 +203,202 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOP: Draft Tube & Tailrace Maintenance</title>
+    <title>SOP: DRAFT TUBE & TAILRACE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        /* Shared Architecture from Francis_Horizontal.html */
-        :root {
-            --primary-color: #003366;
-            --secondary-color: #0066cc;
-            --accent-color: #d9534f;
-            --warning-color: #f0ad4e;
-            --bg-color: #f4f7f6;
-            --text-color: #333;
-            --border-color: #dde;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
 
         body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--bg-color);
-            margin: 0;
-            padding: 20px;
+            font-family: 'JetBrains Mono', monospace;
+            background-color: #0c0a09;
+            color: #d6d3d1;
         }
 
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: #fff;
-            padding: 40px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
+        .procedure-card {
+            background: #1c1917;
+            border: 1px solid #292524;
+            padding: 24px;
+            margin-bottom: 16px;
+            border-left: 4px solid #44403c;
         }
 
-        header {
-            border-bottom: 3px solid var(--primary-color);
-            padding-bottom: 20px;
-            margin-bottom: 30px;
-            text-align: center;
+        .procedure-card.critical {
+            border-left-color: #dc2626;
+            background: #2a1210;
         }
 
-        h1 {
-            margin: 0;
-            color: var(--primary-color);
-            font-size: 28px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        h2 {
-            color: var(--secondary-color);
-            font-size: 18px;
-            margin-top: 5px;
-            font-weight: 400;
-        }
-
-        .section-title {
-            background-color: var(--primary-color);
-            color: #fff;
-            padding: 10px 15px;
-            margin-top: 40px;
-            border-radius: 4px;
-            font-size: 1.2em;
-            font-weight: bold;
-            display: flex;
+        .btn-return {
+            display: inline-flex;
             align-items: center;
-        }
-
-        .section-title::before {
-            content: "►";
-            margin-right: 10px;
-            font-size: 0.8em;
-        }
-
-        h3 {
-            color: var(--primary-color);
-            border-left: 4px solid var(--secondary-color);
-            padding-left: 10px;
-            margin-top: 25px;
-        }
-
-        .module {
-            border: 1px solid var(--border-color);
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 4px;
-            background-color: #fafafa;
-        }
-
-        .critical {
-            border-left: 5px solid var(--accent-color);
-            background-color: #fff5f5;
-        }
-
-        .technical {
-            border-left: 5px solid var(--secondary-color);
-            background-color: #f0f7ff;
-        }
-
-        .diagnostic {
-            border-left: 5px solid var(--warning-color);
-            background-color: #fdf8e4;
-        }
-
-        ul,
-        ol {
-            padding-left: 20px;
-        }
-
-        li {
-            margin-bottom: 8px;
-        }
-
-        .back-btn {
-            display: inline-block;
-            margin-top: 30px;
-            text-decoration: none;
-            color: var(--secondary-color);
+            gap: 8px;
+            background: #1c1917;
+            border: 1px solid #44403c;
+            color: #78716c;
+            padding: 8px 16px;
+            font-size: 12px;
+            text-transform: uppercase;
             font-weight: bold;
-            border: 1px solid var(--secondary-color);
-            padding: 10px 20px;
             border-radius: 4px;
-            transition: all 0.3s;
+            transition: all 0.2s;
         }
 
-        .back-btn:hover {
-            background-color: var(--secondary-color);
-            color: #fff;
-        }
-
-        .visual-aid {
-            border: 2px dashed #ccc;
-            padding: 15px;
-            margin: 10px 0;
-            background: #fff;
-            text-align: center;
-            color: #666;
-            font-size: 0.9em;
+        .btn-return:hover {
+            border-color: #3b82f6;
+            color: white;
         }
     </style>
 </head>
 
-<body>
+<body class="p-6 md:p-12 max-w-5xl mx-auto">
 
-    <div class="container">
-
-        <header>
-            <h1>Critical SOP: Draft Tube & Tailrace</h1>
-            <h2>Energy Recovery & Vibration Control</h2>
-        </header>
-
-        <!-- INTRO MODULE -->
-        <div class="module critical">
-            <h3>⚠️ THE HIDDEN ENERGY THEFT</h3>
-            <p><strong>Logic:</strong> The Draft Tube (DFT) recovers 30-40% of the turbine's total power by decelerating
-                the water and creating suction.</p>
-            <ul>
-                <li><strong>The Risk:</strong> If the draft tube elbow is silted, or the tailrace is blocked, the
-                    "Suction Head" is lost.</li>
-                <li><strong>Impact:</strong> Every centimeter of "Backpressure" in the tailrace is a direct subtraction
-                    from the Net Head ($H_{net}$).</li>
-            </ul>
-        </div>
-
-        <div class="section-title">SOP 1: Elbow Inspection Strategy</div>
-        <div class="module technical">
-            <p>In horizontal units, the 90° elbow is a sediment trap. Flow velocity drops here, allowing sand to settle.
-            </p>
-
-            <h3>1.1 Silt Accumulation Check</h3>
-            <ol>
-                <li><strong>Access:</strong> Enter via the draft tube manhole (Confined Space Permit required).</li>
-                <li><strong>Inspect:</strong> Check the bottom of the elbow for sand bars or rock piles.</li>
-                <li><strong>Clear:</strong> Remove all sediment. Turbulence caused by these piles destroys the draft
-                    tube efficiency.</li>
-            </ol>
-
-            <h3>1.2 Liner Integrity</h3>
-            <ul>
-                <li><strong>Focus Area:</strong> Inspect the upper 1 meter of the draft tube liner (closest to runner).
-                </li>
-                <li><strong>Look For:</strong> "Pitting" or sponge-like metal texture (Cavitation).</li>
-                <li><strong>Repair:</strong> If depth > 3mm, fill with <strong>Underwater Grade Concrete Repair
-                        Mortar</strong> or weld overlay.</li>
-            </ul>
-        </div>
-
-        <div class="section-title">SOP 2: Tailrace Exit & Debris</div>
-        <div class="module technical">
-            <p>The water must leave as freely as it enters.</p>
-
-            <h3>2.1 Obstruction Patrol</h3>
-            <ul>
-                <li><strong>Vegetation:</strong> Overgrown bushes/trees in the channel increase friction. Clear back 2
-                    meters from bank.</li>
-                <li><strong>Rockfalls:</strong> Use a grappling hook or excessive flow (flushing) to clear fallen rocks
-                    from the tunnel exit.</li>
-                <li><strong>Tailwater Level:</strong> If the level is higher than historical norms for the same flow,
-                    there is a downstream blockage.</li>
-            </ul>
-        </div>
-
-        <div class="section-title">SOP 3: Vibration Monitoring (ISO 10816)</div>
-        <div class="module diagnostic">
-            <p>The draft tube is a giant resonance chamber. It "sings" when unhappy.</p>
-
-            <h3>3.1 Surging Detection</h3>
-            <ul>
-                <li><strong>Symptom:</strong> Power swings (MW hunting) combined with a "chugging" sound.</li>
-                <li><strong>Action:</strong> Adjust air admission (See Air Admission SOP) and check tailrace for
-                    "burping" air bubbles.</li>
-                <li><strong>Limit:</strong> Structural vibration on the draft tube door should not exceed 2.5 mm/s RMS.
-                </li>
-            </ul>
-            <div class="visual-aid">
-                Rule: If the door bolts are shaking loose, the vortex is unstable. Admit more air.
+    <!-- Header -->
+    <header class="mb-10 pb-6 border-b border-stone-800 flex justify-between items-start">
+        <div>
+            <div class="flex items-center gap-2 mb-2">
+                <span
+                    class="px-2 py-1 rounded bg-teal-900/30 text-teal-400 text-[10px] font-bold border border-teal-900 uppercase">SOP-HYD-006</span>
+                <span class="text-[10px] text-stone-500 uppercase font-bold">REV 1.9</span>
             </div>
+            <h1 class="text-3xl font-bold text-white mb-2" data-i18n="title">DRAFT TUBE & TAILRACE</h1>
+            <p class="text-stone-500 text-sm" data-i18n="subtitle">Energy Recovery & Hydraulic Backpressure Management
+            </p>
         </div>
 
-        <div class="section-title">Summary Checklist</div>
-        <div class="module">
-            <ul>
-                <li><strong>Weekly:</strong> Walk the tailrace channe l to check for blockages.</li>
-                <li><strong>Annual:</strong> Internal Confined Space inspection of DFT Elbow.</li>
-                <li><strong>On Startup:</strong> Listen for "Rock Crushing" sound (Cavitation).</li>
-            </ul>
-        </div>
+        <a href="Francis_Horizontal_Dashboard.html" class="btn-return">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i> <span data-i18n="return">Back to Dashboard</span>
+        </a>
+    </header>
 
-        <a href="./Francis_Horizontal.html" class="back-btn">← Return to Master Manual</a>
-
+    <!-- 1. The Energy Theft -->
+    <div class="procedure-card critical">
+        <h3 class="text-red-500 font-bold mb-2 flex items-center gap-2" data-i18n="s1_title">
+            <i data-lucide="chevrons-down"></i> THE HIDDEN ENERGY THEFT
+        </h3>
+        <p class="text-sm text-stone-400 mb-4" data-i18n="s1_desc">
+            The Draft Tube recovers 30-40% of the turbine's power by creating suction. Every centimeter of
+            "Backpressure" in the tailrace is a direct subtraction from the Net Head ($H_{net}$).
+        </p>
     </div>
 
+    <!-- 2. Elbow & Liner Strategy -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="procedure-card">
+            <h3 class="text-white font-bold mb-4 flex items-center gap-2" data-i18n="s2_title">
+                <i data-lucide="trash-2"></i> SILT IN ELBOW
+            </h3>
+            <p class="text-[10px] text-stone-500 mb-4" data-i18n="s2_desc">In horizontal units, the 90° elbow is a
+                sediment trap. Flow velocity drops here, allowing sand and rocks to settle.</p>
+            <div class="bg-black/50 p-2 rounded border border-stone-800 text-[10px] text-stone-400">
+                <strong class="text-teal-400 block mb-1" data-i18n="act1">ACTION:</strong>
+                <span data-i18n="act1_desc">Enter via manhole (LOTO 01). Clear bottom sand bars. Turbulence here
+                    destroys suction efficiency.</span>
+            </div>
+        </div>
+        <div class="procedure-card">
+            <h3 class="text-white font-bold mb-4 flex items-center gap-2" data-i18n="s3_title">
+                <i data-lucide="shield-check"></i> LINER INTEGRITY
+            </h3>
+            <p class="text-[10px] text-stone-500 mb-4" data-i18n="s3_desc">Inspect the upper 1m of the liner (closest to
+                runner) for pitting or sponge-texture cavitation.</p>
+            <div class="bg-black/50 p-2 rounded border border-stone-800 text-[10px] text-stone-400">
+                <strong class="text-teal-400 block mb-1" data-i18n="act2">REPAIR:</strong>
+                <span data-i18n="act2_desc">If pitting > 3mm, use Underwater Grade Concrete Repair Mortar or weld
+                    overlay.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Tailrace Channel Patrol -->
+    <div class="procedure-card">
+        <h3 class="text-white font-bold mb-4 flex items-center gap-2" data-i18n="chan_title">
+            <i data-lucide="navigation"></i> TAILRACE CHANNEL PATROL
+        </h3>
+        <ul class="text-sm text-stone-400 space-y-3">
+            <li class="flex items-start gap-2">
+                <i data-lucide="check-circle" class="text-green-500 w-4 h-4 mt-1"></i>
+                <div>
+                    <strong data-i18n="v1">VEGETATION:</strong>
+                    <span class="text-stone-500" data-i18n="v1_desc">Clear overgrown bushes from banks to reduce
+                        friction.</span>
+                </div>
+            </li>
+            <li class="flex items-start gap-2">
+                <i data-lucide="check-circle" class="text-green-500 w-4 h-4 mt-1"></i>
+                <div>
+                    <strong data-i18n="v2">ROCKFALLS:</strong>
+                    <span class="text-stone-500" data-i18n="v2_desc">Check tunnel exit for fallen boulders blocking
+                        outflow.</span>
+                </div>
+            </li>
+            <li class="flex items-start gap-2">
+                <i data-lucide="check-circle" class="text-green-500 w-4 h-4 mt-1"></i>
+                <div>
+                    <strong data-i18n="v3">VIBRATION LIMIT:</strong>
+                    <span class="text-stone-500" data-i18n="v3_desc">Structural vibration on DFT door must be < 2.5 mm/s
+                            RMS (ISO 10816).</span>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Hidden Translation Data -->
+    <script>
+        lucide.createIcons();
+        const ml = localStorage.getItem('anohub_lang_pref') || 'en';
+
+        const i18n = {
+            en: {
+                title: "DRAFT TUBE & TAILRACE",
+                subtitle: "Energy Recovery & Hydraulic Backpressure Management",
+                return: "Back to Dashboard",
+
+                s1_title: "THE HIDDEN ENERGY THEFT",
+                s1_desc: "The Draft Tube recovers 30-40% of the turbine's power by creating suction. Every centimeter of 'Backpressure' in the tailrace is a direct subtraction from the Net Head (H_net).",
+
+                s2_title: "SILT IN ELBOW",
+                s2_desc: "In horizontal units, the 90° elbow is a sediment trap. Flow velocity drops here, allowing sand and rocks to settle.",
+                act1: "ACTION:", act1_desc: "Enter via manhole (LOTO 01). Clear bottom sand bars. Turbulence here destroys suction efficiency.",
+
+                s3_title: "LINER INTEGRITY",
+                s3_desc: "Inspect the upper 1m of the liner (closest to runner) for pitting or sponge-texture cavitation.",
+                act2: "REPAIR:", act2_desc: "If pitting > 3mm, use Underwater Grade Concrete Repair Mortar or weld overlay.",
+
+                chan_title: "TAILRACE CHANNEL PATROL",
+                v1: "VEGETATION:", v1_desc: "Clear overgrown bushes from banks to reduce friction.",
+                v2: "ROCKFALLS:", v2_desc: "Check tunnel exit for fallen boulders blocking outflow.",
+                v3: "VIBRATION LIMIT:", v3_desc: "Structural vibration on DFT door must be < 2.5 mm/s RMS (ISO 10816)."
+            },
+            bs: {
+                title: "SIFON & ODVODNI KANAL",
+                subtitle: "Povrat Energije & Upravljanje Protivpritiskom",
+                return: "Povratak na Kontrolnu Tablu",
+
+                s1_title: "SKRIVENA KRAĐA ENERGIJE",
+                s1_desc: "Sifon (DFT) vraća 30-40% snage turbine stvarajući vakuum (usis). Svaki centimetar 'Kontra-pritiska' u kanalu je direktno oduzimanje od neto pada.",
+
+                s2_title: "MULJ U KOLJENU",
+                s2_desc: "Kod horizontalnih mašina, koljeno od 90° je zamka za sediment. Brzina toka ovdje pada, dozvoljavajući pijesku da se taloži.",
+                act1: "AKCIJA:", act1_desc: "Ulazak kroz revizioni otvor (LOTO 01). Očistite pješčane sprudove. Turbulencija ovdje uništava usisnu efikasnost.",
+
+                s3_title: "INTEGRITET OBLOGE",
+                s3_desc: "Pregledajte gornji 1m obloge sifona na piting ili spužvastu teksturu (kavitaciju).",
+                act2: "REPARACIJA:", act2_desc: "Ako je piting > 3mm, koristiti specijalne maltere za beton ili navarivanje.",
+
+                chan_title: "PATROLA ODVODNOG KANALA",
+                v1: "VEGETACIJA:", v1_desc: "Uklonite granje i grmlje sa obala kako bi smanjili trenje vode.",
+                v2: "ODRONI:", v2_desc: "Provjerite izlaz iz tunela na palo kamenje koje blokira otoke.",
+                v3: "LIMIT VIBRACIJA:", v3_desc: "Vibracije na vratima sifona ne smiju preći 2.5 mm/s RMS (ISO 10816)."
+            }
+        };
+
+        if (ml === 'bs') {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (i18n.bs[key]) el.innerText = i18n.bs[key];
+            });
+        }
+    </script>
 </body>
 
 </html>

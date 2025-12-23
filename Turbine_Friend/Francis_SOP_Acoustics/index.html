@@ -203,601 +203,258 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOP: Acoustic Diagnostics</title>
+    <title>SOP: ACOUSTIC DIAGNOSTICS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        /* Dark/Sonar Theme - Deep Purple/Black */
-        :root {
-            --primary-color: #4C1D95;
-            --secondary-color: #6D28D9;
-            --accent-color: #A78BFA;
-            --warning-color: #F59E0B;
-            --bg-color: #0f0f1e;
-            --text-color: #E9D5FF;
-            --border-color: #4C1D95;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
 
         body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--bg-color);
-            margin: 0;
-            padding: 20px;
+            font-family: 'JetBrains Mono', monospace;
+            background-color: #0c0a09;
+            /* Industrial Dark Mode */
+            color: #d6d3d1;
         }
 
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: linear-gradient(135deg, #1a1a2e, #0f0f1e);
-            padding: 40px;
-            box-shadow: 0 4px 30px rgba(109, 40, 217, 0.3);
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
+        .procedure-card {
+            background: #1c1917;
+            border: 1px solid #292524;
+            padding: 24px;
+            margin-bottom: 16px;
+            border-left: 4px solid #44403c;
         }
 
-        header {
-            border-bottom: 3px solid var(--primary-color);
-            padding-bottom: 20px;
-            margin-bottom: 30px;
-            text-align: center;
-            background: linear-gradient(135deg, rgba(76, 29, 149, 0.3), rgba(109, 40, 217, 0.1));
-            padding: 20px;
-            border-radius: 8px;
+        .procedure-card.critical {
+            border-left-color: #dc2626;
+            background: #2a1210;
         }
 
-        h1 {
-            margin: 0;
-            color: var(--accent-color);
-            font-size: 28px;
+        .procedure-card.sonar {
+            border-left-color: #7c3aed;
+            background: #16122a;
+        }
+
+        .step-num {
+            color: #3b82f6;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .btn-return {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #1c1917;
+            border: 1px solid #44403c;
+            color: #78716c;
+            padding: 8px 16px;
+            font-size: 12px;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: 0 0 10px rgba(167, 139, 250, 0.5);
-        }
-
-        h2 {
-            color: var(--secondary-color);
-            font-size: 18px;
-            margin-top: 5px;
-            font-weight: 400;
-        }
-
-        .section-title {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: #fff;
-            padding: 10px 15px;
-            margin-top: 40px;
-            border-radius: 4px;
-            font-size: 1.2em;
             font-weight: bold;
-            display: flex;
-            align-items: center;
-            box-shadow: 0 0 15px rgba(109, 40, 217, 0.4);
-        }
-
-        .section-title::before {
-            content: "🔊";
-            margin-right: 10px;
-            font-size: 1.2em;
-        }
-
-        h3 {
-            color: var(--accent-color);
-            border-left: 4px solid var(--secondary-color);
-            padding-left: 10px;
-            margin-top: 25px;
-        }
-
-        .module {
-            border: 1px solid var(--border-color);
-            padding: 15px;
-            margin: 15px 0;
             border-radius: 4px;
-            background: rgba(76, 29, 149, 0.1);
+            transition: all 0.2s;
         }
 
-        .critical {
-            border-left: 5px solid var(--warning-color);
-            background: rgba(245, 158, 11, 0.05);
-        }
-
-        .zone {
-            border-left: 5px solid var(--accent-color);
-            background: rgba(167, 139, 250, 0.05);
-            margin: 20px 0;
-            padding: 15px;
-            border-radius: 4px;
-        }
-
-        .zone-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-
-        .zone-label {
-            background: var(--secondary-color);
+        .btn-return:hover {
+            border-color: #3b82f6;
             color: white;
-            padding: 4px 12px;
-            border-radius: 4px;
-            font-weight: bold;
-            font-size: 0.9em;
-        }
-
-        ul,
-        ol {
-            padding-left: 20px;
-        }
-
-        li {
-            margin-bottom: 8px;
-        }
-
-        .back-btn {
-            display: inline-block;
-            margin-top: 30px;
-            text-decoration: none;
-            color: var(--accent-color);
-            font-weight: bold;
-            border: 1px solid var(--accent-color);
-            padding: 10px 20px;
-            border-radius: 4px;
-            transition: all 0.3s;
-        }
-
-        .back-btn:hover {
-            background-color: var(--accent-color);
-            color: #000;
-        }
-
-        strong {
-            font-weight: 600;
-            color: var(--accent-color);
-        }
-
-        .sound-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 15px 0;
-            background: rgba(0, 0, 0, 0.3);
-        }
-
-        .sound-table th,
-        .sound-table td {
-            border: 1px solid var(--border-color);
-            padding: 10px;
-            text-align: left;
-        }
-
-        .sound-table th {
-            background: var(--primary-color);
-            color: #fff;
-        }
-
-        .sound-table tr:nth-child(even) {
-            background: rgba(76, 29, 149, 0.1);
-        }
-
-        .frequency-box {
-            background: linear-gradient(135deg, rgba(109, 40, 217, 0.2), rgba(167, 139, 250, 0.1));
-            padding: 15px;
-            border-left: 4px solid var(--accent-color);
-            margin: 15px 0;
-            border-radius: 4px;
         }
     </style>
 </head>
 
-<body>
-    <div class="container">
-        <header>
-            <h1>🔊 Acoustic Diagnostics</h1>
-            <h2>The Sensory Analysis Protocol</h2>
-            <p style="color: var(--accent-color); font-size: 0.9em; margin-top: 10px;">Using sound signatures to
-                identify internal failures before sensor triggers</p>
-        </header>
+<body class="p-6 md:p-12 max-w-5xl mx-auto">
 
-        <div class="module critical">
-            <h3>⚠️ LISTENING SAFETY PROTOCOL</h3>
-            <p><strong>STOP. READ THIS FIRST.</strong></p>
-            <ul>
-                <li><strong>Hearing Protection:</strong> Always wear hearing protection when unit is operating. Remove
-                    briefly only for diagnostic listening at safe locations.</li>
-                <li><strong>Safe Zones:</strong> Never listen from locations with rotating machinery exposure. Use
-                    designated listening posts only.</li>
-                <li><strong>Baseline Recording:</strong> Record "healthy" sounds during commissioning for future
-                    comparison.</li>
-            </ul>
-        </div>
-
-        <div class="section-title">The Acoustic Map: Four Technical Zones</div>
-        <p>Turbine sound analysis is divided into four distinct zones, each with characteristic acoustic signatures.</p>
-
-        <!-- ZONE A -->
-        <div class="zone">
-            <div class="zone-header">
-                <span class="zone-label">ZONE A</span>
-                <h3 style="margin: 0;">Intake & Spiral Case</h3>
+    <!-- Header -->
+    <header class="mb-10 pb-6 border-b border-stone-800 flex justify-between items-start">
+        <div>
+            <div class="flex items-center gap-2 mb-2">
+                <span
+                    class="px-2 py-1 rounded bg-purple-900/30 text-purple-400 text-[10px] font-bold border border-purple-900 uppercase">SOP-DIAG-001</span>
+                <span class="text-[10px] text-stone-500 uppercase font-bold">REV 2.0</span>
             </div>
-            <p><strong>Location:</strong> Upstream of the runner, from trash rack through MIV to spiral case entry.</p>
-
-            <h4 style="color: var(--accent-color);">Normal Sounds:</h4>
-            <ul>
-                <li><strong>"Smooth Rush":</strong> Steady water flow sound, like a large river - indicates clean flow
-                    path.</li>
-                <li><strong>"Soft Hiss":</strong> Minor turbulence at spiral case entry - normal at high flow rates.
-                </li>
-            </ul>
-
-            <h4 style="color: var(--warning-color);">Abnormal Sounds:</h4>
-            <ul>
-                <li><strong>"Clunk" or "Bang":</strong> Large debris hitting MIV or trash rack.
-                    <br><em>Action: Inspect intake, check trash rack for blockage → <a href="./Francis_SOP_Intake.html"
-                            style="color: var(--accent-color);">Francis_SOP_Intake.html</a></em>
-                </li>
-                <li><strong>"Whistling" or "Screaming":</strong> Partially closed MIV causing high-velocity jet.
-                    <br><em>Action: Check MIV position sensor and servomotor.</em>
-                </li>
-                <li><strong>"Gurgling":</strong> Air entrainment in spiral case.
-                    <br><em>Action: Check upstream water level, inspect MIV seals.</em>
-                </li>
-            </ul>
+            <h1 class="text-3xl font-bold text-white mb-2" data-i18n="title">ACOUSTIC DIAGNOSTICS</h1>
+            <p class="text-stone-500 text-sm" data-i18n="subtitle">The Sensory Analysis Protocol: Sound Signature
+                Diagnostics</p>
         </div>
 
-        <!-- ZONE B -->
-        <div class="zone">
-            <div class="zone-header">
-                <span class="zone-label">ZONE B</span>
-                <h3 style="margin: 0;">Runner & Guide Vanes</h3>
-            </div>
-            <p><strong>Location:</strong> The heart of energy conversion—guide vanes, runner blades, and immediate
-                vicinity.</p>
+        <a href="Francis_Horizontal_Dashboard.html" class="btn-return">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i> <span data-i18n="return">Back to Dashboard</span>
+        </a>
+    </header>
 
-            <h4 style="color: var(--accent-color);">Normal Sounds:</h4>
-            <ul>
-                <li><strong>"Deep Hum":</strong> Rotational frequency (8.3 Hz for 500 RPM) - indicates smooth operation.
-                </li>
-                <li><strong>"Blade Passage Tone":</strong> Number of runner blades × rotational frequency (e.g., 13
-                    blades × 8.3 Hz = 108 Hz).</li>
-            </ul>
-
-            <h4 style="color: var(--warning-color);">Abnormal Sounds:</h4>
-            <ul>
-                <li><strong>"Rock-Crushing" or "Gravel-Dropping":</strong> Continuous, violent sound - classic
-                    cavitation signature.
-                    <br><em>Action: Immediate inspection required → <a href="./Francis_SOP_Welding.html"
-                            style="color: var(--accent-color);">Francis_SOP_Welding.html</a></em>
-                </li>
-                <li><strong>"Rattling" or "Clattering":</strong> Loose runner bolts, damaged blades, or foreign object
-                    trapped.
-                    <br><em>Action: Stop unit, perform internal inspection.</em>
-                </li>
-                <li><strong>"Grinding" or "Scraping":</strong> Runner contact with labyrinth seal or casing.
-                    <br><em>Action: Check shaft alignment and labyrinth gaps → <a href="./Francis_SOP_Precision.html"
-                            style="color: var(--accent-color);">Francis_SOP_Precision.html</a></em>
-                </li>
-                <li><strong>"Popping" (irregular):</strong> Guide vane linkage play or mechanical backlash.
-                    <br><em>Action: Inspect linkage pins → <a href="./Francis_SOP_Linkage.html"
-                            style="color: var(--accent-color);">Francis_SOP_Linkage.html</a></em>
-                </li>
-            </ul>
-        </div>
-
-        <!-- ZONE C -->
-        <div class="zone">
-            <div class="zone-header">
-                <span class="zone-label">ZONE C</span>
-                <h3 style="margin: 0;">Draft Tube</h3>
-            </div>
-            <p><strong>Location:</strong> Downstream of runner, from draft tube cone to tailrace exit.</p>
-
-            <h4 style="color: var(--accent-color);">Normal Sounds:</h4>
-            <ul>
-                <li><strong>"Muffled Roar":</strong> Turbulent water exiting into tailrace - normal at full load.</li>
-            </ul>
-
-            <h4 style="color: var(--warning-color);">Abnormal Sounds:</h4>
-            <ul>
-                <li><strong>"Thumping" or "Pulsing" (0.2-2 Hz):</strong> Low-frequency vortex rope formation.
-                    <br><em>Action: Part-load operation issue. Check air admission → <a href="./Francis_SOP_DFT.html"
-                            style="color: var(--accent-color);">Francis_SOP_DFT.html</a> or <a
-                            href="./Francis_SOP_Vortex_Control.html"
-                            style="color: var(--accent-color);">Francis_SOP_Vortex_Control.html</a></em>
-                </li>
-                <li><strong>"Surging" (irregular pulsations):</strong> Draft tube pressure oscillations causing
-                    whole-unit vibration.
-                    <br><em>Action: Adjust load or install air admission valve.</em>
-                </li>
-            </ul>
-        </div>
-
-        <!-- ZONE D -->
-        <div class="zone">
-            <div class="zone-header">
-                <span class="zone-label">ZONE D</span>
-                <h3 style="margin: 0;">Bearings & Generator</h3>
-            </div>
-            <p><strong>Location:</strong> All rotating mechanical components outside the water path.</p>
-
-            <h4 style="color: var(--accent-color);">Normal Sounds:</h4>
-            <ul>
-                <li><strong>"Smooth Whirr":</strong> Bearing oil film and shaft rotation - barely audible.</li>
-                <li><strong>"Electrical Hum" (50/60 Hz):</strong> Generator magnetic field - consistent tone.</li>
-            </ul>
-
-            <h4 style="color: var(--warning-color);">Abnormal Sounds:</h4>
-            <ul>
-                <li><strong>"High-Pitched Squeal" (metallic):</strong> Oil-film collapse, bearing contact with shaft.
-                    <br><em>Action: STOP UNIT IMMEDIATELY. Inspect bearing → <a href="./Francis_SOP_Bearings.html"
-                            style="color: var(--accent-color);">Francis_SOP_Bearings.html</a></em>
-                </li>
-                <li><strong>"Rumbling" or "Grinding":</strong> Bearing degradation, damaged rolling elements.
-                    <br><em>Action: Check bearing temperature, plan replacement.</em>
-                </li>
-                <li><strong>"Crackling" or "Popping" (electrical):</strong> Brush sparking, insulation breakdown.
-                    <br><em>Action: Inspect brushes → <a href="./Francis_SOP_Generator.html"
-                            style="color: var(--accent-color);">Francis_SOP_Generator.html</a> or <a
-                            href="./Francis_SOP_Elec_Health.html"
-                            style="color: var(--accent-color);">Francis_SOP_Elec_Health.html</a></em>
-                </li>
-                <li><strong>"Varying Hum" (frequency modulation):</strong> Rotor eccentricity or magnetic imbalance.
-                    <br><em>Action: Perform run-out check, inspect air gap uniformity.</em>
-                </li>
-            </ul>
-        </div>
-
-        <div class="section-title">Acoustic Fingerprinting Techniques</div>
-        <div class="module">
-            <h3>Tool Selection</h3>
-            <ul>
-                <li><strong>Industrial Stethoscope:</strong> Best for bearing diagnostics. Place probe on bearing
-                    housing to isolate internal sounds.</li>
-                <li><strong>Metal Rod Method:</strong> Use a 30-50 cm steel rod. Place one end on the component, hold
-                    the other end to your ear (with hearing protection removed briefly). Acts as acoustic waveguide.
-                </li>
-                <li><strong>Sound Level Meter:</strong> For quantitative analysis. Record dB levels at fixed locations
-                    for trend analysis.</li>
-                <li><strong>Smartphone Apps:</strong> Basic spectrum analyzers (FFT) can identify frequency peaks.</li>
-            </ul>
-
-            <h3>Listening Technique</h3>
-            <ol>
-                <li><strong>Establish Baseline:</strong> Record sounds during commissioning or after major overhaul at
-                    various loads (25%, 50%, 75%, 100%).</li>
-                <li><strong>Systematic Approach:</strong> Listen at the same locations during each inspection (e.g.,
-                    turbine bearing, generator DE/NDE, spiral case access points).</li>
-                <li><strong>Load Variation:</strong> Change load incrementally (±10%) while listening. Abnormal sounds
-                    often change with load.</li>
-                <li><strong>Document:</strong> Use voice recorder to capture sounds. Note load, temperature, and
-                    vibration levels at time of recording.</li>
-            </ol>
-        </div>
-
-        <div class="section-title">Frequency Recognition</div>
-        <div class="frequency-box">
-            <h3>Broadband vs. Discrete Tones</h3>
-            <p><strong>Broadband Noise:</strong> Wide frequency range with no distinct peaks. Sounds like "white noise"
-                or "rushing water."</p>
-            <ul>
-                <li><strong>Cause:</strong> General turbulence, water flow, random vibration.</li>
-                <li><strong>Significance:</strong> Normal at most operating conditions. Increase indicates flow path
-                    blockage or roughness.</li>
-            </ul>
-
-            <p style="margin-top: 15px;"><strong>Discrete Tones:</strong> Narrow frequency peaks that stand out from
-                background noise.</p>
-            <ul>
-                <li><strong>Cause:</strong> Specific mechanical or hydraulic phenomenon with periodic nature.</li>
-                <li><strong>Examples:</strong>
-                    <ul>
-                        <li>Rotational frequency (8.3 Hz for 500 RPM) → Shaft imbalance</li>
-                        <li>Blade passage frequency (13 blades × 8.3 Hz = 108 Hz) → Runner blade issues</li>
-                        <li>Vortex shedding frequency (0.2-2 Hz) → Draft tube vortex rope</li>
-                        <li>High-frequency squeal (> 1000 Hz) → Bearing failure</li>
-                    </ul>
-                </li>
-                <li><strong>Significance:</strong> Discrete tones indicate specific failure modes. Always investigate.
-                </li>
-            </ul>
-        </div>
-
-        <div class="module">
-            <h3>Frequency Calculation Guide</h3>
-            <div class="frequency-box">
-                <p><strong>Rotational Frequency (Hz):</strong> RPM ÷ 60</p>
-                <p style="margin-top: 10px;"><strong>Blade Passage Frequency (Hz):</strong> (Number of Blades) × (RPM ÷
-                    60)</p>
-                <p style="margin-top: 10px;"><strong>Example for 500 RPM, 13-blade runner:</strong></p>
-                <ul>
-                    <li>Rotational: 500 ÷ 60 = 8.33 Hz</li>
-                    <li>Blade Passage: 13 × 8.33 = 108.3 Hz</li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="section-title">Action Logic: Sound → SOP Mapping</div>
-        <table class="sound-table">
-            <thead>
-                <tr>
-                    <th>Acoustic Signature</th>
-                    <th>Zone</th>
-                    <th>Likely Cause</th>
-                    <th>Immediate Action</th>
-                    <th>SOP Reference</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>"Rock-Crushing" / "Gravel"</td>
-                    <td>B</td>
-                    <td>Cavitation</td>
-                    <td>Inspect runner blades</td>
-                    <td><a href="./Francis_SOP_Welding.html" style="color: var(--accent-color);">Welding SOP</a></td>
-                </tr>
-                <tr>
-                    <td>"Thumping" (0.2-2 Hz)</td>
-                    <td>C</td>
-                    <td>Vortex Rope</td>
-                    <td>Check air admission</td>
-                    <td><a href="./Francis_SOP_Vortex_Control.html" style="color: var(--accent-color);">Vortex SOP</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>"High-Pitched Squeal"</td>
-                    <td>D</td>
-                    <td>Bearing Failure</td>
-                    <td>STOP UNIT</td>
-                    <td><a href="./Francis_SOP_Bearings.html" style="color: var(--accent-color);">Bearings SOP</a></td>
-                </tr>
-                <tr>
-                    <td>"Grinding" / "Scraping"</td>
-                    <td>B</td>
-                    <td>Shaft Misalignment</td>
-                    <td>Check labyrinth gaps</td>
-                    <td><a href="./Francis_SOP_Precision.html" style="color: var(--accent-color);">Alignment SOP</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>"Clunk" / "Bang"</td>
-                    <td>A</td>
-                    <td>Debris Impact</td>
-                    <td>Inspect intake</td>
-                    <td><a href="./Francis_SOP_Intake.html" style="color: var(--accent-color);">Intake SOP</a></td>
-                </tr>
-                <tr>
-                    <td>"Whistling" (high velocity)</td>
-                    <td>A</td>
-                    <td>Valve Position Error</td>
-                    <td>Check MIV position</td>
-                    <td><a href="./Francis_SOP_HPU.html" style="color: var(--accent-color);">HPU SOP</a></td>
-                </tr>
-                <tr>
-                    <td>"Popping" (irregular)</td>
-                    <td>B</td>
-                    <td>Linkage Play</td>
-                    <td>Inspect pins</td>
-                    <td><a href="./Francis_SOP_Linkage.html" style="color: var(--accent-color);">Linkage SOP</a></td>
-                </tr>
-                <tr>
-                    <td>"Electrical Crackling"</td>
-                    <td>D</td>
-                    <td>Brush Sparking</td>
-                    <td>Inspect brushes</td>
-                    <td><a href="./Francis_SOP_Generator.html" style="color: var(--accent-color);">Generator SOP</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>"Rumbling" (continuous)</td>
-                    <td>D</td>
-                    <td>Bearing Degradation</td>
-                    <td>Monitor temperature</td>
-                    <td><a href="./Francis_SOP_Bearings.html" style="color: var(--accent-color);">Bearings SOP</a></td>
-                </tr>
-                <tr>
-                    <td>"Varying Hum" (modulated)</td>
-                    <td>D</td>
-                    <td>Magnetic Imbalance</td>
-                    <td>Check air gap</td>
-                    <td><a href="./Francis_SOP_Generator.html" style="color: var(--accent-color);">Generator SOP</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td><strong>"Pump Whining" (High Freq)</strong></td>
-                    <td>D (HPU)</td>
-                    <td>Oil Aeration in HPU</td>
-                    <td>Check oil level, inspect suction leaks</td>
-                    <td><a href="./Francis_SOP_Oil_Health.html" style="color: var(--accent-color);">Oil Health SOP</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td><strong>"Hydraulic Hissing"</strong></td>
-                    <td>D (Governor)</td>
-                    <td>Internal Leakage - Pilot Valves</td>
-                    <td>Perform dry-out procedure</td>
-                    <td><a href="./Francis_SOP_Oil_Health.html" style="color: var(--accent-color);">Oil Health SOP</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td><strong>"Low-Freq Pulsing" (0.2-0.4 Hz)</strong></td>
-                    <td>C</td>
-                    <td>Vortex Rope (Draft Tube)</td>
-                    <td>Activate air admission valve</td>
-                    <td><a href="./Francis_SOP_Vortex_Control.html" style="color: var(--accent-color);">Vortex SOP</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td><strong>"Relay Clicking" (Rapid)</strong></td>
-                    <td>D (Governor)</td>
-                    <td>Governor Hunting - PID Instability</td>
-                    <td>Check PID settings, linkage play</td>
-                    <td><a href="./Francis_SOP_Gov_Logic.html" style="color: var(--accent-color);">Governor Logic
-                            SOP</a></td>
-                </tr>
-            </tbody>
-        </table>
-
-        <div class="section-title">Environmental Bias - Seasonal Variations</div>
-        <div class="module critical">
-            <h3>🌧️ Wet Season Impact on Acoustic Signatures</h3>
-            <p><strong>Context:</strong> During Rwanda's rainy seasons (March-May, September-November), river turbidity
-                increases significantly (> 500 NTU) due to suspended solids.</p>
-
-            <h4 style="color: var(--accent-color);">Acoustic Changes:</h4>
-            <ul>
-                <li><strong>"Rock-Crushing" Intensity Increases (Zone B):</strong>
-                    <ul>
-                        <li>Suspended solids (sand, silt) amplify cavitation damage</li>
-                        <li>Normal cavitation sound becomes more aggressive and continuous</li>
-                        <li>Abrasive particles hitting runner blades create additional "grinding" overlay</li>
-                        <li><strong>Action:</strong> Increase listening frequency to weekly during floods</li>
-                    </ul>
-                </li>
-                <li><strong>"Pump Whining" More Common (Zone D - HPU):</strong>
-                    <ul>
-                        <li>Higher river flow can cause flooding in power house basement</li>
-                        <li>Moisture ingress into HPU reservoir increases aeration risk</li>
-                        <li><strong>Correlation:</strong> If wet season + pump whining detected → Immediately check HPU
-                            for water contamination</li>
-                        <li><strong>Link:</strong> <a href="./Francis_SOP_Oil_Health.html"
-                                style="color: var(--accent-color);">Oil Health SOP - Water Contamination</a></li>
-                    </ul>
-                </li>
-                <li><strong>"Gurgling" in Intake (Zone A):</strong>
-                    <ul>
-                        <li>Debris load increases during floods, causing air entrainment at trash rack</li>
-                        <li>More pronounced during high flow (> 50 m³/s)</li>
-                        <li><strong>Normal during wet season</strong> - but indicates need for trash rack cleaning</li>
-                    </ul>
-                </li>
-            </ul>
-
-            <h4 style="color: var(--warning-color);">Diagnostic Threshold Adjustment:</h4>
-            <p><strong>Rule:</strong> During wet season (turbidity > 500 NTU), apply +20% tolerance to cavitation sound
-                intensity before classifying as "critical".</p>
-            <p><strong>Example:</strong> A "moderate" rock-crushing sound in dry season = baseline. The same intensity
-                in wet season may be normal due to silt abrasion. Only escalate if sound increases >20% above wet-season
-                baseline.</p>
-
-            <p style="margin-top: 15px;"><strong>💡 Strategic Link:</strong> See <a href="./Francis_SOP_MIM.html"
-                    style="color: var(--accent-color); font-weight: bold;">Maintenance Intensity Matrix</a> for seasonal
-                priority shifts in acoustic diagnostics.</p>
-        </div>
-
-        <div class="section-title">Inspection Schedule</div>
-        <div class="module">
-            <ul>
-                <li><strong>Daily:</strong> Listen during routine rounds. Note any new sounds.</li>
-                <li><strong>Weekly:</strong> Systematic zone-by-zone acoustic inspection using stethoscope.</li>
-                <li><strong>Monthly:</strong> Record sounds at standard load points for trending.</li>
-                <li><strong>After Load Changes:</strong> Listen for 5 minutes after significant load change (> 20%).
-                </li>
-                <li><strong>After Maintenance:</strong> Establish new baseline after any turbine work.</li>
-            </ul>
-        </div>
-
-        <a href="./Francis_Horizontal.html" class="back-btn">← Return to Master Manual</a>
-
+    <!-- 1. Safety & Sonar Intro -->
+    <div class="procedure-card critical">
+        <h3 class="text-red-500 font-bold mb-2 flex items-center gap-2" data-i18n="s1_title">
+            <i data-lucide="shield-alert"></i> LISTENING SAFETY PROTOCOL
+        </h3>
+        <ul class="text-sm text-stone-400 space-y-2 list-disc list-inside">
+            <li data-i18n="s1_l1"><strong>Hearing Protection:</strong> Mandatory at all times. Brief removal only for
+                diagnostic listening.</li>
+            <li data-i18n="s1_l2"><strong>Safe Zones:</strong> Never approach rotating components. Use listening posts.
+            </li>
+            <li data-i18n="s1_l3"><strong>Baseline:</strong> Compare against "Healthy" commissioning audio files.</li>
+        </ul>
     </div>
+
+    <!-- 2. The Acoustic Map -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Zone A/B -->
+        <div class="procedure-card sonar">
+            <h3 class="text-purple-400 font-bold mb-4 flex items-center gap-2">
+                <i data-lucide="waves"></i> <span data-i18n="map_title">ACOUSTIC ZONES A & B</span>
+            </h3>
+
+            <div class="space-y-4 text-xs">
+                <div class="p-3 bg-black/40 rounded border border-stone-800">
+                    <strong class="text-stone-300 block mb-1" data-i18n="z1">ZONE A: INTAKE & SPIRAL</strong>
+                    <p class="text-stone-500" data-i18n="z1_desc">Normal: Smooth Rush. Abnormal: Clunk/Bang (Debris),
+                        Whistling (MIV Leak).</p>
+                </div>
+                <div class="p-3 bg-black/40 rounded border border-stone-800">
+                    <strong class="text-stone-300 block mb-1" data-i18n="z2">ZONE B: RUNNER & VANES</strong>
+                    <p class="text-stone-500" data-i18n="z2_desc">Normal: Deep Hum (8.3Hz). Abnormal: Rock-Crushing
+                        (Cavitation), Grinding (Seal Contact).</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Zone C/D -->
+        <div class="procedure-card sonar">
+            <h3 class="text-purple-400 font-bold mb-4 flex items-center gap-2">
+                <i data-lucide="activity"></i> <span data-i18n="map2_title">ACOUSTIC ZONES C & D</span>
+            </h3>
+            <div class="space-y-4 text-xs">
+                <div class="p-3 bg-black/40 rounded border border-stone-800">
+                    <strong class="text-stone-300 block mb-1" data-i18n="z3">ZONE C: DRAFT TUBE</strong>
+                    <p class="text-stone-500" data-i18n="z3_desc">Normal: Muffled Roar. Abnormal: Thumping/Pulsing
+                        (Vortex Rope 0.2-2Hz).</p>
+                </div>
+                <div class="p-3 bg-black/40 rounded border border-stone-800">
+                    <strong class="text-stone-300 block mb-1" data-i18n="z4">ZONE D: BEARINGS/GEN</strong>
+                    <p class="text-stone-500" data-i18n="z4_desc">Normal: Smooth Whirr. Abnormal: High-Pitched Squeal
+                        (Oil Collapse), Crackling (Brushes).</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Seasonal Logic - Critical for Rwanda -->
+    <div class="procedure-card critical">
+        <h3 class="text-amber-500 font-bold mb-2 flex items-center gap-2" data-i18n="season_title">
+            <i data-lucide="cloud-rain"></i> WET SEASON BIAS (RWANDA)
+        </h3>
+        <p class="text-sm text-stone-400 mb-4" data-i18n="season_desc">
+            High turbidity (>500 NTU) amplifies sound levels. Silt particles hitting metal create a "grinding" overlay.
+        </p>
+        <div class="bg-amber-900/10 p-3 rounded border border-amber-900/30 text-[10px]">
+            <strong class="text-amber-400 block mb-1" data-i18n="rule">PRECISION RULE:</strong>
+            <span data-i18n="rule_desc">Apply +20% tolerance to cavitation intensity thresholds during March-May
+                floods.</span>
+        </div>
+    </div>
+
+    <!-- 4. Recognition Table -->
+    <div class="procedure-card">
+        <h3 class="text-white font-bold mb-4 flex items-center gap-2" data-i18n="tab_title">
+            <i data-lucide="list"></i> FREQUENCY RECOGNITION
+        </h3>
+        <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+                <thead class="bg-stone-900 text-stone-500 uppercase">
+                    <tr>
+                        <th class="p-2" data-i18n="th1">Signature</th>
+                        <th class="p-2" data-i18n="th2">Likely Cause</th>
+                        <th class="p-2" data-i18n="th3">Action</th>
+                    </tr>
+                </thead>
+                <tbody class="text-stone-400">
+                    <tr class="border-b border-stone-800">
+                        <td class="p-2 text-white">Rock-Crushing</td>
+                        <td class="p-2">Cavitation (Runner)</td>
+                        <td class="p-2">Inspect Blades</td>
+                    </tr>
+                    <tr class="border-b border-stone-800">
+                        <td class="p-2 text-white">High Squeal</td>
+                        <td class="p-2">Oil Film Failure</td>
+                        <td class="p-2 text-red-400 font-bold">EMERGENCY STOP</td>
+                    </tr>
+                    <tr>
+                        <td class="p-2 text-white">Chugging</td>
+                        <td class="p-2">Draft Tube Vortex</td>
+                        <td class="p-2">Adjust Air/Load</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Hidden Translation Data -->
+    <script>
+        lucide.createIcons();
+        const ml = localStorage.getItem('anohub_lang_pref') || 'en';
+
+        const i18n = {
+            en: {
+                title: "ACOUSTIC DIAGNOSTICS",
+                subtitle: "The Sensory Analysis Protocol: Sound Signature Diagnostics",
+                return: "Back to Dashboard",
+
+                s1_title: "LISTENING SAFETY PROTOCOL",
+                s1_l1: "Hearing Protection: Mandatory at all times. Brief removal only for diagnostic listening.",
+                s1_l2: "Safe Zones: Never approach rotating components. Use listening posts.",
+                s1_l3: "Baseline: Compare against 'Healthy' commissioning audio files.",
+
+                map_title: "ACOUSTIC ZONES A & B",
+                z1: "ZONE A: INTAKE & SPIRAL", z1_desc: "Normal: Smooth Rush. Abnormal: Clunk/Bang (Debris), Whistling (MIV Leak).",
+                z2: "ZONE B: RUNNER & VANES", z2_desc: "Normal: Deep Hum (8.3Hz). Abnormal: Rock-Crushing (Cavitation), Grinding (Seal Contact).",
+
+                map2_title: "ACOUSTIC ZONES C & D",
+                z3: "ZONE C: DRAFT TUBE", z3_desc: "Normal: Muffled Roar. Abnormal: Thumping/Pulsing (Vortex Rope 0.2-2Hz).",
+                z4: "ZONE D: BEARINGS/GEN", z4_desc: "Normal: Smooth Whirr. Abnormal: High-Pitched Squeal (Oil Collapse), Crackling (Brushes).",
+
+                season_title: "WET SEASON BIAS (RWANDA)",
+                season_desc: "High turbidity (>500 NTU) amplifies sound levels. Silt particles hitting metal create a 'grinding' overlay.",
+                rule: "PRECISION RULE:",
+                rule_desc: "Apply +20% tolerance to cavitation intensity thresholds during March-May floods.",
+
+                tab_title: "FREQUENCY RECOGNITION",
+                th1: "Signature", th2: "Likely Cause", th3: "Action"
+            },
+            bs: {
+                title: "AKUSTIČNA DIJAGNOSTIKA",
+                subtitle: "Senzorni Protokol Analize: Dijagnostika Zvučnih Signatura",
+                return: "Povratak na Kontrolnu Tablu",
+
+                s1_title: "SIGURNOSNI PROTOKOL SLUŠANJA",
+                s1_l1: "Zaštita sluha: Obavezna cijelo vrijeme. Kratko uklanjanje samo za dijagnostiku.",
+                s1_l2: "Sigurne zone: Nikada ne prilazite rotirajućim dijelovima. Koristite mjerne tačke.",
+                s1_l3: "Baseline: Poredite sa 'Zdravim' snimcima iz puštanja u rad.",
+
+                map_title: "AKUSTIČNE ZONE A & B",
+                z1: "ZONA A: ZAHVAT & SPIRALA", z1_desc: "Normalno: Ravnomjerno šuštanje. Abnormalno: Udarci (otpad), Zviždanje (curenje GUV).",
+                z2: "ZONA B: RADNO KOLO & LOPATICE", z2_desc: "Normalno: Duboki hum (8.3Hz). Abnormalno: Lomljenje kamenja (Kavitacija), Struganje (Labirint).",
+
+                map2_title: "AKUSTIČNE ZONE C & D",
+                z3: "ZONA C: SIFON (DFT)", z3_desc: "Normalno: Prigušena rika. Abnormalno: Pulsiranje/Dahtanje (Vrtlog 0.2-2Hz).",
+                z4: "ZONA D: LEŽAJEVI/GEN", z4_desc: "Normalno: Mirno brujanje. Abnormalno: Visoki vrisak (Slom uljnog filma), Pucketanje (Četkice).",
+
+                season_title: "UTICAJ KIŠNE SEZONE (RWANDA)",
+                season_desc: "Visoka mutnoća (>500 NTU) pojačava nivoe zvuka. Čestice mulja koje udaraju u metal stvaraju 'stružući' sloj.",
+                rule: "PRAVILO PRECIZNOSTI:",
+                rule_desc: "Primijenite +20% tolerancije na pragove intenziteta kavitacije tokom poplava mart-maj.",
+
+                tab_title: "PREPOZNAVANJE FREKVENCIJA",
+                th1: "Signatura", th2: "Vjerovatan Uzrok", th3: "Akcija"
+            }
+        };
+
+        if (ml === 'bs') {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (i18n.bs[key]) el.innerText = i18n.bs[key];
+            });
+        }
+    </script>
 </body>
 
 </html>
