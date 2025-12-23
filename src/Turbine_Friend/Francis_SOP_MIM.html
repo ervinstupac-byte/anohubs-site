@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOP: Maintenance Intensity Matrix (MIM)</title>
+    <style>
+        /* Radar/Matrix Theme - Grid Background with High-Contrast */
+        :root {
+            --primary-color: #00FFFF;
+            --secondary-color: #00CCFF;
+            --accent-color: #FFFF00;
+            --warning-color: #FF0000;
+            --bg-color: #000000;
+            --text-color: #00FF00;
+            --border-color: #00FFFF;
+            --grid-color: rgba(0, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Courier New', 'Consolas', monospace;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            background-image:
+                repeating-linear-gradient(0deg, var(--grid-color) 0px, var(--grid-color) 1px, transparent 1px, transparent 20px),
+                repeating-linear-gradient(90deg, var(--grid-color) 0px, var(--grid-color) 1px, transparent 1px, transparent 20px);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 40px;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+            border-radius: 8px;
+            border: 2px solid var(--border-color);
+        }
+
+        header {
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(0, 204, 255, 0.05));
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        h1 {
+            margin: 0;
+            color: var(--primary-color);
+            font-size: 28px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+        }
+
+        h2 {
+            color: var(--secondary-color);
+            font-size: 18px;
+            margin-top: 5px;
+            font-weight: 400;
+        }
+
+        .section-title {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: #000;
+            padding: 10px 15px;
+            margin-top: 40px;
+            border-radius: 4px;
+            font-size: 1.2em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+        }
+
+        .section-title::before {
+            content: "📊";
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        h3 {
+            color: var(--accent-color);
+            border-left: 4px solid var(--primary-color);
+            padding-left: 10px;
+            margin-top: 25px;
+        }
+
+        .module {
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            background: rgba(0, 255, 255, 0.02);
+        }
+
+        .critical {
+            border-left: 5px solid var(--warning-color);
+            background: rgba(255, 0, 0, 0.05);
+        }
+
+        .season-box {
+            border-left: 5px solid var(--accent-color);
+            background: rgba(255, 255, 0, 0.03);
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 4px;
+        }
+
+        ul,
+        ol {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 30px;
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: bold;
+            border: 1px solid var(--primary-color);
+            padding: 10px 20px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            background-color: var(--primary-color);
+            color: #000;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 1);
+        }
+
+        strong {
+            font-weight: 600;
+            color: var(--accent-color);
+        }
+
+        .matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .matrix-table th,
+        .matrix-table td {
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            text-align: left;
+        }
+
+        .matrix-table th {
+            background: var(--primary-color);
+            color: #000;
+            font-weight: bold;
+        }
+
+        .matrix-table tr:nth-child(even) {
+            background: rgba(0, 255, 255, 0.03);
+        }
+
+        .score-high {
+            color: var(--warning-color);
+            font-weight: bold;
+        }
+
+        .score-med {
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .score-low {
+            color: var(--text-color);
+        }
+
+        .radar-box {
+            background: linear-gradient(135deg, rgba(0, 204, 255, 0.1), rgba(255, 255, 0, 0.05));
+            padding: 15px;
+            border: 2px solid var(--primary-color);
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>📊 MAINTENANCE INTENSITY MATRIX (MIM)</h1>
+            <h2>The Strategic Brain for Adaptive Maintenance</h2>
+            <p style="color: var(--accent-color); font-size: 0.9em; margin-top: 10px;">Dynamic priority calculation
+                based on seasonal conditions and operational stress</p>
+        </header>
+
+        <div class="module critical">
+            <h3>⚠️ CRITICAL OPERATING PRINCIPLE</h3>
+            <p><strong>ADAPTIVE MAINTENANCE PHILOSOPHY</strong></p>
+            <ul>
+                <li><strong>Not All Seasons Are Equal:</strong> Wet season (high silt) vs dry season (precision work)
+                    require fundamentally different focus areas.</li>
+                <li><strong>Dynamic Prioritization:</strong> A "low priority" task in dry season may become "critical"
+                    in wet season.</li>
+                <li><strong>Stress-Based Allocation:</strong> Resources should flow to systems under highest
+                    environmental and operational stress.</li>
+            </ul>
+        </div>
+
+        <div class="section-title">The Seasonal Logic - Two Primary Modes</div>
+
+        <!-- WET SEASON MODE -->
+        <div class="season-box">
+            <h3>🌧️ HIGH INTENSITY MODE (Wet Season / Flood Period)</h3>
+            <p><strong>Duration:</strong> Typically March-May and September-November (Rwanda rainy seasons)</p>
+            <p><strong>Characteristics:</strong> High river flow, elevated turbidity (> 500 NTU), increased sediment
+                load, cooler water temperatures</p>
+
+            <h4 style="color: var(--primary-color);">Primary Focus Areas:</h4>
+            <ol>
+                <li><strong>Silt Management & Erosion Control</strong>
+                    <ul>
+                        <li>Daily trash rack inspection for debris buildup</li>
+                        <li>Increased frequency of silt basin flushing</li>
+                        <li>Runner blade erosion monitoring (weekly visual if possible)</li>
+                        <li><strong>Link:</strong> <a href="./Francis_SOP_Intake.html"
+                                style="color: var(--accent-color);">Intake SOP</a></li>
+                    </ul>
+                </li>
+                <li><strong>Cooling Water Filtration</strong>
+                    <ul>
+                        <li><strong>Shift-level filter checks</strong> (every 8 hours) instead of weekly</li>
+                        <li>Bearing temperature trending for early cooling degradation detection</li>
+                        <li>Back-flush frequency increased to daily</li>
+                    </ul>
+                </li>
+                <li><strong>Oil Hygiene & Aeration Monitoring</strong>
+                    <ul>
+                        <li>Water contamination risk increases during floods</li>
+                        <li>Monthly oil analysis instead of quarterly</li>
+                        <li>Daily HPU sight glass checks for cloudiness</li>
+                        <li><strong>Link:</strong> <a href="./Francis_SOP_Oil_Health.html"
+                                style="color: var(--accent-color);">Oil Health SOP</a></li>
+                    </ul>
+                </li>
+                <li><strong>Thrust Balance & Axial Position</strong>
+                    <ul>
+                        <li>High silt increases runner axial thrust variation</li>
+                        <li>Weekly thrust bearing temperature monitoring</li>
+                        <li>Check shaft end-float (axial play) monthly</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h4 style="color: var(--warning-color);">What to AVOID in Wet Season:</h4>
+            <ul>
+                <li>❌ Stator wedge tightening (vibration from high flow can loosen fresh work)</li>
+                <li>❌ Precision alignment work (thermal cycling and load variation make measurements unreliable)</li>
+                <li>❌ PID tuning (vortex rope frequency varies with silt content, skewing results)</li>
+            </ul>
+        </div>
+
+        <!-- DRY SEASON MODE -->
+        <div class="season-box">
+            <h3>☀️ PRECISION INTENSITY MODE (Dry Season / Low Flow Period)</h3>
+            <p><strong>Duration:</strong> Typically June-August and December-February</p>
+            <p><strong>Characteristics:</strong> Low river flow, clear water (< 50 NTU), stable temperatures,
+                    predictable load patterns</p>
+
+                    <h4 style="color: var(--primary-color);">Primary Focus Areas:</h4>
+                    <ol>
+                        <li><strong>Mechanical Alignment & Precision</strong>
+                            <ul>
+                                <li>Bi-annual shaft run-out measurement</li>
+                                <li>Labyrinth seal gap verification (0.4-0.6 mm target)</li>
+                                <li>Guide vane linkage pin inspection for wear</li>
+                                <li><strong>Link:</strong> <a href="./Francis_SOP_Precision.html"
+                                        style="color: var(--accent-color);">Precision SOP</a></li>
+                            </ul>
+                        </li>
+                        <li><strong>Stator Wedge & Core Integrity</strong>
+                            <ul>
+                                <li>Annual "tap test" for loose wedges</li>
+                                <li>Thermal mapping of stator for hot spots (post-rainy season check)</li>
+                                <li>Insulation resistance testing</li>
+                                <li><strong>Link:</strong> <a href="./Francis_SOP_Elec_Health.html"
+                                        style="color: var(--accent-color);">Electrical Health SOP</a></li>
+                            </ul>
+                        </li>
+                        <li><strong>Governor PID Tuning & Response</strong>
+                            <ul>
+                                <li>Stable conditions allow accurate step response testing</li>
+                                <li>Dead-time measurement and optimization</li>
+                                <li>Frequency stability evaluation (1-hour test)</li>
+                                <li><strong>Link:</strong> <a href="./Francis_SOP_Gov_Logic.html"
+                                        style="color: var(--accent-color);">Governor Logic SOP</a></li>
+                            </ul>
+                        </li>
+                        <li><strong>Foundation & Structural Integrity</strong>
+                            <ul>
+                                <li>Annual anchor bolt re-torquing</li>
+                                <li>The "Hollow Test" for grout voids</li>
+                                <li>Epoxy injection of micro-cracks (if needed)</li>
+                                <li><strong>Link:</strong> <a href="./Francis_SOP_Foundation.html"
+                                        style="color: var(--accent-color);">Foundation SOP</a></li>
+                            </ul>
+                        </li>
+                    </ol>
+
+                    <h4 style="color: var(--text-color);">What to FAVOR in Dry Season:</h4>
+                    <ul>
+                        <li>✅ Extended outages for deep inspection work</li>
+                        <li>✅ Bearing replacement (stable ambient temperatures reduce thermal shock risk)</li>
+                        <li>✅ Runner cavitation repair welding (clean water = better post-repair testing)</li>
+                    </ul>
+        </div>
+
+        <div class="section-title">The Criticality Scoring System (Stress Score 1-10)</div>
+
+        <div class="radar-box">
+            <h3>How to Calculate Stress Score</h3>
+            <p><strong>Formula:</strong></p>
+            <p style="font-family: 'Courier New'; font-size: 1.1em; color: var(--primary-color);">
+                Stress Score = (Environmental Factor × 0.4) + (Load Factor × 0.3) + (Age Factor × 0.2) + (Recent Fault
+                History × 0.1)
+            </p>
+
+            <h4 style="color: var(--accent-color);">Scoring Components:</h4>
+            <table class="matrix-table">
+                <tr>
+                    <th>Factor</th>
+                    <th>Low (1-3)</th>
+                    <th>Medium (4-6)</th>
+                    <th>High (7-10)</th>
+                </tr>
+                <tr>
+                    <td><strong>Environmental</strong><br>(Turbidity)</td>
+                    <td>
+                        < 50 NTU (Clear water)</td>
+                    <td>50-500 NTU (Moderate silt)</td>
+                    <td>> 500 NTU (High silt/flood)</td>
+                </tr>
+                <tr>
+                    <td><strong>Load Factor</strong><br>(% of rated)</td>
+                    <td>40-70% (Optimal efficiency)</td>
+                    <td>70-90% or 30-40% (Acceptable)</td>
+                    <td>> 90% or < 30% (Stress zones)</td>
+                </tr>
+                <tr>
+                    <td><strong>Age Factor</strong><br>(Time since overhaul)</td>
+                    <td>
+                        < 2 years</td>
+                    <td>2-5 years</td>
+                    <td>> 5 years</td>
+                </tr>
+                <tr>
+                    <td><strong>Fault History</strong><br>(Last 6 months)</td>
+                    <td>0 faults</td>
+                    <td>1-2 faults</td>
+                    <td>> 2 faults</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section-title">Criticality Matrix: 25 Modules Ranked</div>
+
+        <table class="matrix-table">
+            <thead>
+                <tr>
+                    <th>Module / System</th>
+                    <th>Wet Season Score</th>
+                    <th>Dry Season Score</th>
+                    <th>Primary Stress Driver</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Intake & Silt Management</td>
+                    <td class="score-high">9-10</td>
+                    <td class="score-low">2-3</td>
+                    <td>Turbidity, debris load</td>
+                </tr>
+                <tr>
+                    <td>Cooling Water System</td>
+                    <td class="score-high">8-9</td>
+                    <td class="score-low">3-4</td>
+                    <td>Filter clogging from silt</td>
+                </tr>
+                <tr>
+                    <td>Oil Hygiene (HPU)</td>
+                    <td class="score-high">7-8</td>
+                    <td class="score-med">4-5</td>
+                    <td>Water contamination risk</td>
+                </tr>
+                <tr>
+                    <td>Runner Cavitation / Erosion</td>
+                    <td class="score-high">8-9</td>
+                    <td class="score-low">3-4</td>
+                    <td>Suspended solids abrasion</td>
+                </tr>
+                <tr>
+                    <td>Thrust Bearing</td>
+                    <td class="score-high">7-8</td>
+                    <td class="score-med">4-5</td>
+                    <td>Axial load variation</td>
+                </tr>
+                <tr>
+                    <td>Guide Vane Linkage</td>
+                    <td class="score-med">6-7</td>
+                    <td class="score-med">5-6</td>
+                    <td>High cycling frequency</td>
+                </tr>
+                <tr>
+                    <td>Governor Response</td>
+                    <td class="score-med">5-6</td>
+                    <td class="score-low">3-4</td>
+                    <td>Load variation, vortex</td>
+                </tr>
+                <tr>
+                    <td>Draft Tube Vortex</td>
+                    <td class="score-high">7-8</td>
+                    <td class="score-med">4-5</td>
+                    <td>Part-load operation</td>
+                </tr>
+                <tr>
+                    <td>Precision Alignment</td>
+                    <td class="score-low">2-3</td>
+                    <td class="score-high">8-9</td>
+                    <td>Optimal for dry season work</td>
+                </tr>
+                <tr>
+                    <td>Stator Wedges</td>
+                    <td class="score-low">2-3</td>
+                    <td class="score-high">7-8</td>
+                    <td>Post-wet season loosening check</td>
+                </tr>
+                <tr>
+                    <td>Foundation Integrity</td>
+                    <td class="score-low">3-4</td>
+                    <td class="score-high">7-8</td>
+                    <td>Annual re-torque cycle</td>
+                </tr>
+                <tr>
+                    <td>PID Tuning</td>
+                    <td class="score-low">2-3</td>
+                    <td class="score-high">8-9</td>
+                    <td>Requires stable conditions</td>
+                </tr>
+                <tr>
+                    <td>Bearings (Guide/Thrust)</td>
+                    <td class="score-med">6-7</td>
+                    <td class="score-med">5-6</td>
+                    <td>Continuous monitoring</td>
+                </tr>
+                <tr>
+                    <td>Generator Brushes</td>
+                    <td class="score-med">5-6</td>
+                    <td class="score-med">5-6</td>
+                    <td>Wear rate independent</td>
+                </tr>
+                <tr>
+                    <td>Sensors & SCADA</td>
+                    <td class="score-med">6-7</td>
+                    <td class="score-med">5-6</td>
+                    <td>Moisture sensitivity</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="section-title">Holistic Correlation - System Interdependencies</div>
+
+        <div class="module">
+            <h3>High Silt → Cascading Effects</h3>
+            <p><strong>Primary Impact:</strong> Elevated turbidity (> 500 NTU) during wet season</p>
+
+            <h4 style="color: var(--primary-color);">Downstream Consequences:</h4>
+            <ol>
+                <li><strong>Runner Erosion Acceleration</strong>
+                    <ul>
+                        <li>Suspended solids act as abrasive particles</li>
+                        <li>Cavitation pitting deepens faster with silt presence</li>
+                        <li><strong>Result:</strong> Increased vibration → Triggers need for #2</li>
+                    </ul>
+                </li>
+                <li><strong>Thrust Balance Degradation</strong>
+                    <ul>
+                        <li>Uneven runner erosion changes hydraulic forces</li>
+                        <li>Axial thrust increases on one side</li>
+                        <li><strong>Result:</strong> Thrust bearing temperature rises → Triggers need for #3</li>
+                    </ul>
+                </li>
+                <li><strong>Oil Hygiene Compromise</strong>
+                    <ul>
+                        <li>Increased bearing load → Higher oil operating temperature</li>
+                        <li>Hot oil degrades faster, loses viscosity</li>
+                        <li>Moisture ingress more likely during heavy rains</li>
+                        <li><strong>Result:</strong> Oil aeration risk → Governor becomes "spongy" → Triggers need for
+                            #4</li>
+                    </ul>
+                </li>
+                <li><strong>Governor Response Issues</strong>
+                    <ul>
+                        <li>Aerated oil reduces hydraulic bulk modulus</li>
+                        <li>Guide vane response becomes erratic</li>
+                        <li><strong>Result:</strong> Frequency hunting → Load instability</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <p style="margin-top: 20px; color: var(--accent-color);"><strong>💡 Strategic Insight:</strong> In wet
+                season, a single uncorrected issue (high silt) can cascade through 4 interconnected systems. This is why
+                "Intake Management" scores 9-10 during floods - it's the leverage point for system-wide stability.</p>
+        </div>
+
+        <div class="module">
+            <h3>Thermal Cycling → Alignment Drift</h3>
+            <p><strong>Mechanism:</strong> Wet season brings cooler water temperatures (15-18°C) vs dry season (22-25°C)
+            </p>
+
+            <h4 style="color: var(--primary-color);">Impact Chain:</h4>
+            <ul>
+                <li>Cooler water → Lower bearing temperatures → Thermal contraction of shaft</li>
+                <li>Shaft contracts → Labyrinth seal gaps increase (+0.05-0.10 mm)</li>
+                <li>Increased gaps → Higher seal leakage → Efficiency loss (0.5-1%)</li>
+                <li><strong>Conclusion:</strong> Alignment work in wet season is futile - measurements will shift when
+                    dry season returns. Wait for thermal stability.</li>
+            </ul>
+        </div>
+
+        <div class="section-title">Maintenance Calendar Integration</div>
+
+        <div class="radar-box">
+            <h3>Recommended Annual Cycle (Rwanda Context)</h3>
+
+            <h4 style="color: var(--accent-color);">March-May (Long Rains):</h4>
+            <ul>
+                <li><strong>FOCUS:</strong> Silt management, cooling water, oil quality</li>
+                <li><strong>DAILY:</strong> Trash rack, HPU sight glass, bearing temps</li>
+                <li><strong>WEEKLY:</strong> Oil analysis if turbidity > 800 NTU</li>
+            </ul>
+
+            <h4 style="color: var(--accent-color);">June-August (Dry Season 1):</h4>
+            <ul>
+                <li><strong>FOCUS:</strong> Precision alignment, PID tuning, foundation work</li>
+                <li><strong>SCHEDULE:</strong> Plan 1-week outage for deep inspection</li>
+                <li><strong>TARGET:</strong> Complete stator wedge tightening, bearing replacement if needed</li>
+            </ul>
+
+            <h4 style="color: var(--accent-color);">September-November (Short Rains):</h4>
+            <ul>
+                <li><strong>FOCUS:</strong> Return to silt management mode</li>
+                <li><strong>VERIFY:</strong> All June-August precision work remains stable</li>
+            </ul>
+
+            <h4 style="color: var(--accent-color);">December-February (Dry Season 2):</h4>
+            <ul>
+                <li><strong>FOCUS:</strong> Annual overhaul planning for next wet season</li>
+                <li><strong>CRITICAL:</strong> Runner cavitation welding repair (if needed) - must be completed before
+                    March rains</li>
+            </ul>
+        </div>
+
+        <a href="./Francis_Horizontal.html" class="back-btn">← Return to Master Manual</a>
+
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOP: MIV & Bypass Logic</title>
+    <style>
+        /* Water Path Theme - Deep Blue */
+        :root {
+            --primary-color: #0EA5E9;
+            --secondary-color: #0284C7;
+            --accent-color: #38BDF8;
+            --warning-color: #EF4444;
+            --bg-color: #0F172A;
+            --text-color: #E2E8F0;
+            --border-color: #0EA5E9;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #0f1c30, #0a1120);
+            padding: 40px;
+            box-shadow: 0 4px 30px rgba(14, 165, 233, 0.2);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        header {
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), rgba(2, 132, 199, 0.05));
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        h1 {
+            margin: 0;
+            color: var(--accent-color);
+            font-size: 28px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+        }
+
+        h2 {
+            color: var(--secondary-color);
+            font-size: 18px;
+            margin-top: 5px;
+            font-weight: 400;
+        }
+
+        .section-title {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: #fff;
+            padding: 10px 15px;
+            margin-top: 40px;
+            border-radius: 4px;
+            font-size: 1.2em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 0 15px rgba(14, 165, 233, 0.4);
+        }
+
+        .section-title::before {
+            content: "🌊";
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        h3 {
+            color: var(--accent-color);
+            border-left: 4px solid var(--primary-color);
+            padding-left: 10px;
+            margin-top: 25px;
+        }
+
+        .module {
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            background: rgba(14, 165, 233, 0.05);
+        }
+
+        .critical {
+            border-left: 5px solid var(--warning-color);
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .logic-box {
+            border-left: 5px solid var(--accent-color);
+            background: rgba(56, 189, 248, 0.05);
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 4px;
+        }
+
+        ul,
+        ol {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 30px;
+            text-decoration: none;
+            color: var(--accent-color);
+            font-weight: bold;
+            border: 1px solid var(--accent-color);
+            padding: 10px 20px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            background-color: var(--accent-color);
+            color: #000;
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.8);
+        }
+
+        strong {
+            font-weight: 600;
+            color: var(--accent-color);
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .data-table th,
+        .data-table td {
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            text-align: left;
+        }
+
+        .data-table th {
+            background: var(--primary-color);
+            color: #fff;
+        }
+
+        .data-table tr:nth-child(even) {
+            background: rgba(14, 165, 233, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>🌊 MIV & BYPASS LOGIC PROTOCOL</h1>
+            <h2>Pressure Equalization & Physical Sealing</h2>
+            <p style="color: var(--accent-color); font-size: 0.9em; margin-top: 10px;">Preventing wire-drawing erosion
+                and ensuring reliable sequencing</p>
+        </header>
+
+        <div class="module critical">
+            <h3>⚠️ CRITICAL OPERATING RULE</h3>
+            <p><strong>NEVER FORCE OPEN THE MIV.</strong></p>
+            <ul>
+                <li><strong>Differential Pressure Limit:</strong> The MIV cylinder is NOT designed to open against full
+                    penstock pressure. ΔP must be < 2 Bar.</li>
+                <li><strong>Seal Damage:</strong> Opening against differential pressure rips the main seal from its
+                    seat.</li>
+                <li><strong>Safety:</strong> Hydraulic overload can burst cylinder seals or hoses.</li>
+            </ul>
+        </div>
+
+        <div class="section-title">The 0% Close Rule - Zero Tolerance</div>
+
+        <div class="logic-box">
+            <h3>SCADA vs. Physical Reality</h3>
+            <p><strong>The Trap:</strong> SCADA showing "0% Open" does not guarantee a seal. A limit switch can be
+                bumped or misaligned.</p>
+
+            <p><strong>The Law of Erosion (Wire-Drawing):</strong></p>
+            <ul>
+                <li>If the MIV is physically open by even <strong>2°</strong> (e.g., at 88° instead of 90° seat angle),
+                    a high-velocity jet of water passes through the gap.</li>
+                <li><strong>Velocity:</strong> > 40 m/s under 150m head.</li>
+                <li><strong>Effect:</strong> Cuts through stainless steel seat rings like a laser cutter within weeks.
+                </li>
+            </ul>
+
+            <h4 style="color: var(--warning-color);">Verification Procedure:</h4>
+            <ol>
+                <li><strong>Visual Check:</strong> Look at the mechanical counterweight arm position. Mark the true
+                    "Closed" position on the wall/floor.</li>
+                <li><strong>Leakage Check:</strong> With MIV closed and Bypass closed, open the Spiral Case Drain.
+                    <ul>
+                        <li>Flow should stop completely within 5 minutes.</li>
+                        <li>If water continues to flow > 5 L/min, the MIV seal is passing.</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+
+        <div class="section-title">Bypass Interlock Logic - The Pressure Handshake</div>
+
+        <div class="module">
+            <h3>Opening Sequence Authorization</h3>
+            <p>The PLC <strong>MUST</strong> enforce the following logic chain before energizing the MIV opening
+                solenoid:</p>
+
+            <table class="data-table">
+                <tr>
+                    <th>Step</th>
+                    <th>Action</th>
+                    <th>Condition to Proceed</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>Command "Start Unit"</td>
+                    <td>No Shutdown Faults</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Open Bypass Valve</td>
+                    <td>Bypass Limit Switch = OPEN</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Wait for Spiral Case Fill</td>
+                    <td>Pressure Rise > 2 Bar/sec</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td><strong>Pressure Equalization Check</strong></td>
+                    <td><strong>(P_penstock - P_spiral) < 0.5 Bar</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>Command MIV Open</td>
+                    <td>Equalization CONFIRMED</td>
+                </tr>
+            </table>
+
+            <h4 style="color: var(--warning-color);">The "Leaking Distributor" Symptom</h4>
+            <p><strong>Scenario:</strong> Bypass valve opens, but Spiral Case pressure never equalizes with Penstock
+                pressure.</p>
+            <p><strong>Diagnosis:</strong> The Guide Vanes (Distributor) are leaking water into the runner faster than
+                the Bypass can fill the spiral case.</p>
+            <p><strong>Action:</strong>
+            <ol>
+                <li>DO NOT override the interlock.</li>
+                <li>Inspect Guide Vane seals mechanism.</li>
+                <li>See <a href="./Francis_SOP_Distributor_Sync.html" style="color: var(--accent-color);">Distributor
+                        Sync SOP</a>.</li>
+            </ol>
+            </p>
+        </div>
+
+        <div class="section-title">Cylinder & Weld Audit Checklist</div>
+
+        <div class="logic-box">
+            <h3>Mechanical Integrity Inspection</h3>
+            <p>The MIV body endures the highest static stress of any component (16 Bar continuous).</p>
+
+            <h4 style="color: var(--primary-color);">Annual Inspection Points:</h4>
+            <ol>
+                <li><strong>Hydraulic Cylinder Mounting:</strong>
+                    <ul>
+                        <li>Check torque on trunnion mounting bolts.</li>
+                        <li>Inspect pin bushings for ovality/slop (> 0.5mm play = replace).</li>
+                    </ul>
+                </li>
+                <li><strong>Weld Seams (NDT Required):</strong>
+                    <ul>
+                        <li>Perform Dye Penetrant test on flange-to-body welds.</li>
+                        <li><strong>Critical Zone:</strong> The transition from the valve body to the trunnion mount
+                            (highest stress riser).</li>
+                    </ul>
+                </li>
+                <li><strong>Counterweight Arm:</strong>
+                    <ul>
+                        <li>Inspect safety guard welds.</li>
+                        <li>Ensure weight stack is secure and cannot shift.</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+
+        <div class="section-title">Troubleshooting Table</div>
+        <table class="data-table">
+            <tr>
+                <th>Symptom</th>
+                <th>Likely Cause</th>
+                <th>Corrective Action</th>
+            </tr>
+            <tr>
+                <td>MIV fails to open (Logic Block)</td>
+                <td>Pressure not equalized</td>
+                <td>Check Guide Vane leakage; Check Bypass filter</td>
+            </tr>
+            <tr>
+                <td>MIV creeps closed during operation</td>
+                <td>Internal cylinder leak</td>
+                <td>Rebuild hydraulic cylinder seals</td>
+            </tr>
+            <tr>
+                <td>Loud "Bang" when closing</td>
+                <td>Closing too fast</td>
+                <td>Adjust throttle valve on HPU return line (Target: 60-90 sec)</td>
+            </tr>
+            <tr>
+                <td>Water rushing sound when closed</td>
+                <td>Wire-drawing (Seat damage)</td>
+                <td><strong>CRITICAL:</strong> Schedule outage for seat ring grinding/replacement</td>
+            </tr>
+        </table>
+
+        <a href="./Francis_Horizontal.html" class="back-btn">← Return to Master Manual</a>
+
+    </div>
+</body>
+
+</html>

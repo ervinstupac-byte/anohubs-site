@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOP: Distributor Synchronization</title>
+    <style>
+        /* Mechanical Core Theme - Grey/Steel */
+        :root {
+            --primary-color: #94A3B8;
+            --secondary-color: #64748B;
+            --accent-color: #CBD5E1;
+            --warning-color: #DC2626;
+            --bg-color: #1a1a1a;
+            --text-color: #F1F5F9;
+            --border-color: #94A3B8;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #2d3748, #1a202c);
+            padding: 40px;
+            box-shadow: 0 4px 30px rgba(148, 163, 184, 0.2);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        header {
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(148, 163, 184, 0.2), rgba(100, 116, 139, 0.1));
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        h1 {
+            margin: 0;
+            color: var(--accent-color);
+            font-size: 28px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(203, 213, 225, 0.5);
+        }
+
+        h2 {
+            color: var(--secondary-color);
+            font-size: 18px;
+            margin-top: 5px;
+            font-weight: 400;
+        }
+
+        .section-title {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            color: #fff;
+            padding: 10px 15px;
+            margin-top: 40px;
+            border-radius: 4px;
+            font-size: 1.2em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 0 15px rgba(148, 163, 184, 0.4);
+        }
+
+        .section-title::before {
+            content: "⚙️";
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        h3 {
+            color: var(--accent-color);
+            border-left: 4px solid var(--secondary-color);
+            padding-left: 10px;
+            margin-top: 25px;
+        }
+
+        .module {
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            background: rgba(148, 163, 184, 0.05);
+        }
+
+        .critical {
+            border-left: 5px solid var(--warning-color);
+            background: rgba(220, 38, 38, 0.1);
+        }
+
+        .sync-box {
+            border-left: 5px solid var(--accent-color);
+            background: rgba(203, 213, 225, 0.05);
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 4px;
+        }
+
+        ul,
+        ol {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 30px;
+            text-decoration: none;
+            color: var(--accent-color);
+            font-weight: bold;
+            border: 1px solid var(--accent-color);
+            padding: 10px 20px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            background-color: var(--accent-color);
+            color: #1a202c;
+            box-shadow: 0 0 15px rgba(203, 213, 225, 0.8);
+        }
+
+        strong {
+            font-weight: 600;
+            color: var(--accent-color);
+        }
+
+        .spec-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .spec-table th,
+        .spec-table td {
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            text-align: left;
+        }
+
+        .spec-table th {
+            background: var(--secondary-color);
+            color: #fff;
+        }
+
+        .spec-table tr:nth-child(even) {
+            background: rgba(148, 163, 184, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>⚙️ DISTRIBUTOR & GUIDE VANE SYNCHRONIZATION</h1>
+            <h2>The "Mechanical Geometry" of Flow Control</h2>
+            <p style="color: var(--accent-color); font-size: 0.9em; margin-top: 10px;">Preventing turbulent wake damage
+                through precision alignment</p>
+        </header>
+
+        <div class="module critical">
+            <h3>⚠️ THE "SINGLE VANE" DISASTER</h3>
+            <p><strong>Mechanics of Failure:</strong></p>
+            <ul>
+                <li>If <strong>EVEN ONE</strong> guide vane is misaligned (e.g., Vane #4 is at 25° while others are at
+                    20°):</li>
+                <li>It acts as a "flow spoiler," creating a massive, turbulent wake downstream.</li>
+                <li>This wake strikes the runner blades cyclically (13 times per revolution for a 13-blade runner).</li>
+                <li><strong>Result:</strong> Localized cavitation pitting and eventual blade cracking in direct line
+                    with the bad vane.</li>
+            </ul>
+        </div>
+
+        <div class="section-title">Angle Verification & Regulating Ring Geometry</div>
+
+        <div class="sync-box">
+            <h3>The Synchronization Protocol</h3>
+            <p>The Regulating Ring moves all 20 guide vanes simultaneously. They must move in perfect unison.</p>
+
+            <table class="spec-table">
+                <tr>
+                    <th>Parameter</th>
+                    <th>Specification</th>
+                    <th>Method</th>
+                </tr>
+                <tr>
+                    <td>Sync Tolerance</td>
+                    <td>± 0.5 mm</td>
+                    <td>Opening difference between any two vanes</td>
+                </tr>
+                <tr>
+                    <td>Vertical Seal Check</td>
+                    <td>0.00 mm (Light Tight)</td>
+                    <td>Feeler Gauge / Light Test at 0%</td>
+                </tr>
+                <tr>
+                    <td>Linkage Play</td>
+                    <td>
+                        < 0.10 mm</td>
+                    <td>Dial indicator on lever arm</td>
+                </tr>
+            </table>
+
+            <h4 style="color: var(--primary-color);">Measurement Procedure:</h4>
+            <ol>
+                <li>Lock Governor in "Manual Mode."</li>
+                <li>Move Distributor to <strong>50% Opening</strong>.</li>
+                <li>Measure the "vent opening" (gap between trailing edge of Vane A and nose of Vane B) for all 20
+                    vanes.</li>
+                <li><strong>Pass Criteria:</strong> If average is 80mm, no vane should be > 80.5mm or < 79.5mm.</li>
+                <li><strong>Adjust:</strong> Use the eccentric pin or turnbuckle on the linkage arm to correct outliers.
+                </li>
+            </ol>
+        </div>
+
+        <div class="section-title">The "Light Test" - The Ultimate Seal Check</div>
+
+        <div class="module">
+            <h3>Verifying 0% Close (Metal-to-Metal Seal)</h3>
+            <p>To prevent "Bypass Failure" (where MIV cannot open because pressure won't equalize), the distributor must
+                seal tightly.</p>
+
+            <h4 style="color: var(--primary-color);">Execution Steps (Requires Dewatered Unit):</h4>
+            <ol>
+                <li><strong>Close Distributor:</strong> Command 0% Servo position. Apply "Squeeze Pressure" (if
+                    applicable).</li>
+                <li><strong>Enter Spiral Case:</strong> Personnel with strong LED floodlights enter the spiral case
+                    (Lock-out/Tag-out req!).</li>
+                <li><strong>Enter Runner:</strong> Second person enters the runner/draft tube area (darkness required).
+                </li>
+                <li><strong>Shine Light:</strong> Shine floodlight on the vertical seal line of each vane from the
+                    spiral case side.</li>
+                <li><strong>Observe:</strong> Person in runner looks for light leaks.
+                    <ul>
+                        <li><strong>No Light:</strong> Perfect seal.</li>
+                        <li><strong>Starry Points:</strong> Minor pitting (acceptable).</li>
+                        <li><strong>Visible Beam:</strong> Gap exists (> 0.2mm). <strong>MUST ADJUST.</strong></li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+
+        <div class="section-title">Diagnostic Cross-Reference</div>
+
+        <div class="sync-box">
+            <h3>Symptoms of Synchronization Failure</h3>
+            <table class="spec-table">
+                <tr>
+                    <th>Symptom</th>
+                    <th>Likely Sync Issue</th>
+                </tr>
+                <tr>
+                    <td>MIV Bypass won't Equalize</td>
+                    <td>Vanes not sealing at 0% (Light Test Failed)</td>
+                </tr>
+                <tr>
+                    <td>Rhythmic "Chugging" Sound</td>
+                    <td>One vane loose (Shear pin broken)</td>
+                </tr>
+                <tr>
+                    <td>High Vibration at specific load</td>
+                    <td>Vanes openings uneven (> 2mm diff) causing hydraulic imbalance</td>
+                </tr>
+            </table>
+
+            <p style="margin-top: 15px;"><strong>Shear Pin Note:</strong> If a shear pin breaks, that specific vane
+                becomes "free-floating." It will flutter violently. <strong>Stop unit immediately</strong> to prevent it
+                hitting the runner.</p>
+        </div>
+
+        <a href="./Francis_Horizontal.html" class="back-btn">← Return to Master Manual</a>
+
+    </div>
+</body>
+
+</html>
