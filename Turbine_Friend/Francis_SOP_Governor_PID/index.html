@@ -198,12 +198,12 @@
 
     <main>
         <!DOCTYPE html>
-<html lang="en">
+<html lang="bs">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOP: Governor PID Tuning</title>
+    <title>SOP: PID Podešavanje Regulatora</title>
     <style>
         /* Control Systems Theme - Blue/Orange */
         :root {
@@ -383,257 +383,270 @@
     <div class="container">
 
         <header>
-            <h1>⚙ Governor PID Tuning</h1>
-            <h2>Proportional-Integral-Derivative Control System</h2>
+            <h1>⚙ PID Podešavanje Regulatora</h1>
+            <h2>Proporcionalno-Integralno-Diferencijalni Kontrolni Sistem</h2>
         </header>
 
         <!-- SAFETY MODULE -->
         <div class="module critical">
-            <h3>⚠️ MANDATORY SAFETY PROTOCOL</h3>
-            <p><strong>STOP. READ THIS FIRST.</strong></p>
+            <h3>⚠️ OBAVEZNI SIGURNOSNI PROTOKOL</h3>
+            <p><strong>STANI. PRVO PROČITAJ OVO.</strong></p>
             <ul>
-                <li><strong>Grid Synchronization:</strong> Never adjust PID parameters while the unit is synchronized to
-                    the grid without approval from the grid operator.</li>
-                <li><strong>Load Stability:</strong> Perform tuning tests at stable load conditions (avoid rapid load
-                    changes during testing).</li>
-                <li><strong>Emergency Stop:</strong> Ensure the emergency stop button is accessible and functional
-                    before beginning tests.</li>
-                <li><strong>Communication:</strong> Notify the control room before initiating step response tests.</li>
+                <li><strong>Sinhronizacija Mreže:</strong> Nikada ne podešavaj PID parametre dok je jedinica
+                    sinhronizovana na
+                    mrežu bez odobrenja dispečera.</li>
+                <li><strong>Stabilnost Tereta:</strong> Izvršavaj testove podešavanja u stabilnim uslovima tereta
+                    (izbjegavaj nagle
+                    promjene tereta tokom testiranja).</li>
+                <li><strong>Hitno Zaustavljanje:</strong> Osiguraj da je dugme za hitno zaustavljanje dostupno i
+                    funkcionalno
+                    prije početka testova.</li>
+                <li><strong>Komunikacija:</strong> Obavijesti operativni centar prije pokretanja testova odziva.</li>
             </ul>
         </div>
 
-        <div class="section-title">PID Fundamentals: The Three Controllers</div>
+        <div class="section-title">Osnove PID-a: Tri Kontrolera</div>
         <div class="module technical">
-            <p>The governor controls the position of the 20 guide vanes to maintain constant turbine speed (typically
-                500 RPM for a 12-pole generator at 50 Hz).</p>
+            <p>Regulator kontroliše poziciju 20 sprovodnih lopatica kako bi održao konstantnu brzinu turbine (tipično
+                500 RPM za 12-polni generator na 50 Hz).</p>
 
-            <h3>The Control Loop</h3>
+            <h3>Kontrolna Petlja</h3>
             <div class="formula">
-                Speed Error = Target Speed - Actual Speed<br>
-                Control Output = (P × Error) + (I × ∫Error dt) + (D × dError/dt)
+                Greška Brzine = Ciljna Brzina - Stvarna Brzina<br>
+                Izlaz Kontrole = (P × Greška) + (I × ∫Greška dt) + (D × dGreška/dt)
             </div>
 
-            <h3>Proportional (P): The Immediate Response</h3>
+            <h3>Proporcionalno (P): Trenutni Odziv</h3>
             <div class="module control">
-                <p><strong>What it does:</strong> Responds proportionally to the current speed error.</p>
+                <p><strong>Šta radi:</strong> Reaguje proporcionalno na trenutnu grešku brzine.</p>
                 <ul>
-                    <li><strong>High P:</strong> Fast response, but can cause overshoot and oscillation.</li>
-                    <li><strong>Low P:</strong> Slow response, but stable.</li>
-                    <li><strong>Typical Range:</strong> 2.0 - 6.0 (dimensionless gain)</li>
+                    <li><strong>Visok P:</strong> Brz odziv, ali može uzrokovati prebačaj i oscilacije.</li>
+                    <li><strong>Nizak P:</strong> Spor odziv, ali stabilan.</li>
+                    <li><strong>Tipičan Raspon:</strong> 2.0 - 6.0 (bezdimenzionalno pojačanje)</li>
                 </ul>
-                <p><strong>💡 Simple Analogy:</strong> Like a driver who steers harder the further off-course they are.
+                <p><strong>💡 Jednostavna Analogija:</strong> Kao vozač koji mota volan jače što je više van kursa.
                 </p>
             </div>
 
-            <h3>Integral (I): The Steady-State Corrector</h3>
+            <h3>Integralno (I): Korektor Stacionarnog Stanja</h3>
             <div class="module control">
-                <p><strong>What it does:</strong> Eliminates steady-state error by accumulating error over time.</p>
+                <p><strong>Šta radi:</strong> Eliminiše grešku stacionarnog stanja akumulirajući grešku tokom vremena.
+                </p>
                 <ul>
-                    <li><strong>High I:</strong> Fast elimination of offset, but can cause "wind-up" and instability.
+                    <li><strong>Visok I:</strong> Brza eliminacija odstupanja, ali može uzrokovati "wind-up" i
+                        nestabilnost.
                     </li>
-                    <li><strong>Low I:</strong> Slow correction, but prevents overshoot.</li>
-                    <li><strong>Typical Range:</strong> 0.5 - 2.0 seconds (integration time)</li>
+                    <li><strong>Nizak I:</strong> Spora korekcija, ali sprečava prebačaj.</li>
+                    <li><strong>Tipičan Raspon:</strong> 0.5 - 2.0 sekundi (vrijeme integracije)</li>
                 </ul>
-                <p><strong>💡 Simple Analogy:</strong> Like a driver who remembers how long they've been off-course and
-                    corrects accordingly.</p>
+                <p><strong>💡 Jednostavna Analogija:</strong> Kao vozač koji pamti koliko dugo je van kursa i
+                    korigira u skladu s tim.</p>
             </div>
 
-            <h3>Derivative (D): The Predictive Damper</h3>
+            <h3>Diferencijalno (D): Prediktivni Prigušivač</h3>
             <div class="module control">
-                <p><strong>What it does:</strong> Predicts future error based on the rate of change and applies damping.
+                <p><strong>Šta radi:</strong> Predviđa buduću grešku na osnovu brzine promjene i primjenjuje prigušenje.
                 </p>
                 <ul>
-                    <li><strong>High D:</strong> Strong damping, but sensitive to noise (can cause jitter).</li>
-                    <li><strong>Low D:</strong> Less damping, smoother response.</li>
-                    <li><strong>Typical Range:</strong> 0.1 - 0.5 seconds (derivative time)</li>
+                    <li><strong>Visok D:</strong> Jako prigušenje, ali osjetljivo na šum (može uzrokovati podrhtavanje).
+                    </li>
+                    <li><strong>Nizak D:</strong> Manje prigušenje, glađi odziv.</li>
+                    <li><strong>Tipičan Raspon:</strong> 0.1 - 0.5 sekundi (diferencijalno vrijeme)</li>
                 </ul>
-                <p><strong>💡 Simple Analogy:</strong> Like a driver who anticipates a turn and starts steering before
-                    reaching it.</p>
+                <p><strong>💡 Jednostavna Analogija:</strong> Kao vozač koji predviđa krivinu i počinje motati prije
+                    nego stigne do nje.</p>
             </div>
         </div>
 
-        <div class="section-title">Dead-Band Analysis</div>
+        <div class="section-title">Analiza Mrtve Zone (Dead-Band)</div>
         <div class="module technical">
-            <h3>What is Dead-Band?</h3>
-            <p>The <strong>dead-band</strong> is a small speed range (e.g., ±0.1 RPM) where the governor
-                <em>ignores</em> speed deviations and does not move the guide vanes.</p>
+            <h3>Šta je Mrtva Zona?</h3>
+            <p><strong>Mrtva zona</strong> je mali opseg brzine (npr. ±0.1 RPM) u kojem regulator
+                <em>ignoriše</em> odstupanja brzine i ne pomjera sprovodne lopatice.
+            </p>
 
-            <h3>Why It Exists</h3>
+            <h3>Zašto Postoji</h3>
             <ul>
-                <li><strong>Prevent Wear:</strong> Constant micro-adjustments cause excessive wear on the servomotor,
-                    linkage pins, and guide vane bearings.</li>
-                <li><strong>Reduce Hunting:</strong> Without a dead-band, the governor would continuously "hunt" for the
-                    exact setpoint, causing oscillations.</li>
-                <li><strong>Noise Immunity:</strong> Filters out small speed fluctuations caused by grid noise or sensor
-                    jitter.</li>
+                <li><strong>Sprečavanje Habanja:</strong> Stalna mikro-podešavanja uzrokuju pretjerano habanje
+                    servomotora,
+                    bolcni polužja i ležajeva lopatica.</li>
+                <li><strong>Smanjenje Lova (Hunting):</strong> Bez mrtve zone, regulator bi neprestano "lovio"
+                    tačan setpoint, uzrokujući oscilacije.</li>
+                <li><strong>Imunitet na Šum:</strong> Filtrira male fluktuacije brzine uzrokovane šumom mreže ili
+                    podrhtavanjem
+                    senzora.</li>
             </ul>
 
-            <h3>Dead-Band Configuration</h3>
+            <h3>Konfiguracija Mrtve Zone</h3>
             <table class="pid-table">
                 <tr>
-                    <th>Parameter</th>
-                    <th>Typical Value</th>
-                    <th>Effect if Too Large</th>
-                    <th>Effect if Too Small</th>
+                    <th>Parametar</th>
+                    <th>Tipična Vrijednost</th>
+                    <th>Efekt ako Preveliko</th>
+                    <th>Efekt ako Premalo</th>
                 </tr>
                 <tr>
-                    <td>Dead-Band</td>
+                    <td>Mrtva Zona</td>
                     <td>±0.05 - 0.15 RPM</td>
-                    <td>Slow response to load changes</td>
-                    <td>Excessive wear, hunting</td>
+                    <td>Spor odziv na promjene tereta</td>
+                    <td>Pretjerano habanje, lov</td>
                 </tr>
             </table>
 
             <div class="module critical">
-                <strong>💡 Tech Note:</strong> The dead-band we found during the linkage inspection (mechanical "play"
-                in the pins) is a <em>physical</em> dead-band caused by wear. This is different from the
-                <em>electronic</em> dead-band in the governor software. Both must be minimized.
+                <strong>💡 Tehnička Napomena:</strong> Mrtva zona koju smo našli tokom inspekcije polužja (mehanički
+                "luft"
+                u bolcnama) je <em>fizička</em> mrtva zona uzrokovana habanjem. Ovo je različito od
+                <em>elektronske</em> mrtve zone u softveru regulatora. Obje moraju biti minimizirane.
             </div>
         </div>
 
-        <div class="section-title">The Stability Test: Step Response</div>
+        <div class="section-title">Test Stabilnosti: Step Response</div>
         <div class="module technical">
-            <h3>What is a Step Response Test?</h3>
-            <p>A controlled test where the load is suddenly changed by a fixed amount (typically 10% of rated power) to
-                observe how the governor reacts.</p>
+            <h3>Šta je Test Odziva Koraka (Step Response)?</h3>
+            <p>Kontrolisani test gdje se teret naglo mijenja za fiksni iznos (tipično 10% nominalne snage) da se
+                posmatra kako regulator reaguje.</p>
 
-            <h3>Test Procedure</h3>
+            <h3>Procedura Testa</h3>
             <ol>
-                <li><strong>Initial Conditions:</strong> Unit synchronized to grid, stable load (e.g., 5.0 MW).</li>
-                <li><strong>Record Baseline:</strong> Monitor speed, guide vane position, and power output for 2
-                    minutes.</li>
-                <li><strong>Apply Step Change:</strong> Increase load setpoint by 10% (e.g., 5.0 MW → 5.5 MW).</li>
-                <li><strong>Observe Response:</strong> Record speed and vane position for 5 minutes.</li>
-                <li><strong>Analyze:</strong> Measure overshoot, settling time, and oscillation frequency.</li>
+                <li><strong>Početni Uslovi:</strong> Jedinica sinhronizovana na mrežu, stabilan teret (npr. 5.0 MW).
+                </li>
+                <li><strong>Zapiši Baznu Liniju:</strong> Prati brzinu, poziciju lopatica i izlaznu snagu tokom 2
+                    minute.</li>
+                <li><strong>Primijeni Step Promjenu:</strong> Povećaj setpoint tereta za 10% (npr. 5.0 MW → 5.5 MW).
+                </li>
+                <li><strong>Posmatraj Odziv:</strong> Zapiši brzinu i poziciju lopatica tokom 5 minuta.</li>
+                <li><strong>Analiziraj:</strong> Izmjeri prebačaj, vrijeme smirivanja i frekvenciju oscilacija.</li>
             </ol>
 
-            <h3>Ideal Response Characteristics</h3>
+            <h3>Karakteristike Idealnog Odziva</h3>
             <table class="pid-table">
                 <tr>
-                    <th>Metric</th>
-                    <th>Target Value</th>
-                    <th>Interpretation</th>
+                    <th>Metrika</th>
+                    <th>Ciljna Vrijednost</th>
+                    <th>Interpretacija</th>
                 </tr>
                 <tr>
-                    <td>Overshoot</td>
+                    <td>Prebačaj (Overshoot)</td>
                     <td>
                         < 5%</td>
-                    <td>Speed should not exceed setpoint by more than 5%</td>
+                    <td>Brzina ne smije preći setpoint za više od 5%</td>
                 </tr>
                 <tr>
-                    <td>Settling Time</td>
+                    <td>Vrijeme Smirivanja</td>
                     <td>
-                        < 10 seconds</td>
-                    <td>Time to stabilize within ±1% of setpoint</td>
+                        < 10 sekundi</td>
+                    <td>Vrijeme stabilizacije unutar ±1% od setpointa</td>
                 </tr>
                 <tr>
-                    <td>Oscillations</td>
+                    <td>Oscilacije</td>
                     <td>
-                        < 2 cycles</td>
-                    <td>Should dampen quickly without sustained hunting</td>
+                        < 2 ciklusa</td>
+                    <td>Treba brzo prigušiti bez održivog lova</td>
                 </tr>
             </table>
 
             <div class="visual-aid">
-                [Visualization: Step Response Graph - Time vs. Speed/Power]<br>
-                Ideal: Quick rise → Small overshoot → Fast settling<br>
-                Poor: Slow rise OR Large overshoot OR Sustained oscillations
+                [Vizualizacija: Graf Odziva Koraka - Vrijeme vs. Brzina/Snaga]<br>
+                Idealno: Brz rast → Mali prebačaj → Brzo smirivanje<br>
+                Loše: Spor rast ILI Velik prebačaj ILI Održive oscilacije
             </div>
         </div>
 
-        <div class="section-title">Anti-Hunting Logic: Diagnosis & Correction</div>
+        <div class="section-title">Logika Protiv Lova: Dijagnoza & Korekcija</div>
         <div class="module technical">
-            <h3>What is Governor Hunting?</h3>
-            <p><strong>Hunting</strong> is a continuous oscillation of the guide vanes around the setpoint, causing
-                speed and power to fluctuate.</p>
+            <h3>Šta je Lov Regulatora?</h3>
+            <p><strong>Lov (Hunting)</strong> je kontinuirana oscilacija sprovodnih lopatica oko setpointa, uzrokujući
+                da brzina i snaga fluktuiraju.</p>
 
-            <h3>Symptoms</h3>
+            <h3>Simptomi</h3>
             <ul>
-                <li>Speed oscillates ±0.2 - 0.5 RPM at a regular frequency (e.g., every 3-5 seconds).</li>
-                <li>Guide vane position oscillates ±1-2% continuously.</li>
-                <li>Audible "clicking" or "tapping" from the servomotor or linkage.</li>
-                <li>Increased wear on linkage pins and bushings.</li>
+                <li>Brzina oscilira ±0.2 - 0.5 RPM na regularnoj frekvenciji (npr. svakih 3-5 sekundi).</li>
+                <li>Pozicija lopatica oscilira ±1-2% kontinuirano.</li>
+                <li>Čujno "kliktaje" ili "lupkanje" iz servomotora ili polužja.</li>
+                <li>Povećano habanje bolcni polužja i čahura.</li>
             </ul>
 
-            <h3>Root Causes</h3>
+            <h3>Osnovni Uzroci</h3>
             <div class="module control">
-                <h4>1. Mechanical Play (Linkage Backlash)</h4>
-                <p>This is the issue we identified during the pin inspection:</p>
+                <h4>1. Mehanički Luft (Linkage Backlash)</h4>
+                <p>Ovo je problem koji smo identifikovali tokom inspekcije bolcni:</p>
                 <ul>
-                    <li><strong>Worn Pins:</strong> Clearance > 0.5 mm between pin and bushing.</li>
-                    <li><strong>Loose Connections:</strong> Bolts not torqued to specification.</li>
-                    <li><strong>Effect:</strong> The servomotor moves, but the guide vanes don't respond immediately,
-                        causing a delayed feedback loop.</li>
+                    <li><strong>Istrošene Bolcne:</strong> Zazor > 0.5 mm između bolcne i čahure.</li>
+                    <li><strong>Labavi Spojevi:</strong> Vijci nisu dategnuti na specifikaciju.</li>
+                    <li><strong>Efekt:</strong> Servomotor se pomjera, ali lopatice ne reaguju odmah,
+                        uzrokujući kasnu povratnu petlju.</li>
                 </ul>
-                <p><strong>Solution:</strong> Replace worn pins and bushings, re-torque all linkage bolts.</p>
+                <p><strong>Rješenje:</strong> Zamijeni istrošene bolcne i čahure, ponovo dategni sve vijke polužja.</p>
 
-                <h4>2. Excessive Integral Gain (I)</h4>
+                <h4>2. Pretjerano Integralno Pojačanje (I)</h4>
                 <ul>
-                    <li><strong>Cause:</strong> I value too high, causing "integral wind-up".</li>
-                    <li><strong>Effect:</strong> The controller over-corrects, causing oscillations.</li>
+                    <li><strong>Uzrok:</strong> I vrijednost previsoka, uzrokuje "integral wind-up".</li>
+                    <li><strong>Efekt:</strong> Kontroler prekomjerno korigira, uzrokujući oscilacije.</li>
                 </ul>
-                <p><strong>Solution:</strong> Reduce I gain by 20-30% and re-test.</p>
+                <p><strong>Rješenje:</strong> Smanji I pojačanje za 20-30% i ponovo testiraj.</p>
 
-                <h4>3. Insufficient Derivative Damping (D)</h4>
+                <h4>3. Nedovoljno Diferencijalno Prigušenje (D)</h4>
                 <ul>
-                    <li><strong>Cause:</strong> D value too low, insufficient damping of oscillations.</li>
-                    <li><strong>Effect:</strong> System overshoots and oscillates.</li>
+                    <li><strong>Uzrok:</strong> D vrijednost preniska, nedovoljno prigušenje oscilacija.</li>
+                    <li><strong>Efekt:</strong> Sistem prebacuje i oscilira.</li>
                 </ul>
-                <p><strong>Solution:</strong> Increase D gain by 10-20% and re-test.</p>
+                <p><strong>Rješenje:</strong> Povećaj D pojačanje za 10-20% i ponovo testiraj.</p>
 
-                <h4>4. Dead-Band Too Small</h4>
+                <h4>4. Premala Mrtva Zona</h4>
                 <ul>
-                    <li><strong>Cause:</strong> Dead-band < 0.05 RPM.</li>
-                    <li><strong>Effect:</strong> Governor responds to noise, causing continuous micro-adjustments.</li>
+                    <li><strong>Uzrok:</strong> Mrtva zona < 0.05 RPM.</li>
+                    <li><strong>Efekt:</strong> Regulator reaguje na šum, uzrokujući stalna mikro-podešavanja.</li>
                 </ul>
-                <p><strong>Solution:</strong> Increase dead-band to 0.10 - 0.15 RPM.</p>
+                <p><strong>Rješenje:</strong> Povećaj mrtvu zonu na 0.10 - 0.15 RPM.</p>
             </div>
 
-            <h3>Diagnostic Procedure</h3>
+            <h3>Dijagnostička Procedura</h3>
             <ol>
-                <li><strong>Mechanical Inspection:</strong> Check all linkage pins for play (target < 0.2 mm
-                        clearance).</li>
-                <li><strong>Monitor Oscillation Frequency:</strong> Fast oscillations (< 2 sec)=mechanical issue. Slow
-                        oscillations (> 5 sec) = PID tuning issue.</li>
-                <li><strong>Isolate Cause:</strong> Temporarily increase dead-band to 0.3 RPM. If hunting stops, the
-                    issue is PID tuning. If hunting continues, the issue is mechanical.</li>
+                <li><strong>Mehanička Inspekcija:</strong> Provjeri sve bolcne polužja na luft (cilj < 0.2 mm
+                        zazora).</li>
+                <li><strong>Prati Frekvenciju Oscilacija:</strong> Brze oscilacije (< 2 sek)=mehanički problem. Spore
+                        oscilacije (> 5 sek) = PID problem.</li>
+                <li><strong>Izoluj Uzrok:</strong> Privremeno povećaj mrtvu zonu na 0.3 RPM. Ako lov stane,
+                    problem je PID podešavanje. Ako se nastavi, problem je mehanički.</li>
             </ol>
         </div>
 
-        <div class="section-title">PID Tuning Workflow</div>
+        <div class="section-title">Tok PID Podešavanja</div>
         <div class="module technical">
-            <h3>Step-by-Step Tuning Process</h3>
+            <h3>Proces Podešavanja Korak-po-Korak</h3>
             <ol>
-                <li><strong>Start with Conservative Values:</strong> P=3.0, I=1.0, D=0.2, Dead-Band=0.10 RPM.</li>
-                <li><strong>Perform Step Response Test:</strong> Apply 10% load change, record response.</li>
-                <li><strong>Adjust P:</strong> If response is too slow, increase P by 0.5. If overshoot is excessive,
-                    decrease P by 0.5.</li>
-                <li><strong>Adjust I:</strong> If steady-state error persists, increase I by 0.2. If hunting occurs,
-                    decrease I by 0.2.</li>
-                <li><strong>Adjust D:</strong> If oscillations are poorly damped, increase D by 0.1. If response is
-                    jittery, decrease D by 0.05.</li>
-                <li><strong>Iterate:</strong> Repeat steps 2-5 until optimal response is achieved.</li>
-                <li><strong>Document:</strong> Record final PID values and step response graphs in the unit logbook.
+                <li><strong>Počni sa Konzervativnim Vrijednostima:</strong> P=3.0, I=1.0, D=0.2, Mrtva Zona=0.10 RPM.
+                </li>
+                <li><strong>Izvrši Test Odziva Koraka:</strong> Primijeni 10% promjenu tereta, zapiši odziv.</li>
+                <li><strong>Podesi P:</strong> Ako je odziv prespor, povećaj P za 0.5. Ako je prebačaj pretjeran,
+                    smanji P za 0.5.</li>
+                <li><strong>Podesi I:</strong> Ako greška stacionarnog stanja traje, povećaj I za 0.2. Ako se javi lov,
+                    smanji I za 0.2.</li>
+                <li><strong>Podesi D:</strong> Ako su oscilacije slabo prigušene, povećaj D za 0.1. Ako je odziv
+                    trzav, smanji D za 0.05.</li>
+                <li><strong>Iteriraj:</strong> Ponavljaj korake 2-5 dok se ne postigne optimalan odziv.</li>
+                <li><strong>Dokumentuj:</strong> Zapiši konačne PID vrijednosti i grafove odziva u dnevnik jedinice.
                 </li>
             </ol>
 
             <div class="formula">
-                Tuning Goal: Fast Response + Minimal Overshoot + No Hunting
+                Cilj Podešavanja: Brz Odziv + Minimalan Prebačaj + Nema Lova
             </div>
         </div>
 
-        <div class="section-title">Materials & Tools Checklist</div>
+        <div class="section-title">Kontrolna Lista Materijala & Alata</div>
         <div class="module">
             <ul>
-                <li><strong>Software:</strong> Governor HMI access (password-protected).</li>
-                <li><strong>Monitoring:</strong> SCADA system with speed, power, and vane position trending.</li>
-                <li><strong>Documentation:</strong> Step response recording software, unit logbook.</li>
-                <li><strong>Mechanical Tools:</strong> Calipers (for measuring linkage play), torque wrench.</li>
-                <li><strong>Safety:</strong> Communication radio, emergency stop access.</li>
+                <li><strong>Softver:</strong> Pristup HMI-ju Regulatora (zaštićeno lozinkom).</li>
+                <li><strong>Monitoring:</strong> SCADA sistem sa trendovima brzine, snage i pozicije lopatica.</li>
+                <li><strong>Dokumentacija:</strong> Softver za snimanje odziva, dnevnik jedinice.</li>
+                <li><strong>Mehanički Alati:</strong> Pomično mjerilo (za mjerenje lufta polužja), moment ključ.</li>
+                <li><strong>Sigurnost:</strong> Komunikacijski radio, pristup hitnom zaustavljanju.</li>
             </ul>
         </div>
 
-        <a href="./Francis_Horizontal.html" class="back-btn">← Return to Master Manual</a>
+        <a href="Francis_Horizontal_Dashboard.html" class="back-btn">← Povratak u Operativni Centar</a>
 
     </div>
 

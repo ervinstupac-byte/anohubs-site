@@ -198,12 +198,12 @@
 
     <main>
         <!DOCTYPE html>
-<html lang="en">
+<html lang="bs">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOP: Governor Response & Frequency Logic</title>
+    <title>SOP: Odziv Regulatora & Logika Frekvencije</title>
     <style>
         /* Logic/Digital Theme - Dark Blue with Matrix Green */
         :root {
@@ -379,343 +379,356 @@
 <body>
     <div class="container">
         <header>
-            <h1>⚡ GOVERNOR RESPONSE & FREQUENCY LOGIC</h1>
-            <h2>The Frequency Brain of the Plant</h2>
-            <p style="color: var(--accent-color); font-size: 0.9em; margin-top: 10px;">Understanding grid stability,
-                droop settings, and response time tuning for 1.3 MW units</p>
+            <h1>⚡ ODZIV REGULATORA & LOGIKA FREKVENCIJE</h1>
+            <h2>Frekventni Mozak Elektrane</h2>
+            <p style="color: var(--accent-color); font-size: 0.9em; margin-top: 10px;">Razumijevanje stabilnosti mreže,
+                postavki statike (droop), i podešavanja vremena odziva za 1.3 MW jedinice</p>
         </header>
 
         <div class="module critical">
-            <h3>⚠️ CRITICAL SAFETY WARNING</h3>
-            <p><strong>GRID SYNCHRONIZATION RISK</strong></p>
+            <h3>⚠️ KRITIČNO SIGURNOSNO UPOZORENJE</h3>
+            <p><strong>RIZIK SINHRONIZACIJE MREŽE</strong></p>
             <ul>
-                <li><strong>Never Adjust Droop While Synchronized:</strong> Changing droop settings under load can cause
-                    instantaneous load shift and trip.</li>
-                <li><strong>Island Mode Transition:</strong> Manual intervention required before disconnecting from
-                    Rwanda grid. Auto-switchover NOT enabled.</li>
-                <li><strong>Communication Protocol:</strong> Coordinate with grid operator before any governor logic
-                    changes during parallel operation.</li>
+                <li><strong>Nikada ne Podešavaj Statiku Dok si Sinhronizovan:</strong> Promjena postavki statike pod
+                    opterećenjem može uzrokovati trenutni udar tereta i ispad.</li>
+                <li><strong>Tranzicija u Ostrvski Rad:</strong> Potrebna ručna intervencija prije odvajanja od
+                    mreže Ruande. Auto-prebacivanje NIJE omogućeno.</li>
+                <li><strong>Komunikacijski Protokol:</strong> Koordiniraj sa dispečerom mreže prije bilo kakvih promjena
+                    logike regulatora tokom paralelnog rada.</li>
             </ul>
         </div>
 
-        <div class="section-title">Frequency Regulation Fundamentals</div>
+        <div class="section-title">Osnove Regulacije Frekvencije</div>
 
-        <h3>Your Role in Grid Stability - 1.3 MW Units</h3>
-        <p>The two 1.3 MW Francis units contribute to Rwanda National Grid frequency regulation through proportional
-            load sharing.</p>
+        <h3>Vaša Uloga u Stabilnosti Mreže - 1.3 MW Jedinice</h3>
+        <p>Dvije 1.3 MW Francis jedinice doprinose regulaciji frekvencije Nacionalne Mreže Ruande kroz proporcionalnu
+            raspodjelu tereta.</p>
 
         <div class="module">
-            <h4 style="color: var(--primary-color);">Grid Frequency Basics</h4>
+            <h4 style="color: var(--primary-color);">Osnove Frekvencije Mreže</h4>
             <ul>
-                <li><strong>Nominal Frequency:</strong> 50.00 Hz (Rwanda grid standard)</li>
-                <li><strong>Operating Tolerance:</strong> 49.8 - 50.2 Hz (±0.2 Hz)</li>
-                <li><strong>Emergency Tolerance:</strong> 49.5 - 50.5 Hz (±0.5 Hz)</li>
-                <li><strong>Load Rejection:</strong> If frequency > 50.5 Hz → Auto-disconnect to prevent overspeed</li>
+                <li><strong>Nominalna Frekvencija:</strong> 50.00 Hz (Standard mreže Ruande)</li>
+                <li><strong>Radna Tolerancija:</strong> 49.8 - 50.2 Hz (±0.2 Hz)</li>
+                <li><strong>Hitna Tolerancija:</strong> 49.5 - 50.5 Hz (±0.5 Hz)</li>
+                <li><strong>Odbacivanje Tereta (Load Rejection):</strong> Ako frekvencija > 50.5 Hz → Auto-odvajanje
+                    radi
+                    sprečavanja prebrzog obrtanja (overspeed)</li>
             </ul>
 
-            <h4 style="color: var(--primary-color);">Frequency-Load Relationship</h4>
-            <p><strong>System Response:</strong></p>
+            <h4 style="color: var(--primary-color);">Odnos Frekvencija-Teret</h4>
+            <p><strong>Odziv Sistema:</strong></p>
             <ul>
-                <li>Grid frequency <strong>drops</strong> (< 50 Hz) → System needs MORE power → Your governor OPENS
-                        guide vanes → Your MW increases</li>
-                <li>Grid frequency <strong>rises</strong> (> 50 Hz) → System has TOO MUCH power → Your governor CLOSES
-                    guide vanes → Your MW decreases</li>
+                <li>Frekvencija mreže <strong>pada</strong> (< 50 Hz) → Sistem treba VIŠE snage → Vaš regulator OTVARA
+                        sprovodne lopatice → Vaši MW rastu</li>
+                <li>Frekvencija mreže <strong>raste</strong> (> 50 Hz) → Sistem ima PREVIŠE snage → Vaš regulator
+                    ZATVARA
+                    sprovodne lopatice → Vaši MW padaju</li>
             </ul>
         </div>
 
-        <div class="section-title">Droop Settings - The 4-6% Rule</div>
+        <div class="section-title">Postavke Statike (Droop) - Pravilo 4-6%</div>
 
         <div class="formula-box">
-            <h3>What is Droop?</h3>
-            <p><strong>Definition:</strong> The percentage frequency change required for the governor to move from 0% to
-                100% power output.</p>
+            <h3>Šta je Statika (Droop)?</h3>
+            <p><strong>Definicija:</strong> Postotak promjene frekvencije potreban da regulator pomjeri izlaz sa 0% na
+                100% snage.</p>
 
             <p style="margin-top: 15px;"><strong>Formula:</strong></p>
-            <p style="font-size: 1.1em; color: var(--primary-color);">Droop (%) = (Δf / f_nominal) × 100</p>
+            <p style="font-size: 1.1em; color: var(--primary-color);">Statika (%) = (Δf / f_nominal) × 100</p>
 
-            <p style="margin-top: 10px;">Where:</p>
+            <p style="margin-top: 10px;">Gdje:</p>
             <ul>
-                <li>Δf = Frequency change from no-load to full-load (Hz)</li>
+                <li>Δf = Promjena frekvencije od praznog hoda do punog tereta (Hz)</li>
                 <li>f_nominal = 50 Hz</li>
             </ul>
 
-            <p style="margin-top: 15px;"><strong>Example for 4% Droop:</strong></p>
+            <p style="margin-top: 15px;"><strong>Primjer za 4% Statike:</strong></p>
             <ul>
                 <li>Δf = 0.04 × 50 = 2.0 Hz</li>
-                <li>At 50.0 Hz → Unit runs at rated MW (1.3 MW)</li>
-                <li>At 48.0 Hz → Unit tries to deliver maximum power (governor fully open)</li>
-                <li>At 52.0 Hz → Unit tries to deliver zero power (governor fully closed)</li>
+                <li>Na 50.0 Hz → Jedinica radi na nominalnim MW (1.3 MW)</li>
+                <li>Na 48.0 Hz → Jedinica pokušava isporučiti maksimalnu snagu (regulator potpuno otvoren)</li>
+                <li>Na 52.0 Hz → Jedinica pokušava isporučiti nula snage (regulator potpuno zatvoren)</li>
             </ul>
         </div>
 
         <div class="module">
-            <h3>Why Droop is Critical for Load Sharing</h3>
-            <p><strong>Problem Without Droop (0% Droop = Isochronous Mode):</strong></p>
+            <h3>Zašto je Statika Kritična za Dijeljenje Tereta</h3>
+            <p><strong>Problem Bez Statike (0% Statike = Izohroni Mod):</strong></p>
             <ul>
-                <li>Governor tries to maintain EXACTLY 50.00 Hz</li>
-                <li>With two units in parallel, both fight to control frequency</li>
-                <li>Result: "Governor fighting" - units oscillate wildly between overload and underload</li>
-                <li><strong>⚠️ THIS MODE IS ONLY FOR ISLAND OPERATION (ONE UNIT ONLY)</strong></li>
+                <li>Regulator pokušava održati TAČNO 50.00 Hz</li>
+                <li>Sa dvije jedinice u paraleli, obje se bore da kontrolišu frekvenciju</li>
+                <li>Rezultat: "Borba regulatora" - jedinice divlje osciliraju između preopterećenja i rasterećenja</li>
+                <li><strong>⚠️ OVAJ MOD JE SAMO ZA OSTRVSKI RAD (SAMO JEDNA JEDINICA)</strong></li>
             </ul>
 
-            <p style="margin-top: 15px;"><strong>Solution: Proportional Droop (4-6%):</strong></p>
+            <p style="margin-top: 15px;"><strong>Rješenje: Proporcionalna Statika (4-6%):</strong></p>
             <ul>
-                <li>Each unit responds proportionally to frequency deviation</li>
-                <li>Load is naturally shared based on unit size and droop setting</li>
-                <li>Both units can run in parallel without fighting</li>
+                <li>Svaka jedinica reaguje proporcionalno na devijaciju frekvencije</li>
+                <li>Teret se prirodno dijeli prema veličini jedinice i postavci statike</li>
+                <li>Obje jedinice mogu raditi u paraleli bez borbe</li>
             </ul>
 
-            <h4 style="color: var(--warning-color);">⚠️ Critical Rule for Your 1.3 MW Units:</h4>
+            <h4 style="color: var(--warning-color);">⚠️ Kritično Pravilo za Vaše 1.3 MW Jedinice:</h4>
             <table class="logic-table">
                 <tr>
-                    <th>Operating Mode</th>
-                    <th>Droop Setting</th>
-                    <th>Reason</th>
+                    <th>Operativni Mod</th>
+                    <th>Postavka Statike</th>
+                    <th>Razlog</th>
                 </tr>
                 <tr>
-                    <td><strong>Parallel with Rwanda Grid</strong></td>
+                    <td><strong>Paralelno sa Mrežom Ruande</strong></td>
                     <td>4-6%</td>
-                    <td>Allows stable load sharing with other grid generators</td>
+                    <td>Omogućava stabilno dijeljenje tereta sa ostalim generatorima mreže</td>
                 </tr>
                 <tr>
-                    <td><strong>Parallel with Each Other (Unit 1 + Unit 2)</strong></td>
-                    <td>4-6% (SAME on both)</td>
-                    <td>Equal droop = equal load sharing between units</td>
+                    <td><strong>Paralelno Jedna s Drugom (Unit 1 + Unit 2)</strong></td>
+                    <td>4-6% (ISTO na obje)</td>
+                    <td>Jednaka statika = jednako dijeljenje tereta između jedinica</td>
                 </tr>
                 <tr>
-                    <td><strong>Island Mode (Emergency)</strong></td>
-                    <td>0% (Isochronous)</td>
-                    <td>ONE unit controls frequency exactly (other unit OFF)</td>
+                    <td><strong>Ostrvski Mod (Hitno)</strong></td>
+                    <td>0% (Izohrono)</td>
+                    <td>JEDNA jedinica kontroliše frekvenciju tačno (druga jedinica ISKLJUČENA)</td>
                 </tr>
             </table>
         </div>
 
-        <div class="section-title">The Vortex Correlation - Rough Running Zones</div>
+        <div class="section-title">Vrtložna Korelacija - Zone Grubog Rada</div>
 
         <div class="logic-box">
-            <h3>How Draft Tube Vortex Affects Frequency Stability</h3>
-            <p><strong>Physical Mechanism:</strong></p>
+            <h3>Kako Vrtlog Sifona Utiče na Stabilnost Frekvencije</h3>
+            <p><strong>Fizički Mehanizam:</strong></p>
             <ol>
-                <li>At part-load (40-70% MW), draft tube vortex rope forms → Low-frequency pulsing (0.2-2 Hz)</li>
-                <li>Vortex causes cyclic pressure fluctuations in draft tube</li>
-                <li>Pressure fluctuations translate to torque pulsations on runner</li>
-                <li>Torque pulsations cause shaft speed oscillations (±0.1 Hz)</li>
-                <li>Governor "sees" frequency oscillate → Tries to correct → Guide vanes move erratically</li>
-                <li><strong>Result: "Hunting" behavior even with perfect PID settings</strong></li>
+                <li>Pri djelomičnom teretu (40-70% MW), formira se vrtložno uže u sifonu → Niskofrekventno pulsiranje
+                    (0.2-2 Hz)</li>
+                <li>Vrtlog uzrokuje ciklične fluktuacije pritiska u sifonu</li>
+                <li>Fluktuacije pritiska se pretvaraju u pulsacije momenta na radnom kolu (runner)</li>
+                <li>Pulsacije momenta uzrokuju oscilacije brzine vratila (±0.1 Hz)</li>
+                <li>Regulator "vidi" oscilaciju frekvencije → Pokušava ispraviti → Sprovodne lopatice se kreću eratično
+                </li>
+                <li><strong>Rezultat: Ponašanje "Lova" (Hunting) čak i sa savršenim PID postavkama</strong></li>
             </ol>
 
-            <h4 style="color: var(--primary-color);">Rough Running Zone Map</h4>
+            <h4 style="color: var(--primary-color);">Mapa Zone Grubog Rada</h4>
             <table class="logic-table">
                 <tr>
-                    <th>Load Range (MW)</th>
-                    <th>% of Rated</th>
-                    <th>Vortex Status</th>
-                    <th>Governor Behavior</th>
+                    <th>Opseg Tereta (MW)</th>
+                    <th>% od Nominalnog</th>
+                    <th>Status Vrtloga</th>
+                    <th>Ponašanje Regulatora</th>
                 </tr>
                 <tr>
                     <td>0 - 0.5 MW</td>
                     <td>0 - 40%</td>
-                    <td><strong>Strong vortex</strong></td>
-                    <td>Severe hunting - AVOID</td>
+                    <td><strong>Jak vrtlog</strong></td>
+                    <td>Ozbiljan lov - IZBJEGAVAJ</td>
                 </tr>
                 <tr>
                     <td>0.5 - 0.9 MW</td>
                     <td>40 - 70%</td>
-                    <td>Moderate vortex</td>
-                    <td>Acceptable with air admission</td>
+                    <td>Umjeren vrtlog</td>
+                    <td>Prihvatljivo sa upuhivanjem zraka</td>
                 </tr>
                 <tr>
                     <td>0.9 - 1.3 MW</td>
                     <td>70 - 100%</td>
-                    <td>No vortex</td>
-                    <td>Stable operation</td>
+                    <td>Nema vrtloga</td>
+                    <td>Stabilan rad</td>
                 </tr>
             </table>
 
-            <h4 style="color: var(--accent-color);">Mitigation Strategy:</h4>
+            <h4 style="color: var(--accent-color);">Strategija Ublažavanja:</h4>
             <ul>
-                <li><strong>Air Admission Valve:</strong> Inject compressed air into draft tube cone → Breaks up vortex
-                    rope → Reduces pulsations</li>
-                <li><strong>Optimal Air Flow:</strong> 1-2% of water flow (approx 0.5-1.0 m³/s air)</li>
-                <li><strong>Cross-Reference:</strong> See <a href="./Francis_SOP_Vortex_Control.html"
-                        style="color: var(--accent-color); font-weight: bold;">Vortex Control SOP</a> and <a
-                        href="./Francis_SOP_DFT.html" style="color: var(--accent-color); font-weight: bold;">Draft Tube
-                        Air Admission SOP</a></li>
+                <li><strong>Ventil za Upuhivanje Zraka:</strong> Ubacuj komprimirani zrak u konus sifona → Razbija
+                    vrtložno
+                    uže → Smanjuje pulsacije</li>
+                <li><strong>Optimalan Protok Zraka:</strong> 1-2% protoka vode (cca 0.5-1.0 m³/s zraka)</li>
+                <li><strong>Unakrsna Referenca:</strong> Vidi <a href="Francis_SOP_Vortex_Control.html"
+                        style="color: var(--accent-color); font-weight: bold;">SOP Kontrole Vrtloga</a> i <a
+                        href="Francis_SOP_DFT.html" style="color: var(--accent-color); font-weight: bold;">SOP
+                        Upuhivanja Zraka
+                        u Sifon</a></li>
             </ul>
         </div>
 
-        <div class="section-title">Response Time Tuning - Dead-Time Analysis</div>
+        <div class="section-title">Podešavanje Vremena Odziva - Analiza Mrtvog Vremena</div>
 
         <div class="module">
-            <h3>Understanding Dead-Time</h3>
-            <p><strong>Definition:</strong> The time delay between a frequency shift detection and the start of guide
-                vane movement.</p>
+            <h3>Razumijevanje Mrtvog Vremena (Dead-Time)</h3>
+            <p><strong>Definicija:</strong> Vremensko kašnjenje između detekcije promjene frekvencije i početka kretanja
+                sprovodnih lopatica.</p>
 
-            <p><strong>Components of Dead-Time:</strong></p>
+            <p><strong>Komponente Mrtvog Vremena:</strong></p>
             <ol>
-                <li><strong>Sensor Lag:</strong> Frequency sensor averaging time (typical: 100-200 ms)</li>
-                <li><strong>Governor Processing:</strong> PID calculation time (typical: 50-100 ms)</li>
-                <li><strong>Hydraulic Lag:</strong> Oil pressure buildup in servomotor (typical: 200-500 ms)</li>
-                <li><strong>Mechanical Backlash:</strong> Play in linkage pins before actual movement (typical: 50-100
+                <li><strong>Kašnjenje Senzora:</strong> Vrijeme usrednjavanja senzora frekvencije (tipično: 100-200 ms)
+                </li>
+                <li><strong>Procesiranje Regulatora:</strong> Vrijeme PID proračuna (tipično: 50-100 ms)</li>
+                <li><strong>Hidraulično Kašnjenje:</strong> Izgradnja pritiska ulja u servomotoru (tipično: 200-500 ms)
+                </li>
+                <li><strong>Mehanički Zazor:</strong> Luft u bolcnama polužja prije stvarnog kretanja (tipično: 50-100
                     ms)</li>
             </ol>
 
-            <p style="margin-top: 15px;"><strong>Total Dead-Time:</strong> Typically 400-900 ms for your units.</p>
+            <p style="margin-top: 15px;"><strong>Ukupno Mrtvo Vrijeme:</strong> Tipično 400-900 ms za vaše jedinice.</p>
 
-            <h4 style="color: var(--primary-color);">How to Measure Dead-Time:</h4>
+            <h4 style="color: var(--primary-color);">Kako Izmjeriti Mrtvo Vrijeme:</h4>
             <ol>
-                <li>With unit running at 1.0 MW, 50.0 Hz (stable)</li>
-                <li>Command a manual load change: Increase setpoint by 0.1 MW</li>
-                <li>Using oscilloscope or SCADA trending:
+                <li>Dok jedinica radi na 1.0 MW, 50.0 Hz (stabilno)</li>
+                <li>Zadaj ručnu promjenu tereta: Povećaj setpoint za 0.1 MW</li>
+                <li>Koristeći osciloskop ili SCADA trend:
                     <ul>
-                        <li>Channel 1: Frequency signal (Hz)</li>
-                        <li>Channel 2: Guide vane position (%)</li>
+                        <li>Kanal 1: Signal frekvencije (Hz)</li>
+                        <li>Kanal 2: Pozicija sprovodnih lopatica (%)</li>
                     </ul>
                 </li>
-                <li>Trigger on frequency drop event</li>
-                <li>Measure time from frequency drop start to first guide vane movement</li>
+                <li>Okini (trigger) na događaj pada frekvencije</li>
+                <li>Mjeri vrijeme od početka pada frekvencije do prvog kretanja lopatica</li>
             </ol>
 
-            <h4 style="color: var(--warning-color);">Target Dead-Time:</h4>
+            <h4 style="color: var(--warning-color);">Ciljno Mrtvo Vrijeme:</h4>
             <ul>
-                <li><strong>Good:</strong>
-                    < 500 ms (responsive system)</li>
-                <li><strong>Acceptable:</strong> 500-800 ms (typical for mechanical governors)</li>
-                <li><strong>Poor:</strong> > 800 ms (investigate oil aeration, linkage play) → See <a
-                        href="./Francis_SOP_Oil_Health.html" style="color: var(--accent-color); font-weight: bold;">Oil
-                        Health SOP</a></li>
+                <li><strong>Dobro:</strong>
+                    < 500 ms (odzivan sistem)</li>
+                <li><strong>Prihvatljivo:</strong> 500-800 ms (tipično za mehaničke regulatore)</li>
+                <li><strong>Loše:</strong> > 800 ms (istražuj aeraciju ulja, luft u polužju) → Vidi <a
+                        href="Francis_SOP_Oil_Health.html" style="color: var(--accent-color); font-weight: bold;">SOP
+                        Zdravlja
+                        Ulja</a></li>
             </ul>
         </div>
 
-        <div class="section-title">Island Mode vs. Parallel Operation</div>
+        <div class="section-title">Ostrvski Mod vs. Paralelni Rad</div>
 
         <div class="logic-box">
-            <h3>Critical Logic Differences</h3>
+            <h3>Kritične Razlike u Logici</h3>
 
-            <h4 style="color: var(--primary-color);">Parallel Operation (Normal)</h4>
-            <p><strong>Configuration:</strong> Units connected to Rwanda national grid OR both 1.3 MW units synchronized
-                together.</p>
+            <h4 style="color: var(--primary-color);">Paralelni Rad (Normalno)</h4>
+            <p><strong>Konfiguracija:</strong> Jedinice spojene na nacionalnu mrežu Ruande ILI obje 1.3 MW jedinice
+                sinhronizovane
+                zajedno.</p>
 
             <table class="logic-table">
                 <tr>
-                    <th>Parameter</th>
-                    <th>Setting</th>
-                    <th>Reason</th>
+                    <th>Parametar</th>
+                    <th>Postavka</th>
+                    <th>Razlog</th>
                 </tr>
                 <tr>
-                    <td><strong>Droop</strong></td>
+                    <td><strong>Statika (Droop)</strong></td>
                     <td>4-6%</td>
-                    <td>Proportional load sharing</td>
+                    <td>Proporcionalno dijeljenje tereta</td>
                 </tr>
                 <tr>
-                    <td><strong>Governor Mode</strong></td>
+                    <td><strong>Mod Regulatora</strong></td>
                     <td>Speed Droop</td>
-                    <td>Follow grid frequency</td>
+                    <td>Prati frekvenciju mreže</td>
                 </tr>
                 <tr>
-                    <td><strong>Dead-Band</strong></td>
+                    <td><strong>Mrtva Zona (Dead-Band)</strong></td>
                     <td>±0.05 Hz</td>
-                    <td>Prevent excessive vane movement</td>
+                    <td>Sprečava pretjerano kretanje lopatica</td>
                 </tr>
                 <tr>
-                    <td><strong>Auto Load Control</strong></td>
-                    <td>Disabled</td>
-                    <td>Grid controls load via frequency</td>
+                    <td><strong>Auto Kontrola Tereta</strong></td>
+                    <td>Onemogućeno (Disabled)</td>
+                    <td>Mreža diktira teret putem frekvencije</td>
                 </tr>
             </table>
 
-            <h4 style="color: var(--warning-color);">Island Mode (Emergency Only)</h4>
-            <p><strong>Configuration:</strong> One unit powering isolated local load ONLY. Other unit OFF. Grid
-                disconnected.</p>
+            <h4 style="color: var(--warning-color);">Ostrvski Mod (Samo Hitno)</h4>
+            <p><strong>Konfiguracija:</strong> Jedna jedinica napaja izolovani lokalni teret SAMO. Druga jedinica
+                ISKLJUČENA. Mreža
+                odspojena.</p>
 
             <table class="logic-table">
                 <tr>
-                    <th>Parameter</th>
-                    <th>Setting</th>
-                    <th>Reason</th>
+                    <th>Parametar</th>
+                    <th>Postavka</th>
+                    <th>Razlog</th>
                 </tr>
                 <tr>
-                    <td><strong>Droop</strong></td>
-                    <td>0% (Isochronous)</td>
-                    <td>Maintain exact 50.00 Hz</td>
+                    <td><strong>Statika (Droop)</strong></td>
+                    <td>0% (Izohrono)</td>
+                    <td>Održava tačno 50.00 Hz</td>
                 </tr>
                 <tr>
-                    <td><strong>Governor Mode</strong></td>
+                    <td><strong>Mod Regulatora</strong></td>
                     <td>Speed Control</td>
-                    <td>Unit IS the frequency reference</td>
+                    <td>Jedinica JE referenca frekvencije</td>
                 </tr>
                 <tr>
-                    <td><strong>Dead-Band</strong></td>
+                    <td><strong>Mrtva Zona (Dead-Band)</strong></td>
                     <td>±0.01 Hz</td>
-                    <td>Tight frequency control needed</td>
+                    <td>Potrebna čvrsta kontrola frekvencije</td>
                 </tr>
                 <tr>
-                    <td><strong>Auto Load Control</strong></td>
-                    <td>Enabled</td>
-                    <td>Match load to generation capacity</td>
+                    <td><strong>Auto Kontrola Tereta</strong></td>
+                    <td>Omogućeno (Enabled)</td>
+                    <td>Usklađuje teret sa kapacitetom generisanja</td>
                 </tr>
             </table>
 
-            <h4 style="color: var(--accent-color);">Transition Procedure (Grid → Island)</h4>
-            <p><strong>⚠️ MANUAL PROCEDURE REQUIRED - NO AUTO-SWITCHOVER</strong></p>
+            <h4 style="color: var(--accent-color);">Procedura Tranzicije (Mreža → Ostrvo)</h4>
+            <p><strong>⚠️ POTREBNA RUČNA PROCEDURA - NEMA AUTO-PREBACIVANJA</strong></p>
             <ol>
-                <li><strong>Open main circuit breaker</strong> to disconnect from Rwanda grid</li>
-                <li><strong>Stop Unit 2</strong> if both units are running (only ONE unit in island mode)</li>
-                <li><strong>Set Unit 1 governor to Isochronous (0% droop)</strong></li>
-                <li><strong>Enable Auto Load Control</strong></li>
-                <li><strong>Reduce local load</strong> to match unit capacity (max 1.3 MW)</li>
-                <li><strong>Monitor frequency:</strong> Should stabilize at 50.00 ± 0.05 Hz within 30 seconds</li>
+                <li><strong>Otvori glavni prekidač</strong> da se odvojiš od mreže Ruande</li>
+                <li><strong>Zaustavi Unit 2</strong> ako obje jedinice rade (samo JEDNA jedinica u ostrvskom modu)</li>
+                <li><strong>Postavi regulator Unit 1 na Izohrono (0% statike)</strong></li>
+                <li><strong>Omogući Auto Kontrolu Tereta</strong></li>
+                <li><strong>Smanji lokalni teret</strong> da odgovara kapacitetu jedinice (max 1.3 MW)</li>
+                <li><strong>Prati frekvenciju:</strong> Treba se stabilizovati na 50.00 ± 0.05 Hz unutar 30 sekundi</li>
             </ol>
 
-            <p style="color: var(--warning-color); margin-top: 15px;"><strong>⚠️ Risk:</strong> If local load exceeds
-                1.3 MW in island mode, unit will overload and trip on frequency drop (< 49.0 Hz). Load shedding MUST be
-                    performed before transition.</p>
+            <p style="color: var(--warning-color); margin-top: 15px;"><strong>⚠️ Rizik:</strong> Ako lokalni teret
+                premaši
+                1.3 MW u ostrvskom modu, jedinica će se preopteretiti i ispasti na pad frekvencije (< 49.0 Hz).
+                    Odbacivanje tereta (load shedding) MORA se izvršiti prije tranzicije.</p>
         </div>
 
-        <div class="section-title">Diagnostic Procedures</div>
+        <div class="section-title">Dijagnostičke Procedure</div>
 
         <div class="module">
-            <h3>Governor Response Test (Step Response)</h3>
-            <p><strong>Purpose:</strong> Verify governor response time and stability.</p>
+            <h3>Test Odziva Regulatora (Step Response)</h3>
+            <p><strong>Svrha:</strong> Verifikuj vrijeme odziva i stabilnost regulatora.</p>
 
             <ol>
-                <li>Run unit at 1.0 MW (75% load), stable frequency 50.0 Hz</li>
-                <li>Command 10% step change: Increase setpoint to 1.1 MW</li>
-                <li>Record:
+                <li>Vozi jedinicu na 1.0 MW (75% tereta), stabilna frekvencija 50.0 Hz</li>
+                <li>Zadaj 10% step promjenu: Povećaj setpoint na 1.1 MW</li>
+                <li>Zapiši:
                     <ul>
-                        <li>Time to first response (dead-time)</li>
-                        <li>Time to reach new setpoint (settling time)</li>
-                        <li>Overshoot (if any)</li>
+                        <li>Vrijeme do prvog odziva (mrtvo vrijeme)</li>
+                        <li>Vrijeme dostizanja novog setpointa (vrijeme smirivanja/settling time)</li>
+                        <li>Prebačaj (overshoot) ako ga ima</li>
                     </ul>
                 </li>
             </ol>
 
-            <h4 style="color: var(--accent-color);">Acceptance Criteria:</h4>
+            <h4 style="color: var(--accent-color);">Kriteriji Prihvatanja:</h4>
             <ul>
-                <li><strong>Dead-Time:</strong>
+                <li><strong>Mrtvo Vrijeme:</strong>
                     < 500 ms</li>
-                <li><strong>Settling Time:</strong>
-                    < 10 seconds</li>
-                <li><strong>Overshoot:</strong>
-                    < 5% of step size (< 0.05 MW for 0.1 MW step)</li>
+                <li><strong>Vrijeme Smirivanja:</strong>
+                    < 10 sekundi</li>
+                <li><strong>Prebačaj:</strong>
+                    < 5% veličine koraka (< 0.05 MW za 0.1 MW korak)</li>
             </ul>
 
-            <h3>Frequency Stability Test</h3>
+            <h3>Test Stabilnosti Frekvencije</h3>
             <ol>
-                <li>Run unit synchronized to grid at 1.2 MW for 1 hour</li>
-                <li>Record frequency every 1 minute</li>
-                <li>Calculate standard deviation (σ) of frequency</li>
+                <li>Vozi jedinicu sinhronizovanu na mrežu na 1.2 MW tokom 1 sata</li>
+                <li>Zapiši frekvenciju svake 1 minute</li>
+                <li>Izračunaj standardnu devijaciju (σ) frekvencije</li>
             </ol>
 
-            <h4 style="color: var(--accent-color);">Acceptance:</h4>
+            <h4 style="color: var(--accent-color);">Prihvatanje:</h4>
             <ul>
-                <li><strong>Good:</strong> σ < 0.02 Hz (very stable)</li>
-                <li><strong>Acceptable:</strong> σ < 0.05 Hz</li>
-                <li><strong>Poor:</strong> σ > 0.05 Hz → Investigate hunting, vortex, or oil aeration issues</li>
+                <li><strong>Dobro:</strong> σ < 0.02 Hz (vrlo stabilno)</li>
+                <li><strong>Prihvatljivo:</strong> σ < 0.05 Hz</li>
+                <li><strong>Loše:</strong> σ > 0.05 Hz → Istražuj lov, vrtlog ili probleme aeracije ulja</li>
             </ul>
         </div>
 
-        <a href="./Francis_Horizontal.html" class="back-btn">← Return to Master Manual</a>
+        <a href="Francis_Horizontal_Dashboard.html" class="back-btn">← Povratak u Operativni Centar</a>
 
     </div>
 </body>

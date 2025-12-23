@@ -12,14 +12,14 @@
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://anohubs.com/Turbine_Friend/Francis_SOP_Elec_Health/">
+    <meta property="og:url" content="https://anohubs.com/Turbine_Friend/Francis_SOP_Shaft_Alignment/">
     <meta property="og:title" content="AnoHUB | Engineering Immunity Protocol">
     <meta property="og:description" content="Global standard for hydro asset integrity. 15+ years of field forensic engineering.">
     <meta property="og:image" content="https://anohubs.com/assets/images/holy_t_trinity.jpg">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://anohubs.com/Turbine_Friend/Francis_SOP_Elec_Health/">
+    <meta property="twitter:url" content="https://anohubs.com/Turbine_Friend/Francis_SOP_Shaft_Alignment/">
     <meta property="twitter:title" content="AnoHUB | Engineering Immunity Protocol">
     <meta property="twitter:description" content="Global standard for hydro asset integrity. 15+ years of field forensic engineering.">
     <meta property="twitter:image" content="https://anohubs.com/assets/images/holy_t_trinity.jpg">
@@ -203,432 +203,156 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOP: Električno Zdravlje & Termalna Zaštita</title>
+    <title>SOP: Centriranje Osovina (Alignment)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        /* Electrical/Amber Theme */
-        :root {
-            --primary-color: #f59e0b;
-            --secondary-color: #d97706;
-            --accent-color: #dc2626;
-            --warning-color: #fbbf24;
-            --bg-color: #f4f7f6;
-            --text-color: #333;
-            --border-color: #dde;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
 
         body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--bg-color);
-            margin: 0;
-            padding: 20px;
+            font-family: 'JetBrains Mono', monospace;
+            background-color: #0c0a09;
+            color: #a8a29e;
         }
 
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: #fff;
-            padding: 40px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
+        .tech-border {
+            border: 1px solid #292524;
         }
 
-        header {
-            border-bottom: 3px solid var(--primary-color);
-            padding-bottom: 20px;
-            margin-bottom: 30px;
-            text-align: center;
+        .section-card {
+            background: #1c1917;
+            border: 1px solid #44403c;
+            transition: all 0.2s;
         }
 
-        h1 {
-            margin: 0;
-            color: var(--primary-color);
-            font-size: 28px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        h2 {
-            color: var(--secondary-color);
-            font-size: 18px;
-            margin-top: 5px;
-            font-weight: 400;
-        }
-
-        .section-title {
-            background-color: var(--primary-color);
-            color: #fff;
-            padding: 10px 15px;
-            margin-top: 40px;
-            border-radius: 4px;
-            font-size: 1.2em;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-        }
-
-        .section-title::before {
-            content: "►";
-            margin-right: 10px;
-            font-size: 0.8em;
-        }
-
-        h3 {
-            color: var(--primary-color);
-            border-left: 4px solid var(--primary-color);
-            padding-left: 10px;
-            margin-top: 25px;
-        }
-
-        .module {
-            border: 1px solid var(--border-color);
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 4px;
-            background-color: #fafafa;
-        }
-
-        .critical {
-            border-left: 5px solid var(--accent-color);
-            background-color: #fff5f5;
-        }
-
-        .technical {
-            border-left: 5px solid var(--primary-color);
-            background-color: #fffbf0;
-        }
-
-        .diagnostic {
-            border-left: 5px solid var(--warning-color);
-            background-color: #fef3c7;
-        }
-
-        ul,
-        ol {
-            padding-left: 20px;
-        }
-
-        li {
-            margin-bottom: 8px;
-        }
-
-        .back-btn {
-            display: inline-block;
-            margin-top: 30px;
-            text-decoration: none;
-            color: var(--primary-color);
-            font-weight: bold;
-            border: 1px solid var(--primary-color);
-            padding: 10px 20px;
-            border-radius: 4px;
-            transition: all 0.3s;
-        }
-
-        .back-btn:hover {
-            background-color: var(--primary-color);
-            color: #fff;
-        }
-
-        .temp-table {
-            background: #fffbf0;
-            border-left: 4px solid var(--primary-color);
-            padding: 12px;
-            margin: 15px 0;
-            font-family: 'Courier New', monospace;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 15px 0;
-            background: rgba(0, 0, 0, 0.02);
-            /* Added slight background for visibility */
-        }
-
-        table th {
-            background: var(--primary-color);
-            color: white;
-            padding: 10px;
-            text-align: left;
-        }
-
-        table td {
-            border: 1px solid #ddd;
-            padding: 10px;
-        }
-
-        table tr:nth-child(even) {
-            background: #f9fafb;
-        }
-
-        /* === PRINT CSS === */
-        @media print {
-            body {
-                background: white;
-                color: black;
-                font-size: 11pt;
-            }
-
-            .container {
-                max-width: 100%;
-                box-shadow: none;
-                padding: 20px;
-            }
-
-            header {
-                border-bottom: 2px solid black;
-            }
-
-            .section-title {
-                background: white !important;
-                color: black !important;
-                border: 2px solid black;
-            }
-
-            .module {
-                page-break-inside: avoid;
-            }
-
-            .back-btn {
-                display: none;
-            }
-
-            table {
-                page-break-inside: avoid;
-            }
+        .section-card:hover {
+            border-color: #d97706;
+            transform: translateY(-2px);
         }
     </style>
 </head>
 
-<body>
+<body class="p-6 md:p-12 max-w-5xl mx-auto">
 
-    <div class="container">
-
-        <header>
-            <h1>Zdravlje Generatora & Termalna Zaštita</h1>
-            <h2>Integritet Izolacije, Korona Pražnjenje & Logika Grijača</h2>
-        </header>
-
-        <!-- INTRO MODULE -->
-        <div class="module critical">
-            <h3>⚠️ NEVIDLJIVA DEGRADACIJA</h3>
-            <p><strong>Kontekst:</strong> Namotaji generatora rade na visokom naponu (tipično 6.6-11 kV za 1.3 MW
-                jedinice). Degradacija izolacije je postepena i nevidljiva dok se ne desi katastrofalan kvar.</p>
-            <ul>
-                <li><strong>Rizik:</strong> Proboj izolacije uzrokuje kratki spoj zavoj-na-zavoj → lokalizovano
-                    pregrijavanje → slot pražnjenje → totalni otkaz namotaja.</li>
-                <li><strong>Cijena Popravka:</strong> Viklovanje statora košta $50,000-$150,000 i zahtijeva 3-6
-                    mjeseci zastoja.</li>
-                <li><strong>Prevencija:</strong> Rana detekcija kroz vizuelnu inspekciju, termalni monitoring i
-                    pravilnu kontrolu vlage.</li>
-            </ul>
+    <!-- Header -->
+    <header class="flex justify-between items-center mb-10 border-b border-stone-800 pb-6">
+        <div>
+            <h1 class="text-3xl font-bold text-amber-500 flex items-center gap-3">
+                <i data-lucide="crosshair"></i> CENTRIRANJE OSOVINA
+            </h1>
+            <p class="text-stone-500 font-mono text-xs mt-1">Baca (Run-Out), Zazor & Termalni Rast</p>
         </div>
+        <a href="Francis_Horizontal_Dashboard.html"
+            class="text-xs text-stone-500 hover:text-white transition flex items-center gap-1">
+            <i data-lucide="layout-dashboard"></i> OPERATIVNI CENTAR
+        </a>
+    </header>
 
-        <div class="section-title">SOP 1: Detekcija Korone & Slot Pražnjenja</div>
-        <div class="module technical">
-            <p>Korona pražnjenje se javlja kada stres električnog polja premaši dielektričnu čvrstoću zraka,
-                jonizirajući zrak
-                i stvarajući ozon.</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 
-            <h3>1.1 "Mirisni Test" na Ozon</h3>
-            <p><strong>Fizika:</strong> Visokonaponska korona proizvodi ozon (O₃), koji ima karakterističan oštar
-                miris sličan hloru, detektibilan pri vrlo niskim koncentracijama (~0.01 ppm).</p>
-            <p><strong>Procedura:</strong></p>
-            <ol>
-                <li><strong>Generator u Radu:</strong> Jedinica na >70% tereta (veći napon = izraženija korona)</li>
-                <li><strong>Pristup:</strong> Priđi izlazima zraka iz rashladnih ventilatora generatora</li>
-                <li><strong>Test Mirisa:</strong> Karakterističan miris ozona ukazuje na aktivno korona pražnjenje</li>
-                <li><strong>Lokacija:</strong> Ako se detektuje ozon, zaustavi i pregledaj da lociraš izvor</li>
-            </ol>
+        <!-- Run-Out Limits -->
+        <div class="section-card p-6 rounded">
+            <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                <i data-lucide="rotate-cw"></i> BACA (TIR)
+            </h2>
 
-            <h3>1.2 Vizuelna Inspekcija za "Bijeli Prah"</h3>
-            <p><strong>Nusproizvod Korone:</strong> Produženo korona pražnjenje razgrađuje izolacione materijale,
-                stvarajući
-                bijeli/sivi praškasti talog (smolom degradiranom ozonom).</p>
-
-            <div class="diagnostic">
-                <strong>PROCEDURA INSPEKCIJE (Tokom Zastoja):</strong><br>
-                1. Skini poklopce generatora za pristup namotajima statora<br>
-                2. Koristi lampu za inspekciju izlaza iz slotova i spojeva glava namotaja<br>
-                3. Traži nakupljanje bijelog praha (posebno u uglovima/pukotinama)<br>
-                4. Provjeri potamnjele/ugljenisane izolacije (znak iskrenja)
-            </div>
-
-            <h3>1.3 Uobičajeni Izvori Korone</h3>
-            <table>
-                <tr>
-                    <th>Lokacija</th>
-                    <th>Uzrok</th>
-                    <th>Lijek</th>
-                </tr>
-                <tr>
-                    <td>Izlazi iz slota</td>
-                    <td>Oštra ivica na oblozi slota</td>
-                    <td>Nanesi traku otpornu na koronu (3M 2210) na oštre ivice</td>
-                </tr>
-                <tr>
-                    <td>Spojevi glava namotaja</td>
-                    <td>Labav spoj koji stvara zračni zazor</td>
-                    <td>Dategni vijke, očisti kontaktne površine</td>
-                </tr>
-                <tr>
-                    <td>Klinovi slota</td>
-                    <td>Klin slota ne sjedi pravilno</td>
-                    <td>Ukloni i ponovo postavi klin sa propisnom kompresijom</td>
-                </tr>
-                <tr>
-                    <td>Ulazi kablova</td>
-                    <td>Prodor vlage degradira izolaciju</td>
-                    <td>Zaptij ulaz kabla epoksidom, verifikuj ispravnost grijača</td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="section-title">SOP 2: Logika Blokade Grijača i Prekidača</div>
-        <div class="module technical">
-            <p><strong>Kritični Zahtjev:</strong> Grijači prostora generatora se MORAJU automatski aktivirati kada se
-                glavni
-                prekidač otvori radi sprečavanja štete od kondenzacije.</p>
-
-            <h3>2.1 Prijetnja od Vlage</h3>
-            <p><strong>Fizika:</strong> Kada generator stane, namotaji se hlade. Ako je ambijentalna vlažnost visoka
-                (>70%),
-                vlaga se kondenzuje na hladnim namotajima, degradirajući otpor izolacije.</p>
-            <p><strong>Funkcija Grijača:</strong> Održava temperaturu namotaja 5-10°C iznad ambijenta → sprečava
-                kondenzaciju → čuva integritet izolacije.</p>
-
-            <h3>2.2 Test Verifikacije Blokade</h3>
-            <ol>
-                <li><strong>Jedinica u Radu:</strong> Generator na normalnom teretu, grijači ISKLJUČENI (zaključani
-                    pomoćnim
-                    kontaktom prekidača)</li>
-                <li><strong>Okini Prekidač:</strong> Ručno otvori glavni prekidač</li>
-                <li><strong>Trenutna Provjera:</strong> Pilot lampica grijača treba zasvijetliti unutar 5 sekundi</li>
-                <li><strong>Termalna Verifikacija:</strong> Nakon 30 minuta, izmjeri temperaturu namotaja - trebala bi
-                    rasti</li>
-            </ol>
-
-            <div class="critical">
-                <strong>POSLJEDICA KVARA:</strong> Ako grijači ne uspiju aktivirati i generator stoji >48 sati
-                u vlažnim uslovima, otpor izolacije može pasti sa >100 MΩ na <1 MΩ → NESIGURNO ZA START bez procesa
-                    sušenja. </div>
-
-                    <h3>2.3 Održavanje Sistema Grijača</h3>
-                    <ul>
-                        <li><strong>Mjesečno:</strong> Verifikuj da pilot lampica radi kad je jedinica stala</li>
-                        <li><strong>Kvartalno:</strong> Izmjeri struju grijača (uporedi sa tablicom - treba biti
-                            unutar 10%)</li>
-                        <li><strong>Godišnje:</strong> Testiraj kontinuitet pomoćnog kontakta na glavnom prekidaču</li>
-                        <li><strong>Nakon Produženog Zastoja (>1 sedmica):</strong> Izmjeri otpor izolacije prije
-                            starta (Meger test)</li>
-                    </ul>
-            </div>
-
-            <div class="section-title">SOP 3: Termalni Limiti Namotaja</div>
-            <div class="module technical">
-                <p>Namotaji generatora koriste izolaciju Klase F ili Klase B. Svaka klasa ima specifične temperaturne
-                    limite koji
-                    se ne smiju preći.</p>
-
-                <h3>3.1 Tabela Referenci Klase Izolacije</h3>
-                <table>
-                    <tr>
-                        <th>Klasa Izolacije</th>
-                        <th>Kontinuirani Limit</th>
-                        <th>Hot Spot Limit</th>
-                        <th>Hitno (2h)</th>
-                    </tr>
-                    <tr>
-                        <td>Klasa B</td>
-                        <td>130°C</td>
-                        <td>145°C</td>
-                        <td>155°C</td>
-                    </tr>
-                    <tr>
-                        <td>Klasa F</td>
-                        <td>155°C</td>
-                        <td>170°C</td>
-                        <td>180°C</td>
-                    </tr>
+            <div class="overflow-hidden rounded border border-stone-800 mb-4">
+                <table class="w-full text-left text-sm text-stone-400">
+                    <thead class="bg-stone-900 text-stone-200 text-xs uppercase">
+                        <tr>
+                            <th class="p-2">Lokacija</th>
+                            <th class="p-2">Limit (mm)</th>
+                            <th class="p-2">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-stone-800 bg-black/20">
+                        <tr>
+                            <td class="p-2">Vodeći Ležaj Turbine</td>
+                            <td class="p-2 font-mono">0.05</td>
+                            <td class="p-2 text-green-500">OK (0.03)</td>
+                        </tr>
+                        <tr>
+                            <td class="p-2">Prirubnica Spojnice</td>
+                            <td class="p-2 font-mono">0.03</td>
+                            <td class="p-2 text-green-500">OK (0.02)</td>
+                        </tr>
+                        <tr>
+                            <td class="p-2">Generator NDE (Zadnja strana)</td>
+                            <td class="p-2 font-mono">0.05</td>
+                            <td class="p-2 text-yellow-500">UPOZORENJE (0.045)</td>
+                        </tr>
+                    </tbody>
                 </table>
-
-                <div class="temp-table">
-                    <strong>TIPIČNA SPECIFIKACIJA 1.3 MW GENERATORA:</strong><br>
-                    Klasa Izolacije: F (verifikuj na pločici)<br>
-                    Nominalna Temp Statora (RTD): 155°C kontinuirano<br>
-                    Alarm Setpoint: 165°C (10°C ispod hot spot limita)<br>
-                    Trip Setpoint: 175°C (5°C margina do hitnog limita)<br>
-                    Ambijentalna Temperatura: Pretpostavi 40°C za proračune
-                </div>
-
-                <h3>3.2 Budžet Rasta Temperature</h3>
-                <p><strong>Inženjerski Proračun:</strong></p>
-                <ul>
-                    <li>Ambijent: 40°C (tipično okruženje mašinske hale)</li>
-                    <li>Dozvoljeni Rast: 155°C - 40°C = <strong>115°C</strong></li>
-                    <li>Na nominalnom teretu (1.3 MW), rast temperature treba biti ~100-110°C</li>
-                    <li>Ako rast pređe 115°C na nominalnom teretu → problem hlađenja ili preopterećenje</li>
-                </ul>
-
-                <h3>3.3 Verifikacija RTD Senzora</h3>
-                <p><strong>Godišnji Test:</strong></p>
-                <ol>
-                    <li>Uporedi sva očitavanja statorskih RTD-a u mirovanju (trebaju biti unutar 2-3°C jedan od drugog)
-                    </li>
-                    <li>Uporedi RTD očitavanje sa ručnim IR termometrom na dostupnom namotaju</li>
-                    <li>Ako RTD odstupa >5°C → drift (pomjeranje) senzora → zamijeni RTD</li>
-                </ol>
             </div>
 
-            <div class="section-title">SOP 4: Kontrola Vlage & Meger Testiranje</div>
-            <div class="module diagnostic">
-                <p><strong>Cilj:</strong> Verifikuj otpor izolacije prije starta nakon produženog zastoja ili
-                    sumnje na prodor vlage.</p>
-
-                <h3>4.1 Procedura Meger Testa</h3>
-                <ol>
-                    <li><strong>Odspoji Generator:</strong> Otvori glavni prekidač I odspoji krug pobude</li>
-                    <li><strong>Provjera Otpora Uzemljenja:</strong> Verifikuj dobru vezu sa zemljom (< 1Ω prema masi
-                            stanice)</li>
-                    <li><strong>Postavka Megera:</strong>
-                        <ul>
-                            <li>Test napon: 500V DC (za 6.6 kV generator) ili 1000V DC (za 11 kV generator)</li>
-                            <li>Spoji pozitiv na Fazu A, negativ na zemlju</li>
-                        </ul>
-                    </li>
-                    <li><strong>1-Minutni Test:</strong> Primijeni napon 60 sekundi, zapiši konačnu vrijednost otpora
-                    </li>
-                    <li><strong>Ponovi:</strong> Testiraj Faze B i C nezavisno</li>
-                </ol>
-
-                <h3>4.2 Kriteriji Prihvatanja</h3>
-                <div class="temp-table">
-                    <strong>LIMITI OTPORA IZOLACIJE:</strong><br>
-                    PROLAZ: > 100 MΩ (odlično stanje, sigurno za start)<br>
-                    UPOZORENJE: 10-100 MΩ (granično - radi grijače 24h, ponovi test)<br>
-                    PAD: < 10 MΩ (kontaminacija vlagom - NE STARTAJ)<br>
-                        <br>
-                        <strong>Ako PADNE:</strong> Radi grijače kontinuirano 48-72 sata, ponavljaj test dnevno dok
-                        se ne postigne >100 MΩ.
-                </div>
-            </div>
-
-            <div class="section-title">Kontrolna Lista Sažetka</div>
-            <div class="module">
-                <ul>
-                    <li><strong>Sedmično (tokom rada):</strong> Test mirisa na ozon na izlazima zraka generatora</li>
-                    <li><strong>Mjesečno:</strong> Verifikuj funkcionalnost blokade grijača/prekidača</li>
-                    <li><strong>Kvartalno:</strong> Vizuelna inspekcija za bijeli prah (nusproizvod korone)</li>
-                    <li><strong>Godišnje:</strong> Verifikacija kalibracije RTD senzora, test struje grijača</li>
-                    <li><strong>Nakon dužeg zastoja (>1 sedmica):</strong> Meger test prije starta</li>
-                </ul>
-            </div>
-
-            <a href="Francis_Horizontal_Dashboard.html" class="back-btn">← Povratak u Operativni Centar</a>
-
+            <p class="text-[10px] text-stone-500">
+                <strong>Metoda:</strong> Komparater na površini vratila (sporo okretanje).
+            </p>
         </div>
 
+        <!-- Laser Alignment -->
+        <div class="section-card p-6 rounded">
+            <div class="flex justify-between items-start mb-4">
+                <h2 class="text-xl font-bold text-white flex items-center gap-2">
+                    <i data-lucide="zap"></i> LASERSKO CENTRIRANJE
+                </h2>
+                <span
+                    class="text-xs font-bold bg-amber-900/30 text-amber-500 px-2 py-1 rounded border border-amber-800">REQ:
+                    6-Mj</span>
+            </div>
+
+            <div class="bg-stone-900 p-3 rounded border border-stone-800 text-sm space-y-2">
+                <div class="flex justify-between">
+                    <span class="text-stone-400">Vertikalni Odstup (Offset)</span>
+                    <span class="text-white">+0.12mm</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-stone-400">Horizontalni Odstup</span>
+                    <span class="text-white">-0.05mm</span>
+                </div>
+            </div>
+
+            <div class="mt-4 p-3 bg-stone-800 rounded border border-amber-500/20">
+                <strong class="text-xs text-amber-400 block mb-1">CILJ TERMALNOG RASTA</strong>
+                <p class="text-[10px] text-stone-400">Postavi Generator 0.15mm NIŽE od Turbine kada je hladan. Generator
+                    raste
+                    tokom rada zbog toplote.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Soft Foot Check -->
+    <div class="mt-8 section-card p-6 rounded">
+        <h2 class="text-lg font-bold text-stone-300 mb-2 flex items-center gap-2">
+            <i data-lucide="footprints"></i> PROVJERA MEKE STOPE (SOFT FOOT)
+        </h2>
+        <p class="text-sm text-stone-400 mb-4">Osigurati da sve 4 stope generatora leže ravno na pločama.</p>
+
+        <div class="flex items-center gap-4 text-xs font-mono">
+            <div class="flex-1 bg-stone-900 p-2 rounded text-center border border-stone-700">
+                <span class="block text-stone-500 mb-1">Ugao 1</span>
+                <span class="text-green-500">0.02mm</span>
+            </div>
+            <div class="flex-1 bg-stone-900 p-2 rounded text-center border border-stone-700">
+                <span class="block text-stone-500 mb-1">Ugao 2</span>
+                <span class="text-green-500">0.01mm</span>
+            </div>
+            <div class="flex-1 bg-stone-900 p-2 rounded text-center border border-stone-700">
+                <span class="block text-stone-500 mb-1">Ugao 3</span>
+                <span class="text-green-500">0.02mm</span>
+            </div>
+            <div class="flex-1 bg-stone-900 p-2 rounded text-center border border-stone-700">
+                <span class="block text-stone-500 mb-1">Ugao 4</span>
+                <span class="text-red-500 font-bold">0.08mm</span>
+            </div>
+        </div>
+        <p class="text-[10px] text-red-400 mt-2 text-right">Akcija: Podloži (Shim) Ugao 4.</p>
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
 </body>
 
 </html>

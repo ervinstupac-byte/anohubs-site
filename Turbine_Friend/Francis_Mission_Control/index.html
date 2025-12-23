@@ -198,12 +198,12 @@
 
     <main>
         <!DOCTYPE html>
-<html lang="en">
+<html lang="bs">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Francis Unit 1: Mission Control V3 - Logic Integrated</title>
+    <title>Francis Agregat 1: Kontrola Misije V3 - Logika Integrisana</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
@@ -386,13 +386,13 @@
             <div>
                 <h1 class="text-4xl font-black text-white tracking-widest uppercase flex items-center gap-3">
                     <i data-lucide="activity" class="text-cyan-400"></i>
-                    Francis <span class="text-cyan-400">Mission Control</span>
+                    Francis <span class="text-cyan-400">Kontrola Misije</span>
                 </h1>
-                <p class="text-slate-500 font-mono text-sm mt-2 ml-11">Safety Interlock Gates Active</p>
+                <p class="text-slate-500 font-mono text-sm mt-2 ml-11">Sigurnosni Interlock Gates Aktivni</p>
             </div>
             <div class="text-right">
-                <div class="text-[10px] text-slate-500 font-bold uppercase">System Status</div>
-                <div id="systemState" class="text-amber-500 font-bold text-xl animate-pulse">SEQUENCE PENDING</div>
+                <div class="text-[10px] text-slate-500 font-bold uppercase">Status Sistema</div>
+                <div id="systemState" class="text-amber-500 font-bold text-xl animate-pulse">SEKVENCA NA ČEKANJU</div>
             </div>
         </header>
 
@@ -400,21 +400,21 @@
         <div class="mb-12 p-4 bg-slate-900/50 rounded border border-slate-700/50 grid grid-cols-2 md:grid-cols-4 gap-4">
             <div
                 class="text-[10px] font-bold text-slate-500 uppercase col-span-full border-b border-slate-800 pb-2 mb-2 flex justify-between">
-                <span>Logic Board Simulation (Inject Faults)</span>
+                <span>Simulacija Logičkih Kvarova (Ubaci Grešku)</span>
                 <span class="text-purple-400">DEV MODE</span>
             </div>
 
             <button onclick="toggleFault('n2')" id="btn-n2" class="toggle-sim">
-                [GATE 1] Sim Low N2 Pressure
+                [GATE 1] Sim Nizak Pritisak N2
             </button>
             <button onclick="toggleFault('sync')" id="btn-sync" class="toggle-sim">
-                [GATE 2] Sim Vane Sync Error
+                [GATE 2] Sim Greška Sinhronizacije
             </button>
             <button onclick="toggleFault('dp')" id="btn-dp" class="toggle-sim">
-                [GATE 3] Sim High Delta-P
+                [GATE 3] Sim Visok Delta-P
             </button>
             <button onclick="toggleFault('angle')" id="btn-angle" class="toggle-sim">
-                [GATE 4] Sim MIV Angle Fail
+                [GATE 4] Sim GUV Ugao Greška
             </button>
         </div>
 
@@ -429,29 +429,29 @@
                 <div class="node-circle"></div>
                 <div class="flex justify-between items-start">
                     <div>
-                        <h3 class="text-lg font-bold text-cyan-400 mb-1">1. HPU & Energy Status</h3>
-                        <p class="text-slate-400 text-xs mb-4">GATE 1: N2 > 12.5 MPa Required.</p>
+                        <h3 class="text-lg font-bold text-cyan-400 mb-1">1. Status HPU i Energije</h3>
+                        <p class="text-slate-400 text-xs mb-4">GATE 1: N2 > 12.5 MPa Potreban.</p>
 
                         <div class="bg-black/40 rounded p-3 mb-4 font-mono text-xs border border-slate-700/50">
                             <div class="flex justify-between mb-1">
-                                <span class="text-slate-500">Oil Pressure:</span>
+                                <span class="text-slate-500">Pritisak Ulja:</span>
                                 <span id="val-oil" class="text-white">14.2 MPa</span>
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-slate-500">N2 Pre-Charge:</span>
-                                <span id="val-n2" class="text-green-400">NORMAL</span>
+                                <span class="text-slate-500">N2 Pred-Punjenje:</span>
+                                <span id="val-n2" class="text-green-400">NORMALNO</span>
                             </div>
                         </div>
                         <div id="err-n2"
                             class="hidden text-red-500 text-xs font-bold mb-2 bg-red-900/20 p-2 rounded border border-red-500/50">
-                            ⚠ BLOCK: N2 PRESSURE CRITICAL (10.1 MPa)
+                            ⚠ BLOKADA: N2 PRITISAK KRITIČAN (10.1 MPa)
                         </div>
                     </div>
                     <i data-lucide="zap" class="w-8 h-8 text-cyan-500/20"></i>
                 </div>
                 <button onclick="confirmStep(1)" id="btn-step-1"
                     class="w-full py-2 bg-cyan-900/50 hover:bg-cyan-600 border border-cyan-700 hover:border-cyan-400 text-cyan-100 font-bold rounded transition text-sm uppercase tracking-wider">
-                    Confirm Conditions (12.5 - 16 MPa)
+                    Potvrdi Uslove (12.5 - 16 MPa)
                 </button>
             </div>
 
@@ -460,29 +460,29 @@
                 <div class="node-circle"></div>
                 <div class="flex justify-between items-start">
                     <div>
-                        <h3 class="text-lg font-bold text-cyan-400 mb-1">2. Distributor Zero-Sealing</h3>
-                        <p class="text-slate-400 text-xs mb-4">GATE 2: Sync Deviation < 0.5mm. 0% Leakage.</p>
+                        <h3 class="text-lg font-bold text-cyan-400 mb-1">2. Nulto Zaptivanje Sprovodnog Aparata</h3>
+                        <p class="text-slate-400 text-xs mb-4">GATE 2: Odstupanje < 0.5mm. 0% Curenja.</p>
 
                                 <div class="bg-black/40 rounded p-3 mb-4 font-mono text-xs border border-slate-700/50">
                                     <div class="flex justify-between mb-1">
-                                        <span class="text-slate-500">Guide Vanes (1-20):</span>
-                                        <span id="val-sync" class="text-green-400">0.0% [LOCKED]</span>
+                                        <span class="text-slate-500">Lopatice (1-20):</span>
+                                        <span id="val-sync" class="text-green-400">0.0% [ZAKLJUČANO]</span>
                                     </div>
                                     <div class="flex justify-between">
-                                        <span class="text-slate-500">Squeeze Pressure:</span>
-                                        <span class="text-green-400">ACTIVE</span>
+                                        <span class="text-slate-500">Pritisak Stiskanja:</span>
+                                        <span class="text-green-400">AKTIVAN</span>
                                     </div>
                                 </div>
                                 <div id="err-sync"
                                     class="hidden text-red-500 text-xs font-bold mb-2 bg-red-900/20 p-2 rounded border border-red-500/50">
-                                    ⚠ BLOCK: VANE 4 MISALIGNED (+2.1mm)
+                                    ⚠ BLOKADA: LOPATICA 4 ODSTUPANJE (+2.1mm)
                                 </div>
                     </div>
                     <i data-lucide="lock" class="w-8 h-8 text-cyan-500/20"></i>
                 </div>
                 <button onclick="confirmStep(2)" id="btn-step-2"
                     class="w-full py-2 bg-cyan-900/50 hover:bg-cyan-600 border border-cyan-700 hover:border-cyan-400 text-cyan-100 font-bold rounded transition text-sm uppercase tracking-wider">
-                    Confirm 0% Sealing
+                    Potvrdi 0% Zaptivanje
                 </button>
             </div>
 
@@ -491,13 +491,13 @@
                 <div class="node-circle"></div>
                 <div class="flex justify-between items-start">
                     <div>
-                        <h3 class="text-lg font-bold text-cyan-400 mb-1">3. Bypass Equalization</h3>
+                        <h3 class="text-lg font-bold text-cyan-400 mb-1">3. Izjednačavanje Bajpasa</h3>
                         <p class="text-slate-400 text-xs mb-4">GATE 3: Delta P < 10% (1 Bar).</p>
 
                                 <div class="flex items-center gap-4 mb-4">
                                     <div class="text-center">
                                         <div class="text-center">
-                                            <div class="text-[10px] text-slate-500">UPSTREAM</div>
+                                            <div class="text-[10px] text-slate-500">UZVODNO</div>
                                             <div class="text-lg font-bold text-white">14.5 Bar</div>
                                         </div>
                                     </div>
@@ -507,13 +507,13 @@
                                             class="h-full bg-blue-500 w-0 transition-all duration-[3000ms]"></div>
                                     </div>
                                     <div class="text-center">
-                                        <div class="text-[10px] text-slate-500">SPIRAL CASE</div>
+                                        <div class="text-[10px] text-slate-500">SPIRALA</div>
                                         <div id="spiralVal" class="text-lg font-bold text-red-500">0.0 Bar</div>
                                     </div>
                                 </div>
                                 <div id="err-dp"
                                     class="hidden text-red-500 text-xs font-bold mb-2 bg-red-900/20 p-2 rounded border border-red-500/50">
-                                    ⚠ BLOCK: DELTA P > 3 BAR. CANNOT OPEN MIV.
+                                    ⚠ BLOKADA: DELTA P > 3 BAR. GUV ZATVOREN.
                                 </div>
                     </div>
                     <i data-lucide="scale" class="w-8 h-8 text-cyan-500/20"></i>
@@ -521,11 +521,11 @@
 
                 <button id="btnBypass" onclick="startFilling()"
                     class="w-full py-2 bg-blue-900/50 hover:bg-blue-600 border border-blue-700 hover:border-blue-400 text-blue-100 font-bold rounded transition text-sm uppercase tracking-wider">
-                    Start Filling Spiral Case
+                    Pokreni Punjenje Spirale
                 </button>
                 <button id="btnBypassConfirm" onclick="confirmStep(3)"
                     class="hidden w-full py-2 bg-green-900/50 hover:bg-green-600 border border-green-700 hover:border-green-400 text-green-100 font-bold rounded transition text-sm uppercase tracking-wider animate-pulse">
-                    Equalization Complete (Confirm)
+                    Izjednačavanje Završeno (Potvrdi)
                 </button>
             </div>
 
@@ -534,29 +534,29 @@
                 <div class="node-circle"></div>
                 <div class="flex justify-between items-start">
                     <div>
-                        <h3 class="text-lg font-bold text-cyan-400 mb-1">4. MIV Release</h3>
-                        <p class="text-slate-400 text-xs mb-4">GATE 4: Angle == 80.0°. Interlock Released.</p>
+                        <h3 class="text-lg font-bold text-cyan-400 mb-1">4. Otvaranje GUV-a</h3>
+                        <p class="text-slate-400 text-xs mb-4">GATE 4: Ugao == 80.0°. Interlock Otpušten.</p>
 
                         <div class="bg-black/40 rounded p-3 mb-4 font-mono text-xs border border-slate-700/50">
                             <div class="flex justify-between mb-1">
                                 <span class="text-slate-500">Interlock:</span>
-                                <span class="text-green-400">RELEASED</span>
+                                <span class="text-green-400">OTPUŠTEN</span>
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-slate-500">Target Angle:</span>
+                                <span class="text-slate-500">Ciljani Ugao:</span>
                                 <span id="val-angle" class="text-white">80.0°</span>
                             </div>
                         </div>
                         <div id="err-angle"
                             class="hidden text-red-500 text-xs font-bold mb-2 bg-red-900/20 p-2 rounded border border-red-500/50">
-                            ⚠ BLOCK: VALVE STUCK @ 45°. EROSION RISK.
+                            ⚠ BLOKADA: VENTIL ZAGLAVLJEN @ 45°. RIZIK EROZIJE.
                         </div>
                     </div>
                     <i data-lucide="door-open" class="w-8 h-8 text-cyan-500/20"></i>
                 </div>
                 <button id="btnMIV" onclick="confirmStep(4)"
                     class="w-full py-2 bg-cyan-900/50 hover:bg-cyan-600 border border-cyan-700 hover:border-cyan-400 text-cyan-100 font-bold rounded transition text-sm uppercase tracking-wider">
-                    COMMAND MIV OPEN
+                    KOMANDA GUV OTVORI
                 </button>
             </div>
 
@@ -570,30 +570,30 @@
 
             <h3 class="text-xl font-black text-red-500 uppercase tracking-widest mb-4 flex items-center gap-2">
                 <i data-lucide="shield-alert"></i>
-                Emergency Shutdown (ESD) Ready
+                Hitno Zaustavljanje (ESD) Spremno
             </h3>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
                 <div class="flex items-center gap-2">
                     <div class="w-2 h-2 bg-green-500 rounded-full"></div>
-                    <span class="text-red-200">Gravity Counterweights: ARMED</span>
+                    <span class="text-red-200">Gravitacioni Tegovi: NAORUŽANI</span>
                 </div>
                 <div class="flex items-center gap-2">
                     <div class="w-2 h-2 bg-green-500 rounded-full"></div>
-                    <span class="text-red-200">Hydraulic Line Integrity: OK</span>
+                    <span class="text-red-200">Integritet Hidraulike: OK</span>
                 </div>
                 <div class="flex items-center gap-2">
                     <div class="w-2 h-2 bg-green-500 rounded-full"></div>
-                    <span class="text-red-200">Pilot Valve Battery: OK</span>
+                    <span class="text-red-200">Baterija Pilot Ventila: OK</span>
                 </div>
             </div>
         </div>
 
         <!-- RETURN LINK -->
         <div class="text-center mt-12">
-            <a href="./Francis_Horizontal_Dashboard.html"
+            <a href="Francis_Horizontal_Dashboard.html"
                 class="text-slate-500 hover:text-white text-xs font-bold uppercase tracking-widest transition">
-                ← Return to Dashboard
+                ← Povratak u Operativni Centar
             </a>
         </div>
 
@@ -618,22 +618,22 @@
             // Update Data Displays based on faults
             if (type === 'n2') {
                 if (faults.n2) {
-                    document.getElementById('val-n2').innerText = "LOW (10.1 MPa)";
+                    document.getElementById('val-n2').innerText = "NISKO (10.1 MPa)";
                     document.getElementById('val-n2').className = "text-red-500 animate-pulse";
                     document.getElementById('err-n2').classList.remove('hidden');
                 } else {
-                    document.getElementById('val-n2').innerText = "NORMAL";
+                    document.getElementById('val-n2').innerText = "NORMALNO";
                     document.getElementById('val-n2').className = "text-green-400";
                     document.getElementById('err-n2').classList.add('hidden');
                 }
             }
             if (type === 'sync') {
                 if (faults.sync) {
-                    document.getElementById('val-sync').innerText = "ERROR [VANE 4]";
+                    document.getElementById('val-sync').innerText = "GREŠKA [LOP 4]";
                     document.getElementById('val-sync').className = "text-red-500 animate-pulse";
                     document.getElementById('err-sync').classList.remove('hidden');
                 } else {
-                    document.getElementById('val-sync').innerText = "0.0% [LOCKED]";
+                    document.getElementById('val-sync').innerText = "0.0% [ZAKLJUČANO]";
                     document.getElementById('val-sync').className = "text-green-400";
                     document.getElementById('err-sync').classList.add('hidden');
                 }
@@ -647,7 +647,7 @@
             }
             if (type === 'angle') {
                 if (faults.angle) {
-                    document.getElementById('val-angle').innerText = "45.0° [STUCK]";
+                    document.getElementById('val-angle').innerText = "45.0° [ZAGLAVLJEN]";
                     document.getElementById('val-angle').className = "text-red-500 animate-pulse";
                     document.getElementById('err-angle').classList.remove('hidden');
                 } else {
@@ -682,7 +682,7 @@
                 stepId === 3 ? 'btnBypassConfirm' : 'btnMIV');
 
             if (btn) {
-                btn.innerText = "GATE PASSED [OK]";
+                btn.innerText = "USLOV ZADOVOLJEN [OK]";
                 btn.classList.add('bg-green-600', 'border-green-500');
             }
 
@@ -690,7 +690,7 @@
                 node.classList.remove('active');
                 node.classList.add('completed');
                 updateTimeline(3.6); // Fill to bottom
-                document.getElementById('systemState').innerText = "UNIT READY FOR SPEED-NO-LOAD";
+                document.getElementById('systemState').innerText = "AGREGAT SPREMAN ZA START (SPEED-NO-LOAD)";
                 document.getElementById('systemState').classList.remove('text-amber-500');
                 document.getElementById('systemState').classList.add('text-green-500');
                 return;
