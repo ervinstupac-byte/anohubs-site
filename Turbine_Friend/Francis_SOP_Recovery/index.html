@@ -198,268 +198,175 @@
 
     <main>
         <!DOCTYPE html>
-<html lang="bs">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOP: Dubinsko Rješavanje - Oporavak Agregata 1</title>
+    <title>SOP: SHAFT SEAL RECOVERY | FRANCIS UNIT 1</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        /* Shared Architecture from Francis_Horizontal.html */
-        :root {
-            --primary-color: #003366;
-            --secondary-color: #0066cc;
-            --accent-color: #d9534f;
-            --warning-color: #f0ad4e;
-            --bg-color: #f4f7f6;
-            --text-color: #333;
-            --border-color: #dde;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
 
         body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--bg-color);
-            margin: 0;
-            padding: 20px;
+            font-family: 'JetBrains Mono', monospace;
+            background-color: #0c0a09;
+            /* Industrial Dark Mode */
+            color: #d6d3d1;
         }
 
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: #fff;
-            padding: 40px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
+        .procedure-card {
+            background: #1c1917;
+            border: 1px solid #292524;
+            padding: 24px;
+            margin-bottom: 16px;
+            border-left: 4px solid #44403c;
         }
 
-        header {
-            border-bottom: 3px solid var(--primary-color);
-            padding-bottom: 20px;
-            margin-bottom: 30px;
-            text-align: center;
+        .procedure-card.critical {
+            border-left-color: #dc2626;
+            background: #2a1210;
         }
 
-        h1 {
-            margin: 0;
-            color: var(--primary-color);
-            font-size: 28px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        h2 {
-            color: var(--secondary-color);
-            font-size: 18px;
-            margin-top: 5px;
-            font-weight: 400;
-        }
-
-        .section-title {
-            background-color: var(--primary-color);
-            color: #fff;
-            padding: 10px 15px;
-            margin-top: 40px;
-            border-radius: 4px;
-            font-size: 1.2em;
+        .step-num {
+            color: #3b82f6;
             font-weight: bold;
-            display: flex;
+            margin-right: 8px;
+        }
+
+        .btn-return {
+            display: inline-flex;
             align-items: center;
-        }
-
-        .section-title::before {
-            content: "►";
-            margin-right: 10px;
-            font-size: 0.8em;
-        }
-
-        h3 {
-            color: var(--primary-color);
-            border-left: 4px solid var(--secondary-color);
-            padding-left: 10px;
-            margin-top: 25px;
-        }
-
-        .module {
-            border: 1px solid var(--border-color);
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 4px;
-            background-color: #fafafa;
-        }
-
-        .critical {
-            border-left: 5px solid var(--accent-color);
-            background-color: #fff5f5;
-        }
-
-        .technical {
-            border-left: 5px solid var(--secondary-color);
-            background-color: #f0f7ff;
-        }
-
-        .diagnostic {
-            border-left: 5px solid var(--warning-color);
-            background-color: #fdf8e4;
-        }
-
-        ul,
-        ol {
-            padding-left: 20px;
-        }
-
-        li {
-            margin-bottom: 8px;
-        }
-
-        .back-btn {
-            display: inline-block;
-            margin-top: 30px;
-            text-decoration: none;
-            color: var(--secondary-color);
+            gap: 8px;
+            background: #1c1917;
+            border: 1px solid #44403c;
+            color: #78716c;
+            padding: 8px 16px;
+            font-size: 12px;
+            text-transform: uppercase;
             font-weight: bold;
-            border: 1px solid var(--secondary-color);
-            padding: 10px 20px;
             border-radius: 4px;
-            transition: all 0.3s;
+            transition: all 0.2s;
         }
 
-        .back-btn:hover {
-            background-color: var(--secondary-color);
-            color: #fff;
-        }
-
-        strong {
-            font-weight: 600;
-        }
-
-        .visual-aid {
-            border: 2px dashed #ccc;
-            padding: 15px;
-            margin: 10px 0;
-            background: #fff;
-            text-align: center;
-            color: #666;
-            font-size: 0.9em;
+        .btn-return:hover {
+            border-color: #3b82f6;
+            color: white;
         }
     </style>
 </head>
 
-<body>
+<body class="p-6 md:p-12 max-w-4xl mx-auto">
 
-    <div class="container">
-
-        <header>
-            <h1>Kritični SOP: Oporavak Agregata 1</h1>
-            <h2>Cilj: Zamjena Zaptivke Vratila & Sinhronizacija Sprovodnog Aparata</h2>
-        </header>
-
-        <!-- SAFETY MODULE -->
-        <div class="module critical">
-            <h3>⚠️ OBAVEZNI SIGURNOSNI PROTOKOL</h3>
-            <p><strong>STOP. PROČITAJ OVO PRVO.</strong></p>
-            <ul>
-                <li><strong>Mehanička Izolacija:</strong> Prije dodirivanja vratila ili sprovodnog aparata,
-                    <strong>Mehanička Sigurnosna Čivija</strong> MORA biti umetnuta u Glavni Ulazni Ventil (GUV).
-                </li>
-                <li><strong>Nulta Energija:</strong> Ne oslanjajte se prvenstveno na hidraulični pritisak, SCADA signale
-                    ili
-                    indikatore "Zatvoreno". Samo fizička čelična čivija garantuje sigurnost života.</li>
-                <li><strong>Raščišćavanje:</strong> Koristite pravilo "Prvo Očisti". Uklonite sav mulj i blato iz
-                    turbinske jame
-                    kako biste otkrili vijke i linije nadzora.</li>
-            </ul>
-        </div>
-
-        <div class="section-title">SOP 1: Zamjena Zaptivke Vratila (Fokus Agregat 1)</div>
-        <div class="module technical">
-            <p>Agregat 1 je trenutno zaustavljen zbog kvara zaptivke uzrokovanog prodorom mulja. Sljedeća procedura je
-                potrebna za vraćanje integriteta.</p>
-
-            <h3>Korak 1: Pristup & Inspekcija</h3>
-            <ol>
-                <li>Pažljivo odspojite cijevi za nadzor curenja kako bi omogućili pomjeranje kućišta zaptivača.</li>
-                <li>Uklonite vijke poklopca kućišta u zvijezda uzorku.</li>
-                <li><strong>KRITIČNA INSPEKCIJA:</strong> Kada je košuljica (sleeve) izložena, provjerite ima li
-                    <strong>"Riseva" (Scouring)</strong> (duboke vertikalne ogrebotine od mulja).
-                </li>
-            </ol>
-            <div class="module diagnostic">
-                <strong>💡 Tehnička Bilješka:</strong> Ako košuljica ima duboke ogrebotine, nova pletenica neće
-                zaptivati. Košuljica
-                se mora ispolirati (fini brusni papir, održavaj prečnik) ili zamijeniti ako je oštećenje > 0.5mm.
+    <!-- Header -->
+    <header class="mb-10 pb-6 border-b border-stone-800 flex justify-between items-start">
+        <div>
+            <div class="flex items-center gap-2 mb-2">
+                <span
+                    class="px-2 py-1 rounded bg-blue-900/30 text-blue-400 text-[10px] font-bold border border-blue-900 uppercase">SOP-REC-001</span>
+                <span class="text-[10px] text-stone-500 uppercase font-bold">REV 2.0</span>
             </div>
+            <h1 class="text-3xl font-bold text-white mb-2" data-i18n="title">SHAFT SEAL RECOVERY PROTOCOL</h1>
+            <p class="text-stone-500 text-sm" data-i18n="subtitle">Emergency procedures for active shaft seal leakage >
+                3.0 L/min</p>
+        </div>
 
-            <h3>Korak 2: Stepenasta Instalacija (Pravilo 90°)</h3>
-            <p>Vodeći uzrok ponovljenog kvara su poravnati rezovi.</p>
-            <ul>
-                <li>Ubacujte prstenove pletenice jedan po jedan.</li>
-                <li><strong>Stepenujte rezove:</strong> Osigurajte da je spoj Prstena 1 na 12:00, Prstena 2 na 3:00 (ili
-                    4:00), itd.</li>
-                <li><strong>Pomak:</strong> Održavajte pomak od 90° ili 120° između slojeva. NIKADA ne poravnavajte
-                    rezove.</li>
-            </ul>
-            <div class="visual-aid">
-                [Vizualizacija: Prsten 1 (12:00) ➔ Prsten 2 (3:00) ➔ Prsten 3 (6:00) ➔ Prsten 4 (9:00)]
+        <!-- Standard Return Button -->
+        <a href="Francis_Horizontal_Dashboard.html" class="btn-return">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i> <span data-i18n="return">Back to Dashboard</span>
+        </a>
+    </header>
+
+    <!-- Content -->
+    <div class="space-y-6">
+
+        <!-- Critical Warning -->
+        <div class="procedure-card critical">
+            <h3 class="text-red-500 font-bold mb-2 flex items-center gap-2">
+                <i data-lucide="alert-triangle"></i> <span data-i18n="warning_title">CRITICAL FLOODING RISK</span>
+            </h3>
+            <p class="text-sm text-red-200" data-i18n="warning_text">
+                If leakage exceeds 10 L/min, ignore this SOP and initiate EMERGENCY SHUTDOWN (ESD).
+                Do not attempt manual tightening while rotating > 100 RPM.
+            </p>
+        </div>
+
+        <!-- Step 1 -->
+        <div class="procedure-card">
+            <h3 class="text-white font-bold mb-2" data-i18n="step1_title"><span class="step-num">01</span> DRAINAGE
+                ACTIVATION</h3>
+            <p class="text-sm text-stone-400 mb-4" data-i18n="step1_desc">Ensure turbine pit pumps are in AUTO/ON mode.
+                Verify discharge flow.</p>
+            <div class="bg-black p-3 rounded border border-stone-800 font-mono text-xs text-green-500">
+                > CHECK PUMP_1 STATUS [ON]<br>
+                > CHECK PUMP_2 STATUS [STANDBY]
             </div>
-
-            <h3>Korak 3: Zatvaranje & Priprema (Priming)</h3>
-            <ol>
-                <li>Ponovo instalirajte poklopac kućišta. Zategnite pritezivač pletenice ravnomjerno da izbjegnete
-                    košenje.</li>
-                <li><strong>Pripremi Zaptivku:</strong> Ručno aktivirajte centralni sistem podmazivanja da napunite novu
-                    pletenicu mašću <em>prije</em> nego što se vratilo okrene.</li>
-            </ol>
         </div>
 
-        <div class="section-title">SOP 2: Sinhronizacija Sprovodnog Aparata</div>
-        <div class="module technical">
-            <p>Gubitak efikasnosti je često zbog "bježanja" sprovodnih lopatica. Verifikujemo sinhronizaciju mehanički,
-                zatim
-                elektronski.</p>
-
-            <h3>Korak 1: Izrada alata "L-Metal"</h3>
-            <ul>
-                <li>Napravite prilagođeni metalni profil (Oblik "L").</li>
-                <li><strong>Dimenzije:</strong> Must stati tačno između ivice sprovodne lopatice i susjednog
-                    fiksnog kućišta ("Chin gap") kada je lopatica u potpuno <strong>ZATVORENOJ</strong> poziciji.</li>
-                <li>Ovaj alat postaje standard postrojenja za "Nultu Poziciju".</li>
-            </ul>
-
-            <h3>Korak 2: Mehanička Verifikacija (Provjera 20 Tačaka)</h3>
-            <p>Sa sprovodnim aparatom mehanički zaključanim u ZATVORENOJ poziciji:</p>
-            <ol>
-                <li>Idi do Lopatice #1. Ubaci L-Metal alat.</li>
-                <li>Ponovi za svih 20 Sprovodnih Lopatica.</li>
-                <li><strong>Kriterij Prolaza:</strong> Alat stoji čvrsto.</li>
-                <li><strong>Kriterij Pada:</strong> Alat je labav (Lopatica nije zatvorena) ILI Alat ne staje (Lopatica
-                    prezategnuta).</li>
-            </ol>
-
-            <h3>Korak 3: SCADA Unakrsna Referenca</h3>
-            <p>Kada je svih 20 lopatica mehanički potvrđeno kao zatvoreno:</p>
-            <ul>
-                <li>Provjeri SCADA Senzor Pozicije.</li>
-                <li>Vrijednost mora pokazivati <strong>0.0%</strong>.</li>
-                <li>Ako > 0.5%, re-kalibriši linearni pretvarač na servomotoru.</li>
-            </ul>
+        <!-- Step 2 -->
+        <div class="procedure-card">
+            <h3 class="text-white font-bold mb-2" data-i18n="step2_title"><span class="step-num">02</span> SEAL WATER
+                PRESSURE</h3>
+            <p class="text-sm text-stone-400" data-i18n="step2_desc">
+                Increase clean water supply pressure to the carbon ring assembly. Target: 0.5 Bar > Penstock Pressure.
+            </p>
         </div>
 
-        <div class="section-title">Kontrolna Lista Materijala & Alata</div>
-        <div class="module">
-            <ul>
-                <li><strong>Zamjenska Zaptivka:</strong> Karbonski/Teflonski Prstenovi Pletenice.</li>
-                <li><strong>Hemikalije:</strong> Loctite 243 (Plavi) za vijke kućišta.</li>
-                <li><strong>Alati:</strong> Fini brusni papir (poliranje košuljice), L-Metal Mjerač.</li>
-                <li><strong>Sigurnost:</strong> Sigurnosna Čivija GUV-a.</li>
-            </ul>
+        <!-- Step 3 -->
+        <div class="procedure-card">
+            <h3 class="text-white font-bold mb-2" data-i18n="step3_title"><span class="step-num">03</span> INFLATABLE
+                MAINTENANCE SEAL</h3>
+            <p class="text-sm text-stone-400" data-i18n="step3_desc">
+                ONLY if unit is STOPPED (0 RPM): Inflate the maintenance seal to isolate the shaft.
+            </p>
         </div>
-
-        <a href="Francis_Horizontal_Dashboard.html" class="back-btn">← Povratak u Operativni Centar</a>
 
     </div>
 
+    <!-- Hidden Translation Data -->
+    <script>
+        lucide.createIcons();
+
+        // Check global lang preference
+        const ml = localStorage.getItem('anohub_lang_pref') || 'en';
+
+        const i18n = {
+            en: {
+                title: "SHAFT SEAL RECOVERY PROTOCOL",
+                subtitle: "Emergency procedures for active shaft seal leakage > 3.0 L/min",
+                return: "Back to Dashboard",
+                warning_title: "CRITICAL FLOODING RISK",
+                warning_text: "If leakage exceeds 10 L/min, ignore this SOP and initiate EMERGENCY SHUTDOWN (ESD). Do not attempt manual tightening while rotating > 100 RPM.",
+                step1_title: "DRAINAGE ACTIVATION",
+                step1_desc: "Ensure turbine pit pumps are in AUTO/ON mode. Verify discharge flow.",
+                step2_title: "SEAL WATER PRESSURE",
+                step2_desc: "Increase clean water supply pressure to the carbon ring assembly. Target: 0.5 Bar > Penstock Pressure.",
+                step3_title: "INFLATABLE MAINTENANCE SEAL",
+                step3_desc: "ONLY if unit is STOPPED (0 RPM): Inflate the maintenance seal to isolate the shaft."
+            },
+            bs: {
+                title: "PROTOKOL OPORAVKA ZAPTIVAČA VRATILA",
+                subtitle: "Hitne procedure za aktivno curenje zaptivača > 3.0 L/min",
+                return: "Povratak na Kontrolnu Tablu",
+                warning_title: "KRITIČAN RIZIK OD POPLAVE",
+                warning_text: "Ako curenje pređe 10 L/min, ignorišite ovaj SOP i pokrenite HITNO ISKLJUČENJE (ESD). Ne pokušavajte ručno dotezanje dok se okreće > 100 RPM.",
+                step1_title: "AKTIVACIJA DRENAŽE",
+                step1_desc: "Osigurajte da su pumpe u turbinskom jahtu u AUTO/ON modu. Provjerite protok izbacivanja.",
+                step2_title: "PRITISAK VODE ZA ZAPTIVANJE",
+                step2_desc: "Povećajte pritisak čiste vode na sklop ugljeničnih prstenova. Cilj: 0.5 Bar > Pritisak Cjevovoda.",
+                step3_title: "ODRŽAVANJE ZAPTIVAČA - NAPUHAVANJE",
+                step3_desc: "SAMO ako je jedinica ZAUSTAVLJENA (0 RPM): Napušite servisnu zaptivku da izolujete vratilo."
+            }
+        };
+
+        if (ml === 'bs') {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (i18n.bs[key]) el.innerText = i18n.bs[key];
+            });
+        }
+    </script>
 </body>
 
 </html>
