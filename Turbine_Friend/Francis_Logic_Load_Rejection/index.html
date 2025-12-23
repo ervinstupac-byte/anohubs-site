@@ -12,14 +12,14 @@
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://anohubs.com/Turbine_Friend/Francis_SOP_MIV_Distributor_Detail/">
+    <meta property="og:url" content="https://anohubs.com/Turbine_Friend/Francis_Logic_Load_Rejection/">
     <meta property="og:title" content="AnoHUB | Engineering Immunity Protocol">
     <meta property="og:description" content="Global standard for hydro asset integrity. 15+ years of field forensic engineering.">
     <meta property="og:image" content="https://anohubs.com/assets/images/holy_t_trinity.jpg">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://anohubs.com/Turbine_Friend/Francis_SOP_MIV_Distributor_Detail/">
+    <meta property="twitter:url" content="https://anohubs.com/Turbine_Friend/Francis_Logic_Load_Rejection/">
     <meta property="twitter:title" content="AnoHUB | Engineering Immunity Protocol">
     <meta property="twitter:description" content="Global standard for hydro asset integrity. 15+ years of field forensic engineering.">
     <meta property="twitter:image" content="https://anohubs.com/assets/images/holy_t_trinity.jpg">
@@ -203,7 +203,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOP: MIV & Distributor Detail</title>
+    <title>LOAD REJECTION LOGIC - GRID LOSS PROTOCOL</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
@@ -212,258 +212,195 @@
         body {
             font-family: 'JetBrains Mono', monospace;
             background-color: #0f172a;
-            color: #cbd5e1;
+            color: #e2e8f0;
         }
 
-        .border-tech {
-            border: 1px solid #334155;
-        }
-
-        .header-strip {
-            background: linear-gradient(90deg, #0ea5e9 0%, transparent 100%);
-            height: 2px;
-            margin-bottom: 2rem;
-            margin-top: 0.5rem;
-        }
-
-        .spec-card {
-            background: rgba(30, 41, 59, 0.5);
-            border: 1px solid #334155;
-            transition: all 0.3s ease;
-        }
-
-        .spec-card:hover {
-            border-color: #0ea5e9;
-            background: rgba(30, 41, 59, 0.8);
-        }
-
-        .alert-box {
-            background: rgba(180, 83, 9, 0.1);
-            border-left: 4px solid #f59e0b;
-            color: #fbbf24;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-        }
-
-        th {
+        /* Flowchart Logic */
+        .logic-step {
             background: #1e293b;
-            color: #94a3b8;
-            font-weight: bold;
+            border: 1px solid #334155;
+            padding: 20px;
+            border-radius: 8px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .logic-step.active {
+            border-color: #f59e0b;
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.3);
+            background: #283044;
+        }
+
+        .logic-connector {
+            position: absolute;
+            left: 50%;
+            top: 100%;
+            width: 2px;
+            height: 40px;
+            background: #475569;
+            transform: translateX(-50%);
+            z-index: 0;
+        }
+
+        .step-title {
+            font-size: 0.8rem;
             text-transform: uppercase;
-            font-size: 0.75rem;
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid #334155;
+            letter-spacing: 0.1em;
+            color: #94a3b8;
+            margin-bottom: 0.5rem;
         }
 
-        td {
-            padding: 1rem;
-            border-bottom: 1px solid #1e293b;
-            font-size: 0.875rem;
-        }
-
-        tr:last-child td {
-            border-bottom: none;
-        }
-
-        .step-circle {
-            width: 32px;
-            height: 32px;
-            background: #0ea5e9;
-            color: #0f172a;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            flex-shrink: 0;
+        /* Interlock Box */
+        .interlock-box {
+            background: rgba(220, 38, 38, 0.1);
+            border: 1px dashed #dc2626;
+            padding: 15px;
+            border-radius: 6px;
         }
     </style>
 </head>
 
-<body class="p-6 md:p-12 max-w-5xl mx-auto">
+<body class="p-6 md:p-12 max-w-4xl mx-auto">
 
     <!-- Header -->
-    <header class="mb-12">
-        <div class="flex justify-between items-start">
-            <div>
-                <h1 class="text-3xl font-black text-white uppercase tracking-tighter flex items-center gap-3">
-                    <i data-lucide="git-pull-request" class="text-cyan-500"></i>
-                    MIV & Distributor <span class="text-cyan-500">Integrity</span>
-                </h1>
-                <div class="header-strip w-1/2"></div>
-                <p class="text-slate-500 font-bold text-xs uppercase tracking-widest">
-                    Ref Code: MIV-DIST-01 | Revision: 2.0 | Status: <span class="text-green-500">ACTIVE</span>
-                </p>
-            </div>
+    <header class="flex justify-between items-center mb-16 border-b border-slate-700 pb-6">
+        <div>
+            <h1 class="text-3xl font-black text-amber-500 tracking-tighter uppercase flex items-center gap-3">
+                <i data-lucide="unlink-2"></i> LOAD REJECTION
+            </h1>
+            <p class="text-slate-500 font-bold tracking-widest mt-2 uppercase text-xs">Grid Loss & Overspeed Logic
+                Sequence</p>
+        </div>
+        <div class="text-right">
             <a href="Francis_Horizontal_Dashboard.html"
-                class="text-xs text-slate-500 hover:text-white uppercase font-bold flex items-center gap-2 transition">
-                <i data-lucide="layout-dashboard"></i> Return to Dashboard
+                class="text-xs text-slate-500 hover:text-white transition flex items-center gap-1 justify-end">
+                <i data-lucide="arrow-left"></i> DASHBOARD
             </a>
         </div>
     </header>
 
-    <!-- Critical Alert -->
-    <div class="alert-box p-4 mb-12 rounded-r">
-        <div class="flex items-start gap-3">
-            <i data-lucide="alert-triangle" class="w-6 h-6 flex-shrink-0"></i>
-            <div>
-                <strong class="font-bold uppercase tracking-wide">CRITICAL INTERLOCK</strong>
-                <p class="text-sm mt-1 opacity-90">This module is directly tied to the Mission Control Startup Sequence.
-                    Any failure here prevents unit start.</p>
+    <!-- Logic Flow -->
+    <div class="space-y-12 relative pb-20">
+
+        <!-- STEP 0: EVENT TRIGGER -->
+        <div class="logic-step active text-center border-amber-500">
+            <div class="step-title text-amber-500 font-bold">EVENT TRIGGER (T=0s)</div>
+            <h2 class="text-2xl font-black text-white">GRID LOSS DETECTED</h2>
+            <p class="text-xs text-slate-400 mt-2 font-mono">Breaker Open Signal (52G) Received.</p>
+            <div class="logic-connector h-12"></div>
+        </div>
+
+        <!-- STEP 1: GOVERNOR REACTION -->
+        <div class="logic-step">
+            <div class="step-title">ACTION 01: GOVERNOR</div>
+            <div class="flex justify-between items-center">
+                <div>
+                    <h3 class="text-lg font-bold text-white">Immediate Rapid Closure</h3>
+                    <p class="text-xs text-slate-400">Guide Vanes move to <span class="text-amber-400">SNL
+                            (Speed-No-Load)</span> position.</p>
+                </div>
+                <i data-lucide="cpu" class="text-slate-600"></i>
+            </div>
+            <div class="logic-connector"></div>
+        </div>
+
+        <!-- STEP 2: MIV LOGIC -->
+        <div class="logic-step">
+            <div class="step-title">ACTION 02: MIV SEQUENCE</div>
+            <div class="flex justify-between items-center mb-4">
+                <div>
+                    <h3 class="text-lg font-bold text-white">Initiate Closing Law</h3>
+                    <p class="text-xs text-slate-400">Trigger 'Emergency Close' solenoid.</p>
+                </div>
+                <i data-lucide="shield-alert" class="text-slate-600"></i>
+            </div>
+
+            <div class="bg-slate-900 border border-slate-700 p-3 rounded flex items-center gap-4 text-xs font-mono">
+                <span class="text-slate-500">Target Profile:</span>
+                <span class="text-cyan-400">80% Fast / 20% Slow</span>
+                <a href="Francis_SOP_Water_Hammer.html" class="ml-auto text-amber-500 underline hover:text-white">View
+                    Physics</a>
+            </div>
+
+            <!-- Interlock Simulation -->
+            <div class="interlock-box mt-4">
+                <div class="flex items-start gap-3">
+                    <i data-lucide="git-pull-request-closed" class="text-red-500 w-5 h-5 mt-1"></i>
+                    <div>
+                        <strong class="text-red-400 text-sm uppercase">Priority Interlock: MIV STUCK</strong>
+                        <p class="text-[10px] text-slate-300 mt-1">
+                            IF MIV Angle remains > 5&deg; after 180s:
+                            <br>
+                            <span class="text-white bg-red-900/50 px-1">COMMAND DISTRIBUTOR LOCK (squeeze mode)</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="logic-connector"></div>
+        </div>
+
+        <!-- STEP 3: BRAKING LOGIC -->
+        <div class="logic-step">
+            <div class="step-title">ACTION 03: MECHANICAL BRAKES</div>
+            <div class="flex justify-between items-center">
+                <div>
+                    <h3 class="text-lg font-bold text-white">Apply Brakes</h3>
+                    <p class="text-xs text-slate-400">Wait for Speed < 20% Nominal.</p>
+                </div>
+                <i data-lucide="disc" class="text-slate-600"></i>
+            </div>
+
+            <div class="mt-3 flex items-center gap-2 text-xs font-mono bg-black p-2 rounded">
+                <span class="text-slate-500">Logic Check:</span>
+                <span class="text-green-500">SPEED &lt; 20% (TRUE)</span>
+                <span class="text-slate-600">&rarr;</span>
+                <span class="text-white font-bold">SOLENOID ENERGIZE</span>
             </div>
         </div>
+
     </div>
 
-    <!-- Section 1: MIV Angular Calibration -->
-    <section class="mb-16">
-        <h2 class="text-xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
-            <i data-lucide="compass"></i> 1. MIV ANGULAR CALIBRATION
-        </h2>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="spec-card p-6 rounded">
-                <h3 class="text-white font-bold mb-2 text-lg">The 0% Mechanical Zero</h3>
-                <p class="text-sm text-slate-400 mb-4">The MIV seal ring must contact the seat evenly. A SCADA reading
-                    of 0% implies the limit switch is engaged.</p>
-                <div class="bg-black/40 p-3 rounded border border-slate-700">
-                    <span class="text-xs text-slate-500 uppercase font-bold block mb-1">Testing Requirement</span>
-                    <span class="text-cyan-400 font-mono text-sm">Spiral Case Drain Leakage < 5 L/min</span>
-                </div>
-            </div>
-
-            <div class="spec-card p-6 rounded">
-                <h3 class="text-white font-bold mb-2 text-lg">The 80° Open Position</h3>
-                <p class="text-sm text-slate-400 mb-4">Valve disc must align perfectly with flow to minimize hydraulic
-                    losses and vortex shedding.</p>
-                <div class="bg-black/40 p-3 rounded border border-slate-700">
-                    <span class="text-xs text-slate-500 uppercase font-bold block mb-1">Calibration Tolerance</span>
-                    <span class="text-cyan-400 font-mono text-sm">80.0° ± 0.5° (Strict)</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Section 2: Distributor Sync -->
-    <section class="mb-16">
-        <h2 class="text-xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
-            <i data-lucide="refresh-cw"></i> 2. DISTRIBUTOR SYNCHRONICITY
-        </h2>
-        <p class="text-slate-400 text-sm mb-6 max-w-2xl">The 20 Guide Vanes must move in unison. A single lagging vane
-            creates a "jet" effect that can destroy runner blades.</p>
-
-        <div class="space-y-4">
-            <div class="flex items-center gap-4 p-4 border-tech rounded bg-slate-900/50">
-                <div class="step-circle">1</div>
-                <div>
-                    <strong class="text-white block">Lock Out Unit</strong>
-                    <span class="text-sm text-slate-500">De-energize HPU Oil Pressure totally.</span>
-                </div>
-            </div>
-            <div class="flex items-center gap-4 p-4 border-tech rounded bg-slate-900/50">
-                <div class="step-circle">2</div>
-                <div>
-                    <strong class="text-white block">Feeler Gauge Test</strong>
-                    <span class="text-sm text-slate-500">At 0% (Squeeze), verify 0.05mm gauge cannot pass between ANY
-                        vane seal.</span>
-                </div>
-            </div>
-            <div class="flex items-center gap-4 p-4 border-tech rounded bg-slate-900/50">
-                <div class="step-circle">3</div>
-                <div>
-                    <strong class="text-white block">Linkage Measurement</strong>
-                    <span class="text-sm text-slate-500">Measure Regulating Ring pin to Vane lever arm. All 20 must
-                        match ±1.0mm.</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="mt-6 p-4 border border-red-900/50 bg-red-900/10 rounded flex items-center gap-4">
-            <i data-lucide="flame" class="text-red-500"></i>
-            <p class="text-xs text-red-300"><strong>CAVITATION RISK:</strong> If Vane #5 is open 2° more than others, it
-                directs a high-velocity jet at the runner, causing pitting within 500 hours.</p>
-        </div>
-    </section>
-
-    <!-- Section 3: Maintenance Tables -->
-    <section class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-
-        <div>
-            <h2 class="text-xl font-bold text-white mb-4">3. Cylinder Audit</h2>
-            <div class="border-tech rounded overflow-hidden">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Component</th>
-                            <th>Check</th>
-                            <th>Freq</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="text-slate-300">Wiper Seal</td>
-                            <td class="text-slate-500">Visual (Weeping)</td>
-                            <td class="text-white">Monthly</td>
-                        </tr>
-                        <tr>
-                            <td class="text-slate-300">Welds</td>
-                            <td class="text-slate-500">NDT (Dye Pen)</td>
-                            <td class="text-white">Yearly</td>
-                        </tr>
-                        <tr>
-                            <td class="text-slate-300">Transducer</td>
-                            <td class="text-slate-500">4-20mA Calib</td>
-                            <td class="text-white">6-Mo</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <div>
-            <h2 class="text-xl font-bold text-white mb-4">4. Hose Lifecycle</h2>
-            <div class="border-tech rounded overflow-hidden">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Tag ID</th>
-                            <th>Exp Date</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="text-slate-300 font-mono">HOSE-MIV-01</td>
-                            <td class="text-slate-500">Jan 2025</td>
-                            <td class="font-bold text-red-500 animate-pulse">CRITICAL</td>
-                        </tr>
-                        <tr>
-                            <td class="text-slate-300 font-mono">HOSE-MIV-02</td>
-                            <td class="text-slate-500">Jan 2025</td>
-                            <td class="font-bold text-red-500 animate-pulse">CRITICAL</td>
-                        </tr>
-                        <tr>
-                            <td class="text-slate-300 font-mono">HOSE-HPU-05</td>
-                            <td class="text-slate-500">Jun 2027</td>
-                            <td class="font-bold text-green-500">OK</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-    </section>
-
-    <footer class="mt-16 pt-8 border-t border-slate-800 text-center text-slate-600 text-xs">
-        FRANCIS UNIT 1 • PRECISION MAINTENANCE PROTOCOLS
-    </footer>
+    <!-- Interactive Simulation -->
+    <div class="mt-12 p-6 bg-slate-800 rounded-lg border border-slate-700 text-center">
+        <h3 class="text-slate-400 font-bold uppercase text-xs mb-4">Logic Verification Simulation</h3>
+        <button onclick="runSimulation()"
+            class="px-8 py-3 bg-amber-600 hover:bg-amber-700 text-white font-black uppercase rounded shadow-lg shadow-amber-600/20 transition">
+            SIMULATE GRID LOSS (52G OPEN)
+        </button>
+        <div id="simStatus" class="mt-4 text-xs font-mono text-slate-500 h-6">System Stable.</div>
+    </div>
 
     <script>
         lucide.createIcons();
+
+        function runSimulation() {
+            const status = document.getElementById('simStatus');
+            const steps = document.querySelectorAll('.logic-step');
+
+            // Reset
+            steps.forEach(s => s.classList.remove('active'));
+            steps[0].classList.add('active'); // Trigger always active
+
+            status.innerHTML = "<span class='text-red-500'>GRID LOSS DETECTED! INITIATING SEQUENCE...</span>";
+
+            // Step 1
+            setTimeout(() => {
+                steps[1].classList.add('active');
+                status.innerText = "GOVERNOR: Reducing to Speed-No-Load...";
+            }, 1000);
+
+            // Step 2
+            setTimeout(() => {
+                steps[2].classList.add('active');
+                status.innerText = "MIV: Emergency Close Signal Sent. Monitoring Angle...";
+            }, 2500);
+
+            // Step 3
+            setTimeout(() => {
+                steps[3].classList.add('active');
+                status.innerHTML = "<span class='text-green-500'>SEQUENCE COMPLETE: Unit Safe. Brakes Applied.</span>";
+            }, 4500);
+        }
     </script>
 </body>
 
