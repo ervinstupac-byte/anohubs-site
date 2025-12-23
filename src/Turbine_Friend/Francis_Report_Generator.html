@@ -232,299 +232,354 @@
                     </div>
 
                     <!-- 3. Anomaly Matrix -->
-                    <div class="mb-8">
+                    <div class="mb-4">
                         <div class="flex justify-between items-end mb-2 border-b border-blue-900 pb-1">
                             <h3 class="font-bold text-blue-900 uppercase text-sm" data-i18n="anomaly_matrix">Anomaly
                                 Matrix (Logic Log)</h3>
-                            <span class="text-[10px] font-mono text-slate-400">SOURCE: LOGIC_LOGGER_V1.4</span>
+                            <span class="text-[10px] font-mono text-slate-400">SOURCE: HEURISTIC_ENGINE_V2.0</span>
                         </div>
 
                         <div id="anomalyTableContainer">
                             <!-- Table populated via JS -->
-                            <div class="text-center py-4 text-sm text-slate-400 italic">No anomalies recorded in recent
-                                history.</div>
                         </div>
                     </div>
 
-                    <!-- 4. Safety Guard Block -->
-                    <div class="mb-8">
-                        <div class="flex justify-between items-end mb-2 border-b border-blue-900 pb-1">
-                            <h3 class="font-bold text-blue-900 uppercase text-sm" data-i18n="safety_guard">Manual Safety
-                                Verification</h3>
-                        </div>
-
-                        <div class="grid grid-cols-3 gap-4">
-                            <div class="border border-slate-300 p-3 bg-white">
-                                <label class="block text-[10px] font-bold text-slate-500 uppercase mb-2">HPU N2
-                                    Pressure</label>
-                                <div class="flex items-end gap-2">
-                                    <input type="number"
-                                        class="w-full font-mono text-lg font-bold text-slate-900 border-b border-slate-300 focus:outline-none"
-                                        placeholder="00.0">
-                                    <span class="text-xs font-bold text-slate-400 mb-1">Bar</span>
-                                </div>
-                                <div class="text-[9px] text-slate-400 mt-1">Ref: > 110 Bar</div>
-                            </div>
-                            <div class="border border-slate-300 p-3 bg-white">
-                                <label class="block text-[10px] font-bold text-slate-500 uppercase mb-2">MIV
-                                    Angle</label>
-                                <div class="flex items-end gap-2">
-                                    <input type="number"
-                                        class="w-full font-mono text-lg font-bold text-slate-900 border-b border-slate-300 focus:outline-none"
-                                        placeholder="00">
-                                    <span class="text-xs font-bold text-slate-400 mb-1">Deg</span>
-                                </div>
-                                <div class="text-[9px] text-slate-400 mt-1">Ref: 0° Closed</div>
-                            </div>
-                            <div class="border border-slate-300 p-3 bg-white">
-                                <label class="block text-[10px] font-bold text-slate-500 uppercase mb-2">Shaft Seal
-                                    Leak</label>
-                                <div class="flex items-end gap-2">
-                                    <input type="number"
-                                        class="w-full font-mono text-lg font-bold text-slate-900 border-b border-slate-300 focus:outline-none"
-                                        placeholder="0.0">
-                                    <span class="text-xs font-bold text-slate-400 mb-1">L/min</span>
-                                </div>
-                                <div class="text-[9px] text-slate-400 mt-1">Ref: < 5 L/min</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 5. Technical Recommendation -->
-                        <div class="flex-grow">
-                            <div class="flex justify-between items-end mb-2 border-b border-blue-900 pb-1">
-                                <h3 class="font-bold text-blue-900 uppercase text-sm" data-i18n="recommendation_title">
-                                    Shift Handover Recommendation</h3>
-                            </div>
-
-                            <div class="border-l-4 border-blue-900 bg-slate-50 p-4">
-                                <div class="font-mono text-sm text-slate-800 whitespace-pre-line"
-                                    id="recommendationText">
-                                    SYSTEM STATUS STABLE. NO CRITICAL ACTIONS REQUIRED.
-                                    CONTINUE STANDARD OBSERVATION PROTOCOL.
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <!-- Footer -->
-                    <div
-                        class="mt-8 pt-4 border-t border-slate-300 flex justify-between items-end text-[10px] text-slate-400">
+                    <!-- 4. Strategic Analysis & Radar Chart -->
+                    <div class="mb-4 grid grid-cols-2 gap-8">
                         <div>
-                            <p class="font-bold uppercase text-slate-600">AnoHUB Engineering Intelligence</p>
-                            <p>Generated via Francis Unit Logic Core</p>
+                            <div class="flex justify-between items-end mb-2 border-b border-blue-900 pb-1">
+                                <h3 class="font-bold text-blue-900 uppercase text-sm" data-i18n="safety_guard">Heuristic
+                                    Trend Analysis</h3>
+                            </div>
+
+                            <!-- Radar Chart Visualization -->
+                            <div
+                                class="relative w-full h-48 bg-slate-50 border border-slate-200 flex items-center justify-center">
+                                <div id="radarChart" class="w-full h-full"></div>
+                                <!-- Simple HTML/CSS Radar Overlay Mockup for PDF compatibility without heavy libraries -->
+                                <div
+                                    class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-20">
+                                    <div class="w-32 h-32 border border-slate-900 rounded-full"></div>
+                                    <div class="w-16 h-16 border border-slate-900 rounded-full absolute"></div>
+                                    <div class="w-full h-px bg-slate-900 absolute rotate-0"></div>
+                                    <div class="w-full h-px bg-slate-900 absolute rotate-60"></div>
+                                    <div class="w-full h-px bg-slate-900 absolute rotate-120"></div>
+                                </div>
+                                <div class="absolute top-2 text-[9px] font-bold text-slate-500">MECH</div>
+                                <div class="absolute bottom-2 left-2 text-[9px] font-bold text-slate-500">HYDR</div>
+                                <div class="absolute bottom-2 right-2 text-[9px] font-bold text-slate-500">ELEC</div>
+                            </div>
                         </div>
-                        <div class="text-right">
-                            <p class="font-mono">DOC-ID: <span id="docId">GEN-001</span></p>
-                            <p>PAGE 1 OF 1</p>
+
+                        <div>
+                            <div class="flex justify-between items-end mb-2 border-b border-blue-900 pb-1">
+                                <h3 class="font-bold text-blue-900 uppercase text-sm" data-i18n="risk_title">Rate of
+                                    Change (RoC) Alert</h3>
+                            </div>
+
+                            <!-- Predictive Input Block -->
+                            <div class="border border-slate-300 p-3 bg-red-50/50 mb-2">
+                                <label class="block text-[10px] font-bold text-red-900 uppercase mb-1">Shaft Seal
+                                    Leakage (L/min)</label>
+                                <div class="flex justify-between items-center">
+                                    <div class="w-1/2">
+                                        <input type="number" id="inputLeak"
+                                            class="w-full font-mono text-lg font-bold text-red-900 bg-transparent border-b border-red-300 focus:outline-none"
+                                            placeholder="0.0" onchange="calcRoC()">
+                                    </div>
+                                    <div class="text-right">
+                                        <div id="rocResult" class="text-[10px] font-bold text-slate-400">WAITING DATA...
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- 5. Strategic Output (Inference Engine) -->
+                    <div class="flex-grow">
+                        <div class="flex justify-between items-end mb-2 border-b border-blue-900 pb-1">
+                            <h3 class="font-bold text-blue-900 uppercase text-sm" data-i18n="recommendation_title">
+                                Synthetic Diagnosis (Inference Engine)</h3>
+                        </div>
+
+                        <div class="border-l-4 border-blue-900 bg-slate-50 p-4 min-h-[100px]">
+                            <div class="font-mono text-sm text-slate-800 whitespace-pre-line" id="recommendationText">
+                                INITIATING HEURISTIC SCAN...
+                            </div>
                         </div>
                     </div>
 
                 </div>
+
+                <!-- Footer -->
+                <div
+                    class="mt-4 pt-2 border-t border-slate-300 flex justify-between items-end text-[10px] text-slate-400">
+                    <div>
+                        <p class="font-bold uppercase text-slate-600">AnoHUB Engineering Intelligence</p>
+                        <p>Generated via Heuristic Core V2.0</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="font-mono">DOC-ID: <span id="docId">GEN-001</span></p>
+                        <p>PAGE 1 OF 1</p>
+                    </div>
+                </div>
+
             </div>
         </div>
+    </div>
 
-        <!-- Scripts -->
-        <script>
-            lucide.createIcons();
+    <!-- Scripts -->
+    <script>
+        lucide.createIcons();
 
-            // --- I18N DICTIONARY ---
-            const i18n = {
-                en: {
-                    report_title: "UNIT STATE REPORT",
-                    date_label: "DATE & TIME",
-                    operator_label: "AUTHORIZED OPERATOR",
-                    shift_label: "SHIFT ID",
-                    system_integrity: "SYSTEM INTEGRITY SCORE",
-                    score_desc: "Calculated based on active logic codes and manual safety inputs.",
-                    anomaly_matrix: "ANOMALY MATRIX (LOGIC LOG)",
-                    safety_guard: "MANUAL SAFETY VERIFICATION",
-                    recommendation_title: "SHIFT HANDOVER RECOMMENDATION",
-                    col_code: "FAULT CODE",
-                    col_zone: "ZONE",
-                    col_time: "TIMESTAMP",
-                    col_status: "LOGICAL STATUS",
-                    default_rec: "SYSTEM STATUS STABLE. NO CRITICAL ACTIONS REQUIRED.\nCONTINUE STANDARD OBSERVATION PROTOCOL.",
-                    status_nominal: "NOMINAL",
-                    status_critical: "CRITICAL",
-                    status_warning: "WARNING"
-                },
-                bs: {
-                    report_title: "IZVJEŠTAJ O STANJU JEDINICE",
-                    date_label: "DATUM I VRIJEME",
-                    operator_label: "OVLAŠTENI OPERATER",
-                    shift_label: "ID SMJENE",
-                    system_integrity: "OCJENA INTEGRITETA SISTEMA",
-                    score_desc: "Izračunato na osnovu aktivnih logičkih kodova i ručnih sigurnosnih unosa.",
-                    anomaly_matrix: "TABELA ANOMALIJA (LOGIČKI ZAPIS)",
-                    safety_guard: "SIGURNOSNI KONTROLNI BLOK",
-                    recommendation_title: "PREPORUKA ZA PREDAJU SMJENE",
-                    col_code: "KOD GREŠKE",
-                    col_zone: "ZONA",
-                    col_time: "VRIJEME",
-                    col_status: "LOGIČKI STATUS",
-                    default_rec: "SISTEM STABILAN. NISU POTREBNE KRITIČNE MJERE.\nNASTAVITI SA STANDARDNIM PROTOKOLOM POSMATRANJA.",
-                    status_nominal: "NOMINALNO",
-                    status_critical: "KRITIČNO",
-                    status_warning: "UPOZORENJE"
-                }
-            };
-
-            let currentLang = 'en';
-
-            // --- LOGIC DICTIONARY FOR RECS ---
-            const recs = {
-                'ERR_N2_PRESS': {
-                    en: "CRITICAL: HPU Accumulator Nitrogen pressure is low. Initiate pre-charge sequence immediately using N2 kit. Do not restart unit until P0 > 110 Bar.",
-                    bs: "KRITIČNO: Nizak pritisak azota u HPU akumulatoru. Odmah pokrenite proceduru dopune koristeći N2 set. Ne restartujte jedinicu dok P0 ne bude > 110 Bar."
-                },
-                'ERR_SYNC_VAR': {
-                    en: "WARNING: Distributor Sync Variance detected. Inspect shear pins on wicket gates. Schedule linkage calibration during next stop.",
-                    bs: "UPOZORENJE: Detektovano odstupanje sinhronizacije sprovodnog aparata. Pregledajte sigurnosne čivije na lopaticama. Zakažite kalibraciju poluga tokom sljedećeg zaustavljanja."
-                },
-                'ERR_LEAK_01': {
-                    en: "ALERT: Shaft seal leakage above nominal limits. Activate backup drainage pump. Check seal water pressure.",
-                    bs: "ALARM: Curenje zaptivača vratila iznad nominalnih granica. Aktivirajte rezervnu drenažnu pumpu. Provjerite pritisak vode za zaptivanje."
-                },
-                'ERR_VIB_LOW': {
-                    en: "ADVISORY: Low frequency vibration suggesting draft tube vortex. Increase load > 40% or inject air to stabilize.",
-                    bs: "SAVJET: Niskofrekventne vibracije sugerišu vrtlog u usisnoj cijevi. Povećajte opterećenje > 40% ili ubacite zrak za stabilizaciju."
-                },
-                'ERR_TEMP_HI': {
-                    en: "ALARM: High bearing temperature. Verify cooling water flow and cooler cleanliness. Monitor trend closely.",
-                    bs: "ALARM: Visoka temperatura ležaja. Provjerite protok rashladne vode i čistoću hladnjaka. Pažljivo pratite trend."
-                }
-            };
-
-            function setLang(lang) {
-                currentLang = lang;
-
-                // Toggle Buttons
-                if (lang === 'en') {
-                    document.getElementById('btnEn').className = "px-3 py-1 rounded text-xs font-bold bg-blue-600 text-white transition";
-                    document.getElementById('btnBs').className = "px-3 py-1 rounded text-xs font-bold text-slate-400 hover:text-white transition";
-                } else {
-                    document.getElementById('btnBs').className = "px-3 py-1 rounded text-xs font-bold bg-blue-600 text-white transition";
-                    document.getElementById('btnEn').className = "px-3 py-1 rounded text-xs font-bold text-slate-400 hover:text-white transition";
-                }
-
-                // Update Text Elements
-                document.querySelectorAll('[data-i18n]').forEach(el => {
-                    const key = el.getAttribute('data-i18n');
-                    if (i18n[lang][key]) el.innerText = i18n[lang][key];
-                });
-
-                // Re-render table and recs to update language there
-                renderData();
+        // --- I18N DICTIONARY ---
+        const i18n = {
+            en: {
+                report_title: "UNIT STATE REPORT",
+                date_label: "DATE & TIME",
+                operator_label: "AUTHORIZED OPERATOR",
+                shift_label: "SHIFT ID",
+                system_integrity: "SYSTEM INTEGRITY SCORE",
+                score_desc: "Calculated based on active logic codes and manual safety inputs.",
+                anomaly_matrix: "ANOMALY MATRIX (LOGIC LOG)",
+                safety_guard: "HEURISTIC TREND ANALYSIS",
+                risk_title: "RATE OF CHANGE (RoC) ALERT",
+                recommendation_title: "SYNTHETIC DIAGNOSIS (INFERENCE ENGINE)",
+                col_code: "SYMPTOM ID",
+                col_zone: "ZONE",
+                col_ctx: "CONTEXT",
+                col_crit: "CRIT",
+                default_rec: "SYSTEM STATUS STABLE. NO CRITICAL ACTIONS REQUIRED.\nCONTINUE STANDARD OBSERVATION PROTOCOL.",
+                status_nominal: "NOMINAL",
+                status_critical: "CRITICAL"
+            },
+            bs: {
+                report_title: "IZVJEŠTAJ O STANJU JEDINICE",
+                date_label: "DATUM I VRIJEME",
+                operator_label: "OVLAŠTENI OPERATER",
+                shift_label: "ID SMJENE",
+                system_integrity: "OCJENA INTEGRITETA SISTEMA",
+                score_desc: "Izračunato na osnovu aktivnih logičkih kodova i ručnih sigurnosnih unosa.",
+                anomaly_matrix: "TABELA ANOMALIJA (LOGIČKI ZAPIS)",
+                safety_guard: "HEURISTIČKA ANALIZA TRENDA",
+                risk_title: "UPOZORENJE NA STOPU PROMJENE (RoC)",
+                recommendation_title: "SINTETIČKA DIJAGNOZA (MOTOR ZAKLJUČIVANJA)",
+                col_code: "ID SIMPTOMA",
+                col_zone: "ZONA",
+                col_ctx: "KONTEKST",
+                col_crit: "KRIT",
+                default_rec: "SISTEM STABILAN. NISU POTREBNE KRITIČNE MJERE.\nNASTAVITI SA STANDARDNIM PROTOKOLOM POSMATRANJA.",
+                status_nominal: "NOMINALNO",
+                status_critical: "KRITIČNO"
             }
+        };
 
-            function renderData() {
-                // 1. Set Date
-                document.getElementById('reportDate').innerText = new Date().toLocaleString();
-                document.getElementById('docId').innerText = `RPT-${Math.floor(Math.random() * 10000)}`;
+        let currentLang = 'en';
 
-                // 2. Fetch History
-                let history = [];
-                try {
-                    history = JSON.parse(localStorage.getItem('turbine_logic_history') || '[]');
-                } catch (e) {
-                    console.error("Storage Error", e);
+        // --- SYNTHETIC LOGIC DATABASE (INFERENCE RULES) ---
+        const inferenceRules = [
+            {
+                // Rule: Bypass + Sync Error = Critical Cavitation Risk
+                condition: (codes) => codes.includes('ERR_LEAK_01') && codes.includes('ERR_SYNC_VAR'),
+                diagnosis: {
+                    en: "CRITICAL RISK: Distributor Sync Error combined with Seal Leakage indicates major mechanical misalignment.\n\nACTION: IMMEDIATE STOP RECOMMENDED. Verify guide vane linkage shear pins and check head cover alignment.",
+                    bs: "KRITIČAN RIZIK: Greška sinhronizacije distributera u kombinaciji sa curenjem zaptivača ukazuje na veliko mehaničko de-centriranje.\n\nAKCIJA: PREPORUČENO TRENUTNO ZAUSTAVLJANJE. Provjerite sigurnosne čivije poluga i centriranje poklopca turbine."
                 }
-
-                // 3. Render Table
-                const container = document.getElementById('anomalyTableContainer');
-                if (history.length === 0) {
-                    container.innerHTML = `<div class="text-center py-4 text-sm text-slate-400 italic">${currentLang === 'en' ? 'No anomalies recorded.' : 'Nema zabilježenih anomalija.'}</div>`;
-                    document.getElementById('recommendationText').innerText = i18n[currentLang].default_rec;
-                    updateScore(100);
-                } else {
-                    let html = `<table>
-                    <thead>
-                        <tr>
-                            <th>${i18n[currentLang].col_zone}</th>
-                            <th>${i18n[currentLang].col_code}</th>
-                            <th>${i18n[currentLang].col_time}</th>
-                            <th>${i18n[currentLang].col_status}</th>
-                        </tr>
-                    </thead>
-                    <tbody>`;
-
-                    let criticalFound = false;
-                    let warningFound = false;
-                    let primaryCode = null;
-
-                    history.forEach(item => {
-                        let badgeClass = "status-nominal";
-                        let statusText = i18n[currentLang].status_nominal;
-
-                        // Simple logic for status styling based on code/string
-                        if (item.code.includes('ERR') || item.code.includes('W-')) {
-                            badgeClass = "status-active"; // Red
-                            statusText = i18n[currentLang].status_critical;
-                            criticalFound = true;
-                            if (!primaryCode) primaryCode = item.code;
-                        } else if (item.code.includes('A-')) {
-                            badgeClass = "status-active"; // Using active for warning too for visibility
-                            statusText = i18n[currentLang].status_warning;
-                            warningFound = true;
-                            if (!primaryCode) primaryCode = item.code;
-                        }
-
-                        html += `<tr>
-                        <td class="font-bold text-slate-700">${item.zone}</td>
-                        <td class="font-mono text-blue-900">${item.code}</td>
-                        <td class="text-slate-500 text-[10px]">${item.timestamp}</td>
-                        <td><span class="status-badge ${badgeClass}">${statusText}</span></td>
-                    </tr>`;
-                    });
-
-                    html += `</tbody></table>`;
-                    container.innerHTML = html;
-
-                    // 4. Update Score
-                    let score = 100;
-                    if (criticalFound) score = 65;
-                    else if (warningFound) score = 85;
-                    else score = 95; // Minor events
-
-                    updateScore(score);
-
-                    // 5. Generate Recommendation
-                    const recEl = document.getElementById('recommendationText');
-                    if (primaryCode && recs[primaryCode]) {
-                        recEl.innerText = recs[primaryCode][currentLang];
-                    } else {
-                        recEl.innerText = i18n[currentLang].default_rec;
-                    }
+            },
+            {
+                // Rule: Low Vib + High Temp = Cooling Flow + Draft Tube issue
+                condition: (codes) => codes.includes('ERR_VIB_LOW') && codes.includes('ERR_TEMP_HI'),
+                diagnosis: {
+                    en: "COMPLEX FAULT: Thermal overload concurrent with Rheingans vibration.\n\nACTION: Draft tube vortex may be restricting cooling water flow if shared intake. Inspect strainers and increase air injection.",
+                    bs: "SLOŽEN KVAR: Termičko preopterećenje istovremeno sa Rheingans vibracijama.\n\nAKCIJA: Vrtlog u usisnoj cijevi možda ograničava protok rashladne vode ako je zahvat zajednički. Pregledajte filtere i povećajte upuhivanje zraka."
                 }
             }
+        ];
 
-            function updateScore(score) {
-                const display = document.getElementById('healthScoreDisplay');
-                const label = document.getElementById('healthStatusLabel');
+        const singleFaults = {
+            'ERR_N2_PRESS': {
+                en: "CRITICAL: HPU Accumulator Nitrogen pressure is low. Initiate pre-charge sequence immediately.",
+                bs: "KRITIČNO: Nizak pritisak azota u HPU akumulatoru. Odmah pokrenite proceduru dopune."
+            },
+            'ERR_SYNC_VAR': {
+                en: "WARNING: Distributor Sync Variance detected. Inspect shear pins.",
+                bs: "UPOZORENJE: Detektovano odstupanje sinhronizacije sprovodnog aparata. Pregledajte čivije."
+            },
+            'ERR_LEAK_01': {
+                en: "ALERT: Shaft seal leakage above nominal limits. Monitor drainage.",
+                bs: "ALARM: Curenje zaptivača vratila iznad limita. Pratite drenažu."
+            }
+        };
 
-                display.innerText = score + "%";
+        function setLang(lang) {
+            currentLang = lang;
 
-                if (score < 70) {
-                    display.className = "text-4xl font-black text-red-700 mono";
-                    label.className = "text-[10px] font-bold text-red-600 bg-red-100 px-2 py-1 rounded inline-block mt-1 uppercase";
-                    label.innerText = i18n[currentLang].status_critical;
-                } else if (score < 90) {
-                    display.className = "text-4xl font-black text-amber-600 mono";
-                    label.className = "text-[10px] font-bold text-amber-600 bg-amber-100 px-2 py-1 rounded inline-block mt-1 uppercase";
-                    label.innerText = i18n[currentLang].status_warning;
-                } else {
-                    display.className = "text-4xl font-black text-blue-900 mono";
-                    label.className = "text-[10px] font-bold text-green-600 bg-green-100 px-2 py-1 rounded inline-block mt-1 uppercase";
-                    label.innerText = i18n[currentLang].status_nominal;
-                }
+            // Toggle Buttons
+            if (lang === 'en') {
+                document.getElementById('btnEn').className = "px-3 py-1 rounded text-xs font-bold bg-blue-600 text-white transition";
+                document.getElementById('btnBs').className = "px-3 py-1 rounded text-xs font-bold text-slate-400 hover:text-white transition";
+            } else {
+                document.getElementById('btnBs').className = "px-3 py-1 rounded text-xs font-bold bg-blue-600 text-white transition";
+                document.getElementById('btnEn').className = "px-3 py-1 rounded text-xs font-bold text-slate-400 hover:text-white transition";
             }
 
-            // Initialize
+            // Update Text Elements
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (i18n[lang][key]) el.innerText = i18n[lang][key];
+            });
+
+            // Re-render logic
             renderData();
+        }
 
-        </script>
+        // --- RATE OF CHANGE (RoC) CALCULATOR ---
+        function calcRoC() {
+            const currentVal = parseFloat(document.getElementById('inputLeak').value);
+            const rocDisplay = document.getElementById('rocResult');
+
+            // Simulate Last Value (in real app, read from history)
+            const lastVal = 4.2; // Baseline
+
+            if (!isNaN(currentVal)) {
+                const change = ((currentVal - lastVal) / lastVal) * 100;
+
+                if (change > 15) {
+                    rocDisplay.innerHTML = `<span class="text-red-600 animate-pulse">▲ ${change.toFixed(1)}% (PREDICTIVE WARNING)</span>`;
+                    // Store high leak in local storage for next time? (Out of scope for simple demo)
+                } else if (change < 0) {
+                    rocDisplay.innerHTML = `<span class="text-green-600">▼ ${Math.abs(change).toFixed(1)}% (IMPROVING)</span>`;
+                } else {
+                    rocDisplay.innerHTML = `<span class="text-slate-500">STABLE (Ref: ${lastVal})</span>`;
+                }
+            }
+        }
+
+        // --- HEURISTIC ENGINE RENDERER ---
+        function renderData() {
+            document.getElementById('reportDate').innerText = new Date().toLocaleString();
+            document.getElementById('docId').innerText = `RPT-${Math.floor(Math.random() * 10000)}`;
+
+            // Fetch Turbine_Health_DB
+            let history = [];
+            try {
+                history = JSON.parse(localStorage.getItem('Turbine_Health_DB') || '[]');
+            } catch (e) { console.error("DB Error", e); }
+
+            const container = document.getElementById('anomalyTableContainer');
+
+            if (history.length === 0) {
+                container.innerHTML = `<div class="text-center py-4 text-sm text-slate-400 italic">${currentLang === 'en' ? 'No anomalies recorded.' : 'Nema zabilježenih anomalija.'}</div>`;
+                document.getElementById('recommendationText').innerText = i18n[currentLang].default_rec;
+                updateScore(100);
+                drawRadarChart(100, 100, 100); // Perfect score
+                return;
+            }
+
+            // Render Table
+            let html = `<table>
+                <thead>
+                    <tr>
+                        <th>${i18n[currentLang].col_zone}</th>
+                        <th>${i18n[currentLang].col_code}</th>
+                        <th>${i18n[currentLang].col_ctx}</th>
+                        <th>${i18n[currentLang].col_crit}</th>
+                    </tr>
+                </thead>
+                <tbody>`;
+
+            const activeCodes = [];
+            let maxCrit = 0;
+
+            // Simplified Radar Scores
+            let mechScore = 100;
+            let hydrScore = 100;
+            let elecScore = 100;
+
+            history.forEach(item => {
+                activeCodes.push(item.symptom_id);
+                if (item.criticality > maxCrit) maxCrit = item.criticality;
+
+                // Radar Logic
+                if (item.zone === 'BEAR' || item.zone === 'MIV') mechScore -= (item.criticality * 10);
+                if (item.zone === 'DIST') hydrScore -= (item.criticality * 10);
+                if (item.zone === 'GEN') elecScore -= (item.criticality * 10);
+
+                html += `<tr>
+                    <td class="font-bold text-slate-700">${item.zone}</td>
+                    <td class="font-mono text-blue-900">${item.symptom_id}</td>
+                    <td class="text-slate-500 text-[10px]">${item.operational_context}</td>
+                    <td><span class="status-badge ${item.criticality >= 4 ? 'status-active' : 'status-nominal'}">Lvl ${item.criticality}</span></td>
+                </tr>`;
+            });
+            html += `</tbody></table>`;
+            container.innerHTML = html;
+
+            // Update Radar Chart
+            drawRadarChart(mechScore, hydrScore, elecScore);
+
+            // Update Health Score
+            let systemHealth = 100 - (maxCrit * 15);
+            if (systemHealth < 0) systemHealth = 0;
+            updateScore(systemHealth);
+
+            // Inference Engine Execution
+            const outputEl = document.getElementById('recommendationText');
+            let diagnosis = null;
+
+            // 1. Check Complex Rules
+            for (const rule of inferenceRules) {
+                if (rule.condition(activeCodes)) {
+                    diagnosis = rule.diagnosis[currentLang];
+                    break; // Priority to complex faults
+                }
+            }
+
+            // 2. Fallback to Primary Fault
+            if (!diagnosis && activeCodes.length > 0) {
+                const primary = activeCodes[0];
+                if (singleFaults[primary]) diagnosis = singleFaults[primary][currentLang];
+                else diagnosis = `${currentLang === 'en' ? 'Standard Fault Protocol:' : 'Standardni Protokol Kvara:'} ${primary}`;
+            }
+
+            // 3. Default
+            if (!diagnosis) diagnosis = i18n[currentLang].default_rec;
+
+            outputEl.innerText = diagnosis;
+        }
+
+        // --- POLYGON RADAR CHART (Canvas-Free) ---
+        function drawRadarChart(m, h, e) {
+            // Visualize via CSS Triangle/Polygon clip-path or simpler div bars for robustness
+            // For this output we will use a SVG overlay which is cleaner
+            const container = document.getElementById('radarChart');
+
+            // Normalize inputs (radius usually 0-50 for percentages in SVG viewbox 0 0 100 100)
+            const rM = (m / 100) * 40; // Top
+            const rH = (h / 100) * 40; // Bottom Left
+            const rE = (e / 100) * 40; // Bottom Right
+
+            // Calc Points (Center is 50,50)
+            const p1 = `50,${50 - rM}`; // Mech (Top)
+            const p2 = `${50 - (rH * 0.866)},${50 + (rH * 0.5)}`; // Hydr (Bot Left)
+            const p3 = `${50 + (rE * 0.866)},${50 + (rE * 0.5)}`; // Elec (Bot Right)
+
+            // Dynamic SVG
+            container.innerHTML = `
+            <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-lg">
+                <polygon points="50,10 15,70 85,70" fill="none" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2"/>
+                <circle cx="50" cy="50" r="1" fill="#1e3a8a"/>
+                <polygon points="${p1} ${p2} ${p3}" fill="rgba(30, 58, 138, 0.5)" stroke="#1e3a8a" stroke-width="2"/>
+            </svg>
+            `;
+        }
+
+        // Initialize
+        renderData();
+
+    </script>
 </body>
 
 </html>
