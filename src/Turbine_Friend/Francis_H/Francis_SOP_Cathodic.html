@@ -4,599 +4,283 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOP: Cathodic Protection System</title>
+    <title>SOP: CATHODIC PROTECTION | FRANCIS UNIT 1</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        /* Chemical/Science Theme - Teal/Silver */
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap');
+
         :root {
-            --primary-color: #008B8B;
-            --secondary-color: #20B2AA;
-            --accent-color: #C0C0C0;
-            --warning-color: #FF6347;
-            --bg-color: #f4f7f6;
-            --text-color: #333;
-            --border-color: #B0E0E6;
+            --accent-color: #10b981;
+            /* Emerald for Advanced Technical */
+            --bg-dark: #020617;
         }
 
         body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-dark);
+            color: #cbd5e1;
+            font-family: 'JetBrains Mono', monospace;
             line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--bg-color);
-            margin: 0;
-            padding: 20px;
         }
 
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: #fff;
-            padding: 40px;
-            box-shadow: 0 4px 15px rgba(0, 139, 139, 0.15);
-            border-radius: 8px;
+        .glass-card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            backdrop-filter: blur(12px);
+            transition: all 0.3s ease;
         }
 
-        header {
-            border-bottom: 3px solid var(--primary-color);
-            padding-bottom: 20px;
-            margin-bottom: 30px;
-            text-align: center;
+        .header-gradient {
+            background: linear-gradient(135deg, #064e3b 0%, #0c0a09 100%);
+            border-bottom: 2px solid var(--accent-color);
         }
 
-        /* Language Toggle Switch */
-        .lang-switch {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            display: flex;
-            gap: 10px;
+        .btn-lang {
+            transition: all 0.2s;
         }
 
-        .lang-btn {
-            background: transparent;
-            border: 1px solid var(--primary-color);
-            color: var(--primary-color);
-            padding: 5px 10px;
-            cursor: pointer;
-            border-radius: 4px;
-            font-weight: bold;
+        .active-lang {
+            background-color: var(--accent-color) !important;
+            color: black !important;
+            border-color: var(--accent-color) !important;
         }
 
-        .lang-btn.active {
-            background: var(--primary-color);
+        .atom-rotating {
+            animation: rotate 10s linear infinite;
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .tech-table th {
+            background: #064e3b;
             color: white;
-        }
-
-        h1 {
-            margin: 0;
-            color: var(--primary-color);
-            font-size: 28px;
+            padding: 12px;
+            font-size: 10px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            text-align: left;
         }
 
-        h2 {
-            color: var(--secondary-color);
-            font-size: 18px;
-            margin-top: 5px;
-            font-weight: 400;
-        }
-
-        .section-title {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: #fff;
-            padding: 10px 15px;
-            margin-top: 40px;
-            border-radius: 4px;
-            font-size: 1.2em;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-        }
-
-        .section-title::before {
-            content: "⚛";
-            margin-right: 10px;
-            font-size: 1.2em;
-        }
-
-        h3 {
-            color: var(--primary-color);
-            border-left: 4px solid var(--secondary-color);
-            padding-left: 10px;
-            margin-top: 25px;
-        }
-
-        .module {
-            border: 1px solid var(--border-color);
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 4px;
-            background-color: #fafafa;
-        }
-
-        .critical {
-            border-left: 5px solid var(--warning-color);
-            background-color: #fff5f5;
-        }
-
-        .technical {
-            border-left: 5px solid var(--secondary-color);
-            background-color: #E0F2F1;
-        }
-
-        .chemical {
-            border-left: 5px solid var(--accent-color);
-            background-color: #F5F5F5;
-            border: 2px solid var(--accent-color);
-        }
-
-        ul,
-        ol {
-            padding-left: 20px;
-        }
-
-        li {
-            margin-bottom: 8px;
-        }
-
-        .back-btn {
-            display: inline-block;
-            margin-top: 30px;
-            text-decoration: none;
-            color: var(--secondary-color);
-            font-weight: bold;
-            border: 1px solid var(--secondary-color);
-            padding: 10px 20px;
-            border-radius: 4px;
-            transition: all 0.3s;
-        }
-
-        .back-btn:hover {
-            background-color: var(--secondary-color);
-            color: #fff;
-        }
-
-        strong {
-            font-weight: 600;
-        }
-
-        .visual-aid {
-            border: 2px dashed var(--accent-color);
-            padding: 15px;
-            margin: 10px 0;
-            background: #fff;
-            text-align: center;
-            color: #666;
-            font-size: 0.9em;
-        }
-
-        .formula {
-            background: linear-gradient(135deg, #E0F2F1, #F0F8FF);
-            padding: 15px;
-            border-left: 4px solid var(--primary-color);
-            margin: 15px 0;
-            font-family: 'Courier New', monospace;
-            font-size: 1.1em;
-            text-align: center;
-        }
-
-        .warning-box {
-            background: #FFF3CD;
-            border: 2px solid var(--warning-color);
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 4px;
+        .tech-table td {
+            padding: 12px;
+            font-size: 10px;
+            border-bottom: 1px solid rgba(16, 185, 129, 0.1);
         }
     </style>
 </head>
 
-<body>
-    <div class="lang-switch">
-        <button class="lang-btn active" onclick="setLang('en')">EN</button>
-        <button class="lang-btn" onclick="setLang('bs')">BS</button>
-    </div>
+<body class="min-h-screen pb-12">
 
-    <div class="container">
-
-        <header>
-            <h1 data-i18n="title">⚛ Cathodic Protection System</h1>
-            <h2 data-i18n="subtitle">Electrochemical Corrosion Prevention Protocol</h2>
-        </header>
-
-        <!-- SAFETY MODULE -->
-        <div class="module critical">
-            <h3 data-i18n="safety_title">⚠️ MANDATORY SAFETY PROTOCOL</h3>
-            <p><strong data-i18n="safety_strong">STOP. READ THIS FIRST.</strong></p>
-            <ul>
-                <li data-i18n="safety1"><strong>De-Watering Required:</strong> The spiral case and draft tube must be
-                    fully drained before anode inspection.</li>
-                <li data-i18n="safety2"><strong>Confined Space Entry:</strong> Follow confined space
-                    protocols—ventilation, gas testing (O₂ > 19.5%), and buddy system.</li>
-                <li data-i18n="safety3"><strong>Electrical Isolation:</strong> Disconnect all cathodic protection
-                    rectifiers before touching anodes to prevent electrical shock.</li>
-            </ul>
-        </div>
-
-        <div class="section-title" data-i18n="section1_title">The Battery Effect: Dissimilar Metals</div>
-        <div class="module technical">
-            <p><span data-i18n="section1_intro">When two different metals are submerged in water (an electrolyte), they
-                    form a</span> <strong data-i18n="galvanic_cell">galvanic cell</strong><span
-                    data-i18n="battery_term">—essentially a battery.</span></p>
-
-            <h3 data-i18n="how_it_works">How It Works</h3>
-            <div class="formula" data-i18n="formula1">
-                Anode (Sacrificial Metal) → Oxidation → Electrons Flow → Cathode (Protected Metal)
+    <!-- Header -->
+    <header class="header-gradient py-8 px-4 md:px-8 mb-8 sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-4">
+                <div class="p-3 bg-emerald-600 rounded-lg border border-emerald-400/30 text-white">
+                    <i data-lucide="atom" class="w-8 h-8 atom-rotating"></i>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2 mb-1">
+                        <span
+                            class="px-2 py-0.5 rounded bg-emerald-900/40 text-emerald-300 text-[10px] font-bold border border-emerald-800 uppercase">SOP-MECH-014</span>
+                        <span class="text-[10px] text-stone-500 uppercase font-bold">REV 2.2</span>
+                    </div>
+                    <h1 class="text-2xl md:text-3xl font-black text-white tracking-tighter uppercase" data-i18n="title">
+                        CATHODIC PROTECTION SYSTEM</h1>
+                </div>
             </div>
 
-            <ul>
-                <li data-i18n="work1"><strong>Spiral Case Material:</strong> Typically Carbon Steel or Cast Iron (less
-                    noble).</li>
-                <li data-i18n="work2"><strong>Runner Material:</strong> Stainless Steel 13Cr4Ni or Martensitic Stainless
-                    (more noble).</li>
-                <li data-i18n="work3"><strong>The Problem:</strong> Without protection, the spiral case becomes the
-                    <strong>anode</strong> and corrodes rapidly, especially in aggressive water (high conductivity, low
-                    pH, or dissolved oxygen).</li>
-            </ul>
-
-            <h3 data-i18n="electro_series">The Electrochemical Series</h3>
-            <div class="module chemical">
-                <p><strong data-i18n="most_active">Most Active (Anodic) ↓</strong></p>
-                <ol>
-                    <li data-i18n="series1">Magnesium (Mg) - Most sacrificial</li>
-                    <li data-i18n="series2">Zinc (Zn) - Common choice</li>
-                    <li data-i18n="series3">Aluminum (Al)</li>
-                    <li data-i18n="series4">Carbon Steel (Fe)</li>
-                    <li data-i18n="series5">Stainless Steel (Cr/Ni) - Protected</li>
-                </ol>
-                <p><strong data-i18n="most_noble">Most Noble (Cathodic) ↑</strong></p>
-            </div>
-
-            <p data-i18n="key_principle"><strong>💡 Key Principle:</strong> By installing a more active metal (Zinc or
-                Magnesium), we force it to corrode <em>instead</em> of the turbine components.</p>
-        </div>
-
-        <div class="section-title" data-i18n="section2_title">Sacrificial Anodes: Inspection Protocol</div>
-        <div class="module technical">
-            <h3 data-i18n="step1_title">Step 1: Locate All Anodes</h3>
-            <p data-i18n="step1_text">Typical Francis turbine installations have anodes in:</p>
-            <ul>
-                <li data-i18n="step1_1"><strong>Spiral Case:</strong> 4-8 anodes distributed around the circumference.
-                </li>
-                <li data-i18n="step1_2"><strong>Draft Tube:</strong> 2-4 anodes near the cone section.</li>
-                <li data-i18n="step1_3"><strong>Stay Ring:</strong> Additional anodes if the stay ring is carbon steel.
-                </li>
-            </ul>
-
-            <h3 data-i18n="step2_title">Step 2: Visual Inspection</h3>
-            <ol>
-                <li data-i18n="step2_1"><strong>Surface Condition:</strong> Anodes should show white/gray corrosion
-                    products (zinc oxide/hydroxide).</li>
-                <li data-i18n="step2_2"><strong>Measure Remaining Mass:</strong> Use calipers or a ruler to measure the
-                    remaining thickness/diameter.</li>
-                <li data-i18n="step2_3"><strong>Document:</strong> Take photos and record dimensions for each anode.
-                </li>
-            </ol>
-
-            <div class="visual-aid" data-i18n="visual1">
-                [Visualization: New Anode (100%) vs. 50% Consumed vs. 75% Consumed]
-            </div>
-
-            <h3 data-i18n="step3_title">Step 3: Connection Integrity Check</h3>
-            <p data-i18n="step3_intro">The anode MUST have a clean, metal-to-metal connection to the turbine body.</p>
-            <ul>
-                <li data-i18n="step3_1"><strong>Inspect Mounting Bolt:</strong> Check for corrosion, looseness, or
-                    paint/coating on contact surfaces.</li>
-                <li data-i18n="step3_2"><strong>Continuity Test:</strong> Use a multimeter (resistance mode) to verify
-                    electrical continuity between the anode and the turbine casing (should be < 1 Ω).</li>
-                <li data-i18n="step3_3"><strong>Clean Contact Surfaces:</strong> Use a wire brush to remove any oxide
-                    layer, paint, or debris from the mounting surface.</li>
-            </ul>
-
-            <div class="warning-box" data-i18n="warning_text">
-                <strong>⚠️ CRITICAL:</strong> If the anode is electrically isolated (painted surface, corroded bolt,
-                loose connection), it will NOT protect the turbine. The runner will become the anode and corrode
-                instead.
+            <div class="flex flex-col items-end gap-3">
+                <div class="flex gap-2">
+                    <button onclick="setLang('en')" id="btnEn"
+                        class="btn-lang px-3 py-1 text-[10px] font-black border border-slate-600 text-slate-400 rounded hover:border-emerald-50 transition uppercase">EN</button>
+                    <button onclick="setLang('bs')" id="btnBs"
+                        class="btn-lang px-3 py-1 text-[10px] font-black border border-slate-600 text-slate-400 rounded hover:border-emerald-50 transition uppercase">BS</button>
+                </div>
+                <a href="Francis_Horizontal_Dashboard.html"
+                    class="flex items-center gap-2 px-4 py-2 bg-slate-900/80 border border-slate-700 rounded text-[10px] font-bold text-slate-300 hover:text-white hover:border-slate-500 transition">
+                    <i data-lucide="arrow-left" class="w-3 h-3 text-emerald-500"></i>
+                    <span data-i18n="return">BACK TO DASHBOARD</span>
+                </a>
             </div>
         </div>
+    </header>
 
-        <div class="section-title" data-i18n="section3_title">The 50% Rule: Replacement Criteria</div>
-        <div class="module technical">
-            <h3 data-i18n="why50_title">Why 50%?</h3>
-            <p data-i18n="why50_text">Anodes are designed with a <strong>safety margin</strong>. Once 50% of the
-                original mass is consumed:</p>
-            <ul>
-                <li data-i18n="why50_1"><strong>Reduced Surface Area:</strong> The anode's ability to protect decreases
-                    exponentially.</li>
-                <li data-i18n="why50_2"><strong>Increased Resistance:</strong> Corrosion products build up, reducing
-                    electrical contact.</li>
-                <li data-i18n="why50_3"><strong>Risk of Detachment:</strong> Mechanical integrity is compromised—the
-                    anode may fall off.</li>
-            </ul>
+    <main class="max-w-5xl mx-auto px-4 md:px-8 space-y-8">
 
-            <h3 data-i18n="replace_proc_title">Replacement Procedure</h3>
-            <ol>
-                <li data-i18n="replace_proc_1"><strong>Remove Old Anode:</strong> Unbolt and discard the consumed anode.
-                </li>
-                <li data-i18n="replace_proc_2"><strong>Clean Mounting Surface:</strong> Wire brush the contact area to
-                    bare metal (remove all paint, rust, and corrosion products).</li>
-                <li data-i18n="replace_proc_3"><strong>Install New Anode:</strong> Use a new stainless steel bolt with a
-                    star washer to ensure tight contact.</li>
-                <li data-i18n="replace_proc_4"><strong>Torque Specification:</strong> Tighten to manufacturer's spec
-                    (typically 40-60 Nm for M12 bolts).</li>
-                <li data-i18n="replace_proc_5"><strong>Verify Continuity:</strong> Re-test with multimeter (< 1 Ω).</li>
-            </ol>
-
-            <div class="formula" data-i18n="formula2">
-                If Remaining Mass ≤ 50% → REPLACE IMMEDIATELY
+        <!-- 1. Electrochemical Logic -->
+        <section class="glass-card rounded-2xl p-8 border-l-4 border-l-emerald-600">
+            <h2 class="text-xl font-black text-white uppercase tracking-tight mb-8" data-i18n="s1_title">ELECTROCHEMICAL
+                LOGIC</h2>
+            <div class="grid md:grid-cols-2 gap-8 mb-8">
+                <div>
+                    <p class="text-[11px] text-slate-400 leading-relaxed mb-6" data-i18n="s1_desc">Sacrificial Anodes
+                        (Zinc/Aluminum) create a galvanic cell where the anode corrodes instead of the turbine runner.
+                        Without this, the runner becomes the anode and dissolves into the water.</p>
+                    <div class="p-4 bg-slate-950/40 border border-slate-800 rounded-xl">
+                        <span class="text-emerald-500 text-[10px] font-black uppercase block mb-1"
+                            data-i18n="h1_rule">THE 50% CONSUMPTION RULE</span>
+                        <p class="text-[10px] text-slate-300" data-i18n="rule_desc">If an anode has lost >50% of its
+                            original mass or shows deep pitting, replace it immediately. Residual mass cannot sustain
+                            the protective current.</p>
+                    </div>
+                </div>
+                <div class="p-6 bg-emerald-950/10 border border-emerald-900/30 rounded-2xl">
+                    <h4 class="text-white text-[10px] font-black uppercase mb-4" data-i18n="h1_spec">CONTINUITY
+                        SPECIFICATION</h4>
+                    <div class="flex items-center gap-4 p-4 bg-black/40 rounded-xl mb-4">
+                        <i data-lucide="zap" class="text-emerald-500 w-8 h-8"></i>
+                        <div>
+                            <span class="text-[10px] text-emerald-400 font-bold block">TARGET RESISTANCE</span>
+                            <span class="text-2xl font-black text-white" data-i18n="target_val">&lt; 1.0 &Omega;</span>
+                        </div>
+                    </div>
+                    <p class="text-[9px] text-slate-500 italic" data-i18n="spec_note">Measure from the anode surface to
+                        the turbine casing using a calibrated multimeter.</p>
+                </div>
             </div>
+        </section>
 
-            <div class="module critical" data-i18n="tech_note">
-                <strong>💡 Tech Note:</strong> If you delay replacement beyond 50%, the runner becomes the "sacrificial
-                anode" and will develop pitting corrosion on the blade surfaces—requiring expensive welding repairs.
+        <!-- 2. Installation Integrity -->
+        <section class="glass-card rounded-2xl p-8 border-l-4 border-l-emerald-600">
+            <h2 class="text-xl font-black text-white uppercase tracking-tight mb-8" data-i18n="s2_title">MOUNTING &
+                CONTINUITY INTEGRITY</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="space-y-4">
+                    <h4 class="text-emerald-400 text-[10px] font-black uppercase tracking-widest" data-i18n="steps">
+                        CRITICAL INSTALLATION STEPS</h4>
+                    <ul class="space-y-3 text-[10px] text-slate-400">
+                        <li class="flex gap-2"><i data-lucide="brush" class="w-4 h-4 text-emerald-500"></i> <span
+                                data-i18n="l1">Grind base plate to bare metal. <b>NO PAINT</b> under the anode.</span>
+                        </li>
+                        <li class="flex gap-2"><i data-lucide="settings" class="w-4 h-4 text-emerald-500"></i> <span
+                                data-i18n="l2">Use Grade 316 Stainless Steel bolts only. No carbon steel.</span></li>
+                        <li class="flex gap-2"><i data-lucide="check-square" class="w-4 h-4 text-emerald-500"></i> <span
+                                data-i18n="l3">Tighten until spring washers are fully flat for max contact.</span></li>
+                    </ul>
+                </div>
+                <div class="bg-black/40 border border-slate-800 p-6 rounded-2xl">
+                    <h4 class="text-white text-[10px] font-black uppercase mb-4" data-i18n="h2_warn">CORROSION WARNING
+                    </h4>
+                    <p class="text-[10px] text-slate-500 mb-4" data-i18n="warn_desc">If the interface is painted or
+                        greasy, the anode is 'Blind'—it looks okay but provides ZERO protection.</p>
+                    <div class="p-3 bg-red-950/20 border border-red-900/40 rounded-lg flex items-center gap-3">
+                        <i data-lucide="alert-triangle" class="text-red-500 w-5 h-5"></i>
+                        <span class="text-[10px] text-red-400 font-bold" data-i18n="crit_alert">CRITICAL: High
+                            resistance (>5&Omega;) = Passive Corrosion Active.</span>
+                    </div>
+                </div>
             </div>
-        </div>
+        </section>
 
-        <div class="section-title" data-i18n="section4_title">Anode Continuity: The Metal-to-Metal Rule</div>
-        <div class="module technical">
-            <h3 data-i18n="why_cont_title">Why Continuity Matters</h3>
-            <p data-i18n="why_cont_text">For cathodic protection to work, electrons must flow freely from the anode to
-                the turbine structure.</p>
-
-            <h3 data-i18n="failure_modes_title">Common Failure Modes</h3>
-            <ul>
-                <li data-i18n="fail1"><strong>Painted Surfaces:</strong> Paint acts as an insulator. Always remove paint
-                    from contact areas.</li>
-                <li data-i18n="fail2"><strong>Corroded Bolts:</strong> Rust on the mounting bolt creates high
-                    resistance. Use stainless steel bolts.</li>
-                <li data-i18n="fail3"><strong>Loose Connection:</strong> Vibration can loosen bolts over time. Use lock
-                    washers or Loctite.</li>
-                <li data-i18n="fail4"><strong>Oxide Layer:</strong> Aluminum oxide or zinc oxide can form a
-                    non-conductive layer. Clean before installation.</li>
-            </ul>
-
-            <h3 data-i18n="test_proc_title">Continuity Test Procedure</h3>
-            <ol>
-                <li data-i18n="test1">Set multimeter to resistance (Ω) mode.</li>
-                <li data-i18n="test2">Place one probe on the anode surface.</li>
-                <li data-i18n="test3">Place the other probe on the turbine casing (bare metal).</li>
-                <li data-i18n="test4"><strong>Pass Criteria:</strong> Resistance < 1 Ω.</li>
-                <li data-i18n="test5"><strong>Fail Criteria:</strong> Resistance > 5 Ω or "OL" (open circuit).</li>
-            </ol>
-
-            <div class="visual-aid" data-i18n="visual2">
-                [Visualization: Multimeter Test Setup - Anode → Bolt → Casing]
+        <!-- 3. Troubleshooting Table -->
+        <section class="glass-card rounded-2xl p-8 border-l-4 border-l-emerald-600">
+            <h2 class="text-xl font-black text-white uppercase tracking-tight mb-8" data-i18n="s3_title">SYSTEM
+                TROUBLESHOOTING</h2>
+            <div class="overflow-hidden rounded-xl border border-emerald-900/30">
+                <table class="w-full tech-table">
+                    <thead>
+                        <tr>
+                            <th data-i18n="th1">OBSERVATION</th>
+                            <th data-i18n="th2">DIAGNOSIS</th>
+                            <th data-i18n="th3">CORRECTIVE ACTION</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-black/20">
+                        <tr>
+                            <td class="text-emerald-400 font-bold" data-i18n="obs1">Anode looks brand new after 1 year
+                            </td>
+                            <td data-i18n="diag1">Passivity / No Continuity</td>
+                            <td data-i18n="act1">Remove, clean base, re-test resistance.</td>
+                        </tr>
+                        <tr>
+                            <td class="text-emerald-400 font-bold" data-i18n="obs2">Rapid wasting (< 3 months)</td>
+                            <td data-i18n="diag2">Stray Current Interference</td>
+                            <td data-i18n="act2">Check motor grounding / Shaft grounding.</td>
+                        </tr>
+                        <tr>
+                            <td class="text-emerald-400 font-bold" data-i18n="obs3">White chalky coating</td>
+                            <td data-i18n="diag3">Normal Oxidation (Working)</td>
+                            <td data-i18n="act3">No action required if mass > 50%.</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-        </div>
+        </section>
 
-        <div class="section-title" data-i18n="section5_title">Materials & Tools Checklist</div>
-        <div class="module">
-            <ul>
-                <li data-i18n="tool1"><strong>Replacement Anodes:</strong> Zinc (Zn) or Magnesium (Mg) anodes per OEM
-                    specification.</li>
-                <li data-i18n="tool2"><strong>Hardware:</strong> Stainless steel bolts (M12 or M16), star washers,
-                    Loctite 243 (Blue).</li>
-                <li data-i18n="tool3"><strong>Tools:</strong> Wire brush, calipers, multimeter, torque wrench.</li>
-                <li data-i18n="tool4"><strong>Safety:</strong> Confined space entry kit, gas detector, ventilation fan.
-                </li>
-                <li data-i18n="tool5"><strong>Documentation:</strong> Camera, inspection log, anode consumption chart.
-                </li>
-            </ul>
-        </div>
-
-        <div class="section-title" data-i18n="section6_title">Inspection Schedule</div>
-        <div class="module technical">
-            <ul>
-                <li data-i18n="sched1"><strong>Annual Inspection:</strong> Visual check during scheduled outage.</li>
-                <li data-i18n="sched2"><strong>Bi-Annual Measurement:</strong> Measure remaining mass and document
-                    consumption rate.</li>
-                <li data-i18n="sched3"><strong>Immediate Replacement:</strong> If any anode reaches 50% consumption.
-                </li>
-                <li data-i18n="sched4"><strong>Emergency Check:</strong> If unusual corrosion is observed on the runner
-                    or spiral case.</li>
-            </ul>
-        </div>
-
-        <a href="./Francis_Horizontal.html" class="back-btn" data-i18n="back_btn">← Return to Master Manual</a>
-
-    </div>
+    </main>
 
     <script>
+        lucide.createIcons();
+
         const i18n = {
             en: {
-                title: "⚛ Cathodic Protection System",
-                subtitle: "Electrochemical Corrosion Prevention Protocol",
-                safety_title: "⚠️ MANDATORY SAFETY PROTOCOL",
-                safety_strong: "STOP. READ THIS FIRST.",
-                safety1: "<strong>De-Watering Required:</strong> The spiral case and draft tube must be fully drained before anode inspection.",
-                safety2: "<strong>Confined Space Entry:</strong> Follow confined space protocols—ventilation, gas testing (O₂ > 19.5%), and buddy system.",
-                safety3: "<strong>Electrical Isolation:</strong> Disconnect all cathodic protection rectifiers before touching anodes to prevent electrical shock.",
-                section1_title: "The Battery Effect: Dissimilar Metals",
-                section1_intro: "When two different metals are submerged in water (an electrolyte), they form a ",
-                galvanic_cell: "galvanic cell",
-                battery_term: "—essentially a battery.",
-                how_it_works: "How It Works",
-                formula1: "Anode (Sacrificial Metal) → Oxidation → Electrons Flow → Cathode (Protected Metal)",
-                work1: "<strong>Spiral Case Material:</strong> Typically Carbon Steel or Cast Iron (less noble).",
-                work2: "<strong>Runner Material:</strong> Stainless Steel 13Cr4Ni or Martensitic Stainless (more noble).",
-                work3: "<strong>The Problem:</strong> Without protection, the spiral case becomes the <strong>anode</strong> and corrodes rapidly, especially in aggressive water (high conductivity, low pH, or dissolved oxygen).",
-                electro_series: "The Electrochemical Series",
-                most_active: "Most Active (Anodic) ↓",
-                series1: "Magnesium (Mg) - Most sacrificial",
-                series2: "Zinc (Zn) - Common choice",
-                series3: "Aluminum (Al)",
-                series4: "Carbon Steel (Fe)",
-                series5: "Stainless Steel (Cr/Ni) - Protected",
-                most_noble: "Most Noble (Cathodic) ↑",
-                key_principle: "<strong>💡 Key Principle:</strong> By installing a more active metal (Zinc or Magnesium), we force it to corrode <em>instead</em> of the turbine components.",
-                section2_title: "Sacrificial Anodes: Inspection Protocol",
-                step1_title: "Step 1: Locate All Anodes",
-                step1_text: "Typical Francis turbine installations have anodes in:",
-                step1_1: "<strong>Spiral Case:</strong> 4-8 anodes distributed around the circumference.",
-                step1_2: "<strong>Draft Tube:</strong> 2-4 anodes near the cone section.",
-                step1_3: "<strong>Stay Ring:</strong> Additional anodes if the stay ring is carbon steel.",
-                step2_title: "Step 2: Visual Inspection",
-                step2_1: "<strong>Surface Condition:</strong> Anodes should show white/gray corrosion products (zinc oxide/hydroxide).",
-                step2_2: "<strong>Measure Remaining Mass:</strong> Use calipers or a ruler to measure the remaining thickness/diameter.",
-                step2_3: "<strong>Document:</strong> Take photos and record dimensions for each anode.",
-                visual1: "[Visualization: New Anode (100%) vs. 50% Consumed vs. 75% Consumed]",
-                step3_title: "Step 3: Connection Integrity Check",
-                step3_intro: "The anode MUST have a clean, metal-to-metal connection to the turbine body.",
-                step3_1: "<strong>Inspect Mounting Bolt:</strong> Check for corrosion, looseness, or paint/coating on contact surfaces.",
-                step3_2: "<strong>Continuity Test:</strong> Use a multimeter (resistance mode) to verify electrical continuity between the anode and the turbine casing (should be < 1 Ω).",
-                step3_3: "<strong>Clean Contact Surfaces:</strong> Use a wire brush to remove any oxide layer, paint, or debris from the mounting surface.",
-                warning_text: "<strong>⚠️ CRITICAL:</strong> If the anode is electrically isolated (painted surface, corroded bolt, loose connection), it will NOT protect the turbine. The runner will become the anode and corrode instead.",
-                section3_title: "The 50% Rule: Replacement Criteria",
-                why50_title: "Why 50%?",
-                why50_text: "Anodes are designed with a <strong>safety margin</strong>. Once 50% of the original mass is consumed:",
-                why50_1: "<strong>Reduced Surface Area:</strong> The anode's ability to protect decreases exponentially.",
-                why50_2: "<strong>Increased Resistance:</strong> Corrosion products build up, reducing electrical contact.",
-                why50_3: "<strong>Risk of Detachment:</strong> Mechanical integrity is compromised—the anode may fall off.",
-                replace_proc_title: "Replacement Procedure",
-                replace_proc_1: "<strong>Remove Old Anode:</strong> Unbolt and discard the consumed anode.",
-                replace_proc_2: "<strong>Clean Mounting Surface:</strong> Wire brush the contact area to bare metal (remove all paint, rust, and corrosion products).",
-                replace_proc_3: "<strong>Install New Anode:</strong> Use a new stainless steel bolt with a star washer to ensure tight contact.",
-                replace_proc_4: "<strong>Torque Specification:</strong> Tighten to manufacturer's spec (typically 40-60 Nm for M12 bolts).",
-                replace_proc_5: "<strong>Verify Continuity:</strong> Re-test with multimeter (< 1 Ω).",
-                formula2: "If Remaining Mass ≤ 50% → REPLACE IMMEDIATELY",
-                tech_note: "<strong>💡 Tech Note:</strong> If you delay replacement beyond 50%, the runner becomes the \"sacrificial anode\" and will develop pitting corrosion on the blade surfaces—requiring expensive welding repairs.",
-                section4_title: "Anode Continuity: The Metal-to-Metal Rule",
-                why_cont_title: "Why Continuity Matters",
-                why_cont_text: "For cathodic protection to work, electrons must flow freely from the anode to the turbine structure.",
-                failure_modes_title: "Common Failure Modes",
-                fail1: "<strong>Painted Surfaces:</strong> Paint acts as an insulator. Always remove paint from contact areas.",
-                fail2: "<strong>Corroded Bolts:</strong> Rust on the mounting bolt creates high resistance. Use stainless steel bolts.",
-                fail3: "<strong>Loose Connection:</strong> Vibration can loosen bolts over time. Use lock washers or Loctite.",
-                fail4: "<strong>Oxide Layer:</strong> Aluminum oxide or zinc oxide can form a non-conductive layer. Clean before installation.",
-                test_proc_title: "Continuity Test Procedure",
-                test1: "Set multimeter to resistance (Ω) mode.",
-                test2: "Place one probe on the anode surface.",
-                test3: "Place the other probe on the turbine casing (bare metal).",
-                test4: "<strong>Pass Criteria:</strong> Resistance < 1 Ω.",
-                test5: "<strong>Fail Criteria:</strong> Resistance > 5 Ω or \"OL\" (open circuit).",
-                visual2: "[Visualization: Multimeter Test Setup - Anode → Bolt → Casing]",
-                section5_title: "Materials & Tools Checklist",
-                tool1: "<strong>Replacement Anodes:</strong> Zinc (Zn) or Magnesium (Mg) anodes per OEM specification.",
-                tool2: "<strong>Hardware:</strong> Stainless steel bolts (M12 or M16), star washers, Loctite 243 (Blue).",
-                tool3: "<strong>Tools:</strong> Wire brush, calipers, multimeter, torque wrench.",
-                tool4: "<strong>Safety:</strong> Confined space entry kit, gas detector, ventilation fan.",
-                tool5: "<strong>Documentation:</strong> Camera, inspection log, anode consumption chart.",
-                section6_title: "Inspection Schedule",
-                sched1: "<strong>Annual Inspection:</strong> Visual check during scheduled outage.",
-                sched2: "<strong>Bi-Annual Measurement:</strong> Measure remaining mass and document consumption rate.",
-                sched3: "<strong>Immediate Replacement:</strong> If any anode reaches 50% consumption.",
-                sched4: "<strong>Emergency Check:</strong> If unusual corrosion is observed on the runner or spiral case.",
-                back_btn: "← Return to Master Manual"
+                title: "CATHODIC PROTECTION SYSTEM",
+                return: "BACK TO DASHBOARD",
+                s1_title: "ELECTROCHEMICAL LOGIC",
+                s1_desc: "Sacrificial Anodes (Zinc/Aluminum) create a galvanic cell where the anode corrodes instead of the turbine runner. Without this, the runner becomes the anode and dissolves into the water.",
+                h1_rule: "THE 50% CONSUMPTION RULE",
+                rule_desc: "If an anode has lost >50% of its original mass or shows deep pitting, replace it immediately. Residual mass cannot sustain the protective current.",
+                h1_spec: "CONTINUITY SPECIFICATION",
+                target_val: "< 1.0 Ω",
+                spec_note: "Measure from the anode surface to the turbine casing using a calibrated multimeter.",
+                s2_title: "MOUNTING & CONTINUITY INTEGRITY",
+                steps: "CRITICAL INSTALLATION STEPS",
+                l1: "Grind base plate to bare metal. <b>NO PAINT</b> under the anode.",
+                l2: "Use Grade 316 Stainless Steel bolts only. No carbon steel.",
+                l3: "Tighten until spring washers are fully flat for max contact.",
+                h2_warn: "CORROSION WARNING",
+                warn_desc: "If the interface is painted or greasy, the anode is 'Blind'—it looks okay but provides ZERO protection.",
+                crit_alert: "CRITICAL: High resistance (>5Ω) = Passive Corrosion Active.",
+                s3_title: "SYSTEM TROUBLESHOOTING",
+                th1: "OBSERVATION", th2: "DIAGNOSIS", th3: "CORRECTIVE ACTION",
+                obs1: "Anode looks brand new after 1 year", diag1: "Passivity / No Continuity", act1: "Remove, clean base, re-test resistance.",
+                obs2: "Rapid wasting (< 3 months)", diag2: "Stray Current Interference", act2: "Check motor grounding / Shaft grounding.",
+                obs3: "White chalky coating", diag3: "Normal Oxidation (Working)", act3: "No action required if mass > 50%."
             },
             bs: {
-                title: "⚛ Sistem katodne zaštite",
-                subtitle: "Protokol prevencije elektrohemijske korozije",
-                safety_title: "⚠️ OBAVEZNI SIGURNOSNI PROTOKOL",
-                safety_strong: "STANI. PROČITAJ PRVO OVO.",
-                safety1: "<strong>Odvodnjavanje obavezno:</strong> Spiralno kućište i sifon moraju biti potpuno ispražnjeni prije inspekcije anoda.",
-                safety2: "<strong>Ulazak u zatvoreni prostor:</strong> Slijedite protokole za zatvoreni prostor—ventilacija, testiranje gasa (O₂ > 19.5%) i sistem partnera.",
-                safety3: "<strong>Električna izolacija:</strong> Isključite sve ispravljače katodne zaštite prije dodirivanja anoda kako biste spriječili električni udar.",
-                section1_title: "Baterijski efekat: Različiti metali",
-                section1_intro: "Kada su dva različita metala potopljena u vodu (elektrolit), formiraju ",
-                galvanic_cell: "galvanski članak",
-                battery_term: "—u suštini bateriju.",
-                how_it_works: "Kako to radi",
-                formula1: "Anoda (Žrtveni metal) → Oksidacija → Tok elektrona → Katoda (Zaštićeni metal)",
-                work1: "<strong>Materijal spiralnog kućišta:</strong> Obično ugljenični čelik ili liveno gvožđe (manje plemenito).",
-                work2: "<strong>Materijal radnog kola:</strong> Nerđajući čelik 13Cr4Ni ili martenzitni nerđajući čelik (više plemenit).",
-                work3: "<strong>Problem:</strong> Bez zaštite, spiralno kućište postaje <strong>anoda</strong> i ubrzano korodira, posebno u agresivnoj vodi (visoka provodljivost, nizak pH ili rastvoreni kiseonik).",
-                electro_series: "Elektrohemijski niz",
-                most_active: "Najaktivniji (Anodni) ↓",
-                series1: "Magnezijum (Mg) - Najviše žrtvujući",
-                series2: "Cink (Zn) - Čest izbor",
-                series3: "Aluminijum (Al)",
-                series4: "Ugljenični čelik (Fe)",
-                series5: "Nerđajući čelik (Cr/Ni) - Zaštićen",
-                most_noble: "Najplemenitiji (Katodni) ↑",
-                key_principle: "<strong>💡 Ključni princip:</strong> Instaliranjem aktivnijeg metala (Cink ili Magnezijum), prisiljavamo ga da korodira <em>umjesto</em> turbinskih komponenti.",
-                section2_title: "Žrtvene anode: Protokol inspekcije",
-                step1_title: "Korak 1: Lociranje svih anoda",
-                step1_text: "Tipične instalacije Francis tubina imaju anode u:",
-                step1_1: "<strong>Spiralno kućište:</strong> 4-8 anoda raspoređenih po obimu.",
-                step1_2: "<strong>Sifon:</strong> 2-4 anode blizu konusnog dijela.",
-                step1_3: "<strong>Stator:</strong> Dodatne anode ako je stator od ugljeničnog čelika.",
-                step2_title: "Korak 2: Vizuelna inspekcija",
-                step2_1: "<strong>Stanje površine:</strong> Anode trebaju pokazivati bijele/sive proizvode korozije (cink oksid/hidroksid).",
-                step2_2: "<strong>Izmjerite preostalu masu:</strong> Koristite pomično mjerilo ili lenjir za mjerenje preostale debljine/prečnika.",
-                step2_3: "<strong>Dokumentujte:</strong> Fotografišite i zabilježite dimenzije za svaku anodu.",
-                visual1: "[Vizualizacija: Nova anoda (100%) vs. 50% Potrošena vs. 75% Potrošena]",
-                step3_title: "Korak 3: Provjera integriteta veze",
-                step3_intro: "Anoda MORA imati čist, metal-na-metal spoj sa tijelom turbine.",
-                step3_1: "<strong>Provjerite montažni vijak:</strong> Provjerite koroziju, labavost ili boju/premaz na kontaktnim površinama.",
-                step3_2: "<strong>Test kontinuiteta:</strong> Koristite multimetar (režim otpora) da potvrdite električni kontinuitet između anode i kućišta turbine (treba biti < 1 Ω).",
-                step3_3: "<strong>Očistite kontaktne površine:</strong> Koristite žičanu četku da uklonite oksidni sloj, boju ili nečistoće sa montažne površine.",
-                warning_text: "<strong>⚠️ KRITIČNO:</strong> Ako je anoda električno izolovana (obojena površina, korodirani vijak, labava veza), ona NEĆE štititi turbinu. Radno kolo će postati anoda i korodirati umjesto nje.",
-                section3_title: "Pravilo 50%: Kriterijumi zamjene",
-                why50_title: "Zašto 50%?",
-                why50_text: "Anode su dizajnirane sa <strong>sigurnosnom marginom</strong>. Kada se potroši 50% originalne mase:",
-                why50_1: "<strong>Smanjena površina:</strong> Sposobnost zaštite anode eksponencijalno opada.",
-                why50_2: "<strong>Povećan otpor:</strong> Proizvodi korozije se nakupljaju, smanjujući električni kontakt.",
-                why50_3: "<strong>Rizik od odvajanja:</strong> Mehanički integritet je ugrožen—anoda može otpasti.",
-                replace_proc_title: "Procedura zamjene",
-                replace_proc_1: "<strong>Uklonite staru anodu:</strong> Odvrnite i bacite potrošenu anodu.",
-                replace_proc_2: "<strong>Očistite montažnu površinu:</strong> Očistite kontaktnu površinu žičanom četkom do golog metala (uklonite svu boju, hrđu i proizvode korozije).",
-                replace_proc_3: "<strong>Instalirajte novu anodu:</strong> Koristite novi vijak od nerđajućeg čelika sa zvjezdastom podloškom da osigurate čvrst kontakt.",
-                replace_proc_4: "<strong>Specifikacija momenta:</strong> Zategnite prema specifikaciji proizvođača (obično 40-60 Nm za M12 vijke).",
-                replace_proc_5: "<strong>Potvrdite kontinuitet:</strong> Ponovo testirajte multimetrom (< 1 Ω).",
-                formula2: "Ako je Preostala Masa ≤ 50% → ZAMIJENITE ODMAH",
-                tech_note: "<strong>Tehnička napomena:</strong> Ako odgodite zamjenu nakon 50%, radno kolo postaje \"žrtvena anoda\" i razviće jamičastu koroziju na lopaticama—što zahtijeva skupe popravke zavarivanjem.",
-                section4_title: "Kontinuitet anode: Pravilo metal-na-metal",
-                why_cont_title: "Zašto je kontinuitet važan",
-                why_cont_text: "Da bi katodna zaštita radila, elektroni moraju slobodno teći od anode do strukture turbine.",
-                failure_modes_title: "Uobičajeni načini kvara",
-                fail1: "<strong>Obojene površine:</strong> Boja djeluje kao izolator. Uvijek uklonite boju sa kontaktnih područja.",
-                fail2: "<strong>Korodirani vijci:</strong> Hrđa na montažnom vijku stvara visok otpor. Koristite vijke od nerđajućeg čelika.",
-                fail3: "<strong>Labava veza:</strong> Vibracije mogu vremenom olabaviti vijke. Koristite sigurnosne podloške ili Loctite.",
-                fail4: "<strong>Oksidni sloj:</strong> Aluminijum oksid ili cink oksid mogu formirati neprovodni sloj. Očistite prije instalacije.",
-                test_proc_title: "Procedura testa kontinuiteta",
-                test1: "Postavite multimetar na režim otpora (Ω).",
-                test2: "Postavite jednu sondu na površinu anode.",
-                test3: "Postavite drugu sondu na kućište turbine (goli metal).",
-                test4: "<strong>Kriterijum prolaza:</strong> Otpor < 1 Ω.",
-                test5: "<strong>Kriterijum pada:</strong> Otpor > 5 Ω ili \"OL\" (otvoreno kolo).",
-                visual2: "[Vizualizacija: Postavka testa multimetrom - Anoda → Vijak → Kućište]",
-                section5_title: "Lista materijala i alata",
-                tool1: "<strong>Zamjenske anode:</strong> Cink (Zn) ili Magnezijum (Mg) prema OEM specifikaciji.",
-                tool2: "<strong>Okov:</strong> Vijci od nerđajućeg čelika (M12 ili M16), zvjezdaste podloške, Loctite 243 (Plavi).",
-                tool3: "<strong>Alati:</strong> Žičana četka, pomično mjerilo, multimetar, moment ključ.",
-                tool4: "<strong>Sigurnost:</strong> Komplet za ulazak u zatvoreni prostor, detektor gasa, ventilator.",
-                tool5: "<strong>Dokumentacija:</strong> Kamera, dnevnik inspekcije, tabela potrošnje anoda.",
-                section6_title: "Raspored inspekcije",
-                sched1: "<strong>Godišnja inspekcija:</strong> Vizuelna provjera tokom planiranog zastoja.",
-                sched2: "<strong>Polugodišnje mjerenje:</strong> Izmjerite preostalu masu i dokumentujte stopu potrošnje.",
-                sched3: "<strong>Hitna zamjena:</strong> Ako bilo koja anoda dostigne 50% potrošnje.",
-                sched4: "<strong>Hitna provjera:</strong> Ako se primijeti neobična korozija na radnom kolu ili spiralnom kućištu.",
-                back_btn: "← Povratak na Glavni priručnik"
-
+                title: "KATODNA ZAŠTITA SISTEMA",
+                return: "POVRATAK NA KONTROLNU TABLU",
+                s1_title: "ELEKTROHEMIJSKA LOGIKA",
+                s1_desc: "Žrtvovane anode (Cink/Aluminij) stvaraju galvanski članak gdje anoda korodira umjesto radnog kola turbine.",
+                h1_rule: "PRAVILO 50% POTROŠNJE",
+                rule_desc: "Ako je anoda izgubila >50% mase ili pokazuje duboka oštećenja, odmah je zamijenite. Preostala masa ne može održati zaštitnu struju.",
+                h1_spec: "SPECIFIKACIJA KONTINUITETA",
+                target_val: "< 1.0 Ω",
+                spec_note: "Mjerite od površine anode do kućišta turbine koristeći kalibrisani multimetar.",
+                s2_title: "INTEGRITET MONTAŽE I KONTINUITETA",
+                steps: "KRITIČNI KORACI INSTALACIJE",
+                l1: "Izbrusite bazu do sjajnog metala. <b>BEZ BOJE</b> ispod anode.",
+                l2: "Koristite vijke od nehrđajućeg čelika 316. Bez običnog čelika.",
+                l3: "Pritegnite dok elastične podloške ne budu potpuno ravne.",
+                h2_warn: "UPOZORENJE O KOROZIJI",
+                warn_desc: "Ako je baza ofarbana ili masna, anoda je 'slijepa'—izgleda dobro ali pruža NULA zaštite.",
+                crit_alert: "KRITIČNO: Visok otpor (>5Ω) = Aktivna pasivna korozija.",
+                s3_title: "RJEŠAVANJE PROBLEMA",
+                th1: "ZAPAŽANJE", th2: "DIJAGNOZA", th3: "KOREKTIVNA AKCIJA",
+                obs1: "Anoda izgleda kao nova nakon 1 godine", diag1: "Pasivnost / Nema kontinuiteta", act1: "Skinite, očistite bazu, ponovo testirajte.",
+                obs2: "Brza potrošnja (< 3 mjeseca)", diag2: "Lutajuće struje / Interferencija", act2: "Provjerite uzemljenje motora i vratila.",
+                obs3: "Bijeli kredast sloj", diag3: "Normalna oksidacija (Radi)", act3: "Nije potrebna akcija ako je masa > 50%."
             }
         };
 
         function setLang(lang) {
+            localStorage.setItem('anohub_lang_pref', lang);
+            document.querySelectorAll('.btn-lang').forEach(btn => btn.classList.remove('active-lang'));
+            if (lang === 'en') document.getElementById('btnEn').classList.add('active-lang');
+            else document.getElementById('btnBs').classList.add('active-lang');
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
-                if (i18n[lang][key]) {
-                    el.innerHTML = i18n[lang][key];
-                }
+                if (i18n[lang][key]) el.innerHTML = i18n[lang][key];
             });
-
-            // Update button states
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.innerText.toLowerCase() === lang) {
-                    btn.classList.add('active');
-                }
-            });
-
-            localStorage.setItem('anohub_lang_pref', lang);
         }
-
-        // Initialize from storage or default to English
-        const savedLang = localStorage.getItem('anohub_lang_pref') || 'en';
-        setLang(savedLang);
+        setLang(localStorage.getItem('anohub_lang_pref') || 'en');
     </script>
 </body>
 
