@@ -5,238 +5,267 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SOP: MIV & Distributor Detail</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        /* Precision Engineering Theme */
-        :root {
-            --tech-blue: #0056b3;
-            --tech-grey: #e9ecef;
-            --tech-dark: #212529;
-            --border: #dee2e6;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
 
         body {
-            font-family: 'Segoe UI', sans-serif;
-            background: var(--tech-grey);
-            color: var(--tech-dark);
-            line-height: 1.6;
-            margin: 0;
-            padding: 40px;
+            font-family: 'JetBrains Mono', monospace;
+            background-color: #0f172a;
+            color: #cbd5e1;
         }
 
-        .container {
-            max-width: 960px;
-            margin: 0 auto;
-            background: white;
-            padding: 50px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            border-top: 5px solid var(--tech-blue);
+        .border-tech {
+            border: 1px solid #334155;
         }
 
-        h1 {
-            margin-top: 0;
-            color: var(--tech-blue);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        h2 {
-            border-bottom: 2px solid var(--border);
-            padding-bottom: 10px;
-            margin-top: 40px;
-        }
-
-        h3 {
-            color: var(--tech-blue);
-            margin-bottom: 5px;
-        }
-
-        .spec-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 30px;
+        .header-strip {
+            background: linear-gradient(90deg, #0ea5e9 0%, transparent 100%);
+            height: 2px;
+            margin-bottom: 2rem;
+            margin-top: 0.5rem;
         }
 
         .spec-card {
-            background: #f8f9fa;
-            padding: 20px;
-            border-left: 4px solid var(--tech-blue);
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid #334155;
+            transition: all 0.3s ease;
         }
 
-        .procedure-step {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .step-num {
-            background: var(--tech-blue);
-            color: white;
-            width: 30px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            font-weight: bold;
-            flex-shrink: 0;
+        .spec-card:hover {
+            border-color: #0ea5e9;
+            background: rgba(30, 41, 59, 0.8);
         }
 
         .alert-box {
-            background: #fff3cd;
-            color: #856404;
-            padding: 15px;
-            border: 1px solid #ffeeba;
-            border-radius: 4px;
-            margin: 20px 0;
+            background: rgba(180, 83, 9, 0.1);
+            border-left: 4px solid #f59e0b;
+            color: #fbbf24;
         }
 
         table {
             width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        th,
-        td {
-            padding: 12px;
-            border: 1px solid var(--border);
-            text-align: left;
+            border-collapse: separate;
+            border-spacing: 0;
         }
 
         th {
-            background: #e9ecef;
-        }
-
-        .back-link {
-            display: inline-block;
-            margin-top: 30px;
-            color: var(--tech-blue);
-            text-decoration: none;
+            background: #1e293b;
+            color: #94a3b8;
             font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #334155;
         }
 
-        .back-link:hover {
-            text-decoration: underline;
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #1e293b;
+            font-size: 0.875rem;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .step-circle {
+            width: 32px;
+            height: 32px;
+            background: #0ea5e9;
+            color: #0f172a;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
         }
     </style>
 </head>
 
-<body>
-    <div class="container">
-        <h1>MIV & Distributor Integrity Protocol</h1>
-        <p><strong>Ref Code:</strong> MIV-DIST-01 | <strong>Revision:</strong> 2.0</p>
+<body class="p-6 md:p-12 max-w-5xl mx-auto">
 
-        <div class="alert-box">
-            <strong>CRITICAL INTERLOCK:</strong> This module is directly tied to the Mission Control Startup Sequence.
-            Any failure here prevents unit start.
-        </div>
-
-        <h2>1. MIV Angular Calibration</h2>
-        <div class="spec-grid">
-            <div class="spec-card">
-                <h3>The 0% Mechanical Zero</h3>
-                <p><strong>Requirement:</strong> The MIV seal ring must contact the seat evenly. A SCADA reading of 0%
-                    implies the limit switch is engaged, but not necessarily that the valve is water-tight.</p>
-                <p><strong>Verification:</strong> Perform Spiral Case drain test. Leakage must be < 5 L/min.</p>
-            </div>
-            <div class="spec-card">
-                <h3>The 80° Open Position</h3>
-                <p><strong>Requirement:</strong> The valve disc must align perfectly with the flow to minimize hydraulic
-                    losses.</p>
-                <p><strong>Tolerance:</strong> 80° ± 0.5°. Any deviation creates a vortex shedder.</p>
-            </div>
-        </div>
-
-        <h2>2. Distributor Synchronicity Check</h2>
-        <p>The 20 Guide Vanes must move in unison. A single lagging vane creates a "jet" effect.</p>
-
-        <div class="procedure-step">
-            <div class="step-num">1</div>
+    <!-- Header -->
+    <header class="mb-12">
+        <div class="flex justify-between items-start">
             <div>
-                <strong>Lock Out Unit:</strong> De-energize HPU Oil Pressure.
+                <h1 class="text-3xl font-black text-white uppercase tracking-tighter flex items-center gap-3">
+                    <i data-lucide="git-pull-request" class="text-cyan-500"></i>
+                    MIV & Distributor <span class="text-cyan-500">Integrity</span>
+                </h1>
+                <div class="header-strip w-1/2"></div>
+                <p class="text-slate-500 font-bold text-xs uppercase tracking-widest">
+                    Ref Code: MIV-DIST-01 | Revision: 2.0 | Status: <span class="text-green-500">ACTIVE</span>
+                </p>
             </div>
+            <a href="Francis_Horizontal_Dashboard.html"
+                class="text-xs text-slate-500 hover:text-white uppercase font-bold flex items-center gap-2 transition">
+                <i data-lucide="layout-dashboard"></i> Return to Dashboard
+            </a>
         </div>
-        <div class="procedure-step">
-            <div class="step-num">2</div>
+    </header>
+
+    <!-- Critical Alert -->
+    <div class="alert-box p-4 mb-12 rounded-r">
+        <div class="flex items-start gap-3">
+            <i data-lucide="alert-triangle" class="w-6 h-6 flex-shrink-0"></i>
             <div>
-                <strong>Feeler Gauge Test:</strong> With distributor at 0% (Squeeze), verify 0.05mm feeler gauge cannot
-                pass between ANY vane vertical seal.
+                <strong class="font-bold uppercase tracking-wide">CRITICAL INTERLOCK</strong>
+                <p class="text-sm mt-1 opacity-90">This module is directly tied to the Mission Control Startup Sequence.
+                    Any failure here prevents unit start.</p>
             </div>
         </div>
-        <div class="procedure-step">
-            <div class="step-num">3</div>
-            <div>
-                <strong>Linkage Measurement:</strong> Measure distance from Regulating Ring pin to Vane lever arm. All
-                20 must match within 1.0mm.
-            </div>
-        </div>
-
-        <div class="alert-box">
-            <strong>Warning (Turbulence):</strong> If Vane #5 is open 2° more than others, it directs a high-velocity
-            jet at the runner blade leading edge, causing cavitation pitting within 500 hours.
-        </div>
-
-        <h2>3. MIV Cylinder Maintenance</h2>
-        <table class="table">
-            <tr>
-                <th>Component</th>
-                <th>Check Type</th>
-                <th>Frequency</th>
-            </tr>
-            <tr>
-                <td>Cylinder Wiper Seal</td>
-                <td>Visual (Oil weeping)</td>
-                <td>Monthly</td>
-            </tr>
-            <tr>
-                <td>Trunnion Mount Welds</td>
-                <td>NDT (Dye Penetrant)</td>
-                <td>Annually</td>
-            </tr>
-            <tr>
-                <td>Position Transducer</td>
-                <td>Calibration (4-20mA)</td>
-                <td>6-Months</td>
-            </tr>
-        </table>
-
-        <h2>4. Hose Lifecycle Management</h2>
-        <p>Flexible hydraulic hoses under 125 Bar pressure are "ticking clocks".</p>
-
-        <table>
-            <tr>
-                <th>Hose ID</th>
-                <th>Location</th>
-                <th>Install Date</th>
-                <th>Mandatory Replace Date</th>
-                <th>Status</th>
-            </tr>
-            <tr>
-                <td>HOSE-MIV-01</td>
-                <td>MIV Open Line (A)</td>
-                <td>2020-01-15</td>
-                <td>2025-01-15</td>
-                <td style="color:red; font-weight:bold;">CRITICAL</td>
-            </tr>
-            <tr>
-                <td>HOSE-MIV-02</td>
-                <td>MIV Close Line (B)</td>
-                <td>2020-01-15</td>
-                <td>2025-01-15</td>
-                <td style="color:red; font-weight:bold;">CRITICAL</td>
-            </tr>
-            <tr>
-                <td>HOSE-HPU-05</td>
-                <td>Accumulator Rank 1</td>
-                <td>2022-06-10</td>
-                <td>2027-06-10</td>
-                <td style="color:green;">OK</td>
-            </tr>
-        </table>
-
-        <a href="./Francis_Mission_Control.html" class="back-link">← Return to Mission Control</a>
     </div>
+
+    <!-- Section 1: MIV Angular Calibration -->
+    <section class="mb-16">
+        <h2 class="text-xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+            <i data-lucide="compass"></i> 1. MIV ANGULAR CALIBRATION
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="spec-card p-6 rounded">
+                <h3 class="text-white font-bold mb-2 text-lg">The 0% Mechanical Zero</h3>
+                <p class="text-sm text-slate-400 mb-4">The MIV seal ring must contact the seat evenly. A SCADA reading
+                    of 0% implies the limit switch is engaged.</p>
+                <div class="bg-black/40 p-3 rounded border border-slate-700">
+                    <span class="text-xs text-slate-500 uppercase font-bold block mb-1">Testing Requirement</span>
+                    <span class="text-cyan-400 font-mono text-sm">Spiral Case Drain Leakage < 5 L/min</span>
+                </div>
+            </div>
+
+            <div class="spec-card p-6 rounded">
+                <h3 class="text-white font-bold mb-2 text-lg">The 80° Open Position</h3>
+                <p class="text-sm text-slate-400 mb-4">Valve disc must align perfectly with flow to minimize hydraulic
+                    losses and vortex shedding.</p>
+                <div class="bg-black/40 p-3 rounded border border-slate-700">
+                    <span class="text-xs text-slate-500 uppercase font-bold block mb-1">Calibration Tolerance</span>
+                    <span class="text-cyan-400 font-mono text-sm">80.0° ± 0.5° (Strict)</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 2: Distributor Sync -->
+    <section class="mb-16">
+        <h2 class="text-xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+            <i data-lucide="refresh-cw"></i> 2. DISTRIBUTOR SYNCHRONICITY
+        </h2>
+        <p class="text-slate-400 text-sm mb-6 max-w-2xl">The 20 Guide Vanes must move in unison. A single lagging vane
+            creates a "jet" effect that can destroy runner blades.</p>
+
+        <div class="space-y-4">
+            <div class="flex items-center gap-4 p-4 border-tech rounded bg-slate-900/50">
+                <div class="step-circle">1</div>
+                <div>
+                    <strong class="text-white block">Lock Out Unit</strong>
+                    <span class="text-sm text-slate-500">De-energize HPU Oil Pressure totally.</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-4 p-4 border-tech rounded bg-slate-900/50">
+                <div class="step-circle">2</div>
+                <div>
+                    <strong class="text-white block">Feeler Gauge Test</strong>
+                    <span class="text-sm text-slate-500">At 0% (Squeeze), verify 0.05mm gauge cannot pass between ANY
+                        vane seal.</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-4 p-4 border-tech rounded bg-slate-900/50">
+                <div class="step-circle">3</div>
+                <div>
+                    <strong class="text-white block">Linkage Measurement</strong>
+                    <span class="text-sm text-slate-500">Measure Regulating Ring pin to Vane lever arm. All 20 must
+                        match ±1.0mm.</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-6 p-4 border border-red-900/50 bg-red-900/10 rounded flex items-center gap-4">
+            <i data-lucide="flame" class="text-red-500"></i>
+            <p class="text-xs text-red-300"><strong>CAVITATION RISK:</strong> If Vane #5 is open 2° more than others, it
+                directs a high-velocity jet at the runner, causing pitting within 500 hours.</p>
+        </div>
+    </section>
+
+    <!-- Section 3: Maintenance Tables -->
+    <section class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+
+        <div>
+            <h2 class="text-xl font-bold text-white mb-4">3. Cylinder Audit</h2>
+            <div class="border-tech rounded overflow-hidden">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Component</th>
+                            <th>Check</th>
+                            <th>Freq</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-slate-300">Wiper Seal</td>
+                            <td class="text-slate-500">Visual (Weeping)</td>
+                            <td class="text-white">Monthly</td>
+                        </tr>
+                        <tr>
+                            <td class="text-slate-300">Welds</td>
+                            <td class="text-slate-500">NDT (Dye Pen)</td>
+                            <td class="text-white">Yearly</td>
+                        </tr>
+                        <tr>
+                            <td class="text-slate-300">Transducer</td>
+                            <td class="text-slate-500">4-20mA Calib</td>
+                            <td class="text-white">6-Mo</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div>
+            <h2 class="text-xl font-bold text-white mb-4">4. Hose Lifecycle</h2>
+            <div class="border-tech rounded overflow-hidden">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tag ID</th>
+                            <th>Exp Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-slate-300 font-mono">HOSE-MIV-01</td>
+                            <td class="text-slate-500">Jan 2025</td>
+                            <td class="font-bold text-red-500 animate-pulse">CRITICAL</td>
+                        </tr>
+                        <tr>
+                            <td class="text-slate-300 font-mono">HOSE-MIV-02</td>
+                            <td class="text-slate-500">Jan 2025</td>
+                            <td class="font-bold text-red-500 animate-pulse">CRITICAL</td>
+                        </tr>
+                        <tr>
+                            <td class="text-slate-300 font-mono">HOSE-HPU-05</td>
+                            <td class="text-slate-500">Jun 2027</td>
+                            <td class="font-bold text-green-500">OK</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </section>
+
+    <footer class="mt-16 pt-8 border-t border-slate-800 text-center text-slate-600 text-xs">
+        FRANCIS UNIT 1 • PRECISION MAINTENANCE PROTOCOLS
+    </footer>
+
+    <script>
+        lucide.createIcons();
+    </script>
 </body>
 
 </html>

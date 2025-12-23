@@ -4,378 +4,352 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Francis Unit 1: System Map</title>
-    <!-- Tailwind CSS -->
+    <title>FRANCIS UNIT 1 - SYSTEM MAP & LOGIC HUB</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        /* Industrial Dark Mode Config */
-        :root {
-            --neon-blue: #0ea5e9;
-            --neon-green: #22c55e;
-            --neon-red: #ef4444;
-            --neon-amber: #f59e0b;
-            --bg-dark: #0f172a;
-            --bg-card: #1e293b;
-            --grid-line: rgba(148, 163, 184, 0.1);
-        }
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap');
 
         body {
             background-color: #020617;
-            background-image:
-                linear-gradient(var(--grid-line) 1px, transparent 1px),
-                linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-            background-size: 40px 40px;
-            color: #e2e8f0;
-            font-family: 'Segoe UI', monospace;
+            color: #cbd5e1;
+            font-family: 'JetBrains Mono', monospace;
         }
 
+        /* Sector Cards */
         .sector-card {
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(148, 163, 184, 0.2);
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(51, 65, 85, 0.5);
             transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
         }
 
         .sector-card:hover {
-            border-color: var(--neon-blue);
-            box-shadow: 0 0 20px rgba(14, 165, 233, 0.1);
+            border-color: rgba(96, 165, 250, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
         }
 
+        /* Status Dots */
         .status-dot {
-            width: 12px;
-            height: 12px;
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
             cursor: pointer;
-            box-shadow: 0 0 10px currentColor;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s;
+            box-shadow: 0 0 5px currentColor;
         }
 
-        .status-dot:hover {
-            transform: scale(1.2);
+        .status-green {
+            background-color: #22c55e;
+            color: #22c55e;
         }
 
-        .pulse-ring {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            animation: ripple 2s infinite;
+        .status-yellow {
+            background-color: #eab308;
+            color: #eab308;
         }
 
-        @keyframes ripple {
-            0% {
-                opacity: 1;
-                transform: translate(-50%, -50%) scale(1);
-                border: 1px solid currentColor;
-            }
+        .status-red {
+            background-color: #ef4444;
+            color: #ef4444;
+            animation: blink 1s infinite;
+        }
 
-            100% {
-                opacity: 0;
-                transform: translate(-50%, -50%) scale(2);
-                border: 0px solid currentColor;
+        @keyframes blink {
+            50% {
+                opacity: 0.5;
             }
         }
 
+        /* Module Link */
         .module-link {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            background: rgba(30, 41, 59, 0.4);
+            border: 1px solid rgba(51, 65, 85, 0.3);
             transition: all 0.2s;
         }
 
         .module-link:hover {
-            transform: translateX(5px);
-            color: white;
+            background: rgba(30, 41, 59, 0.8);
+            border-color: #3b82f6;
+        }
+
+        /* Health Meter */
+        .health-dial {
+            background: conic-gradient(from 180deg, #22c55e 0%, #22c55e var(--health), #334155 var(--health), #334155 100%);
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.2);
+        }
+
+        .dial-inner {
+            background: #020617;
+            width: 80%;
+            height: 80%;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
     </style>
 </head>
 
-<body class="min-h-screen p-8">
+<body class="min-h-screen p-4 md:p-8">
 
-    <!-- Top Bar: Mission Control Header -->
-    <header class="flex flex-col md:flex-row justify-between items-center mb-10 border-b border-slate-800 pb-6 gap-6">
+    <!-- Header & Health Score -->
+    <header
+        class="flex flex-col xl:flex-row justify-between items-start xl:items-center mb-10 border-b border-slate-800 pb-6 gap-8">
         <div>
             <div class="flex items-center gap-3">
-                <i data-lucide="activity" class="text-cyan-400 w-8 h-8"></i>
-                <h1 class="text-3xl font-black text-white tracking-widest uppercase">Francis <span
-                        class="text-cyan-400">Unit 1</span></h1>
+                <i data-lucide="cpu" class="text-cyan-400 w-10 h-10"></i>
+                <div>
+                    <h1 class="text-4xl font-black text-white tracking-tighter uppercase">FRANCIS <span
+                            class="text-cyan-400">UNIT 1</span></h1>
+                    <p class="text-slate-500 text-xs tracking-widest mt-1">LOGIC HUB & SYSTEM MAP</p>
+                </div>
             </div>
-            <p class="text-slate-500 font-mono text-sm mt-1 ml-11">System Map & Operational Diagnostics</p>
         </div>
 
-        <!-- MAIN LAUNCH BUTTON -->
-        <a href="./Francis_Mission_Control.html"
-            class="flex-1 max-w-xl group relative px-8 py-4 bg-gradient-to-r from-cyan-900/50 to-blue-900/50 border border-cyan-500/50 rounded hover:from-cyan-800 hover:to-blue-800 transition flex items-center justify-center gap-4 shadow-[0_0_30px_rgba(6,182,212,0.15)] animate-pulse hover:animate-none">
-            <div class="absolute inset-0 bg-cyan-500/10 blur opacity-0 group-hover:opacity-100 transition"></div>
-            <i data-lucide="rocket" class="text-cyan-400 w-6 h-6"></i>
-            <div class="text-left">
-                <div class="text-[10px] text-cyan-300 font-bold uppercase tracking-wider">Mission Critical</div>
-                <div class="text-white text-lg font-black tracking-widest">[ POKRENI MISSION CONTROL - STARTUP ]</div>
-            </div>
-        </a>
+        <!-- CENTER: STARTUP & OBSERVATION CONTROL -->
+        <div class="flex gap-4">
+            <a href="Francis_Mission_Control.html"
+                class="px-6 py-4 bg-red-900/20 border border-red-500/50 rounded flex items-center justify-center gap-3 hover:bg-red-900/40 transition group">
+                <i data-lucide="power" class="text-red-500 w-6 h-6 group-hover:scale-110 transition"></i>
+                <div class="text-left">
+                    <div class="text-[10px] text-red-400 font-bold uppercase tracking-wider">Mission Control</div>
+                    <div class="text-white text-sm font-black tracking-widest">START SEQUENCE</div>
+                </div>
+            </a>
 
-        <!-- SENSORY CHECKLIST BUTTON -->
-        <a href="./Francis_Sensory_Checklist.html"
-            class="px-6 py-4 bg-gradient-to-r from-amber-900/50 to-orange-900/50 border border-amber-500/50 rounded hover:from-amber-800 hover:to-orange-800 transition flex items-center justify-center gap-3 shadow-[0_0_20px_rgba(245,158,11,0.15)] group">
-            <i data-lucide="eye" class="text-amber-400 w-6 h-6 group-hover:scale-110 transition"></i>
-            <div class="text-left">
-                <div class="text-[10px] text-amber-300 font-bold uppercase tracking-wider">Human Sensory</div>
-                <div class="text-white text-sm font-black tracking-widest">DNEVNI PREGLED</div>
-            </div>
-        </a>
+            <a href="Francis_Observation_Log.html"
+                class="px-6 py-4 bg-amber-900/20 border border-amber-500/50 rounded flex items-center justify-center gap-3 hover:bg-amber-900/40 transition group">
+                <i data-lucide="eye" class="text-amber-500 w-6 h-6 group-hover:scale-110 transition"></i>
+                <div class="text-left">
+                    <div class="text-[10px] text-amber-400 font-bold uppercase tracking-wider">Operator Log</div>
+                    <div class="text-white text-sm font-black tracking-widest">LOG OBSERVATION</div>
+                </div>
+            </a>
 
-        <div class="px-6 py-3 bg-slate-900/50 border border-slate-700 rounded text-right">
-            <div class="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Grid Status</div>
-            <div class="text-green-500 font-bold flex items-center gap-2 justify-end">
-                SYNCED <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+            <!-- PEAK PRESSURE INDICATOR -->
+            <div
+                class="px-6 py-4 bg-slate-900/50 border border-slate-700/50 rounded flex items-center justify-center gap-3">
+                <div class="text-center">
+                    <div class="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Peak Press (24h)</div>
+                    <div class="text-white text-sm font-black tracking-widest flex items-center gap-2">
+                        16.2 Bar <span
+                            class="text-[10px] text-red-500 bg-red-900/20 px-1 rounded animate-pulse">HIGH</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT: HEALTH SCORE & TICKER -->
+        <div class="flex items-center gap-6 bg-slate-900/50 p-4 rounded border border-slate-800">
+            <div class="health-dial" style="--health: 88%">
+                <div class="dial-inner">
+                    <span class="text-2xl font-black text-white" id="scoreVal">88%</span>
+                    <span class="text-[8px] text-slate-500 uppercase">HEALTH</span>
+                </div>
+            </div>
+
+            <div class="w-48">
+                <div class="text-[10px] font-bold text-slate-500 uppercase mb-2 flex justify-between">
+                    <span>Active Risks</span>
+                    <span class="text-red-400 animate-pulse">2 CRITICAL</span>
+                </div>
+                <!-- Ticker -->
+                <div class="space-y-2 text-[10px]">
+                    <div class="flex justify-between items-center text-red-300">
+                        <span>• Shaft Seal Leak</span>
+                        <a href="Francis_Logic_Logger.html" class="text-slate-500 hover:text-white underline">LOGIC</a>
+                    </div>
+                    <div class="flex justify-between items-center text-red-500 font-bold">
+                        <span>• PEAK SURGE DETECTED</span>
+                        <a href="Francis_Symptom_Dictionary.html"
+                            class="text-red-400 underline hover:text-white">W-04-WH</a>
+                    </div>
+                </div>
             </div>
         </div>
     </header>
 
-    <!-- Main Grid: The 4 Sectors -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <!-- MAIN DASHBOARD GRID -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-        <!-- SECTOR 1: PROTOK & PRITISAK (The Arteries) -->
-        <div class="sector-card rounded-lg p-6 relative overflow-hidden group">
-            <div class="absolute top-0 left-0 w-1 h-full bg-blue-500/50 group-hover:bg-blue-400 transition"></div>
+        <!-- SECTOR 1: FLOW & PRESSURE -->
+        <div class="sector-card p-6 rounded-lg relative overflow-hidden group">
+            <div class="absolute top-0 left-0 w-1 h-full bg-cyan-500/50 group-hover:bg-cyan-400 transition"></div>
+            <h2 class="text-xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                <i data-lucide="droplets"></i> FLOW & PRESSURE
+            </h2>
 
-            <!-- Header -->
-            <div class="flex justify-between items-start mb-6">
-                <div>
-                    <h2 class="text-blue-400 font-black text-lg uppercase tracking-wide">Flow & Pressure</h2>
-                    <p class="text-slate-500 text-xs font-mono">The Arteries</p>
-                </div>
-                <i data-lucide="waves" class="text-blue-500/20 w-8 h-8 group-hover:text-blue-500/50 transition"></i>
-            </div>
-
-            <!-- Map Items -->
-            <div class="space-y-4">
-                <div
-                    class="flex items-center justify-between p-3 bg-slate-900/50 rounded border border-slate-700/50 hover:border-blue-500/30 transition">
-                    <a href="./Francis_SOP_MIV_Distributor_Detail.html"
-                        class="module-link flex items-center gap-3 text-slate-300">
-                        <i data-lucide="git-pull-request" class="w-4 h-4 text-blue-400"></i>
-                        <span class="text-sm font-bold">MIV & Bypass Detail</span>
-                    </a>
-                    <div onclick="toggleStatus(this)" class="status-dot bg-green-500 text-green-500"
-                        title="Click to change status"></div>
-                </div>
-
-                <div
-                    class="flex items-center justify-between p-3 bg-slate-900/50 rounded border border-slate-700/50 hover:border-blue-500/30 transition">
-                    <a href="./Francis_SOP_Intake.html" class="module-link flex items-center gap-3 text-slate-300">
-                        <i data-lucide="filter" class="w-4 h-4 text-blue-400"></i>
-                        <span class="text-sm font-bold">Intake / Trash Rack</span>
-                    </a>
-                    <div onclick="toggleStatus(this)" class="status-dot bg-yellow-500 text-yellow-500"></div>
-                </div>
-
-                <div
-                    class="flex items-center justify-between p-3 bg-slate-900/50 rounded border border-slate-700/50 hover:border-blue-500/30 transition">
-                    <a href="./Francis_SOP_DFT.html" class="module-link flex items-center gap-3 text-slate-300">
-                        <i data-lucide="wind" class="w-4 h-4 text-blue-400"></i>
-                        <span class="text-sm font-bold">Draft Tube / Air</span>
-                    </a>
-                    <div onclick="toggleStatus(this)" class="status-dot bg-green-500 text-green-500"></div>
-                </div>
-            </div>
-
-            <!-- Live Metric Sim -->
-            <div class="mt-6 pt-4 border-t border-slate-700/50">
-                <div class="flex justify-between text-xs font-mono">
-                    <span class="text-slate-500">Penstock:</span>
-                    <span class="text-blue-300">14.2 Bar</span>
-                </div>
-                <div class="w-full bg-slate-800 h-1 mt-1 rounded overflow-hidden">
-                    <div class="bg-blue-500 h-full w-[85%]"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- SECTOR 2: ROTACIJA & PRECIZNOST (The Bone & Muscle) -->
-        <div class="sector-card rounded-lg p-6 relative overflow-hidden group">
-            <div class="absolute top-0 left-0 w-1 h-full bg-slate-400/50 group-hover:bg-slate-200 transition"></div>
-
-            <div class="flex justify-between items-start mb-6">
-                <div>
-                    <h2 class="text-slate-200 font-black text-lg uppercase tracking-wide">Rotation</h2>
-                    <p class="text-slate-500 text-xs font-mono">Bone & Muscle</p>
-                </div>
-                <i data-lucide="settings"
-                    class="text-slate-500/20 w-8 h-8 group-hover:text-slate-500/50 transition"></i>
-            </div>
-
-            <div class="space-y-4">
-                <div
-                    class="flex items-center justify-between p-3 bg-slate-900/50 rounded border border-slate-700/50 hover:border-slate-400/30 transition">
-                    <a href="./Francis_SOP_Master_Valve_Distributor.html#distributor"
-                        class="module-link flex items-center gap-3 text-slate-300">
-                        <i data-lucide="layers" class="w-4 h-4 text-slate-400"></i>
-                        <span class="text-sm font-bold">Distributor Sync</span>
-                    </a>
-                    <div onclick="toggleStatus(this)" class="status-dot bg-green-500 text-green-500"></div>
-                </div>
-
-                <div
-                    class="flex items-center justify-between p-3 bg-slate-900/50 rounded border border-slate-700/50 hover:border-slate-400/30 transition">
-                    <a href="./Francis_SOP_Precision.html" class="module-link flex items-center gap-3 text-slate-300">
-                        <i data-lucide="crosshair" class="w-4 h-4 text-slate-400"></i>
-                        <span class="text-sm font-bold">Shaft Alignment</span>
-                    </a>
-                    <div onclick="toggleStatus(this)" class="status-dot bg-green-500 text-green-500"></div>
-                </div>
-
-                <div
-                    class="flex items-center justify-between p-3 bg-slate-900/50 rounded border border-slate-700/50 hover:border-slate-400/30 transition">
-                    <a href="./Francis_SOP_Bearings.html" class="module-link flex items-center gap-3 text-slate-300">
-                        <i data-lucide="disc" class="w-4 h-4 text-slate-400"></i>
-                        <span class="text-sm font-bold">Bearings & Lube</span>
-                    </a>
-                    <div onclick="toggleStatus(this)" class="status-dot bg-red-500 text-red-500 animate-pulse relative">
-                        <div class="pulse-ring"></div>
+            <div class="space-y-3">
+                <a href="Francis_SOP_MIV_Distributor_Detail.html" class="module-link group">
+                    <div class="flex items-center gap-3">
+                        <i data-lucide="git-pull-request" class="w-4 h-4 text-cyan-600 group-hover:text-cyan-400"></i>
+                        <span class="text-sm font-bold text-slate-300 group-hover:text-white">MIV & Bypass</span>
                     </div>
-                </div>
-            </div>
-
-            <div class="mt-6 pt-4 border-t border-slate-700/50">
-                <div class="flex justify-between text-xs font-mono">
-                    <span class="text-slate-500">Vibration X:</span>
-                    <span class="text-red-400 font-bold">125 µm ⚠</span>
-                </div>
-                <div class="w-full bg-slate-800 h-1 mt-1 rounded overflow-hidden">
-                    <div class="bg-red-500 h-full w-[90%]"></div>
-                </div>
+                    <div onclick="toggleStatus(event, this)" class="status-dot status-green"></div>
+                </a>
+                <a href="Francis_SOP_Penstock.html" class="module-link group">
+                    <div class="flex items-center gap-3">
+                        <i data-lucide="activity" class="w-4 h-4 text-cyan-600 group-hover:text-cyan-400"></i>
+                        <span class="text-sm font-bold text-slate-300 group-hover:text-white">Penstock</span>
+                    </div>
+                    <div onclick="toggleStatus(event, this)" class="status-dot status-green"></div>
+                </a>
+                <a href="Francis_SOP_Intake.html" class="module-link group">
+                    <div class="flex items-center gap-3">
+                        <i data-lucide="filter" class="w-4 h-4 text-cyan-600 group-hover:text-cyan-400"></i>
+                        <span class="text-sm font-bold text-slate-300 group-hover:text-white">Intake</span>
+                    </div>
+                    <div onclick="toggleStatus(event, this)" class="status-dot status-yellow"></div>
+                </a>
             </div>
         </div>
 
-        <!-- SECTOR 3: ENERGIJA & KONTROLA (The Brain & Blood) -->
-        <div class="sector-card rounded-lg p-6 relative overflow-hidden group">
+        <!-- SECTOR 2: ROTATION (MECHANICAL) -->
+        <div class="sector-card p-6 rounded-lg relative overflow-hidden group">
             <div class="absolute top-0 left-0 w-1 h-full bg-amber-500/50 group-hover:bg-amber-400 transition"></div>
+            <h2 class="text-xl font-bold text-amber-500 mb-6 flex items-center gap-2">
+                <i data-lucide="settings"></i> ROTATION
+            </h2>
 
-            <div class="flex justify-between items-start mb-6">
-                <div>
-                    <h2 class="text-amber-400 font-black text-lg uppercase tracking-wide">Energy & Control</h2>
-                    <p class="text-slate-500 text-xs font-mono">Brain & Blood</p>
-                </div>
-                <i data-lucide="zap" class="text-amber-500/20 w-8 h-8 group-hover:text-amber-500/50 transition"></i>
+            <div class="space-y-3">
+                <a href="Francis_SOP_Bearings.html" class="module-link group">
+                    <div class="flex items-center gap-3">
+                        <i data-lucide="disc" class="w-4 h-4 text-amber-600 group-hover:text-amber-400"></i>
+                        <span class="text-sm font-bold text-slate-300 group-hover:text-white">Bearings (T/G)</span>
+                    </div>
+                    <div onclick="toggleStatus(event, this)" class="status-dot status-red"></div>
+                </a>
+                <a href="Francis_SOP_Shaft_Alignment.html" class="module-link group">
+                    <div class="flex items-center gap-3">
+                        <i data-lucide="crosshair" class="w-4 h-4 text-amber-600 group-hover:text-amber-400"></i>
+                        <span class="text-sm font-bold text-slate-300 group-hover:text-white">Shaft Alignment</span>
+                    </div>
+                    <div onclick="toggleStatus(event, this)" class="status-dot status-green"></div>
+                </a>
+                <a href="Francis_SOP_Recovery.html" class="module-link group">
+                    <div class="flex items-center gap-3">
+                        <i data-lucide="life-buoy" class="w-4 h-4 text-amber-600 group-hover:text-amber-400"></i>
+                        <span class="text-sm font-bold text-slate-300 group-hover:text-white">Seal Recovery</span>
+                    </div>
+                    <div onclick="toggleStatus(event, this)" class="status-dot status-yellow"></div>
+                </a>
             </div>
 
-            <div class="space-y-4">
-                <div
-                    class="flex items-center justify-between p-3 bg-slate-900/50 rounded border border-slate-700/50 hover:border-amber-500/30 transition">
-                    <a href="./Francis_Safety_System_Integrity.html"
-                        class="module-link flex items-center gap-3 text-slate-300">
-                        <i data-lucide="shield-alert" class="w-4 h-4 text-red-400"></i>
-                        <span class="text-sm font-bold">HPU Safety Integrity</span>
-                    </a>
-                    <div onclick="toggleStatus(this)" class="status-dot bg-green-500 text-green-500"></div>
-                </div>
-
-                <div
-                    class="flex items-center justify-between p-3 bg-slate-900/50 rounded border border-slate-700/50 hover:border-amber-500/30 transition">
-                    <a href="./Francis_SOP_Gov_Logic.html" class="module-link flex items-center gap-3 text-slate-300">
-                        <i data-lucide="cpu" class="w-4 h-4 text-amber-400"></i>
-                        <span class="text-sm font-bold">Governor Logic</span>
-                    </a>
-                    <div onclick="toggleStatus(this)" class="status-dot bg-green-500 text-green-500"></div>
-                </div>
-
-                <div
-                    class="flex items-center justify-between p-3 bg-slate-900/50 rounded border border-slate-700/50 hover:border-amber-500/30 transition">
-                    <a href="./Francis_SOP_Elec_Health.html" class="module-link flex items-center gap-3 text-slate-300">
-                        <i data-lucide="activity" class="w-4 h-4 text-amber-400"></i>
-                        <span class="text-sm font-bold">Electrical Health</span>
-                    </a>
-                    <div onclick="toggleStatus(this)" class="status-dot bg-green-500 text-green-500"></div>
-                </div>
-            </div>
-
-            <div class="mt-6 pt-4 border-t border-slate-700/50">
-                <div class="flex justify-between text-xs font-mono">
-                    <span class="text-slate-500">Battery V:</span>
-                    <span class="text-amber-300">110.4 VDC</span>
-                </div>
-                <div class="w-full bg-slate-800 h-1 mt-1 rounded overflow-hidden">
-                    <div class="bg-amber-500 h-full w-[98%]"></div>
-                </div>
+            <!-- Wear Analytics Quick Link -->
+            <div class="mt-4 pt-4 border-t border-slate-700/50">
+                <a href="Francis_Wear_Analytics.html"
+                    class="text-[10px] text-amber-500 hover:text-white font-bold tracking-widest uppercase flex items-center gap-2 justify-end">
+                    View Wear Models <i data-lucide="bar-chart-2" class="w-3 h-3"></i>
+                </a>
             </div>
         </div>
 
-        <!-- SECTOR 4: DIJAGNOSTIKA (The Senses) -->
-        <div class="sector-card rounded-lg p-6 relative overflow-hidden group">
-            <div class="absolute top-0 left-0 w-1 h-full bg-purple-500/50 group-hover:bg-purple-400 transition"></div>
+        <!-- SECTOR 3: ENERGY & SAFETY -->
+        <div class="sector-card p-6 rounded-lg relative overflow-hidden group">
+            <div class="absolute top-0 left-0 w-1 h-full bg-red-500/50 group-hover:bg-red-400 transition"></div>
+            <h2 class="text-xl font-bold text-red-500 mb-6 flex items-center gap-2">
+                <i data-lucide="shield-alert"></i> SAFETY & CONTROL
+            </h2>
 
-            <div class="flex justify-between items-start mb-6">
-                <div>
-                    <h2 class="text-purple-400 font-black text-lg uppercase tracking-wide">Diagnostics</h2>
-                    <p class="text-slate-500 text-xs font-mono">The Senses</p>
-                </div>
-                <i data-lucide="brain" class="text-purple-500/20 w-8 h-8 group-hover:text-purple-500/50 transition"></i>
-            </div>
+            <div class="space-y-3">
+                <a href="Francis_Safety_System_Integrity.html" class="module-link group">
+                    <div class="flex items-center gap-3">
+                        <i data-lucide="lock" class="w-4 h-4 text-red-600 group-hover:text-red-400"></i>
+                        <span class="text-sm font-bold text-slate-300 group-hover:text-white">HPU & ESD Logic</span>
+                    </div>
+                    <div onclick="toggleStatus(event, this)" class="status-dot status-green"></div>
+                </a>
+                <a href="Francis_SOP_Gov_Logic.html" class="module-link group">
+                    <div class="flex items-center gap-3">
+                        <i data-lucide="cpu" class="w-4 h-4 text-red-600 group-hover:text-red-400"></i>
+                        <span class="text-sm font-bold text-slate-300 group-hover:text-white">PID Governor</span>
+                    </div>
+                    <div onclick="toggleStatus(event, this)" class="status-dot status-green"></div>
+                </a>
 
-            <div class="space-y-4">
-                <div
-                    class="flex items-center justify-between p-3 bg-slate-900/50 rounded border border-slate-700/50 hover:border-purple-500/30 transition">
-                    <a href="./Francis_SOP_Digital_Integrity.html"
-                        class="module-link flex items-center gap-3 text-slate-300">
-                        <i data-lucide="binary" class="w-4 h-4 text-purple-400"></i>
-                        <span class="text-sm font-bold">Digital Integrity</span>
-                    </a>
-                    <div onclick="toggleStatus(this)" class="status-dot bg-green-500 text-green-500"></div>
-                </div>
+                <a href="Francis_Logic_Load_Rejection.html" class="module-link group">
+                    <div class="flex items-center gap-3">
+                        <i data-lucide="zap-off" class="w-4 h-4 text-red-600 group-hover:text-red-400"></i>
+                        <span class="text-sm font-bold text-slate-300 group-hover:text-white">Load Rejection
+                            Logic</span>
+                    </div>
+                    <div onclick="toggleStatus(event, this)" class="status-dot status-green"></div>
+                </a>
 
-                <div
-                    class="flex items-center justify-between p-3 bg-slate-900/50 rounded border border-slate-700/50 hover:border-purple-500/30 transition">
-                    <a href="./Francis_SOP_Acoustics.html" class="module-link flex items-center gap-3 text-slate-300">
-                        <i data-lucide="ear" class="w-4 h-4 text-purple-400"></i>
-                        <span class="text-sm font-bold">Acoustic Analysis</span>
-                    </a>
-                    <div onclick="toggleStatus(this)" class="status-dot bg-yellow-500 text-yellow-500"></div>
-                </div>
-
-                <div
-                    class="flex items-center justify-between p-3 bg-slate-900/50 rounded border border-slate-700/50 hover:border-purple-500/30 transition">
-                    <a href="./Francis_SOP_Analytics.html" class="module-link flex items-center gap-3 text-slate-300">
-                        <i data-lucide="trending-up" class="w-4 h-4 text-purple-400"></i>
-                        <span class="text-sm font-bold">Wear Analytics</span>
-                    </a>
-                    <div onclick="toggleStatus(this)" class="status-dot bg-green-500 text-green-500"></div>
-                </div>
-            </div>
-
-            <div class="mt-6 pt-4 border-t border-slate-700/50">
-                <div class="flex justify-between text-xs font-mono">
-                    <span class="text-slate-500">Efficiency:</span>
-                    <span class="text-purple-300">92.4%</span>
-                </div>
-                <div class="w-full bg-slate-800 h-1 mt-1 rounded overflow-hidden">
-                    <div class="bg-purple-500 h-full w-[92%]"></div>
-                </div>
+                <!-- Logic Logger Quick Link -->
+                <a href="Francis_Logic_Logger.html"
+                    class="block w-full text-center py-2 mt-2 bg-red-900/20 border border-red-500/30 rounded text-xs font-bold text-red-400 hover:bg-red-900/40 transition">
+                    INPUT LOGIC CODE
+                </a>
             </div>
         </div>
 
     </div>
 
     <!-- Live Instructions -->
-    <div class="mt-8 text-center text-slate-600 text-xs font-mono">
-        <p>SYSTEM MAP V2.0 • INTERACTIVE DIAGNOSTIC LAYER</p>
-        <p>Click status dots to cycle: GREEN → YELLOW → RED</p>
+    <div class="mt-8 text-center text-slate-700 text-xs font-mono">
+        <p>SYSTEM MAP V3.0 • LOGIC INTEGRATED</p>
+        <p>Health Score is calculated dynamically based on module status.</p>
     </div>
 
     <script>
         lucide.createIcons();
 
-        function toggleStatus(element) {
+        function toggleStatus(event, element) {
+            event.preventDefault(); // Prevent link click
             // Cycle classes: green -> yellow -> red -> green
-            if (element.classList.contains('bg-green-500')) {
-                element.className = 'status-dot bg-yellow-500 text-yellow-500';
-            } else if (element.classList.contains('bg-yellow-500')) {
-                element.className = 'status-dot bg-red-500 text-red-500 animate-pulse';
+            if (element.classList.contains('status-green')) {
+                element.className = 'status-dot status-yellow';
+            } else if (element.classList.contains('status-yellow')) {
+                element.className = 'status-dot status-red';
             } else {
-                element.className = 'status-dot bg-green-500 text-green-500';
+                element.className = 'status-dot status-green';
+            }
+            recalcHealth();
+        }
+
+        function recalcHealth() {
+            const dots = document.querySelectorAll('.status-dot');
+            let total = dots.length * 2; // Green = 2 pts, Yellow = 1, Red = 0
+            let current = 0;
+
+            dots.forEach(d => {
+                if (d.classList.contains('status-green')) current += 2;
+                if (d.classList.contains('status-yellow')) current += 1;
+            });
+
+            const pct = Math.round((current / total) * 100);
+            document.getElementById('scoreVal').innerText = pct + "%";
+            document.querySelector('.health-dial').style.setProperty('--health', pct + "%");
+
+            // Adjust dial color based on score
+            const dial = document.querySelector('.health-dial');
+            if (pct < 50) {
+                dial.style.background = `conic-gradient(from 180deg, #ef4444 0%, #ef4444 ${pct}%, #334155 ${pct}%, #334155 100%)`;
+            } else if (pct < 80) {
+                dial.style.background = `conic-gradient(from 180deg, #eab308 0%, #eab308 ${pct}%, #334155 ${pct}%, #334155 100%)`;
+            } else {
+                dial.style.background = `conic-gradient(from 180deg, #22c55e 0%, #22c55e ${pct}%, #334155 ${pct}%, #334155 100%)`;
             }
         }
+
+        // Initial calc
+        recalcHealth();
     </script>
 </body>
 

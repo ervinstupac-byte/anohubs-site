@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Francis Unit 1: Mission Control V2</title>
+    <title>Francis Unit 1: Mission Control V3 - Logic Integrated</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
@@ -64,6 +64,36 @@
             box-shadow: 0 0 20px rgba(14, 165, 233, 0.1);
         }
 
+        .node-container.blocked {
+            border-color: #ef4444;
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+            animation: shake 0.5s cubic-bezier(.36, .07, .19, .97) both;
+        }
+
+        @keyframes shake {
+
+            10%,
+            90% {
+                transform: translate3d(-1px, 0, 0);
+            }
+
+            20%,
+            80% {
+                transform: translate3d(2px, 0, 0);
+            }
+
+            30%,
+            50%,
+            70% {
+                transform: translate3d(-4px, 0, 0);
+            }
+
+            40%,
+            60% {
+                transform: translate3d(4px, 0, 0);
+            }
+        }
+
         .node-container.completed {
             opacity: 1;
             pointer-events: none;
@@ -98,6 +128,13 @@
             box-shadow: 0 0 15px #22c55e;
         }
 
+        .node-container.blocked .node-circle {
+            background: #ef4444 !important;
+            border-color: #ef4444 !important;
+            box-shadow: 0 0 15px #ef4444 !important;
+        }
+
+
         /* ESD Panel */
         .esd-panel {
             border: 2px solid #ef4444;
@@ -119,6 +156,24 @@
                 box-shadow: 0 0 5px rgba(239, 68, 68, 0.2);
             }
         }
+
+        .toggle-sim {
+            background: #1e293b;
+            border: 1px solid #334155;
+            color: #64748b;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .toggle-sim.active {
+            background: #3b0764;
+            border-color: #a855f7;
+            color: #d8b4fe;
+            box-shadow: 0 0 10px rgba(168, 85, 247, 0.3);
+        }
     </style>
 </head>
 
@@ -127,13 +182,14 @@
     <div class="max-w-4xl mx-auto">
 
         <!-- Header -->
-        <header class="flex justify-between items-center mb-12 border-b border-slate-800 pb-6">
+        <header class="flex justify-between items-center mb-6 border-b border-slate-800 pb-6 transition-all"
+            id="mainHeader">
             <div>
                 <h1 class="text-4xl font-black text-white tracking-widest uppercase flex items-center gap-3">
                     <i data-lucide="activity" class="text-cyan-400"></i>
                     Francis <span class="text-cyan-400">Mission Control</span>
                 </h1>
-                <p class="text-slate-500 font-mono text-sm mt-2 ml-11">Interactive Startup Sequence Logic Gate</p>
+                <p class="text-slate-500 font-mono text-sm mt-2 ml-11">Safety Interlock Gates Active</p>
             </div>
             <div class="text-right">
                 <div class="text-[10px] text-slate-500 font-bold uppercase">System Status</div>
@@ -141,19 +197,41 @@
             </div>
         </header>
 
+        <!-- LOGIC SIMULATION PANEL -->
+        <div class="mb-12 p-4 bg-slate-900/50 rounded border border-slate-700/50 grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div
+                class="text-[10px] font-bold text-slate-500 uppercase col-span-full border-b border-slate-800 pb-2 mb-2 flex justify-between">
+                <span>Logic Board Simulation (Inject Faults)</span>
+                <span class="text-purple-400">DEV MODE</span>
+            </div>
+
+            <button onclick="toggleFault('n2')" id="btn-n2" class="toggle-sim">
+                [GATE 1] Sim Low N2 Pressure
+            </button>
+            <button onclick="toggleFault('sync')" id="btn-sync" class="toggle-sim">
+                [GATE 2] Sim Vane Sync Error
+            </button>
+            <button onclick="toggleFault('dp')" id="btn-dp" class="toggle-sim">
+                [GATE 3] Sim High Delta-P
+            </button>
+            <button onclick="toggleFault('angle')" id="btn-angle" class="toggle-sim">
+                [GATE 4] Sim MIV Angle Fail
+            </button>
+        </div>
+
         <div class="relative">
             <!-- Vertical Timeline -->
             <div class="timeline-line">
                 <div id="timelineFill" class="timeline-progress"></div>
             </div>
 
-            <!-- NODE 1: HPU & ENERGY -->
+            <!-- NODE 1: HPU & ENERGY (GATE 1) -->
             <div id="node1" class="node-container active">
                 <div class="node-circle"></div>
                 <div class="flex justify-between items-start">
                     <div>
                         <h3 class="text-lg font-bold text-cyan-400 mb-1">1. HPU & Energy Status</h3>
-                        <p class="text-slate-400 text-xs mb-4">Validate stored hydraulic energy reserves.</p>
+                        <p class="text-slate-400 text-xs mb-4">GATE 1: N2 > 12.5 MPa Required.</p>
 
                         <div class="bg-black/40 rounded p-3 mb-4 font-mono text-xs border border-slate-700/50">
                             <div class="flex justify-between mb-1">
@@ -162,57 +240,67 @@
                             </div>
                             <div class="flex justify-between">
                                 <span class="text-slate-500">N2 Pre-Charge:</span>
-                                <span id="val-n2" class="text-white">Is O.K.</span>
+                                <span id="val-n2" class="text-green-400">NORMAL</span>
                             </div>
+                        </div>
+                        <div id="err-n2"
+                            class="hidden text-red-500 text-xs font-bold mb-2 bg-red-900/20 p-2 rounded border border-red-500/50">
+                            ⚠ BLOCK: N2 PRESSURE CRITICAL (10.1 MPa)
                         </div>
                     </div>
                     <i data-lucide="zap" class="w-8 h-8 text-cyan-500/20"></i>
                 </div>
-                <button onclick="confirmStep(1)"
+                <button onclick="confirmStep(1)" id="btn-step-1"
                     class="w-full py-2 bg-cyan-900/50 hover:bg-cyan-600 border border-cyan-700 hover:border-cyan-400 text-cyan-100 font-bold rounded transition text-sm uppercase tracking-wider">
                     Confirm Conditions (12.5 - 16 MPa)
                 </button>
             </div>
 
-            <!-- NODE 2: DISTRIBUTOR ZERO -->
+            <!-- NODE 2: DISTRIBUTOR ZERO (GATE 2) -->
             <div id="node2" class="node-container">
                 <div class="node-circle"></div>
                 <div class="flex justify-between items-start">
                     <div>
                         <h3 class="text-lg font-bold text-cyan-400 mb-1">2. Distributor Zero-Sealing</h3>
-                        <p class="text-slate-400 text-xs mb-4">Mechanical lock confirmation. 0% Leakage tolerance.</p>
+                        <p class="text-slate-400 text-xs mb-4">GATE 2: Sync Deviation < 0.5mm. 0% Leakage.</p>
 
-                        <div class="bg-black/40 rounded p-3 mb-4 font-mono text-xs border border-slate-700/50">
-                            <div class="flex justify-between mb-1">
-                                <span class="text-slate-500">Guide Vanes (1-20):</span>
-                                <span class="text-green-400">0.0% [LOCKED]</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-slate-500">Squeeze Pressure:</span>
-                                <span class="text-green-400">ACTIVE</span>
-                            </div>
-                        </div>
+                                <div class="bg-black/40 rounded p-3 mb-4 font-mono text-xs border border-slate-700/50">
+                                    <div class="flex justify-between mb-1">
+                                        <span class="text-slate-500">Guide Vanes (1-20):</span>
+                                        <span id="val-sync" class="text-green-400">0.0% [LOCKED]</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-slate-500">Squeeze Pressure:</span>
+                                        <span class="text-green-400">ACTIVE</span>
+                                    </div>
+                                </div>
+                                <div id="err-sync"
+                                    class="hidden text-red-500 text-xs font-bold mb-2 bg-red-900/20 p-2 rounded border border-red-500/50">
+                                    ⚠ BLOCK: VANE 4 MISALIGNED (+2.1mm)
+                                </div>
                     </div>
                     <i data-lucide="lock" class="w-8 h-8 text-cyan-500/20"></i>
                 </div>
-                <button onclick="confirmStep(2)"
+                <button onclick="confirmStep(2)" id="btn-step-2"
                     class="w-full py-2 bg-cyan-900/50 hover:bg-cyan-600 border border-cyan-700 hover:border-cyan-400 text-cyan-100 font-bold rounded transition text-sm uppercase tracking-wider">
                     Confirm 0% Sealing
                 </button>
             </div>
 
-            <!-- NODE 3: BYPASS EQUALIZATION -->
+            <!-- NODE 3: BYPASS EQUALIZATION (GATE 3) -->
             <div id="node3" class="node-container">
                 <div class="node-circle"></div>
                 <div class="flex justify-between items-start">
                     <div>
                         <h3 class="text-lg font-bold text-cyan-400 mb-1">3. Bypass Equalization</h3>
-                        <p class="text-slate-400 text-xs mb-4">Filling Spiral Case. Wait for Delta-P < 1 Bar.</p>
+                        <p class="text-slate-400 text-xs mb-4">GATE 3: Delta P < 10% (1 Bar).</p>
 
                                 <div class="flex items-center gap-4 mb-4">
                                     <div class="text-center">
-                                        <div class="text-[10px] text-slate-500">UPSTREAM</div>
-                                        <div class="text-lg font-bold text-white">14.5 Bar</div>
+                                        <div class="text-center">
+                                            <div class="text-[10px] text-slate-500">UPSTREAM</div>
+                                            <div class="text-lg font-bold text-white">14.5 Bar</div>
+                                        </div>
                                     </div>
                                     <div id="loadingBarContainer"
                                         class="flex-1 h-2 bg-slate-800 rounded overflow-hidden">
@@ -223,6 +311,10 @@
                                         <div class="text-[10px] text-slate-500">SPIRAL CASE</div>
                                         <div id="spiralVal" class="text-lg font-bold text-red-500">0.0 Bar</div>
                                     </div>
+                                </div>
+                                <div id="err-dp"
+                                    class="hidden text-red-500 text-xs font-bold mb-2 bg-red-900/20 p-2 rounded border border-red-500/50">
+                                    ⚠ BLOCK: DELTA P > 3 BAR. CANNOT OPEN MIV.
                                 </div>
                     </div>
                     <i data-lucide="scale" class="w-8 h-8 text-cyan-500/20"></i>
@@ -238,13 +330,13 @@
                 </button>
             </div>
 
-            <!-- NODE 4: MIV RELEASE -->
+            <!-- NODE 4: MIV RELEASE (GATE 4) -->
             <div id="node4" class="node-container">
                 <div class="node-circle"></div>
                 <div class="flex justify-between items-start">
                     <div>
                         <h3 class="text-lg font-bold text-cyan-400 mb-1">4. MIV Release</h3>
-                        <p class="text-slate-400 text-xs mb-4">Master Inlet Valve opening authorization.</p>
+                        <p class="text-slate-400 text-xs mb-4">GATE 4: Angle == 80.0°. Interlock Released.</p>
 
                         <div class="bg-black/40 rounded p-3 mb-4 font-mono text-xs border border-slate-700/50">
                             <div class="flex justify-between mb-1">
@@ -253,8 +345,12 @@
                             </div>
                             <div class="flex justify-between">
                                 <span class="text-slate-500">Target Angle:</span>
-                                <span class="text-white">80.0°</span>
+                                <span id="val-angle" class="text-white">80.0°</span>
                             </div>
+                        </div>
+                        <div id="err-angle"
+                            class="hidden text-red-500 text-xs font-bold mb-2 bg-red-900/20 p-2 rounded border border-red-500/50">
+                            ⚠ BLOCK: VALVE STUCK @ 45°. EROSION RISK.
                         </div>
                     </div>
                     <i data-lucide="door-open" class="w-8 h-8 text-cyan-500/20"></i>
@@ -307,23 +403,94 @@
     <script>
         lucide.createIcons();
         const steps = 4;
-        let currentStep = 1;
+
+        let faults = {
+            n2: false,
+            sync: false,
+            dp: false,
+            angle: false
+        };
+
+        function toggleFault(type) {
+            faults[type] = !faults[type];
+            // Toggle Visuals
+            document.getElementById('btn-' + type).classList.toggle('active');
+
+            // Update Data Displays based on faults
+            if (type === 'n2') {
+                if (faults.n2) {
+                    document.getElementById('val-n2').innerText = "LOW (10.1 MPa)";
+                    document.getElementById('val-n2').className = "text-red-500 animate-pulse";
+                    document.getElementById('err-n2').classList.remove('hidden');
+                } else {
+                    document.getElementById('val-n2').innerText = "NORMAL";
+                    document.getElementById('val-n2').className = "text-green-400";
+                    document.getElementById('err-n2').classList.add('hidden');
+                }
+            }
+            if (type === 'sync') {
+                if (faults.sync) {
+                    document.getElementById('val-sync').innerText = "ERROR [VANE 4]";
+                    document.getElementById('val-sync').className = "text-red-500 animate-pulse";
+                    document.getElementById('err-sync').classList.remove('hidden');
+                } else {
+                    document.getElementById('val-sync').innerText = "0.0% [LOCKED]";
+                    document.getElementById('val-sync').className = "text-green-400";
+                    document.getElementById('err-sync').classList.add('hidden');
+                }
+            }
+            if (type === 'dp') {
+                if (faults.dp) {
+                    document.getElementById('err-dp').classList.remove('hidden');
+                } else {
+                    document.getElementById('err-dp').classList.add('hidden');
+                }
+            }
+            if (type === 'angle') {
+                if (faults.angle) {
+                    document.getElementById('val-angle').innerText = "45.0° [STUCK]";
+                    document.getElementById('val-angle').className = "text-red-500 animate-pulse";
+                    document.getElementById('err-angle').classList.remove('hidden');
+                } else {
+                    document.getElementById('val-angle').innerText = "80.0°";
+                    document.getElementById('val-angle').className = "text-white";
+                    document.getElementById('err-angle').classList.add('hidden');
+                }
+            }
+        }
 
         function updateTimeline(level) {
-            // level 1 = 0%, 2=33%, 3=66%, 4=100% (roughly)
-            // Or mapping to node positions
             const percent = ((level) / steps) * 100;
             document.getElementById('timelineFill').style.height = percent + '%';
         }
 
-        function confirmStep(stepId) {
-            // Logic for visual transition
+        function blockStep(stepId) {
             const node = document.getElementById('node' + stepId);
+            node.classList.add('blocked');
+            setTimeout(() => { node.classList.remove('blocked'); }, 600);
+        }
+
+        function confirmStep(stepId) {
+            // Logic Gate Validation
+            if (stepId === 1 && faults.n2) { blockStep(1); return; }
+            if (stepId === 2 && faults.sync) { blockStep(2); return; }
+            if (stepId === 3 && faults.dp) { blockStep(3); return; }
+            if (stepId === 4 && faults.angle) { blockStep(4); return; }
+
+            // Success Transition
+            const node = document.getElementById('node' + stepId);
+            const btn = document.getElementById(stepId === 1 || stepId === 2 ? 'btn-step-' + stepId :
+                stepId === 3 ? 'btnBypassConfirm' : 'btnMIV');
+
+            if (btn) {
+                btn.innerText = "GATE PASSED [OK]";
+                btn.classList.add('bg-green-600', 'border-green-500');
+            }
 
             if (stepId === 4) {
                 node.classList.remove('active');
                 node.classList.add('completed');
-                updateTimeline(3.5); // Fill to bottom
+                updateTimeline(3.6); // Fill to bottom
                 document.getElementById('systemState').innerText = "UNIT READY FOR SPEED-NO-LOAD";
                 document.getElementById('systemState').classList.remove('text-amber-500');
                 document.getElementById('systemState').classList.add('text-green-500');
@@ -347,13 +514,22 @@
 
             let press = 0.0;
             const target = 14.5;
+            // IF DP FAULT IS ON, WE SIMULATE STUCK PRESSURE
+            const limit = faults.dp ? 11.0 : 14.5;
+
             const interval = setInterval(() => {
                 press += 0.2;
-                if (press >= target) {
-                    press = target;
+                if (press >= limit) {
+                    press = limit;
                     clearInterval(interval);
-                    document.getElementById('spiralVal').className = "text-lg font-bold text-green-400";
-                    document.getElementById('btnBypassConfirm').classList.remove('hidden');
+                    if (!faults.dp) {
+                        document.getElementById('spiralVal').className = "text-lg font-bold text-green-400";
+                        document.getElementById('btnBypassConfirm').classList.remove('hidden');
+                    } else {
+                        // Stuck
+                        document.getElementById('spiralVal').className = "text-lg font-bold text-red-500 animate-pulse";
+                        document.getElementById('err-dp').classList.remove('hidden');
+                    }
                 }
                 document.getElementById('spiralVal').innerText = press.toFixed(1) + " Bar";
             }, 50);
