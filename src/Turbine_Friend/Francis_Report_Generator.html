@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNIT STATE REPORT GENERATOR | FRANCIS 1.3MW</title>
+    <!-- Using Tailwind via CDN for layout, but custom CSS for print styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Inter:wght@400;600;800&display=swap');
+
+        body {
+            background-color: #e5e5e5;
+            font-family: 'Inter', sans-serif;
+            color: #111;
+        }
+
+        /* The A4 Paper Simulation */
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 20mm;
+            margin: 10mm auto;
+            border: 1px solid #d3d3d3;
+            border-radius: 2px;
+            background: white;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        /* Engineering Frame */
+        .engineering-frame {
+            border: 2px solid #1e3a8a;
+            /* Blue-900 */
+            height: 100%;
+            padding: 2px;
+            position: relative;
+        }
+
+        .inner-frame {
+            border: 1px solid #1e3a8a;
+            height: 100%;
+            padding: 20px;
+        }
+
+        /* Typography */
+        h1 {
+            font-family: 'Inter', sans-serif;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+        }
+
+        .mono {
+            font-family: 'Roboto Mono', monospace;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th,
+        td {
+            border: 1px solid #cbd5e1;
+            padding: 8px;
+            text-align: left;
+            font-size: 0.85rem;
+        }
+
+        th {
+            background-color: #f1f5f9;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            color: #1e3a8a;
+        }
+
+        /* Print Specifics */
+        @media print {
+            body {
+                background: white;
+            }
+
+            .page {
+                margin: 0;
+                border: initial;
+                border-radius: initial;
+                width: initial;
+                min-height: initial;
+                box-shadow: initial;
+                background: initial;
+                page-break-after: always;
+            }
+
+            .no-print {
+                display: none !important;
+            }
+        }
+
+        .input-field {
+            border: none;
+            border-bottom: 1px dashed #94a3b8;
+            width: 100%;
+            font-family: 'Roboto Mono', monospace;
+            color: #0f172a;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-bottom: 1px solid #1e3a8a;
+        }
+
+        /* Status Badges */
+        .status-badge {
+            padding: 2px 6px;
+            border-radius: 2px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .status-active {
+            background: #fecaca;
+            color: #991b1b;
+        }
+
+        /* Red */
+        .status-resolved {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        /* Green */
+        .status-nominal {
+            background: #e0f2fe;
+            color: #075985;
+        }
+
+        /* Blue */
+    </style>
+</head>
+
+<body>
+
+    <!-- Control Bar (No Print) -->
+    <div
+        class="no-print fixed top-0 left-0 w-full bg-slate-900 text-white p-3 flex justify-between items-center z-50 shadow-lg">
+        <div class="flex items-center gap-4">
+            <a href="Francis_Horizontal_Dashboard.html"
+                class="flex items-center gap-2 text-slate-400 hover:text-white text-sm font-bold uppercase transition">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i> Dashboard
+            </a>
+            <div class="h-4 w-px bg-slate-700"></div>
+            <span class="text-xs text-slate-400 font-mono">REPORT GENERATOR V1.0</span>
+        </div>
+        <div class="flex items-center gap-4">
+            <!-- Language Toggle -->
+            <div class="flex bg-slate-800 rounded p-1">
+                <button onclick="setLang('en')" id="btnEn"
+                    class="px-3 py-1 rounded text-xs font-bold bg-blue-600 text-white transition">EN</button>
+                <button onclick="setLang('bs')" id="btnBs"
+                    class="px-3 py-1 rounded text-xs font-bold text-slate-400 hover:text-white transition">BS</button>
+            </div>
+
+            <button onclick="window.print()"
+                class="flex items-center gap-2 bg-white text-slate-900 px-4 py-2 rounded text-xs font-bold uppercase hover:bg-slate-200 transition">
+                <i data-lucide="printer" class="w-4 h-4"></i> Print / Save PDF
+            </button>
+        </div>
+    </div>
+
+    <div class="h-16 no-print"></div> <!-- Spacer for fixed header -->
+
+    <!-- A4 Page Container -->
+    <div class="page">
+        <div class="engineering-frame">
+            <div class="inner-frame flex flex-col justify-between">
+
+                <!-- 1. Header -->
+                <div>
+                    <div class="flex justify-between items-start border-b-2 border-blue-900 pb-4 mb-6">
+                        <div>
+                            <h1 class="text-2xl text-blue-900 mb-1" data-i18n="report_title">UNIT STATE REPORT</h1>
+                            <div class="text-sm font-bold text-slate-500 flex items-center gap-2">
+                                <span class="uppercase">Francis Horizontal 1.3 MW</span> | <span
+                                    class="mono text-xs">S/N: 88-FR-01</span>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-xs text-slate-400 uppercase font-bold" data-i18n="date_label">Date & Time
+                            </div>
+                            <div class="text-sm font-mono font-bold text-slate-900" id="reportDate"></div>
+                        </div>
+                    </div>
+
+                    <!-- Operator Block -->
+                    <div class="grid grid-cols-2 gap-8 mb-8 text-sm">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 uppercase mb-1"
+                                data-i18n="operator_label">Authorized Operator</label>
+                            <input type="text" class="input-field font-bold bg-yellow-50/50 p-1"
+                                placeholder="[ ENTER NAME ]" value="Eric (Shift Lead)">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 uppercase mb-1"
+                                data-i18n="shift_label">Shift ID</label>
+                            <input type="text" class="input-field font-bold bg-yellow-50/50 p-1" value="A-01-MORNING">
+                        </div>
+                    </div>
+
+                    <!-- 2. Health Score Summary -->
+                    <div class="mb-8">
+                        <div
+                            class="bg-slate-100 border border-slate-300 p-4 rounded-sm flex justify-between items-center">
+                            <div>
+                                <h2 class="text-lg font-bold text-slate-800 uppercase mb-1"
+                                    data-i18n="system_integrity">System Integrity Score</h2>
+                                <p class="text-xs text-slate-500 max-w-md" data-i18n="score_desc">Calculated based on
+                                    active logic codes and manual safety inputs.</p>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-4xl font-black text-blue-900 mono" id="healthScoreDisplay">100%</div>
+                                <div class="text-[10px] font-bold text-green-600 bg-green-100 px-2 py-1 rounded inline-block mt-1 uppercase"
+                                    id="healthStatusLabel">Nominal</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. Anomaly Matrix -->
+                    <div class="mb-8">
+                        <div class="flex justify-between items-end mb-2 border-b border-blue-900 pb-1">
+                            <h3 class="font-bold text-blue-900 uppercase text-sm" data-i18n="anomaly_matrix">Anomaly
+                                Matrix (Logic Log)</h3>
+                            <span class="text-[10px] font-mono text-slate-400">SOURCE: LOGIC_LOGGER_V1.4</span>
+                        </div>
+
+                        <div id="anomalyTableContainer">
+                            <!-- Table populated via JS -->
+                            <div class="text-center py-4 text-sm text-slate-400 italic">No anomalies recorded in recent
+                                history.</div>
+                        </div>
+                    </div>
+
+                    <!-- 4. Safety Guard Block -->
+                    <div class="mb-8">
+                        <div class="flex justify-between items-end mb-2 border-b border-blue-900 pb-1">
+                            <h3 class="font-bold text-blue-900 uppercase text-sm" data-i18n="safety_guard">Manual Safety
+                                Verification</h3>
+                        </div>
+
+                        <div class="grid grid-cols-3 gap-4">
+                            <div class="border border-slate-300 p-3 bg-white">
+                                <label class="block text-[10px] font-bold text-slate-500 uppercase mb-2">HPU N2
+                                    Pressure</label>
+                                <div class="flex items-end gap-2">
+                                    <input type="number"
+                                        class="w-full font-mono text-lg font-bold text-slate-900 border-b border-slate-300 focus:outline-none"
+                                        placeholder="00.0">
+                                    <span class="text-xs font-bold text-slate-400 mb-1">Bar</span>
+                                </div>
+                                <div class="text-[9px] text-slate-400 mt-1">Ref: > 110 Bar</div>
+                            </div>
+                            <div class="border border-slate-300 p-3 bg-white">
+                                <label class="block text-[10px] font-bold text-slate-500 uppercase mb-2">MIV
+                                    Angle</label>
+                                <div class="flex items-end gap-2">
+                                    <input type="number"
+                                        class="w-full font-mono text-lg font-bold text-slate-900 border-b border-slate-300 focus:outline-none"
+                                        placeholder="00">
+                                    <span class="text-xs font-bold text-slate-400 mb-1">Deg</span>
+                                </div>
+                                <div class="text-[9px] text-slate-400 mt-1">Ref: 0° Closed</div>
+                            </div>
+                            <div class="border border-slate-300 p-3 bg-white">
+                                <label class="block text-[10px] font-bold text-slate-500 uppercase mb-2">Shaft Seal
+                                    Leak</label>
+                                <div class="flex items-end gap-2">
+                                    <input type="number"
+                                        class="w-full font-mono text-lg font-bold text-slate-900 border-b border-slate-300 focus:outline-none"
+                                        placeholder="0.0">
+                                    <span class="text-xs font-bold text-slate-400 mb-1">L/min</span>
+                                </div>
+                                <div class="text-[9px] text-slate-400 mt-1">Ref: < 5 L/min</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 5. Technical Recommendation -->
+                        <div class="flex-grow">
+                            <div class="flex justify-between items-end mb-2 border-b border-blue-900 pb-1">
+                                <h3 class="font-bold text-blue-900 uppercase text-sm" data-i18n="recommendation_title">
+                                    Shift Handover Recommendation</h3>
+                            </div>
+
+                            <div class="border-l-4 border-blue-900 bg-slate-50 p-4">
+                                <div class="font-mono text-sm text-slate-800 whitespace-pre-line"
+                                    id="recommendationText">
+                                    SYSTEM STATUS STABLE. NO CRITICAL ACTIONS REQUIRED.
+                                    CONTINUE STANDARD OBSERVATION PROTOCOL.
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Footer -->
+                    <div
+                        class="mt-8 pt-4 border-t border-slate-300 flex justify-between items-end text-[10px] text-slate-400">
+                        <div>
+                            <p class="font-bold uppercase text-slate-600">AnoHUB Engineering Intelligence</p>
+                            <p>Generated via Francis Unit Logic Core</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-mono">DOC-ID: <span id="docId">GEN-001</span></p>
+                            <p>PAGE 1 OF 1</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Scripts -->
+        <script>
+            lucide.createIcons();
+
+            // --- I18N DICTIONARY ---
+            const i18n = {
+                en: {
+                    report_title: "UNIT STATE REPORT",
+                    date_label: "DATE & TIME",
+                    operator_label: "AUTHORIZED OPERATOR",
+                    shift_label: "SHIFT ID",
+                    system_integrity: "SYSTEM INTEGRITY SCORE",
+                    score_desc: "Calculated based on active logic codes and manual safety inputs.",
+                    anomaly_matrix: "ANOMALY MATRIX (LOGIC LOG)",
+                    safety_guard: "MANUAL SAFETY VERIFICATION",
+                    recommendation_title: "SHIFT HANDOVER RECOMMENDATION",
+                    col_code: "FAULT CODE",
+                    col_zone: "ZONE",
+                    col_time: "TIMESTAMP",
+                    col_status: "LOGICAL STATUS",
+                    default_rec: "SYSTEM STATUS STABLE. NO CRITICAL ACTIONS REQUIRED.\nCONTINUE STANDARD OBSERVATION PROTOCOL.",
+                    status_nominal: "NOMINAL",
+                    status_critical: "CRITICAL",
+                    status_warning: "WARNING"
+                },
+                bs: {
+                    report_title: "IZVJEŠTAJ O STANJU JEDINICE",
+                    date_label: "DATUM I VRIJEME",
+                    operator_label: "OVLAŠTENI OPERATER",
+                    shift_label: "ID SMJENE",
+                    system_integrity: "OCJENA INTEGRITETA SISTEMA",
+                    score_desc: "Izračunato na osnovu aktivnih logičkih kodova i ručnih sigurnosnih unosa.",
+                    anomaly_matrix: "TABELA ANOMALIJA (LOGIČKI ZAPIS)",
+                    safety_guard: "SIGURNOSNI KONTROLNI BLOK",
+                    recommendation_title: "PREPORUKA ZA PREDAJU SMJENE",
+                    col_code: "KOD GREŠKE",
+                    col_zone: "ZONA",
+                    col_time: "VRIJEME",
+                    col_status: "LOGIČKI STATUS",
+                    default_rec: "SISTEM STABILAN. NISU POTREBNE KRITIČNE MJERE.\nNASTAVITI SA STANDARDNIM PROTOKOLOM POSMATRANJA.",
+                    status_nominal: "NOMINALNO",
+                    status_critical: "KRITIČNO",
+                    status_warning: "UPOZORENJE"
+                }
+            };
+
+            let currentLang = 'en';
+
+            // --- LOGIC DICTIONARY FOR RECS ---
+            const recs = {
+                'ERR_N2_PRESS': {
+                    en: "CRITICAL: HPU Accumulator Nitrogen pressure is low. Initiate pre-charge sequence immediately using N2 kit. Do not restart unit until P0 > 110 Bar.",
+                    bs: "KRITIČNO: Nizak pritisak azota u HPU akumulatoru. Odmah pokrenite proceduru dopune koristeći N2 set. Ne restartujte jedinicu dok P0 ne bude > 110 Bar."
+                },
+                'ERR_SYNC_VAR': {
+                    en: "WARNING: Distributor Sync Variance detected. Inspect shear pins on wicket gates. Schedule linkage calibration during next stop.",
+                    bs: "UPOZORENJE: Detektovano odstupanje sinhronizacije sprovodnog aparata. Pregledajte sigurnosne čivije na lopaticama. Zakažite kalibraciju poluga tokom sljedećeg zaustavljanja."
+                },
+                'ERR_LEAK_01': {
+                    en: "ALERT: Shaft seal leakage above nominal limits. Activate backup drainage pump. Check seal water pressure.",
+                    bs: "ALARM: Curenje zaptivača vratila iznad nominalnih granica. Aktivirajte rezervnu drenažnu pumpu. Provjerite pritisak vode za zaptivanje."
+                },
+                'ERR_VIB_LOW': {
+                    en: "ADVISORY: Low frequency vibration suggesting draft tube vortex. Increase load > 40% or inject air to stabilize.",
+                    bs: "SAVJET: Niskofrekventne vibracije sugerišu vrtlog u usisnoj cijevi. Povećajte opterećenje > 40% ili ubacite zrak za stabilizaciju."
+                },
+                'ERR_TEMP_HI': {
+                    en: "ALARM: High bearing temperature. Verify cooling water flow and cooler cleanliness. Monitor trend closely.",
+                    bs: "ALARM: Visoka temperatura ležaja. Provjerite protok rashladne vode i čistoću hladnjaka. Pažljivo pratite trend."
+                }
+            };
+
+            function setLang(lang) {
+                currentLang = lang;
+
+                // Toggle Buttons
+                if (lang === 'en') {
+                    document.getElementById('btnEn').className = "px-3 py-1 rounded text-xs font-bold bg-blue-600 text-white transition";
+                    document.getElementById('btnBs').className = "px-3 py-1 rounded text-xs font-bold text-slate-400 hover:text-white transition";
+                } else {
+                    document.getElementById('btnBs').className = "px-3 py-1 rounded text-xs font-bold bg-blue-600 text-white transition";
+                    document.getElementById('btnEn').className = "px-3 py-1 rounded text-xs font-bold text-slate-400 hover:text-white transition";
+                }
+
+                // Update Text Elements
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (i18n[lang][key]) el.innerText = i18n[lang][key];
+                });
+
+                // Re-render table and recs to update language there
+                renderData();
+            }
+
+            function renderData() {
+                // 1. Set Date
+                document.getElementById('reportDate').innerText = new Date().toLocaleString();
+                document.getElementById('docId').innerText = `RPT-${Math.floor(Math.random() * 10000)}`;
+
+                // 2. Fetch History
+                let history = [];
+                try {
+                    history = JSON.parse(localStorage.getItem('turbine_logic_history') || '[]');
+                } catch (e) {
+                    console.error("Storage Error", e);
+                }
+
+                // 3. Render Table
+                const container = document.getElementById('anomalyTableContainer');
+                if (history.length === 0) {
+                    container.innerHTML = `<div class="text-center py-4 text-sm text-slate-400 italic">${currentLang === 'en' ? 'No anomalies recorded.' : 'Nema zabilježenih anomalija.'}</div>`;
+                    document.getElementById('recommendationText').innerText = i18n[currentLang].default_rec;
+                    updateScore(100);
+                } else {
+                    let html = `<table>
+                    <thead>
+                        <tr>
+                            <th>${i18n[currentLang].col_zone}</th>
+                            <th>${i18n[currentLang].col_code}</th>
+                            <th>${i18n[currentLang].col_time}</th>
+                            <th>${i18n[currentLang].col_status}</th>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+
+                    let criticalFound = false;
+                    let warningFound = false;
+                    let primaryCode = null;
+
+                    history.forEach(item => {
+                        let badgeClass = "status-nominal";
+                        let statusText = i18n[currentLang].status_nominal;
+
+                        // Simple logic for status styling based on code/string
+                        if (item.code.includes('ERR') || item.code.includes('W-')) {
+                            badgeClass = "status-active"; // Red
+                            statusText = i18n[currentLang].status_critical;
+                            criticalFound = true;
+                            if (!primaryCode) primaryCode = item.code;
+                        } else if (item.code.includes('A-')) {
+                            badgeClass = "status-active"; // Using active for warning too for visibility
+                            statusText = i18n[currentLang].status_warning;
+                            warningFound = true;
+                            if (!primaryCode) primaryCode = item.code;
+                        }
+
+                        html += `<tr>
+                        <td class="font-bold text-slate-700">${item.zone}</td>
+                        <td class="font-mono text-blue-900">${item.code}</td>
+                        <td class="text-slate-500 text-[10px]">${item.timestamp}</td>
+                        <td><span class="status-badge ${badgeClass}">${statusText}</span></td>
+                    </tr>`;
+                    });
+
+                    html += `</tbody></table>`;
+                    container.innerHTML = html;
+
+                    // 4. Update Score
+                    let score = 100;
+                    if (criticalFound) score = 65;
+                    else if (warningFound) score = 85;
+                    else score = 95; // Minor events
+
+                    updateScore(score);
+
+                    // 5. Generate Recommendation
+                    const recEl = document.getElementById('recommendationText');
+                    if (primaryCode && recs[primaryCode]) {
+                        recEl.innerText = recs[primaryCode][currentLang];
+                    } else {
+                        recEl.innerText = i18n[currentLang].default_rec;
+                    }
+                }
+            }
+
+            function updateScore(score) {
+                const display = document.getElementById('healthScoreDisplay');
+                const label = document.getElementById('healthStatusLabel');
+
+                display.innerText = score + "%";
+
+                if (score < 70) {
+                    display.className = "text-4xl font-black text-red-700 mono";
+                    label.className = "text-[10px] font-bold text-red-600 bg-red-100 px-2 py-1 rounded inline-block mt-1 uppercase";
+                    label.innerText = i18n[currentLang].status_critical;
+                } else if (score < 90) {
+                    display.className = "text-4xl font-black text-amber-600 mono";
+                    label.className = "text-[10px] font-bold text-amber-600 bg-amber-100 px-2 py-1 rounded inline-block mt-1 uppercase";
+                    label.innerText = i18n[currentLang].status_warning;
+                } else {
+                    display.className = "text-4xl font-black text-blue-900 mono";
+                    label.className = "text-[10px] font-bold text-green-600 bg-green-100 px-2 py-1 rounded inline-block mt-1 uppercase";
+                    label.innerText = i18n[currentLang].status_nominal;
+                }
+            }
+
+            // Initialize
+            renderData();
+
+        </script>
+</body>
+
+</html>

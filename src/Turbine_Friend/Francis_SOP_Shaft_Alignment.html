@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="bs">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOP: Centriranje Osovina (Alignment)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background-color: #0c0a09;
+            color: #a8a29e;
+        }
+
+        .tech-border {
+            border: 1px solid #292524;
+        }
+
+        .section-card {
+            background: #1c1917;
+            border: 1px solid #44403c;
+            transition: all 0.2s;
+        }
+
+        .section-card:hover {
+            border-color: #d97706;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+
+<body class="p-6 md:p-12 max-w-5xl mx-auto">
+
+    <!-- Header -->
+    <header class="flex justify-between items-center mb-10 border-b border-stone-800 pb-6">
+        <div>
+            <h1 class="text-3xl font-bold text-amber-500 flex items-center gap-3">
+                <i data-lucide="crosshair"></i> CENTRIRANJE OSOVINA
+            </h1>
+            <p class="text-stone-500 font-mono text-xs mt-1">Baca (Run-Out), Zazor & Termalni Rast</p>
+        </div>
+        <a href="Francis_Horizontal_Dashboard.html"
+            class="text-xs text-stone-500 hover:text-white transition flex items-center gap-1">
+            <i data-lucide="layout-dashboard"></i> OPERATIVNI CENTAR
+        </a>
+    </header>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+        <!-- Run-Out Limits -->
+        <div class="section-card p-6 rounded">
+            <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                <i data-lucide="rotate-cw"></i> BACA (TIR)
+            </h2>
+
+            <div class="overflow-hidden rounded border border-stone-800 mb-4">
+                <table class="w-full text-left text-sm text-stone-400">
+                    <thead class="bg-stone-900 text-stone-200 text-xs uppercase">
+                        <tr>
+                            <th class="p-2">Lokacija</th>
+                            <th class="p-2">Limit (mm)</th>
+                            <th class="p-2">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-stone-800 bg-black/20">
+                        <tr>
+                            <td class="p-2">Vodeći Ležaj Turbine</td>
+                            <td class="p-2 font-mono">0.05</td>
+                            <td class="p-2 text-green-500">OK (0.03)</td>
+                        </tr>
+                        <tr>
+                            <td class="p-2">Prirubnica Spojnice</td>
+                            <td class="p-2 font-mono">0.03</td>
+                            <td class="p-2 text-green-500">OK (0.02)</td>
+                        </tr>
+                        <tr>
+                            <td class="p-2">Generator NDE (Zadnja strana)</td>
+                            <td class="p-2 font-mono">0.05</td>
+                            <td class="p-2 text-yellow-500">UPOZORENJE (0.045)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p class="text-[10px] text-stone-500">
+                <strong>Metoda:</strong> Komparater na površini vratila (sporo okretanje).
+            </p>
+        </div>
+
+        <!-- Laser Alignment -->
+        <div class="section-card p-6 rounded">
+            <div class="flex justify-between items-start mb-4">
+                <h2 class="text-xl font-bold text-white flex items-center gap-2">
+                    <i data-lucide="zap"></i> LASERSKO CENTRIRANJE
+                </h2>
+                <span
+                    class="text-xs font-bold bg-amber-900/30 text-amber-500 px-2 py-1 rounded border border-amber-800">REQ:
+                    6-Mj</span>
+            </div>
+
+            <div class="bg-stone-900 p-3 rounded border border-stone-800 text-sm space-y-2">
+                <div class="flex justify-between">
+                    <span class="text-stone-400">Vertikalni Odstup (Offset)</span>
+                    <span class="text-white">+0.12mm</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-stone-400">Horizontalni Odstup</span>
+                    <span class="text-white">-0.05mm</span>
+                </div>
+            </div>
+
+            <div class="mt-4 p-3 bg-stone-800 rounded border border-amber-500/20">
+                <strong class="text-xs text-amber-400 block mb-1">CILJ TERMALNOG RASTA</strong>
+                <p class="text-[10px] text-stone-400">Postavi Generator 0.15mm NIŽE od Turbine kada je hladan. Generator
+                    raste
+                    tokom rada zbog toplote.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Soft Foot Check -->
+    <div class="mt-8 section-card p-6 rounded">
+        <h2 class="text-lg font-bold text-stone-300 mb-2 flex items-center gap-2">
+            <i data-lucide="footprints"></i> PROVJERA MEKE STOPE (SOFT FOOT)
+        </h2>
+        <p class="text-sm text-stone-400 mb-4">Osigurati da sve 4 stope generatora leže ravno na pločama.</p>
+
+        <div class="flex items-center gap-4 text-xs font-mono">
+            <div class="flex-1 bg-stone-900 p-2 rounded text-center border border-stone-700">
+                <span class="block text-stone-500 mb-1">Ugao 1</span>
+                <span class="text-green-500">0.02mm</span>
+            </div>
+            <div class="flex-1 bg-stone-900 p-2 rounded text-center border border-stone-700">
+                <span class="block text-stone-500 mb-1">Ugao 2</span>
+                <span class="text-green-500">0.01mm</span>
+            </div>
+            <div class="flex-1 bg-stone-900 p-2 rounded text-center border border-stone-700">
+                <span class="block text-stone-500 mb-1">Ugao 3</span>
+                <span class="text-green-500">0.02mm</span>
+            </div>
+            <div class="flex-1 bg-stone-900 p-2 rounded text-center border border-stone-700">
+                <span class="block text-stone-500 mb-1">Ugao 4</span>
+                <span class="text-red-500 font-bold">0.08mm</span>
+            </div>
+        </div>
+        <p class="text-[10px] text-red-400 mt-2 text-right">Akcija: Podloži (Shim) Ugao 4.</p>
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>

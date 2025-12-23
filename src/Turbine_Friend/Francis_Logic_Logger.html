@@ -174,8 +174,27 @@
                 return;
             }
 
+            // Save to LocalStorage for Report Generator
+            const timestamp = new Date().toLocaleString();
+            const logEntry = {
+                zone: zone,
+                code: code,
+                timestamp: timestamp,
+                status: 'ACTIVE'
+            };
+
+            // Get existing history or init empty array
+            let history = JSON.parse(localStorage.getItem('turbine_logic_history') || '[]');
+            // Add new entry to top
+            history.unshift(logEntry);
+            // Limit to last 10 entries
+            if (history.length > 10) history = history.slice(0, 10);
+            localStorage.setItem('turbine_logic_history', JSON.stringify(history));
+
+
             // Output Simulation
             term.innerHTML += `<p class="text-stone-400 mt-2">> PROCESSING ${zone} + ${code} ...</p>`;
+            term.innerHTML += `<p class="text-blue-500">> MEMORY: Stored in Local Retention [REF: ${timestamp}]</p>`;
 
             setTimeout(() => {
                 let response = "";
@@ -195,6 +214,14 @@
                     cmd = `IF (LEAK_RATE > LIMIT) THEN INITIATE_SEAL_RECOVERY`;
                     response = `ALERT: Shaft seal integrity compromised. recovery protocol active.`;
                     link = "Francis_SOP_Recovery.html";
+                } else if (code === 'ERR_VIB_LOW') {
+                    cmd = `IF (FREQ < 3.5Hz) THEN CHECK_DRAFT_TUBE_VORTEX`;
+                    response = `ADVISORY: Rheingans detected. Aeration recommended.`;
+                    link = "Francis_SOP_Vortex_Control.html";
+                } else if (code === 'ERR_TEMP_HI') {
+                    cmd = `IF (BEARING_TEMP > 65) THEN CHECK_COOLING_FLOW`;
+                    response = `ALARM: Thermal threshold exceeded. Verify cooling loop.`;
+                    link = "Francis_SOP_Cooling_Water.html";
                 } else {
                     cmd = `SEARCHING_DATABASE...`;
                     response = `Code recognized. Standard diagnostics recommended.`;
