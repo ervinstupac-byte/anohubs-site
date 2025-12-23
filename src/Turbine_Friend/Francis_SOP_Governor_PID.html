@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOP: Governor PID Tuning</title>
+    <style>
+        /* Control Systems Theme - Blue/Orange */
+        :root {
+            --primary-color: #1E3A8A;
+            --secondary-color: #3B82F6;
+            --accent-color: #F97316;
+            --warning-color: #EF4444;
+            --bg-color: #f4f7f6;
+            --text-color: #333;
+            --border-color: #BFDBFE;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 40px;
+            box-shadow: 0 4px 15px rgba(30, 58, 138, 0.15);
+            border-radius: 8px;
+        }
+
+        header {
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+            color: var(--primary-color);
+            font-size: 28px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h2 {
+            color: var(--secondary-color);
+            font-size: 18px;
+            margin-top: 5px;
+            font-weight: 400;
+        }
+
+        .section-title {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: #fff;
+            padding: 10px 15px;
+            margin-top: 40px;
+            border-radius: 4px;
+            font-size: 1.2em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title::before {
+            content: "⚙";
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        h3 {
+            color: var(--primary-color);
+            border-left: 4px solid var(--accent-color);
+            padding-left: 10px;
+            margin-top: 25px;
+        }
+
+        .module {
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            background-color: #fafafa;
+        }
+
+        .critical {
+            border-left: 5px solid var(--warning-color);
+            background-color: #FEF2F2;
+        }
+
+        .technical {
+            border-left: 5px solid var(--secondary-color);
+            background-color: #EFF6FF;
+        }
+
+        .control {
+            border-left: 5px solid var(--accent-color);
+            background-color: #FFF7ED;
+        }
+
+        ul,
+        ol {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 30px;
+            text-decoration: none;
+            color: var(--secondary-color);
+            font-weight: bold;
+            border: 1px solid var(--secondary-color);
+            padding: 10px 20px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            background-color: var(--secondary-color);
+            color: #fff;
+        }
+
+        strong {
+            font-weight: 600;
+        }
+
+        .visual-aid {
+            border: 2px dashed var(--accent-color);
+            padding: 15px;
+            margin: 10px 0;
+            background: #fff;
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .formula {
+            background: linear-gradient(135deg, #EFF6FF, #FFF7ED);
+            padding: 15px;
+            border-left: 4px solid var(--accent-color);
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1em;
+            text-align: center;
+        }
+
+        .pid-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        .pid-table th,
+        .pid-table td {
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            text-align: left;
+        }
+
+        .pid-table th {
+            background-color: var(--primary-color);
+            color: #fff;
+        }
+
+        .pid-table tr:nth-child(even) {
+            background-color: #F9FAFB;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <header>
+            <h1>⚙ Governor PID Tuning</h1>
+            <h2>Proportional-Integral-Derivative Control System</h2>
+        </header>
+
+        <!-- SAFETY MODULE -->
+        <div class="module critical">
+            <h3>⚠️ MANDATORY SAFETY PROTOCOL</h3>
+            <p><strong>STOP. READ THIS FIRST.</strong></p>
+            <ul>
+                <li><strong>Grid Synchronization:</strong> Never adjust PID parameters while the unit is synchronized to
+                    the grid without approval from the grid operator.</li>
+                <li><strong>Load Stability:</strong> Perform tuning tests at stable load conditions (avoid rapid load
+                    changes during testing).</li>
+                <li><strong>Emergency Stop:</strong> Ensure the emergency stop button is accessible and functional
+                    before beginning tests.</li>
+                <li><strong>Communication:</strong> Notify the control room before initiating step response tests.</li>
+            </ul>
+        </div>
+
+        <div class="section-title">PID Fundamentals: The Three Controllers</div>
+        <div class="module technical">
+            <p>The governor controls the position of the 20 guide vanes to maintain constant turbine speed (typically
+                500 RPM for a 12-pole generator at 50 Hz).</p>
+
+            <h3>The Control Loop</h3>
+            <div class="formula">
+                Speed Error = Target Speed - Actual Speed<br>
+                Control Output = (P × Error) + (I × ∫Error dt) + (D × dError/dt)
+            </div>
+
+            <h3>Proportional (P): The Immediate Response</h3>
+            <div class="module control">
+                <p><strong>What it does:</strong> Responds proportionally to the current speed error.</p>
+                <ul>
+                    <li><strong>High P:</strong> Fast response, but can cause overshoot and oscillation.</li>
+                    <li><strong>Low P:</strong> Slow response, but stable.</li>
+                    <li><strong>Typical Range:</strong> 2.0 - 6.0 (dimensionless gain)</li>
+                </ul>
+                <p><strong>💡 Simple Analogy:</strong> Like a driver who steers harder the further off-course they are.
+                </p>
+            </div>
+
+            <h3>Integral (I): The Steady-State Corrector</h3>
+            <div class="module control">
+                <p><strong>What it does:</strong> Eliminates steady-state error by accumulating error over time.</p>
+                <ul>
+                    <li><strong>High I:</strong> Fast elimination of offset, but can cause "wind-up" and instability.
+                    </li>
+                    <li><strong>Low I:</strong> Slow correction, but prevents overshoot.</li>
+                    <li><strong>Typical Range:</strong> 0.5 - 2.0 seconds (integration time)</li>
+                </ul>
+                <p><strong>💡 Simple Analogy:</strong> Like a driver who remembers how long they've been off-course and
+                    corrects accordingly.</p>
+            </div>
+
+            <h3>Derivative (D): The Predictive Damper</h3>
+            <div class="module control">
+                <p><strong>What it does:</strong> Predicts future error based on the rate of change and applies damping.
+                </p>
+                <ul>
+                    <li><strong>High D:</strong> Strong damping, but sensitive to noise (can cause jitter).</li>
+                    <li><strong>Low D:</strong> Less damping, smoother response.</li>
+                    <li><strong>Typical Range:</strong> 0.1 - 0.5 seconds (derivative time)</li>
+                </ul>
+                <p><strong>💡 Simple Analogy:</strong> Like a driver who anticipates a turn and starts steering before
+                    reaching it.</p>
+            </div>
+        </div>
+
+        <div class="section-title">Dead-Band Analysis</div>
+        <div class="module technical">
+            <h3>What is Dead-Band?</h3>
+            <p>The <strong>dead-band</strong> is a small speed range (e.g., ±0.1 RPM) where the governor
+                <em>ignores</em> speed deviations and does not move the guide vanes.</p>
+
+            <h3>Why It Exists</h3>
+            <ul>
+                <li><strong>Prevent Wear:</strong> Constant micro-adjustments cause excessive wear on the servomotor,
+                    linkage pins, and guide vane bearings.</li>
+                <li><strong>Reduce Hunting:</strong> Without a dead-band, the governor would continuously "hunt" for the
+                    exact setpoint, causing oscillations.</li>
+                <li><strong>Noise Immunity:</strong> Filters out small speed fluctuations caused by grid noise or sensor
+                    jitter.</li>
+            </ul>
+
+            <h3>Dead-Band Configuration</h3>
+            <table class="pid-table">
+                <tr>
+                    <th>Parameter</th>
+                    <th>Typical Value</th>
+                    <th>Effect if Too Large</th>
+                    <th>Effect if Too Small</th>
+                </tr>
+                <tr>
+                    <td>Dead-Band</td>
+                    <td>±0.05 - 0.15 RPM</td>
+                    <td>Slow response to load changes</td>
+                    <td>Excessive wear, hunting</td>
+                </tr>
+            </table>
+
+            <div class="module critical">
+                <strong>💡 Tech Note:</strong> The dead-band we found during the linkage inspection (mechanical "play"
+                in the pins) is a <em>physical</em> dead-band caused by wear. This is different from the
+                <em>electronic</em> dead-band in the governor software. Both must be minimized.
+            </div>
+        </div>
+
+        <div class="section-title">The Stability Test: Step Response</div>
+        <div class="module technical">
+            <h3>What is a Step Response Test?</h3>
+            <p>A controlled test where the load is suddenly changed by a fixed amount (typically 10% of rated power) to
+                observe how the governor reacts.</p>
+
+            <h3>Test Procedure</h3>
+            <ol>
+                <li><strong>Initial Conditions:</strong> Unit synchronized to grid, stable load (e.g., 5.0 MW).</li>
+                <li><strong>Record Baseline:</strong> Monitor speed, guide vane position, and power output for 2
+                    minutes.</li>
+                <li><strong>Apply Step Change:</strong> Increase load setpoint by 10% (e.g., 5.0 MW → 5.5 MW).</li>
+                <li><strong>Observe Response:</strong> Record speed and vane position for 5 minutes.</li>
+                <li><strong>Analyze:</strong> Measure overshoot, settling time, and oscillation frequency.</li>
+            </ol>
+
+            <h3>Ideal Response Characteristics</h3>
+            <table class="pid-table">
+                <tr>
+                    <th>Metric</th>
+                    <th>Target Value</th>
+                    <th>Interpretation</th>
+                </tr>
+                <tr>
+                    <td>Overshoot</td>
+                    <td>
+                        < 5%</td>
+                    <td>Speed should not exceed setpoint by more than 5%</td>
+                </tr>
+                <tr>
+                    <td>Settling Time</td>
+                    <td>
+                        < 10 seconds</td>
+                    <td>Time to stabilize within ±1% of setpoint</td>
+                </tr>
+                <tr>
+                    <td>Oscillations</td>
+                    <td>
+                        < 2 cycles</td>
+                    <td>Should dampen quickly without sustained hunting</td>
+                </tr>
+            </table>
+
+            <div class="visual-aid">
+                [Visualization: Step Response Graph - Time vs. Speed/Power]<br>
+                Ideal: Quick rise → Small overshoot → Fast settling<br>
+                Poor: Slow rise OR Large overshoot OR Sustained oscillations
+            </div>
+        </div>
+
+        <div class="section-title">Anti-Hunting Logic: Diagnosis & Correction</div>
+        <div class="module technical">
+            <h3>What is Governor Hunting?</h3>
+            <p><strong>Hunting</strong> is a continuous oscillation of the guide vanes around the setpoint, causing
+                speed and power to fluctuate.</p>
+
+            <h3>Symptoms</h3>
+            <ul>
+                <li>Speed oscillates ±0.2 - 0.5 RPM at a regular frequency (e.g., every 3-5 seconds).</li>
+                <li>Guide vane position oscillates ±1-2% continuously.</li>
+                <li>Audible "clicking" or "tapping" from the servomotor or linkage.</li>
+                <li>Increased wear on linkage pins and bushings.</li>
+            </ul>
+
+            <h3>Root Causes</h3>
+            <div class="module control">
+                <h4>1. Mechanical Play (Linkage Backlash)</h4>
+                <p>This is the issue we identified during the pin inspection:</p>
+                <ul>
+                    <li><strong>Worn Pins:</strong> Clearance > 0.5 mm between pin and bushing.</li>
+                    <li><strong>Loose Connections:</strong> Bolts not torqued to specification.</li>
+                    <li><strong>Effect:</strong> The servomotor moves, but the guide vanes don't respond immediately,
+                        causing a delayed feedback loop.</li>
+                </ul>
+                <p><strong>Solution:</strong> Replace worn pins and bushings, re-torque all linkage bolts.</p>
+
+                <h4>2. Excessive Integral Gain (I)</h4>
+                <ul>
+                    <li><strong>Cause:</strong> I value too high, causing "integral wind-up".</li>
+                    <li><strong>Effect:</strong> The controller over-corrects, causing oscillations.</li>
+                </ul>
+                <p><strong>Solution:</strong> Reduce I gain by 20-30% and re-test.</p>
+
+                <h4>3. Insufficient Derivative Damping (D)</h4>
+                <ul>
+                    <li><strong>Cause:</strong> D value too low, insufficient damping of oscillations.</li>
+                    <li><strong>Effect:</strong> System overshoots and oscillates.</li>
+                </ul>
+                <p><strong>Solution:</strong> Increase D gain by 10-20% and re-test.</p>
+
+                <h4>4. Dead-Band Too Small</h4>
+                <ul>
+                    <li><strong>Cause:</strong> Dead-band < 0.05 RPM.</li>
+                    <li><strong>Effect:</strong> Governor responds to noise, causing continuous micro-adjustments.</li>
+                </ul>
+                <p><strong>Solution:</strong> Increase dead-band to 0.10 - 0.15 RPM.</p>
+            </div>
+
+            <h3>Diagnostic Procedure</h3>
+            <ol>
+                <li><strong>Mechanical Inspection:</strong> Check all linkage pins for play (target < 0.2 mm
+                        clearance).</li>
+                <li><strong>Monitor Oscillation Frequency:</strong> Fast oscillations (< 2 sec)=mechanical issue. Slow
+                        oscillations (> 5 sec) = PID tuning issue.</li>
+                <li><strong>Isolate Cause:</strong> Temporarily increase dead-band to 0.3 RPM. If hunting stops, the
+                    issue is PID tuning. If hunting continues, the issue is mechanical.</li>
+            </ol>
+        </div>
+
+        <div class="section-title">PID Tuning Workflow</div>
+        <div class="module technical">
+            <h3>Step-by-Step Tuning Process</h3>
+            <ol>
+                <li><strong>Start with Conservative Values:</strong> P=3.0, I=1.0, D=0.2, Dead-Band=0.10 RPM.</li>
+                <li><strong>Perform Step Response Test:</strong> Apply 10% load change, record response.</li>
+                <li><strong>Adjust P:</strong> If response is too slow, increase P by 0.5. If overshoot is excessive,
+                    decrease P by 0.5.</li>
+                <li><strong>Adjust I:</strong> If steady-state error persists, increase I by 0.2. If hunting occurs,
+                    decrease I by 0.2.</li>
+                <li><strong>Adjust D:</strong> If oscillations are poorly damped, increase D by 0.1. If response is
+                    jittery, decrease D by 0.05.</li>
+                <li><strong>Iterate:</strong> Repeat steps 2-5 until optimal response is achieved.</li>
+                <li><strong>Document:</strong> Record final PID values and step response graphs in the unit logbook.
+                </li>
+            </ol>
+
+            <div class="formula">
+                Tuning Goal: Fast Response + Minimal Overshoot + No Hunting
+            </div>
+        </div>
+
+        <div class="section-title">Materials & Tools Checklist</div>
+        <div class="module">
+            <ul>
+                <li><strong>Software:</strong> Governor HMI access (password-protected).</li>
+                <li><strong>Monitoring:</strong> SCADA system with speed, power, and vane position trending.</li>
+                <li><strong>Documentation:</strong> Step response recording software, unit logbook.</li>
+                <li><strong>Mechanical Tools:</strong> Calipers (for measuring linkage play), torque wrench.</li>
+                <li><strong>Safety:</strong> Communication radio, emergency stop access.</li>
+            </ul>
+        </div>
+
+        <a href="./Francis_Horizontal.html" class="back-btn">← Return to Master Manual</a>
+
+    </div>
+
+</body>
+
+</html>

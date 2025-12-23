@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOP: Generator Electrical Health & Thermal Protection</title>
+    <style>
+        /* Electrical/Amber Theme */
+        :root {
+            --primary-color: #f59e0b;
+            --secondary-color: #d97706;
+            --accent-color: #dc2626;
+            --warning-color: #fbbf24;
+            --bg-color: #f4f7f6;
+            --text-color: #333;
+            --border-color: #dde;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 40px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        header {
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+            color: var(--primary-color);
+            font-size: 28px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h2 {
+            color: var(--secondary-color);
+            font-size: 18px;
+            margin-top: 5px;
+            font-weight: 400;
+        }
+
+        .section-title {
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 10px 15px;
+            margin-top: 40px;
+            border-radius: 4px;
+            font-size: 1.2em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title::before {
+            content: "►";
+            margin-right: 10px;
+            font-size: 0.8em;
+        }
+
+        h3 {
+            color: var(--primary-color);
+            border-left: 4px solid var(--primary-color);
+            padding-left: 10px;
+            margin-top: 25px;
+        }
+
+        .module {
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            background-color: #fafafa;
+        }
+
+        .critical {
+            border-left: 5px solid var(--accent-color);
+            background-color: #fff5f5;
+        }
+
+        .technical {
+            border-left: 5px solid var(--primary-color);
+            background-color: #fffbf0;
+        }
+
+        .diagnostic {
+            border-left: 5px solid var(--warning-color);
+            background-color: #fef3c7;
+        }
+
+        ul,
+        ol {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 30px;
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: bold;
+            border: 1px solid var(--primary-color);
+            padding: 10px 20px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            background-color: var(--primary-color);
+            color: #fff;
+        }
+
+        .temp-table {
+            background: #fffbf0;
+            border-left: 4px solid var(--primary-color);
+            padding: 12px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        table th {
+            background: var(--primary-color);
+            color: white;
+            padding: 10px;
+            text-align: left;
+        }
+
+        table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+
+        table tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        /* === PRINT CSS === */
+        @media print {
+            body {
+                background: white;
+                color: black;
+                font-size: 11pt;
+            }
+
+            .container {
+                max-width: 100%;
+                box-shadow: none;
+                padding: 20px;
+            }
+
+            header {
+                border-bottom: 2px solid black;
+            }
+
+            .section-title {
+                background: white !important;
+                color: black !important;
+                border: 2px solid black;
+            }
+
+            .module {
+                page-break-inside: avoid;
+            }
+
+            .back-btn {
+                display: none;
+            }
+
+            table {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <header>
+            <h1>Generator Electrical Health & Thermal Protection</h1>
+            <h2>Insulation Integrity, Corona Discharge & Heater-Breaker Logic</h2>
+        </header>
+
+        <!-- INTRO MODULE -->
+        <div class="module critical">
+            <h3>⚠️ THE INVISIBLE DEGRADATION</h3>
+            <p><strong>Context:</strong> Generator windings operate at high voltage (typically 6.6-11 kV for 1.3 MW
+                units). Insulation degradation is gradual and invisible until catastrophic failure occurs.</p>
+            <ul>
+                <li><strong>The Risk:</strong> Insulation breakdown causes turn-to-turn short circuits → localized
+                    overheating → slot discharge → total winding failure.</li>
+                <li><strong>Repair Cost:</strong> Re-winding a generator stator costs $50,000-$150,000 and requires 3-6
+                    months downtime.</li>
+                <li><strong>Prevention:</strong> Early detection through visual inspection, thermal monitoring, and
+                    proper moisture control.</li>
+            </ul>
+        </div>
+
+        <div class="section-title">SOP 1: Corona & Slot Discharge Detection</div>
+        <div class="module technical">
+            <p>Corona discharge occurs when electrical field stress exceeds air's dielectric strength, ionizing the air
+                and creating ozone.</p>
+
+            <h3>1.1 The "Ozone Smell Test"</h3>
+            <p><strong>Physics:</strong> High-voltage corona produces ozone (O₃), which has a distinctive sharp,
+                chlorine-like smell detectable at very low concentrations (~0.01 ppm).</p>
+            <p><strong>Procedure:</strong></p>
+            <ol>
+                <li><strong>Generator Running:</strong> Unit at >70% load (higher voltage = more pronounced corona)</li>
+                <li><strong>Access:</strong> Approach air outlets from generator cooling fans</li>
+                <li><strong>Sniff Test:</strong> Distinctive ozone smell indicates active corona discharge</li>
+                <li><strong>Location:</strong> If ozone detected, shutdown and inspect to locate source</li>
+            </ol>
+
+            <h3>1.2 Visual Inspection for "White Powder"</h3>
+            <p><strong>Corona Byproduct:</strong> Prolonged corona discharge breaks down insulation materials, creating
+                a white/gray powdery residue (ozone-degraded resin).</p>
+
+            <div class="diagnostic">
+                <strong>INSPECTION PROCEDURE (During Shutdown):</strong><br>
+                1. Remove generator end covers to access stator windings<br>
+                2. Use flashlight to inspect slot exits and end-winding connections<br>
+                3. Look for white powder accumulation (especially in corners/crevices)<br>
+                4. Check for darkened/charred insulation (indicates arcing)
+            </div>
+
+            <h3>1.3 Common Corona Sources</h3>
+            <table>
+                <tr>
+                    <th>Location</th>
+                    <th>Cause</th>
+                    <th>Remedy</th>
+                </tr>
+                <tr>
+                    <td>Slot exits</td>
+                    <td>Sharp edge on slot liner</td>
+                    <td>Apply corona-resistant tape (3M 2210) to sharp edges</td>
+                </tr>
+                <tr>
+                    <td>End-winding connections</td>
+                    <td>Loose connection creating air gap</td>
+                    <td>Re-tighten bolts, clean contact surfaces</td>
+                </tr>
+                <tr>
+                    <td>Wedge slots</td>
+                    <td>Slot wedge not seated properly</td>
+                    <td>Remove and re-seat wedge with proper compression</td>
+                </tr>
+                <tr>
+                    <td>Cable entries</td>
+                    <td>Moisture ingress degrading insulation</td>
+                    <td>Seal cable entry with epoxy, verify heaters functional</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section-title">SOP 2: Heater-Breaker Interlock Logic</div>
+        <div class="module technical">
+            <p><strong>Critical Requirement:</strong> Generator space heaters MUST activate automatically when main
+                breaker opens to prevent condensation damage.</p>
+
+            <h3>2.1 The Moisture Threat</h3>
+            <p><strong>Physics:</strong> When generator stops, windings cool. If ambient humidity is high (>70%),
+                moisture condenses on cold windings, degrading insulation resistance.</p>
+            <p><strong>Space Heater Function:</strong> Maintains winding temperature 5-10°C above ambient → prevents
+                condensation → preserves insulation integrity.</p>
+
+            <h3>2.2 Interlock Verification Test</h3>
+            <ol>
+                <li><strong>Unit Running:</strong> Generator at normal load, space heaters OFF (locked out by breaker
+                    auxiliary contact)</li>
+                <li><strong>Trip Breaker:</strong> Manually open main breaker</li>
+                <li><strong>Immediate Check:</strong> Space heater pilot light should illuminate within 5 seconds</li>
+                <li><strong>Temperature Verification:</strong> After 30 minutes, measure winding temperature - should be
+                    rising</li>
+            </ol>
+
+            <div class="critical">
+                <strong>FAILURE CONSEQUENCE:</strong> If heaters fail to activate and generator sits idle for >48 hours
+                in humid conditions, insulation resistance can drop from >100 MΩ to <1 MΩ → UNSAFE TO RESTART without
+                    drying process. </div>
+
+                    <h3>2.3 Heater System Maintenance</h3>
+                    <ul>
+                        <li><strong>Monthly:</strong> Verify heater pilot light illuminates when unit stopped</li>
+                        <li><strong>Quarterly:</strong> Measure heater current draw (compare to nameplate - should be
+                            within 10%)</li>
+                        <li><strong>Annually:</strong> Test auxiliary contact continuity on main breaker</li>
+                        <li><strong>After Extended Outage (>1 week):</strong> Measure insulation resistance before
+                            restart (Megger test)</li>
+                    </ul>
+            </div>
+
+            <div class="section-title">SOP 3: Winding Thermal Limits</div>
+            <div class="module technical">
+                <p>Generator windings use Class F or Class B insulation. Each class has specific temperature limits that
+                    must not be exceeded.</p>
+
+                <h3>3.1 Insulation Class Reference Table</h3>
+                <table>
+                    <tr>
+                        <th>Insulation Class</th>
+                        <th>Continuous Limit</th>
+                        <th>Hot Spot Limit</th>
+                        <th>Emergency (2hr)</th>
+                    </tr>
+                    <tr>
+                        <td>Class B</td>
+                        <td>130°C</td>
+                        <td>145°C</td>
+                        <td>155°C</td>
+                    </tr>
+                    <tr>
+                        <td>Class F</td>
+                        <td>155°C</td>
+                        <td>170°C</td>
+                        <td>180°C</td>
+                    </tr>
+                </table>
+
+                <div class="temp-table">
+                    <strong>TYPICAL 1.3 MW GENERATOR SPECIFICATION:</strong><br>
+                    Insulation Class: F (verify on nameplate)<br>
+                    Rated Stator Temp (RTD): 155°C continuous<br>
+                    Alarm Setpoint: 165°C (10°C below hot spot limit)<br>
+                    Trip Setpoint: 175°C (5°C margin to emergency limit)<br>
+                    Ambient Temperature: Assume 40°C for calculations
+                </div>
+
+                <h3>3.2 Temperature Rise Budget</h3>
+                <p><strong>Engineering Calculation:</strong></p>
+                <ul>
+                    <li>Ambient: 40°C (typical powerhouse environment)</li>
+                    <li>Allowable Rise: 155°C - 40°C = <strong>115°C</strong></li>
+                    <li>At rated load (1.3 MW), temperature rise should be ~100-110°C</li>
+                    <li>If rise exceeds 115°C at rated load → cooling system issue or overload</li>
+                </ul>
+
+                <h3>3.3 RTD Sensor Verification</h3>
+                <p><strong>Annual Test:</strong></p>
+                <ol>
+                    <li>Compare all stator RTD readings at standstill (should be within 2-3°C of each other)</li>
+                    <li>Compare RTD reading to handheld IR thermometer measurement on accessible winding</li>
+                    <li>If RTD reads >5°C different → sensor drift → replace RTD</li>
+                </ol>
+            </div>
+
+            <div class="section-title">SOP 4: Moisture Control & Megger Testing</div>
+            <div class="module diagnostic">
+                <p><strong>Objective:</strong> Verify insulation resistance before startup after extended outage or
+                    suspected moisture ingress.</p>
+
+                <h3>4.1 Megger Test Procedure</h3>
+                <ol>
+                    <li><strong>Disconnect Generator:</strong> Open main breaker AND disconnect excitation circuit</li>
+                    <li><strong>Ground Resistance Check:</strong> Verify proper ground connection (< 1Ω to station
+                            ground)</li>
+                    <li><strong>Megger Setup:</strong>
+                        <ul>
+                            <li>Test voltage: 500V DC (for 6.6 kV generator) or 1000V DC (for 11 kV generator)</li>
+                            <li>Connect positive to phase A, negative to ground</li>
+                        </ul>
+                    </li>
+                    <li><strong>1-Minute Test:</strong> Apply voltage for 60 seconds, record final resistance value</li>
+                    <li><strong>Repeat:</strong> Test Phases B and C independently</li>
+                </ol>
+
+                <h3>4.2 Acceptance Criteria</h3>
+                <div class="temp-table">
+                    <strong>INSULATION RESISTANCE LIMITS:</strong><br>
+                    PASS: > 100 MΩ (excellent condition, safe to start)<br>
+                    WARNING: 10-100 MΩ (marginal - operate heaters 24hr, re-test)<br>
+                    FAIL: < 10 MΩ (moisture contamination - DO NOT START)<br>
+                        <br>
+                        <strong>If FAIL:</strong> Run space heaters continuously for 48-72 hours, re-test daily until
+                        >100 MΩ achieved.
+                </div>
+            </div>
+
+            <div class="section-title">Summary Checklist</div>
+            <div class="module">
+                <ul>
+                    <li><strong>Weekly (during operation):</strong> Ozone smell test at generator air outlets</li>
+                    <li><strong>Monthly:</strong> Verify heater-breaker interlock functional</li>
+                    <li><strong>Quarterly:</strong> Visual inspection for white powder (corona byproduct)</li>
+                    <li><strong>Annually:</strong> RTD sensor calibration verification, heater current draw test</li>
+                    <li><strong>After extended shutdown (>1 week):</strong> Megger test before restart</li>
+                </ul>
+            </div>
+
+            <a href="./Francis_Horizontal.html" class="back-btn">← Return to Master Manual</a>
+
+        </div>
+
+</body>
+
+</html>
