@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="bs">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOP: Popravak Kavitacije Zavarivanjem</title>
+    <title>SOP: Cavitation Repair by Welding</title>
     <style>
         :root {
             --primary-color: #4B5563;
@@ -54,6 +54,29 @@
             font-size: 18px;
             margin-top: 5px;
             font-weight: 400;
+        }
+
+        .lang-toggle {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .lang-toggle button {
+            padding: 8px 20px;
+            font-size: 12px;
+            font-weight: bold;
+            border: 1px solid var(--primary-color);
+            background: transparent;
+            color: var(--primary-color);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .lang-toggle button.active {
+            background: var(--primary-color);
+            color: #fff;
         }
 
         .section-title {
@@ -159,157 +182,336 @@
 <body>
     <div class="container">
         <header>
-            <h1>🔥 Zavarivanje & Kavitacija</h1>
-            <h2>Protokol Reparacije Radnog Kola Inox Čelik</h2>
+            <h1 data-i18n="title">🔥 Welding & Cavitation</h1>
+            <h2 data-i18n="subtitle">Stainless Steel Runner Repair Protocol</h2>
+            <div class="lang-toggle">
+                <button onclick="setLang('en')" id="btnEn" class="active">EN</button>
+                <button onclick="setLang('bs')" id="btnBs">BS</button>
+            </div>
         </header>
 
         <div class="module critical">
-            <h3>⚠️ OBAVEZNI SIGURNOSNI PROTOKOL</h3>
-            <p><strong>STOP. PROČITAJ OVO PRVO.</strong></p>
+            <h3 data-i18n="safety_title">⚠️ MANDATORY SAFETY PROTOCOL</h3>
+            <p><strong data-i18n="stop_msg">STOP. READ THIS FIRST.</strong></p>
             <ul>
-                <li><strong>Dozvola za Vrući Rad:</strong> Pribavi dozvolu prije zavarivanja. PP aparati u blizini.</li>
-                <li><strong>Ventilacija:</strong> Zavarivanje nehrđajućeg čelika proizvodi pare heksavalentnog hroma
-                    (kancerogeno). Koristi prinudnu ventilaciju i maske.</li>
-                <li><strong>Zaštita Očiju:</strong> Maska za zavarivanje sa zatamnjenjem 10-12.</li>
-                <li><strong>Električna Sigurnost:</strong> Osiguraj da je aparat uzemljen. Suha radna zona.</li>
+                <li data-i18n="safety_1"><strong>Hot Work Permit:</strong> Obtain permit before welding. Fire
+                    extinguishers nearby.</li>
+                <li data-i18n="safety_2"><strong>Ventilation:</strong> Stainless steel welding produces hexavalent
+                    chromium fumes (carcinogenic). Use forced ventilation and masks.</li>
+                <li data-i18n="safety_3"><strong>Eye Protection:</strong> Welding helmet with shade 10-12.</li>
+                <li data-i18n="safety_4"><strong>Electrical Safety:</strong> Ensure machine ground. Dry working zone.
+                </li>
             </ul>
         </div>
 
-        <div class="section-title">Uparivanje Materijala: Izbor Elektrode</div>
+        <div class="section-title" data-i18n="match_title">Material Matching: Electrode Selection</div>
         <div class="module technical">
-            <h3>Zašto je Uparivanje Bitno</h3>
-            <p>Radno kolo je tipično <strong>13Cr4Ni Martenzitni Nehrđajući Čelik</strong>. Pogrešna elektroda uzrokuje
-                galvansku koroziju, pukotine ili smanjenu tvrdoću.</p>
+            <h3 data-i18n="why_match">Why Matching Matters</h3>
+            <p data-i18n="match_desc">Runner is typically <strong>13Cr4Ni Martensitic Stainless Steel</strong>. Wrong
+                electrode causes galvanic corrosion, cracking, or reduced hardness.</p>
 
-            <h3>Preporučene Elektrode</h3>
+            <h3 data-i18n="rec_elect">Recommended Electrodes</h3>
             <ul>
-                <li><strong>308L (E308L-16):</strong> Opšta popravka kavitacije. Austenitna, dobra otpornost na
-                    koroziju.
-                </li>
-                <li><strong>309L (E309L-16):</strong> Spojevi raznorodne metale. Veći sadržaj hroma.</li>
+                <li data-i18n="el_308"><strong>308L (E308L-16):</strong> General cavitation repair. Austenitic, good
+                    corrosion resistance.</li>
+                <li data-i18n="el_309"><strong>309L (E309L-16):</strong> Joining dissimilar metals. Higher chromium
+                    content.</li>
             </ul>
 
             <div class="module metallurgy">
-                <strong>💡 Tehnička Bilješka:</strong> 308L ili 309L su preferirane—BEZ predgrijavanja ili termičke
-                obrade
-                nakon zavarivanja.
+                <strong data-i18n="tech_note">💡 Technical Note:</strong> <span data-i18n="tech_note_desc">308L or 309L
+                    are preferred—NO pre-heating or post-weld heat treatment required.</span>
             </div>
 
-            <h3>Parametri Zavarivanja</h3>
+            <h3 data-i18n="weld_param">Welding Parameters</h3>
             <ul>
-                <li><strong>Struja:</strong> 80-120 A (3.2 mm elektroda)</li>
-                <li><strong>Polaritet:</strong> DCEP (Plus na elektrodi)</li>
-                <li><strong>Međuprolazna Temperatura:</strong>
+                <li data-i18n="current"><strong>Current:</strong> 80-120 A (3.2 mm electrode)</li>
+                <li data-i18n="polarity"><strong>Polarity:</strong> DCEP (Electrode Positive)</li>
+                <li data-i18n="interpass"><strong>Interpass Temperature:</strong>
                     < 150°C</li>
             </ul>
         </div>
 
-        <div class="section-title">Profil Šablon: Očuvanje Zakrivljenosti Lopatice</div>
+        <div class="section-title" data-i18n="prof_templ">Profile Template: Preserving Blade Curvature</div>
         <div class="module technical">
-            <h3>Izrada Mjerača Profila</h3>
+            <h3 data-i18n="make_gauge">Making a Profile Gauge</h3>
             <ol>
-                <li><strong>Odaberi Neoštećenu Licu:</strong> Nađi susjednu neoštećenu lopaticu.</li>
-                <li><strong>Materijal:</strong> Debeli karton, plastika ili tanki aluminij (1-2 mm).</li>
-                <li><strong>Kopiraj Profil:</strong> Pritisni materijal uz lopaticu, iscrtaj tačnu krivinu.</li>
-                <li><strong>Izreži Šablon:</strong> Reži po iscrtanoj liniji.</li>
-                <li><strong>Označi:</strong> Zapiši broj lopatice i poziciju.</li>
+                <li data-i18n="sel_undam"><strong>Select Undamaged Face:</strong> Find adjacent undamaged blade.</li>
+                <li data-i18n="mat"><strong>Material:</strong> Thick cardboard, plastic, or thin aluminum (1-2 mm).</li>
+                <li data-i18n="copy_prof"><strong>Copy Profile:</strong> Press material against blade, trace exact
+                    curve.</li>
+                <li data-i18n="cut_temp"><strong>Cut Template:</strong> Cut along the line.</li>
+                <li data-i18n="label"><strong>Label:</strong> Record blade number and position.</li>
             </ol>
 
-            <div class="visual-aid">
-                [Vizualizacija: Šablon Profila]<br>
-                Šablon → Iscrtavanje → Rezanje → Provjera popravljene lopatice
+            <div class="visual-aid" data-i18n="vis_aide">
+                [Visualization: Profile Template]<br>
+                Template → Tracing → Cutting → Verifying Repaired Blade
             </div>
 
-            <h3>Korištenje Šablona</h3>
+            <h3 data-i18n="use_temp">Using the Template</h3>
             <ol>
-                <li>Nakon brušenja: Ukloni sav oštećeni materijal.</li>
-                <li>Nakon zavarivanja: Nadogradi 1-2 mm viška metala.</li>
-                <li>Završno brušenje: Koristi šablon kao vodič—lopatica se mora poklapati sa šablonom.</li>
+                <li data-i18n="after_grind">After grinding: Remove all damaged material.</li>
+                <li data-i18n="after_weld">After welding: Build up 1-2 mm excess metal.</li>
+                <li data-i18n="finish_grind">Finish grinding: Use template as guide—blade must match template.</li>
             </ol>
 
             <div class="module critical">
-                <strong>⚠️ KRITIČNO:</strong> Čak i 1 mm devijacije smanjuje efikasnost turbine za 1-2%.
+                <strong data-i18n="crit_dev">⚠️ CRITICAL:</strong> <span data-i18n="dev_desc">Even 1 mm deviation
+                    reduces turbine efficiency by 1-2%.</span>
             </div>
         </div>
 
-        <div class="section-title">Standard 'Glatkoće': Efekat Ogledala</div>
+        <div class="section-title" data-i18n="smooth_std">'Smoothness' Standard: Mirror Effect</div>
         <div class="module technical">
-            <h3>Zašto je Završna Obrada Bitna</h3>
-            <p>Svaka hrapavost površine djeluje kao <strong>nukleacijska tačka</strong> za nove mjehuriće kavitacije.
-            </p>
+            <h3 data-i18n="finish_matters">Why Surface Finish Matters</h3>
+            <p data-i18n="nucl_pt">Any surface roughness acts as a <strong>nucleation point</strong> for new cavitation
+                bubbles.</p>
 
-            <div class="formula">
-                Cilj: Ra < 1.6 μm (Efekat Ogledala) </div>
+            <div class="formula" data-i18n="target_ra">
+                Target: Ra < 1.6 μm (Mirror Effect) </div>
 
-                    <h3>Procedura Brušenja i Poliranja</h3>
+                    <h3 data-i18n="grind_proc">Grinding & Polishing Procedure</h3>
                     <ol>
-                        <li><strong>Grubo Brušenje (40-60 granulacija):</strong> Ukloni višak, oblikuj profil.</li>
-                        <li><strong>Srednje Brušenje (80-120 granulacija):</strong> Izgladi grube tragove.</li>
-                        <li><strong>Fino Brušenje (180-240 granulacija):</strong> Postigni glatku površinu.</li>
-                        <li><strong>Poliranje (320-600 granulacija):</strong> Poliraj do sjaja ogledala.</li>
+                        <li data-i18n="rough"><strong>Rough Grinding (40-60 grit):</strong> Remove excess, shape
+                            profile.</li>
+                        <li data-i18n="med"><strong>Medium Grinding (80-120 grit):</strong> Smooth out rough marks.</li>
+                        <li data-i18n="fine"><strong>Fine Grinding (180-240 grit):</strong> Achieve smooth surface.</li>
+                        <li data-i18n="polish"><strong>Polishing (320-600 grit):</strong> Buff to mirror finish.</li>
                     </ol>
 
                     <div class="module metallurgy">
-                        <strong>💡 Tehnička Bilješka:</strong> Uvijek brusi <strong>paralelno sa smjerom toka
-                            vode</strong>
-                        (od ulaza ka izlazu). Poprečne ogrebotine stvaraju turbulenciju.
+                        <strong data-i18n="tech_note_2">💡 Technical Note:</strong> <span data-i18n="grind_dir">Always
+                            grind <strong>parallel to water flow direction</strong> (inlet to outlet). Cross-scratches
+                            create turbulence.</span>
                     </div>
 
-                    <h3>Vizuelna Inspekcija</h3>
+                    <h3 data-i18n="vis_insp">Visual Inspection</h3>
                     <ul>
-                        <li><strong>Test Ogledala:</strong> Baterijska lampa pod plitkim uglom mora se jasno
-                            reflektovati.</li>
-                        <li><strong>Test Noktom:</strong> Ne smiju se osjetiti neravnine ili ogrebotine.</li>
+                        <li data-i18n="mirror_test"><strong>Mirror Test:</strong> Flashlight at shallow angle must
+                            reflect clearly.</li>
+                        <li data-i18n="nail_test"><strong>Fingernail Test:</strong> Should feel no bumps or scratches.
+                        </li>
                     </ul>
             </div>
 
-            <div class="section-title">Upozorenje o Dinamičkom Balansu</div>
+            <div class="section-title" data-i18n="bal_warn">Dynamic Balance Warning</div>
             <div class="module technical">
-                <h3>Zašto je Balans Bitan</h3>
-                <p>Dodavanje metala na jednu lopaticu stvara debalans mase, uzrokujući vibracije, habanje ležajeva,
-                    zamor
-                    vratila i kvar zaptivača.</p>
+                <h3 data-i18n="why_bal">Why Balance Matters</h3>
+                <p data-i18n="mass_imb">Adding metal to one blade creates mass imbalance, causing vibration, bearing
+                    wear, shaft fatigue, and seal failure.</p>
 
-                <div class="formula">
-                    Metal Zavaivanja → Debalans → Centrifugalna Sila → Vibracija
+                <div class="formula" data-i18n="bal_eq">
+                    Weld Metal → Imbalance → Centrifugal Force → Vibration
                 </div>
 
-                <h3>Strategije Mitigacije</h3>
+                <h3 data-i18n="mit_strat">Mitigation Strategies</h3>
                 <div class="module metallurgy">
-                    <h4>1. Simetrična Popravka (Preferirano)</h4>
-                    <p>Popravi sve oštećene lopatice radi održavanja simetrije.</p>
+                    <h4 data-i18n="sym_rep">1. Symmetrical Repair (Preferred)</h4>
+                    <p data-i18n="sym_desc">Repair all damaged blades to maintain symmetry.</p>
 
-                    <h4>2. Dodavanje Protutega</h4>
-                    <p>Dodaj istu masu na suprotnu lopaticu (180° dalje) u nekritičnoj zoni.</p>
+                    <h4 data-i18n="counter_weight">2. Adding Counterweights</h4>
+                    <p data-i18n="cw_desc">Add same mass to opposite blade (180° away) in non-critical zone.</p>
 
-                    <h4>3. Provjera Bacanja Poslije Popravke</h4>
+                    <h4 data-i18n="runout_chk">3. Runout Check Post-Repair</h4>
                     <ol>
-                        <li>Montiraj radno kolo na postolje za balansiranje.</li>
-                        <li>Rotiraj sporo, mjeri radijalno bacanje komparaterom.</li>
-                        <li><strong>Cilj:</strong> Bacanje < 0.05 mm na vrhovima lopatica.</li>
+                        <li data-i18n="mount_run">Mount runner on balancing stand.</li>
+                        <li data-i18n="rot_slow">Rotate slowly, measure radial runout with dial indicator.</li>
+                        <li><strong data-i18n="target_run">Target:</strong> <span data-i18n="run_val">Runout < 0.05 mm
+                                    at blade tips.</span>
+                        </li>
                     </ol>
                 </div>
 
                 <div class="module critical">
-                    <strong>⚠️ KRITIČNO:</strong> NE dodaji više od 100g metala na jednu lopaticu bez konsultacije sa
-                    specijalistom za balansiranje.
+                    <strong data-i18n="crit_bal">⚠️ CRITICAL:</strong> <span data-i18n="bal_limit">DO NOT add more than
+                        100g of metal to a single blade without consulting a balancing specialist.</span>
                 </div>
             </div>
 
-            <div class="section-title">Kontrolna Lista Materijala & Alata</div>
+            <div class="section-title" data-i18n="checklist">Material & Tool Checklist</div>
             <div class="module">
                 <ul>
-                    <li><strong>Elektrode:</strong> E308L-16 ili E309L-16 (3.2 mm).</li>
-                    <li><strong>Zavarivanje:</strong> REL (SMAW) aparat, 80-120 A.</li>
-                    <li><strong>Brušenje:</strong> Ugaona brusilica, lamelirani diskovi (40-600).</li>
-                    <li><strong>Šablon:</strong> Karton, plastika ili aluminij.</li>
-                    <li><strong>Mjerenje:</strong> Pomično mjerilo, komparater.</li>
-                    <li><strong>Sigurnost:</strong> Maska za zavarivanje, respirator (P100), rukavice, PP aparat.</li>
+                    <li><strong data-i18n="electrodes">Electrodes:</strong> E308L-16 or E309L-16 (3.2 mm).</li>
+                    <li><strong data-i18n="welding">Welding:</strong> SMAW machine, 80-120 A.</li>
+                    <li><strong data-i18n="grinding">Grinding:</strong> Angle grinder, flap discs (40-600).</li>
+                    <li><strong data-i18n="template">Template:</strong> Cardboard, plastic, or aluminum.</li>
+                    <li><strong data-i18n="measuring">Measuring:</strong> Calipers, dial indicator.</li>
+                    <li><strong data-i18n="safety_gear">Safety:</strong> Welding helmet, respirator (P100), gloves, fire
+                        extinguisher.</li>
                 </ul>
             </div>
 
-            <a href="Francis_Horizontal_Dashboard.html" class="back-btn">← Povratak u Operativni Centar</a>
+            <a href="Francis_Horizontal_Dashboard.html" class="back-btn" data-i18n="back_btn">← Return to Operations
+                Center</a>
         </div>
+
+        <script>
+            const i18n = {
+                en: {
+                    title: "🔥 Welding & Cavitation",
+                    subtitle: "Stainless Steel Runner Repair Protocol",
+                    safety_title: "⚠️ MANDATORY SAFETY PROTOCOL",
+                    stop_msg: "STOP. READ THIS FIRST.",
+                    safety_1: "<strong>Hot Work Permit:</strong> Obtain permit before welding. Fire extinguishers nearby.",
+                    safety_2: "<strong>Ventilation:</strong> Stainless steel welding produces hexavalent chromium fumes (carcinogenic). Use forced ventilation and masks.",
+                    safety_3: "<strong>Eye Protection:</strong> Welding helmet with shade 10-12.",
+                    safety_4: "<strong>Electrical Safety:</strong> Ensure machine ground. Dry working zone.",
+                    match_title: "Material Matching: Electrode Selection",
+                    why_match: "Why Matching Matters",
+                    match_desc: "Runner is typically <strong>13Cr4Ni Martensitic Stainless Steel</strong>. Wrong electrode causes galvanic corrosion, cracking, or reduced hardness.",
+                    rec_elect: "Recommended Electrodes",
+                    el_308: "<strong>308L (E308L-16):</strong> General cavitation repair. Austenitic, good corrosion resistance.",
+                    el_309: "<strong>309L (E309L-16):</strong> Joining dissimilar metals. Higher chromium content.",
+                    tech_note: "💡 Technical Note:",
+                    tech_note_desc: "308L or 309L are preferred—NO pre-heating or post-weld heat treatment required.",
+                    weld_param: "Welding Parameters",
+                    current: "<strong>Current:</strong> 80-120 A (3.2 mm electrode)",
+                    polarity: "<strong>Polarity:</strong> DCEP (Electrode Positive)",
+                    interpass: "<strong>Interpass Temperature:</strong> < 150°C",
+                    prof_templ: "Profile Template: Preserving Blade Curvature",
+                    make_gauge: "Making a Profile Gauge",
+                    sel_undam: "<strong>Select Undamaged Face:</strong> Find adjacent undamaged blade.",
+                    mat: "<strong>Material:</strong> Thick cardboard, plastic, or thin aluminum (1-2 mm).",
+                    copy_prof: "<strong>Copy Profile:</strong> Press material against blade, trace exact curve.",
+                    cut_temp: "<strong>Cut Template:</strong> Cut along the line.",
+                    label: "<strong>Label:</strong> Record blade number and position.",
+                    vis_aide: "[Visualization: Profile Template]<br>Template → Tracing → Cutting → Verifying Repaired Blade",
+                    use_temp: "Using the Template",
+                    after_grind: "After grinding: Remove all damaged material.",
+                    after_weld: "After welding: Build up 1-2 mm excess metal.",
+                    finish_grind: "Finish grinding: Use template as guide—blade must match template.",
+                    crit_dev: "⚠️ CRITICAL:",
+                    dev_desc: "Even 1 mm deviation reduces turbine efficiency by 1-2%.",
+                    smooth_std: "'Smoothness' Standard: Mirror Effect",
+                    finish_matters: "Why Surface Finish Matters",
+                    nucl_pt: "Any surface roughness acts as a <strong>nucleation point</strong> for new cavitation bubbles.",
+                    target_ra: "Target: Ra < 1.6 μm (Mirror Effect)",
+                    grind_proc: "Grinding & Polishing Procedure",
+                    rough: "<strong>Rough Grinding (40-60 grit):</strong> Remove excess, shape profile.",
+                    med: "<strong>Medium Grinding (80-120 grit):</strong> Smooth out rough marks.",
+                    fine: "<strong>Fine Grinding (180-240 grit):</strong> Achieve smooth surface.",
+                    polish: "<strong>Polishing (320-600 grit):</strong> Buff to mirror finish.",
+                    tech_note_2: "💡 Technical Note:",
+                    grind_dir: "Always grind <strong>parallel to water flow direction</strong> (inlet to outlet). Cross-scratches create turbulence.",
+                    vis_insp: "Visual Inspection",
+                    mirror_test: "<strong>Mirror Test:</strong> Flashlight at shallow angle must reflect clearly.",
+                    nail_test: "<strong>Fingernail Test:</strong> Should feel no bumps or scratches.",
+                    bal_warn: "Dynamic Balance Warning",
+                    why_bal: "Why Balance Matters",
+                    mass_imb: "Adding metal to one blade creates mass imbalance, causing vibration, bearing wear, shaft fatigue, and seal failure.",
+                    bal_eq: "Weld Metal → Imbalance → Centrifugal Force → Vibration",
+                    mit_strat: "Mitigation Strategies",
+                    sym_rep: "1. Symmetrical Repair (Preferred)",
+                    sym_desc: "Repair all damaged blades to maintain symmetry.",
+                    counter_weight: "2. Adding Counterweights",
+                    cw_desc: "Add same mass to opposite blade (180° away) in non-critical zone.",
+                    runout_chk: "3. Runout Check Post-Repair",
+                    mount_run: "Mount runner on balancing stand.",
+                    rot_slow: "Rotate slowly, measure radial runout with dial indicator.",
+                    target_run: "Target:",
+                    run_val: "Runout < 0.05 mm at blade tips.",
+                    crit_bal: "⚠️ CRITICAL:",
+                    bal_limit: "DO NOT add more than 100g of metal to a single blade without consulting a balancing specialist.",
+                    checklist: "Material & Tool Checklist",
+                    electrodes: "<strong>Electrodes:</strong> E308L-16 or E309L-16 (3.2 mm).",
+                    welding: "<strong>Welding:</strong> SMAW machine, 80-120 A.",
+                    grinding: "<strong>Grinding:</strong> Angle grinder, flap discs (40-600).",
+                    template: "<strong>Template:</strong> Cardboard, plastic, or aluminum.",
+                    measuring: "<strong>Measuring:</strong> Calipers, dial indicator.",
+                    safety_gear: "<strong>Safety:</strong> Welding helmet, respirator (P100), gloves, fire extinguisher.",
+                    back_btn: "← Return to Operations Center"
+                },
+                bs: {
+                    title: "🔥 Zavarivanje & Kavitacija",
+                    subtitle: "Protokol Reparacije Radnog Kola Inox Čelik",
+                    safety_title: "⚠️ OBAVEZNI SIGURNOSNI PROTOKOL",
+                    stop_msg: "STOP. PROČITAJ OVO PRVO.",
+                    safety_1: "<strong>Dozvola za Vrući Rad:</strong> Pribavi dozvolu prije zavarivanja. PP aparati u blizini.",
+                    safety_2: "<strong>Ventilacija:</strong> Zavarivanje nehrđajućeg čelika proizvodi pare heksavalentnog hroma (kancerogeno). Koristi prinudnu ventilaciju i maske.",
+                    safety_3: "<strong>Zaštita Očiju:</strong> Maska za zavarivanje sa zatamnjenjem 10-12.",
+                    safety_4: "<strong>Električna Sigurnost:</strong> Osiguraj da je aparat uzemljen. Suha radna zona.",
+                    match_title: "Uparivanje Materijala: Izbor Elektrode",
+                    why_match: "Zašto je Uparivanje Bitno",
+                    match_desc: "Radno kolo je tipično <strong>13Cr4Ni Martenzitni Nehrđajući Čelik</strong>. Pogrešna elektroda uzrokuje galvansku koroziju, pukotine ili smanjenu tvrdoću.",
+                    rec_elect: "Preporučene Elektrode",
+                    el_308: "<strong>308L (E308L-16):</strong> Opšta popravka kavitacije. Austenitna, dobra otpornost na koroziju.",
+                    el_309: "<strong>309L (E309L-16):</strong> Spojevi raznorodne metale. Veći sadržaj hroma.",
+                    tech_note: "💡 Tehnička Bilješka:",
+                    tech_note_desc: "308L ili 309L su preferirane—BEZ predgrijavanja ili termičke obrade nakon zavarivanja.",
+                    weld_param: "Parametri Zavarivanja",
+                    current: "<strong>Struja:</strong> 80-120 A (3.2 mm elektroda)",
+                    polarity: "<strong>Polaritet:</strong> DCEP (Plus na elektrodi)",
+                    interpass: "<strong>Međuprolazna Temperatura:</strong> < 150°C",
+                    prof_templ: "Profil Šablon: Očuvanje Zakrivljenosti Lopatice",
+                    make_gauge: "Izrada Mjerača Profila",
+                    sel_undam: "<strong>Odaberi Neoštećenu Licu:</strong> Nađi susjednu neoštećenu lopaticu.",
+                    mat: "<strong>Materijal:</strong> Debeli karton, plastika ili tanki aluminij (1-2 mm).",
+                    copy_prof: "<strong>Kopiraj Profil:</strong> Pritisni materijal uz lopaticu, iscrtaj tačnu krivinu.",
+                    cut_temp: "<strong>Izreži Šablon:</strong> Reži po iscrtanoj liniji.",
+                    label: "<strong>Označi:</strong> Zapiši broj lopatice i poziciju.",
+                    vis_aide: "[Vizualizacija: Šablon Profila]<br>Šablon → Iscrtavanje → Rezanje → Provjera popravljene lopatice",
+                    use_temp: "Korištenje Šablona",
+                    after_grind: "Nakon brušenja: Ukloni sav oštećeni materijal.",
+                    after_weld: "Nakon zavarivanja: Nadogradi 1-2 mm viška metala.",
+                    finish_grind: "Završno brušenje: Koristi šablon kao vodič—lopatica se mora poklapati sa šablonom.",
+                    crit_dev: "⚠️ KRITIČNO:",
+                    dev_desc: "Čak i 1 mm devijacije smanjuje efikasnost turbine za 1-2%.",
+                    smooth_std: "Standard 'Glatkoće': Efekat Ogledala",
+                    finish_matters: "Zašto je Završna Obrada Bitna",
+                    nucl_pt: "Svaka hrapavost površine djeluje kao <strong>nukleacijska tačka</strong> za nove mjehuriće kavitacije.",
+                    target_ra: "Cilj: Ra < 1.6 μm (Efekat Ogledala)",
+                    grind_proc: "Procedura Brušenja i Poliranja",
+                    rough: "<strong>Grubo Brušenje (40-60 granulacija):</strong> Ukloni višak, oblikuj profil.",
+                    med: "<strong>Srednje Brušenje (80-120 granulacija):</strong> Izgladi grube tragove.",
+                    fine: "<strong>Fino Brušenje (180-240 granulacija):</strong> Postigni glatku površinu.",
+                    polish: "<strong>Poliranje (320-600 granulacija):</strong> Poliraj do sjaja ogledala.",
+                    tech_note_2: "💡 Tehnička Bilješka:",
+                    grind_dir: "Uvijek brusi <strong>paralelno sa smjerom toka vode</strong> (od ulaza ka izlazu). Poprečne ogrebotine stvaraju turbulenciju.",
+                    vis_insp: "Vizuelna Inspekcija",
+                    mirror_test: "<strong>Test Ogledala:</strong> Baterijska lampa pod plitkim uglom mora se jasno reflektovati.",
+                    nail_test: "<strong>Test Noktom:</strong> Ne smiju se osjetiti neravnine ili ogrebotine.",
+                    bal_warn: "Upozorenje o Dinamičkom Balansu",
+                    why_bal: "Zašto je Balans Bitan",
+                    mass_imb: "Dodavanje metala na jednu lopaticu stvara debalans mase, uzrokujući vibracije, habanje ležajeva, zamor vratila i kvar zaptivača.",
+                    bal_eq: "Metal Zavaivanja → Debalans → Centrifugalna Sila → Vibracija",
+                    mit_strat: "Strategije Mitigacije",
+                    sym_rep: "1. Simetrična Popravka (Preferirano)",
+                    sym_desc: "Popravi sve oštećene lopatice radi održavanja simetrije.",
+                    counter_weight: "2. Dodavanje Protutega",
+                    cw_desc: "Dodaj istu masu na suprotnu lopaticu (180° dalje) u nekritičnoj zoni.",
+                    runout_chk: "3. Provjera Bacanja Poslije Popravke",
+                    mount_run: "Montiraj radno kolo na postolje za balansiranje.",
+                    rot_slow: "Rotiraj sporo, mjeri radijalno bacanje komparaterom.",
+                    target_run: "Cilj:",
+                    run_val: "Bacanje < 0.05 mm na vrhovima lopatica.",
+                    crit_bal: "⚠️ KRITIČNO:",
+                    bal_limit: "NE dodaji više od 100g metala na jednu lopaticu bez konsultacije sa specijalistom za balansiranje.",
+                    checklist: "Kontrolna Lista Materijala & Alata",
+                    electrodes: "<strong>Elektrode:</strong> E308L-16 ili E309L-16 (3.2 mm).",
+                    welding: "<strong>Zavarivanje:</strong> REL (SMAW) aparat, 80-120 A.",
+                    grinding: "<strong>Brušenje:</strong> Ugaona brusilica, lamelirani diskovi (40-600).",
+                    template: "<strong>Šablon:</strong> Karton, plastika ili aluminij.",
+                    measuring: "<strong>Mjerenje:</strong> Pomično mjerilo, komparater.",
+                    safety_gear: "<strong>Sigurnost:</strong> Maska za zavarivanje, respirator (P100), rukavice, PP aparat.",
+                    back_btn: "← Povratak u Operativni Centar"
+                }
+            };
+
+            function setLang(lang) {
+                localStorage.setItem('anohub_lang_pref', lang);
+                document.getElementById('btnEn').className = lang === 'en' ? 'active' : '';
+                document.getElementById('btnBs').className = lang === 'bs' ? 'active' : '';
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (i18n[lang][key]) el.innerHTML = i18n[lang][key];
+                });
+                document.documentElement.lang = lang;
+            }
+
+            const pref = localStorage.getItem('anohub_lang_pref') || 'en';
+            setLang(pref);
+        </script>
 </body>
 
 </html>

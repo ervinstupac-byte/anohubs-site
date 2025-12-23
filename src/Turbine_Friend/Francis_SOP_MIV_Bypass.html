@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="bs">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOP: GUV i Bajpas Logika</title>
+    <title>SOP: MIV & Bypass Logic</title>
     <style>
         /* Water Path Theme - Deep Blue */
         :root {
@@ -60,6 +60,29 @@
             font-size: 18px;
             margin-top: 5px;
             font-weight: 400;
+        }
+
+        .lang-toggle {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .lang-toggle button {
+            padding: 8px 20px;
+            font-size: 12px;
+            font-weight: bold;
+            border: 1px solid var(--accent-color);
+            background: transparent;
+            color: var(--accent-color);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .lang-toggle button.active {
+            background: var(--accent-color);
+            color: #000;
         }
 
         .section-title {
@@ -169,177 +192,369 @@
 <body>
     <div class="container">
         <header>
-            <h1>🌊 PROTOKOL GUV-a & BAJPAS LOGIKE</h1>
-            <h2>Izjednačavanje Pritiska & Fizičko Zaptivanje</h2>
-            <p style="color: var(--accent-color); font-size: 0.9em; margin-top: 10px;">Sprečavanje erozije "izvlačenjem
-                žice"
-                i osiguravanje pouzdanog sekvenciranja</p>
+            <h1 data-i18n="title">🌊 MIV & BYPASS LOGIC PROTOCOL</h1>
+            <h2 data-i18n="subtitle">Pressure Equalization & Physical Sealing</h2>
+            <p style="color: var(--accent-color); font-size: 0.9em; margin-top: 10px;" data-i18n="hdr_desc">Preventing
+                "wire-drawing" erosion and ensuring reliable sequencing</p>
+            <div class="lang-toggle">
+                <button onclick="setLang('en')" id="btnEn" class="active">EN</button>
+                <button onclick="setLang('bs')" id="btnBs">BS</button>
+            </div>
         </header>
 
         <div class="module critical">
-            <h3>⚠️ KRITIČNO PRAVILO RADA</h3>
-            <p><strong>NIKADA NE SILITE OTVARANJE GUV-a.</strong></p>
+            <h3 data-i18n="crit_rule">⚠️ CRITICAL OPERATING RULE</h3>
+            <p><strong data-i18n="no_force">NEVER FORCE MIV OPEN.</strong></p>
             <ul>
-                <li><strong>Limit Diferencijalnog Pritiska:</strong> Cilindar GUV-a NIJE dizajniran da otvara protiv
-                    punog
-                    pritiska cjevovoda. ΔP mora biti < 2 Bara.</li>
-                <li><strong>Oštećenje Zaptivača:</strong> Otvaranje pod diferencijalnim pritiskom čupa glavni zaptivač
-                    iz
-                    njegovog sjedišta.</li>
-                <li><strong>Sigurnost:</strong> Hidrauličko preopterećenje može rasprsnuti zaptivače cilindra ili
-                    crijeva.</li>
+                <li><strong data-i18n="diff_limit">Differential Pressure Limit:</strong> <span
+                        data-i18n="diff_limit_desc">MIV cylinder is NOT designed to open against full penstock pressure.
+                        ΔP must be < 2 Bar.</span>
+                </li>
+                <li><strong data-i18n="seal_damage">Seal Damage:</strong> <span data-i18n="seal_damage_desc">Opening
+                        under differential pressure rips the main seal out of its seat.</span></li>
+                <li><strong data-i18n="safety">Safety:</strong> <span data-i18n="safety_desc">Hydraulic overload can
+                        burst cylinder seals or hoses.</span></li>
             </ul>
         </div>
 
-        <div class="section-title">Pravilo 0% Zatvaranja - Nulta Tolerancija</div>
+        <div class="section-title" data-i18n="rule_0_title">0% Closing Rule - Zero Tolerance</div>
 
         <div class="logic-box">
-            <h3>SCADA protiv Fizičke Stvarnosti</h3>
-            <p><strong>Zamka:</strong> SCADA prikaz "0% Otvoreno" ne garantuje zaptivanje. Krajnji prekidač može biti
-                pomjeren ili pogrešno poravnat.</p>
+            <h3 data-i18n="scada_real">SCADA vs. Physical Reality</h3>
+            <p><strong data-i18n="trap">Trap:</strong> <span data-i18n="trap_desc">SCADA showing "0% Open" does not
+                    guarantee sealing. Limit switch might be moved or misaligned.</span></p>
 
-            <p><strong>Zakon Erozije (Wire-Drawing):</strong></p>
+            <p><strong data-i18n="wire_law">Law of Erosion (Wire-Drawing):</strong></p>
             <ul>
-                <li>Ako je GUV fizički otvoren čak i za <strong>2°</strong> (npr. na 88° umjesto 90° u sjedištu),
-                    mlaz vode velike brzine prolazi kroz zazor.</li>
-                <li><strong>Brzina:</strong> > 40 m/s pod padom od 150m.</li>
-                <li><strong>Efekat:</strong> Reže kroz prsten sjedišta od nehrđajućeg čelika kao laser unutar nekoliko
-                    sedmica.
-                </li>
+                <li data-i18n="gap_desc">If MIV is physically open even by <strong>2°</strong> (e.g. at 88° instead of
+                    90° in seat), high velocity water jet shoots through the gap.</li>
+                <li data-i18n="vel_desc"><strong>Velocity:</strong> > 40 m/s under 150m head.</li>
+                <li data-i18n="eff_desc"><strong>Effect:</strong> Cuts through stainless steel seat ring like a laser
+                    within weeks.</li>
             </ul>
 
-            <h4 style="color: var(--warning-color);">Procedura Verifikacije:</h4>
+            <h4 style="color: var(--warning-color);" data-i18n="ver_proc">Verification Procedure:</h4>
             <ol>
-                <li><strong>Vizuelna Provjera:</strong> Pogledajte poziciju ruke mehaničkog tega. Označite stvarnu
-                    "Zatvorenu" poziciju na zidu/podu.</li>
-                <li><strong>Provjera Curenja:</strong> Sa zatvorenim GUV-om i Bajpasom, otvorite drenažu Spirale.
+                <li><strong data-i18n="vis_check">Visual Check:</strong> <span data-i18n="vis_check_desc">Look at
+                        mechanical weight arm position. Mark the actual "Closed" position on wall/floor.</span></li>
+                <li><strong data-i18n="leak_check">Leak Check:</strong> <span data-i18n="leak_check_desc">With MIV and
+                        Bypass closed, open Spiral Drain.</span>
                     <ul>
-                        <li>Protok bi trebao potpuno stati unutar 5 minuta.</li>
-                        <li>Ako voda nastavi teći > 5 L/min, zaptivač GUV-a propušta.</li>
+                        <li data-i18n="flow_stop">Flow should stop completely within 5 minutes.</li>
+                        <li data-i18n="leak_rate">If water continues > 5 L/min, MIV seal is passing.</li>
                     </ul>
                 </li>
             </ol>
         </div>
 
-        <div class="section-title">Logika Bajpas Interlock-a - Rukovanje Pritiskom</div>
+        <div class="section-title" data-i18n="bypass_title">Bypass Interlock Logic - Pressure Handling</div>
 
         <div class="module">
-            <h3>Autorizacija Sekvence Otvaranja</h3>
-            <p>PLC <strong>MORA</strong> provesti sljedeći lanac logike prije energizacije solenoida za otvaranje GUV-a:
-            </p>
+            <h3 data-i18n="auth_seq">Authorization Opening Sequence</h3>
+            <p data-i18n="plc_rule">PLC <strong>MUST</strong> enforce the following logic chain before energizing MIV
+                Open Solenoid:</p>
 
             <table class="data-table">
                 <tr>
-                    <th>Korak</th>
-                    <th>Akcija</th>
-                    <th>Uslov za Nastavak</th>
+                    <th data-i18n="step">Step</th>
+                    <th data-i18n="action">Action</th>
+                    <th data-i18n="cond">Condition to Proceed</th>
                 </tr>
                 <tr>
                     <td>1</td>
-                    <td>Komanda "Start Agregat"</td>
-                    <td>Nema Grešaka Zaustavljanja (Faults)</td>
+                    <td data-i18n="start_cmd">"Start Unit" Command</td>
+                    <td data-i18n="no_faults">No Faults</td>
                 </tr>
                 <tr>
                     <td>2</td>
-                    <td>Otvori Bajpas Ventil</td>
-                    <td>Bajpas Krajnji Prekidač = OTVOREN</td>
+                    <td data-i18n="open_bp">Open Bypass Valve</td>
+                    <td data-i18n="bp_open">Bypass Limit Switch = OPEN</td>
                 </tr>
                 <tr>
                     <td>3</td>
-                    <td>Čekaj Punjenje Spirale</td>
-                    <td>Porast Pritiska > 2 Bar/sek</td>
+                    <td data-i18n="wait_fill">Wait Spiral Fill</td>
+                    <td data-i18n="press_rise">Pressure Rise > 2 Bar/sec</td>
                 </tr>
                 <tr>
                     <td>4</td>
-                    <td><strong>Provjera Izjednačenja Pritiska</strong></td>
-                    <td><strong>(P_cjevovod - P_spirala) < 0.5 Bar</strong>
+                    <td><strong data-i18n="check_eq">Pressure Equalization Check</strong></td>
+                    <td><strong data-i18n="delta_p">(P_penstock - P_spiral) < 0.5 Bar</strong>
                     </td>
                 </tr>
                 <tr>
                     <td>5</td>
-                    <td>Komanda Otvori GUV</td>
-                    <td>Izjednačenje POTVRĐENO</td>
+                    <td data-i18n="open_miv">Open MIV Command</td>
+                    <td data-i18n="eq_conf">Equalization CONFIRMED</td>
                 </tr>
             </table>
 
-            <h4 style="color: var(--warning-color);">Simptom "Curenje Sprovodnog Aparata"</h4>
-            <p><strong>Scenario:</strong> Bajpas ventil se otvara, ali pritisak u Spirali se nikada ne izjednači sa
-                pritiskom Cjevovoda.</p>
-            <p><strong>Dijagnoza:</strong> Sprovodne Lopatice (Distributor) propuštaju vodu u radno kolo brže nego
-                što Bajpas može napuniti spiralu.</p>
-            <p><strong>Akcija:</strong>
+            <h4 style="color: var(--warning-color);" data-i18n="leak_symp">"Distributor Leakage" Symptom</h4>
+            <p><strong data-i18n="scenario">Scenario:</strong> <span data-i18n="scen_byp_desc">Bypass valve opens, but
+                    Spiral pressure never equalizes with Penstock pressure.</span></p>
+            <p><strong data-i18n="diagnosis">Diagnosis:</strong> <span data-i18n="diag_byp_desc">Wicket Gates
+                    (Distributor) are leaking water into runner faster than Bypass can fill the spiral.</span></p>
+            <p><strong data-i18n="action_title">Action:</strong>
             <ol>
-                <li>NEMOJTE premoštavati interlock.</li>
-                <li>Izvršite inspekciju zaptivača Sprovodnih Lopatica.</li>
-                <li>Vidi <a href="Francis_SOP_Distributor_Sync.html" style="color: var(--accent-color);">SOP
-                        Sinhronizacije
-                        Sprovodnog Aparata</a>.</li>
+                <li data-i18n="act_1">DO NOT bridge the interlock.</li>
+                <li data-i18n="act_2">Perform Wicket Gate seal inspection.</li>
+                <li><span data-i18n="see_sop">See</span> <a href="Francis_SOP_Distributor_Sync.html"
+                        style="color: var(--accent-color);" data-i18n="dist_sop">Distributor Synchronization SOP</a>.
+                </li>
             </ol>
             </p>
         </div>
 
-        <div class="section-title">Lista Provjere Cilindra & Zavara</div>
+        <div class="section-title" data-i18n="cyl_title">Cylinder & Weld Checklist</div>
 
         <div class="logic-box">
-            <h3>Inspekcija Mehaničkog Integriteta</h3>
-            <p>Tijelo GUV-a trpi najveći statički stres od svih komponenti (16 Bara kontinuirano).</p>
+            <h3 data-i18n="mech_int">Mechanical Integrity Inspection</h3>
+            <p data-i18n="stress_note">MIV body takes highest static stress of any component (16 Bar continuous).</p>
 
-            <h4 style="color: var(--primary-color);">Tačke Godišnje Inspekcije:</h4>
+            <h4 style="color: var(--primary-color);" data-i18n="ann_insp">Annual Inspection Points:</h4>
             <ol>
-                <li><strong>Montaža Hidrauličnog Cilindra:</strong>
+                <li><strong data-i18n="cyl_mount">Hydraulic Cylinder Mounting:</strong>
                     <ul>
-                        <li>Provjeri moment na vijcima nosača (trunnion).</li>
-                        <li>Pregledaj čahure bolcni na ovalnost/luft (> 0.5mm luft = zamjena).</li>
+                        <li data-i18n="chk_torq">Check torque on trunnion bolts.</li>
+                        <li data-i18n="chk_bush">Inspect pin bushings for ovality/play (> 0.5mm play = replace).</li>
                     </ul>
                 </li>
-                <li><strong>Zavareni Šavovi (NDT Obavezan):</strong>
+                <li><strong data-i18n="weld_seam">Welded Seams (NDT Mandatory):</strong>
                     <ul>
-                        <li>Izvrši test penetrantima na zavarima prirubnice prema tijelu.</li>
-                        <li><strong>Kritična Zona:</strong> Prijelaz sa tijela ventila na nosač cilindra
-                            (najveći stres).</li>
+                        <li data-i18n="ndt_test">Perform Dye Penetrant test on flange-to-body welds.</li>
+                        <li data-i18n="crit_zone"><strong>Critical Zone:</strong> Valve body to cylinder trunnion
+                            transition (highest stress).</li>
                     </ul>
                 </li>
-                <li><strong>Ruka Tega:</strong>
+                <li><strong data-i18n="weight_arm">Weight Arm:</strong>
                     <ul>
-                        <li>Pregledaj zavare sigurnosne ograde.</li>
-                        <li>Osiguraj da je snop tegova učvršćen i da se ne može pomjeriti.</li>
+                        <li data-i18n="chk_weld">Inspect safety cage welds.</li>
+                        <li data-i18n="chk_stack">Ensure weight stack is secured and cannot shift.</li>
                     </ul>
                 </li>
             </ol>
         </div>
 
-        <div class="section-title">Tabela Rješavanja Problema</div>
+        <div class="section-title" data-i18n="ts_title">Troubleshooting Table</div>
         <table class="data-table">
             <tr>
-                <th>Simptom</th>
-                <th>Vjerovatan Uzrok</th>
-                <th>Korektivna Akcija</th>
+                <th data-i18n="symptom">Symptom</th>
+                <th data-i18n="prob_cause">Probable Cause</th>
+                <th data-i18n="corr_act">Corrective Action</th>
             </tr>
             <tr>
-                <td>GUV neće da otvori (Logička Blokada)</td>
-                <td>Pritisak nije izjednačen</td>
-                <td>Provjeri curenje Sprovodnih Lopatica; Provjeri filter Bajpasa</td>
+                <td data-i18n="ts_1_sym">MIV won't open (Logic Block)</td>
+                <td data-i18n="ts_1_cause">Pressure not equalized</td>
+                <td data-i18n="ts_1_act">Check Wicket Gate leakage; Check Bypass filter</td>
             </tr>
             <tr>
-                <td>GUV puzi ka zatvaranju tokom rada</td>
-                <td>Unutrašnje curenje cilindra</td>
-                <td>Reparacija zaptivača hidrauličnog cilindra</td>
+                <td data-i18n="ts_2_sym">MIV creeps closed during operation</td>
+                <td data-i18n="ts_2_cause">Cylinder internal bypass</td>
+                <td data-i18n="ts_2_act">Rebuild hydraulic cylinder seals</td>
             </tr>
             <tr>
-                <td>Glasan "Udarac" pri zatvaranju</td>
-                <td>Zatvaranje prebrzo</td>
-                <td>Podesi prigušni ventil na povratnoj liniji HPU-a (Cilj: 60-90 sek)</td>
+                <td data-i18n="ts_3_sym">Loud "Bang" when closing</td>
+                <td data-i18n="ts_3_cause">Closing too fast</td>
+                <td data-i18n="ts_3_act">Adjust throttle valve on HPU return line (Target: 60-90 sec)</td>
             </tr>
             <tr>
-                <td>Zvuk šištanja vode kada je zatvoren</td>
-                <td>Erozija sjedišta (Wire-drawing)</td>
-                <td><strong>KRITIČNO:</strong> Planiraj remont za brušenje/zamjenu prstena sjedišta</td>
+                <td data-i18n="ts_4_sym">Hissing water sound when closed</td>
+                <td data-i18n="ts_4_cause">Seat erosion (Wire-drawing)</td>
+                <td data-i18n="ts_4_act"><strong>CRITICAL:</strong> Schedule outage for seat ring grinding/replacement
+                </td>
             </tr>
         </table>
 
-        <a href="Francis_Horizontal_Dashboard.html" class="back-btn">← Povratak u Operativni Centar</a>
+        <a href="Francis_Horizontal_Dashboard.html" class="back-btn" data-i18n="back_btn">← Return to Operations
+            Center</a>
 
     </div>
+
+    <script>
+        const i18n = {
+            en: {
+                title: "🌊 MIV & BYPASS LOGIC PROTOCOL",
+                subtitle: "Pressure Equalization & Physical Sealing",
+                hdr_desc: "Preventing \"wire-drawing\" erosion and ensuring reliable sequencing",
+                crit_rule: "⚠️ CRITICAL OPERATING RULE",
+                no_force: "NEVER FORCE MIV OPEN.",
+                diff_limit: "Differential Pressure Limit:",
+                diff_limit_desc: "MIV cylinder is NOT designed to open against full penstock pressure. ΔP must be < 2 Bar.",
+                seal_damage: "Seal Damage:",
+                seal_damage_desc: "Opening under differential pressure rips the main seal out of its seat.",
+                safety: "Safety:",
+                safety_desc: "Hydraulic overload can burst cylinder seals or hoses.",
+                rule_0_title: "0% Closing Rule - Zero Tolerance",
+                scada_real: "SCADA vs. Physical Reality",
+                trap: "Trap:",
+                trap_desc: "SCADA showing \"0% Open\" does not guarantee sealing. Limit switch might be moved or misaligned.",
+                wire_law: "Law of Erosion (Wire-Drawing):",
+                gap_desc: "If MIV is physically open even by <strong>2°</strong> (e.g. at 88° instead of 90° in seat), high velocity water jet shoots through the gap.",
+                vel_desc: "<strong>Velocity:</strong> > 40 m/s under 150m head.",
+                eff_desc: "<strong>Effect:</strong> Cuts through stainless steel seat ring like a laser within weeks.",
+                ver_proc: "Verification Procedure:",
+                vis_check: "Visual Check:",
+                vis_check_desc: "Look at mechanical weight arm position. Mark the actual \"Closed\" position on wall/floor.",
+                leak_check: "Leak Check:",
+                leak_check_desc: "With MIV and Bypass closed, open Spiral Drain.",
+                flow_stop: "Flow should stop completely within 5 minutes.",
+                leak_rate: "If water continues > 5 L/min, MIV seal is passing.",
+                bypass_title: "Bypass Interlock Logic - Pressure Handling",
+                auth_seq: "Authorization Opening Sequence",
+                plc_rule: "PLC <strong>MUST</strong> enforce the following logic chain before energizing MIV Open Solenoid:",
+                step: "Step",
+                action: "Action",
+                cond: "Condition to Proceed",
+                start_cmd: "\"Start Unit\" Command",
+                no_faults: "No Faults",
+                open_bp: "Open Bypass Valve",
+                bp_open: "Bypass Limit Switch = OPEN",
+                wait_fill: "Wait Spiral Fill",
+                press_rise: "Pressure Rise > 2 Bar/sec",
+                check_eq: "Pressure Equalization Check",
+                delta_p: "(P_penstock - P_spiral) < 0.5 Bar",
+                open_miv: "Open MIV Command",
+                eq_conf: "Equalization CONFIRMED",
+                leak_symp: "\"Distributor Leakage\" Symptom",
+                scenario: "Scenario:",
+                scen_byp_desc: "Bypass valve opens, but Spiral pressure never equalizes with Penstock pressure.",
+                diagnosis: "Diagnosis:",
+                diag_byp_desc: "Wicket Gates (Distributor) are leaking water into runner faster than Bypass can fill the spiral.",
+                action_title: "Action:",
+                act_1: "DO NOT bridge the interlock.",
+                act_2: "Perform Wicket Gate seal inspection.",
+                see_sop: "See",
+                dist_sop: "Distributor Synchronization SOP",
+                cyl_title: "Cylinder & Weld Checklist",
+                mech_int: "Mechanical Integrity Inspection",
+                stress_note: "MIV body takes highest static stress of any component (16 Bar continuous).",
+                ann_insp: "Annual Inspection Points:",
+                cyl_mount: "Hydraulic Cylinder Mounting:",
+                chk_torq: "Check torque on trunnion bolts.",
+                chk_bush: "Inspect pin bushings for ovality/play (> 0.5mm play = replace).",
+                weld_seam: "Welded Seams (NDT Mandatory):",
+                ndt_test: "Perform Dye Penetrant test on flange-to-body welds.",
+                crit_zone: "<strong>Critical Zone:</strong> Valve body to cylinder trunnion transition (highest stress).",
+                weight_arm: "Weight Arm:",
+                chk_weld: "Inspect safety cage welds.",
+                chk_stack: "Ensure weight stack is secured and cannot shift.",
+                ts_title: "Troubleshooting Table",
+                symptom: "Symptom",
+                prob_cause: "Probable Cause",
+                corr_act: "Corrective Action",
+                ts_1_sym: "MIV won't open (Logic Block)",
+                ts_1_cause: "Pressure not equalized",
+                ts_1_act: "Check Wicket Gate leakage; Check Bypass filter",
+                ts_2_sym: "MIV creeps closed during operation",
+                ts_2_cause: "Cylinder internal bypass",
+                ts_2_act: "Rebuild hydraulic cylinder seals",
+                ts_3_sym: "Loud \"Bang\" when closing",
+                ts_3_cause: "Closing too fast",
+                ts_3_act: "Adjust throttle valve on HPU return line (Target: 60-90 sec)",
+                ts_4_sym: "Hissing water sound when closed",
+                ts_4_cause: "Seat erosion (Wire-drawing)",
+                ts_4_act: "<strong>CRITICAL:</strong> Schedule outage for seat ring grinding/replacement",
+                back_btn: "← Return to Operations Center"
+            },
+            bs: {
+                title: "🌊 PROTOKOL GUV-a & BAJPAS LOGIKE",
+                subtitle: "Izjednačavanje Pritiska & Fizičko Zaptivanje",
+                hdr_desc: "Sprečavanje erozije \"izvlačenjem žice\" i osiguravanje pouzdanog sekvenciranja",
+                crit_rule: "⚠️ KRITIČNO PRAVILO RADA",
+                no_force: "NIKADA NE SILITE OTVARANJE GUV-a.",
+                diff_limit: "Limit Diferencijalnog Pritiska:",
+                diff_limit_desc: "Cilindar GUV-a NIJE dizajniran da otvara protiv punog pritiska cjevovoda. ΔP mora biti < 2 Bara.",
+                seal_damage: "Oštećenje Zaptivača:",
+                seal_damage_desc: "Otvaranje pod diferencijalnim pritiskom čupa glavni zaptivač iz njegovog sjedišta.",
+                safety: "Sigurnost:",
+                safety_desc: "Hidrauličko preopterećenje može rasprsnuti zaptivače cilindra ili crijeva.",
+                rule_0_title: "Pravilo 0% Zatvaranja - Nulta Tolerancija",
+                scada_real: "SCADA protiv Fizičke Stvarnosti",
+                trap: "Zamka:",
+                trap_desc: "SCADA prikaz \"0% Otvoreno\" ne garantuje zaptivanje. Krajnji prekidač može biti pomjeren ili pogrešno poravnat.",
+                wire_law: "Zakon Erozije (Wire-Drawing):",
+                gap_desc: "Ako je GUV fizički otvoren čak i za <strong>2°</strong> (npr. na 88° umjesto 90° u sjedištu), mlaz vode velike brzine prolazi kroz zazor.",
+                vel_desc: "<strong>Brzina:</strong> > 40 m/s pod padom od 150m.",
+                eff_desc: "<strong>Efekat:</strong> Reže kroz prsten sjedišta od nehrđajućeg čelika kao laser unutar nekoliko sedmica.",
+                ver_proc: "Procedura Verifikacije:",
+                vis_check: "Vizuelna Provjera:",
+                vis_check_desc: "Pogledajte poziciju ruke mehaničkog tega. Označite stvarnu \"Zatvorenu\" poziciju na zidu/podu.",
+                leak_check: "Provjera Curenja:",
+                leak_check_desc: "Sa zatvorenim GUV-om i Bajpasom, otvorite drenažu Spirale.",
+                flow_stop: "Protok bi trebao potpuno stati unutar 5 minuta.",
+                leak_rate: "Ako voda nastavi teći > 5 L/min, zaptivač GUV-a propušta.",
+                bypass_title: "Logika Bajpas Interlock-a - Rukovanje Pritiskom",
+                auth_seq: "Autorizacija Sekvence Otvaranja",
+                plc_rule: "PLC <strong>MORA</strong> provesti sljedeći lanac logike prije energizacije solenoida za otvaranje GUV-a:",
+                step: "Korak",
+                action: "Akcija",
+                cond: "Uslov za Nastavak",
+                start_cmd: "Komanda \"Start Agregat\"",
+                no_faults: "Nema Grešaka Zaustavljanja (Faults)",
+                open_bp: "Otvori Bajpas Ventil",
+                bp_open: "Bajpas Krajnji Prekidač = OTVOREN",
+                wait_fill: "Čekaj Punjenje Spirale",
+                press_rise: "Porast Pritiska > 2 Bar/sek",
+                check_eq: "Provjera Izjednačenja Pritiska",
+                delta_p: "(P_cjevovod - P_spirala) < 0.5 Bar",
+                open_miv: "Komanda Otvori GUV",
+                eq_conf: "Izjednačenje POTVRĐENO",
+                leak_symp: "Simptom \"Curenje Sprovodnog Aparata\"",
+                scenario: "Scenario:",
+                scen_byp_desc: "Bajpas ventil se otvara, ali pritisak u Spirali se nikada ne izjednači sa pritiskom Cjevovoda.",
+                diagnosis: "Dijagnoza:",
+                diag_byp_desc: "Sprovodne Lopatice (Distributor) propuštaju vodu u radno kolo brže nego što Bajpas može napuniti spiralu.",
+                action_title: "Akcija:",
+                act_1: "NEMOJTE premoštavati interlock.",
+                act_2: "Izvršite inspekciju zaptivača Sprovodnih Lopatica.",
+                see_sop: "Vidi",
+                dist_sop: "SOP Sinhronizacije Sprovodnog Aparata",
+                cyl_title: "Lista Provjere Cilindra & Zavara",
+                mech_int: "Inspekcija Mehaničkog Integriteta",
+                stress_note: "Tijelo GUV-a trpi najveći statički stres od svih komponenti (16 Bara kontinuirano).",
+                ann_insp: "Tačke Godišnje Inspekcije:",
+                cyl_mount: "Montaža Hidrauličnog Cilindra:",
+                chk_torq: "Provjeri moment na vijcima nosača (trunnion).",
+                chk_bush: "Pregledaj čahure bolcni na ovalnost/luft (> 0.5mm luft = zamjena).",
+                weld_seam: "Zavareni Šavovi (NDT Obavezan):",
+                ndt_test: "Izvrši test penetrantima na zavarima prirubnice prema tijelu.",
+                crit_zone: "<strong>Kritična Zona:</strong> Prijelaz sa tijela ventila na nosač cilindra (najveći stres).",
+                weight_arm: "Ruka Tega:",
+                chk_weld: "Pregledaj zavare sigurnosne ograde.",
+                chk_stack: "Osiguraj da je snop tegova učvršćen i da se ne može pomjeriti.",
+                ts_title: "Tabela Rješavanja Problema",
+                symptom: "Simptom",
+                prob_cause: "Vjerovatan Uzrok",
+                corr_act: "Korektivna Akcija",
+                ts_1_sym: "GUV neće da otvori (Logička Blokada)",
+                ts_1_cause: "Pritisak nije izjednačen",
+                ts_1_act: "Provjeri curenje Sprovodnih Lopatica; Provjeri filter Bajpasa",
+                ts_2_sym: "GUV puzi ka zatvaranju tokom rada",
+                ts_2_cause: "Unutrašnje curenje cilindra",
+                ts_2_act: "Reparacija zaptivača hidrauličnog cilindra",
+                ts_3_sym: "Glasan \"Udarac\" pri zatvaranju",
+                ts_3_cause: "Zatvaranje prebrzo",
+                ts_3_act: "Podesi prigušni ventil na povratnoj liniji HPU-a (Cilj: 60-90 sek)",
+                ts_4_sym: "Zvuk šištanja vode kada je zatvoren",
+                ts_4_cause: "Erozija sjedišta (Wire-drawing)",
+                ts_4_act: "<strong>KRITIČNO:</strong> Planiraj remont za brušenje/zamjenu prstena sjedišta",
+                back_btn: "← Povratak u Operativni Centar"
+            }
+        };
+
+        function setLang(lang) {
+            localStorage.setItem('anohub_lang_pref', lang);
+            document.getElementById('btnEn').className = lang === 'en' ? 'active' : '';
+            document.getElementById('btnBs').className = lang === 'bs' ? 'active' : '';
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (i18n[lang][key]) el.innerHTML = i18n[lang][key];
+            });
+            document.documentElement.lang = lang;
+        }
+
+        const pref = localStorage.getItem('anohub_lang_pref') || 'en';
+        setLang(pref);
+    </script>
 </body>
 
 </html>

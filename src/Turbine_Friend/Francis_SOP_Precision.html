@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SOP: Mechanical Precision & Alignment</title>
     <style>
-        /* Shared Architecture from Francis_Horizontal.html */
         :root {
             --primary-color: #003366;
             --secondary-color: #0066cc;
@@ -55,6 +54,33 @@
             font-size: 18px;
             margin-top: 5px;
             font-weight: 400;
+        }
+
+        .lang-toggle {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .lang-toggle button {
+            padding: 6px 16px;
+            font-size: 11px;
+            font-weight: bold;
+            border-radius: 4px;
+            border: 1px solid var(--secondary-color);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .lang-toggle button.active {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .lang-toggle button:not(.active) {
+            background-color: white;
+            color: var(--secondary-color);
         }
 
         .section-title {
@@ -144,108 +170,259 @@
 </head>
 
 <body>
-
     <div class="container">
-
         <header>
-            <h1>Critical SOP: Mechanical Precision</h1>
-            <h2>The "6-Month Rule" & Structural Verification</h2>
+            <h1 data-i18n="title">Critical SOP: Mechanical Precision</h1>
+            <h2 data-i18n="subtitle">The "6-Month Rule" & Structural Verification</h2>
+            <div class="lang-toggle">
+                <button onclick="setLang('en')" id="btnEn" class="active">EN</button>
+                <button onclick="setLang('bs')" id="btnBs">BS</button>
+            </div>
         </header>
 
-        <!-- INTRO MODULE -->
         <div class="module critical">
-            <h3>⚠️ THE TROPICAL FOUNDATION RISK</h3>
-            <p><strong>Context:</strong> In humid/tropical environments, concrete absorbs moisture and undergoes thermal
-                expansion/contraction cycles. This causes "Micro-Movements".</p>
+            <h3 data-i18n="s1_title">⚠️ THE TROPICAL FOUNDATION RISK</h3>
+            <p><strong data-i18n="context">Context:</strong> <span data-i18n="s1_desc">In humid/tropical environments,
+                    concrete absorbs moisture and undergoes thermal expansion/contraction cycles. This causes
+                    "Micro-Movements".</span></p>
             <ul>
-                <li><strong>Result:</strong> A unit perfectly aligned in January may be 0.15mm off-center by July.</li>
-                <li><strong>Protocol:</strong> You MUST verify alignment every 6 months. Do not assume the foundation is
-                    static.</li>
+                <li><strong data-i18n="result">Result:</strong> <span data-i18n="s1_li1">A unit perfectly aligned in
+                        January may be 0.15mm off-center by July.</span></li>
+                <li><strong data-i18n="protocol">Protocol:</strong> <span data-i18n="s1_li2">You MUST verify alignment
+                        every 6 months. Do not assume the foundation is static.</span></li>
             </ul>
         </div>
 
-        <div class="section-title">SOP 1: Labyrinth Clearance Checks</div>
+        <div class="section-title" data-i18n="sop1">SOP 1: Labyrinth Clearance Checks</div>
         <div class="module technical">
-            <p>The gap between the rotating runner and the stationary seal ring (Labyrinth) determines efficiency and
-                leakage.</p>
+            <p data-i18n="sop1_desc">The gap between the rotating runner and the stationary seal ring (Labyrinth)
+                determines efficiency and leakage.</p>
 
-            <h3>1.1 Measurement Procedure</h3>
+            <h3 data-i18n="s2_title">1.1 Measurement Procedure</h3>
             <ol>
-                <li><strong>Lock Out:</strong> Ensure Unit is locked out and drained.</li>
-                <li><strong>Access:</strong> Enter the draft tube or turbine pit access door.</li>
-                <li><strong>Define Points:</strong> Mark 4 points (Top, Bottom, Left, Right) or 8 points (Clockwise) on
-                    the casing.</li>
-                <li><strong>Measure:</strong> Insert <strong>Feeler Gauges</strong> into the gap. Start small.
+                <li><strong data-i18n="lockout">Lock Out:</strong> <span data-i18n="s2_li1">Ensure Unit is locked out
+                        and drained.</span></li>
+                <li><strong data-i18n="access">Access:</strong> <span data-i18n="s2_li2">Enter the draft tube or turbine
+                        pit access door.</span></li>
+                <li><strong data-i18n="define">Define Points:</strong> <span data-i18n="s2_li3">Mark 4 points (Top,
+                        Bottom, Left, Right) or 8 points (Clockwise) on the casing.</span></li>
+                <li><strong data-i18n="measure">Measure:</strong> <span data-i18n="s2_li4">Insert Feeler Gauges into the
+                        gap. Start small.</span>
                     <ul>
-                        <li>Range: 0.05mm - 1.00mm.</li>
-                        <li>Find the gauge that fits "snug" (drag resistance).</li>
+                        <li data-i18n="range">Range: 0.05mm - 1.00mm.</li>
+                        <li data-i18n="fit">Find the gauge that fits "snug" (drag resistance).</li>
                     </ul>
                 </li>
-                <li><strong>Record:</strong> Log values for all points.</li>
+                <li><strong data-i18n="record">Record:</strong> <span data-i18n="s2_li5">Log values for all
+                        points.</span></li>
             </ol>
 
-            <h3>1.2 Analysis</h3>
+            <h3 data-i18n="s3_title">1.2 Analysis</h3>
             <ul>
-                <li><strong>Uniformity:</strong> The deviation between Top/Bottom and Left/Right should not exceed 10%.
+                <li><strong data-i18n="uniformity">Uniformity:</strong> <span data-i18n="s3_li1">The deviation between
+                        Top/Bottom and Left/Right should not exceed 10%.</span></li>
+                <li><strong data-i18n="rubbing">Rubbing Risk:</strong> <span data-i18n="s3_li2">If any single point is <
+                            0.20mm, the runner is in danger of seizing. Re-align immediately.</span>
                 </li>
-                <li><strong>Rubbing Risk:</strong> If any singe point is &lt; 0.20mm, the runner is in danger of
-                    seizing. Re-align immediately.</li>
             </ul>
         </div>
 
-        <div class="section-title">SOP 2: Shaft Run-Out check</div>
+        <div class="section-title" data-i18n="sop2">SOP 2: Shaft Run-Out Check</div>
         <div class="module technical">
-            <p>Vibration is often just a symptom of a bent shaft or a misaligned coupling.</p>
+            <p data-i18n="sop2_desc">Vibration is often just a symptom of a bent shaft or a misaligned coupling.</p>
 
-            <h3>2.1 Setup</h3>
+            <h3 data-i18n="s4_title">2.1 Setup</h3>
             <ol>
-                <li><strong>Clean:</strong> Polish a section of the shaft near the bearing (remove oil/paint).</li>
-                <li><strong>Mount:</strong> Attach the <strong>Magnetic Base</strong> of the Dial Indicator to a fixed,
-                    non-vibrating point (e.g., bearing housing).</li>
-                <li><strong>Zero:</strong> Place the needle on the shaft surface. Pre-load by 1-2mm. Rotate bezel to
-                    "0".</li>
+                <li><strong data-i18n="clean">Clean:</strong> <span data-i18n="s4_li1">Polish a section of the shaft
+                        near the bearing (remove oil/paint).</span></li>
+                <li><strong data-i18n="mount">Mount:</strong> <span data-i18n="s4_li2">Attach the Magnetic Base of the
+                        Dial Indicator to a fixed, non-vibrating point (e.g., bearing housing).</span></li>
+                <li><strong data-i18n="zero">Zero:</strong> <span data-i18n="s4_li3">Place the needle on the shaft
+                        surface. Pre-load by 1-2mm. Rotate bezel to "0".</span></li>
             </ol>
 
-            <h3>2.2 Rotation & Reading</h3>
+            <h3 data-i18n="s5_title">2.2 Rotation & Reading</h3>
             <ol>
-                <li><strong>Rotate:</strong> Manually turn the shaft (barring gear or by hand) very slowly.</li>
-                <li><strong>Observe:</strong> Watch the Total Indicator Reading (TIR).</li>
-                <li><strong>The Limit:</strong>
+                <li><strong data-i18n="rotate">Rotate:</strong> <span data-i18n="s5_li1">Manually turn the shaft
+                        (barring gear or by hand) very slowly.</span></li>
+                <li><strong data-i18n="observe">Observe:</strong> <span data-i18n="s5_li2">Watch the Total Indicator
+                        Reading (TIR).</span></li>
+                <li><strong data-i18n="limit">The Limit:</strong>
                     <ul>
-                        <li><strong>Pass:</strong> Deviation &le; 0.05mm.</li>
-                        <li><strong>Fail:</strong> Deviation > 0.05mm.</li>
+                        <li><strong data-i18n="pass">Pass:</strong> <span data-i18n="pass_desc">Deviation ≤
+                                0.05mm.</span></li>
+                        <li><strong data-i18n="fail">Fail:</strong> <span data-i18n="fail_desc">Deviation >
+                                0.05mm.</span></li>
                     </ul>
                 </li>
             </ol>
-            <div class="visual-aid">
-                Visual Goal: The needle should stay steady. Systematic wobble means the shaft axis is off-center.
-            </div>
+            <div class="visual-aid" data-i18n="visual">Visual Goal: The needle should stay steady. Systematic wobble
+                means the shaft axis is off-center.</div>
         </div>
 
-        <div class="section-title">Mandatory Tooling</div>
+        <div class="section-title" data-i18n="tooling">Mandatory Tooling</div>
         <div class="module diagnostic">
-            <p>You cannot perform "Expert Maintenance" with just a wrench. These two tools are non-negotiable.</p>
+            <p data-i18n="tooling_desc">You cannot perform "Expert Maintenance" with just a wrench. These two tools are
+                non-negotiable.</p>
             <ul>
-                <li><strong>1. Dial Test Indicator (DTI):</strong>
+                <li><strong data-i18n="tool1">1. Dial Test Indicator (DTI):</strong>
                     <ul>
-                        <li>Precision: 0.01mm (Hundredth of a millimeter).</li>
-                        <li>Type: Plunger or Lever type with Magnetic Stand.</li>
+                        <li data-i18n="tool1_prec">Precision: 0.01mm (Hundredth of a millimeter).</li>
+                        <li data-i18n="tool1_type">Type: Plunger or Lever type with Magnetic Stand.</li>
                     </ul>
                 </li>
-                <li><strong>2. Precision Feeler Gauge Set:</strong>
+                <li><strong data-i18n="tool2">2. Precision Feeler Gauge Set:</strong>
                     <ul>
-                        <li>Blades: Steel or Brass.</li>
-                        <li>Range: 0.05mm steps up to 1.00mm.</li>
-                        <li>Length: Long blades (200mm+) preferred for reaching deep gaps.</li>
+                        <li data-i18n="tool2_blades">Blades: Steel or Brass.</li>
+                        <li data-i18n="tool2_range">Range: 0.05mm steps up to 1.00mm.</li>
+                        <li data-i18n="tool2_length">Length: Long blades (200mm+) preferred for reaching deep gaps.</li>
                     </ul>
                 </li>
             </ul>
         </div>
 
-        <a href="./Francis_Horizontal.html" class="back-btn">← Return to Master Manual</a>
-
+        <a href="./Francis_Horizontal.html" class="back-btn" data-i18n="back">← Return to Master Manual</a>
     </div>
 
+    <script>
+        const i18n = {
+            en: {
+                title: "Critical SOP: Mechanical Precision",
+                subtitle: 'The "6-Month Rule" & Structural Verification',
+                s1_title: "⚠️ THE TROPICAL FOUNDATION RISK",
+                context: "Context:",
+                s1_desc: 'In humid/tropical environments, concrete absorbs moisture and undergoes thermal expansion/contraction cycles. This causes "Micro-Movements".',
+                result: "Result:",
+                s1_li1: "A unit perfectly aligned in January may be 0.15mm off-center by July.",
+                protocol: "Protocol:",
+                s1_li2: "You MUST verify alignment every 6 months. Do not assume the foundation is static.",
+                sop1: "SOP 1: Labyrinth Clearance Checks",
+                sop1_desc: "The gap between the rotating runner and the stationary seal ring (Labyrinth) determines efficiency and leakage.",
+                s2_title: "1.1 Measurement Procedure",
+                lockout: "Lock Out:",
+                s2_li1: "Ensure Unit is locked out and drained.",
+                access: "Access:",
+                s2_li2: "Enter the draft tube or turbine pit access door.",
+                define: "Define Points:",
+                s2_li3: "Mark 4 points (Top, Bottom, Left, Right) or 8 points (Clockwise) on the casing.",
+                measure: "Measure:",
+                s2_li4: "Insert Feeler Gauges into the gap. Start small.",
+                range: "Range: 0.05mm - 1.00mm.",
+                fit: 'Find the gauge that fits "snug" (drag resistance).',
+                record: "Record:",
+                s2_li5: "Log values for all points.",
+                s3_title: "1.2 Analysis",
+                uniformity: "Uniformity:",
+                s3_li1: "The deviation between Top/Bottom and Left/Right should not exceed 10%.",
+                rubbing: "Rubbing Risk:",
+                s3_li2: "If any single point is < 0.20mm, the runner is in danger of seizing. Re-align immediately.",
+                sop2: "SOP 2: Shaft Run-Out Check",
+                sop2_desc: "Vibration is often just a symptom of a bent shaft or a misaligned coupling.",
+                s4_title: "2.1 Setup",
+                clean: "Clean:",
+                s4_li1: "Polish a section of the shaft near the bearing (remove oil/paint).",
+                mount: "Mount:",
+                s4_li2: "Attach the Magnetic Base of the Dial Indicator to a fixed, non-vibrating point (e.g., bearing housing).",
+                zero: "Zero:",
+                s4_li3: 'Place the needle on the shaft surface. Pre-load by 1-2mm. Rotate bezel to "0".',
+                s5_title: "2.2 Rotation & Reading",
+                rotate: "Rotate:",
+                s5_li1: "Manually turn the shaft (barring gear or by hand) very slowly.",
+                observe: "Observe:",
+                s5_li2: "Watch the Total Indicator Reading (TIR).",
+                limit: "The Limit:",
+                pass: "Pass:",
+                pass_desc: "Deviation ≤ 0.05mm.",
+                fail: "Fail:",
+                fail_desc: "Deviation > 0.05mm.",
+                visual: "Visual Goal: The needle should stay steady. Systematic wobble means the shaft axis is off-center.",
+                tooling: "Mandatory Tooling",
+                tooling_desc: 'You cannot perform "Expert Maintenance" with just a wrench. These two tools are non-negotiable.',
+                tool1: "1. Dial Test Indicator (DTI):",
+                tool1_prec: "Precision: 0.01mm (Hundredth of a millimeter).",
+                tool1_type: "Type: Plunger or Lever type with Magnetic Stand.",
+                tool2: "2. Precision Feeler Gauge Set:",
+                tool2_blades: "Blades: Steel or Brass.",
+                tool2_range: "Range: 0.05mm steps up to 1.00mm.",
+                tool2_length: "Length: Long blades (200mm+) preferred for reaching deep gaps.",
+                back: "← Return to Master Manual"
+            },
+            bs: {
+                title: "Kritični SOP: Mehanička Preciznost",
+                subtitle: 'Pravilo "6 Mjeseci" & Strukturna Verifikacija',
+                s1_title: "⚠️ RIZIK TROPSKOG TEMELJA",
+                context: "Kontekst:",
+                s1_desc: 'U vlažnim/tropskim okruženjima, beton apsorbuje vlagu i prolazi kroz cikluse termalne ekspanzije/kontrakcije. Ovo uzrokuje "Mikro-Pomjeranja".',
+                result: "Rezultat:",
+                s1_li1: "Agregat savršeno centriran u januaru može biti 0.15mm van centra do jula.",
+                protocol: "Protokol:",
+                s1_li2: "MORATE provjeriti centriranje svakih 6 mjeseci. Ne pretpostavljajte da je temelj statičan.",
+                sop1: "SOP 1: Provjere Zazora Labirinta",
+                sop1_desc: "Zazor između rotirajućeg radnog kola i stacionarnog prstena zaptivke (Labirint) određuje efikasnost i curenje.",
+                s2_title: "1.1 Procedura Mjerenja",
+                lockout: "Zaključaj:",
+                s2_li1: "Osiguraj da je Agregat zaključan i ispražnjen.",
+                access: "Pristup:",
+                s2_li2: "Uđi kroz vrata pristupa usisnoj cijevi ili jami turbine.",
+                define: "Definiši Tačke:",
+                s2_li3: "Označi 4 tačke (Gore, Dole, Lijevo, Desno) ili 8 tačaka (U smjeru kazaljke na satu) na kućištu.",
+                measure: "Izmjeri:",
+                s2_li4: "Umetni Mjerače Zazora u zazor. Počni sa malim.",
+                range: "Raspon: 0.05mm - 1.00mm.",
+                fit: 'Pronađi mjerač koji odgovara "čvrsto" (otpor pri povlačenju).',
+                record: "Zapiši:",
+                s2_li5: "Evidentiraj vrijednosti za sve tačke.",
+                s3_title: "1.2 Analiza",
+                uniformity: "Uniformnost:",
+                s3_li1: "Odstupanje između Gore/Dole i Lijevo/Desno ne smije preći 10%.",
+                rubbing: "Rizik Trljanja:",
+                s3_li2: "Ako je bilo koja pojedinačna tačka < 0.20mm, radno kolo je u opasnosti od zaglavljivanja. Odmah ponovo centriraj.",
+                sop2: "SOP 2: Provjera Odstupanja Vratila",
+                sop2_desc: "Vibracija je često samo simptom savijenog vratila ili necentrovanog spoja.",
+                s4_title: "2.1 Postavljanje",
+                clean: "Očisti:",
+                s4_li1: "Ispoliraj dio vratila blizu ležaja (ukloni ulje/boju).",
+                mount: "Montiraj:",
+                s4_li2: "Pričvrsti Magnetnu Bazu Komparatora na fiksnu, ne-vibrirajuću tačku (npr., kućište ležaja).",
+                zero: "Nuliranje:",
+                s4_li3: 'Postavi iglu na površinu vratila. Pred-optereti za 1-2mm. Rotiraj okvir na "0".',
+                s5_title: "2.2 Rotacija & Očitavanje",
+                rotate: "Rotiraj:",
+                s5_li1: "Ručno okreni vratilo (zupčanik za okretanje ili rukom) vrlo sporo.",
+                observe: "Posmatraj:",
+                s5_li2: "Gledaj Ukupno Očitavanje Indikatora (TIR).",
+                limit: "Granica:",
+                pass: "Prolaz:",
+                pass_desc: "Odstupanje ≤ 0.05mm.",
+                fail: "Pad:",
+                fail_desc: "Odstupanje > 0.05mm.",
+                visual: "Vizuelni Cilj: Igla bi trebala ostati stabilna. Sistematsko njihanje znači da je osa vratila van centra.",
+                tooling: "Obavezni Alati",
+                tooling_desc: 'Ne možeš obavljati "Stručno Održavanje" samo sa ključem. Ova dva alata su neophodna.',
+                tool1: "1. Komparator (DTI):",
+                tool1_prec: "Preciznost: 0.01mm (Stoti dio milimetra).",
+                tool1_type: "Tip: Klipni ili Polužni tip sa Magnetnim Postoljem.",
+                tool2: "2. Set Preciznih Mjerača Zazora:",
+                tool2_blades: "Listići: Čelik ili Mesing.",
+                tool2_range: "Raspon: Koraci od 0.05mm do 1.00mm.",
+                tool2_length: "Dužina: Dugi listići (200mm+) poželjni za dosezanje dubokih zazora.",
+                back: "← Povratak na Glavni Priručnik"
+            }
+        };
+
+        function setLang(lang) {
+            localStorage.setItem('anohub_lang_pref', lang);
+            document.getElementById('btnEn').className = lang === 'en' ? 'active' : '';
+            document.getElementById('btnBs').className = lang === 'bs' ? 'active' : '';
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (i18n[lang][key]) el.innerText = i18n[lang][key];
+            });
+        }
+
+        const pref = localStorage.getItem('anohub_lang_pref') || 'en';
+        setLang(pref);
+    </script>
 </body>
 
 </html>

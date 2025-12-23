@@ -12,7 +12,8 @@
 
         body {
             font-family: 'JetBrains Mono', monospace;
-            background-color: #0c0a09; /* Industrial Dark Mode */
+            background-color: #0c0a09;
+            /* Industrial Dark Mode */
             color: #d6d3d1;
         }
 
@@ -63,13 +64,20 @@
     <header class="mb-10 pb-6 border-b border-stone-800 flex justify-between items-start">
         <div>
             <div class="flex items-center gap-2 mb-2">
-                <span class="px-2 py-1 rounded bg-blue-900/30 text-blue-400 text-[10px] font-bold border border-blue-900 uppercase">SOP-GEN-00X</span>
+                <span
+                    class="px-2 py-1 rounded bg-blue-900/30 text-blue-400 text-[10px] font-bold border border-blue-900 uppercase">SOP-GEN-00X</span>
                 <span class="text-[10px] text-stone-500 uppercase font-bold">REV 3.0</span>
             </div>
             <h1 class="text-3xl font-bold text-white mb-2" data-i18n="title">SOP PROCEDURE</h1>
             <p class="text-stone-500 text-sm" data-i18n="subtitle">Standard Operation Protocol</p>
+            <div class="flex gap-2 mt-4">
+                <button onclick="setLang('en')" id="btnEn"
+                    class="px-2 py-0.5 text-[10px] font-bold bg-cyan-600 text-white rounded">EN</button>
+                <button onclick="setLang('bs')" id="btnBs"
+                    class="px-2 py-0.5 text-[10px] font-bold bg-slate-800 text-slate-500 rounded hover:text-white">BS</button>
+            </div>
         </div>
-        
+
         <!-- Standard Return Button -->
         <a href="Francis_Horizontal_Dashboard.html" class="btn-return">
             <i data-lucide="arrow-left" class="w-4 h-4"></i> <span data-i18n="return">Back to Dashboard</span>
@@ -101,12 +109,23 @@
             }
         };
 
-        if(ml === 'bs') {
+        function setLang(lang) {
+            localStorage.setItem('anohub_lang_pref', lang);
+            if (lang === 'en') {
+                document.getElementById('btnEn').className = "px-2 py-0.5 text-[10px] font-bold bg-cyan-600 text-white rounded";
+                document.getElementById('btnBs').className = "px-2 py-0.5 text-[10px] font-bold bg-slate-800 text-slate-500 rounded hover:text-white";
+            } else {
+                document.getElementById('btnBs').className = "px-2 py-0.5 text-[10px] font-bold bg-cyan-600 text-white rounded";
+                document.getElementById('btnEn').className = "px-2 py-0.5 text-[10px] font-bold bg-slate-800 text-slate-500 rounded hover:text-white";
+            }
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
-                if(i18n.bs[key]) el.innerText = i18n.bs[key];
+                if (i18n[lang][key]) el.innerText = i18n[lang][key];
             });
         }
+        const pref = localStorage.getItem('anohub_lang_pref') || 'en';
+        setLang(pref);
     </script>
 </body>
+
 </html>

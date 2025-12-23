@@ -42,6 +42,30 @@
             text-align: center;
         }
 
+        /* Language Toggle Switch */
+        .lang-switch {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .lang-btn.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
         h1 {
             margin: 0;
             color: var(--primary-color);
@@ -160,95 +184,106 @@
 </head>
 
 <body>
+    <div class="lang-switch">
+        <button class="lang-btn active" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" onclick="setLang('bs')">BS</button>
+    </div>
 
     <div class="container">
 
         <header>
-            <h1>Advanced SOP: Vortex Control & Draft Tube Dynamics</h1>
-            <h2>The "Forgotten" Fluid Dynamics - Managing Spiral Vortex & Surging</h2>
+            <h1 data-i18n="title">Advanced SOP: Vortex Control & Draft Tube Dynamics</h1>
+            <h2 data-i18n="subtitle">The "Forgotten" Fluid Dynamics - Managing Spiral Vortex & Surging</h2>
         </header>
 
         <!-- INTRO MODULE -->
         <div class="module critical">
-            <h3>⚠️ THE SHAKING POWERHOUSE</h3>
-            <p><strong>Context:</strong> At specific load points (typically 40-60% power), a spiral vortex rope forms in
-                the draft tube downstream of the runner. This is not a minor vibration - it can shake the entire
-                powerhouse structure.</p>
+            <h3 data-i18n="intro_title">⚠️ THE SHAKING POWERHOUSE</h3>
+            <p><strong data-i18n="context_label">Context:</strong> <span data-i18n="context_text">At specific load
+                    points (typically 40-60% power), a spiral vortex rope forms in the draft tube downstream of the
+                    runner. This is not a minor vibration - it can shake the entire powerhouse structure.</span></p>
             <ul>
-                <li><strong>The Risk:</strong> Operators often dismiss this as "just noise" or "normal operation," but
-                    prolonged exposure causes:
+                <li><strong data-i18n="risk_label">The Risk:</strong> <span data-i18n="risk_text">Operators often
+                        dismiss this as "just noise" or "normal operation," but prolonged exposure causes:</span>
                     <ul>
-                        <li>Fatigue cracks in draft tube liner concrete</li>
-                        <li>Bearing damage from cyclic loading</li>
-                        <li>Floor bolt loosening in turbine mounting</li>
+                        <li data-i18n="risk1">Fatigue cracks in draft tube liner concrete</li>
+                        <li data-i18n="risk2">Bearing damage from cyclic loading</li>
+                        <li data-i18n="risk3">Floor bolt loosening in turbine mounting</li>
                     </ul>
                 </li>
-                <li><strong>Economic Impact:</strong> If ignored, vortex-induced fatigue can reduce turbine lifespan by
-                    30-40%, requiring major refurbishment.</li>
+                <li data-i18n="economic"><strong>Economic Impact:</strong> If ignored, vortex-induced fatigue can reduce
+                    turbine lifespan by 30-40%, requiring major refurbishment.</li>
             </ul>
         </div>
 
-        <div class="section-title">SOP 1: The Physics of Vortex Rope Formation</div>
+        <div class="section-title" data-i18n="section1_title">SOP 1: The Physics of Vortex Rope Formation</div>
         <div class="module technical">
-            <p>Understanding the mechanism allows intelligent countermeasures instead of reactive firefighting.</p>
+            <p data-i18n="section1_intro">Understanding the mechanism allows intelligent countermeasures instead of
+                reactive firefighting.</p>
 
-            <h3>1.1 Fluid Dynamics Simplified</h3>
-            <p>When the Francis runner operates at partial load, water exits the runner with residual swirl (tangential
-                velocity). This swirl continues into the draft tube, creating a helical vortex rope that rotates and
-                pulsates.</p>
+            <h3 data-i18n="subsection1_1_title">1.1 Fluid Dynamics Simplified</h3>
+            <p data-i18n="subsection1_1_text">When the Francis runner operates at partial load, water exits the runner
+                with residual swirl (tangential velocity). This swirl continues into the draft tube, creating a helical
+                vortex rope that rotates and pulsates.</p>
 
-            <div class="physics-box">
+            <div class="physics-box" data-i18n="physics_box">
                 <strong>Key Physics:</strong> The vortex rope has a natural frequency (typically 0.2-0.4 × runner
                 rotation frequency). If this frequency matches the structural resonance of the draft tube or powerhouse,
                 violent vibrations occur.
             </div>
 
-            <h3>1.2 Vortex Rope Characteristics</h3>
+            <h3 data-i18n="subsection1_2_title">1.2 Vortex Rope Characteristics</h3>
             <ul>
-                <li><strong>Appearance:</strong> If draft tube has sight glass, visible as a rotating "snake" of
-                    low-pressure vapor.</li>
-                <li><strong>Frequency:</strong> Calculate expected vortex frequency:
+                <li data-i18n="char1"><strong>Appearance:</strong> If draft tube has sight glass, visible as a rotating
+                    "snake" of low-pressure vapor.</li>
+                <li><strong data-i18n="char2_label">Frequency:</strong> <span data-i18n="char2_text">Calculate expected
+                        vortex frequency:</span>
                     <ul>
-                        <li>Runner speed: 600 RPM (Unit 1) = 10 Hz</li>
-                        <li>Vortex frequency: 0.2-0.4 × 10 Hz = <strong>2-4 Hz</strong></li>
+                        <li data-i18n="char2_1">Runner speed: 600 RPM (Unit 1) = 10 Hz</li>
+                        <li data-i18n="char2_2">Vortex frequency: 0.2-0.4 × 10 Hz = <strong>2-4 Hz</strong></li>
                     </ul>
                 </li>
-                <li><strong>Audible Signal:</strong> Low-frequency "thumping" or "whumping" sound at 2-4 Hz interval
-                    (count: 1-Mississippi, 2-Mississippi rhythm).</li>
-                <li><strong>Vibration Sensors:</strong> SCADA accelerometers will show peak at 2-4 Hz when vortex is
-                    active.</li>
+                <li data-i18n="char3"><strong>Audible Signal:</strong> Low-frequency "thumping" or "whumping" sound at
+                    2-4 Hz interval (count: 1-Mississippi, 2-Mississippi rhythm).</li>
+                <li data-i18n="char4"><strong>Vibration Sensors:</strong> SCADA accelerometers will show peak at 2-4 Hz
+                    when vortex is active.</li>
             </ul>
         </div>
 
-        <div class="section-title">SOP 2: Identifying "Rough Running Zones"</div>
+        <div class="section-title" data-i18n="section2_title">SOP 2: Identifying "Rough Running Zones"</div>
         <div class="module diagnostic">
-            <p><strong>Objective:</strong> Map the specific load points where vortex induces unacceptable vibration,
-                then avoid operating in those zones.</p>
+            <p data-i18n="section2_intro"><strong>Objective:</strong> Map the specific load points where vortex induces
+                unacceptable vibration, then avoid operating in those zones.</p>
 
-            <h3>2.1 Load-Shifting Diagnostic Procedure</h3>
+            <h3 data-i18n="subsection2_1_title">2.1 Load-Shifting Diagnostic Procedure</h3>
             <ol>
-                <li><strong>Test Setup:</strong> Install temporary vibration accelerometer on draft tube wall (or use
-                    existing SCADA sensors).</li>
-                <li><strong>Load Sweep:</strong> Incrementally adjust power output from 20% to 100% in 5% steps.</li>
-                <li><strong>Dwell Time:</strong> Hold each load for 3 minutes to allow vortex to stabilize.</li>
-                <li><strong>Data Recording:</strong> For each load point, record:
+                <li data-i18n="diag1"><strong>Test Setup:</strong> Install temporary vibration accelerometer on draft
+                    tube wall (or use existing SCADA sensors).</li>
+                <li data-i18n="diag2"><strong>Load Sweep:</strong> Incrementally adjust power output from 20% to 100% in
+                    5% steps.</li>
+                <li data-i18n="diag3"><strong>Dwell Time:</strong> Hold each load for 3 minutes to allow vortex to
+                    stabilize.</li>
+                <li><strong data-i18n="diag4_label">Data Recording:</strong> <span data-i18n="diag4_text">For each load
+                        point, record:</span>
                     <ul>
-                        <li>Vibration amplitude (mm/s RMS)</li>
-                        <li>Dominant frequency (Hz)</li>
-                        <li>Audible noise level (subjective: Low/Medium/High)</li>
+                        <li data-i18n="diag4_1">Vibration amplitude (mm/s RMS)</li>
+                        <li data-i18n="diag4_2">Dominant frequency (Hz)</li>
+                        <li data-i18n="diag4_3">Audible noise level (subjective: Low/Medium/High)</li>
                     </ul>
                 </li>
-                <li><strong>Threshold Criteria:</strong>
+                <li><strong data-i18n="diag5_label">Threshold Criteria:</strong>
                     <ul>
-                        <li><strong>Safe:</strong>
+                        <li data-i18n="diag5_safe"><strong>Safe:</strong>
                             <2.0 mm/s vibration</li>
-                        <li><strong>Warning:</strong> 2.0-4.0 mm/s (avoid continuous operation)</li>
-                        <li><strong>Critical:</strong> >4.0 mm/s (AVOID - damage accumulates rapidly)</li>
+                        <li data-i18n="diag5_warn"><strong>Warning:</strong> 2.0-4.0 mm/s (avoid continuous operation)
+                        </li>
+                        <li data-i18n="diag5_crit"><strong>Critical:</strong> >4.0 mm/s (AVOID - damage accumulates
+                            rapidly)</li>
                     </ul>
                 </li>
             </ol>
 
-            <div class="avoid-zone">
+            <div class="avoid-zone" data-i18n="avoid_zone">
                 <strong>TYPICAL ROUGH RUNNING ZONES FOR FRANCIS TURBINES:</strong><br>
                 • 35-50% load (low head conditions)<br>
                 • 55-65% load (medium head, high swirl)<br>
@@ -256,122 +291,341 @@
                 <strong>OPERATOR RULE:</strong> If grid demand requires operation in rough zone, limit continuous run
                 time to <2 hours. Request load adjustment from dispatcher if possible. </div>
 
-                    <h3>2.2 Creating the "Forbidden Zone" Chart</h3>
-                    <p>After completing load sweep, create a visual chart posted in control room:</p>
+                    <h3 data-i18n="subsection2_2_title">2.2 Creating the "Forbidden Zone" Chart</h3>
+                    <p data-i18n="subsection2_2_text">After completing load sweep, create a visual chart posted in
+                        control room:</p>
                     <ul>
-                        <li>X-axis: Power output (0-100%)</li>
-                        <li>Y-axis: Vibration level (mm/s)</li>
-                        <li>Color zones: Green (safe), Yellow (warning), Red (avoid)</li>
+                        <li data-i18n="chart1">X-axis: Power output (0-100%)</li>
+                        <li data-i18n="chart2">Y-axis: Vibration level (mm/s)</li>
+                        <li data-i18n="chart3">Color zones: Green (safe), Yellow (warning), Red (avoid)</li>
                     </ul>
-                    <div class="visual-aid">
+                    <div class="visual-aid" data-i18n="visual_aid">
                         [CHART PLACEHOLDER: Load vs. Vibration with color-coded zones]
                     </div>
             </div>
 
-            <div class="section-title">SOP 3: Air Injection Optimization</div>
+            <div class="section-title" data-i18n="section3_title">SOP 3: Air Injection Optimization</div>
             <div class="module technical">
-                <p>Air admission is not just "venting" - it's a precision tool to disrupt vortex coherence.</p>
+                <p data-i18n="section3_intro">Air admission is not just "venting" - it's a precision tool to disrupt
+                    vortex coherence.</p>
 
-                <h3>3.1 The Mechanism: Vortex Rope Breakup</h3>
-                <p><strong>Physics:</strong> Injecting air into the draft tube creates buoyant bubbles that interfere
-                    with the vortex rope's rotational coherence. The rope becomes unstable and breaks into smaller, less
-                    energetic eddies.</p>
+                <h3 data-i18n="subsection3_1_title">3.1 The Mechanism: Vortex Rope Breakup</h3>
+                <p data-i18n="subsection3_1_text"><strong>Physics:</strong> Injecting air into the draft tube creates
+                    buoyant bubbles that interfere with the vortex rope's rotational coherence. The rope becomes
+                    unstable and breaks into smaller, less energetic eddies.</p>
 
-                <h3>3.2 Tuning the Air Admission Valve</h3>
-                <p><strong>Context for Unit 1:</strong> Air admission valve is already installed (ref: DFT Air Admission
-                    SOP), but may not be optimized for vortex suppression.</p>
+                <h3 data-i18n="subsection3_2_title">3.2 Tuning the Air Admission Valve</h3>
+                <p data-i18n="subsection3_2_text"><strong>Context for Unit 1:</strong> Air admission valve is already
+                    installed (ref: DFT Air Admission SOP), but may not be optimized for vortex suppression.</p>
 
                 <ol>
-                    <li><strong>Baseline:</strong> Operate unit at known "rough running" load (e.g., 45% power) with air
-                        valve CLOSED. Record vibration level.</li>
-                    <li><strong>Incremental Opening:</strong> Open air valve in 10% increments (10%, 20%, 30%... up to
-                        100%).</li>
-                    <li><strong>Observation:</strong> At each increment, allow 2 minutes for flow stabilization, then
-                        record vibration.</li>
-                    <li><strong>Optimal Setting:</strong> The valve opening that produces <strong>minimum
-                            vibration</strong> is the "sweet spot" for this specific load point.</li>
-                    <li><strong>Warning:</strong> Excessive air injection (>70% valve open) can create secondary noise
-                        and reduce efficiency slightly (~0.5-1%). Balance vibration reduction vs. efficiency loss.</li>
+                    <li data-i18n="tune1"><strong>Baseline:</strong> Operate unit at known "rough running" load (e.g.,
+                        45% power) with air valve CLOSED. Record vibration level.</li>
+                    <li data-i18n="tune2"><strong>Incremental Opening:</strong> Open air valve in 10% increments (10%,
+                        20%, 30%... up to 100%).</li>
+                    <li data-i18n="tune3"><strong>Observation:</strong> At each increment, allow 2 minutes for flow
+                        stabilization, then record vibration.</li>
+                    <li data-i18n="tune4"><strong>Optimal Setting:</strong> The valve opening that produces
+                        <strong>minimum vibration</strong> is the "sweet spot" for this specific load point.</li>
+                    <li data-i18n="tune5"><strong>Warning:</strong> Excessive air injection (>70% valve open) can create
+                        secondary noise and reduce efficiency slightly (~0.5-1%). Balance vibration reduction vs.
+                        efficiency loss.</li>
                 </ol>
 
-                <div class="physics-box">
+                <div class="physics-box" data-i18n="low_head_box">
                     <strong>Low-Head Operations:</strong> During monsoon season when river level is high (reducing net
                     head), vortex intensity increases. Air injection requirements may double compared to dry season.
                     Re-tune air valve seasonally.
                 </div>
 
-                <h3>3.3 Air Compressor Capacity Check</h3>
-                <p>Ensure the air supply compressor can sustain the required flow rate:</p>
+                <h3 data-i18n="subsection3_3_title">3.3 Air Compressor Capacity Check</h3>
+                <p data-i18n="subsection3_3_text">Ensure the air supply compressor can sustain the required flow rate:
+                </p>
                 <ul>
-                    <li><strong>Typical Demand:</strong> 50-100 Nm³/h at 2-3 bar gauge pressure</li>
-                    <li><strong>Verification:</strong> Monitor compressor pressure during peak air injection. If
-                        pressure drops below 1.5 bar, compressor is undersized.</li>
-                    <li><strong>Upgrade Path:</strong> If existing compressor insufficient, add secondary unit or
-                        increase tank capacity buffer.</li>
+                    <li data-i18n="comp1"><strong>Typical Demand:</strong> 50-100 Nm³/h at 2-3 bar gauge pressure</li>
+                    <li data-i18n="comp2"><strong>Verification:</strong> Monitor compressor pressure during peak air
+                        injection. If pressure drops below 1.5 bar, compressor is undersized.</li>
+                    <li data-i18n="comp3"><strong>Upgrade Path:</strong> If existing compressor insufficient, add
+                        secondary unit or increase tank capacity buffer.</li>
                 </ul>
             </div>
 
-            <div class="section-title">SOP 4: Acoustic Diagnostic</div>
+            <div class="section-title" data-i18n="section4_title">SOP 4: Acoustic Diagnostic</div>
             <div class="module diagnostic">
-                <p>Operators can identify vortex issues by <strong>sound</strong> even without instrumentation.</p>
+                <p data-i18n="section4_intro">Operators can identify vortex issues by <strong>sound</strong> even
+                    without instrumentation.</p>
 
-                <h3>4.1 The "Thumping" Signature</h3>
+                <h3 data-i18n="subsection4_1_title">4.1 The "Thumping" Signature</h3>
                 <ul>
-                    <li><strong>Frequency:</strong> Low-frequency rhythmic thumping at 2-4 beats per second (120-240 BPM
-                        if thinking in music terms).</li>
-                    <li><strong>Location:</strong> Loudest near draft tube elbow or tailrace exit.</li>
-                    <li><strong>Character:</strong> "Whump-whump-whump" - not a high-pitched whine or grinding. Feels
-                        like a slow heartbeat.</li>
+                    <li data-i18n="thump1"><strong>Frequency:</strong> Low-frequency rhythmic thumping at 2-4 beats per
+                        second (120-240 BPM if thinking in music terms).</li>
+                    <li data-i18n="thump2"><strong>Location:</strong> Loudest near draft tube elbow or tailrace exit.
+                    </li>
+                    <li data-i18n="thump3"><strong>Character:</strong> "Whump-whump-whump" - not a high-pitched whine or
+                        grinding. Feels like a slow heartbeat.</li>
                 </ul>
 
-                <h3>4.2 Differential Diagnosis</h3>
+                <h3 data-i18n="subsection4_2_title">4.2 Differential Diagnosis</h3>
                 <table border="1" cellpadding="8" style="width:100%; margin-top:15px; border-collapse: collapse;">
                     <tr style="background-color: #f0f7ff;">
-                        <th>Sound</th>
-                        <th>Likely Cause</th>
-                        <th>Action</th>
+                        <th data-i18n="th_sound">Sound</th>
+                        <th data-i18n="th_cause">Likely Cause</th>
+                        <th data-i18n="th_action">Action</th>
                     </tr>
                     <tr>
-                        <td>Low-frequency thumping (2-4 Hz)</td>
-                        <td>Draft tube vortex rope</td>
-                        <td>Shift load or increase air injection</td>
+                        <td data-i18n="td_low">Low-frequency thumping (2-4 Hz)</td>
+                        <td data-i18n="td_vortex">Draft tube vortex rope</td>
+                        <td data-i18n="td_shift">Shift load or increase air injection</td>
                     </tr>
                     <tr>
-                        <td>High-frequency whine (>100 Hz)</td>
-                        <td>Bearing issue or cavitation</td>
-                        <td>Refer to Bearings/Cavitation SOP</td>
+                        <td data-i18n="td_high">High-frequency whine (>100 Hz)</td>
+                        <td data-i18n="td_bearing">Bearing issue or cavitation</td>
+                        <td data-i18n="td_refer">Refer to Bearings/Cavitation SOP</td>
                     </tr>
                     <tr>
-                        <td>Grinding/scraping</td>
-                        <td>Mechanical contact (runner/casing)</td>
-                        <td>STOP UNIT - Inspect clearances</td>
+                        <td data-i18n="td_grind">Grinding/scraping</td>
+                        <td data-i18n="td_contact">Mechanical contact (runner/casing)</td>
+                        <td data-i18n="td_stop1">STOP UNIT - Inspect clearances</td>
                     </tr>
                     <tr>
-                        <td>Intermittent banging</td>
-                        <td>Loose component or debris impact</td>
-                        <td>STOP UNIT - Inspect intake/runner</td>
+                        <td data-i18n="td_bang">Intermittent banging</td>
+                        <td data-i18n="td_loose">Loose component or debris impact</td>
+                        <td data-i18n="td_stop2">STOP UNIT - Inspect intake/runner</td>
                     </tr>
                 </table>
             </div>
 
-            <div class="section-title">Summary Checklist</div>
+            <div class="section-title" data-i18n="section5_title">Summary Checklist</div>
             <div class="module">
                 <ul>
-                    <li><strong>Quarterly:</strong> Perform load sweep to verify "rough running zones" chart is still
-                        accurate (river head changes seasonally).</li>
-                    <li><strong>Monthly:</strong> Test air admission valve for proper operation and optimal setting at
-                        typical loads.</li>
-                    <li><strong>Daily:</strong> During shift handover, report any new vibrations or unusual sounds to
-                        incoming operator.</li>
-                    <li><strong>On Overhaul:</strong> Inspect draft tube liner for fatigue cracks induced by long-term
-                        vortex exposure.</li>
+                    <li data-i18n="check1"><strong>Quarterly:</strong> Perform load sweep to verify "rough running
+                        zones" chart is still accurate (river head changes seasonally).</li>
+                    <li data-i18n="check2"><strong>Monthly:</strong> Test air admission valve for proper operation and
+                        optimal setting at typical loads.</li>
+                    <li data-i18n="check3"><strong>Daily:</strong> During shift handover, report any new vibrations or
+                        unusual sounds to incoming operator.</li>
+                    <li data-i18n="check4"><strong>On Overhaul:</strong> Inspect draft tube liner for fatigue cracks
+                        induced by long-term vortex exposure.</li>
                 </ul>
             </div>
 
-            <a href="./Francis_Horizontal.html" class="back-btn">← Return to Master Manual</a>
+            <a href="./Francis_Horizontal.html" class="back-btn" data-i18n="back_btn">← Return to Master Manual</a>
 
         </div>
 
+        <script>
+            const i18n = {
+                en: {
+                    title: "Advanced SOP: Vortex Control & Draft Tube Dynamics",
+                    subtitle: "The \"Forgotten\" Fluid Dynamics - Managing Spiral Vortex & Surging",
+                    intro_title: "⚠️ THE SHAKING POWERHOUSE",
+                    context_label: "Context:",
+                    context_text: "At specific load points (typically 40-60% power), a spiral vortex rope forms in the draft tube downstream of the runner. This is not a minor vibration - it can shake the entire powerhouse structure.",
+                    risk_label: "The Risk:",
+                    risk_text: "Operators often dismiss this as \"just noise\" or \"normal operation,\" but prolonged exposure causes:",
+                    risk1: "Fatigue cracks in draft tube liner concrete",
+                    risk2: "Bearing damage from cyclic loading",
+                    risk3: "Floor bolt loosening in turbine mounting",
+                    economic: "<strong>Economic Impact:</strong> If ignored, vortex-induced fatigue can reduce turbine lifespan by 30-40%, requiring major refurbishment.",
+                    section1_title: "SOP 1: The Physics of Vortex Rope Formation",
+                    section1_intro: "Understanding the mechanism allows intelligent countermeasures instead of reactive firefighting.",
+                    subsection1_1_title: "1.1 Fluid Dynamics Simplified",
+                    subsection1_1_text: "When the Francis runner operates at partial load, water exits the runner with residual swirl (tangential velocity). This swirl continues into the draft tube, creating a helical vortex rope that rotates and pulsates.",
+                    physics_box: "<strong>Key Physics:</strong> The vortex rope has a natural frequency (typically 0.2-0.4 × runner rotation frequency). If this frequency matches the structural resonance of the draft tube or powerhouse, violent vibrations occur.",
+                    subsection1_2_title: "1.2 Vortex Rope Characteristics",
+                    char1: "<strong>Appearance:</strong> If draft tube has sight glass, visible as a rotating \"snake\" of low-pressure vapor.",
+                    char2_label: "Frequency:",
+                    char2_text: "Calculate expected vortex frequency:",
+                    char2_1: "Runner speed: 600 RPM (Unit 1) = 10 Hz",
+                    char2_2: "Vortex frequency: 0.2-0.4 × 10 Hz = <strong>2-4 Hz</strong>",
+                    char3: "<strong>Audible Signal:</strong> Low-frequency \"thumping\" or \"whumping\" sound at 2-4 Hz interval (count: 1-Mississippi, 2-Mississippi rhythm).",
+                    char4: "<strong>Vibration Sensors:</strong> SCADA accelerometers will show peak at 2-4 Hz when vortex is active.",
+                    section2_title: "SOP 2: Identifying \"Rough Running Zones\"",
+                    section2_intro: "<strong>Objective:</strong> Map the specific load points where vortex induces unacceptable vibration, then avoid operating in those zones.",
+                    subsection2_1_title: "2.1 Load-Shifting Diagnostic Procedure",
+                    diag1: "<strong>Test Setup:</strong> Install temporary vibration accelerometer on draft tube wall (or use existing SCADA sensors).",
+                    diag2: "<strong>Load Sweep:</strong> Incrementally adjust power output from 20% to 100% in 5% steps.",
+                    diag3: "<strong>Dwell Time:</strong> Hold each load for 3 minutes to allow vortex to stabilize.",
+                    diag4_label: "Data Recording:",
+                    diag4_text: "For each load point, record:",
+                    diag4_1: "Vibration amplitude (mm/s RMS)",
+                    diag4_2: "Dominant frequency (Hz)",
+                    diag4_3: "Audible noise level (subjective: Low/Medium/High)",
+                    diag5_label: "Threshold Criteria:",
+                    diag5_safe: "<strong>Safe:</strong> <2.0 mm/s vibration",
+                    diag5_warn: "<strong>Warning:</strong> 2.0-4.0 mm/s (avoid continuous operation)",
+                    diag5_crit: "<strong>Critical:</strong> >4.0 mm/s (AVOID - damage accumulates rapidly)",
+                    avoid_zone: "<strong>TYPICAL ROUGH RUNNING ZONES FOR FRANCIS TURBINES:</strong><br>• 35-50% load (low head conditions)<br>• 55-65% load (medium head, high swirl)<br><br><strong>OPERATOR RULE:</strong> If grid demand requires operation in rough zone, limit continuous run time to <2 hours. Request load adjustment from dispatcher if possible.",
+                    subsection2_2_title: "2.2 Creating the \"Forbidden Zone\" Chart",
+                    subsection2_2_text: "After completing load sweep, create a visual chart posted in control room:",
+                    chart1: "X-axis: Power output (0-100%)",
+                    chart2: "Y-axis: Vibration level (mm/s)",
+                    chart3: "Color zones: Green (safe), Yellow (warning), Red (avoid)",
+                    visual_aid: "[CHART PLACEHOLDER: Load vs. Vibration with color-coded zones]",
+                    section3_title: "SOP 3: Air Injection Optimization",
+                    section3_intro: "Air admission is not just \"venting\" - it's a precision tool to disrupt vortex coherence.",
+                    subsection3_1_title: "3.1 The Mechanism: Vortex Rope Breakup",
+                    subsection3_1_text: "<strong>Physics:</strong> Injecting air into the draft tube creates buoyant bubbles that interfere with the vortex rope's rotational coherence. The rope becomes unstable and breaks into smaller, less energetic eddies.",
+                    subsection3_2_title: "3.2 Tuning the Air Admission Valve",
+                    subsection3_2_text: "<strong>Context for Unit 1:</strong> Air admission valve is already installed (ref: DFT Air Admission SOP), but may not be optimized for vortex suppression.",
+                    tune1: "<strong>Baseline:</strong> Operate unit at known \"rough running\" load (e.g., 45% power) with air valve CLOSED. Record vibration level.",
+                    tune2: "<strong>Incremental Opening:</strong> Open air valve in 10% increments (10%, 20%, 30%... up to 100%).",
+                    tune3: "<strong>Observation:</strong> At each increment, allow 2 minutes for flow stabilization, then record vibration.",
+                    tune4: "<strong>Optimal Setting:</strong> The valve opening that produces <strong>minimum vibration</strong> is the \"sweet spot\" for this specific load point.",
+                    tune5: "<strong>Warning:</strong> Excessive air injection (>70% valve open) can create secondary noise and reduce efficiency slightly (~0.5-1%). Balance vibration reduction vs. efficiency loss.",
+                    low_head_box: "<strong>Low-Head Operations:</strong> During monsoon season when river level is high (reducing net head), vortex intensity increases. Air injection requirements may double compared to dry season. Re-tune air valve seasonally.",
+                    subsection3_3_title: "3.3 Air Compressor Capacity Check",
+                    subsection3_3_text: "Ensure the air supply compressor can sustain the required flow rate:",
+                    comp1: "<strong>Typical Demand:</strong> 50-100 Nm³/h at 2-3 bar gauge pressure",
+                    comp2: "<strong>Verification:</strong> Monitor compressor pressure during peak air injection. If pressure drops below 1.5 bar, compressor is undersized.",
+                    comp3: "<strong>Upgrade Path:</strong> If existing compressor insufficient, add secondary unit or increase tank capacity buffer.",
+                    section4_title: "SOP 4: Acoustic Diagnostic",
+                    section4_intro: "Operators can identify vortex issues by <strong>sound</strong> even without instrumentation.",
+                    subsection4_1_title: "4.1 The \"Thumping\" Signature",
+                    thump1: "<strong>Frequency:</strong> Low-frequency rhythmic thumping at 2-4 beats per second (120-240 BPM if thinking in music terms).",
+                    thump2: "<strong>Location:</strong> Loudest near draft tube elbow or tailrace exit.",
+                    thump3: "<strong>Character:</strong> \"Whump-whump-whump\" - not a high-pitched whine or grinding. Feels like a slow heartbeat.",
+                    subsection4_2_title: "4.2 Differential Diagnosis",
+                    th_sound: "Sound",
+                    th_cause: "Likely Cause",
+                    th_action: "Action",
+                    td_low: "Low-frequency thumping (2-4 Hz)",
+                    td_vortex: "Draft tube vortex rope",
+                    td_shift: "Shift load or increase air injection",
+                    td_high: "High-frequency whine (>100 Hz)",
+                    td_bearing: "Bearing issue or cavitation",
+                    td_refer: "Refer to Bearings/Cavitation SOP",
+                    td_grind: "Grinding/scraping",
+                    td_contact: "Mechanical contact (runner/casing)",
+                    td_stop1: "STOP UNIT - Inspect clearances",
+                    td_bang: "Intermittent banging",
+                    td_loose: "Loose component or debris impact",
+                    td_stop2: "STOP UNIT - Inspect intake/runner",
+                    section5_title: "Summary Checklist",
+                    check1: "<strong>Quarterly:</strong> Perform load sweep to verify \"rough running zones\" chart is still accurate (river head changes seasonally).",
+                    check2: "<strong>Monthly:</strong> Test air admission valve for proper operation and optimal setting at typical loads.",
+                    check3: "<strong>Daily:</strong> During shift handover, report any new vibrations or unusual sounds to incoming operator.",
+                    check4: "<strong>On Overhaul:</strong> Inspect draft tube liner for fatigue cracks induced by long-term vortex exposure.",
+                    back_btn: "← Return to Master Manual"
+                },
+                bs: {
+                    title: "Napredni SOP: Kontrola vrtloga i dinamika sifona",
+                    subtitle: "\"Zaboravljene\" dinamike fluida - Upravljanje spiralnim vrtlogom i pulsiranjem",
+                    intro_title: "⚠️ ELEKTRANA KOJA SE TRESE",
+                    context_label: "Kontekst:",
+                    context_text: "Na određenim tačkama opterećenja (obično 40-60% snage), spiralni vrtložni konopac se formira u sifonu nizvodno od radnog kola. Ovo nije mala vibracija - može protresati cijelu strukturu elektrane.",
+                    risk_label: "Rizik:",
+                    risk_text: "Operateri često odbacuju ovo kao \"samo buku\" ili \"normalan rad\", ali produžena izloženost uzrokuje:",
+                    risk1: "Pukotine od zamora u betonskoj oblozi sifona",
+                    risk2: "Oštećenje ležajeva od cikličnog opterećenja",
+                    risk3: "Olabavljenje podnih vijaka u montaži turbine",
+                    economic: "<strong>Ekonomski uticaj:</strong> Ako se ignoriše, zamor izazvan vrtlogom može smanjiti životni vijek turbine za 30-40%, zahtijevajući veliki remont.",
+                    section1_title: "SOP 1: Fizika formiranja vrtložnog konopca",
+                    section1_intro: "Razumijevanje mehanizma omogućava inteligentne protumjere umjesto reaktivnog gašenja požara.",
+                    subsection1_1_title: "1.1 Pojednostavljena dinamika fluida",
+                    subsection1_1_text: "Kada Francis radno kolo radi na djelimičnom opterećenju, voda izlazi iz radnog kola sa zaostalim vrtlogom (tangencijalnom brzinom). Ovaj vrtlog se nastavlja u sifon, stvarajući spiralni vrtložni konopac koji rotira i pulsira.",
+                    physics_box: "<strong>Ključna fizika:</strong> Vrtložni konopac ima prirodnu frekvenciju (obično 0.2-0.4 × frekvencija rotacije radnog kola). Ako se ova frekvencija poklapa sa strukturnom rezonancom sifona ili elektrane, dolazi do nasilnih vibracija.",
+                    subsection1_2_title: "1.2 Karakteristike vrtložnog konopca",
+                    char1: "<strong>Izgled:</strong> Ako sifon ima staklo za pregled, vidljiv kao rotirajuća \"zmija\" pare niskog pritiska.",
+                    char2_label: "Frekvencija:",
+                    char2_text: "Izračunajte očekivanu frekvenciju vrtloga:",
+                    char2_1: "Brzina radnog kola: 600 RPM (Jedinica 1) = 10 Hz",
+                    char2_2: "Frekvencija vrtloga: 0.2-0.4 × 10 Hz = <strong>2-4 Hz</strong>",
+                    char3: "<strong>Zvučni signal:</strong> Niskofrekventni \"udarni\" ili \"tupavi\" zvuk na intervalu od 2-4 Hz (brojanje: 1-Mississippi, 2-Mississippi ritam).",
+                    char4: "<strong>Senzori vibracija:</strong> SCADA akcelerometri će pokazati vrh na 2-4 Hz kada je vrtlog aktivan.",
+                    section2_title: "SOP 2: Identifikacija \"Zona grubog rada\"",
+                    section2_intro: "<strong>Cilj:</strong> Mapirati specifične tačke opterećenja gdje vrtlog izaziva neprihvatljive vibracije, zatim izbjeći rad u tim zonama.",
+                    subsection2_1_title: "2.1 Dijagnostička procedura pomjeranja opterećenja",
+                    diag1: "<strong>Postavljanje testa:</strong> Instalirajte privremeni akcelerometar vibracija na zid sifona (ili koristite postojeće SCADA senzore).",
+                    diag2: "<strong>Pomjeranje opterećenja:</strong> Postepeno prilagodite izlaznu snagu od 20% do 100% u koracima od 5%.",
+                    diag3: "<strong>Vrijeme zadržavanja:</strong> Držite svako opterećenje 3 minute da se vrtlog stabilizuje.",
+                    diag4_label: "Snimanje podataka:",
+                    diag4_text: "Za svaku tačku opterećenja, zabilježite:",
+                    diag4_1: "Amplituda vibracija (mm/s RMS)",
+                    diag4_2: "Dominantna frekvencija (Hz)",
+                    diag4_3: "Nivo čujne buke (subjektivno: Nisko/Srednje/Visoko)",
+                    diag5_label: "Kriterijumi praga:",
+                    diag5_safe: "<strong>Sigurno:</strong> <2.0 mm/s vibracije",
+                    diag5_warn: "<strong>Upozorenje:</strong> 2.0-4.0 mm/s (izbjegavajte kontinuiran rad)",
+                    diag5_crit: "<strong>Kritično:</strong> >4.0 mm/s (IZBJEGAVAJTE - šteta se brzo akumulira)",
+                    avoid_zone: "<strong>TIPIČNE ZONE GRUBOG RADA ZA FRANCIS TURBINE:</strong><br>• 35-50% opterećenje (uslovi niskog pada)<br>• 55-65% opterećenje (srednji pad, visok vrtlog)<br><br><strong>PRAVILO OPERATERA:</strong> Ako potražnja mreže zahtijeva rad u gruboj zoni, ograničite kontinuirano vrijeme rada na <2 sata. Zatražite prilagođavanje opterećenja od dispečera ako je moguće.",
+                    subsection2_2_title: "2.2 Kreiranje grafikona \"Zabranjene zone\"",
+                    subsection2_2_text: "Nakon završetka pomjeranja opterećenja, kreirajte vizuelni grafikon postavljen u kontrolnoj sobi:",
+                    chart1: "X-osa: Izlazna snaga (0-100%)",
+                    chart2: "Y-osa: Nivo vibracija (mm/s)",
+                    chart3: "Zone boja: Zelena (sigurno), Žuta (upozorenje), Crvena (izbjegavajte)",
+                    visual_aid: "[MJESTO ZA GRAFIKON: Opterećenje vs. Vibracije sa zonama u boji]",
+                    section3_title: "SOP 3: Optimizacija ubrizgavanja vazduha",
+                    section3_intro: "Prijem vazduha nije samo \"odzračivanje\" - to je precizni alat za ometanje koherentnosti vrtloga.",
+                    subsection3_1_title: "3.1 Mehanizam: Razbijanje vrtložnog konopca",
+                    subsection3_1_text: "<strong>Fizika:</strong> Ubrizgavanje vazduha u sifon stvara plutajuće mjehuriće koji ometaju rotacionu koherentnost vrtložnog konopca. Konopac postaje nestabilan i raspada se u manje, manje energične vrtloge.",
+                    subsection3_2_title: "3.2 Podešavanje ventila za prijem vazduha",
+                    subsection3_2_text: "<strong>Kontekst za Jedinicu 1:</strong> Ventil za prijem vazduha je već instaliran (ref: DFT SOP za prijem vazduha), ali možda nije optimizovan za suzbijanje vrtloga.",
+                    tune1: "<strong>Osnovna linija:</strong> Radite jedinicu na poznatom \"grubom\" opterećenju (npr. 45% snage) sa ZATVORENIM ventilom za vazduh. Zabilježite nivo vibracija.",
+                    tune2: "<strong>Postepeno otvaranje:</strong> Otvorite ventil za vazduh u koracima od 10% (10%, 20%, 30%... do 100%).",
+                    tune3: "<strong>Posmatranje:</strong> Na svakom koraku, dozvolite 2 minute za stabilizaciju protoka, zatim zabilježite vibracije.",
+                    tune4: "<strong>Optimalna postavka:</strong> Otvaranje ventila koje proizvodi <strong>minimalne vibracije</strong> je \"slatka tačka\" za ovu specifičnu tačku opterećenja.",
+                    tune5: "<strong>Upozorenje:</strong> Prekomjerno ubrizgavanje vazduha (>70% otvaranje ventila) može stvoriti sekundarnu buku i smanjiti efikasnost neznatno (~0.5-1%). Balansirajte smanjenje vibracija vs. gubitak efikasnosti.",
+                    low_head_box: "<strong>Operacije niskog pada:</strong> Tokom monsunske sezone kada je nivo rijeke visok (smanjujući neto pad), intenzitet vrtloga raste. Zahtjevi za ubrizgavanje vazduha mogu se udvostručiti u poređenju sa sušnom sezonom. Ponovo podesite ventil za vazduh sezonski.",
+                    subsection3_3_title: "3.3 Provjera kapaciteta kompresora za vazduh",
+                    subsection3_3_text: "Osigurajte da kompresor za snabdijevanje vazduhom može održati potreban protok:",
+                    comp1: "<strong>Tipična potražnja:</strong> 50-100 Nm³/h na 2-3 bara mjernog pritiska",
+                    comp2: "<strong>Verifikacija:</strong> Pratite pritisak kompresora tokom vršnog ubrizgavanja vazduha. Ako pritisak padne ispod 1.5 bara, kompresor je nedovoljno dimenzionisan.",
+                    comp3: "<strong>Put nadogradnje:</strong> Ako postojeći kompresor nije dovoljan, dodajte sekundarnu jedinicu ili povećajte bafer kapaciteta rezervoara.",
+                    section4_title: "SOP 4: Akustička dijagnostika",
+                    section4_intro: "Operateri mogu identifikovati probleme sa vrtlogom po <strong>zvuku</strong> čak i bez instrumentacije.",
+                    subsection4_1_title: "4.1 \"Udarni\" potpis",
+                    thump1: "<strong>Frekvencija:</strong> Niskofrekventno ritmičko udaranje na 2-4 udara u sekundi (120-240 BPM ako razmišljate u muzičkim terminima).",
+                    thump2: "<strong>Lokacija:</strong> Najglasniji blizu lakta sifona ili izlaza odvodnog kanala.",
+                    thump3: "<strong>Karakter:</strong> \"Tup-tup-tup\" - ne visoki piskavi zvuk ili brušenje. Osjeća se kao spori otkucaj srca.",
+                    subsection4_2_title: "4.2 Diferencijalna dijagnoza",
+                    th_sound: "Zvuk",
+                    th_cause: "Vjerovatni uzrok",
+                    th_action: "Akcija",
+                    td_low: "Niskofrekventno udaranje (2-4 Hz)",
+                    td_vortex: "Vrtložni konopac u sifonu",
+                    td_shift: "Pomjerite opterećenje ili povećajte ubrizgavanje vazduha",
+                    td_high: "Visokofrekventni piskavi zvuk (>100 Hz)",
+                    td_bearing: "Problem sa ležajem ili kavitacija",
+                    td_refer: "Pogledajte SOP za Ležajeve/Kavitaciju",
+                    td_grind: "Brušenje/struganje",
+                    td_contact: "Mehanički kontakt (radno kolo/kućište)",
+                    td_stop1: "ZAUSTAVITE JEDINICU - Pregledajte zazore",
+                    td_bang: "Povremeno lupanje",
+                    td_loose: "Labava komponenta ili udar otpada",
+                    td_stop2: "ZAUSTAVITE JEDINICU - Pregledajte ulaz/radno kolo",
+                    section5_title: "Kontrolna lista sažetka",
+                    check1: "<strong>Kvartalno:</strong> Izvršite pomjeranje opterećenja da verifikujete da je grafikon \"zona grubog rada\" još uvijek tačan (pad rijeke se mijenja sezonski).",
+                    check2: "<strong>Mjesečno:</strong> Testirajte ventil za prijem vazduha za pravilno funkcionisanje i optimalnu postavku na tipičnim opterećenjima.",
+                    check3: "<strong>Dnevno:</strong> Tokom predaje smjene, prijavite sve nove vibracije ili neobične zvukove dolazećem operateru.",
+                    check4: "<strong>Na remontu:</strong> Pregledajte oblogu sifona na pukotine od zamora izazvane dugotrajnom izloženošću vrtlogu.",
+                    back_btn: "← Povratak na Glavni priručnik"
+                }
+            };
+
+            function setLang(lang) {
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (i18n[lang][key]) {
+                        el.innerHTML = i18n[lang][key];
+                    }
+                });
+
+                // Update button states
+                document.querySelectorAll('.lang-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.innerText.toLowerCase() === lang) {
+                        btn.classList.add('active');
+                    }
+                });
+
+                localStorage.setItem('anohub_lang_pref', lang);
+            }
+
+            // Initialize from storage or default to English
+            const savedLang = localStorage.getItem('anohub_lang_pref') || 'en';
+            setLang(savedLang);
+        </script>
 </body>
 
 </html>

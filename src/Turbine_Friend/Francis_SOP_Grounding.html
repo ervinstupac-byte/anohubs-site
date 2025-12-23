@@ -43,6 +43,29 @@
             text-align: center;
         }
 
+        .lang-switch {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: 1px solid var(--electrical-color);
+            color: var(--electrical-color);
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .lang-btn.active {
+            background: var(--electrical-color);
+            color: white;
+        }
+
         h1 {
             margin: 0;
             color: var(--electrical-color);
@@ -161,55 +184,55 @@
 </head>
 
 <body>
-
+    <div class="lang-switch">
+        <button class="lang-btn active" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" onclick="setLang('bs')">BS</button>
+    </div>
     <div class="container">
-
         <header>
-            <h1>Critical SOP: Shaft Grounding & Electrolysis Protection</h1>
-            <h2>The "Silent Bearing Killer" - Preventing Electrical Pitting</h2>
+            <h1 data-i18n="title">Critical SOP: Shaft Grounding & Electrolysis Protection</h1>
+            <h2 data-i18n="subtitle">The "Silent Bearing Killer" - Preventing Electrical Pitting</h2>
         </header>
-
-        <!-- INTRO MODULE -->
         <div class="module critical">
-            <h3>⚠️ THE INVISIBLE DESTROYER</h3>
-            <p><strong>Context:</strong> Magnetic imbalances in the generator induce electrical voltage on the rotating
-                shaft. Without proper grounding, this voltage arcs through the bearing oil film, creating thousands of
-                microscopic craters (pitting) in the Babbitt metal.</p>
+            <h3 data-i18n="intro_title">⚠️ THE INVISIBLE DESTROYER</h3>
+            <p><strong data-i18n="context_label">Context:</strong> <span data-i18n="context_text">Magnetic imbalances in
+                    the generator induce electrical voltage on the rotating shaft. Without proper grounding, this
+                    voltage arcs through the bearing oil film, creating thousands of microscopic craters (pitting) in
+                    the Babbitt metal.</span></p>
             <ul>
-                <li><strong>Why It's Silent:</strong> Unlike mechanical wear that produces noise or heat, electrical
-                    pitting is nearly undetectable until the bearing suddenly fails catastrophically.</li>
-                <li><strong>The Mechanism:</strong> Each voltage arc is tiny (~millivolts), but occurs thousands of
-                    times per second, vaporizing microscopic amounts of bearing material.</li>
-                <li><strong>Economic Impact:</strong> A bearing that should last 10 years can fail in 18 months if shaft
-                    grounding is non-functional.</li>
+                <li data-i18n="intro1"><strong>Why It's Silent:</strong> Unlike mechanical wear that produces noise or
+                    heat, electrical pitting is nearly undetectable until the bearing suddenly fails catastrophically.
+                </li>
+                <li data-i18n="intro2"><strong>The Mechanism:</strong> Each voltage arc is tiny (~millivolts), but
+                    occurs thousands of times per second, vaporizing microscopic amounts of bearing material.</li>
+                <li data-i18n="intro3"><strong>Economic Impact:</strong> A bearing that should last 10 years can fail in
+                    18 months if shaft grounding is non-functional.</li>
             </ul>
         </div>
-
-        <div class="section-title">SOP 1: The Phenomenon - Shaft Voltage Generation</div>
+        <div class="section-title" data-i18n="section1_title">SOP 1: The Phenomenon - Shaft Voltage Generation</div>
         <div class="module technical">
-            <p>Understanding the root cause prevents treating symptoms instead of the disease.</p>
-
-            <h3>1.1 Generator Magnetic Asymmetry</h3>
-            <p>In a perfect generator, magnetic flux is perfectly balanced. In reality, manufacturing tolerances, rotor
-                eccentricity, and winding imperfections create <strong>flux asymmetry</strong>.</p>
-            <p><strong>Result:</strong> A small AC voltage (0.1-5V) is induced on the shaft, which rotates at generator
-                speed (typically 600-750 RPM for vertical Francis units).</p>
-
-            <h3>1.2 The Arc Path</h3>
-            <p>Without grounding, the shaft voltage seeks the easiest path to ground. This path is through the bearing
-                oil film:</p>
+            <p data-i18n="section1_intro">Understanding the root cause prevents treating symptoms instead of the
+                disease.</p>
+            <h3 data-i18n="subsection1_1_title">1.1 Generator Magnetic Asymmetry</h3>
+            <p data-i18n="subsection1_1_text1">In a perfect generator, magnetic flux is perfectly balanced. In reality,
+                manufacturing tolerances, rotor eccentricity, and winding imperfections create <strong>flux
+                    asymmetry</strong>.</p>
+            <p data-i18n="subsection1_1_text2"><strong>Result:</strong> A small AC voltage (0.1-5V) is induced on the
+                shaft, which rotates at generator speed (typically 600-750 RPM for vertical Francis units).</p>
+            <h3 data-i18n="subsection1_2_title">1.2 The Arc Path</h3>
+            <p data-i18n="subsection1_2_text">Without grounding, the shaft voltage seeks the easiest path to ground.
+                This path is through the bearing oil film:</p>
             <ol>
-                <li><strong>Oil Film as Insulator:</strong> Thin oil film (~10-50 microns) acts as a weak dielectric.
-                </li>
-                <li><strong>Voltage Breakdown:</strong> When shaft voltage exceeds oil film breakdown voltage
-                    (~0.5-1.0V), an arc jumps from shaft → bearing → ground.</li>
-                <li><strong>Pitting Mechanism:</strong> Each arc vaporizes a microscopic amount of Babbitt metal,
-                    creating a "crater" ~1-10 microns deep.</li>
-                <li><strong>Cumulative Damage:</strong> Millions of arcs over months/years erode bearing surface,
-                    destroying oil film capability.</li>
+                <li data-i18n="arc_path1"><strong>Oil Film as Insulator:</strong> Thin oil film (~10-50 microns) acts as
+                    a weak dielectric.</li>
+                <li data-i18n="arc_path2"><strong>Voltage Breakdown:</strong> When shaft voltage exceeds oil film
+                    breakdown voltage (~0.5-1.0V), an arc jumps from shaft → bearing → ground.</li>
+                <li data-i18n="arc_path3"><strong>Pitting Mechanism:</strong> Each arc vaporizes a microscopic amount of
+                    Babbitt metal, creating a "crater" ~1-10 microns deep.</li>
+                <li data-i18n="arc_path4"><strong>Cumulative Damage:</strong> Millions of arcs over months/years erode
+                    bearing surface, destroying oil film capability.</li>
             </ol>
-
-            <div class="pitting-damage">
+            <div class="pitting-damage" data-i18n="visual_signature">
                 <strong>VISUAL SIGNATURE OF ELECTRICAL PITTING:</strong><br>
                 • Surface appears "frosted" or "etched" (vs. smooth mechanical wear)<br>
                 • Random crater distribution (vs. directional scoring from debris)<br>
@@ -217,168 +240,362 @@
                 • Microscope reveals sharp-edged craters (vs. smooth gouges)
             </div>
         </div>
-
-        <div class="section-title">SOP 2: The Grounding Brush Inspection</div>
+        <div class="section-title" data-i18n="section2_title">SOP 2: The Grounding Brush Inspection</div>
         <div class="module technical">
-            <p><strong>Purpose:</strong> The shaft grounding brush provides a low-resistance path to ground, diverting
-                shaft voltage AWAY from bearings.</p>
-
-            <h3>2.1 Location & Design</h3>
+            <p data-i18n="section2_purpose"><strong>Purpose:</strong> The shaft grounding brush provides a
+                low-resistance path to ground, diverting shaft voltage AWAY from bearings.</p>
+            <h3 data-i18n="subsection2_1_title">2.1 Location & Design</h3>
             <ul>
-                <li><strong>Typical Location:</strong> On turbine shaft between thrust bearing and generator coupling
-                    (accessible without major disassembly).</li>
-                <li><strong>Design:</strong> Carbon or copper-graphite brush (similar to generator brushes) mounted in
-                    spring-loaded holder, pressing against machined slip surface on shaft.</li>
-                <li><strong>Required Contact:</strong> Brush must maintain constant electrical contact even during shaft
-                    vibration.</li>
+                <li data-i18n="loc1"><strong>Typical Location:</strong> On turbine shaft between thrust bearing and
+                    generator coupling (accessible without major disassembly).</li>
+                <li data-i18n="loc2"><strong>Design:</strong> Carbon or copper-graphite brush (similar to generator
+                    brushes) mounted in spring-loaded holder, pressing against machined slip surface on shaft.</li>
+                <li data-i18n="loc3"><strong>Required Contact:</strong> Brush must maintain constant electrical contact
+                    even during shaft vibration.</li>
             </ul>
-
-            <h3>2.2 Brush Wear Inspection</h3>
+            <h3 data-i18n="subsection2_2_title">2.2 Brush Wear Inspection</h3>
             <ol>
-                <li><strong>Access:</strong> Locate brush housing (typically has inspection cover removable without unit
-                    shutdown).</li>
-                <li><strong>Visual Check:</strong> Inspect brush length:
+                <li data-i18n="insp1"><strong>Access:</strong> Locate brush housing (typically has inspection cover
+                    removable without unit shutdown).</li>
+                <li><strong data-i18n="insp2_label">Visual Check:</strong> <span data-i18n="insp2_text">Inspect brush
+                        length:</span>
                     <ul>
-                        <li><strong>New Brush:</strong> 40-50mm length (varies by manufacturer)</li>
-                        <li><strong>Service Limit:</strong> 15-20mm remaining (below this, spring tension inadequate)
-                        </li>
-                        <li><strong>Critical:</strong>
+                        <li data-i18n="insp2_1"><strong>New Brush:</strong> 40-50mm length (varies by manufacturer)</li>
+                        <li data-i18n="insp2_2"><strong>Service Limit:</strong> 15-20mm remaining (below this, spring
+                            tension inadequate)</li>
+                        <li data-i18n="insp2_3"><strong>Critical:</strong>
                             <10mm remaining → Replace immediately</li>
                     </ul>
                 </li>
-                <li><strong>Surface Condition:</strong>
+                <li><strong data-i18n="insp3_label">Surface Condition:</strong>
                     <ul>
-                        <li><strong>Healthy:</strong> Smooth, even wear pattern across brush face</li>
-                        <li><strong>Problem:</strong> Uneven wear (brush cocked in holder) or cracking (poor material
-                            quality)</li>
+                        <li data-i18n="insp3_1"><strong>Healthy:</strong> Smooth, even wear pattern across brush face
+                        </li>
+                        <li data-i18n="insp3_2"><strong>Problem:</strong> Uneven wear (brush cocked in holder) or
+                            cracking (poor material quality)</li>
                     </ul>
                 </li>
-                <li><strong>Spring Tension:</strong> Verify spring is not compressed to coil-bind. Should provide 2-5 kg
-                    force on brush.</li>
+                <li data-i18n="insp4"><strong>Spring Tension:</strong> Verify spring is not compressed to coil-bind.
+                    Should provide 2-5 kg force on brush.</li>
             </ol>
         </div>
-
-        <div class="section-title">SOP 3: Cleaning the Slip Surface</div>
+        <div class="section-title" data-i18n="section3_title">SOP 3: Cleaning the Slip Surface</div>
         <div class="module technical">
-            <p><strong>Critical:</strong> Even a perfect brush is useless if the shaft slip surface has high resistance
-                due to contamination.</p>
-
-            <h3>3.1 Contamination Sources</h3>
+            <p data-i18n="section3_critical"><strong>Critical:</strong> Even a perfect brush is useless if the shaft
+                slip surface has high resistance due to contamination.</p>
+            <h3 data-i18n="subsection3_1_title">3.1 Contamination Sources</h3>
             <ul>
-                <li><strong>Silt Buildup:</strong> Airborne silt from powerhouse environment deposits on shaft
-                    (especially problematic for silt-heavy river units).</li>
-                <li><strong>Oil Film:</strong> Bearing oil mist settles on shaft, creating insulating layer.</li>
-                <li><strong>Oxidation:</strong> Shaft surface oxidizes if unit sits idle for extended periods (like Unit
-                    1's shutdown).</li>
+                <li data-i18n="contam1"><strong>Silt Buildup:</strong> Airborne silt from powerhouse environment
+                    deposits on shaft (especially problematic for silt-heavy river units).</li>
+                <li data-i18n="contam2"><strong>Oil Film:</strong> Bearing oil mist settles on shaft, creating
+                    insulating layer.</li>
+                <li data-i18n="contam3"><strong>Oxidation:</strong> Shaft surface oxidizes if unit sits idle for
+                    extended periods (like Unit 1's shutdown).</li>
             </ul>
-
-            <h3>3.2 Cleaning Procedure</h3>
+            <h3 data-i18n="subsection3_2_title">3.2 Cleaning Procedure</h3>
             <ol>
-                <li><strong>Safety:</strong> Unit must be fully stopped and locked out.</li>
-                <li><strong>Brush Removal:</strong> Retract or remove grounding brush to access slip surface.</li>
-                <li><strong>Initial Cleaning:</strong> Wipe slip surface with lint-free cloth dampened with electrical
-                    contact cleaner or isopropyl alcohol.</li>
-                <li><strong>Polishing:</strong> Use fine Scotch-Brite pad (equivalent to 600-grit) to gently polish
-                    surface, removing oxidation.</li>
-                <li><strong>Final Wipe:</strong> Clean again with alcohol-dampened cloth to remove polishing residue.
+                <li data-i18n="clean1"><strong>Safety:</strong> Unit must be fully stopped and locked out.</li>
+                <li data-i18n="clean2"><strong>Brush Removal:</strong> Retract or remove grounding brush to access slip
+                    surface.</li>
+                <li data-i18n="clean3"><strong>Initial Cleaning:</strong> Wipe slip surface with lint-free cloth
+                    dampened with electrical contact cleaner or isopropyl alcohol.</li>
+                <li data-i18n="clean4"><strong>Polishing:</strong> Use fine Scotch-Brite pad (equivalent to 600-grit) to
+                    gently polish surface, removing oxidation.</li>
+                <li data-i18n="clean5"><strong>Final Wipe:</strong> Clean again with alcohol-dampened cloth to remove
+                    polishing residue.</li>
+                <li data-i18n="clean6"><strong>Inspection:</strong> Surface should be bright metal, no discoloration or
+                    pitting visible.</li>
+                <li data-i18n="clean7"><strong>Reinstall Brush:</strong> Ensure brush seats properly on cleaned surface.
                 </li>
-                <li><strong>Inspection:</strong> Surface should be bright metal, no discoloration or pitting visible.
-                </li>
-                <li><strong>Reinstall Brush:</strong> Ensure brush seats properly on cleaned surface.</li>
             </ol>
-
-            <div class="voltage-spec">
-                <strong>POST-CLEANING VERIFICATION:</strong><br>
-                Measure contact resistance (brush-to-shaft): Should be <0.1 Ω<br>
-                    If >0.5 Ω, cleaning insufficient or brush worn.
+            <div class="voltage-spec" data-i18n="post_clean_verification">
+                <strong>POST-CLEANING VERIFICATION:</strong><br>Measure contact resistance (brush-to-shaft): Should be
+                <0.1 Ω<br>If >0.5 Ω, cleaning insufficient or brush worn.
             </div>
         </div>
-
-        <div class="section-title">SOP 4: Voltage Measurement Protocol</div>
+        <div class="section-title" data-i18n="section4_title">SOP 4: Voltage Measurement Protocol</div>
         <div class="module diagnostic">
-            <p>Quantitative measurement provides objective proof of grounding effectiveness.</p>
-
-            <h3>4.1 Equipment Required</h3>
+            <p data-i18n="section4_intro">Quantitative measurement provides objective proof of grounding effectiveness.
+            </p>
+            <h3 data-i18n="subsection4_1_title">4.1 Equipment Required</h3>
             <ul>
-                <li><strong>True RMS Multimeter:</strong> Must measure AC+DC voltage accurately (cheap meters give false
-                    readings).</li>
-                <li><strong>Test Leads:</strong> High-quality with minimal contact resistance.</li>
-                <li><strong>Grounding Point:</strong> Verified earth ground (building steel, not painted surface).</li>
+                <li data-i18n="equip1"><strong>True RMS Multimeter:</strong> Must measure AC+DC voltage accurately
+                    (cheap meters give false readings).</li>
+                <li data-i18n="equip2"><strong>Test Leads:</strong> High-quality with minimal contact resistance.</li>
+                <li data-i18n="equip3"><strong>Grounding Point:</strong> Verified earth ground (building steel, not
+                    painted surface).</li>
             </ul>
-
-            <h3>4.2 Measurement Procedure</h3>
+            <h3 data-i18n="subsection4_2_title">4.2 Measurement Procedure</h3>
             <ol>
-                <li><strong>Unit Running:</strong> Measurement must be taken during normal operation (shaft voltage only
-                    exists when generator is energized).</li>
-                <li><strong>Meter Setup:</strong> Set to AC voltage mode, auto-ranging or 5V scale.</li>
-                <li><strong>Probe Placement:</strong>
+                <li data-i18n="meas1"><strong>Unit Running:</strong> Measurement must be taken during normal operation
+                    (shaft voltage only exists when generator is energized).</li>
+                <li data-i18n="meas2"><strong>Meter Setup:</strong> Set to AC voltage mode, auto-ranging or 5V scale.
+                </li>
+                <li><strong data-i18n="meas3_label">Probe Placement:</strong>
                     <ul>
-                        <li><strong>Negative (Black):</strong> Attach to verified ground point</li>
-                        <li><strong>Positive (Red):</strong> Touch to exposed shaft surface (NOT the grounding brush -
-                            measure bypass current)</li>
+                        <li data-i18n="meas3_1"><strong>Negative (Black):</strong> Attach to verified ground point</li>
+                        <li data-i18n="meas3_2"><strong>Positive (Red):</strong> Touch to exposed shaft surface (NOT the
+                            grounding brush - measure bypass current)</li>
                     </ul>
                 </li>
-                <li><strong>Reading Interpretation:</strong>
-                    <div class="voltage-spec">
-                        <strong>SHAFT-TO-GROUND VOLTAGE LIMITS:</strong><br>
-                        Excellent: <0.2V (grounding highly effective)<br>
-                            Acceptable: 0.2-0.5V (grounding functional)<br>
-                            Warning: 0.5-1.0V (grounding marginal - inspect brush)<br>
-                            Critical: >1.0V (grounding ineffective - bearing damage occurring)
+                <li><strong data-i18n="meas4_label">Reading Interpretation:</strong>
+                    <div class="voltage-spec" data-i18n="voltage_limits">
+                        <strong>SHAFT-TO-GROUND VOLTAGE LIMITS:</strong><br>Excellent: <0.2V (grounding highly
+                            effective)<br>Acceptable: 0.2-0.5V (grounding functional)<br>Warning: 0.5-1.0V (grounding
+                            marginal - inspect brush)<br>Critical: >1.0V (grounding ineffective - bearing damage
+                            occurring)
                     </div>
                 </li>
             </ol>
-
-            <h3>4.3 Troubleshooting High Shaft Voltage</h3>
-            <p>If measured voltage >0.5V:</p>
+            <h3 data-i18n="subsection4_3_title">4.3 Troubleshooting High Shaft Voltage</h3>
+            <p data-i18n="trouble_intro">If measured voltage >0.5V:</p>
             <ol>
-                <li><strong>Inspect Brush Contact:</strong> Remove brush, check for excessive wear or contamination.
-                </li>
-                <li><strong>Clean Slip Surface:</strong> Follow SOP 3 cleaning procedure.</li>
-                <li><strong>Check Brush Wiring:</strong> Verify grounding wire from brush holder to earth ground is
-                    intact (not corroded or broken).</li>
-                <li><strong>Measure Contact Resistance:</strong> Use ohmmeter to measure brush-to-shaft resistance.
-                    Should be <0.1Ω.< /li>
-                <li><strong>Re-test:</strong> After corrective actions, re-measure shaft voltage. If still high,
-                    generator rotor may need re-balancing (specialist work).</li>
+                <li data-i18n="trouble1"><strong>Inspect Brush Contact:</strong> Remove brush, check for excessive wear
+                    or contamination.</li>
+                <li data-i18n="trouble2"><strong>Clean Slip Surface:</strong> Follow SOP 3 cleaning procedure.</li>
+                <li data-i18n="trouble3"><strong>Check Brush Wiring:</strong> Verify grounding wire from brush holder to
+                    earth ground is intact (not corroded or broken).</li>
+                <li data-i18n="trouble4"><strong>Measure Contact Resistance:</strong> Use ohmmeter to measure
+                    brush-to-shaft resistance. Should be <0.1Ω.< /li>
+                <li data-i18n="trouble5"><strong>Re-test:</strong> After corrective actions, re-measure shaft voltage.
+                    If still high, generator rotor may need re-balancing (specialist work).</li>
             </ol>
         </div>
-
-        <div class="section-title">Summary Checklist</div>
+        <div class="section-title" data-i18n="section5_title">Summary Checklist</div>
         <div class="module">
-            <h3>Preventive Maintenance Schedule</h3>
+            <h3 data-i18n="subsection5_1_title">Preventive Maintenance Schedule</h3>
             <ul>
-                <li><strong>Monthly:</strong> Visual inspection of grounding brush wear (through inspection window if
-                    available).</li>
-                <li><strong>Quarterly:</strong> Measure shaft-to-ground voltage during operation. Record in logbook.
-                </li>
-                <li><strong>Annually:</strong> Full grounding system inspection:
+                <li data-i18n="sched1"><strong>Monthly:</strong> Visual inspection of grounding brush wear (through
+                    inspection window if available).</li>
+                <li data-i18n="sched2"><strong>Quarterly:</strong> Measure shaft-to-ground voltage during operation.
+                    Record in logbook.</li>
+                <li><strong data-i18n="sched3_label">Annually:</strong> <span data-i18n="sched3_text">Full grounding
+                        system inspection:</span>
                     <ul>
-                        <li>Remove and inspect brush for wear</li>
-                        <li>Clean slip surface</li>
-                        <li>Measure contact resistance</li>
-                        <li>Verify grounding wire integrity</li>
+                        <li data-i18n="sched3_1">Remove and inspect brush for wear</li>
+                        <li data-i18n="sched3_2">Clean slip surface</li>
+                        <li data-i18n="sched3_3">Measure contact resistance</li>
+                        <li data-i18n="sched3_4">Verify grounding wire integrity</li>
                     </ul>
                 </li>
-                <li><strong>After Extended Shutdown (>1 month):</strong> Clean slip surface before restart (oxidation
-                    accumulates during idle periods).</li>
+                <li data-i18n="sched4"><strong>After Extended Shutdown (>1 month):</strong> Clean slip surface before
+                    restart (oxidation accumulates during idle periods).</li>
             </ul>
-
-            <h3>Bearing Pitting Detection</h3>
+            <h3 data-i18n="subsection5_2_title">Bearing Pitting Detection</h3>
             <ul>
-                <li><strong>During Oil Analysis:</strong> High copper content in oil sample indicates Babbitt erosion →
-                    Check grounding.</li>
-                <li><strong>During Bearing Inspection:</strong> "Frosted" or "etched" bearing surface → Likely
-                    electrical pitting → Verify grounding before reassembly.</li>
-                <li><strong>Unexplained Bearing Failures:</strong> If bearing fails prematurely (<5 years) with no
-                        obvious mechanical cause → Investigate shaft grounding history.</li>
+                <li data-i18n="pit1"><strong>During Oil Analysis:</strong> High copper content in oil sample indicates
+                    Babbitt erosion → Check grounding.</li>
+                <li data-i18n="pit2"><strong>During Bearing Inspection:</strong> "Frosted" or "etched" bearing surface →
+                    Likely electrical pitting → Verify grounding before reassembly.</li>
+                <li data-i18n="pit3"><strong>Unexplained Bearing Failures:</strong> If bearing fails prematurely (<5
+                        years) with no obvious mechanical cause → Investigate shaft grounding history.</li>
             </ul>
         </div>
-
-        <a href="./Francis_Horizontal.html" class="back-btn">← Return to Master Manual</a>
-
+        <a href="./Francis_Horizontal.html" class="back-btn" data-i18n="back_btn">← Return to Master Manual</a>
     </div>
-
+    <script>
+        const i18n = {
+            en: {
+                title: "Critical SOP: Shaft Grounding & Electrolysis Protection",
+                subtitle: "The \"Silent Bearing Killer\" - Preventing Electrical Pitting",
+                intro_title: "⚠️ THE INVISIBLE DESTROYER",
+                context_label: "Context:",
+                context_text: "Magnetic imbalances in the generator induce electrical voltage on the rotating shaft. Without proper grounding, this voltage arcs through the bearing oil film, creating thousands of microscopic craters (pitting) in the Babbitt metal.",
+                intro1: "<strong>Why It's Silent:</strong> Unlike mechanical wear that produces noise or heat, electrical pitting is nearly undetectable until the bearing suddenly fails catastrophically.",
+                intro2: "<strong>The Mechanism:</strong> Each voltage arc is tiny (~millivolts), but occurs thousands of times per second, vaporizing microscopic amounts of bearing material.",
+                intro3: "<strong>Economic Impact:</strong> A bearing that should last 10 years can fail in 18 months if shaft grounding is non-functional.",
+                section1_title: "SOP 1: The Phenomenon - Shaft Voltage Generation",
+                section1_intro: "Understanding the root cause prevents treating symptoms instead of the disease.",
+                subsection1_1_title: "1.1 Generator Magnetic Asymmetry",
+                subsection1_1_text1: "In a perfect generator, magnetic flux is perfectly balanced. In reality, manufacturing tolerances, rotor eccentricity, and winding imperfections create <strong>flux asymmetry</strong>.",
+                subsection1_1_text2: "<strong>Result:</strong> A small AC voltage (0.1-5V) is induced on the shaft, which rotates at generator speed (typically 600-750 RPM for vertical Francis units).",
+                subsection1_2_title: "1.2 The Arc Path",
+                subsection1_2_text: "Without grounding, the shaft voltage seeks the easiest path to ground. This path is through the bearing oil film:",
+                arc_path1: "<strong>Oil Film as Insulator:</strong> Thin oil film (~10-50 microns) acts as a weak dielectric.",
+                arc_path2: "<strong>Voltage Breakdown:</strong> When shaft voltage exceeds oil film breakdown voltage (~0.5-1.0V), an arc jumps from shaft → bearing → ground.",
+                arc_path3: "<strong>Pitting Mechanism:</strong> Each arc vaporizes a microscopic amount of Babbitt metal, creating a \"crater\" ~1-10 microns deep.",
+                arc_path4: "<strong>Cumulative Damage:</strong> Millions of arcs over months/years erode bearing surface, destroying oil film capability.",
+                visual_signature: "<strong>VISUAL SIGNATURE OF ELECTRICAL PITTING:</strong><br>• Surface appears \"frosted\" or \"etched\" (vs. smooth mechanical wear)<br>• Random crater distribution (vs. directional scoring from debris)<br>• Often concentrated on load-bearing pads<br>• Microscope reveals sharp-edged craters (vs. smooth gouges)",
+                section2_title: "SOP 2: The Grounding Brush Inspection",
+                section2_purpose: "<strong>Purpose:</strong> The shaft grounding brush provides a low-resistance path to ground, diverting shaft voltage AWAY from bearings.",
+                subsection2_1_title: "2.1 Location & Design",
+                loc1: "<strong>Typical Location:</strong> On turbine shaft between thrust bearing and generator coupling (accessible without major disassembly).",
+                loc2: "<strong>Design:</strong> Carbon or copper-graphite brush (similar to generator brushes) mounted in spring-loaded holder, pressing against machined slip surface on shaft.",
+                loc3: "<strong>Required Contact:</strong> Brush must maintain constant electrical contact even during shaft vibration.",
+                subsection2_2_title: "2.2 Brush Wear Inspection",
+                insp1: "<strong>Access:</strong> Locate brush housing (typically has inspection cover removable without unit shutdown).",
+                insp2_label: "Visual Check:",
+                insp2_text: "Inspect brush length:",
+                insp2_1: "<strong>New Brush:</strong> 40-50mm length (varies by manufacturer)",
+                insp2_2: "<strong>Service Limit:</strong> 15-20mm remaining (below this, spring tension inadequate)",
+                insp2_3: "<strong>Critical:</strong> <10mm remaining → Replace immediately",
+                insp3_label: "Surface Condition:",
+                insp3_1: "<strong>Healthy:</strong> Smooth, even wear pattern across brush face",
+                insp3_2: "<strong>Problem:</strong> Uneven wear (brush cocked in holder) or cracking (poor material quality)",
+                insp4: "<strong>Spring Tension:</strong> Verify spring is not compressed to coil-bind. Should provide 2-5 kg force on brush.",
+                section3_title: "SOP 3: Cleaning the Slip Surface",
+                section3_critical: "<strong>Critical:</strong> Even a perfect brush is useless if the shaft slip surface has high resistance due to contamination.",
+                subsection3_1_title: "3.1 Contamination Sources",
+                contam1: "<strong>Silt Buildup:</strong> Airborne silt from powerhouse environment deposits on shaft (especially problematic for silt-heavy river units).",
+                contam2: "<strong>Oil Film:</strong> Bearing oil mist settles on shaft, creating insulating layer.",
+                contam3: "<strong>Oxidation:</strong> Shaft surface oxidizes if unit sits idle for extended periods (like Unit 1's shutdown).",
+                subsection3_2_title: "3.2 Cleaning Procedure",
+                clean1: "<strong>Safety:</strong> Unit must be fully stopped and locked out.",
+                clean2: "<strong>Brush Removal:</strong> Retract or remove grounding brush to access slip surface.",
+                clean3: "<strong>Initial Cleaning:</strong> Wipe slip surface with lint-free cloth dampened with electrical contact cleaner or isopropyl alcohol.",
+                clean4: "<strong>Polishing:</strong> Use fine Scotch-Brite pad (equivalent to 600-grit) to gently polish surface, removing oxidation.",
+                clean5: "<strong>Final Wipe:</strong> Clean again with alcohol-dampened cloth to remove polishing residue.",
+                clean6: "<strong>Inspection:</strong> Surface should be bright metal, no discoloration or pitting visible.",
+                clean7: "<strong>Reinstall Brush:</strong> Ensure brush seats properly on cleaned surface.",
+                post_clean_verification: "<strong>POST-CLEANING VERIFICATION:</strong><br>Measure contact resistance (brush-to-shaft): Should be <0.1 Ω<br>If >0.5 Ω, cleaning insufficient or brush worn.",
+                section4_title: "SOP 4: Voltage Measurement Protocol",
+                section4_intro: "Quantitative measurement provides objective proof of grounding effectiveness.",
+                subsection4_1_title: "4.1 Equipment Required",
+                equip1: "<strong>True RMS Multimeter:</strong> Must measure AC+DC voltage accurately (cheap meters give false readings).",
+                equip2: "<strong>Test Leads:</strong> High-quality with minimal contact resistance.",
+                equip3: "<strong>Grounding Point:</strong> Verified earth ground (building steel, not painted surface).",
+                subsection4_2_title: "4.2 Measurement Procedure",
+                meas1: "<strong>Unit Running:</strong> Measurement must be taken during normal operation (shaft voltage only exists when generator is energized).",
+                meas2: "<strong>Meter Setup:</strong> Set to AC voltage mode, auto-ranging or 5V scale.",
+                meas3_label: "Probe Placement:",
+                meas3_1: "<strong>Negative (Black):</strong> Attach to verified ground point",
+                meas3_2: "<strong>Positive (Red):</strong> Touch to exposed shaft surface (NOT the grounding brush - measure bypass current)",
+                meas4_label: "Reading Interpretation:",
+                voltage_limits: "<strong>SHAFT-TO-GROUND VOLTAGE LIMITS:</strong><br>Excellent: <0.2V (grounding highly effective)<br>Acceptable: 0.2-0.5V (grounding functional)<br>Warning: 0.5-1.0V (grounding marginal - inspect brush)<br>Critical: >1.0V (grounding ineffective - bearing damage occurring)",
+                subsection4_3_title: "4.3 Troubleshooting High Shaft Voltage",
+                trouble_intro: "If measured voltage >0.5V:",
+                trouble1: "<strong>Inspect Brush Contact:</strong> Remove brush, check for excessive wear or contamination.",
+                trouble2: "<strong>Clean Slip Surface:</strong> Follow SOP 3 cleaning procedure.",
+                trouble3: "<strong>Check Brush Wiring:</strong> Verify grounding wire from brush holder to earth ground is intact (not corroded or broken).",
+                trouble4: "<strong>Measure Contact Resistance:</strong> Use ohmmeter to measure brush-to-shaft resistance. Should be <0.1Ω.",
+                trouble5: "<strong>Re-test:</strong> After corrective actions, re-measure shaft voltage. If still high, generator rotor may need re-balancing (specialist work).",
+                section5_title: "Summary Checklist",
+                subsection5_1_title: "Preventive Maintenance Schedule",
+                sched1: "<strong>Monthly:</strong> Visual inspection of grounding brush wear (through inspection window if available).",
+                sched2: "<strong>Quarterly:</strong> Measure shaft-to-ground voltage during operation. Record in logbook.",
+                sched3_label: "Annually:",
+                sched3_text: "Full grounding system inspection:",
+                sched3_1: "Remove and inspect brush for wear",
+                sched3_2: "Clean slip surface",
+                sched3_3: "Measure contact resistance",
+                sched3_4: "Verify grounding wire integrity",
+                sched4: "<strong>After Extended Shutdown (>1 month):</strong> Clean slip surface before restart (oxidation accumulates during idle periods).",
+                subsection5_2_title: "Bearing Pitting Detection",
+                pit1: "<strong>During Oil Analysis:</strong> High copper content in oil sample indicates Babbitt erosion → Check grounding.",
+                pit2: "<strong>During Bearing Inspection:</strong> \"Frosted\" or \"etched\" bearing surface → Likely electrical pitting → Verify grounding before reassembly.",
+                pit3: "<strong>Unexplained Bearing Failures:</strong> If bearing fails prematurely (<5 years) with no obvious mechanical cause → Investigate shaft grounding history.",
+                back_btn: "← Return to Master Manual"
+            },
+            bs: {
+                title: "Kritični SOP: Uzemljenje osovine i zaštita od elektrolize",
+                subtitle: "SOP: Uzemljenje osovine i elektroliza",
+                intro_title: "⚠️ NEVIDLJIVI UNIŠTITELJ",
+                context_label: "Kontekst:",
+                context_text: "Magnetne neravnoteže u generatoru indukuju električni napon na rotirajućoj osovini. Bez pravilnog uzemljenja, ovaj napon preskače kroz uljni film ležaja, stvarajući hiljade mikroskopskih kratera (jamičenje) u babit metalu.",
+                intro1: "<strong>Zašto je tih:</strong> Za razliku od mehaničkog habanja koje proizvodi buku ili toplotu, električno jamičenje je gotovo neprimjetno dok ležaj iznenada ne otkaže katastrofalno.",
+                intro2: "<strong>Mehanizam:</strong> Svaki naponski luk je sićušan (~milivolti), ali se dešava hiljadama puta u sekundi, isparavajući mikroskopske količine materijala ležaja.",
+                intro3: "<strong>Ekonomski uticaj:</strong> Ležaj koji bi trebao trajati 10 godina može otkazati za 18 mjeseci ako uzemljenje osovine ne funkcioniše.",
+                section1_title: "SOP 1: Fenomen - Generisanje napona osovine",
+                section1_intro: "Razumijevanje osnovnog uzroka sprečava liječenje simptoma umjesto bolesti.",
+                subsection1_1_title: "1.1 Magnetna asimetrija generatora",
+                subsection1_1_text1: "U savršenom generatoru, magnetni fluks je savršeno balansiran. U stvarnosti, proizvodne tolerancije, ekscentricitet rotora i nesavršenosti namotaja stvaraju <strong>asimetriju fluksa</strong>.",
+                subsection1_1_text2: "<strong>Rezultat:</strong> Mali AC napon (0.1-5V) se indukuje na osovini, koji rotira brzinom generatora (obično 600-750 RPM za vertikalne Francis jedinice).",
+                subsection1_2_title: "1.2 Putanja luka",
+                subsection1_2_text: "Bez uzemljenja, napon osovine traži najlakši put do zemlje. Taj put je kroz uljni film ležaja:",
+                arc_path1: "<strong>Uljni film kao izolator:</strong> Tanki uljni film (~10-50 mikrona) djeluje kao slabi dielektrik.",
+                arc_path2: "<strong>Proboj napona:</strong> Kada napon osovine pređe probojni napon uljnog filma (~0.5-1.0V), luk skače sa osovine → ležaj → zemlja.",
+                arc_path3: "<strong>Mehanizam jamičenja:</strong> Svaki luk isparava mikroskopsku količinu babit metala, stvarajući \"krater\" ~1-10 mikrona dubine.",
+                arc_path4: "<strong>Kumulativna šteta:</strong> Milioni lukova tokom mjeseci/godina erodiraju površinu ležaja, uništavajući sposobnost uljnog filma.",
+                visual_signature: "<strong>VIZUELNI POTPIS ELEKTRIČNOG JAMIČENJA:</strong><br>• Površina izgleda \"smrznuto\" ili \"nagriženo\" (naspram glatkog mehaničkog habanja)<br>• Nasumična distribucija kratera (naspram usmjerenih ogrebotina od krhotina)<br>• Često koncentrisano na nosivim jastučićima<br>• Mikroskop otkriva kratere oštrih ivica (naspram glatkih udubljenja)",
+                section2_title: "SOP 2: Inspekcija četkice za uzemljenje",
+                section2_purpose: "<strong>Svrha:</strong> Četkica za uzemljenje osovine pruža put niskog otpora do zemlje, preusmjeravajući napon osovine DALJE od ležajeva.",
+                subsection2_1_title: "2.1 Lokacija i dizajn",
+                loc1: "<strong>Lokacija:</strong> Na osovini turbine između aksijalnog ležaja i spojke generatora (dostupno bez većeg rastavljanja).",
+                loc2: "<strong>Dizajn:</strong> Karbonska ili bakar-grafitna četkica (slično četkicama generatora) montirana u držač sa oprugom, pritišće na mašinski obrađenu kliznu površinu na osovini.",
+                loc3: "<strong>Potreban kontakt:</strong> Četkica mora održavati stalan električni kontakt čak i tokom vibracija osovine.",
+                subsection2_2_title: "2.2 Inspekcija habanja četkice",
+                insp1: "<strong>Pristup:</strong> Locirajte kućište četkice (obično ima inspekcijski poklopac koji se može ukloniti bez gašenja jedinice).",
+                insp2_label: "Vizuelna provera:",
+                insp2_text: "Pregledajte dužinu četkice:",
+                insp2_1: "<strong>Nova četkica:</strong> 40-50mm dužine (zavisi od proizvođača)",
+                insp2_2: "<strong>Granica servisa:</strong> 15-20mm preostalo (ispod ovoga, napetost opruge je neadekvatna)",
+                insp2_3: "<strong>Kritično:</strong> <10mm preostalo → Zamijenite odmah",
+                insp3_label: "Stanje površine:",
+                insp3_1: "<strong>Zdravo:</strong> Glatko, ujednačeno habanje preko lica četkice",
+                insp3_2: "<strong>Problem:</strong> Neujednačeno habanje (četkica nakrivljena u držaču) ili pucanje (loš kvalitet materijala)",
+                insp4: "<strong>Napetost opruge:</strong> Potvrdite da opruga nije sabijena do kraja. Treba pružiti silu od 2-5 kg na četkicu.",
+                section3_title: "SOP 3: Čišćenje klizne površine",
+                section3_critical: "<strong>Kritično:</strong> Čak je i savršena četkica beskorisna ako klizna površina osovine ima visok otpor zbog kontaminacije.",
+                subsection3_1_title: "3.1 Izvori kontaminacije",
+                contam1: "<strong>Nakupljanje mulja:</strong> Lebdeći mulj iz okruženja mašinske hale taloži se na osovini (posebno problematično za jedinice na rijekama sa puno mulja).",
+                contam2: "<strong>Uljni film:</strong> Uljna magla ležaja taloži se na osovini, stvarajući izolacioni sloj.",
+                contam3: "<strong>Oksidacija:</strong> Površina osovine oksidira ako jedinica stoji u praznom hodu duže vrijeme (kao gašenje Jedinice 1).",
+                subsection3_2_title: "3.2 Procedura čišćenja",
+                clean1: "<strong>Sigurnost:</strong> Jedinica mora biti potpuno zaustavljena i zaključana.",
+                clean2: "<strong>Uklanjanje četkice:</strong> Povucite ili uklonite četkicu za uzemljenje da biste pristupili kliznoj površini.",
+                clean3: "<strong>Inicijalno čišćenje:</strong> Obrišite kliznu površinu krpom bez dlačica navlaženom sredstvom za čišćenje kontakata ili izopropil alkoholom.",
+                clean4: "<strong>Poliranje:</strong> Koristite fini Scotch-Brite jastučić (ekvivalent 600-granulacije) da nježno polirate površinu, uklanjajući oksidaciju.",
+                clean5: "<strong>Završno brisanje:</strong> Ponovo očistite krpom navlaženom alkoholom da biste uklonili ostatke poliranja.",
+                clean6: "<strong>Inspekcija:</strong> Površina treba biti svijetli metal, bez vidljivih diskoloracija ili jamičenja.",
+                clean7: "<strong>Ponovna instalacija četkice:</strong> Osigurajte da četkica pravilno naliježe na očišćenu površinu.",
+                post_clean_verification: "<strong>VERIFIKACIJA NAKON ČIŠĆENJA:</strong><br>Izmjerite kontaktni otpor (četkica-do-osovine): Treba biti <0.1 Ω<br>Ako je >0.5 Ω, čišćenje nedovoljno ili je četkica istrošena.",
+                section4_title: "SOP 4: Protokol mjerenja napona",
+                section4_intro: "Kvantitativno mjerenje pruža objektivan dokaz efikasnosti uzemljenja.",
+                subsection4_1_title: "4.1 Potrebna oprema",
+                equip1: "<strong>True RMS Multimeter:</strong> Mora precizno mjeriti AC+DC napon (jeftini mjerači daju lažna očitavanja).",
+                equip2: "<strong>Test kablovi:</strong> Visokokvalitetni sa minimalnim kontaktnim otporom.",
+                equip3: "<strong>Tačka uzemljenja:</strong> Verifikovano uzemljenje (čelik zgrade, ne obojena površina).",
+                subsection4_2_title: "4.2 Procedura mjerenja",
+                meas1: "<strong>Jedinica u radu:</strong> Mjerenje se mora obaviti tokom normalnog rada (napon osovine postoji samo kada je generator pod naponom).",
+                meas2: "<strong>Postavka mjerača:</strong> Postavite na AC naponski režim, automatski raspon ili 5V skala.",
+                meas3_label: "Postavljanje sonde:",
+                meas3_1: "<strong>Negativna (Crna):</strong> Pričvrstite na verifikovanu tačku uzemljenja",
+                meas3_2: "<strong>Pozitivna (Crvena):</strong> Dodirnite izloženu površinu osovine (NE četkicu za uzemljenje - mjerite struju zaobilaznice)",
+                meas4_label: "Interpretacija očitavanja:",
+                voltage_limits: "<strong>GRANICE NAPONA OSOVINA-ZEMLJA:</strong><br>Odlično: <0.2V (uzemljenje visoko efikasno)<br>Prihvatljivo: 0.2-0.5V (uzemljenje funkcionalno)<br>Upozorenje: 0.5-1.0V (uzemljenje granično - pregledajte četkicu)<br>Kritično: >1.0V (uzemljenje neefikasno - oštećenje ležaja se dešava)",
+                subsection4_3_title: "4.3 Rješavanje problema visokog napona osovine",
+                trouble_intro: "Ako je izmjereni napon >0.5V:",
+                trouble1: "<strong>Pregledajte kontakt četkice:</strong> Uklonite četkicu, provjerite prekomjerno habanje ili kontaminaciju.",
+                trouble2: "<strong>Očistite kliznu površinu:</strong> Slijedite SOP 3 proceduru čišćenja.",
+                trouble3: "<strong>Provjerite ožičenje četkice:</strong> Potvrdite da je žica za uzemljenje od držača četkice do uzemljenja neoštećena (nije korodirana ili prekinuta).",
+                trouble4: "<strong>Izmjerite kontaktni otpor:</strong> Koristite ommetar da izmjerite otpor četkice-do-osovine. Treba biti <0.1Ω.",
+                trouble5: "<strong>Ponovo testirajte:</strong> Nakon korektivnih radnji, ponovo izmjerite napon osovine. Ako je i dalje visok, rotor generatora možda treba balansiranje (specijalistički posao).",
+                section5_title: "Kontrolna lista sažetka",
+                subsection5_1_title: "Raspored preventivnog održavanja",
+                sched1: "<strong>Mjesečno:</strong> Vizuelna inspekcija habanja četkice za uzemljenje (kroz inspekcijski prozor ako je dostupan).",
+                sched2: "<strong>Kvartalno:</strong> Izmjerite napon osovina-zemlja tokom rada. Zabilježite u dnevnik.",
+                sched3_label: "Godišnje:",
+                sched3_text: "Potpuna inspekcija sistema uzemljenja:",
+                sched3_1: "Uklonite i pregledajte četkicu za habanje",
+                sched3_2: "Očistite kliznu površinu",
+                sched3_3: "Izmjerite kontaktni otpor",
+                sched3_4: "Potvrdite integritet žice za uzemljenje",
+                sched4: "<strong>Nakon produženog gašenja (>1 mjesec):</strong> Očistite kliznu površinu prije ponovnog pokretanja (oksidacija se nakuplja tokom perioda mirovanja).",
+                subsection5_2_title: "Detekcija jamičenja ležaja",
+                pit1: "<strong>Tokom analize ulja:</strong> Visok sadržaj bakra u uzorku ulja ukazuje na eroziju babita → Provjerite uzemljenje.",
+                pit2: "<strong>Tokom inspekcije ležaja:</strong> \"Smrznuta\" ili \"nagrižena\" površina ležaja → Vjerovatno električno jamičenje → Potvrdite uzemljenje prije ponovnog sastavljanja.",
+                pit3: "<strong>Neobjašnjivi kvarovi ležaja:</strong> Ako ležaj otkaže prijevremeno (<5 godina) bez očiglednog mehaničkog uzroka → Istražite historiju uzemljenja osovine.",
+                back_btn: "← Return to Master Manual"
+            }
+        };
+        function setLang(lang) {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (i18n[lang][key]) {
+                    el.innerHTML = i18n[lang][key];
+                }
+            });
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.innerText.toLowerCase() === lang) {
+                    btn.classList.add('active');
+                }
+            });
+            localStorage.setItem('anohub_lang_pref', lang);
+        }
+        const savedLang = localStorage.getItem('anohub_lang_pref') || 'en';
+        setLang(savedLang);
+    </script>
 </body>
 
 </html>

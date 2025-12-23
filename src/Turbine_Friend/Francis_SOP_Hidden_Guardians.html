@@ -42,6 +42,29 @@
             text-align: center;
         }
 
+        .lang-switch {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .lang-btn.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
         h1 {
             margin: 0;
             color: var(--primary-color);
@@ -171,7 +194,6 @@
             background: #f9fafb;
         }
 
-        /* === PRINT CSS === */
         @media print {
             body {
                 background: white;
@@ -211,225 +233,432 @@
 </head>
 
 <body>
-
+    <div class="lang-switch">
+        <button class="lang-btn active" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" onclick="setLang('bs')">BS</button>
+    </div>
     <div class="container">
-
         <header>
-            <h1>Critical SOP: Hidden Guardians</h1>
-            <h2>The Often-Ignored Components That Prevent Catastrophic Failure</h2>
+            <h1 data-i18n="title">Critical SOP: Hidden Guardians</h1>
+            <h2 data-i18n="subtitle">The Often-Ignored Components That Prevent Catastrophic Failure</h2>
         </header>
-
-        <!-- INTRO MODULE -->
         <div class="module critical">
-            <h3>⚠️ THE SILENT PROTECTORS</h3>
-            <p><strong>Context:</strong> While operators focus on visible components (bearings, coupling, guide vanes),
-                several "hidden" components work silently to prevent catastrophic failure. These are rarely inspected
-                until failure occurs.</p>
+            <h3 data-i18n="intro_title">⚠️ THE SILENT PROTECTORS</h3>
+            <p><strong data-i18n="context_label">Context:</strong> <span data-i18n="context_text">While operators focus
+                    on visible components (bearings, coupling, guide vanes), several "hidden" components work silently
+                    to prevent catastrophic failure. These are rarely inspected until failure occurs.</span></p>
             <ul>
-                <li><strong>Why "Hidden":</strong> Located inside sealed assemblies, underwater, or in rarely-accessed
-                    areas.</li>
-                <li><strong>The Risk:</strong> Failure of these components can cause sudden, severe damage that takes
-                    months to repair.</li>
-                <li><strong>Inspection Frequency:</strong> Often skipped during routine maintenance due to access
-                    difficulty.</li>
+                <li data-i18n="intro1"><strong>Why "Hidden":</strong> Located inside sealed assemblies, underwater, or
+                    in rarely-accessed areas.</li>
+                <li data-i18n="intro2"><strong>The Risk:</strong> Failure of these components can cause sudden, severe
+                    damage that takes months to repair.</li>
+                <li data-i18n="intro3"><strong>Inspection Frequency:</strong> Often skipped during routine maintenance
+                    due to access difficulty.</li>
             </ul>
         </div>
-
-        <div class="section-title">SOP 1: Nose Cone Integrity</div>
+        <div class="section-title" data-i18n="section1_title">SOP 1: Nose Cone Integrity</div>
         <div class="module technical">
-            <p>The runner nose cone reduces turbulence at the draft tube exit. If bolts loosen, the cone shifts,
-                creating massive vibration and hydraulic imbalance.</p>
-
-            <h3>1.1 The Failure Mechanism</h3>
-            <p><strong>Physics:</strong> Water exits the runner at high velocity (~15-20 m/s) and must smoothly
-                transition into the draft tube. The nose cone shapes this flow.</p>
-            <p><strong>If Loose:</strong> Cone wobbles during rotation, creating asymmetric flow → vibration → bolt
-                fatigue → cone detachment → catastrophic runner imbalance.</p>
-
-            <h3>1.2 Inspection Requirements</h3>
-            <p><strong>Access:</strong> Unit must be shut down, draft tube dewatered, access via tailrace hatch.</p>
+            <p data-i18n="section1_intro">The runner nose cone reduces turbulence at the draft tube exit. If bolts
+                loosen, the cone shifts, creating massive vibration and hydraulic imbalance.</p>
+            <h3 data-i18n="subsection1_1_title">1.1 The Failure Mechanism</h3>
+            <p data-i18n="subsection1_1_text1"><strong>Physics:</strong> Water exits the runner at high velocity (~15-20
+                m/s) and must smoothly transition into the draft tube. The nose cone shapes this flow.</p>
+            <p data-i18n="subsection1_1_text2"><strong>If Loose:</strong> Cone wobbles during rotation, creating
+                asymmetric flow → vibration → bolt fatigue → cone detachment → catastrophic runner imbalance.</p>
+            <h3 data-i18n="subsection1_2_title">1.2 Inspection Requirements</h3>
+            <p data-i18n="subsection1_2_access"><strong>Access:</strong> Unit must be shut down, draft tube dewatered,
+                access via tailrace hatch.</p>
             <ol>
-                <li><strong>Visual Check:</strong> Inspect nose cone for cracks or deformation (especially around bolt
-                    holes).</li>
-                <li><strong>Bolt Torque Verification:</strong> Using torque wrench, verify each bolt maintains specified
-                    torque.</li>
-                <li><strong>Loctite Presence:</strong> Check for blue residue indicating Loctite was properly applied.
-                </li>
+                <li data-i18n="insp1"><strong>Visual Check:</strong> Inspect nose cone for cracks or deformation
+                    (especially around bolt holes).</li>
+                <li data-i18n="insp2"><strong>Bolt Torque Verification:</strong> Using torque wrench, verify each bolt
+                    maintains specified torque.</li>
+                <li data-i18n="insp3"><strong>Loctite Presence:</strong> Check for blue residue indicating Loctite was
+                    properly applied.</li>
             </ol>
-
-            <div class="torque-spec">
+            <div class="torque-spec" data-i18n="nose_cone_spec">
                 <strong>NOSE CONE BOLT SPECIFICATIONS:</strong><br>
                 Bolt Size: M16 or M20 (varies by manufacturer)<br>
                 Torque: 180-220 Nm (check manufacturer manual)<br>
                 Thread Locker: Loctite 243 (blue, medium strength)<br>
                 Inspection Frequency: Every major overhaul (3-5 years)
             </div>
-
-            <h3>1.3 Re-torquing Procedure</h3>
+            <h3 data-i18n="subsection1_3_title">1.3 Re-torquing Procedure</h3>
             <ol>
-                <li>Clean bolt threads with wire brush</li>
-                <li>Apply fresh Loctite 243</li>
-                <li>Torque in star pattern (like wheel lugs) to prevent cone warping</li>
-                <li>Wait 24 hours for Loctite to cure before refilling draft tube</li>
+                <li data-i18n="retorque1">Clean bolt threads with wire brush</li>
+                <li data-i18n="retorque2">Apply fresh Loctite 243</li>
+                <li data-i18n="retorque3">Torque in star pattern (like wheel lugs) to prevent cone warping</li>
+                <li data-i18n="retorque4">Wait 24 hours for Loctite to cure before refilling draft tube</li>
             </ol>
         </div>
-
-        <div class="section-title">SOP 2: Vacuum Breaker (Snifter) Valve</div>
+        <div class="section-title" data-i18n="section2_title">SOP 2: Vacuum Breaker (Snifter) Valve</div>
         <div class="module technical">
-            <p>The vacuum breaker valve is mounted on the turbine head cover. During load rejection, it must open
-                rapidly to admit air and prevent destructive vacuum collapse.</p>
-
-            <h3>2.1 The Critical Function</h3>
-            <p><strong>Load Rejection Scenario:</strong> When grid trips, guide vanes slam closed in 3-5 seconds. Water
-                column decelerates, creating vacuum (negative pressure) in the spiral casing.</p>
-            <p><strong>Without Vacuum Breaker:</strong> Vacuum can reach -0.8 to -0.9 bar, creating massive suction
-                force that:</p>
+            <p data-i18n="section2_intro">The vacuum breaker valve is mounted on the turbine head cover. During load
+                rejection, it must open rapidly to admit air and prevent destructive vacuum collapse.</p>
+            <h3 data-i18n="subsection2_1_title">2.1 The Critical Function</h3>
+            <p data-i18n="subsection2_1_text1"><strong>Load Rejection Scenario:</strong> When grid trips, guide vanes
+                slam closed in 3-5 seconds. Water column decelerates, creating vacuum (negative pressure) in the spiral
+                casing.</p>
+            <p data-i18n="subsection2_1_text2"><strong>Without Vacuum Breaker:</strong> Vacuum can reach -0.8 to -0.9
+                bar, creating massive suction force that:</p>
             <ul>
-                <li>Implodes head cover (catastrophic structural failure)</li>
-                <li>Damages spiral casing liner</li>
-                <li>Causes violent water hammer on restart</li>
+                <li data-i18n="conseq1">Implodes head cover (catastrophic structural failure)</li>
+                <li data-i18n="conseq2">Damages spiral casing liner</li>
+                <li data-i18n="conseq3">Causes violent water hammer on restart</li>
             </ul>
-
-            <h3>2.2 Test Procedure</h3>
-            <p><strong>Functional Test (Annual):</strong></p>
+            <h3 data-i18n="subsection2_2_title">2.2 Test Procedure</h3>
+            <p data-i18n="test_proc_label"><strong>Functional Test (Annual):</strong></p>
             <ol>
-                <li><strong>Locate Valve:</strong> Typically 6-12" diameter valve on top of head cover with
-                    counterweight or spring mechanism.</li>
-                <li><strong>Manual Actuation:</strong> Lift disc by hand (unit stopped). Should move freely with minimal
-                    force.</li>
-                <li><strong>Seating Test:</strong> Release disc - should drop and seat with audible "clunk".</li>
-                <li><strong>Seal Check:</strong> With unit filled but stopped, valve should be airtight (no hissing
-                    sound).</li>
+                <li data-i18n="test1"><strong>Locate Valve:</strong> Typically 6-12" diameter valve on top of head cover
+                    with counterweight or spring mechanism.</li>
+                <li data-i18n="test2"><strong>Manual Actuation:</strong> Lift disc by hand (unit stopped). Should move
+                    freely with minimal force.</li>
+                <li data-i18n="test3"><strong>Seating Test:</strong> Release disc - should drop and seat with audible
+                    "clunk".</li>
+                <li data-i18n="test4"><strong>Seal Check:</strong> With unit filled but stopped, valve should be
+                    airtight (no hissing sound).</li>
             </ol>
-
-            <h3>2.3 Common Failures</h3>
+            <h3 data-i18n="subsection2_3_title">2.3 Common Failures</h3>
             <table>
                 <tr>
-                    <th>Symptom</th>
-                    <th>Cause</th>
-                    <th>Remedy</th>
+                    <th data-i18n="th_symptom">Symptom</th>
+                    <th data-i18n="th_cause">Cause</th>
+                    <th data-i18n="th_remedy">Remedy</th>
                 </tr>
                 <tr>
-                    <td>Valve stuck closed</td>
-                    <td>Corrosion on hinge pin</td>
-                    <td>Disassemble, wire-brush, lubricate with anti-seize</td>
+                    <td data-i18n="td_symptom1">Valve stuck closed</td>
+                    <td data-i18n="td_cause1">Corrosion on hinge pin</td>
+                    <td data-i18n="td_remedy1">Disassemble, wire-brush, lubricate with anti-seize</td>
                 </tr>
                 <tr>
-                    <td>Slow opening</td>
-                    <td>Weak counterweight spring</td>
-                    <td>Replace spring or add weight to counterweight arm</td>
+                    <td data-i18n="td_symptom2">Slow opening</td>
+                    <td data-i18n="td_cause2">Weak counterweight spring</td>
+                    <td data-i18n="td_remedy2">Replace spring or add weight to counterweight arm</td>
                 </tr>
                 <tr>
-                    <td>Air leakage during operation</td>
-                    <td>Worn rubber seat</td>
-                    <td>Replace rubber gasket (standard NBR material)</td>
+                    <td data-i18n="td_symptom3">Air leakage during operation</td>
+                    <td data-i18n="td_cause3">Worn rubber seat</td>
+                    <td data-i18n="td_remedy3">Replace rubber gasket (standard NBR material)</td>
                 </tr>
             </table>
-
-            <div class="torque-spec">
+            <div class="torque-spec" data-i18n="vac_breaker_warning">
                 <strong>CRITICAL:</strong> Vacuum breaker MUST actuate within 2-3 seconds of pressure drop. Test during
                 scheduled shutdown by partially closing guide vanes and monitoring vacuum gauge.
             </div>
         </div>
-
-        <div class="section-title">SOP 3: Spiral Case Silt Drainage</div>
+        <div class="section-title" data-i18n="section3_title">SOP 3: Spiral Case Silt Drainage</div>
         <div class="module technical">
-            <p><strong>Problem:</strong> Silt-laden water enters the spiral casing during operation. Heaviest particles
-                settle at the bottom, accumulating over months.</p>
-
-            <h3>3.1 The Accumulation Mechanism</h3>
-            <p>Francis turbines have high-velocity flow (15-25 m/s) that keeps most silt suspended. However, at the
-                spiral casing's lowest point (6 o'clock position), flow velocity drops slightly, allowing silt to
-                settle.</p>
-            <p><strong>Consequences of Buildup:</strong></p>
+            <p data-i18n="section3_problem"><strong>Problem:</strong> Silt-laden water enters the spiral casing during
+                operation. Heaviest particles settle at the bottom, accumulating over months.</p>
+            <h3 data-i18n="subsection3_1_title">3.1 The Accumulation Mechanism</h3>
+            <p data-i18n="subsection3_1_text1">Francis turbines have high-velocity flow (15-25 m/s) that keeps most silt
+                suspended. However, at the spiral casing's lowest point (6 o'clock position), flow velocity drops
+                slightly, allowing silt to settle.</p>
+            <p data-i18n="subsection3_1_text2"><strong>Consequences of Buildup:</strong></p>
             <ul>
-                <li>Reduced effective casing volume → efficiency loss (~1-2%)</li>
-                <li>Uneven flow distribution to guide vanes → vibration</li>
-                <li>Silt hardens into concrete-like deposits if left >6 months</li>
+                <li data-i18n="buildup1">Reduced effective casing volume → efficiency loss (~1-2%)</li>
+                <li data-i18n="buildup2">Uneven flow distribution to guide vanes → vibration</li>
+                <li data-i18n="buildup3">Silt hardens into concrete-like deposits if left >6 months</li>
             </ul>
-
-            <h3>3.2 Weekly Flushing Procedure</h3>
+            <h3 data-i18n="subsection3_2_title">3.2 Weekly Flushing Procedure</h3>
             <ol>
-                <li><strong>Locate Drain Valve:</strong> Bottom of spiral casing, typically 3-4" ball valve or gate
-                    valve.</li>
-                <li><strong>Safety:</strong> Unit can remain running during flushing (low flow only, <30% load
-                        recommended).</li>
-                <li><strong>Open Drain:</strong> Crack valve open slowly. Initial discharge will be thick, muddy water.
-                </li>
-                <li><strong>Flush Duration:</strong> Continue until water runs clear (typically 30-60 seconds).</li>
-                <li><strong>Close Valve:</strong> Ensure valve seats tightly (no dripping).</li>
-                <li><strong>Log Entry:</strong> Record silt volume estimate and water clarity in maintenance log.</li>
+                <li data-i18n="flush1"><strong>Locate Drain Valve:</strong> Bottom of spiral casing, typically 3-4" ball
+                    valve or gate valve.</li>
+                <li data-i18n="flush2"><strong>Safety:</strong> Unit can remain running during flushing (low flow only,
+                    <30% load recommended).</li>
+                <li data-i18n="flush3"><strong>Open Drain:</strong> Crack valve open slowly. Initial discharge will be
+                    thick, muddy water.</li>
+                <li data-i18n="flush4"><strong>Flush Duration:</strong> Continue until water runs clear (typically 30-60
+                    seconds).</li>
+                <li data-i18n="flush5"><strong>Close Valve:</strong> Ensure valve seats tightly (no dripping).</li>
+                <li data-i18n="flush6"><strong>Log Entry:</strong> Record silt volume estimate and water clarity in
+                    maintenance log.</li>
             </ol>
-
-            <div class="diagnostic">
+            <div class="diagnostic" data-i18n="monsoon_protocol">
                 <strong>MONSOON SEASON PROTOCOL:</strong> During Jun-Sep when river silt is highest (>3000 ppm),
                 increase flushing frequency to twice weekly or daily if sediment load is critical.
             </div>
-
-            <h3>3.3 Hardened Deposit Removal</h3>
-            <p><strong>If Valve Won't Drain (indicating blockage):</strong></p>
+            <h3 data-i18n="subsection3_3_title">3.3 Hardened Deposit Removal</h3>
+            <p data-i18n="harden_intro"><strong>If Valve Won't Drain (indicating blockage):</strong></p>
             <ol>
-                <li>Shut down unit and drain spiral casing</li>
-                <li>Access spiral casing via inspection manway</li>
-                <li>Manually remove hardened silt using shovel and wire brush</li>
-                <li>Flush with high-pressure water before refilling</li>
+                <li data-i18n="harden1">Shut down unit and drain spiral casing</li>
+                <li data-i18n="harden2">Access spiral casing via inspection manway</li>
+                <li data-i18n="harden3">Manually remove hardened silt using shovel and wire brush</li>
+                <li data-i18n="harden4">Flush with high-pressure water before refilling</li>
             </ol>
         </div>
-
-        <div class="section-title">SOP 4: Runner Hub Pressure Relief Channels</div>
+        <div class="section-title" data-i18n="section4_title">SOP 4: Runner Hub Pressure Relief Channels</div>
         <div class="module technical">
-            <p>The runner hub has small (5-10mm) pressure relief holes that balance pressure behind the runner. These
-                are critical for thrust bearing protection (ref: Thrust Balance SOP).</p>
-
-            <h3>4.1 Inspection During Overhaul</h3>
-            <p><strong>Access:</strong> Only accessible when runner is lifted out for overhaul.</p>
+            <p data-i18n="section4_intro">The runner hub has small (5-10mm) pressure relief holes that balance pressure
+                behind the runner. These are critical for thrust bearing protection (ref: Thrust Balance SOP).</p>
+            <h3 data-i18n="subsection4_1_title">4.1 Inspection During Overhaul</h3>
+            <p data-i18n="subsection4_1_access"><strong>Access:</strong> Only accessible when runner is lifted out for
+                overhaul.</p>
             <ol>
-                <li><strong>Locate Holes:</strong> Typically 4-8 radial holes drilled through runner hub from back side.
-                </li>
-                <li><strong>Visual Inspection:</strong> Use flashlight and mirror to inspect each hole for silt
-                    blockage.</li>
-                <li><strong>Wire Probe Test:</strong> Insert 5mm diameter wire probe through full depth of each hole to
-                    verify clearance.</li>
-                <li><strong>Water Flush:</strong> Use garden hose to flush each hole from both directions.</li>
+                <li data-i18n="hub1"><strong>Locate Holes:</strong> Typically 4-8 radial holes drilled through runner
+                    hub from back side.</li>
+                <li data-i18n="hub2"><strong>Visual Inspection:</strong> Use flashlight and mirror to inspect each hole
+                    for silt blockage.</li>
+                <li data-i18n="hub3"><strong>Wire Probe Test:</strong> Insert 5mm diameter wire probe through full depth
+                    of each hole to verify clearance.</li>
+                <li data-i18n="hub4"><strong>Water Flush:</strong> Use garden hose to flush each hole from both
+                    directions.</li>
             </ol>
-
-            <h3>4.2 Clearing Procedure</h3>
-            <p><strong>For Partially Blocked Holes:</strong></p>
+            <h3 data-i18n="subsection4_2_title">4.2 Clearing Procedure</h3>
+            <p data-i18n="clear_partial"><strong>For Partially Blocked Holes:</strong></p>
             <ul>
-                <li>Drill wire brush (5mm diameter) on cordless drill - carefully clean hole without damaging walls</li>
-                <li>High-pressure water flush (100-150 bar)</li>
-                <li>Verify clearance with gauge wire</li>
+                <li data-i18n="clear1">Drill wire brush (5mm diameter) on cordless drill - carefully clean hole without
+                    damaging walls</li>
+                <li data-i18n="clear2">High-pressure water flush (100-150 bar)</li>
+                <li data-i18n="clear3">Verify clearance with gauge wire</li>
             </ul>
-
-            <p><strong>For Fully Blocked Holes:</strong></p>
+            <p data-i18n="clear_blocked"><strong>For Fully Blocked Holes:</strong></p>
             <ul>
-                <li>DO NOT attempt to re-drill - risk of off-center hole damaging runner balance</li>
-                <li>Use carbide-tipped punch to break through blockage</li>
-                <li>Flush extensively after clearing</li>
+                <li data-i18n="block1">DO NOT attempt to re-drill - risk of off-center hole damaging runner balance</li>
+                <li data-i18n="block2">Use carbide-tipped punch to break through blockage</li>
+                <li data-i18n="block3">Flush extensively after clearing</li>
             </ul>
-
-            <div class="critical">
+            <div class="critical" data-i18n="hub_warning">
                 <strong>WARNING:</strong> If >50% of pressure relief holes are blocked, thrust bearing load can triple
                 (ref: Thrust Balance SOP). This is a critical hidden failure mode - do not skip this inspection during
                 overhaul.
             </div>
         </div>
-
-        <div class="section-title">Summary Checklist</div>
+        <div class="section-title" data-i18n="section5_title">Summary Checklist</div>
         <div class="module">
             <ul>
-                <li><strong>Every Major Overhaul (3-5 years):</strong> Nose cone bolt torque verification + Loctite
-                    re-application</li>
-                <li><strong>Annually:</strong> Vacuum breaker functional test (manual actuation + seal check)</li>
-                <li><strong>Weekly:</strong> Spiral case silt drainage (30-60 second flush)</li>
-                <li><strong>During Runner Removal:</strong> Hub pressure relief channel inspection and clearing</li>
+                <li data-i18n="check1"><strong>Every Major Overhaul (3-5 years):</strong> Nose cone bolt torque
+                    verification + Loctite re-application</li>
+                <li data-i18n="check2"><strong>Annually:</strong> Vacuum breaker functional test (manual actuation +
+                    seal check)</li>
+                <li data-i18n="check3"><strong>Weekly:</strong> Spiral case silt drainage (30-60 second flush)</li>
+                <li data-i18n="check4"><strong>During Runner Removal:</strong> Hub pressure relief channel inspection
+                    and clearing</li>
             </ul>
         </div>
-
-        <a href="./Francis_Horizontal.html" class="back-btn">← Return to Master Manual</a>
-
+        <a href="./Francis_Horizontal.html" class="back-btn" data-i18n="back_btn">← Return to Master Manual</a>
     </div>
-
+    <script>
+        const i18n = {
+            en: {
+                title: "Critical SOP: Hidden Guardians",
+                subtitle: "The Often-Ignored Components That Prevent Catastrophic Failure",
+                intro_title: "⚠️ THE SILENT PROTECTORS",
+                context_label: "Context:",
+                context_text: "While operators focus on visible components (bearings, coupling, guide vanes), several \"hidden\" components work silently to prevent catastrophic failure. These are rarely inspected until failure occurs.",
+                intro1: "<strong>Why \"Hidden\":</strong> Located inside sealed assemblies, underwater, or in rarely-accessed areas.",
+                intro2: "<strong>The Risk:</strong> Failure of these components can cause sudden, severe damage that takes months to repair.",
+                intro3: "<strong>Inspection Frequency:</strong> Often skipped during routine maintenance due to access difficulty.",
+                section1_title: "SOP 1: Nose Cone Integrity",
+                section1_intro: "The runner nose cone reduces turbulence at the draft tube exit. If bolts loosen, the cone shifts, creating massive vibration and hydraulic imbalance.",
+                subsection1_1_title: "1.1 The Failure Mechanism",
+                subsection1_1_text1: "<strong>Physics:</strong> Water exits the runner at high velocity (~15-20 m/s) and must smoothly transition into the draft tube. The nose cone shapes this flow.",
+                subsection1_1_text2: "<strong>If Loose:</strong> Cone wobbles during rotation, creating asymmetric flow → vibration → bolt fatigue → cone detachment → catastrophic runner imbalance.",
+                subsection1_2_title: "1.2 Inspection Requirements",
+                subsection1_2_access: "<strong>Access:</strong> Unit must be shut down, draft tube dewatered, access via tailrace hatch.",
+                insp1: "<strong>Visual Check:</strong> Inspect nose cone for cracks or deformation (especially around bolt holes).",
+                insp2: "<strong>Bolt Torque Verification:</strong> Using torque wrench, verify each bolt maintains specified torque.",
+                insp3: "<strong>Loctite Presence:</strong> Check for blue residue indicating Loctite was properly applied.",
+                nose_cone_spec: "<strong>NOSE CONE BOLT SPECIFICATIONS:</strong><br>Bolt Size: M16 or M20 (varies by manufacturer)<br>Torque: 180-220 Nm (check manufacturer manual)<br>Thread Locker: Loctite 243 (blue, medium strength)<br>Inspection Frequency: Every major overhaul (3-5 years)",
+                subsection1_3_title: "1.3 Re-torquing Procedure",
+                retorque1: "Clean bolt threads with wire brush",
+                retorque2: "Apply fresh Loctite 243",
+                retorque3: "Torque in star pattern (like wheel lugs) to prevent cone warping",
+                retorque4: "Wait 24 hours for Loctite to cure before refilling draft tube",
+                section2_title: "SOP 2: Vacuum Breaker (Snifter) Valve",
+                section2_intro: "The vacuum breaker valve is mounted on the turbine head cover. During load rejection, it must open rapidly to admit air and prevent destructive vacuum collapse.",
+                subsection2_1_title: "2.1 The Critical Function",
+                subsection2_1_text1: "<strong>Load Rejection Scenario:</strong> When grid trips, guide vanes slam closed in 3-5 seconds. Water column decelerates, creating vacuum (negative pressure) in the spiral casing.",
+                subsection2_1_text2: "<strong>Without Vacuum Breaker:</strong> Vacuum can reach -0.8 to -0.9 bar, creating massive suction force that:",
+                conseq1: "Implodes head cover (catastrophic structural failure)",
+                conseq2: "Damages spiral casing liner",
+                conseq3: "Causes violent water hammer on restart",
+                subsection2_2_title: "2.2 Test Procedure",
+                test_proc_label: "<strong>Functional Test (Annual):</strong>",
+                test1: "<strong>Locate Valve:</strong> Typically 6-12\" diameter valve on top of head cover with counterweight or spring mechanism.",
+                test2: "<strong>Manual Actuation:</strong> Lift disc by hand (unit stopped). Should move freely with minimal force.",
+                test3: "<strong>Seating Test:</strong> Release disc - should drop and seat with audible \"clunk\".",
+                test4: "<strong>Seal Check:</strong> With unit filled but stopped, valve should be airtight (no hissing sound).",
+                subsection2_3_title: "2.3 Common Failures",
+                th_symptom: "Symptom",
+                th_cause: "Cause",
+                th_remedy: "Remedy",
+                td_symptom1: "Valve stuck closed",
+                td_cause1: "Corrosion on hinge pin",
+                td_remedy1: "Disassemble, wire-brush, lubricate with anti-seize",
+                td_symptom2: "Slow opening",
+                td_cause2: "Weak counterweight spring",
+                td_remedy2: "Replace spring or add weight to counterweight arm",
+                td_symptom3: "Air leakage during operation",
+                td_cause3: "Worn rubber seat",
+                td_remedy3: "Replace rubber gasket (standard NBR material)",
+                vac_breaker_warning: "<strong>CRITICAL:</strong> Vacuum breaker MUST actuate within 2-3 seconds of pressure drop. Test during scheduled shutdown by partially closing guide vanes and monitoring vacuum gauge.",
+                section3_title: "SOP 3: Spiral Case Silt Drainage",
+                section3_problem: "<strong>Problem:</strong> Silt-laden water enters the spiral casing during operation. Heaviest particles settle at the bottom, accumulating over months.",
+                subsection3_1_title: "3.1 The Accumulation Mechanism",
+                subsection3_1_text1: "Francis turbines have high-velocity flow (15-25 m/s) that keeps most silt suspended. However, at the spiral casing's lowest point (6 o'clock position), flow velocity drops slightly, allowing silt to settle.",
+                subsection3_1_text2: "<strong>Consequences of Buildup:</strong>",
+                buildup1: "Reduced effective casing volume → efficiency loss (~1-2%)",
+                buildup2: "Uneven flow distribution to guide vanes → vibration",
+                buildup3: "Silt hardens into concrete-like deposits if left >6 months",
+                subsection3_2_title: "3.2 Weekly Flushing Procedure",
+                flush1: "<strong>Locate Drain Valve:</strong> Bottom of spiral casing, typically 3-4\" ball valve or gate valve.",
+                flush2: "<strong>Safety:</strong> Unit can remain running during flushing (low flow only, <30% load recommended).",
+                flush3: "<strong>Open Drain:</strong> Crack valve open slowly. Initial discharge will be thick, muddy water.",
+                flush4: "<strong>Flush Duration:</strong> Continue until water runs clear (typically 30-60 seconds).",
+                flush5: "<strong>Close Valve:</strong> Ensure valve seats tightly (no dripping).",
+                flush6: "<strong>Log Entry:</strong> Record silt volume estimate and water clarity in maintenance log.",
+                monsoon_protocol: "<strong>MONSOON SEASON PROTOCOL:</strong> During Jun-Sep when river silt is highest (>3000 ppm), increase flushing frequency to twice weekly or daily if sediment load is critical.",
+                subsection3_3_title: "3.3 Hardened Deposit Removal",
+                harden_intro: "<strong>If Valve Won't Drain (indicating blockage):</strong>",
+                harden1: "Shut down unit and drain spiral casing",
+                harden2: "Access spiral casing via inspection manway",
+                harden3: "Manually remove hardened silt using shovel and wire brush",
+                harden4: "Flush with high-pressure water before refilling",
+                section4_title: "SOP 4: Runner Hub Pressure Relief Channels",
+                section4_intro: "The runner hub has small (5-10mm) pressure relief holes that balance pressure behind the runner. These are critical for thrust bearing protection (ref: Thrust Balance SOP).",
+                subsection4_1_title: "4.1 Inspection During Overhaul",
+                subsection4_1_access: "<strong>Access:</strong> Only accessible when runner is lifted out for overhaul.",
+                hub1: "<strong>Locate Holes:</strong> Typically 4-8 radial holes drilled through runner hub from back side.",
+                hub2: "<strong>Visual Inspection:</strong> Use flashlight and mirror to inspect each hole for silt blockage.",
+                hub3: "<strong>Wire Probe Test:</strong> Insert 5mm diameter wire probe through full depth of each hole to verify clearance.",
+                hub4: "<strong>Water Flush:</strong> Use garden hose to flush each hole from both directions.",
+                subsection4_2_title: "4.2 Clearing Procedure",
+                clear_partial: "<strong>For Partially Blocked Holes:</strong>",
+                clear1: "Drill wire brush (5mm diameter) on cordless drill - carefully clean hole without damaging walls",
+                clear2: "High-pressure water flush (100-150 bar)",
+                clear3: "Verify clearance with gauge wire",
+                clear_blocked: "<strong>For Fully Blocked Holes:</strong>",
+                block1: "DO NOT attempt to re-drill - risk of off-center hole damaging runner balance",
+                block2: "Use carbide-tipped punch to break through blockage",
+                block3: "Flush extensively after clearing",
+                hub_warning: "<strong>WARNING:</strong> If >50% of pressure relief holes are blocked, thrust bearing load can triple (ref: Thrust Balance SOP). This is a critical hidden failure mode - do not skip this inspection during overhaul.",
+                section5_title: "Summary Checklist",
+                check1: "<strong>Every Major Overhaul (3-5 years):</strong> Nose cone bolt torque verification + Loctite re-application",
+                check2: "<strong>Annually:</strong> Vacuum breaker functional test (manual actuation + seal check)",
+                check3: "<strong>Weekly:</strong> Spiral case silt drainage (30-60 second flush)",
+                check4: "<strong>During Runner Removal:</strong> Hub pressure relief channel inspection and clearing",
+                back_btn: "← Return to Master Manual"
+            },
+            bs: {
+                title: "Kritični SOP: Skriveni čuvari",
+                subtitle: "Često ignorisane komponente koje sprečavaju katastrofalni kvar",
+                intro_title: "⚠️ TIHI ZAŠTITNICI",
+                context_label: "Kontekst:",
+                context_text: "Dok se operateri fokusiraju na vidljive komponente (ležajevi, spojka, sprovodne lopatice), nekoliko \"skrivenih\" komponenti radi tiho na sprečavanju katastrofalnog kvara. One se rijetko pregledaju dok se ne desi kvar.",
+                intro1: "<strong>Zašto \"Skriveni\":</strong> Nalaze se unutar zatvorenih sklopova, pod vodom, ili u rijetko dostupnim područjima.",
+                intro2: "<strong>Rizik:</strong> Kvar ovih komponenti može uzrokovati iznenadnu, tešku štetu čija popravka traje mjesecima.",
+                intro3: "<strong>Učestalost inspekcije:</strong> Često se preskače tokom rutinskog održavanja zbog poteškoća u pristupu.",
+                section1_title: "SOP 1: Integritet konusa radnog kola",
+                section1_intro: "Konus radnog kola smanjuje turbulenciju na izlazu iz sifona. Ako vijci popuste, konus se pomjera, stvarajući masivne vibracije i hidrauličku neravnotežu.",
+                subsection1_1_title: "1.1 Mehanizam kvara",
+                subsection1_1_text1: "<strong>Fizika:</strong> Voda napušta radno kolo velikom brzinom (~15-20 m/s) i mora glatko preći u sifon. Konus radnog kola oblikuje ovaj tok.",
+                subsection1_1_text2: "<strong>Ako je labav:</strong> Konus se klati tokom rotacije, stvarajući asimetričan tok → vibracije → zamor vijaka → odvajanje konusa → katastrofalnu neravnotežu radnog kola.",
+                subsection1_2_title: "1.2 Zahtjevi inspekcije",
+                subsection1_2_access: "<strong>Pristup:</strong> Jedinica mora biti zaustavljena, sifon ispražnjen, pristup kroz otvor u odvodnom kanalu.",
+                insp1: "<strong>Vizuelna provera:</strong> Pregledajte konus na pukotine ili deformacije (posebno oko rupa za vijke).",
+                insp2: "<strong>Verifikacija momenta vijaka:</strong> Koristeći moment ključ, potvrdite da svaki vijak održava specificirani moment.",
+                insp3: "<strong>Prisustvo Loctite-a:</strong> Provjerite plave ostatke koji ukazuju na pravilnu primjenu Loctite-a.",
+                nose_cone_spec: "<strong>SPECIFIKACIJE VIJAKA KONUSA:</strong><br>Veličina vijka: M16 ili M20 (varira po proizvođaču)<br>Moment: 180-220 Nm (provjerite priručnik proizvođača)<br>Osigurač navoja: Loctite 243 (plavi, srednja čvrstoća)<br>Učestalost inspekcije: Svaki veliki remont (3-5 godina)",
+                subsection1_3_title: "1.3 Procedura ponovnog zatezanja",
+                retorque1: "Očistite navoje vijka žičanom četkom",
+                retorque2: "Nanesite svjež Loctite 243",
+                retorque3: "Zategnite u zvjezdanom uzorku (kao točkove) da spriječite krivljenje konusa",
+                retorque4: "Sačekajte 24 sata da Loctite očvrsne prije punjenja sifona",
+                section2_title: "SOP 2: Vakuum ventil (Snifter)",
+                section2_intro: "Vakuum ventil je montiran na poklopcu turbine. Tokom odbacivanja tereta, mora se brzo otvoriti da bi propustio vazduh i spriječio destruktivni kolaps vakuuma.",
+                subsection2_1_title: "2.1 Kritična funkcija",
+                subsection2_1_text1: "<strong>Scenario odbacivanja tereta:</strong> Kada mreža ispadne, sprovodne lopatice se zatvaraju naglo za 3-5 sekundi. Vodeni stub usporava, stvarajući vakuum (negativan pritisak) u spiralnom kućištu.",
+                subsection2_1_text2: "<strong>Bez vakuum ventila:</strong> Vakuum može dostići -0.8 do -0.9 bar, stvarajući masivnu usisnu silu koja:",
+                conseq1: "Implodira poklopac turbine (katastrofalni strukturni kvar)",
+                conseq2: "Oštećuje oblogu spiralnog kućišta",
+                conseq3: "Uzrokuje nasilan hidraulički udar pri ponovnom pokretanju",
+                subsection2_2_title: "2.2 Procedura testiranja",
+                test_proc_label: "<strong>Funkcionalni test (Godišnje):</strong>",
+                test1: "<strong>Locirajte ventil:</strong> Obično ventil prečnika 6-12\" na vrhu poklopca turbine sa protivtegom ili oprugom.",
+                test2: "<strong>Ručna aktivacija:</strong> Podignite disk rukom (jedinica zaustavljena). Treba se kretati slobodno uz minimalnu silu.",
+                test3: "<strong>Test sjedišta:</strong> Pustite disk - treba pasti i sjesti uz čujan \"klonk\".",
+                test4: "<strong>Provjera zaptivanja:</strong> Sa napunjenom ali zaustavljenom jedinicom, ventil treba biti hermetičan (nema zvuka šištanja).",
+                subsection2_3_title: "2.3 Uobičajeni kvarovi",
+                th_symptom: "Simptom",
+                th_cause: "Uzrok",
+                th_remedy: "Lijek",
+                td_symptom1: "Ventil zaglavljen zatvoren",
+                td_cause1: "Korozija na osovini šarke",
+                td_remedy1: "Rastavite, očistite žičanom četkom, podmažite anti-seize sredstvom",
+                td_symptom2: "Sporo otvaranje",
+                td_cause2: "Slaba opruga protivtega",
+                td_remedy2: "Zamijenite oprugu ili dodajte težinu na ruku protivtega",
+                td_symptom3: "Curenje vazduha tokom rada",
+                td_cause3: "Istrošeno gumeno sjedište",
+                td_remedy3: "Zamijenite gumenu brtvu (standardni NBR materijal)",
+                vac_breaker_warning: "<strong>KRITIČNO:</strong> Vakuum ventil mora reagovati unutar 2-3 sekunde od pada pritiska. Testirajte tokom planiranog gašenja djelimičnim zatvaranjem sprovodnih lopatica i praćenjem vakuum manometra.",
+                section3_title: "SOP 3: Drenaža mulja iz spiralnog kućišta",
+                section3_problem: "<strong>Problem:</strong> Voda puna mulja ulazi u spiralno kućište tokom rada. Najteže čestice se talože na dnu, nakupljajući se mjesecima.",
+                subsection3_1_title: "3.1 Mehanizam akumulacije",
+                subsection3_1_text1: "Francis turbine imaju tok velike brzine (15-25 m/s) koji drži većinu mulja suspendovanim. Međutim, na najnižoj tački spiralnog kućišta (pozicija 6 sati), brzina toka blago opada, omogućavajući taloženje mulja.",
+                subsection3_1_text2: "<strong>Posljedice nakupljanja:</strong>",
+                buildup1: "Smanjen efektivni volumen kućišta → gubitak efikasnosti (~1-2%)",
+                buildup2: "Neujednačena distribucija toka ka sprovodnim lopaticama → vibracije",
+                buildup3: "Mulj očvrsne u naslage slične betonu ako se ostavi >6 mjeseci",
+                subsection3_2_title: "3.2 Procedura sedmičnog ispiranja",
+                flush1: "<strong>Locirajte drenažni ventil:</strong> Dno spiralnog kućišta, obično kuglasti ili zasun ventil od 3-4\".",
+                flush2: "<strong>Sigurnost:</strong> Jedinica može ostati u radu tokom ispiranja (samo nizak protok, preporučeno <30% opterećenja).",
+                flush3: "<strong>Otvorite drenažu:</strong> Polako otvorite ventil. Početni ispus će biti gusta, blatnjava voda.",
+                flush4: "<strong>Trajanje ispiranja:</strong> Nastavite dok voda ne postane bistra (obično 30-60 sekundi).",
+                flush5: "<strong>Zatvorite ventil:</strong> Osigurajte da ventil čvrsto naliježe (nema kapanja).",
+                flush6: "<strong>Unos u dnevnik:</strong> Zabilježite procjenu volumena mulja i bistrinu vode u dnevnik održavanja.",
+                monsoon_protocol: "<strong>PROTOKOL SEZONE MONSUNA:</strong> Tokom jun-sep kada je riječni mulj najviši (>3000 ppm), povećajte učestalost ispiranja na dva puta sedmično ili dnevno ako je opterećenje sedimentom kritično.",
+                subsection3_3_title: "3.3 Uklanjanje stvrdnutih naslaga",
+                harden_intro: "<strong>Ako ventil neće da drenira (ukazuje na blokadu):</strong>",
+                harden1: "Ugasite jedinicu i ispraznite spiralno kućište",
+                harden2: "Pristupite spiralnom kućištu kroz inspekcijski otvor",
+                harden3: "Ručno uklonite stvrdnuti mulj koristeći lopatu i žičanu četku",
+                harden4: "Isperite vodom pod visokim pritiskom prije ponovnog punjenja",
+                section4_title: "SOP 4: Kanali za rasterećenje pritiska na glavčini radnog kola",
+                section4_intro: "Glavčina radnog kola ima male (5-10mm) rupe za rasterećenje pritiska koje balansiraju pritisak iza radnog kola. One su kritične za zaštitu aksijalnog ležaja (ref: SOP Balans Aksijalnog Potiska).",
+                subsection4_1_title: "4.1 Inspekcija tokom remonta",
+                subsection4_1_access: "<strong>Pristup:</strong> Dostupno samo kada se radno kolo izvadi radi remonta.",
+                hub1: "<strong>Locirajte rupe:</strong> Obično 4-8 radijalnih rupa izbušenih kroz glavčinu radnog kola sa zadnje strane.",
+                hub2: "<strong>Vizuelna inspekcija:</strong> Koristite lampu i ogledalo da pregledate svaku rupu na blokadu muljem.",
+                hub3: "<strong>Test žičanom sondom:</strong> Umetnite žičanu sondu prečnika 5mm kroz punu dubinu svake rupe da verifikujete prohodnost.",
+                hub4: "<strong>Ispiranje vodom:</strong> Koristite baštensko crijevo da isperete svaku rupu iz oba smjera.",
+                subsection4_2_title: "4.2 Procedura čišćenja",
+                clear_partial: "<strong>Za djelimično blokirane rupe:</strong>",
+                clear1: "Bušite žičanom četkom (5mm prečnik) na akumulatorskoj bušilici - pažljivo očistite rupu bez oštećenja zidova",
+                clear2: "Ispiranje vodom pod visokim pritiskom (100-150 bar)",
+                clear3: "Verifikujte prohodnost mjernom žicom",
+                clear_blocked: "<strong>Za potpuno blokirane rupe:</strong>",
+                block1: "NE pokušavajte ponovo bušiti - rizik od rupe van centra koja oštećuje balans radnog kola",
+                block2: "Koristite karbidni proboj da probijete blokadu",
+                block3: "Obilno isperite nakon čišćenja",
+                hub_warning: "<strong>UPOZORENJE:</strong> Ako je >50% rupa za rasterećenje blokirano, opterećenje aksijalnog ležaja se može utrostručiti (ref: SOP Balans Aksijalnog Potiska). Ovo je kritični skriveni način kvara - ne preskačite ovu inspekciju tokom remonta.",
+                section5_title: "Kontrolna lista sažetka",
+                check1: "<strong>Svaki veliki remont (3-5 godina):</strong> Verifikacija momenta vijaka konusa + ponovna primjena Loctite-a",
+                check2: "<strong>Godišnje:</strong> Funkcionalni test vakuum ventila (ručna aktivacija + provjera zaptivanja)",
+                check3: "<strong>Sedmično:</strong> Drenaža mulja iz spiralnog kućišta (ispiranje 30-60 sekundi)",
+                check4: "<strong>Tokom vađenja radnog kola:</strong> Inspekcija i čišćenje kanala za rasterećenje pritiska na glavčini",
+                back_btn: "← Povratak na Glavni priručnik"
+            }
+        };
+        function setLang(lang) {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (i18n[lang][key]) {
+                    el.innerHTML = i18n[lang][key];
+                }
+            });
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.innerText.toLowerCase() === lang) {
+                    btn.classList.add('active');
+                }
+            });
+            localStorage.setItem('anohub_lang_pref', lang);
+        }
+        const savedLang = localStorage.getItem('anohub_lang_pref') || 'en';
+        setLang(savedLang);
+    </script>
 </body>
 
 </html>

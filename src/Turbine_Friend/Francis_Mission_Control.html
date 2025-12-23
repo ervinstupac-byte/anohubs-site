@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="bs">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -187,13 +187,21 @@
             <div>
                 <h1 class="text-4xl font-black text-white tracking-widest uppercase flex items-center gap-3">
                     <i data-lucide="activity" class="text-cyan-400"></i>
-                    Francis <span class="text-cyan-400">Kontrola Misije</span>
+                    Francis <span class="text-cyan-400" data-i18n="title_main">Kontrola Misije</span>
                 </h1>
-                <p class="text-slate-500 font-mono text-sm mt-2 ml-11">Sigurnosni Interlock Gates Aktivni</p>
+                <p class="text-slate-500 font-mono text-sm mt-2 ml-11" data-i18n="subtitle">Sigurnosni Interlock Gates
+                    Aktivni</p>
             </div>
             <div class="text-right">
-                <div class="text-[10px] text-slate-500 font-bold uppercase">Status Sistema</div>
+                <div class="text-[10px] text-slate-500 font-bold uppercase" data-i18n="system_status_label">Status
+                    Sistema</div>
                 <div id="systemState" class="text-amber-500 font-bold text-xl animate-pulse">SEKVENCA NA ČEKANJU</div>
+                <div class="flex gap-2 mt-3">
+                    <button onclick="setLang('en')" id="btnEn"
+                        style="padding: 4px 10px; font-size: 10px; font-weight: bold; background: #0ea5e9; color: white; border: none; border-radius: 3px; cursor: pointer;">EN</button>
+                    <button onclick="setLang('bs')" id="btnBs"
+                        style="padding: 4px 10px; font-size: 10px; font-weight: bold; background: #475569; color: #94a3b8; border: none; border-radius: 3px; cursor: pointer;">BS</button>
+                </div>
             </div>
         </header>
 
@@ -201,7 +209,7 @@
         <div class="mb-12 p-4 bg-slate-900/50 rounded border border-slate-700/50 grid grid-cols-2 md:grid-cols-4 gap-4">
             <div
                 class="text-[10px] font-bold text-slate-500 uppercase col-span-full border-b border-slate-800 pb-2 mb-2 flex justify-between">
-                <span>Simulacija Logičkih Kvarova (Ubaci Grešku)</span>
+                <span data-i18n="sim_title">Simulacija Logičkih Kvarova (Ubaci Grešku)</span>
                 <span class="text-purple-400">DEV MODE</span>
             </div>
 
@@ -230,8 +238,10 @@
                 <div class="node-circle"></div>
                 <div class="flex justify-between items-start">
                     <div>
-                        <h3 class="text-lg font-bold text-cyan-400 mb-1">1. Status HPU i Energije</h3>
-                        <p class="text-slate-400 text-xs mb-4">GATE 1: N2 > 12.5 MPa Potreban.</p>
+                        <h3 class="text-lg font-bold text-cyan-400 mb-1" data-i18n="node1_title">1. Status HPU i
+                            Energije</h3>
+                        <p class="text-slate-400 text-xs mb-4" data-i18n="node1_desc">GATE 1: N2 > 12.5 MPa Potreban.
+                        </p>
 
                         <div class="bg-black/40 rounded p-3 mb-4 font-mono text-xs border border-slate-700/50">
                             <div class="flex justify-between mb-1">
@@ -261,8 +271,10 @@
                 <div class="node-circle"></div>
                 <div class="flex justify-between items-start">
                     <div>
-                        <h3 class="text-lg font-bold text-cyan-400 mb-1">2. Nulto Zaptivanje Sprovodnog Aparata</h3>
-                        <p class="text-slate-400 text-xs mb-4">GATE 2: Odstupanje < 0.5mm. 0% Curenja.</p>
+                        <h3 class="text-lg font-bold text-cyan-400 mb-1" data-i18n="node2_title">2. Nulto Zaptivanje
+                            Sprovodnog Aparata</h3>
+                        <p class="text-slate-400 text-xs mb-4" data-i18n="node2_desc">GATE 2: Odstupanje < 0.5mm. 0%
+                                Curenja.</p>
 
                                 <div class="bg-black/40 rounded p-3 mb-4 font-mono text-xs border border-slate-700/50">
                                     <div class="flex justify-between mb-1">
@@ -292,8 +304,9 @@
                 <div class="node-circle"></div>
                 <div class="flex justify-between items-start">
                     <div>
-                        <h3 class="text-lg font-bold text-cyan-400 mb-1">3. Izjednačavanje Bajpasa</h3>
-                        <p class="text-slate-400 text-xs mb-4">GATE 3: Delta P < 10% (1 Bar).</p>
+                        <h3 class="text-lg font-bold text-cyan-400 mb-1" data-i18n="node3_title">3. Izjednačavanje
+                            Bajpasa</h3>
+                        <p class="text-slate-400 text-xs mb-4" data-i18n="node3_desc">GATE 3: Delta P < 10% (1 Bar).</p>
 
                                 <div class="flex items-center gap-4 mb-4">
                                     <div class="text-center">
@@ -335,8 +348,9 @@
                 <div class="node-circle"></div>
                 <div class="flex justify-between items-start">
                     <div>
-                        <h3 class="text-lg font-bold text-cyan-400 mb-1">4. Otvaranje GUV-a</h3>
-                        <p class="text-slate-400 text-xs mb-4">GATE 4: Ugao == 80.0°. Interlock Otpušten.</p>
+                        <h3 class="text-lg font-bold text-cyan-400 mb-1" data-i18n="node4_title">4. Otvaranje GUV-a</h3>
+                        <p class="text-slate-400 text-xs mb-4" data-i18n="node4_desc">GATE 4: Ugao == 80.0°. Interlock
+                            Otpušten.</p>
 
                         <div class="bg-black/40 rounded p-3 mb-4 font-mono text-xs border border-slate-700/50">
                             <div class="flex justify-between mb-1">
@@ -371,7 +385,7 @@
 
             <h3 class="text-xl font-black text-red-500 uppercase tracking-widest mb-4 flex items-center gap-2">
                 <i data-lucide="shield-alert"></i>
-                Hitno Zaustavljanje (ESD) Spremno
+                <span data-i18n="esd_title">Hitno Zaustavljanje (ESD) Spremno</span>
             </h3>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
@@ -393,7 +407,8 @@
         <!-- RETURN LINK -->
         <div class="text-center mt-12">
             <a href="Francis_Horizontal_Dashboard.html"
-                class="text-slate-500 hover:text-white text-xs font-bold uppercase tracking-widest transition">
+                class="text-slate-500 hover:text-white text-xs font-bold uppercase tracking-widest transition"
+                data-i18n="back_btn">
                 ← Povratak u Operativni Centar
             </a>
         </div>
@@ -534,6 +549,74 @@
                 document.getElementById('spiralVal').innerText = press.toFixed(1) + " Bar";
             }, 50);
         }
+
+        // i18n translations
+        const i18n = {
+            en: {
+                title_main: "Mission Control",
+                subtitle: "Safety Interlock Gates Active",
+                system_status_label: "System Status",
+                sim_title: "Logic Fault Simulation (Inject Error)",
+                node1_title: "1. HPU & Energy Status",
+                node1_desc: "GATE 1: N2 > 12.5 MPa Required.",
+                node2_title: "2. Distributor Zero Sealing",
+                node2_desc: "GATE 2: Deviation < 0.5mm. 0% Leakage.",
+                node3_title: "3. Bypass Equalization",
+                node3_desc: "GATE 3: Delta P < 10% (1 Bar).",
+                node4_title: "4. MIV Opening",
+                node4_desc: "GATE 4: Angle == 80.0°. Interlock Released.",
+                esd_title: "Emergency Shutdown (ESD) Ready",
+                back_btn: "← Return to Operations Center",
+                state_waiting: "SEQUENCE ON HOLD",
+                state_ready: "UNIT READY FOR START (SPEED-NO-LOAD)"
+            },
+            bs: {
+                title_main: "Kontrola Misije",
+                subtitle: "Sigurnosni Interlock Gates Aktivni",
+                system_status_label: "Status Sistema",
+                sim_title: "Simulacija Logičkih Kvarova (Ubaci Grešku)",
+                node1_title: "1. Status HPU i Energije",
+                node1_desc: "GATE 1: N2 > 12.5 MPa Potreban.",
+                node2_title: "2. Nulto Zaptivanje Sprovodnog Aparata",
+                node2_desc: "GATE 2: Odstupanje < 0.5mm. 0% Curenja.",
+                node3_title: "3. Izjednačavanje Bajpasa",
+                node3_desc: "GATE 3: Delta P < 10% (1 Bar).",
+                node4_title: "4. Otvaranje GUV-a",
+                node4_desc: "GATE 4: Ugao == 80.0°. Interlock Otpušten.",
+                esd_title: "Hitno Zaustavljanje (ESD) Spremno",
+                back_btn: "← Povratak u Operativni Centar",
+                state_waiting: "SEKVENCA NA ČEKANJU",
+                state_ready: "AGREGAT SPREMAN ZA START (SPEED-NO-LOAD)"
+            }
+        };
+
+        function setLang(lang) {
+            localStorage.setItem('anohub_lang_pref', lang);
+            if (lang === 'en') {
+                document.getElementById('btnEn').style.background = '#0ea5e9';
+                document.getElementById('btnEn').style.color = 'white';
+                document.getElementById('btnBs').style.background = '#475569';
+                document.getElementById('btnBs').style.color = '#94a3b8';
+            } else {
+                document.getElementById('btnBs').style.background = '#0ea5e9';
+                document.getElementById('btnBs').style.color = 'white';
+                document.getElementById('btnEn').style.background = '#475569';
+                document.getElementById('btnEn').style.color = '#94a3b8';
+            }
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (i18n[lang][key]) el.innerText = i18n[lang][key];
+            });
+            // Update system state if it's in initial state
+            const stateEl = document.getElementById('systemState');
+            if (stateEl.innerText.includes('SEKVENCA') || stateEl.innerText.includes('SEQUENCE')) {
+                stateEl.innerText = i18n[lang].state_waiting;
+            } else if (stateEl.innerText.includes('AGREGAT') || stateEl.innerText.includes('UNIT READY')) {
+                stateEl.innerText = i18n[lang].state_ready;
+            }
+        }
+        const pref = localStorage.getItem('anohub_lang_pref') || 'en';
+        setLang(pref);
     </script>
 </body>
 
