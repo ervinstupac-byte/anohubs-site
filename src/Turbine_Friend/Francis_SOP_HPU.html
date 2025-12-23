@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOP: HPU & Nitrogen Systems</title>
+    <style>
+        /* Shared Architecture from Francis_Horizontal.html */
+        :root {
+            --primary-color: #003366;
+            --secondary-color: #0066cc;
+            --accent-color: #d9534f;
+            --warning-color: #f0ad4e;
+            --bg-color: #f4f7f6;
+            --text-color: #333;
+            --border-color: #dde;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 40px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        header {
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+            color: var(--primary-color);
+            font-size: 28px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h2 {
+            color: var(--secondary-color);
+            font-size: 18px;
+            margin-top: 5px;
+            font-weight: 400;
+        }
+
+        .section-title {
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 10px 15px;
+            margin-top: 40px;
+            border-radius: 4px;
+            font-size: 1.2em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title::before {
+            content: "►";
+            margin-right: 10px;
+            font-size: 0.8em;
+        }
+
+        h3 {
+            color: var(--primary-color);
+            border-left: 4px solid var(--secondary-color);
+            padding-left: 10px;
+            margin-top: 25px;
+        }
+
+        .module {
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            background-color: #fafafa;
+        }
+
+        .critical {
+            border-left: 5px solid var(--accent-color);
+            background-color: #fff5f5;
+        }
+
+        .technical {
+            border-left: 5px solid var(--secondary-color);
+            background-color: #f0f7ff;
+        }
+
+        .diagnostic {
+            border-left: 5px solid var(--warning-color);
+            background-color: #fdf8e4;
+        }
+
+        ul,
+        ol {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 30px;
+            text-decoration: none;
+            color: var(--secondary-color);
+            font-weight: bold;
+            border: 1px solid var(--secondary-color);
+            padding: 10px 20px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            background-color: var(--secondary-color);
+            color: #fff;
+        }
+
+        .formula-box {
+            background: #000;
+            color: #0f0;
+            font-family: 'Courier New', monospace;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <header>
+            <h1>Critical SOP: HPU & Nitrogen Systems</h1>
+            <h2>Ref: 1.3 MW Francis Units | Pressure Hygiene & ESD Protocol</h2>
+        </header>
+
+        <!-- SAFETY MODULE -->
+        <div class="module critical">
+            <h3>⚠️ HIGH PRESSURE HAZARD</h3>
+            <p><strong>DANGER:</strong> Hydraulic oil at 100+ bar is lethal.</p>
+            <ul>
+                <li><strong>De-Energize:</strong> Before any HPU disassembly, open the manual ball valves to drain the
+                    Accumulators back to the tank. Gauge must read 0 bar.</li>
+                <li><strong>Injection Risk:</strong> Never use hands to check for leaks. Pinhole leaks can inject oil
+                    into the bloodstream.</li>
+            </ul>
+        </div>
+
+        <div class="section-title">SOP 1: Nitrogen Accumulator Protocol</div>
+        <div class="module technical">
+            <p>The Accumulators are the "Battery" of the safety system. They allow the MIV to close even if the
+                electricity (pumps) fails.</p>
+
+            <h3>1.1 ESD Energy Verification (Quarterly)</h3>
+            <p><strong>Goal:</strong> Ensure sufficient stored energy for Emergency Shut Down.</p>
+            <ol>
+                <li><strong>Isolate and Drain:</strong> Isolate one accumulator bank. Drain oil side to tank.</li>
+                <li><strong>Connect Kit:</strong> Attach the Nitrogen Charging Kit to the top bladder valve.</li>
+                <li><strong>Measure Pre-Charge (P0):</strong>
+                    <ul>
+                        <li>P0 should be approx. <strong>90% of Minimum Working Pressure (Pmin)</strong>.</li>
+                        <li><em>Example:</em> If MIV requires 80 bar to close, P0 should be ~72 bar.</li>
+                    </ul>
+                </li>
+                <li><strong>Pass Criteria:</strong> Pressure > 90% of Target.</li>
+                <li><strong>Fail Criteria:</strong> Bladder is empty or collapsed. Recharge immediately.</li>
+            </ol>
+            <div class="module diagnostic">
+                <strong>💡 Tech Note:</strong> If nitrogen needs frequent recharging, the rubber bladder is likely
+                porous and needs replacement.
+            </div>
+        </div>
+
+        <div class="section-title">SOP 2: Oil Hygiene Standards</div>
+        <div class="module technical">
+            <p>Silt is the enemy of hydraulic precision. "Stiction" (Static Friction) in valves causes erratic MIV
+                movement.</p>
+
+            <h3>2.1 ISO Cleanliness Protocol</h3>
+            <ul>
+                <li><strong>Oil Type:</strong> Use only high-grade <strong>L-HL</strong> or <strong>L-HM</strong>
+                    hydraulic oil (ISO VG 46/68).</li>
+                <li><strong>Target Cleanliness:</strong> maintain <strong>ISO 4406 18/16/13</strong> or better.</li>
+                <li><strong>Sampling:</strong> Take samples from the reservoir middle zone (not bottom sludge) annually.
+                </li>
+            </ul>
+
+            <h3>2.2 High-Pressure Filter Replacement</h3>
+            <ol>
+                <li>Inspect the "Clogging Indicator" on the pressure filter housing daily.</li>
+                <li><strong>Red Flag = Stop & Replace.</strong> Do not bypass.</li>
+                <li><strong>Procedure:</strong>
+                    <ul>
+                        <li>Switch to duplex standby filter (if available) or shut down HPU.</li>
+                        <li>Vent pressure. unscrew bowl.</li>
+                        <li>Install new cartridge (Do not clean disposable elements).</li>
+                        <li>Check O-ring condition.</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+
+        <div class="section-title">SOP 3: Water Hammer & Stroke Timing</div>
+        <div class="module critical">
+            <p>Dirty oil leads to valve sticking. If a valve sticks and then suddenly releases, the MIV may slam shut.
+            </p>
+
+            <h3>3.1 The Joukowsky Equation (Water Hammer)</h3>
+            <div class="formula-box">
+                ΔP = ρ · c · Δv
+            </div>
+            <ul>
+                <li><strong>ΔP:</strong> Pressure Rise (The "Hammer").</li>
+                <li><strong>ρ (Rho):</strong> Density of water.</li>
+                <li><strong>c:</strong> Celerity (Speed of sound in water ~1200 m/s).</li>
+                <li><strong>Δv:</strong> Change in velocity (Stopping the water).</li>
+            </ul>
+
+            <h3>3.2 The Hygiene Link</h3>
+            <p><strong>Scenario:</strong> Silt causes the proportional valve to stick. The MIV doesn't move for 5
+                seconds, then snaps shut in 1 second.</p>
+            <ul>
+                <li><strong>Result:</strong> $\Delta v$ becomes instantaneous. $\Delta P$ spikes to 50+ bar.</li>
+                <li><strong>Consequence:</strong> Penstock rupture or spiral case fracture.</li>
+                <li><strong>Prevention:</strong> Clean oil ensures smooth, linear valve actuation (e.g., controlled
+                    40-second closure).</li>
+            </ul>
+        </div>
+
+        <div class="section-title">Summary Checklist</div>
+        <div class="module">
+            <ul>
+                <li><strong>Quarterly:</strong> Check Nitrogen Pre-Charge.</li>
+                <li><strong>Daily:</strong> Check Filter Clogging Indicators.</li>
+                <li><strong>Annually:</strong> Lab analysis of L-HM Oil (ISO 4406).</li>
+                <li><strong>Safety:</strong> Never work on pressurized accumulators.</li>
+            </ul>
+        </div>
+
+        <a href="./Francis_Horizontal.html" class="back-btn">← Return to Master Manual</a>
+
+    </div>
+
+</body>
+
+</html>

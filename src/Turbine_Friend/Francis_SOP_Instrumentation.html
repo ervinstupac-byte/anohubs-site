@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOP: Instrumentation & Sensors</title>
+    <style>
+        /* Shared Architecture from Francis_Horizontal.html */
+        :root {
+            --primary-color: #003366;
+            --secondary-color: #0066cc;
+            --accent-color: #d9534f;
+            --warning-color: #f0ad4e;
+            --bg-color: #f4f7f6;
+            --text-color: #333;
+            --border-color: #dde;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 40px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        header {
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+            color: var(--primary-color);
+            font-size: 28px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h2 {
+            color: var(--secondary-color);
+            font-size: 18px;
+            margin-top: 5px;
+            font-weight: 400;
+        }
+
+        .section-title {
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 10px 15px;
+            margin-top: 40px;
+            border-radius: 4px;
+            font-size: 1.2em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title::before {
+            content: "►";
+            margin-right: 10px;
+            font-size: 0.8em;
+        }
+
+        h3 {
+            color: var(--primary-color);
+            border-left: 4px solid var(--secondary-color);
+            padding-left: 10px;
+            margin-top: 25px;
+        }
+
+        .module {
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            background-color: #fafafa;
+        }
+
+        .critical {
+            border-left: 5px solid var(--accent-color);
+            background-color: #fff5f5;
+        }
+
+        .technical {
+            border-left: 5px solid var(--secondary-color);
+            background-color: #f0f7ff;
+        }
+
+        .diagnostic {
+            border-left: 5px solid var(--warning-color);
+            background-color: #fdf8e4;
+        }
+
+        ul,
+        ol {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 30px;
+            text-decoration: none;
+            color: var(--secondary-color);
+            font-weight: bold;
+            border: 1px solid var(--secondary-color);
+            padding: 10px 20px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            background-color: var(--secondary-color);
+            color: #fff;
+        }
+
+        .visual-aid {
+            border: 2px dashed #ccc;
+            padding: 15px;
+            margin: 10px 0;
+            background: #fff;
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <header>
+            <h1>Critical SOP: Instrumentation & Sensors</h1>
+            <h2>Sensory Logic & SCADA Reliability</h2>
+        </header>
+
+        <!-- INTRO MODULE -->
+        <div class="module critical">
+            <h3>⚠️ TRUST BUT VERIFY</h3>
+            <p><strong>Context:</strong> The SCADA system is the brain, but sensors are the eyes. If the eyes are blind,
+                the brain makes fatal decisions.</p>
+            <ul>
+                <li><strong>The Risk:</strong> "Drifting" sensors can hide overheating bearings or falsely trip the
+                    unit.</li>
+                <li><strong>Rule:</strong> Never trust a digital reading blindly without analog correlation (e.g., check
+                    the mercury thermometer!).</li>
+            </ul>
+        </div>
+
+        <div class="section-title">SOP 1: Temperature Validation (RTDs)</div>
+        <div class="module technical">
+            <p>Resistance Temperature Detectors (RTDs) protect the Babbit bearings.</p>
+
+            <h3>1.1 Calibration Protocol</h3>
+            <ol>
+                <li><strong>Reference:</strong> Use a certified calibrated thermometer (Ice bath 0°C or Boiling 100°C
+                    checks).</li>
+                <li><strong>Compare:</strong> Insert the reference probe into the bearing well (if available) or tape
+                    adjacent to the RTD.</li>
+                <li><strong>Tolerance:</strong> Variation > 1.0°C requires offsetting the SCADA signal or replacing the
+                    sensor definition.</li>
+            </ol>
+        </div>
+
+        <div class="section-title">SOP 2: Pressure Transducer Logic</div>
+        <div class="module technical">
+            <p>Penstock and Spiral Case pressure data determine Net Head and hydraulic safety.</p>
+
+            <h3>2.1 Zero & Span</h3>
+            <ul>
+                <li><strong>Zeroing:</strong> With the Penstock drained (Atmospheric pressure), the sensor must read
+                    <strong>0.00 Bar</strong>. If it reads 0.5 Bar, it has drifted.</li>
+                <li><strong>Spanning:</strong> Compare against the mechanical Bourdon gauge (Analog) at full pressure.
+                </li>
+                <li><strong>Action:</strong> Adjust the 4-20mA scaling in the PLC if drift is linear; replace if
+                    erratic.</li>
+            </ul>
+        </div>
+
+        <div class="section-title">SOP 3: Flow Meter Hygiene</div>
+        <div class="module diagnostic">
+            <p>Silt is the enemy of ultrasonics and electromagnetics.</p>
+
+            <h3>3.1 Sensor Cleaning</h3>
+            <ul>
+                <li><strong>Type:</strong> Ultrasonic / Electromagnetic.</li>
+                <li><strong>Probelm:</strong> A layer of conductive silt or algae on the electrode faces interferes with
+                    the signal.</li>
+                <li><strong>Protocol:</strong> Remove the sensor head annually. Wipe the sensing face gently with a soft
+                    cloth and alcohol. Do NOT scratch the electrode.</li>
+            </ul>
+        </div>
+
+        <div class="section-title">Summary Checklist</div>
+        <div class="module">
+            <ul>
+                <li><strong>Monthly:</strong> Compare SCADA Temps vs. Analog Thermometers.</li>
+                <li><strong>Annually:</strong> Zero-out Pressure Transducers (During dewatering).</li>
+                <li><strong>Annually:</strong> Clean Flow Meter electrodes.</li>
+            </ul>
+        </div>
+
+        <a href="./Francis_Horizontal.html" class="back-btn">← Return to Master Manual</a>
+
+    </div>
+
+</body>
+
+</html>

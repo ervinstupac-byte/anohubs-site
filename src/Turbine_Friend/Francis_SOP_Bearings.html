@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOP: Main Bearings & Cooling System</title>
+    <style>
+        /* Shared Architecture from Francis_Horizontal.html */
+        :root {
+            --primary-color: #003366;
+            --secondary-color: #0066cc;
+            --accent-color: #d9534f;
+            --warning-color: #f0ad4e;
+            --bg-color: #f4f7f6;
+            --text-color: #333;
+            --border-color: #dde;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 40px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        header {
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+            color: var(--primary-color);
+            font-size: 28px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h2 {
+            color: var(--secondary-color);
+            font-size: 18px;
+            margin-top: 5px;
+            font-weight: 400;
+        }
+
+        .section-title {
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 10px 15px;
+            margin-top: 40px;
+            border-radius: 4px;
+            font-size: 1.2em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title::before {
+            content: "►";
+            margin-right: 10px;
+            font-size: 0.8em;
+        }
+
+        h3 {
+            color: var(--primary-color);
+            border-left: 4px solid var(--secondary-color);
+            padding-left: 10px;
+            margin-top: 25px;
+        }
+
+        .module {
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            background-color: #fafafa;
+        }
+
+        .critical {
+            border-left: 5px solid var(--accent-color);
+            background-color: #fff5f5;
+        }
+
+        .technical {
+            border-left: 5px solid var(--secondary-color);
+            background-color: #f0f7ff;
+        }
+
+        .diagnostic {
+            border-left: 5px solid var(--warning-color);
+            background-color: #fdf8e4;
+        }
+
+        ul,
+        ol {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 30px;
+            text-decoration: none;
+            color: var(--secondary-color);
+            font-weight: bold;
+            border: 1px solid var(--secondary-color);
+            padding: 10px 20px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            background-color: var(--secondary-color);
+            color: #fff;
+        }
+
+        .visual-aid {
+            border: 2px dashed #ccc;
+            padding: 15px;
+            margin: 10px 0;
+            background: #fff;
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <header>
+            <h1>Critical SOP: Main Bearings & Cooling</h1>
+            <h2>Thermal Protection & Heat Exchange Logic</h2>
+        </header>
+
+        <!-- INTRO MODULE -->
+        <div class="module critical">
+            <h3>⚠️ THE OIL FILM IS THE BEARING</h3>
+            <p><strong>Context:</strong> The heavy rotating mass of the turbine/generator floats on a microscopic film
+                of oil.</p>
+            <ul>
+                <li><strong>The Danger:</strong> If the oil gets too hot (> 60°C), its viscosity drops. Thin oil cannot
+                    support the shaft.</li>
+                <li><strong>Result:</strong> Metal-to-metal contact, catastrophic wiping of the babbit material, and
+                    prolonged shutdown.</li>
+            </ul>
+        </div>
+
+        <div class="section-title">SOP 1: Cooling Water Logic</div>
+        <div class="module technical">
+            <p>Heat is removed from the oil by the cooling water system. In silt-heavy rivers, this is the primary
+                failure point.</p>
+
+            <h3>1.1 Intake Filtration</h3>
+            <ol>
+                <li><strong>Check:</strong> Inspect the mesh filters on the cooling water intake lines daily.</li>
+                <li><strong>Clean:</strong> If pressure differential is high, remove and scrub the mesh. Silt blocks
+                    flow.</li>
+            </ol>
+
+            <h3>1.2 Heat Exchanger "Back-Flush"</h3>
+            <p>Silt accumulates inside the heat exchanger coils, acting as an insulator.</p>
+            <ul>
+                <li><strong>Protocol:</strong> Close the inlet/outlet valves. Open the "Back-Flush" bypass valves to
+                    reverse flow direction for 5 minutes. This dislodges settled sediment.</li>
+                <li><strong>Verify:</strong> Check the discharge water. It should turn from muddy to clear.</li>
+            </ul>
+        </div>
+
+        <div class="section-title">SOP 2: Oil Condition Monitoring</div>
+        <div class="module diagnostic">
+            <p>The oil speaks to you visually.</p>
+
+            <h3>2.1 Water Contamination</h3>
+            <ul>
+                <li><strong>Symptom:</strong> Oil in sight glass looks "Milky" or cloudy (like latte).</li>
+                <li><strong>Cause:</strong> Cooling water is entering the oil chamber (Seal failure or heat exchanger
+                    leak).</li>
+                <li><strong>Action:</strong> IMMEDIATE STOP. Centrifuge oil or replace. 0.1% water reduces bearing life
+                    by 50%.</li>
+            </ul>
+
+            <h3>2.2 Vibration Correlation</h3>
+            <p><strong>Note:</strong> High temperature is arguably a symptom, not a disease.</p>
+            <ul>
+                <li>If cooling is perfect but temperature rises: <strong>Check Alignment (Run-Out)</strong>.</li>
+                <li>Shaft friction creates excess heat that the cooler cannot remove.</li>
+            </ul>
+        </div>
+
+        <div class="section-title">SOP 3: Temperature Limits</div>
+        <div class="module critical">
+            <table>
+                <tr>
+                    <th>Condition</th>
+                    <th>Temp Range</th>
+                    <th>Action</th>
+                </tr>
+                <tr>
+                    <td><strong>Normal</strong></td>
+                    <td>18°C - 55°C</td>
+                    <td>Monitor.</td>
+                </tr>
+                <tr>
+                    <td><strong>Alarm</strong></td>
+                    <td>60°C</td>
+                    <td>inspect Cooling & Oil Level. Cleaning filters.</td>
+                </tr>
+                <tr>
+                    <td><strong>Trip</strong></td>
+                    <td>70°C</td>
+                    <td><strong>EMERGENCY STOP.</strong> Do not restart without inspection.</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section-title">Summary Checklist</div>
+        <div class="module">
+            <ul>
+                <li><strong>Daily:</strong> Clean cooling water filters.</li>
+                <li><strong>Weekly:</strong> "Back-flush" heat exchangers.</li>
+                <li><strong>On Alarm:</strong> Check for "Milky" oil immediately.</li>
+            </ul>
+        </div>
+
+        <a href="./Francis_Horizontal.html" class="back-btn">← Return to Master Manual</a>
+
+    </div>
+
+</body>
+
+</html>

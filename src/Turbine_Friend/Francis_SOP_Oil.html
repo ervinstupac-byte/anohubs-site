@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOP: Hydraulic Fluid Management</title>
+    <style>
+        /* Shared Architecture from Francis_Horizontal.html */
+        :root {
+            --primary-color: #003366;
+            --secondary-color: #0066cc;
+            --accent-color: #d9534f;
+            --warning-color: #f0ad4e;
+            --bg-color: #f4f7f6;
+            --text-color: #333;
+            --border-color: #dde;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 40px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        header {
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+            color: var(--primary-color);
+            font-size: 28px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h2 {
+            color: var(--secondary-color);
+            font-size: 18px;
+            margin-top: 5px;
+            font-weight: 400;
+        }
+
+        .section-title {
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 10px 15px;
+            margin-top: 40px;
+            border-radius: 4px;
+            font-size: 1.2em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title::before {
+            content: "►";
+            margin-right: 10px;
+            font-size: 0.8em;
+        }
+
+        h3 {
+            color: var(--primary-color);
+            border-left: 4px solid var(--secondary-color);
+            padding-left: 10px;
+            margin-top: 25px;
+        }
+
+        .module {
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            background-color: #fafafa;
+        }
+
+        .critical {
+            border-left: 5px solid var(--accent-color);
+            background-color: #fff5f5;
+        }
+
+        .technical {
+            border-left: 5px solid var(--secondary-color);
+            background-color: #f0f7ff;
+        }
+
+        .diagnostic {
+            border-left: 5px solid var(--warning-color);
+            background-color: #fdf8e4;
+        }
+
+        ul,
+        ol {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.95em;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: #fff;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 30px;
+            text-decoration: none;
+            color: var(--secondary-color);
+            font-weight: bold;
+            border: 1px solid var(--secondary-color);
+            padding: 10px 20px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            background-color: var(--secondary-color);
+            color: #fff;
+        }
+
+        .formula-box {
+            background: #000;
+            color: #0f0;
+            font-family: 'Courier New', monospace;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <header>
+            <h1>Critical SOP: Hydraulic Fluid Management</h1>
+            <h2>Viscosity, Temperature & Hygiene Standards</h2>
+        </header>
+
+        <!-- INTRO MODULE -->
+        <div class="module critical">
+            <h3>⚠️ THE SILT THREAT</h3>
+            <p><strong>Mechanism:</strong> Micro-particles (quartz/silt) suspended in oil act like sandpaper on valve
+                spools.</p>
+            <ul>
+                <li><strong>Consequence:</strong> "Stiction" (Static Friction). The valve jams, then suddenly releases.
+                </li>
+                <li><strong>Danger:</strong> This erratic movement destroys the stroke timing logic, leading to
+                    <strong>Water Hammer</strong>.</li>
+            </ul>
+            <div class="formula-box">
+                Risk: P = ρ · c · Δv (Rapid Δv = Pipe Rupture)
+            </div>
+        </div>
+
+        <div class="section-title">SOP 1: Fluid Specification Standards</div>
+        <div class="module technical">
+            <p>Not all hydraulic oil is created equal. You must match the fluid to the system pressure.</p>
+
+            <h3>1.1 Viscosity & Grade Selection</h3>
+            <ul>
+                <li><strong>Role:</strong> Oil must transmit power, lubricate moving parts, and dissipate heat.</li>
+                <li><strong>Selection Rule:</strong>
+                    <ul>
+                        <li><strong>Pressure &le; 12.5 MPa:</strong> Use <strong>L-HL</strong> (Protection against
+                            oxidation & rust).</li>
+                        <li><strong>Pressure > 12.5 MPa:</strong> Use <strong>L-HM</strong> (Anti-wear additives
+                            mandatory).</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="section-title">SOP 2: Hygiene & Filtration Protocol</div>
+        <div class="module technical">
+            <p>A kidney-loop filtration system or high-quality pressure filters are the only defense against silt.</p>
+
+            <h3>2.1 Monthly Filter Check</h3>
+            <ol>
+                <li><strong>Inspect:</strong> Check the "Differential Pressure" (Delta-P) indicator on the filter
+                    housing.</li>
+                <li><strong>Trigger:</strong> If the indicator enters the <strong>RED zone</strong> (typically > 3-5 bar
+                    drop), the element is saturated.</li>
+                <li><strong>Action:</strong> Replace immediately. Do not clean disposable elements.</li>
+            </ol>
+
+            <h3>2.2 Annual Lab Analysis (ISO 4406)</h3>
+            <ul>
+                <li><strong>Sample:</strong> Take 100ml from the middle of the tank (warm oil).</li>
+                <li><strong>Analyze For:</strong>
+                    <ol>
+                        <li><strong>Particle Count:</strong> Target ISO 18/16/13.</li>
+                        <li><strong>Water Content:</strong> Max 500 ppm.</li>
+                        <li><strong>TAN (Total Acid Number):</strong> Check for oxidation.</li>
+                    </ol>
+                </li>
+            </ul>
+        </div>
+
+        <div class="section-title">SOP 3: Temperature Operating Window</div>
+        <div class="module diagnostic">
+            <p>Oil viscosity changes with heat. Too hot = too thin (leaks). Too cold = too thick (cavitation/sluggish).
+            </p>
+            <ul>
+                <li><strong>The Golden Window:</strong> Keep bearing and tank temperatures between <strong>18°C and
+                        60°C</strong>.</li>
+                <li><strong>Cold Start:</strong> If temp &lt; 15°C, use tank heaters before starting pumps.</li>
+                <li><strong>Overheat:</strong> If temp > 60°C, oil degrades rapidly (oxidation doubles every 10°C).
+                    Check cooling water flow.</li>
+            </ul>
+        </div>
+
+        <div class="section-title">Technical Audit Reference Table</div>
+        <div class="module">
+            <p>Use this table for routine plant rounds.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Frequency</th>
+                        <th>Method / Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Oil Level</strong></td>
+                        <td>Daily</td>
+                        <td>Check sight glass. Top up if below midpoint.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Filter Status</strong></td>
+                        <td>Monthly</td>
+                        <td>Check Delta-P indicator. Replace if Red.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Water Contamination</strong></td>
+                        <td>Annual</td>
+                        <td>Lab Analysis or "Crackle Test" on hot plate.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Temperature</strong></td>
+                        <td>Daily</td>
+                        <td>Log HPU & Bearing temps. Target: 18°C - 60°C.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <a href="./Francis_Horizontal.html" class="back-btn">← Return to Master Manual</a>
+
+    </div>
+
+</body>
+
+</html>

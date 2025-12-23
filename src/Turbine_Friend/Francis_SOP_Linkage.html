@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOP: Governor & Vane Linkage</title>
+    <style>
+        /* Shared Architecture from Francis_Horizontal.html */
+        :root {
+            --primary-color: #003366;
+            --secondary-color: #0066cc;
+            --accent-color: #d9534f;
+            --warning-color: #f0ad4e;
+            --bg-color: #f4f7f6;
+            --text-color: #333;
+            --border-color: #dde;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 40px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        header {
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+            color: var(--primary-color);
+            font-size: 28px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h2 {
+            color: var(--secondary-color);
+            font-size: 18px;
+            margin-top: 5px;
+            font-weight: 400;
+        }
+
+        .section-title {
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 10px 15px;
+            margin-top: 40px;
+            border-radius: 4px;
+            font-size: 1.2em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title::before {
+            content: "►";
+            margin-right: 10px;
+            font-size: 0.8em;
+        }
+
+        h3 {
+            color: var(--primary-color);
+            border-left: 4px solid var(--secondary-color);
+            padding-left: 10px;
+            margin-top: 25px;
+        }
+
+        .module {
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            background-color: #fafafa;
+        }
+
+        .critical {
+            border-left: 5px solid var(--accent-color);
+            background-color: #fff5f5;
+        }
+
+        .technical {
+            border-left: 5px solid var(--secondary-color);
+            background-color: #f0f7ff;
+        }
+
+        .diagnostic {
+            border-left: 5px solid var(--warning-color);
+            background-color: #fdf8e4;
+        }
+
+        ul,
+        ol {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 30px;
+            text-decoration: none;
+            color: var(--secondary-color);
+            font-weight: bold;
+            border: 1px solid var(--secondary-color);
+            padding: 10px 20px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            background-color: var(--secondary-color);
+            color: #fff;
+        }
+
+        .visual-aid {
+            border: 2px dashed #ccc;
+            padding: 15px;
+            margin: 10px 0;
+            background: #fff;
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <header>
+            <h1>Critical SOP: Governor & Guide Vane Linkage</h1>
+            <h2>Mechanical Synchronization & Transmission</h2>
+        </header>
+
+        <!-- INTRO MODULE -->
+        <div class="module critical">
+            <h3>⚠️ THE COST OF BACKLASH</h3>
+            <p><strong>Context:</strong> The hydraulic piston (Servomotor) pushes the Regulating Ring, which rotates all
+                20 guide vanes simultaneously to control water flow.</p>
+            <ul>
+                <li><strong>The Risk:</strong> If the linkage pins have "play" (wear), the vanes will flutter.</li>
+                <li><strong>Equation:</strong> 1mm of pin wear = ~5% loss in vane synchronization. This leads to
+                    efficiency loss and hunting.</li>
+            </ul>
+        </div>
+
+        <div class="section-title">SOP 1: Linkage Logic & Inspection</div>
+        <div class="module technical">
+            <p>The system is a chain. A chain is only as strong as its weakest link (pin).</p>
+
+            <h3>1.1 Transmission Path</h3>
+            <p>Servomotor → Regulating Ring → Linkage Arms (20x) → Guide Vane Stems.</p>
+
+            <h3>1.2 Bushing & Pin Check</h3>
+            <ol>
+                <li><strong>Static Check:</strong> With the unit stopped and pressure released, grab each linkage arm by
+                    hand.</li>
+                <li><strong>Push/Pull:</strong> Attempt to wiggle the arm.</li>
+                <li><strong>Result:</strong>
+                    <ul>
+                        <li><strong>Pass:</strong> Zero palpable movement. Solid.</li>
+                        <li><strong>Fail:</strong> "Clicking" sound or visible movement. Replace bushing immediately.
+                        </li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+
+        <div class="section-title">SOP 2: Lubrication Audit</div>
+        <div class="module technical">
+            <p>Friction causes the governor to "hunt" (unstable power). Grease is the stabilizer.</p>
+
+            <h3>2.1 Central Greasing System</h3>
+            <ul>
+                <li><strong>Audit:</strong> Verify the central pump is building pressure (typically 150-200 bar).</li>
+                <li><strong>Visual Confirmation:</strong> Inspect all 20 guide vane stems. You should see a
+                    <strong>fresh collar of grease</strong> purging from the seals.</li>
+                <li><strong>Blockage:</strong> If one bearing is dry while others purge, the dosage valve is blocked.
+                    Clear it manually.</li>
+            </ul>
+        </div>
+
+        <div class="section-title">SOP 3: The Friction "Swing Test"</div>
+        <div class="module diagnostic">
+            <p>This test confirms the entire mechanism "floats" freely.</p>
+
+            <h3>3.1 Procedure</h3>
+            <ol>
+                <li><strong>Safety:</strong> Unit stopped. MIV Closed. <strong>Mechanical Safety Pin REMOVED</strong>
+                    (Control risk!).</li>
+                <li><strong>Disconnect:</strong> Uncouple the servomotor piston from the regulating ring.</li>
+                <li><strong>Manual Swing:</strong> Two technicians should be able to push the regulating ring by hand
+                    from 0% to 100% open.</li>
+                <li><strong>Criteria:</strong> Movement must be smooth. No "binding", "hard spots", or "jumping".</li>
+            </ol>
+            <div class="visual-aid">
+                Diagnosis: If the ring binds at a specific spot, a guide vane is bent or a debris rock is lodged in the
+                casing.
+            </div>
+        </div>
+
+        <div class="section-title">Summary Checklist</div>
+        <div class="module">
+            <ul>
+                <li><strong>Monthly:</strong> Check for "Grease Collars" on all 20 vanes.</li>
+                <li><strong>Annually:</strong> Perform Manual "Swing Test" to check friction.</li>
+                <li><strong>On Overhaul:</strong> Replace all shear pins and bushings if > 0.1mm play detected.</li>
+            </ul>
+        </div>
+
+        <a href="./Francis_Horizontal.html" class="back-btn">← Return to Master Manual</a>
+
+    </div>
+
+</body>
+
+</html>

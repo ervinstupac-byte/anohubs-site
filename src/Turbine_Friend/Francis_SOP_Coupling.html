@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOP: Coupling & Shaft Alignment</title>
+    <style>
+        /* Shared Architecture from Francis_Horizontal.html */
+        :root {
+            --primary-color: #003366;
+            --secondary-color: #0066cc;
+            --accent-color: #d9534f;
+            --warning-color: #f0ad4e;
+            --bg-color: #f4f7f6;
+            --text-color: #333;
+            --border-color: #dde;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 40px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        header {
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+            color: var(--primary-color);
+            font-size: 28px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h2 {
+            color: var(--secondary-color);
+            font-size: 18px;
+            margin-top: 5px;
+            font-weight: 400;
+        }
+
+        .section-title {
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 10px 15px;
+            margin-top: 40px;
+            border-radius: 4px;
+            font-size: 1.2em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title::before {
+            content: "►";
+            margin-right: 10px;
+            font-size: 0.8em;
+        }
+
+        h3 {
+            color: var(--primary-color);
+            border-left: 4px solid var(--secondary-color);
+            padding-left: 10px;
+            margin-top: 25px;
+        }
+
+        .module {
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            background-color: #fafafa;
+        }
+
+        .critical {
+            border-left: 5px solid var(--accent-color);
+            background-color: #fff5f5;
+        }
+
+        .technical {
+            border-left: 5px solid var(--secondary-color);
+            background-color: #f0f7ff;
+        }
+
+        .diagnostic {
+            border-left: 5px solid var(--warning-color);
+            background-color: #fdf8e4;
+        }
+
+        ul,
+        ol {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 30px;
+            text-decoration: none;
+            color: var(--secondary-color);
+            font-weight: bold;
+            border: 1px solid var(--secondary-color);
+            padding: 10px 20px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            background-color: var(--secondary-color);
+            color: #fff;
+        }
+
+        .visual-aid {
+            border: 2px dashed #ccc;
+            padding: 15px;
+            margin: 10px 0;
+            background: #fff;
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <header>
+            <h1>Critical SOP: Coupling & Shaft Alignment</h1>
+            <h2>Ref: 1.3 MW Units | The "Zero Stress" Objective</h2>
+        </header>
+
+        <!-- INTRO MODULE -->
+        <div class="module critical">
+            <h3>⚠️ THE FOUNDATION SHIFT RISK</h3>
+            <p><strong>Context:</strong> Since 2014, the powerhouse foundation has likely settled. For a horizontal unit
+                spinning at 750/1000 RPM, the margin for error is microscopic.</p>
+            <ul>
+                <li><strong>The Threat:</strong> A vertical foundation shift of just <strong>0.1mm</strong> creates a
+                    permanent bending force ("Cyclic Loading") on the shaft.</li>
+                <li><strong>Result:</strong> Fatigue failure of the shaft or catastrophic bearing seizure.</li>
+            </ul>
+        </div>
+
+        <div class="section-title">SOP 1: Alignment Logic</div>
+        <div class="module technical">
+            <p>We are fighting two types of misalignment. Both must be eliminated.</p>
+            <ul>
+                <li><strong>1. Parallel (Offset):</strong> The generator shaft axis is higher/lower or left/right of the
+                    turbine axis.</li>
+                <li><strong>2. Angular (Gap):</strong> The faces of the coupling are not parallel (open at the top or
+                    side).</li>
+            </ul>
+            <div class="visual-aid">
+                Goal: When the bolts are tight, the shaft should naturally "float" in the bearings, not be forced there.
+            </div>
+        </div>
+
+        <div class="section-title">SOP 2: Precision Measurement (Rim & Face)</div>
+        <div class="module technical">
+            <p><strong>Method:</strong> Use a Dial Indicator with a magnetic base clamped to one shaft hub, measuring
+                the other.</p>
+
+            <h3>2.1 The Procedure</h3>
+            <ol>
+                <li><strong>Setup:</strong> Clean the coupling flanges. Mount the dial indicator to read the
+                    <strong>Rim</strong> (Radial/Parallel) and the <strong>Face</strong> (Axial/Angular).</li>
+                <li><strong>Rotate:</strong> Rotate both shafts together (if coupled) or the generator shaft (if
+                    uncoupled) in 90° increments (12:00, 3:00, 6:00, 9:00).</li>
+                <li><strong>Calculate:</strong> Record the Total Indicated Reading (TIR). Halve the TIR to get the
+                    actual offset.</li>
+            </ol>
+
+            <h3>2.2 The Target Tolerance</h3>
+            <ul>
+                <li><strong>Pass:</strong> Misalignment &le; <strong>0.05 mm</strong>.</li>
+                <li><strong>Fail:</strong> Misalignment > 0.05 mm. Shims must be added/removed from generator feet.</li>
+            </ul>
+        </div>
+
+        <div class="section-title">SOP 3: Coupling Bolt Integrity</div>
+        <div class="module technical">
+            <p>A loose coupling bolt destroys the flange holes ("ovaling"), rendering the shaft scrap.</p>
+
+            <h3>3.1 Inspection & Torque</h3>
+            <ul>
+                <li><strong>Rubber Elements:</strong> If flexible pin coupling, inspect rubber bushes for cracking/dry
+                    rot. Replace as a full set.</li>
+                <li><strong>Rigid Bolts:</strong> Inspect fit. Bolts must be a "Transition Fit" (Zero play).</li>
+                <li><strong>Chemical Locking:</strong>
+                    <ul>
+                        <li>Vibration is constant. Mechanical washers are insufficient.</li>
+                        <li><strong>Standard:</strong> Apply <strong>Loctite 243 (Blue)</strong> to threads during final
+                            torque sequence.</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="section-title">SOP 4: Symptom Awareness</div>
+        <div class="module diagnostic">
+            <p>How do you know if alignment has drifted before the shaft breaks?</p>
+
+            <h3>4.1 The "Coupling Hum"</h3>
+            <ul>
+                <li><strong>Sound:</strong> A distinct, low-frequency "Growl" or "Hum" coming specifically from the
+                    coupling guard area.</li>
+                <li><strong>Vibration:</strong> High <strong>1X RPM</strong> vibration signature in the Radial
+                    direction.</li>
+            </ul>
+
+            <h3>4.2 The "Hot Bearing" Sign</h3>
+            <ul>
+                <li><strong>Symptom:</strong> The bearing <em>closest</em> to the coupling runs 5-10°C hotter than the
+                    outboard bearing.</li>
+                <li><strong>Cause:</strong> The coupling is physically lifting or pushing down on that specific bearing,
+                    breaking the oil film.</li>
+            </ul>
+        </div>
+
+        <div class="section-title">Summary Checklist</div>
+        <div class="module">
+            <ul>
+                <li><strong>Every 6 Months:</strong> Check Rim & Face Alignment.</li>
+                <li><strong>Annually:</strong> Replace Rubber Coupling Elements (if flexible).</li>
+                <li><strong>Consumable:</strong> Loctite 243 (Blue) always in stock.</li>
+            </ul>
+        </div>
+
+        <a href="./Francis_Horizontal.html" class="back-btn">← Return to Master Manual</a>
+
+    </div>
+
+</body>
+
+</html>
