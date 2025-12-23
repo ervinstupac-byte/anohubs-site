@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAFETY SYSTEM INTEGRITY - HPU & ESD</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background-color: #0d0d0d;
+            color: #e5e5e5;
+        }
+
+        .safety-panel {
+            border: 1px solid #dc2626;
+            box-shadow: 0 0 10px rgba(220, 38, 38, 0.2);
+        }
+
+        .safety-header {
+            background-color: #1f0a0a;
+            border-bottom: 2px solid #dc2626;
+        }
+
+        .status-led {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+            box-shadow: 0 0 5px currentColor;
+        }
+
+        .led-green {
+            background-color: #22c55e;
+            color: #22c55e;
+        }
+
+        .led-red {
+            background-color: #ef4444;
+            color: #ef4444;
+        }
+
+        .led-amber {
+            background-color: #f59e0b;
+            color: #f59e0b;
+        }
+
+        .checklist-item {
+            transition: all 0.2s;
+        }
+
+        .checklist-item:hover {
+            background-color: #1a0505;
+        }
+    </style>
+</head>
+
+<body class="p-6 max-w-7xl mx-auto">
+
+    <!-- Header -->
+    <header class="mb-8 flex justify-between items-center border-b border-red-800 pb-4">
+        <div>
+            <h1 class="text-3xl font-bold text-red-500 flex items-center gap-3">
+                <i data-lucide="shield-alert"></i> SAFETY SYSTEM INTEGRITY
+            </h1>
+            <p class="text-gray-400 mt-1">CRITICAL CONTROL: HPU, ESD & FAIL-SAFE LOGIC</p>
+        </div>
+        <div class="text-right">
+            <div
+                class="inline-flex items-center gap-2 px-3 py-1 rounded bg-red-900/30 border border-red-700 text-red-400">
+                <span class="status-led led-red animate-pulse"></span> SYSTEM ARMED
+            </div>
+            <div class="text-xs text-gray-500 mt-1">REDUNDANCY ACTIVE</div>
+        </div>
+    </header>
+
+    <!-- Main Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <!-- Column 1: Nitrogen Energy (The Spring) -->
+        <div class="safety-panel rounded-lg overflow-hidden bg-zinc-900">
+            <div class="safety-header p-4">
+                <h2 class="text-xl font-bold text-red-400 flex items-center gap-2">
+                    <i data-lucide="zap"></i> N2 ACCUMULATORS
+                </h2>
+                <div class="text-xs text-gray-500 mt-1">STORED HYDRAULIC ENERGY</div>
+            </div>
+            <div class="p-4 space-y-4">
+                <div class="p-3 bg-zinc-800/50 rounded border border-zinc-700">
+                    <h3 class="text-sm font-bold text-gray-300">PRE-CHARGE VERIFICATION</h3>
+                    <p class="text-xs text-gray-400 my-2">Nitrogen pressure must match design curve relative to oil
+                        temperature.</p>
+                    <ul class="text-xs space-y-2 text-gray-400">
+                        <li class="flex justify-between"><span>Design P0 (20°C):</span> <strong class="text-white">125
+                                Bar</strong></li>
+                        <li class="flex justify-between"><span>Min Alarm:</span> <strong class="text-red-400">110
+                                Bar</strong></li>
+                        <li class="flex justify-between"><span>Bladder State:</span> <strong
+                                class="text-yellow-400">Integral</strong></li>
+                    </ul>
+                </div>
+
+                <div class="checklist-item p-3 rounded border border-dotted border-red-800 cursor-pointer hover:border-red-500"
+                    onclick="toggleCheck(this)">
+                    <div class="flex items-center gap-3">
+                        <div class="w-5 h-5 border border-gray-500 rounded flex items-center justify-center check-box">
+                        </div>
+                        <span class="text-sm text-gray-300">Gas Bank Isolation Test</span>
+                    </div>
+                </div>
+                <div class="checklist-item p-3 rounded border border-dotted border-red-800 cursor-pointer hover:border-red-500"
+                    onclick="toggleCheck(this)">
+                    <div class="flex items-center gap-3">
+                        <div class="w-5 h-5 border border-gray-500 rounded flex items-center justify-center check-box">
+                        </div>
+                        <span class="text-sm text-gray-300">P0 Pressure Audit (Monthly)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Column 2: ESD / Gravity (The Fail-Safe) -->
+        <div class="safety-panel rounded-lg overflow-hidden bg-zinc-900">
+            <div class="safety-header p-4">
+                <h2 class="text-xl font-bold text-red-400 flex items-center gap-2">
+                    <i data-lucide="anchor"></i> ESD & GRAVITY
+                </h2>
+                <div class="text-xs text-gray-500 mt-1">EMERGENCY SHUTDOWN LOGIC</div>
+            </div>
+            <div class="p-4 space-y-4">
+                <div class="p-3 bg-zinc-800/50 rounded border border-zinc-700">
+                    <h3 class="text-sm font-bold text-gray-300">COUNTERWEIGHT DROP</h3>
+                    <p class="text-xs text-gray-400 my-2">Upon loss of electrical power or ESD trip, gravity must close
+                        guide vanes.</p>
+                    <div class="w-full bg-gray-800 rounded-full h-2 mb-1">
+                        <div class="bg-red-600 h-2 rounded-full" style="width: 85%"></div>
+                    </div>
+                    <div class="flex justify-between text-xs text-gray-500">
+                        <span>Speed</span>
+                        <span>
+                            < 12.0s Complete Closure</span>
+                    </div>
+                </div>
+
+                <div class="checklist-item p-3 rounded border border-dotted border-red-800 cursor-pointer hover:border-red-500"
+                    onclick="toggleCheck(this)">
+                    <div class="flex items-center gap-3">
+                        <div class="w-5 h-5 border border-gray-500 rounded flex items-center justify-center check-box">
+                        </div>
+                        <span class="text-sm text-gray-300">Verify Solenoid "De-Energize"</span>
+                    </div>
+                </div>
+                <div class="checklist-item p-3 rounded border border-dotted border-red-800 cursor-pointer hover:border-red-500"
+                    onclick="toggleCheck(this)">
+                    <div class="flex items-center gap-3">
+                        <div class="w-5 h-5 border border-gray-500 rounded flex items-center justify-center check-box">
+                        </div>
+                        <span class="text-sm text-gray-300">Mechanical Linkage Free-Movement</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Column 3: Hose Integrity (The Veins) -->
+        <div class="safety-panel rounded-lg overflow-hidden bg-zinc-900">
+            <div class="safety-header p-4">
+                <h2 class="text-xl font-bold text-red-400 flex items-center gap-2">
+                    <i data-lucide="activity"></i> HOSE INTEGRITY
+                </h2>
+                <div class="text-xs text-gray-500 mt-1">HIGH PRESSURE CONTAINMENT</div>
+            </div>
+            <div class="p-4 space-y-4">
+                <div class="grid grid-cols-2 gap-2 text-xs">
+                    <div class="bg-zinc-800 p-2 rounded text-center">
+                        <div class="text-gray-500">Replaced</div>
+                        <div class="text-white font-bold">2023</div>
+                    </div>
+                    <div class="bg-zinc-800 p-2 rounded text-center">
+                        <div class="text-gray-500">Next Due</div>
+                        <div class="text-red-400 font-bold">2028</div>
+                    </div>
+                </div>
+
+                <div class="p-3 bg-red-900/10 rounded border border-red-800/30">
+                    <h3 class="text-sm font-bold text-red-400">CRITICAL INSPECTION</h3>
+                    <ul class="text-xs space-y-1 mt-2 text-gray-300 list-disc list-inside">
+                        <li>Bubbling on outer sheath</li>
+                        <li>Weeping at crimp collars</li>
+                        <li>Abrasion from vibration</li>
+                    </ul>
+                </div>
+
+                <div class="checklist-item p-3 rounded border border-dotted border-red-800 cursor-pointer hover:border-red-500"
+                    onclick="toggleCheck(this)">
+                    <div class="flex items-center gap-3">
+                        <div class="w-5 h-5 border border-gray-500 rounded flex items-center justify-center check-box">
+                        </div>
+                        <span class="text-sm text-gray-300">Monthly Visual Survey Completed</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Action -->
+    <div class="mt-8 flex justify-center">
+        <a href="Francis_Horizontal_Dashboard.html"
+            class="bg-zinc-800 hover:bg-zinc-700 text-gray-300 px-6 py-3 rounded border border-gray-600 transition flex items-center gap-2 font-bold uppercase tracking-wide">
+            <i data-lucide="layout-dashboard"></i> Return to Dashboard
+        </a>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        function toggleCheck(element) {
+            const box = element.querySelector('.check-box');
+            if (box.innerHTML === '') {
+                box.innerHTML = '<i data-lucide="check" class="w-3 h-3 text-red-500"></i>';
+                box.classList.add('border-red-500');
+                element.classList.add('bg-red-900/10');
+                lucide.createIcons();
+            } else {
+                box.innerHTML = '';
+                box.classList.remove('border-red-500');
+                element.classList.remove('bg-red-900/10');
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="bs">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOP: Sistem Rashladne Vode</title>
+    <title>SOP: COOLING WATER SYSTEM</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
@@ -13,98 +13,130 @@
         body {
             font-family: 'JetBrains Mono', monospace;
             background-color: #0c0a09;
-            color: #a8a29e;
+            /* Industrial Dark Mode */
+            color: #d6d3d1;
         }
 
-        .section-card {
+        .procedure-card {
+            background: #1c1917;
+            border: 1px solid #292524;
+            padding: 24px;
+            margin-bottom: 16px;
+            border-left: 4px solid #44403c;
+        }
+
+        .procedure-card.critical {
+            border-left-color: #dc2626;
+            background: #2a1210;
+        }
+
+        .step-num {
+            color: #3b82f6;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .btn-return {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
             background: #1c1917;
             border: 1px solid #44403c;
+            color: #78716c;
+            padding: 8px 16px;
+            font-size: 12px;
+            text-transform: uppercase;
+            font-weight: bold;
+            border-radius: 4px;
             transition: all 0.2s;
         }
 
-        .section-card:hover {
-            border-color: #06b6d4;
-            transform: translateY(-2px);
+        .btn-return:hover {
+            border-color: #3b82f6;
+            color: white;
         }
     </style>
 </head>
 
-<body class="p-6 md:p-12 max-w-5xl mx-auto">
+<body class="p-6 md:p-12 max-w-4xl mx-auto">
 
     <!-- Header -->
-    <header class="flex justify-between items-center mb-10 border-b border-stone-800 pb-6">
+    <header class="mb-10 pb-6 border-b border-stone-800 flex justify-between items-start">
         <div>
-            <h1 class="text-3xl font-bold text-cyan-500 flex items-center gap-3">
-                <i data-lucide="snowflake"></i> SISTEM RASHLADNE VODE
-            </h1>
-            <p class="text-stone-500 font-mono text-xs mt-1">Filtracija Sirove Vode & Izmjenjivači Toplote</p>
+            <div class="flex items-center gap-2 mb-2">
+                <span
+                    class="px-2 py-1 rounded bg-blue-900/30 text-blue-400 text-[10px] font-bold border border-blue-900 uppercase">SOP-AUX-001</span>
+                <span class="text-[10px] text-stone-500 uppercase font-bold">REV 1.8</span>
+            </div>
+            <h1 class="text-3xl font-bold text-white mb-2" data-i18n="title">COOLING WATER SYSTEM</h1>
+            <p class="text-stone-500 text-sm" data-i18n="subtitle">Raw Water Filtration & Heat Exchangers</p>
         </div>
-        <a href="Francis_Horizontal_Dashboard.html"
-            class="text-xs text-stone-500 hover:text-white transition flex items-center gap-1">
-            <i data-lucide="layout-dashboard"></i> OPERATIVNI CENTAR
+
+        <a href="Francis_Horizontal_Dashboard.html" class="btn-return">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i> <span data-i18n="return">Back to Dashboard</span>
         </a>
     </header>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <!-- Content -->
+    <div class="space-y-6">
 
-        <!-- Strainer Logic -->
-        <div class="section-card p-6 rounded">
+        <!-- 1. Auto Strainers -->
+        <div class="procedure-card">
             <div class="flex justify-between items-start mb-4">
-                <h2 class="text-xl font-bold text-white flex items-center gap-2">
-                    <i data-lucide="filter"></i> AUTO-FILTERI
-                </h2>
-                <span
-                    class="text-xs font-bold bg-green-900/30 text-green-400 px-2 py-1 rounded border border-green-800">STATUS:
-                    ČISTO</span>
+                <h3 class="text-white font-bold flex items-center gap-2" data-i18n="s1_title">
+                    <i data-lucide="filter" class="w-4 h-4 text-cyan-500"></i> AUTO-STRAINERS
+                </h3>
+                <span class="text-xs font-bold bg-green-900/30 text-green-400 px-2 py-1 rounded border border-green-800"
+                    data-i18n="status_clean">STATUS: CLEAN</span>
             </div>
 
-            <div class="space-y-4 text-sm mt-6">
+            <div class="space-y-4 text-sm mt-2">
                 <div class="flex justify-between items-center bg-stone-900 p-3 rounded border border-stone-800">
-                    <span class="text-stone-400">Diferencijalni Pritisak (dP)</span>
+                    <span class="text-stone-400" data-i18n="dp_val">Differential Pressure (dP)</span>
                     <span class="text-white font-mono">0.12 Bar</span>
                 </div>
 
                 <div class="p-3 bg-cyan-900/10 border border-cyan-800/30 rounded">
-                    <h3 class="text-cyan-400 font-bold text-xs uppercase mb-2">Logika Ispiranja</h3>
+                    <strong class="text-cyan-400 font-bold text-xs uppercase mb-2 block"
+                        data-i18n="flush_logic">Flushing Logic</strong>
                     <ul class="text-xs text-stone-400 space-y-1">
-                        <li>• Okidač: dP > 0.5 Bar ILI Tajmer (12 h)</li>
-                        <li>• Akcija: Motor rotira četku, Ventil odvoda otvoren 15s</li>
-                        <li>• <span class="text-red-400">Greška Zaglavljivanja:</span> Struja Motora > 5A</li>
+                        <li data-i18n="trig">• Trigger: dP > 0.5 Bar OR Timer (12 h)</li>
+                        <li data-i18n="act">• Action: Motor rotates brush, Drain valve open 15s</li>
+                        <li data-i18n="jam"><span class="text-red-400">• Jam Error:</span> Motor Current > 5A</li>
                     </ul>
                 </div>
             </div>
         </div>
 
-        <!-- Heat Exchanger Flow -->
-        <div class="section-card p-6 rounded">
+        <!-- 2. Heat Exchangers -->
+        <div class="procedure-card">
             <div class="flex justify-between items-start mb-4">
-                <h2 class="text-xl font-bold text-white flex items-center gap-2">
-                    <i data-lucide="thermometer-snowflake"></i> HLADNJACI
-                </h2>
-                <span
-                    class="text-xs font-bold bg-cyan-900/30 text-cyan-400 px-2 py-1 rounded border border-cyan-800">ULAZ:
-                    12°C</span>
+                <h3 class="text-white font-bold flex items-center gap-2" data-i18n="s2_title">
+                    <i data-lucide="thermometer-snowflake" class="w-4 h-4 text-cyan-500"></i> COOLERS (FLOW)
+                </h3>
+                <span class="text-xs font-bold bg-cyan-900/30 text-cyan-400 px-2 py-1 rounded border border-cyan-800"
+                    data-i18n="inlet_temp">INLET: 12°C</span>
             </div>
 
             <div class="bg-stone-900 p-3 rounded border border-stone-800 text-sm space-y-2">
                 <div class="flex justify-between items-center border-b border-stone-800 pb-2">
-                    <span class="text-stone-400">Hladnjaci Zraka Generatora</span>
+                    <span class="text-stone-400" data-i18n="col1">Generator Air Coolers</span>
                     <span class="text-white font-mono">1,200 L/min</span>
                 </div>
                 <div class="flex justify-between items-center border-b border-stone-800 pb-2">
-                    <span class="text-stone-400">Hladnjak Ulja Aksijalnog Ležaja</span>
+                    <span class="text-stone-400" data-i18n="col2">Thrust Bearing Oil Cooler</span>
                     <span class="text-white font-mono">450 L/min</span>
                 </div>
                 <div class="flex justify-between items-center">
-                    <span class="text-stone-400">Hladnjak Ulja Vodećeg Ležaja</span>
+                    <span class="text-stone-400" data-i18n="col3">Guide Bearing Oil Cooler</span>
                     <span class="text-white font-mono">150 L/min</span>
                 </div>
             </div>
 
             <div class="mt-4 p-3 bg-stone-800 rounded">
                 <div class="flex justify-between text-xs mb-1">
-                    <span class="text-stone-500">Status Protokola</span>
-                    <span class="text-green-500 font-bold">ISPRAVNO</span>
+                    <span class="text-stone-500" data-i18n="proto_stat">Protocol Status</span>
+                    <span class="text-green-500 font-bold" data-i18n="healthy">HEALTHY</span>
                 </div>
                 <div class="w-full bg-stone-700 h-1 rounded-full overflow-hidden">
                     <div class="bg-cyan-500 h-full w-[80%]"></div>
@@ -112,34 +144,98 @@
             </div>
         </div>
 
-    </div>
-
-    <!-- Mixing Valve Logic -->
-    <div class="mt-8 section-card p-6 rounded">
-        <h2 class="text-lg font-bold text-stone-300 mb-4 flex items-center gap-2">
-            <i data-lucide="git-merge"></i> REGULACIJA TEMPERATURE (3-KRAKI VENTIL)
-        </h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
-            <div class="p-3 border border-stone-700 rounded text-center">
-                <div class="text-stone-500 text-xs uppercase mb-1">Zimski Mod</div>
-                <div class="text-cyan-300 font-bold">RECIRKULACIJA</div>
-                <p class="text-[10px] text-stone-500 mt-1">Sprečava pothlađivanje ulja (< 35°C)</p>
-            </div>
-            <div class="p-3 border border-stone-700 rounded text-center">
-                <div class="text-stone-500 text-xs uppercase mb-1">Ljetni Mod</div>
-                <div class="text-blue-500 font-bold">PUNO HLAĐENJE</div>
-                <p class="text-[10px] text-stone-500 mt-1">Ciljna temp ulja 45°C</p>
-            </div>
-            <div class="p-3 border border-stone-700 rounded text-center bg-red-900/10 border-red-900/50">
-                <div class="text-red-400 text-xs uppercase mb-1">Kvar</div>
-                <div class="text-red-500 font-bold">RUČNI BAJPAS</div>
-                <p class="text-[10px] text-stone-500 mt-1">Ako aktuator ventila otkaže</p>
+        <!-- 3. Temp Regulation -->
+        <div class="procedure-card">
+            <h3 class="text-white font-bold mb-4 flex items-center gap-2" data-i18n="s3_title">
+                <i data-lucide="git-merge" class="w-4 h-4 text-stone-400"></i> TEMP REGULATION (3-WAY VALVE)
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
+                <div class="p-3 border border-stone-700 rounded text-center">
+                    <div class="text-stone-500 text-xs uppercase mb-1" data-i18n="mode_winter">Winter Mode</div>
+                    <div class="text-cyan-300 font-bold" data-i18n="mode_rec">RECIRCULATION</div>
+                    <p class="text-[10px] text-stone-500 mt-1" data-i18n="desc_winter">Prevents overcooling (< 35°C)</p>
+                </div>
+                <div class="p-3 border border-stone-700 rounded text-center">
+                    <div class="text-stone-500 text-xs uppercase mb-1" data-i18n="mode_summer">Summer Mode</div>
+                    <div class="text-blue-500 font-bold" data-i18n="mode_full">FULL COOLING</div>
+                    <p class="text-[10px] text-stone-500 mt-1" data-i18n="desc_summer">Target oil temp 45°C</p>
+                </div>
+                <div class="p-3 border border-stone-700 rounded text-center bg-red-900/10 border-red-900/50">
+                    <div class="text-red-400 text-xs uppercase mb-1" data-i18n="mode_fail">Failure</div>
+                    <div class="text-red-500 font-bold" data-i18n="mode_man">MANUAL BYPASS</div>
+                    <p class="text-[10px] text-stone-500 mt-1" data-i18n="desc_fail">If valve actuator fails</p>
+                </div>
             </div>
         </div>
+
     </div>
 
+    <!-- Hidden Translation Data -->
     <script>
         lucide.createIcons();
+        const ml = localStorage.getItem('anohub_lang_pref') || 'en';
+
+        const i18n = {
+            en: {
+                title: "COOLING WATER SYSTEM",
+                subtitle: "Raw Water Filtration & Heat Exchangers",
+                return: "Back to Dashboard",
+
+                s1_title: "AUTO-STRAINERS",
+                status_clean: "STATUS: CLEAN",
+                dp_val: "Differential Pressure (dP)",
+                flush_logic: "Flushing Logic",
+                trig: "• Trigger: dP > 0.5 Bar OR Timer (12 h)",
+                act: "• Action: Motor rotates brush, Drain valve open 15s",
+                jam: "• Jam Error: Motor Current > 5A",
+
+                s2_title: "COOLERS (FLOW)",
+                inlet_temp: "INLET: 12°C",
+                col1: "Generator Air Coolers",
+                col2: "Thrust Bearing Oil Cooler",
+                col3: "Guide Bearing Oil Cooler",
+                proto_stat: "Protocol Status",
+                healthy: "HEALTHY",
+
+                s3_title: "TEMP REGULATION (3-WAY VALVE)",
+                mode_winter: "Winter Mode", mode_rec: "RECIRCULATION", desc_winter: "Prevents overcooling (< 35°C)",
+                mode_summer: "Summer Mode", mode_full: "FULL COOLING", desc_summer: "Target oil temp 45°C",
+                mode_fail: "Failure", mode_man: "MANUAL BYPASS", desc_fail: "If valve actuator fails"
+            },
+            bs: {
+                title: "SISTEM RASHLADNE VODE",
+                subtitle: "Filtracija Sirove Vode & Izmjenjivači Toplote",
+                return: "Povratak na Kontrolnu Tablu",
+
+                s1_title: "AUTO-FILTERI",
+                status_clean: "STATUS: ČISTO",
+                dp_val: "Diferencijalni Pritisak (dP)",
+                flush_logic: "Logika Ispiranja",
+                trig: "• Okidač: dP > 0.5 Bar ILI Tajmer (12 h)",
+                act: "• Akcija: Motor rotira četku, Ventil odvoda otvoren 15s",
+                jam: "• Greška Zaglavljivanja: Struja Motora > 5A",
+
+                s2_title: "HLADNJACI (PROTOK)",
+                inlet_temp: "ULAZ: 12°C",
+                col1: "Hladnjaci Zraka Generatora",
+                col2: "Hladnjak Ulja Aksijalnog Ležaja",
+                col3: "Hladnjak Ulja Vodećeg Ležaja",
+                proto_stat: "Status Protokola",
+                healthy: "ISPRAVNO",
+
+                s3_title: "REGULACIJA TEMPERATURE (3-KRAKI VENTIL)",
+                mode_winter: "Zimski Mod", mode_rec: "RECIRKULACIJA", desc_winter: "Sprečava pothlađivanje ulja (< 35°C)",
+                mode_summer: "Ljetni Mod", mode_full: "PUNO HLAĐENJE", desc_summer: "Ciljna temp ulja 45°C",
+                mode_fail: "Kvar", mode_man: "RUČNI BAJPAS", desc_fail: "Ako aktuator ventila otkaže"
+            }
+        };
+
+        if (ml === 'bs') {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (i18n.bs[key]) el.innerText = i18n.bs[key];
+            });
+        }
     </script>
 </body>
 

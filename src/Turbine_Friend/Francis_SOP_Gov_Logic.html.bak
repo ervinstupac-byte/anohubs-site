@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="bs">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOP: Odziv Regulatora & Logika Frekvencije</title>
+    <style>
+        /* Logic/Digital Theme - Dark Blue with Matrix Green */
+        :root {
+            --primary-color: #00FF00;
+            --secondary-color: #00CC00;
+            --accent-color: #33FF33;
+            --warning-color: #FFFF00;
+            --bg-color: #000033;
+            --text-color: #E0FFE0;
+            --border-color: #00FF00;
+        }
+
+        body {
+            font-family: 'Courier New', 'Consolas', monospace;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #001a33, #000033);
+            padding: 40px;
+            box-shadow: 0 4px 30px rgba(0, 255, 0, 0.3);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        header {
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(0, 255, 0, 0.1), rgba(0, 204, 0, 0.05));
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        h1 {
+            margin: 0;
+            color: var(--primary-color);
+            font-size: 28px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.8);
+            font-family: 'Courier New', monospace;
+        }
+
+        h2 {
+            color: var(--secondary-color);
+            font-size: 18px;
+            margin-top: 5px;
+            font-weight: 400;
+        }
+
+        .section-title {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: #000;
+            padding: 10px 15px;
+            margin-top: 40px;
+            border-radius: 4px;
+            font-size: 1.2em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+        }
+
+        .section-title::before {
+            content: "⚡";
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        h3 {
+            color: var(--accent-color);
+            border-left: 4px solid var(--primary-color);
+            padding-left: 10px;
+            margin-top: 25px;
+        }
+
+        .module {
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            background: rgba(0, 255, 0, 0.02);
+        }
+
+        .critical {
+            border-left: 5px solid var(--warning-color);
+            background: rgba(255, 255, 0, 0.05);
+        }
+
+        .logic-box {
+            border-left: 5px solid var(--accent-color);
+            background: rgba(51, 255, 51, 0.03);
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 4px;
+        }
+
+        ul,
+        ol {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 30px;
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: bold;
+            border: 1px solid var(--primary-color);
+            padding: 10px 20px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            background-color: var(--primary-color);
+            color: #000;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.8);
+        }
+
+        strong {
+            font-weight: 600;
+            color: var(--accent-color);
+        }
+
+        .logic-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .logic-table th,
+        .logic-table td {
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            text-align: left;
+        }
+
+        .logic-table th {
+            background: var(--primary-color);
+            color: #000;
+            font-weight: bold;
+        }
+
+        .logic-table tr:nth-child(even) {
+            background: rgba(0, 255, 0, 0.02);
+        }
+
+        .formula-box {
+            background: linear-gradient(135deg, rgba(0, 204, 0, 0.1), rgba(51, 255, 51, 0.05));
+            padding: 15px;
+            border-left: 4px solid var(--accent-color);
+            margin: 15px 0;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>⚡ ODZIV REGULATORA & LOGIKA FREKVENCIJE</h1>
+            <h2>Frekventni Mozak Elektrane</h2>
+            <p style="color: var(--accent-color); font-size: 0.9em; margin-top: 10px;">Razumijevanje stabilnosti mreže,
+                postavki statike (droop), i podešavanja vremena odziva za 1.3 MW jedinice</p>
+        </header>
+
+        <div class="module critical">
+            <h3>⚠️ KRITIČNO SIGURNOSNO UPOZORENJE</h3>
+            <p><strong>RIZIK SINHRONIZACIJE MREŽE</strong></p>
+            <ul>
+                <li><strong>Nikada ne Podešavaj Statiku Dok si Sinhronizovan:</strong> Promjena postavki statike pod
+                    opterećenjem može uzrokovati trenutni udar tereta i ispad.</li>
+                <li><strong>Tranzicija u Ostrvski Rad:</strong> Potrebna ručna intervencija prije odvajanja od
+                    mreže Ruande. Auto-prebacivanje NIJE omogućeno.</li>
+                <li><strong>Komunikacijski Protokol:</strong> Koordiniraj sa dispečerom mreže prije bilo kakvih promjena
+                    logike regulatora tokom paralelnog rada.</li>
+            </ul>
+        </div>
+
+        <div class="section-title">Osnove Regulacije Frekvencije</div>
+
+        <h3>Vaša Uloga u Stabilnosti Mreže - 1.3 MW Jedinice</h3>
+        <p>Dvije 1.3 MW Francis jedinice doprinose regulaciji frekvencije Nacionalne Mreže Ruande kroz proporcionalnu
+            raspodjelu tereta.</p>
+
+        <div class="module">
+            <h4 style="color: var(--primary-color);">Osnove Frekvencije Mreže</h4>
+            <ul>
+                <li><strong>Nominalna Frekvencija:</strong> 50.00 Hz (Standard mreže Ruande)</li>
+                <li><strong>Radna Tolerancija:</strong> 49.8 - 50.2 Hz (±0.2 Hz)</li>
+                <li><strong>Hitna Tolerancija:</strong> 49.5 - 50.5 Hz (±0.5 Hz)</li>
+                <li><strong>Odbacivanje Tereta (Load Rejection):</strong> Ako frekvencija > 50.5 Hz → Auto-odvajanje
+                    radi
+                    sprečavanja prebrzog obrtanja (overspeed)</li>
+            </ul>
+
+            <h4 style="color: var(--primary-color);">Odnos Frekvencija-Teret</h4>
+            <p><strong>Odziv Sistema:</strong></p>
+            <ul>
+                <li>Frekvencija mreže <strong>pada</strong> (< 50 Hz) → Sistem treba VIŠE snage → Vaš regulator OTVARA
+                        sprovodne lopatice → Vaši MW rastu</li>
+                <li>Frekvencija mreže <strong>raste</strong> (> 50 Hz) → Sistem ima PREVIŠE snage → Vaš regulator
+                    ZATVARA
+                    sprovodne lopatice → Vaši MW padaju</li>
+            </ul>
+        </div>
+
+        <div class="section-title">Postavke Statike (Droop) - Pravilo 4-6%</div>
+
+        <div class="formula-box">
+            <h3>Šta je Statika (Droop)?</h3>
+            <p><strong>Definicija:</strong> Postotak promjene frekvencije potreban da regulator pomjeri izlaz sa 0% na
+                100% snage.</p>
+
+            <p style="margin-top: 15px;"><strong>Formula:</strong></p>
+            <p style="font-size: 1.1em; color: var(--primary-color);">Statika (%) = (Δf / f_nominal) × 100</p>
+
+            <p style="margin-top: 10px;">Gdje:</p>
+            <ul>
+                <li>Δf = Promjena frekvencije od praznog hoda do punog tereta (Hz)</li>
+                <li>f_nominal = 50 Hz</li>
+            </ul>
+
+            <p style="margin-top: 15px;"><strong>Primjer za 4% Statike:</strong></p>
+            <ul>
+                <li>Δf = 0.04 × 50 = 2.0 Hz</li>
+                <li>Na 50.0 Hz → Jedinica radi na nominalnim MW (1.3 MW)</li>
+                <li>Na 48.0 Hz → Jedinica pokušava isporučiti maksimalnu snagu (regulator potpuno otvoren)</li>
+                <li>Na 52.0 Hz → Jedinica pokušava isporučiti nula snage (regulator potpuno zatvoren)</li>
+            </ul>
+        </div>
+
+        <div class="module">
+            <h3>Zašto je Statika Kritična za Dijeljenje Tereta</h3>
+            <p><strong>Problem Bez Statike (0% Statike = Izohroni Mod):</strong></p>
+            <ul>
+                <li>Regulator pokušava održati TAČNO 50.00 Hz</li>
+                <li>Sa dvije jedinice u paraleli, obje se bore da kontrolišu frekvenciju</li>
+                <li>Rezultat: "Borba regulatora" - jedinice divlje osciliraju između preopterećenja i rasterećenja</li>
+                <li><strong>⚠️ OVAJ MOD JE SAMO ZA OSTRVSKI RAD (SAMO JEDNA JEDINICA)</strong></li>
+            </ul>
+
+            <p style="margin-top: 15px;"><strong>Rješenje: Proporcionalna Statika (4-6%):</strong></p>
+            <ul>
+                <li>Svaka jedinica reaguje proporcionalno na devijaciju frekvencije</li>
+                <li>Teret se prirodno dijeli prema veličini jedinice i postavci statike</li>
+                <li>Obje jedinice mogu raditi u paraleli bez borbe</li>
+            </ul>
+
+            <h4 style="color: var(--warning-color);">⚠️ Kritično Pravilo za Vaše 1.3 MW Jedinice:</h4>
+            <table class="logic-table">
+                <tr>
+                    <th>Operativni Mod</th>
+                    <th>Postavka Statike</th>
+                    <th>Razlog</th>
+                </tr>
+                <tr>
+                    <td><strong>Paralelno sa Mrežom Ruande</strong></td>
+                    <td>4-6%</td>
+                    <td>Omogućava stabilno dijeljenje tereta sa ostalim generatorima mreže</td>
+                </tr>
+                <tr>
+                    <td><strong>Paralelno Jedna s Drugom (Unit 1 + Unit 2)</strong></td>
+                    <td>4-6% (ISTO na obje)</td>
+                    <td>Jednaka statika = jednako dijeljenje tereta između jedinica</td>
+                </tr>
+                <tr>
+                    <td><strong>Ostrvski Mod (Hitno)</strong></td>
+                    <td>0% (Izohrono)</td>
+                    <td>JEDNA jedinica kontroliše frekvenciju tačno (druga jedinica ISKLJUČENA)</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section-title">Vrtložna Korelacija - Zone Grubog Rada</div>
+
+        <div class="logic-box">
+            <h3>Kako Vrtlog Sifona Utiče na Stabilnost Frekvencije</h3>
+            <p><strong>Fizički Mehanizam:</strong></p>
+            <ol>
+                <li>Pri djelomičnom teretu (40-70% MW), formira se vrtložno uže u sifonu → Niskofrekventno pulsiranje
+                    (0.2-2 Hz)</li>
+                <li>Vrtlog uzrokuje ciklične fluktuacije pritiska u sifonu</li>
+                <li>Fluktuacije pritiska se pretvaraju u pulsacije momenta na radnom kolu (runner)</li>
+                <li>Pulsacije momenta uzrokuju oscilacije brzine vratila (±0.1 Hz)</li>
+                <li>Regulator "vidi" oscilaciju frekvencije → Pokušava ispraviti → Sprovodne lopatice se kreću eratično
+                </li>
+                <li><strong>Rezultat: Ponašanje "Lova" (Hunting) čak i sa savršenim PID postavkama</strong></li>
+            </ol>
+
+            <h4 style="color: var(--primary-color);">Mapa Zone Grubog Rada</h4>
+            <table class="logic-table">
+                <tr>
+                    <th>Opseg Tereta (MW)</th>
+                    <th>% od Nominalnog</th>
+                    <th>Status Vrtloga</th>
+                    <th>Ponašanje Regulatora</th>
+                </tr>
+                <tr>
+                    <td>0 - 0.5 MW</td>
+                    <td>0 - 40%</td>
+                    <td><strong>Jak vrtlog</strong></td>
+                    <td>Ozbiljan lov - IZBJEGAVAJ</td>
+                </tr>
+                <tr>
+                    <td>0.5 - 0.9 MW</td>
+                    <td>40 - 70%</td>
+                    <td>Umjeren vrtlog</td>
+                    <td>Prihvatljivo sa upuhivanjem zraka</td>
+                </tr>
+                <tr>
+                    <td>0.9 - 1.3 MW</td>
+                    <td>70 - 100%</td>
+                    <td>Nema vrtloga</td>
+                    <td>Stabilan rad</td>
+                </tr>
+            </table>
+
+            <h4 style="color: var(--accent-color);">Strategija Ublažavanja:</h4>
+            <ul>
+                <li><strong>Ventil za Upuhivanje Zraka:</strong> Ubacuj komprimirani zrak u konus sifona → Razbija
+                    vrtložno
+                    uže → Smanjuje pulsacije</li>
+                <li><strong>Optimalan Protok Zraka:</strong> 1-2% protoka vode (cca 0.5-1.0 m³/s zraka)</li>
+                <li><strong>Unakrsna Referenca:</strong> Vidi <a href="Francis_SOP_Vortex_Control.html"
+                        style="color: var(--accent-color); font-weight: bold;">SOP Kontrole Vrtloga</a> i <a
+                        href="Francis_SOP_DFT.html" style="color: var(--accent-color); font-weight: bold;">SOP
+                        Upuhivanja Zraka
+                        u Sifon</a></li>
+            </ul>
+        </div>
+
+        <div class="section-title">Podešavanje Vremena Odziva - Analiza Mrtvog Vremena</div>
+
+        <div class="module">
+            <h3>Razumijevanje Mrtvog Vremena (Dead-Time)</h3>
+            <p><strong>Definicija:</strong> Vremensko kašnjenje između detekcije promjene frekvencije i početka kretanja
+                sprovodnih lopatica.</p>
+
+            <p><strong>Komponente Mrtvog Vremena:</strong></p>
+            <ol>
+                <li><strong>Kašnjenje Senzora:</strong> Vrijeme usrednjavanja senzora frekvencije (tipično: 100-200 ms)
+                </li>
+                <li><strong>Procesiranje Regulatora:</strong> Vrijeme PID proračuna (tipično: 50-100 ms)</li>
+                <li><strong>Hidraulično Kašnjenje:</strong> Izgradnja pritiska ulja u servomotoru (tipično: 200-500 ms)
+                </li>
+                <li><strong>Mehanički Zazor:</strong> Luft u bolcnama polužja prije stvarnog kretanja (tipično: 50-100
+                    ms)</li>
+            </ol>
+
+            <p style="margin-top: 15px;"><strong>Ukupno Mrtvo Vrijeme:</strong> Tipično 400-900 ms za vaše jedinice.</p>
+
+            <h4 style="color: var(--primary-color);">Kako Izmjeriti Mrtvo Vrijeme:</h4>
+            <ol>
+                <li>Dok jedinica radi na 1.0 MW, 50.0 Hz (stabilno)</li>
+                <li>Zadaj ručnu promjenu tereta: Povećaj setpoint za 0.1 MW</li>
+                <li>Koristeći osciloskop ili SCADA trend:
+                    <ul>
+                        <li>Kanal 1: Signal frekvencije (Hz)</li>
+                        <li>Kanal 2: Pozicija sprovodnih lopatica (%)</li>
+                    </ul>
+                </li>
+                <li>Okini (trigger) na događaj pada frekvencije</li>
+                <li>Mjeri vrijeme od početka pada frekvencije do prvog kretanja lopatica</li>
+            </ol>
+
+            <h4 style="color: var(--warning-color);">Ciljno Mrtvo Vrijeme:</h4>
+            <ul>
+                <li><strong>Dobro:</strong>
+                    < 500 ms (odzivan sistem)</li>
+                <li><strong>Prihvatljivo:</strong> 500-800 ms (tipično za mehaničke regulatore)</li>
+                <li><strong>Loše:</strong> > 800 ms (istražuj aeraciju ulja, luft u polužju) → Vidi <a
+                        href="Francis_SOP_Oil_Health.html" style="color: var(--accent-color); font-weight: bold;">SOP
+                        Zdravlja
+                        Ulja</a></li>
+            </ul>
+        </div>
+
+        <div class="section-title">Ostrvski Mod vs. Paralelni Rad</div>
+
+        <div class="logic-box">
+            <h3>Kritične Razlike u Logici</h3>
+
+            <h4 style="color: var(--primary-color);">Paralelni Rad (Normalno)</h4>
+            <p><strong>Konfiguracija:</strong> Jedinice spojene na nacionalnu mrežu Ruande ILI obje 1.3 MW jedinice
+                sinhronizovane
+                zajedno.</p>
+
+            <table class="logic-table">
+                <tr>
+                    <th>Parametar</th>
+                    <th>Postavka</th>
+                    <th>Razlog</th>
+                </tr>
+                <tr>
+                    <td><strong>Statika (Droop)</strong></td>
+                    <td>4-6%</td>
+                    <td>Proporcionalno dijeljenje tereta</td>
+                </tr>
+                <tr>
+                    <td><strong>Mod Regulatora</strong></td>
+                    <td>Speed Droop</td>
+                    <td>Prati frekvenciju mreže</td>
+                </tr>
+                <tr>
+                    <td><strong>Mrtva Zona (Dead-Band)</strong></td>
+                    <td>±0.05 Hz</td>
+                    <td>Sprečava pretjerano kretanje lopatica</td>
+                </tr>
+                <tr>
+                    <td><strong>Auto Kontrola Tereta</strong></td>
+                    <td>Onemogućeno (Disabled)</td>
+                    <td>Mreža diktira teret putem frekvencije</td>
+                </tr>
+            </table>
+
+            <h4 style="color: var(--warning-color);">Ostrvski Mod (Samo Hitno)</h4>
+            <p><strong>Konfiguracija:</strong> Jedna jedinica napaja izolovani lokalni teret SAMO. Druga jedinica
+                ISKLJUČENA. Mreža
+                odspojena.</p>
+
+            <table class="logic-table">
+                <tr>
+                    <th>Parametar</th>
+                    <th>Postavka</th>
+                    <th>Razlog</th>
+                </tr>
+                <tr>
+                    <td><strong>Statika (Droop)</strong></td>
+                    <td>0% (Izohrono)</td>
+                    <td>Održava tačno 50.00 Hz</td>
+                </tr>
+                <tr>
+                    <td><strong>Mod Regulatora</strong></td>
+                    <td>Speed Control</td>
+                    <td>Jedinica JE referenca frekvencije</td>
+                </tr>
+                <tr>
+                    <td><strong>Mrtva Zona (Dead-Band)</strong></td>
+                    <td>±0.01 Hz</td>
+                    <td>Potrebna čvrsta kontrola frekvencije</td>
+                </tr>
+                <tr>
+                    <td><strong>Auto Kontrola Tereta</strong></td>
+                    <td>Omogućeno (Enabled)</td>
+                    <td>Usklađuje teret sa kapacitetom generisanja</td>
+                </tr>
+            </table>
+
+            <h4 style="color: var(--accent-color);">Procedura Tranzicije (Mreža → Ostrvo)</h4>
+            <p><strong>⚠️ POTREBNA RUČNA PROCEDURA - NEMA AUTO-PREBACIVANJA</strong></p>
+            <ol>
+                <li><strong>Otvori glavni prekidač</strong> da se odvojiš od mreže Ruande</li>
+                <li><strong>Zaustavi Unit 2</strong> ako obje jedinice rade (samo JEDNA jedinica u ostrvskom modu)</li>
+                <li><strong>Postavi regulator Unit 1 na Izohrono (0% statike)</strong></li>
+                <li><strong>Omogući Auto Kontrolu Tereta</strong></li>
+                <li><strong>Smanji lokalni teret</strong> da odgovara kapacitetu jedinice (max 1.3 MW)</li>
+                <li><strong>Prati frekvenciju:</strong> Treba se stabilizovati na 50.00 ± 0.05 Hz unutar 30 sekundi</li>
+            </ol>
+
+            <p style="color: var(--warning-color); margin-top: 15px;"><strong>⚠️ Rizik:</strong> Ako lokalni teret
+                premaši
+                1.3 MW u ostrvskom modu, jedinica će se preopteretiti i ispasti na pad frekvencije (< 49.0 Hz).
+                    Odbacivanje tereta (load shedding) MORA se izvršiti prije tranzicije.</p>
+        </div>
+
+        <div class="section-title">Dijagnostičke Procedure</div>
+
+        <div class="module">
+            <h3>Test Odziva Regulatora (Step Response)</h3>
+            <p><strong>Svrha:</strong> Verifikuj vrijeme odziva i stabilnost regulatora.</p>
+
+            <ol>
+                <li>Vozi jedinicu na 1.0 MW (75% tereta), stabilna frekvencija 50.0 Hz</li>
+                <li>Zadaj 10% step promjenu: Povećaj setpoint na 1.1 MW</li>
+                <li>Zapiši:
+                    <ul>
+                        <li>Vrijeme do prvog odziva (mrtvo vrijeme)</li>
+                        <li>Vrijeme dostizanja novog setpointa (vrijeme smirivanja/settling time)</li>
+                        <li>Prebačaj (overshoot) ako ga ima</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h4 style="color: var(--accent-color);">Kriteriji Prihvatanja:</h4>
+            <ul>
+                <li><strong>Mrtvo Vrijeme:</strong>
+                    < 500 ms</li>
+                <li><strong>Vrijeme Smirivanja:</strong>
+                    < 10 sekundi</li>
+                <li><strong>Prebačaj:</strong>
+                    < 5% veličine koraka (< 0.05 MW za 0.1 MW korak)</li>
+            </ul>
+
+            <h3>Test Stabilnosti Frekvencije</h3>
+            <ol>
+                <li>Vozi jedinicu sinhronizovanu na mrežu na 1.2 MW tokom 1 sata</li>
+                <li>Zapiši frekvenciju svake 1 minute</li>
+                <li>Izračunaj standardnu devijaciju (σ) frekvencije</li>
+            </ol>
+
+            <h4 style="color: var(--accent-color);">Prihvatanje:</h4>
+            <ul>
+                <li><strong>Dobro:</strong> σ < 0.02 Hz (vrlo stabilno)</li>
+                <li><strong>Prihvatljivo:</strong> σ < 0.05 Hz</li>
+                <li><strong>Loše:</strong> σ > 0.05 Hz → Istražuj lov, vrtlog ili probleme aeracije ulja</li>
+            </ul>
+        </div>
+
+        <a href="Francis_Horizontal_Dashboard.html" class="back-btn">← Povratak u Operativni Centar</a>
+
+    </div>
+</body>
+
+</html>
