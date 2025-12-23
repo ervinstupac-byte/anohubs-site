@@ -360,24 +360,35 @@
 <body>
     <div class="container">
         <header>
-            <h1>STARTUP LOGIC GATE</h1>
-            <p>Sequence of Operations (SOP) Decision Tree</p>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                <div>
+                    <h1 data-i18n="title">STARTUP LOGIC GATE</h1>
+                    <p data-i18n="subtitle">Sequence of Operations (SOP) Decision Tree</p>
+                </div>
+                <div style="display: flex; gap: 8px;">
+                    <button onclick="setLang('en')" id="btnEn"
+                        style="padding: 6px 12px; font-size: 11px; font-weight: bold; background: #3b82f6; color: white; border: none; border-radius: 4px; cursor: pointer;">EN</button>
+                    <button onclick="setLang('bs')" id="btnBs"
+                        style="padding: 6px 12px; font-size: 11px; font-weight: bold; background: #64748b; color: #cbd5e1; border: none; border-radius: 4px; cursor: pointer;">BS</button>
+                </div>
+            </div>
         </header>
 
         <div style="display:flex; flex-direction:column; align-items:center;">
 
-            <div class="start-circle">START</div>
+            <div class="start-circle" data-i18n="start">START</div>
             <div class="connector"></div>
             <div class="arrow"></div>
 
             <!-- Step 1 -->
             <div class="step-box check">
-                <span class="step-number">STEP 1</span>
-                <strong>Verify HPU Health</strong>
-                <p style="font-size:0.9em; margin:5px 0;">Is Oil Pressure > 120 Bar?<br>Is Nitrogen Level OK?</p>
+                <span class="step-number" data-i18n="step_label">STEP 1</span>
+                <strong data-i18n="step1_title">Verify HPU Health</strong>
+                <p style="font-size:0.9em; margin:5px 0;" data-i18n="step1_desc">Is Oil Pressure > 120 Bar?<br>Is
+                    Nitrogen Level OK?</p>
                 <div class="go-no-go">
-                    <span class="go">YES ↓</span>
-                    <span class="no-go">NO → STOP</span>
+                    <span class="go" data-i18n="yes">YES ↓</span>
+                    <span class="no-go" data-i18n="no_stop">NO → STOP</span>
                 </div>
             </div>
 
@@ -387,12 +398,13 @@
             <!-- Step 2 -->
             <div class="step-box check">
                 <span class="step-number">STEP 2</span>
-                <strong>Distributor Status</strong>
-                <p style="font-size:0.9em; margin:5px 0;">Are Guide Vanes at ABSOLUTE 0%?<br>(Verify "Squeeze" Pressure)
+                <strong data-i18n="step2_title">Distributor Status</strong>
+                <p style="font-size:0.9em; margin:5px 0;" data-i18n="step2_desc">Are Guide Vanes at ABSOLUTE
+                    0%?<br>(Verify "Squeeze" Pressure)
                 </p>
                 <div class="go-no-go">
-                    <span class="go">YES ↓</span>
-                    <span class="no-go">NO → STOP (Leak Risk)</span>
+                    <span class="go" data-i18n="yes">YES ↓</span>
+                    <span class="no-go" data-i18n="no_stop_leak">NO → STOP (Leak Risk)</span>
                 </div>
             </div>
 
@@ -402,8 +414,9 @@
             <!-- Step 3 -->
             <div class="step-box action">
                 <span class="step-number">STEP 3</span>
-                <strong>Open Bypass Valve</strong>
-                <p style="font-size:0.9em; margin:5px 0;">Command Bypass OPEN.<br>Wait for Spiral Case to fill.</p>
+                <strong data-i18n="step3_title">Open Bypass Valve</strong>
+                <p style="font-size:0.9em; margin:5px 0;" data-i18n="step3_desc">Command Bypass OPEN.<br>Wait for Spiral
+                    Case to fill.</p>
             </div>
 
             <div class="connector"></div>
@@ -412,11 +425,11 @@
             <!-- Step 4 -->
             <div class="step-box decision">
                 <span class="step-number">STEP 4</span>
-                <strong>Pressure Equalization</strong>
-                <p style="font-size:0.9em; margin:5px 0;">Is P_penstock - P_spiral < 1 Bar?</p>
+                <strong data-i18n="step4_title">Pressure Equalization</strong>
+                <p style="font-size:0.9em; margin:5px 0;" data-i18n="step4_desc">Is P_penstock - P_spiral < 1 Bar?</p>
                         <div class="go-no-go">
-                            <span class="go">YES (Equalized) ↓</span>
-                            <span class="no-go">NO (Leak) → ABORT startup</span>
+                            <span class="go" data-i18n="yes_equalized">YES (Equalized) ↓</span>
+                            <span class="no-go" data-i18n="no_abort">NO (Leak) → ABORT startup</span>
                         </div>
             </div>
 
@@ -426,8 +439,9 @@
             <!-- Step 5 -->
             <div class="step-box action">
                 <span class="step-number">STEP 5</span>
-                <strong>Command MIV OPEN</strong>
-                <p style="font-size:0.9em; margin:5px 0;">Monitor Limit Switches.<br>Verify physical arm movement.</p>
+                <strong data-i18n="step5_title">Command MIV OPEN</strong>
+                <p style="font-size:0.9em; margin:5px 0;" data-i18n="step5_desc">Monitor Limit Switches.<br>Verify
+                    physical arm movement.</p>
             </div>
 
             <div class="connector"></div>
@@ -436,22 +450,99 @@
             <!-- Step 6 -->
             <div class="step-box action">
                 <span class="step-number">STEP 6</span>
-                <strong>Initiate Speed-No-Load (SNL)</strong>
-                <p style="font-size:0.9em; margin:5px 0;">Release Brakes.<br>PID ramps vanes to Start position.</p>
+                <strong data-i18n="step6_title">Initiate Speed-No-Load (SNL)</strong>
+                <p style="font-size:0.9em; margin:5px 0;" data-i18n="step6_desc">Release Brakes.<br>PID ramps vanes to
+                    Start position.</p>
             </div>
 
             <div class="connector"></div>
             <div class="arrow"></div>
 
-            <div class="end-circle">RUN</div>
+            <div class="end-circle" data-i18n="run">RUN</div>
 
         </div>
 
         <div style="text-align:center; margin-top:40px;">
-            <a href="./Francis_Horizontal.html" style="color: #64748b; text-decoration:none; font-weight:bold;">← BACK
+            <a href="./Francis_Horizontal_Dashboard.html"
+                style="color: #64748b; text-decoration:none; font-weight:bold;" data-i18n="back_btn">← BACK
                 TO DASHBOARD</a>
         </div>
     </div>
+    <script>
+        const i18n = {
+            en: {
+                title: "STARTUP LOGIC GATE",
+                subtitle: "Sequence of Operations (SOP) Decision Tree",
+                start: "START",
+                step_label: "STEP 1",
+                step1_title: "Verify HPU Health",
+                step1_desc: "Is Oil Pressure > 120 Bar?<br>Is Nitrogen Level OK?",
+                step2_title: "Distributor Status",
+                step2_desc: "Are Guide Vanes at ABSOLUTE 0%?<br>(Verify \"Squeeze\" Pressure)",
+                step3_title: "Open Bypass Valve",
+                step3_desc: "Command Bypass OPEN.<br>Wait for Spiral Case to fill.",
+                step4_title: "Pressure Equalization",
+                step4_desc: "Is P_penstock - P_spiral < 1 Bar?",
+                step5_title: "Command MIV OPEN",
+                step5_desc: "Monitor Limit Switches.<br>Verify physical arm movement.",
+                step6_title: "Initiate Speed-No-Load (SNL)",
+                step6_desc: "Release Brakes.<br>PID ramps vanes to Start position.",
+                run: "RUN",
+                yes: "YES ↓",
+                no_stop: "NO → STOP",
+                no_stop_leak: "NO → STOP (Leak Risk)",
+                yes_equalized: "YES (Equalized) ↓",
+                no_abort: "NO (Leak) → ABORT startup",
+                back_btn: "← BACK TO DASHBOARD"
+            },
+            bs: {
+                title: "LOGIČKA KAPIJA POKRETANJA",
+                subtitle: "Sekvenca Operacija (SOP) Stablo Odluka",
+                start: "POČETAK",
+                step_label: "KORAK 1",
+                step1_title: "Provjeri Zdravlje HPU",
+                step1_desc: "Da li je Pritisak Ulja > 120 Bar?<br>Da li je Nivo Azota OK?",
+                step2_title: "Status Distributora",
+                step2_desc: "Da li su Vodilice na APSOLUTNIH 0%?<br>(Provjeri Pritisak \"Stiskanja\")",
+                step3_title: "Otvori Bajpas Ventil",
+                step3_desc: "Komanda Bajpas OTVORI.<br>Čekaj da se Spiralni Kućište Napuni.",
+                step4_title: "Izjednačavanje Pritiska",
+                step4_desc: "Da li je P_cjevovod - P_spirala < 1 Bar?",
+                step5_title: "Komanda GUV OTVORI",
+                step5_desc: "Prati Granične Prekidače.<br>Provjeri fizički pokret ruke.",
+                step6_title: "Pokreni Brzinu-Bez-Opterećenja (SNL)",
+                step6_desc: "Otpusti Kočnice.<br>PID podiže vodilice na Početnu poziciju.",
+                run: "RAD",
+                yes: "DA ↓",
+                no_stop: "NE → STOP",
+                no_stop_leak: "NE → STOP (Rizik Curenja)",
+                yes_equalized: "DA (Izjednačeno) ↓",
+                no_abort: "NE (Curenje) → PREKINI pokretanje",
+                back_btn: "← NAZAD NA KONTROLNU TABLU"
+            }
+        };
+
+        function setLang(lang) {
+            localStorage.setItem('anohub_lang_pref', lang);
+            if (lang === 'en') {
+                document.getElementById('btnEn').style.background = '#3b82f6';
+                document.getElementById('btnEn').style.color = 'white';
+                document.getElementById('btnBs').style.background = '#64748b';
+                document.getElementById('btnBs').style.color = '#cbd5e1';
+            } else {
+                document.getElementById('btnBs').style.background = '#3b82f6';
+                document.getElementById('btnBs').style.color = 'white';
+                document.getElementById('btnEn').style.background = '#64748b';
+                document.getElementById('btnEn').style.color = '#cbd5e1';
+            }
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (i18n[lang][key]) el.innerHTML = i18n[lang][key];
+            });
+        }
+        const pref = localStorage.getItem('anohub_lang_pref') || 'en';
+        setLang(pref);
+    </script>
 </body>
 
 </html>

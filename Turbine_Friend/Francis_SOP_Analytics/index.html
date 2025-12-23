@@ -251,6 +251,31 @@
             text-align: center;
         }
 
+        /* Language Toggle Switch */
+        .lang-switch {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .lang-btn.active {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+        }
+
         h1 {
             margin: 0;
             color: var(--secondary-color);
@@ -355,95 +380,213 @@
 </head>
 
 <body>
+    <div class="lang-switch">
+        <button class="lang-btn active" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" onclick="setLang('bs')">BS</button>
+    </div>
+
     <div class="container">
         <header>
-            <h1>HISTORICAL ANALYTICS & WEAR TRENDING</h1>
-            <h2>Predictive Diagnostics via Long-Term Data</h2>
+            <h1 data-i18n="title">HISTORICAL ANALYTICS & WEAR TRENDING</h1>
+            <h2 data-i18n="subtitle">Predictive Diagnostics via Long-Term Data</h2>
         </header>
 
         <div class="module">
-            <p><strong>The machine tells a story perfectly, but slowly.</strong></p>
-            <p>A single reading tells you the condition <em>today</em>. A 5-year trend tells you the condition
-                <em>tomorrow</em>. We use historical data to move from "Reactive" to "Predictive" maintenance.</p>
+            <p><strong data-i18n="intro_strong">The machine tells a story perfectly, but slowly.</strong></p>
+            <p data-i18n="intro_text">A single reading tells you the condition <em>today</em>. A 5-year trend tells you
+                the condition <em>tomorrow</em>. We use historical data to move from "Reactive" to "Predictive"
+                maintenance.</p>
         </div>
 
-        <div class="section-title">WEAR-RATE TRACKING: THE LABYRINTH GAP</div>
+        <div class="section-title" data-i18n="section1_title">WEAR-RATE TRACKING: THE LABYRINTH GAP</div>
         <div class="module">
-            <h3>Visualizing Runner Drop</h3>
-            <p>As the thrust bearing wears or the foundation settles, the runner vertical position shifts.
-                Simultaneously, suspended silt erodes the labyrinth seal clearances.</p>
+            <h3 data-i18n="module1_title">Visualizing Runner Drop</h3>
+            <p data-i18n="module1_text">As the thrust bearing wears or the foundation settles, the runner vertical
+                position shifts. Simultaneously, suspended silt erodes the labyrinth seal clearances.</p>
 
-            <div class="chart-placeholder">
+            <div class="chart-placeholder" data-i18n="graph1_placeholder">
                 [GRAPH: Labyrinth Seal Clearance (mm) vs. Operating Hours]
                 Trend: Linear increase from 0.50mm to 0.85mm over 15,000 hrs
             </div>
 
-            <p><strong>Decision Trigger:</strong></p>
+            <p><strong data-i18n="decision_trigger">Decision Trigger:</strong></p>
             <ul>
-                <li><strong>Baseline (New):</strong> ~0.50 mm</li>
-                <li><strong>Warning Zone:</strong> > 1.00 mm (Efficiency drops ~1-2%)</li>
-                <li><strong>FAILURE LIMIT:</strong> > 1.50 mm (Excessive leakage causes axial thrust imbalance)</li>
+                <li data-i18n="trigger1"><strong>Baseline (New):</strong> ~0.50 mm</li>
+                <li data-i18n="trigger2"><strong>Warning Zone:</strong> > 1.00 mm (Efficiency drops ~1-2%)</li>
+                <li data-i18n="trigger3"><strong>FAILURE LIMIT:</strong> > 1.50 mm (Excessive leakage causes axial
+                    thrust imbalance)</li>
             </ul>
         </div>
 
-        <div class="section-title">EFFICIENCY MAPPING: HEAD LOSS CALCULATOR</div>
+        <div class="section-title" data-i18n="section2_title">EFFICIENCY MAPPING: HEAD LOSS CALCULATOR</div>
         <div class="module">
-            <h3>Trash Rack & Filter Efficiency</h3>
-            <p>Don't just clean "when it looks dirty." Clean when the math says so.</p>
-            <p><strong>Formula:</strong> <code>ΔH = Level_Upstream - Level_Intake_Sensor</code></p>
+            <h3 data-i18n="module2_title">Trash Rack & Filter Efficiency</h3>
+            <p data-i18n="module2_text">Don't just clean "when it looks dirty." Clean when the math says so.</p>
+            <p><strong data-i18n="formula_label">Formula:</strong>
+                <code>ΔH = Level_Upstream - Level_Intake_Sensor</code></p>
 
             <table>
                 <tr>
-                    <th>Condition</th>
-                    <th>ΔH (Head Loss)</th>
-                    <th>Energy Loss (kW)</th>
-                    <th>Action</th>
+                    <th data-i18n="table_condition">Condition</th>
+                    <th data-i18n="table_head_loss">ΔH (Head Loss)</th>
+                    <th data-i18n="table_energy_loss">Energy Loss (kW)</th>
+                    <th data-i18n="table_action">Action</th>
                 </tr>
                 <tr>
-                    <td>Clean Racks</td>
+                    <td data-i18n="row1_condition">Clean Racks</td>
                     <td>0.05 - 0.10 m</td>
-                    <td>Negligible</td>
-                    <td>Monitor</td>
+                    <td data-i18n="row1_energy">Negligible</td>
+                    <td data-i18n="row1_action">Monitor</td>
                 </tr>
                 <tr>
-                    <td>Dirty</td>
+                    <td data-i18n="row2_condition">Dirty</td>
                     <td>0.30 - 0.50 m</td>
                     <td>~10-50 kW</td>
-                    <td><strong>Schedule Cleaning</strong></td>
+                    <td><strong data-i18n="row2_action">Schedule Cleaning</strong></td>
                 </tr>
                 <tr>
-                    <td>Blocked</td>
+                    <td data-i18n="row3_condition">Blocked</td>
                     <td>> 1.00 m</td>
                     <td>> 100 kW / Trip Hazard</td>
-                    <td><strong>EMERGENCY STOP</strong> (Rack collapse risk)</td>
+                    <td><strong data-i18n="row3_action">EMERGENCY STOP</strong> (Rack collapse risk)</td>
                 </tr>
             </table>
         </div>
 
-        <div class="section-title">THE SILT CORRELATION: ENVIRONMENT VS. MACHINE</div>
+        <div class="section-title" data-i18n="section3_title">THE SILT CORRELATION: ENVIRONMENT VS. MACHINE</div>
         <div class="module">
-            <h3>Linking Cause and Effect</h3>
-            <p>In Rwanda, the river conditions dictate machine life. We must correlate vibration data with turbidity
-                data.</p>
+            <h3 data-i18n="module3_title">Linking Cause and Effect</h3>
+            <p data-i18n="module3_text">In Rwanda, the river conditions dictate machine life. We must correlate
+                vibration data with turbidity data.</p>
 
-            <div class="chart-placeholder">
+            <div class="chart-placeholder" data-i18n="graph2_placeholder">
                 [GRAPH: Turbidity (NTU) vs. Shaft Vibration (µm)]
                 Visual: Vibration spikes occur 24-48 hours AFTER Turbidity spikes.
             </div>
 
-            <p><strong>The Insight:</strong></p>
+            <p><strong data-i18n="insight_label">The Insight:</strong></p>
             <ul>
-                <li>High Silt (>1000 NTU) enters the machine.</li>
-                <li><strong>Primary Effect:</strong> Scours the seal rings (Clearance opens).</li>
-                <li><strong>Secondary Effect:</strong> Unbalanced leakage creates hydraulic instability.</li>
-                <li><strong>Lagging Indicator:</strong> Vibration rises 2 days later as the damage stabilizes.</li>
+                <li data-i18n="insight1">High Silt (>1000 NTU) enters the machine.</li>
+                <li data-i18n="insight2"><strong>Primary Effect:</strong> Scours the seal rings (Clearance opens).</li>
+                <li data-i18n="insight3"><strong>Secondary Effect:</strong> Unbalanced leakage creates hydraulic
+                    instability.</li>
+                <li data-i18n="insight4"><strong>Lagging Indicator:</strong> Vibration rises 2 days later as the damage
+                    stabilizes.</li>
             </ul>
-            <p><strong>Strategy:</strong> If Turbidity > 800 NTU, <strong>REDUCE LOAD to 70%</strong> to lower velocity
-                and impact energy of particles.</p>
+            <p data-i18n="strategy"><strong>Strategy:</strong> If Turbidity > 800 NTU, <strong>REDUCE LOAD to
+                    70%</strong> to lower velocity and impact energy of particles.</p>
         </div>
 
-        <a href="./Francis_Horizontal.html" class="back-btn">← Return to Master Manual</a>
+        <a href="./Francis_Horizontal.html" class="back-btn" data-i18n="back_button">← Return to Master Manual</a>
     </div>
+
+    <script>
+        const i18n = {
+            en: {
+                title: "HISTORICAL ANALYTICS & WEAR TRENDING",
+                subtitle: "Predictive Diagnostics via Long-Term Data",
+                intro_strong: "The machine tells a story perfectly, but slowly.",
+                intro_text: "A single reading tells you the condition <em>today</em>. A 5-year trend tells you the condition <em>tomorrow</em>. We use historical data to move from \"Reactive\" to \"Predictive\" maintenance.",
+                section1_title: "WEAR-RATE TRACKING: THE LABYRINTH GAP",
+                module1_title: "Visualizing Runner Drop",
+                module1_text: "As the thrust bearing wears or the foundation settles, the runner vertical position shifts. Simultaneously, suspended silt erodes the labyrinth seal clearances.",
+                graph1_placeholder: "[GRAPH: Labyrinth Seal Clearance (mm) vs. Operating Hours] Trend: Linear increase from 0.50mm to 0.85mm over 15,000 hrs",
+                decision_trigger: "Decision Trigger:",
+                trigger1: "<strong>Baseline (New):</strong> ~0.50 mm",
+                trigger2: "<strong>Warning Zone:</strong> > 1.00 mm (Efficiency drops ~1-2%)",
+                trigger3: "<strong>FAILURE LIMIT:</strong> > 1.50 mm (Excessive leakage causes axial thrust imbalance)",
+                section2_title: "EFFICIENCY MAPPING: HEAD LOSS CALCULATOR",
+                module2_title: "Trash Rack & Filter Efficiency",
+                module2_text: "Don't just clean \"when it looks dirty.\" Clean when the math says so.",
+                formula_label: "Formula:",
+                table_condition: "Condition",
+                table_head_loss: "ΔH (Head Loss)",
+                table_energy_loss: "Energy Loss (kW)",
+                table_action: "Action",
+                row1_condition: "Clean Racks",
+                row1_energy: "Negligible",
+                row1_action: "Monitor",
+                row2_condition: "Dirty",
+                row2_action: "Schedule Cleaning",
+                row3_condition: "Blocked",
+                row3_action: "EMERGENCY STOP (Rack collapse risk)",
+                section3_title: "THE SILT CORRELATION: ENVIRONMENT VS. MACHINE",
+                module3_title: "Linking Cause and Effect",
+                module3_text: "In Rwanda, the river conditions dictate machine life. We must correlate vibration data with turbidity data.",
+                graph2_placeholder: "[GRAPH: Turbidity (NTU) vs. Shaft Vibration (µm)] Visual: Vibration spikes occur 24-48 hours AFTER Turbidity spikes.",
+                insight_label: "The Insight:",
+                insight1: "High Silt (>1000 NTU) enters the machine.",
+                insight2: "<strong>Primary Effect:</strong> Scours the seal rings (Clearance opens).",
+                insight3: "<strong>Secondary Effect:</strong> Unbalanced leakage creates hydraulic instability.",
+                insight4: "<strong>Lagging Indicator:</strong> Vibration rises 2 days later as the damage stabilizes.",
+                strategy: "<strong>Strategy:</strong> If Turbidity > 800 NTU, <strong>REDUCE LOAD to 70%</strong> to lower velocity and impact energy of particles.",
+                back_button: "← Return to Master Manual"
+            },
+            bs: {
+                title: "HISTORIJSKA ANALITIKA I PRAĆENJE HABANJA",
+                subtitle: "Prediktivna dijagnostika putem dugoročnih podataka",
+                intro_strong: "Mašina priča priču savršeno, ali polako.",
+                intro_text: "Jedno očitavanje vam govori stanje <em>danas</em>. Trend od 5 godina vam govori stanje <em>sutra</em>. Koristimo historijske podatke za prelazak sa \"Reaktivnog\" na \"Prediktivno\" održavanje.",
+                section1_title: "PRAĆENJE STOPE HABANJA: ZAZOR LABIRINTA",
+                module1_title: "Vizualizacija pada radnog kola",
+                module1_text: "Kako se nosivi ležaj troši ili se temelj sleže, vertikalni položaj radnog kola se pomjera. Istovremeno, suspendovani mulj erodira zazore labirintne brtve.",
+                graph1_placeholder: "[GRAF: Zazor labirintne brtve (mm) vs. Radni sati] Trend: Linearno povećanje sa 0.50mm na 0.85mm tokom 15,000 sati",
+                decision_trigger: "Okidač odluke:",
+                trigger1: "<strong>Početna vrijednost (Novo):</strong> ~0.50 mm",
+                trigger2: "<strong>Zona upozorenja:</strong> > 1.00 mm (Efikasnost pada ~1-2%)",
+                trigger3: "<strong>GRANICA KVARA:</strong> > 1.50 mm (Prekomjerno curenje uzrokuje neravnotežu aksijalnog potiska)",
+                section2_title: "MAPIRANJE EFIKASNOSTI: KALKULATOR GUBITKA NETO PADA",
+                module2_title: "Efikasnost rešetke i filtera",
+                module2_text: "Nemojte čistiti samo \"kada izgleda prljavo\". Čistite kada matematika tako kaže.",
+                formula_label: "Formula:",
+                table_condition: "Stanje",
+                table_head_loss: "ΔH (Gubitak pada)",
+                table_energy_loss: "Gubitak energije (kW)",
+                table_action: "Akcija",
+                row1_condition: "Čiste rešetke",
+                row1_energy: "Zanemarivo",
+                row1_action: "Monitorirati",
+                row2_condition: "Prljavo",
+                row2_action: "Zakazati čišćenje",
+                row3_condition: "Blokirano",
+                row3_action: "HITNO ZAUSTAVLJANJE (Rizik od kolapsa rešetke)",
+                section3_title: "KORELACIJA MULJA: OKOLIŠ PROTIV MAŠINE",
+                module3_title: "Povezivanje uzroka i posljedice",
+                module3_text: "U Ruandi, uslovi rijeke diktiraju vijek trajanja mašine. Moramo korelirati podatke o vibracijama sa podacima o zamućenosti.",
+                graph2_placeholder: "[GRAF: Zamućenost (NTU) vs. Vibracije osovine (µm)] Vizualno: Skokovi vibracija se javljaju 24-48 sati NAKON skokova zamućenosti.",
+                insight_label: "Uvid:",
+                insight1: "Visok nivo mulja (>1000 NTU) ulazi u mašinu.",
+                insight2: "<strong>Primarni efekat:</strong> Ispiranje zaptivnih prstenova (Zazor se otvara).",
+                insight3: "<strong>Sekundarni efekat:</strong> Neuravnoteženo curenje stvara hidrauličku nestabilnost.",
+                insight4: "<strong>Indikator kašnjenja:</strong> Vibracije rastu 2 dana kasnije kako se šteta stabilizuje.",
+                strategy: "<strong>Strategija:</strong> Ako je Zamućenost > 800 NTU, <strong>SMANJITI OPTEREĆENJE na 70%</strong> kako bi se smanjila brzina i energija udara čestica.",
+                back_button: "← Povratak na Glavni priručnik"
+            }
+        };
+
+        function setLang(lang) {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (i18n[lang][key]) {
+                    el.innerHTML = i18n[lang][key];
+                }
+            });
+
+            // Update button states
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.innerText.toLowerCase() === lang) {
+                    btn.classList.add('active');
+                }
+            });
+
+            localStorage.setItem('anohub_lang_pref', lang);
+        }
+
+        // Initialize from storage or default to English
+        const savedLang = localStorage.getItem('anohub_lang_pref') || 'en';
+        setLang(savedLang);
+    </script>
 </body>
 
 </html>

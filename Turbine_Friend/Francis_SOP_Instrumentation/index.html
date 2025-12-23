@@ -205,7 +205,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SOP: Instrumentation & Sensors</title>
     <style>
-        /* Shared Architecture from Francis_Horizontal.html */
         :root {
             --primary-color: #003366;
             --secondary-color: #0066cc;
@@ -254,6 +253,33 @@
             font-size: 18px;
             margin-top: 5px;
             font-weight: 400;
+        }
+
+        .lang-toggle {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .lang-toggle button {
+            padding: 6px 16px;
+            font-size: 11px;
+            font-weight: bold;
+            border-radius: 4px;
+            border: 1px solid var(--secondary-color);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .lang-toggle button.active {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .lang-toggle button:not(.active) {
+            background-color: white;
+            color: var(--secondary-color);
         }
 
         .section-title {
@@ -329,98 +355,203 @@
             background-color: var(--secondary-color);
             color: #fff;
         }
-
-        .visual-aid {
-            border: 2px dashed #ccc;
-            padding: 15px;
-            margin: 10px 0;
-            background: #fff;
-            text-align: center;
-            color: #666;
-            font-size: 0.9em;
-        }
     </style>
 </head>
 
 <body>
-
     <div class="container">
-
         <header>
-            <h1>Critical SOP: Instrumentation & Sensors</h1>
-            <h2>Sensory Logic & SCADA Reliability</h2>
+            <h1 data-i18n="title">Critical SOP: Instrumentation & Sensors</h1>
+            <h2 data-i18n="subtitle">Sensory Logic & SCADA Reliability</h2>
+            <div class="lang-toggle">
+                <button onclick="setLang('en')" id="btnEn" class="active">EN</button>
+                <button onclick="setLang('bs')" id="btnBs">BS</button>
+            </div>
         </header>
 
-        <!-- INTRO MODULE -->
         <div class="module critical">
-            <h3>⚠️ TRUST BUT VERIFY</h3>
-            <p><strong>Context:</strong> The SCADA system is the brain, but sensors are the eyes. If the eyes are blind,
-                the brain makes fatal decisions.</p>
+            <h3 data-i18n="s1_title">⚠️ TRUST BUT VERIFY</h3>
+            <p><strong data-i18n="context">Context:</strong> <span data-i18n="s1_desc">The SCADA system is the brain,
+                    but sensors are the eyes. If the eyes are blind, the brain makes fatal decisions.</span></p>
             <ul>
-                <li><strong>The Risk:</strong> "Drifting" sensors can hide overheating bearings or falsely trip the
-                    unit.</li>
-                <li><strong>Rule:</strong> Never trust a digital reading blindly without analog correlation (e.g., check
-                    the mercury thermometer!).</li>
+                <li><strong data-i18n="risk">The Risk:</strong> <span data-i18n="s1_li1">"Drifting" sensors can hide
+                        overheating bearings or falsely trip the unit.</span></li>
+                <li><strong data-i18n="rule">Rule:</strong> <span data-i18n="s1_li2">Never trust a digital reading
+                        blindly without analog correlation (e.g., check the mercury thermometer!).</span></li>
             </ul>
         </div>
 
-        <div class="section-title">SOP 1: Temperature Validation (RTDs)</div>
+        <div class="section-title" data-i18n="sop1">SOP 1: Temperature Validation (RTDs)</div>
         <div class="module technical">
-            <p>Resistance Temperature Detectors (RTDs) protect the Babbit bearings.</p>
+            <p data-i18n="sop1_desc">Resistance Temperature Detectors (RTDs) protect the Babbit bearings.</p>
 
-            <h3>1.1 Calibration Protocol</h3>
+            <h3 data-i18n="s2_title">1.1 Calibration Protocol</h3>
             <ol>
-                <li><strong>Reference:</strong> Use a certified calibrated thermometer (Ice bath 0°C or Boiling 100°C
-                    checks).</li>
-                <li><strong>Compare:</strong> Insert the reference probe into the bearing well (if available) or tape
-                    adjacent to the RTD.</li>
-                <li><strong>Tolerance:</strong> Variation > 1.0°C requires offsetting the SCADA signal or replacing the
-                    sensor definition.</li>
+                <li><strong data-i18n="ref">Reference:</strong> <span data-i18n="s2_li1">Use a certified calibrated
+                        thermometer (Ice bath 0°C or Boiling 100°C checks).</span></li>
+                <li><strong data-i18n="compare">Compare:</strong> <span data-i18n="s2_li2">Insert the reference probe
+                        into the bearing well (if available) or tape adjacent to the RTD.</span></li>
+                <li><strong data-i18n="tolerance">Tolerance:</strong> <span data-i18n="s2_li3">Variation > 1.0°C
+                        requires offsetting the SCADA signal or replacing the sensor definition.</span></li>
             </ol>
         </div>
 
-        <div class="section-title">SOP 2: Pressure Transducer Logic</div>
+        <div class="section-title" data-i18n="sop2">SOP 2: Pressure Transducer Logic</div>
         <div class="module technical">
-            <p>Penstock and Spiral Case pressure data determine Net Head and hydraulic safety.</p>
+            <p data-i18n="sop2_desc">Penstock and Spiral Case pressure data determine Net Head and hydraulic safety.</p>
 
-            <h3>2.1 Zero & Span</h3>
+            <h3 data-i18n="s3_title">2.1 Zero & Span</h3>
             <ul>
-                <li><strong>Zeroing:</strong> With the Penstock drained (Atmospheric pressure), the sensor must read
-                    <strong>0.00 Bar</strong>. If it reads 0.5 Bar, it has drifted.</li>
-                <li><strong>Spanning:</strong> Compare against the mechanical Bourdon gauge (Analog) at full pressure.
-                </li>
-                <li><strong>Action:</strong> Adjust the 4-20mA scaling in the PLC if drift is linear; replace if
-                    erratic.</li>
+                <li><strong data-i18n="zeroing">Zeroing:</strong> <span data-i18n="s3_li1">With the Penstock drained
+                        (Atmospheric pressure), the sensor must read 0.00 Bar. If it reads 0.5 Bar, it has
+                        drifted.</span></li>
+                <li><strong data-i18n="spanning">Spanning:</strong> <span data-i18n="s3_li2">Compare against the
+                        mechanical Bourdon gauge (Analog) at full pressure.</span></li>
+                <li><strong data-i18n="action">Action:</strong> <span data-i18n="s3_li3">Adjust the 4-20mA scaling in
+                        the PLC if drift is linear; replace if erratic.</span></li>
             </ul>
         </div>
 
-        <div class="section-title">SOP 3: Flow Meter Hygiene</div>
+        <div class="section-title" data-i18n="sop3">SOP 3: Flow Meter Hygiene</div>
         <div class="module diagnostic">
-            <p>Silt is the enemy of ultrasonics and electromagnetics.</p>
+            <p data-i18n="sop3_desc">Silt is the enemy of ultrasonics and electromagnetics.</p>
 
-            <h3>3.1 Sensor Cleaning</h3>
+            <h3 data-i18n="s4_title">3.1 Sensor Cleaning</h3>
             <ul>
-                <li><strong>Type:</strong> Ultrasonic / Electromagnetic.</li>
-                <li><strong>Probelm:</strong> A layer of conductive silt or algae on the electrode faces interferes with
-                    the signal.</li>
-                <li><strong>Protocol:</strong> Remove the sensor head annually. Wipe the sensing face gently with a soft
-                    cloth and alcohol. Do NOT scratch the electrode.</li>
+                <li><strong data-i18n="type">Type:</strong> <span data-i18n="s4_li1">Ultrasonic /
+                        Electromagnetic.</span></li>
+                <li><strong data-i18n="problem">Problem:</strong> <span data-i18n="s4_li2">A layer of conductive silt or
+                        algae on the electrode faces interferes with the signal.</span></li>
+                <li><strong data-i18n="protocol">Protocol:</strong> <span data-i18n="s4_li3">Remove the sensor head
+                        annually. Wipe the sensing face gently with a soft cloth and alcohol. Do NOT scratch the
+                        electrode.</span></li>
             </ul>
         </div>
 
-        <div class="section-title">Summary Checklist</div>
+        <div class="section-title" data-i18n="summary">Summary Checklist</div>
         <div class="module">
             <ul>
-                <li><strong>Monthly:</strong> Compare SCADA Temps vs. Analog Thermometers.</li>
-                <li><strong>Annually:</strong> Zero-out Pressure Transducers (During dewatering).</li>
-                <li><strong>Annually:</strong> Clean Flow Meter electrodes.</li>
+                <li><strong data-i18n="monthly">Monthly:</strong> <span data-i18n="monthly_desc">Compare SCADA Temps vs.
+                        Analog Thermometers.</span></li>
+                <li><strong data-i18n="annually1">Annually:</strong> <span data-i18n="annually1_desc">Zero-out Pressure
+                        Transducers (During dewatering).</span></li>
+                <li><strong data-i18n="annually2">Annually:</strong> <span data-i18n="annually2_desc">Clean Flow Meter
+                        electrodes.</span></li>
             </ul>
         </div>
 
-        <a href="./Francis_Horizontal.html" class="back-btn">← Return to Master Manual</a>
-
+        <a href="./Francis_Horizontal.html" class="back-btn" data-i18n="back">← Return to Master Manual</a>
     </div>
 
+    <script>
+        const i18n = {
+            en: {
+                title: "Critical SOP: Instrumentation & Sensors",
+                subtitle: "Sensory Logic & SCADA Reliability",
+                s1_title: "⚠️ TRUST BUT VERIFY",
+                context: "Context:",
+                s1_desc: "The SCADA system is the brain, but sensors are the eyes. If the eyes are blind, the brain makes fatal decisions.",
+                risk: "The Risk:",
+                s1_li1: '"Drifting" sensors can hide overheating bearings or falsely trip the unit.',
+                rule: "Rule:",
+                s1_li2: "Never trust a digital reading blindly without analog correlation (e.g., check the mercury thermometer!).",
+                sop1: "SOP 1: Temperature Validation (RTDs)",
+                sop1_desc: "Resistance Temperature Detectors (RTDs) protect the Babbit bearings.",
+                s2_title: "1.1 Calibration Protocol",
+                ref: "Reference:",
+                s2_li1: "Use a certified calibrated thermometer (Ice bath 0°C or Boiling 100°C checks).",
+                compare: "Compare:",
+                s2_li2: "Insert the reference probe into the bearing well (if available) or tape adjacent to the RTD.",
+                tolerance: "Tolerance:",
+                s2_li3: "Variation > 1.0°C requires offsetting the SCADA signal or replacing the sensor definition.",
+                sop2: "SOP 2: Pressure Transducer Logic",
+                sop2_desc: "Penstock and Spiral Case pressure data determine Net Head and hydraulic safety.",
+                s3_title: "2.1 Zero & Span",
+                zeroing: "Zeroing:",
+                s3_li1: "With the Penstock drained (Atmospheric pressure), the sensor must read 0.00 Bar. If it reads 0.5 Bar, it has drifted.",
+                spanning: "Spanning:",
+                s3_li2: "Compare against the mechanical Bourdon gauge (Analog) at full pressure.",
+                action: "Action:",
+                s3_li3: "Adjust the 4-20mA scaling in the PLC if drift is linear; replace if erratic.",
+                sop3: "SOP 3: Flow Meter Hygiene",
+                sop3_desc: "Silt is the enemy of ultrasonics and electromagnetics.",
+                s4_title: "3.1 Sensor Cleaning",
+                type: "Type:",
+                s4_li1: "Ultrasonic / Electromagnetic.",
+                problem: "Problem:",
+                s4_li2: "A layer of conductive silt or algae on the electrode faces interferes with the signal.",
+                protocol: "Protocol:",
+                s4_li3: "Remove the sensor head annually. Wipe the sensing face gently with a soft cloth and alcohol. Do NOT scratch the electrode.",
+                summary: "Summary Checklist",
+                monthly: "Monthly:",
+                monthly_desc: "Compare SCADA Temps vs. Analog Thermometers.",
+                annually1: "Annually:",
+                annually1_desc: "Zero-out Pressure Transducers (During dewatering).",
+                annually2: "Annually:",
+                annually2_desc: "Clean Flow Meter electrodes.",
+                back: "← Return to Master Manual"
+            },
+            bs: {
+                title: "Kritični SOP: Instrumentacija & Senzori",
+                subtitle: "Senzorna Logika & SCADA Pouzdanost",
+                s1_title: "⚠️ VJERUJ ALI PROVJERI",
+                context: "Kontekst:",
+                s1_desc: "SCADA sistem je mozak, ali senzori su oči. Ako su oči slijepe, mozak donosi fatalne odluke.",
+                risk: "Rizik:",
+                s1_li1: '"Pomjereni" senzori mogu sakriti pregrijavanje ležajeva ili lažno isključiti agregat.',
+                rule: "Pravilo:",
+                s1_li2: "Nikada ne vjeruj slijepo digitalnom očitavanju bez analogne korelacije (npr., provjeri živin termometar!).",
+                sop1: "SOP 1: Validacija Temperature (RTD)",
+                sop1_desc: "Otpornički Temperaturni Detektori (RTD) štite Babbitt ležajeve.",
+                s2_title: "1.1 Protokol Kalibracije",
+                ref: "Referenca:",
+                s2_li1: "Koristi certificirani kalibrirani termometar (Ledena kupka 0°C ili Ključala voda 100°C provjere).",
+                compare: "Uporedi:",
+                s2_li2: "Umetni referentnu sondu u bunar ležaja (ako je dostupno) ili zalijepi pored RTD-a.",
+                tolerance: "Tolerancija:",
+                s2_li3: "Varijacija > 1.0°C zahtijeva podešavanje SCADA signala ili zamjenu definicije senzora.",
+                sop2: "SOP 2: Logika Pretvarača Pritiska",
+                sop2_desc: "Podaci o pritisku tlačne cijevi i spiralnog kućišta određuju Neto Pad i hidrauličku sigurnost.",
+                s3_title: "2.1 Nula & Raspon",
+                zeroing: "Nuliranje:",
+                s3_li1: "Sa ispražnjenom tlačnom cijevi (Atmosferski pritisak), senzor mora očitati 0.00 Bar. Ako očita 0.5 Bar, pomjerio se.",
+                spanning: "Raspon:",
+                s3_li2: "Uporedi sa mehaničkim Bourdon manometrom (Analogni) na punom pritisku.",
+                action: "Akcija:",
+                s3_li3: "Podesi 4-20mA skaliranje u PLC-u ako je pomjeranje linearno; zamijeni ako je haotično.",
+                sop3: "SOP 3: Higijena Mjerača Protoka",
+                sop3_desc: "Mulj je neprijatelj ultrazvuka i elektromagnetike.",
+                s4_title: "3.1 Čišćenje Senzora",
+                type: "Tip:",
+                s4_li1: "Ultrazvučni / Elektromagnetni.",
+                problem: "Problem:",
+                s4_li2: "Sloj provodnog mulja ili algi na površini elektrode ometa signal.",
+                protocol: "Protokol:",
+                s4_li3: "Ukloni glavu senzora godišnje. Obriši površinu senzora pažljivo mekom krpom i alkoholom. NE grebi elektrodu.",
+                summary: "Sažetak Kontrolne Liste",
+                monthly: "Mjesečno:",
+                monthly_desc: "Uporedi SCADA Temperature sa Analognim Termometrima.",
+                annually1: "Godišnje:",
+                annually1_desc: "Nuliranje Pretvarača Pritiska (Tokom pražnjenja).",
+                annually2: "Godišnje:",
+                annually2_desc: "Čišćenje elektroda Mjerača Protoka.",
+                back: "← Povratak na Glavni Priručnik"
+            }
+        };
+
+        function setLang(lang) {
+            localStorage.setItem('anohub_lang_pref', lang);
+            document.getElementById('btnEn').className = lang === 'en' ? 'active' : '';
+            document.getElementById('btnBs').className = lang === 'bs' ? 'active' : '';
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (i18n[lang][key]) el.innerText = i18n[lang][key];
+            });
+        }
+
+        const pref = localStorage.getItem('anohub_lang_pref') || 'en';
+        setLang(pref);
+    </script>
 </body>
 
 </html>

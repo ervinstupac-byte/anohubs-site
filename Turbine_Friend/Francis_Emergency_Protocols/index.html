@@ -400,17 +400,27 @@
     <div class="container">
 
         <header>
-            <h1>⚠ EMERGENCY PROTOCOLS ⚠</h1>
-            <h2>FRANCIS HORIZONTAL TURBINE - CRITICAL RESPONSE PROCEDURES</h2>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                <div>
+                    <h1 data-i18n="title">⚠ EMERGENCY PROTOCOLS ⚠</h1>
+                    <h2 data-i18n="subtitle">FRANCIS HORIZONTAL TURBINE - CRITICAL RESPONSE PROCEDURES</h2>
+                </div>
+                <div style="display: flex; gap: 8px; margin-top: 10px;">
+                    <button onclick="setLang('en')" id="btnEn"
+                        style="padding: 6px 12px; font-size: 11px; font-weight: bold; background: #dc2626; color: white; border: none; border-radius: 4px; cursor: pointer;">EN</button>
+                    <button onclick="setLang('bs')" id="btnBs"
+                        style="padding: 6px 12px; font-size: 11px; font-weight: bold; background: #57534e; color: #a8a29e; border: none; border-radius: 4px; cursor: pointer;">BS</button>
+                </div>
+            </div>
         </header>
 
-        <div class="emergency-notice">
+        <div class="emergency-notice" data-i18n="emergency_notice">
             🚨 THIS DOCUMENT CONTAINS TIME-CRITICAL PROCEDURES. FAMILIARIZE YOURSELF WITH ALL PROTOCOLS BEFORE EMERGENCY
             OCCURS. RESPONSE TIME MEASURED IN SECONDS, NOT MINUTES.
         </div>
 
         <!-- PROTOCOL 1: LOAD REJECTION -->
-        <div class="section-title">PROTOCOL 1: Load Rejection & Overspeed</div>
+        <div class="section-title" data-i18n="protocol1_title">PROTOCOL 1: Load Rejection & Overspeed</div>
         <div class="protocol">
             <h3>Scenario: Grid Trip - Unit Goes to Overspeed</h3>
             <p><strong>Context:</strong> If the electrical grid disconnects suddenly (breaker trip, line fault), the
@@ -465,7 +475,7 @@
         </div>
 
         <!-- PROTOCOL 2: SILT FLASH FLOOD -->
-        <div class="section-title">PROTOCOL 2: Silt Flash Flood</div>
+        <div class="section-title" data-i18n="protocol2_title">PROTOCOL 2: Silt Flash Flood</div>
         <div class="protocol">
             <h3>Scenario: River Silt Levels Exceed Design Limit</h3>
             <p><strong>Context:</strong> During heavy monsoon or upstream landslide, river silt concentration can spike
@@ -540,7 +550,7 @@
         </div>
 
         <!-- PROTOCOL 3: HPU POWER LOSS -->
-        <div class="section-title">PROTOCOL 3: HPU Power Loss - Manual MIV Closure</div>
+        <div class="section-title" data-i18n="protocol3_title">PROTOCOL 3: HPU Power Loss - Manual MIV Closure</div>
         <div class="protocol">
             <h3>Scenario: Hydraulic Power Unit Fails During Operation</h3>
             <p><strong>Context:</strong> The HPU provides pressurized oil to operate the guide vane servomotor and (in
@@ -607,7 +617,7 @@
         </div>
 
         <!-- PROTOCOL 4: LINKAGE BREAKAGE -->
-        <div class="section-title">PROTOCOL 4: Linkage Failure - Mechanical Lockout</div>
+        <div class="section-title" data-i18n="protocol4_title">PROTOCOL 4: Linkage Failure - Mechanical Lockout</div>
         <div class="protocol">
             <h3>Scenario: Governor Linkage Shear Pin Breaks</h3>
             <p><strong>Context:</strong> The linkage connecting the servomotor to the regulating ring uses deliberate
@@ -673,7 +683,7 @@
         </div>
 
         <!-- SUMMARY TABLE -->
-        <div class="section-title">Quick Reference Summary</div>
+        <div class="section-title" data-i18n="summary_title">Quick Reference Summary</div>
         <table>
             <thead>
                 <tr>
@@ -706,10 +716,58 @@
             </tbody>
         </table>
 
-        <a href="./Francis_Horizontal.html" class="back-btn">← Return to Master Manual</a>
+        <a href="./Francis_Horizontal_Dashboard.html" class="back-btn" data-i18n="back_btn">← Return to Master
+            Manual</a>
 
     </div>
 
+    <script>
+        const i18n = {
+            en: {
+                title: "⚠ EMERGENCY PROTOCOLS ⚠",
+                subtitle: "FRANCIS HORIZONTAL TURBINE - CRITICAL RESPONSE PROCEDURES",
+                emergency_notice: "🚨 THIS DOCUMENT CONTAINS TIME-CRITICAL PROCEDURES. FAMILIARIZE YOURSELF WITH ALL PROTOCOLS BEFORE EMERGENCY OCCURS. RESPONSE TIME MEASURED IN SECONDS, NOT MINUTES.",
+                protocol1_title: "PROTOCOL 1: Load Rejection & Overspeed",
+                protocol2_title: "PROTOCOL 2: Silt Flash Flood",
+                protocol3_title: "PROTOCOL 3: HPU Power Loss - Manual MIV Closure",
+                protocol4_title: "PROTOCOL 4: Linkage Failure - Mechanical Lockout",
+                summary_title: "Quick Reference Summary",
+                back_btn: "← Return to Master Manual"
+            },
+            bs: {
+                title: "⚠ HITNI PROTOKOLI ⚠",
+                subtitle: "FRANCIS HORIZONTALNA TURBINA - KRITIČNE PROCEDURE ODGOVORA",
+                emergency_notice: "🚨 OVAJ DOKUMENT SADRŽI VREMENSKI KRITIČNE PROCEDURE. UPOZNAJTE SE SA SVIM PROTOKOLIMA PRIJE NEGO ŠTO SE DOGODI HITNI SLUČAJ. VRIJEME ODGOVORA SE MJERI U SEKUNDAMA, NE MINUTAMA.",
+                protocol1_title: "PROTOKOL 1: Odbacivanje Opterećenja i Prekoračenje Brzine",
+                protocol2_title: "PROTOKOL 2: Iznenadna Poplava Mulja",
+                protocol3_title: "PROTOKOL 3: Gubitak Napajanja HPU - Ručno Zatvaranje GUV-a",
+                protocol4_title: "PROTOKOL 4: Kvar Poluge - Mehaničko Zaključavanje",
+                summary_title: "Brzi Referentni Pregled",
+                back_btn: "← Povratak na Glavni Priručnik"
+            }
+        };
+
+        function setLang(lang) {
+            localStorage.setItem('anohub_lang_pref', lang);
+            if (lang === 'en') {
+                document.getElementById('btnEn').style.background = '#dc2626';
+                document.getElementById('btnEn').style.color = 'white';
+                document.getElementById('btnBs').style.background = '#57534e';
+                document.getElementById('btnBs').style.color = '#a8a29e';
+            } else {
+                document.getElementById('btnBs').style.background = '#dc2626';
+                document.getElementById('btnBs').style.color = 'white';
+                document.getElementById('btnEn').style.background = '#57534e';
+                document.getElementById('btnEn').style.color = '#a8a29e';
+            }
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (i18n[lang][key]) el.innerText = i18n[lang][key];
+            });
+        }
+        const pref = localStorage.getItem('anohub_lang_pref') || 'en';
+        setLang(pref);
+    </script>
 </body>
 
 </html>
