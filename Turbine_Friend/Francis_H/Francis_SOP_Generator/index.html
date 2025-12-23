@@ -203,188 +203,332 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOP: GENERATOR ELECTRICAL MAINTENANCE</title>
+    <title>SOP: GENERATOR INTEGRITY | FRANCIS UNIT 1</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap');
+
+        :root {
+            --accent-color: #818cf8;
+            /* Purple/Indigo for Power & Grid */
+            --bg-dark: #020617;
+        }
 
         body {
+            background-color: var(--bg-dark);
+            color: #cbd5e1;
             font-family: 'JetBrains Mono', monospace;
-            background-color: #0c0a09;
-            color: #d6d3d1;
+            line-height: 1.6;
         }
 
-        .procedure-card {
-            background: #1c1917;
-            border: 1px solid #292524;
-            padding: 24px;
-            margin-bottom: 16px;
-            border-left: 4px solid #44403c;
+        .glass-card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(129, 140, 248, 0.2);
+            backdrop-filter: blur(12px);
+            transition: all 0.3s ease;
         }
 
-        .procedure-card.critical {
-            border-left-color: #dc2626;
-            background: #2a1210;
+        .glass-card:hover {
+            border-color: rgba(129, 140, 248, 0.5);
+            box-shadow: 0 0 20px rgba(129, 140, 248, 0.1);
         }
 
-        .procedure-card.elec {
-            border-left-color: #f59e0b;
-            background: #2d2010;
+        .header-gradient {
+            background: linear-gradient(135deg, #312e81 0%, #0c0a09 100%);
+            border-bottom: 2px solid var(--accent-color);
         }
 
-        .btn-return {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: #1c1917;
-            border: 1px solid #44403c;
-            color: #78716c;
-            padding: 8px 16px;
-            font-size: 12px;
-            text-transform: uppercase;
-            font-weight: bold;
-            border-radius: 4px;
+        .btn-lang {
             transition: all 0.2s;
         }
 
-        .btn-return:hover {
-            border-color: #3b82f6;
-            color: white;
+        .active-lang {
+            background-color: var(--accent-color) !important;
+            color: black !important;
+            border-color: var(--accent-color) !important;
+        }
+
+        .test-box {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(129, 140, 248, 0.2);
+            padding: 1.25rem;
+            border-radius: 1rem;
+            transition: all 0.2s;
+        }
+
+        .test-box:hover {
+            border-color: var(--accent-color);
+            background: rgba(30, 41, 59, 0.8);
+        }
+
+        .status-pill {
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.65rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        @keyframes drift {
+            0% {
+                opacity: 0.1;
+                transform: translateX(0);
+            }
+
+            50% {
+                opacity: 0.3;
+                transform: translateX(10px);
+            }
+
+            100% {
+                opacity: 0.1;
+                transform: translateX(0);
+            }
+        }
+
+        .carbon-smoke {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, rgba(0, 0, 0, 0.8) 0%, transparent 70%);
+            filter: blur(20px);
+            animation: drift 5s infinite ease-in-out;
+            pointer-events: none;
         }
     </style>
 </head>
 
-<body class="p-6 md:p-12 max-w-5xl mx-auto">
+<body class="min-h-screen pb-12 overflow-x-hidden">
 
     <!-- Header -->
-    <header class="mb-10 pb-6 border-b border-stone-800 flex justify-between items-start">
-        <div>
-            <div class="flex items-center gap-2 mb-2">
-                <span
-                    class="px-2 py-1 rounded bg-amber-900/30 text-amber-400 text-[10px] font-bold border border-amber-900 uppercase">SOP-ELEC-004</span>
-                <span class="text-[10px] text-stone-500 uppercase font-bold">REV 3.1</span>
+    <header class="header-gradient py-8 px-4 md:px-8 mb-8 sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-4">
+                <div class="p-3 bg-indigo-600 rounded-lg border border-indigo-400/30">
+                    <i data-lucide="zap" class="text-white w-8 h-8"></i>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2 mb-1">
+                        <span
+                            class="px-2 py-0.5 rounded bg-indigo-900/40 text-indigo-300 text-[10px] font-bold border border-indigo-800 uppercase">SOP-ELEC-004</span>
+                        <span class="text-[10px] text-stone-500 uppercase font-bold">REV 3.1</span>
+                    </div>
+                    <h1 class="text-2xl md:text-3xl font-black text-white tracking-tighter uppercase" data-i18n="title">
+                        GENERATOR INTEGRITY</h1>
+                </div>
             </div>
-            <h1 class="text-3xl font-bold text-white mb-2" data-i18n="title">GENERATOR ELECTRICAL MAINTENANCE</h1>
-            <p class="text-stone-500 text-sm" data-i18n="subtitle">Excitation, Insulation & Carbon Dust Management</p>`n            <div class="flex gap-2 mt-4">`n                <button onclick="setLang('en')" id="btnEn" class="px-2 py-0.5 text-[10px] font-bold bg-cyan-600 text-white rounded">EN</button>`n                <button onclick="setLang('bs')" id="btnBs" class="px-2 py-0.5 text-[10px] font-bold bg-slate-800 text-slate-500 rounded hover:text-white">BS</button>`n            </div>
-        </div>
 
-        <a href="Francis_Horizontal_Dashboard.html" class="btn-return">
-            <i data-lucide="arrow-left" class="w-4 h-4"></i> <span data-i18n="return">Back to Dashboard</span>
-        </a>
+            <div class="flex flex-col items-end gap-3">
+                <div class="flex gap-2">
+                    <button onclick="setLang('en')" id="btnEn"
+                        class="btn-lang px-3 py-1 text-[10px] font-black border border-slate-600 text-slate-400 rounded hover:border-indigo-50 transition uppercase">EN</button>
+                    <button onclick="setLang('bs')" id="btnBs"
+                        class="btn-lang px-3 py-1 text-[10px] font-black border border-slate-600 text-slate-400 rounded hover:border-indigo-50 transition uppercase">BS</button>
+                </div>
+                <a href="Francis_Horizontal_Dashboard.html"
+                    class="flex items-center gap-2 px-4 py-2 bg-slate-900/80 border border-slate-700 rounded text-[10px] font-bold text-slate-300 hover:text-white hover:border-slate-500 transition">
+                    <i data-lucide="arrow-left" class="w-3 h-3 text-indigo-500"></i>
+                    <span data-i18n="return">BACK TO DASHBOARD</span>
+                </a>
+            </div>
+        </div>
     </header>
 
-    <!-- 1. The Carbon Threat -->
-    <div class="procedure-card critical">
-        <h3 class="text-red-500 font-bold mb-2 flex items-center gap-2" data-i18n="s1_title">
-            <i data-lucide="zap-off"></i> THE SILENT KILLER: CARBON DUST
-        </h3>
-        <p class="text-sm text-stone-400 mb-4" data-i18n="s1_desc">
-            Carbon brushes wear down, creating conductive dust. In Rwanda's humidity, this dust creates "tracking paths"
-            for electricity to jump to the stator frame (Flash-over).
-        </p>
-        <div class="bg-red-900/10 p-3 rounded border border-red-900/30 text-xs text-stone-400">
-            <span data-i18n="s1_rule">Cleanliness is not aesthetics; it is insulation integrity.</span>
-        </div>
-    </div>
+    <main class="max-w-5xl mx-auto px-4 md:px-8">
 
-    <!-- 2. Technical Logic -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div class="procedure-card elec">
-            <h3 class="text-amber-400 font-bold mb-4 flex items-center gap-2">
-                <i data-lucide="brush"></i> <span data-i18n="brush_title">BRUSH PROTOCOL</span>
-            </h3>
-            <ul class="text-[10px] text-stone-400 space-y-2">
-                <li><strong data-i18n="b1">REPLACE:</strong> <span data-i18n="b1_desc">At 25-30% length. Never wait for
-                        the wire shunt to touch the slip ring.</span></li>
-                <li><strong data-i18n="b2">PRESSURE:</strong> <span data-i18n="b2_desc">Too soft = Sparking/Burning. Too
-                        hard = Rapid groove wear.</span></li>
-            </ul>
-        </div>
-        <div class="procedure-card">
-            <h3 class="text-white font-bold mb-4 flex items-center gap-2" data-i18n="heat_title">
-                <i data-lucide="thermometer-sun"></i> HEATER LOGIC
-            </h3>
-            <p class="text-xs text-stone-500" data-i18n="heat_desc">Whenever the unit is SHUT DOWN, anti-condensation
-                heaters MUST be ACTIVE. This prevents windings from absorbing tropical moisture.</p>
-        </div>
-    </div>
+        <div class="grid grid-cols-1 gap-8">
 
-    <!-- 3. Tests -->
-    <div class="procedure-card">
-        <h3 class="text-white font-bold mb-4 flex items-center gap-2" data-i18n="test_title">
-            <i data-lucide="shield-check"></i> INTEGRITY TESTS
-        </h3>
-        <div class="space-y-4 text-sm text-stone-400">
-            <div class="flex items-start gap-3">
-                <div class="p-2 bg-stone-800 rounded text-amber-500 font-bold">IR</div>
-                <div>
-                    <strong data-i18n="t1">INSULATION RESISTANCE (MEGGER):</strong>
-                    <p class="text-xs text-stone-500" data-i18n="t1_desc">Annual test. 500V/1000V DC on Stator/Rotor.
-                        Correct all readings to 40°C baseline.</p>
+            <!-- 1. Carbon Dust Warning -->
+            <section
+                class="glass-card rounded-2xl p-8 border-l-4 border-l-red-600 relative overflow-hidden bg-red-950/5">
+                <div class="carbon-smoke" style="top: 10%; right: 5%;"></div>
+                <div class="flex flex-col md:flex-row justify-between items-start gap-4 mb-6 relative z-10">
+                    <h2 class="text-xl font-black text-red-500 uppercase tracking-tight flex items-center gap-2"
+                        data-i18n="s1_title">
+                        <i data-lucide="skull" class="w-5 h-5"></i> THE SILENT KILLER: CARBON DUST
+                    </h2>
+                    <span class="status-pill bg-red-900/30 text-red-500 border border-red-900"
+                        data-i18n="crit_risk">CRITICAL RISK</span>
                 </div>
-            </div>
-            <div class="flex items-start gap-3">
-                <div class="p-2 bg-stone-800 rounded text-amber-500 font-bold">BOX</div>
-                <div>
-                    <strong data-i18n="t2">TERMINAL BOX INSPECTION:</strong>
-                    <p class="text-xs text-stone-500" data-i18n="t2_desc">Check for discolored lugs or melted tape (high
-                        resistance). Tighten to torque spec.</p>
+                <p class="text-[11px] text-slate-400 leading-relaxed mb-6 relative z-10" data-i18n="s1_desc">
+                    Carbon brushes wear down, creating conductive dust. In high humidity, this dust creates "tracking
+                    paths" for electricity to jump to the stator frame (Flash-over / Ground Fault).
+                </p>
+                <div class="p-4 bg-red-600 text-white rounded-xl relative z-10 shadow-lg shadow-red-900/20">
+                    <p class="text-[10px] font-black uppercase text-center tracking-widest" data-i18n="s1_rule">
+                        CLEANLINESS IS NOT AESTHETICS; IT IS INSULATION INTEGRITY.</p>
                 </div>
-            </div>
-        </div>
-    </div>
+            </section>
 
-    <!-- Hidden Translation Data -->
+            <!-- 2. Dual Technical Columns -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Brush Protocol -->
+                <section class="glass-card rounded-2xl p-8 border-l-4 border-l-indigo-600">
+                    <h2 class="text-lg font-black text-white uppercase tracking-tight mb-8 flex items-center gap-2">
+                        <i data-lucide="brush" class="w-5 h-5 text-indigo-400"></i> <span data-i18n="brush_title">BRUSH
+                            PROTOCOL</span>
+                    </h2>
+
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-[9px] text-slate-500 font-black uppercase tracking-widest"
+                                    data-i18n="b1">REPLACEMENT LIMIT</span>
+                                <span class="text-xs font-black text-white">25-30%</span>
+                            </div>
+                            <p class="text-[10px] text-slate-400 italic" data-i18n="b1_desc">Never wait for the wire
+                                shunt to touch the slip ring. Monitor groove wear monthly.</p>
+                        </div>
+                        <div class="h-px bg-slate-800"></div>
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-[9px] text-slate-500 font-black uppercase tracking-widest"
+                                    data-i18n="b2">SPRING PRESSURE</span>
+                                <span class="text-xs font-black text-indigo-400">1.5 - 2.0 N/cm²</span>
+                            </div>
+                            <p class="text-[10px] text-slate-400 italic" data-i18n="b2_desc">Too soft = Sparking/Burn
+                                Marks. Too hard = Rapid premature groove wear.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Heater Logic -->
+                <section class="glass-card rounded-2xl p-8 border-l-4 border-l-indigo-600">
+                    <h2 class="text-lg font-black text-white uppercase tracking-tight mb-8 flex items-center gap-2">
+                        <i data-lucide="thermometer-sun" class="w-5 h-5 text-indigo-400"></i> <span
+                            data-i18n="heat_title">HEATER LOGIC</span>
+                    </h2>
+
+                    <div class="bg-indigo-950/20 p-5 rounded-2xl border border-indigo-900/30 mb-6">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="p-2 bg-indigo-600 rounded-lg">
+                                <i data-lucide="power" class="text-white w-4 h-4"></i>
+                            </div>
+                            <div class="text-[10px] font-black text-white uppercase tracking-widest">AUTO-ACTIVE ON STOP
+                            </div>
+                        </div>
+                        <p class="text-[10px] text-slate-400 leading-relaxed" data-i18n="heat_desc">Whenever the unit is
+                            SHUT DOWN, anti-condensation heaters MUST be ACTIVE. This prevents windings from absorbing
+                            tropical moisture.</p>
+                    </div>
+
+                    <div class="flex justify-between items-center px-2">
+                        <span class="text-[9px] text-slate-500 font-black uppercase tracking-widest">Heater
+                            Status</span>
+                        <div class="flex items-center gap-2">
+                            <div class="w-2 h-2 rounded-full bg-green-500 shadow-lg shadow-green-500/50"></div>
+                            <span class="text-[10px] font-black text-green-500">READY</span>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- 3. Integrity Tests -->
+            <section class="glass-card rounded-2xl p-8 border-l-4 border-l-indigo-600">
+                <h2 class="text-xl font-black text-white uppercase tracking-tight mb-8 flex items-center gap-2"
+                    data-i18n="test_title">
+                    <i data-lucide="shield-check" class="w-6 h-6 text-indigo-400"></i> INSULATION INTEGRITY TESTS
+                </h2>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="test-box group">
+                        <div class="flex justify-between items-start mb-4">
+                            <div
+                                class="p-2 bg-indigo-900/30 rounded border border-indigo-800 text-indigo-400 font-black text-xs">
+                                IR (MEGGER)</div>
+                            <span class="status-pill bg-slate-900 text-slate-500" data-i18n="freq_ann">ANNUAL</span>
+                        </div>
+                        <h4 class="text-white text-xs font-black uppercase mb-2" data-i18n="t1">Insulation Resistance
+                        </h4>
+                        <p class="text-[10px] text-slate-500 leading-relaxed" data-i18n="t1_desc">500V/1000V DC on
+                            Stator/Rotor. Correct all readings to 40°C baseline for trend analysis.</p>
+                    </div>
+
+                    <div class="test-box group">
+                        <div class="flex justify-between items-start mb-4">
+                            <div
+                                class="p-2 bg-indigo-900/30 rounded border border-indigo-800 text-indigo-400 font-black text-xs">
+                                TERM (BOX)</div>
+                            <span class="status-pill bg-slate-900 text-slate-500" data-i18n="freq_mon">MONTHLY</span>
+                        </div>
+                        <h4 class="text-white text-xs font-black uppercase mb-2" data-i18n="t2">Terminal Box Audit</h4>
+                        <p class="text-[10px] text-slate-500 leading-relaxed" data-i18n="t2_desc">Inspect for discolored
+                            lugs or melted tape (High Resistance). Torque verification required.</p>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+    </main>
+
     <script>
         lucide.createIcons();
-        const ml = localStorage.getItem('anohub_lang_pref') || 'en';
 
         const i18n = {
             en: {
-                title: "GENERATOR ELECTRICAL MAINTENANCE",
-                subtitle: "Excitation, Insulation & Carbon Dust Management",
-                return: "Back to Dashboard",
-
+                title: "GENERATOR INTEGRITY",
+                return: "BACK TO DASHBOARD",
                 s1_title: "THE SILENT KILLER: CARBON DUST",
-                s1_desc: "Carbon brushes wear down, creating conductive dust. In Rwanda's humidity, this dust creates 'tracking paths' for electricity to jump to the stator frame (Flash-over).",
-                s1_rule: "Cleanliness is not aesthetics; it is insulation integrity.",
-
+                crit_risk: "CRITICAL RISK",
+                s1_desc: "Carbon brushes wear down, creating conductive dust. In high humidity, this dust creates 'tracking paths' for electricity to jump to the stator frame (Flash-over / Ground Fault).",
+                s1_rule: "CLEANLINESS IS NOT AESTHETICS; IT IS INSULATION INTEGRITY.",
                 brush_title: "BRUSH PROTOCOL",
-                b1: "REPLACE:", b1_desc: "At 25-30% length. Never wait for the wire shunt to touch the slip ring.",
-                b2: "PRESSURE:", b2_desc: "Too soft = Sparking/Burning. Too hard = Rapid groove wear.",
-
+                b1: "REPLACEMENT LIMIT",
+                b1_desc: "Never wait for the wire shunt to touch the slip ring. Monitor groove wear monthly.",
+                b2: "SPRING PRESSURE",
+                b2_desc: "Too soft = Sparking/Burn Marks. Too hard = Rapid premature groove wear.",
                 heat_title: "HEATER LOGIC",
                 heat_desc: "Whenever the unit is SHUT DOWN, anti-condensation heaters MUST be ACTIVE. This prevents windings from absorbing tropical moisture.",
-
-                test_title: "INTEGRITY TESTS",
-                t1: "INSULATION RESISTANCE (MEGGER):", t1_desc: "Annual test. 500V/1000V DC on Stator/Rotor. Correct all readings to 40°C baseline.",
-                t2: "TERMINAL BOX INSPECTION:", t2_desc: "Check for discolored lugs or melted tape (high resistance). Tighten to torque spec."
+                test_title: "INSULATION INTEGRITY TESTS",
+                freq_ann: "ANNUAL",
+                freq_mon: "MONTHLY",
+                t1: "Insulation Resistance",
+                t1_desc: "500V/1000V DC on Stator/Rotor. Correct all readings to 40°C baseline for trend analysis.",
+                t2: "Terminal Box Audit",
+                t2_desc: "Inspect for discolored lugs or melted tape (High Resistance). Torque verification required."
             },
             bs: {
-                title: "ELEKTRIČNO ODRŽAVANJE GENERATORA",
-                subtitle: "Pobuda, Izolacija & Upravljanje Karbonskom Prašinom",
-                return: "Povratak na Kontrolnu Tablu",
-
+                title: "INTEGRITET GENERATORA",
+                return: "POVRATAK NA KONTROLNU TABLU",
                 s1_title: "TIHI UBICA: KARBONSKA PRAŠINA",
-                s1_desc: "Četkice se troše stvarajući provodljivu prašinu. U vlažnim uslovima, ova prašina stvara puteve za 'preskok' struje na kućište.",
-                s1_rule: "Čistoća ovdje nije estetika, već integritet izolacije.",
-
+                crit_risk: "KRITIČNI RIZIK",
+                s1_desc: "Karbonske četkice se troše, stvarajući provodljivu prašinu. Pri visokoj vlažnosti, ova prašina stvara 'staze' za preskok struje na kućište statora (Flash-over).",
+                s1_rule: "ČISTOĆA OVDJE NIJE ESTETIKA; TO JE INTEGRITET IZOLACIJE.",
                 brush_title: "PROTOKOL ZA ČETKICE",
-                b1: "ZAMIJENI:", b1_desc: "Na 25-30% dužine. Ne čekaj da pletenica dodirne klizni prsten.",
-                b2: "PRITISAK:", b2_desc: "Previše meko = Varničenje. Previše tvrdo = Urezivanje prstena.",
-
+                b1: "LIMIT ZA ZAMJENU",
+                b1_desc: "Nikada ne čekajte da pletenica dodirne klizni prsten. Pratite trošenje utora mjesečno.",
+                b2: "PRITISAK OPRUGE",
+                b2_desc: "Previše meko = Varničenje/Ožegotine. Previše tvrdo = Ubrzano trošenje kliznog prstena.",
                 heat_title: "LOGIKA GRIJAČA",
-                heat_desc: "Kad god je agregat ugašen, antikondenzacioni grijači MORAJU biti AKTIVNI. Ovo sprečava prodor vlage u namotaje.",
-
-                test_title: "TESTOVI INTEGRITETA",
-                t1: "OTPOR IZOLACIJE (MEGER):", t1_desc: "Godišnji test. 500V/1000V DC na stator/rotor. Koriguj na 40°C.",
-                t2: "INSPEKCIJA PRIKLJUČNE KUTIJE:", t2_desc: "Provjeri promjenu boje papučica ili topljenje trake. Dategni moment ključem."
+                heat_desc: "Kad god je agregat ugašen, antikondenzacioni grijači MORAJU biti AKTIVNI. Ovo sprečava prodor tropske vlage u namotaje.",
+                test_title: "TESTOVI INTEGRITETA IZOLACIJE",
+                freq_ann: "GODIŠNJE",
+                freq_mon: "MJESEČNO",
+                t1: "Otpor Izolacije (Megger)",
+                t1_desc: "500V/1000V DC na Statoru/Rotoru. Korigujte sva očitavanja na 40°C za analizu trenda.",
+                t2: "Audit Priključne Kutije",
+                t2_desc: "Pregledajte papučice zbog promjene boje (Veliki Otpor). Obavezna provjera momenta zatezanja."
             }
         };
 
-        function setLang(lang) {`n            localStorage.setItem('anohub_lang_pref', lang);`n            if (lang === 'en') {`n                document.getElementById('btnEn').className = "px-2 py-0.5 text-[10px] font-bold bg-cyan-600 text-white rounded";`n                document.getElementById('btnBs').className = "px-2 py-0.5 text-[10px] font-bold bg-slate-800 text-slate-500 rounded hover:text-white";`n            } else {`n                document.getElementById('btnBs').className = "px-2 py-0.5 text-[10px] font-bold bg-cyan-600 text-white rounded";`n                document.getElementById('btnEn').className = "px-2 py-0.5 text-[10px] font-bold bg-slate-800 text-slate-500 rounded hover:text-white";`n            }`n            document.querySelectorAll('[data-i18n]').forEach(el => {`n                const key = el.getAttribute('data-i18n');`n                if(i18n[lang][key]) el.innerText = i18n[lang][key];`n            });`n        }`n        const pref = localStorage.getItem('anohub_lang_pref') || 'en';`n        setLang(pref););
+        function setLang(lang) {
+            localStorage.setItem('anohub_lang_pref', lang);
+
+            document.querySelectorAll('.btn-lang').forEach(btn => btn.classList.remove('active-lang'));
+            if (lang === 'en') document.getElementById('btnEn').classList.add('active-lang');
+            else document.getElementById('btnBs').classList.add('active-lang');
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (i18n[lang][key]) el.innerText = i18n[lang][key];
+            });
         }
+
+        const pref = localStorage.getItem('anohub_lang_pref') || 'en';
+        setLang(pref);
     </script>
 </body>
 
